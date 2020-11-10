@@ -1,5 +1,6 @@
 IF(NOT DAS_VULKAN_INCLUDED)
     SET(DAS_VULKAN_INCLUDED TRUE)
+    MESSAGE(STATUS "dasVulkan module included.")
 
     include(${PROJECT_SOURCE_DIR}/modules/dasBinder/CMakeLists.txt)
 
