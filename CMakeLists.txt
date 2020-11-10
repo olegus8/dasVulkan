@@ -2,14 +2,14 @@ IF(NOT DAS_VULKAN_INCLUDED)
     SET(DAS_VULKAN_INCLUDED TRUE)
     MESSAGE(STATUS "dasVulkan module included.")
 
-    include(${PROJECT_SOURCE_DIR}/modules/dasBinder/CMakeLists.txt)
+    include(${CMAKE_SOURCE_DIR}/modules/dasBinder/CMakeLists.txt)
 
     find_package(Vulkan)
 
     IF(NOT Vulkan_FOUND)
         MESSAGE(STATUS "Vulkan SDK not found. Not building dasVulkan.")
     ELSE()
-        SET(DAS_VULKAN_DIR ${PROJECT_SOURCE_DIR}/modules/dasVulkan)
+        SET(DAS_VULKAN_DIR ${CMAKE_SOURCE_DIR}/modules/dasVulkan)
 
         SET(DAS_VULKAN_EXAMPLE_SRC
             ${DAS_VULKAN_DIR}/example/main.cpp
