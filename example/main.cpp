@@ -97,7 +97,7 @@ int main( int argc, char * argv[] ) {
 
     uint64_t timeStamp = ref_time_ticks();
     bool ok = true;
-    ok = run_das(getDasRoot() +  "/examples/vulkan/main.das") && ok;
+    ok = run_das(getDasRoot() +  "/modules/dasVulkan/example/main.das") && ok;
     int usec = get_time_usec(timeStamp);
     tout << "EXAMPLE " << (ok ? "FINISHED SUCCESSFULLY " : "FAILED!!! ") << ((usec/1000)/1000.0) << "\n";
     // shutdown
