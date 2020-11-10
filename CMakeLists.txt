@@ -18,7 +18,7 @@ IF(NOT DAS_VULKAN_INCLUDED)
         add_executable(dasVulkanExample ${DAS_VULKAN_EXAMPLE_SRC})
         TARGET_LINK_LIBRARIES(dasVulkanExample libDaScript ${Vulkan_LIBRARY})
         TARGET_INCLUDE_DIRECTORIES(dasVulkanExample PUBLIC ${Vulkan_INCLUDE_DIR})
-        SETUP_CPP11(vulkanExample)
+        SETUP_CPP11(dasVulkanExample)
 
         IF(DAS_BINDER_INCLUDED)
             DAS_BINDER(
