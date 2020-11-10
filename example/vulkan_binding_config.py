@@ -22,19 +22,10 @@ class Config(ConfigBase):
             field.ignore()
         for kw in [
             #TODO: bind _T * handles as DummyType(..._T)
-            #TODO: hints from Boris:
-            # ast_typedecl.h -- add size_t and char there
-            # options log_infer_passes = true
-            # options log = true
-            # ast_lint.cpp -- for options
-
             '*',
-            'unsigned long',
 
-            #TODO: bind unions as structs
-            # the following are unions:
-            #'VkPerformanceValueDataINTEL',
-            #'VkPipelineExecutableStatisticValueKHR',
+            #TODO: add size_t and char to ast_typedecl.h
+            'unsigned long',
         ]:
             if kw in field.type:
                 field.ignore()
