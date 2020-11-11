@@ -29,9 +29,6 @@ class Config(ConfigBase):
         ):
             field.ignore()
         for kw in [
-            #TODO: bind _T * handles as DummyType(..._T)
-            '*',
-
             #TODO: add size_t and char to ast_typedecl.h
             'unsigned long',
         ]:
