@@ -11,6 +11,10 @@ class Config(ConfigBase):
     def c_header_include(self):
         return 'vulkan/vulkan.h'
 
+    @property
+    def save_ast(self):
+        return True
+
     def configure_struct_field(self, field):
         #FIXME: make it work for all fields
         if (field.is_array
