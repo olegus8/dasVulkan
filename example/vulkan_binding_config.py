@@ -22,7 +22,7 @@ class Config(ConfigBase):
     def configure_struct_field(self, field):
         #FIXME: make it work for all fields
         if (field.name.startswith('pfn')
-            or field.is_array
+            or (field.is_array and ('char' in field.type))
 
             #TODO: generate accessors for these
             or field.is_bit_field
