@@ -15,7 +15,6 @@ class Config(ConfigBase):
     def save_ast(self):
         return True
 
-    @property
     def configure_opaque_struct(self, struct):
         if struct.name.endswith('_T'):
             struct.set_dummy_type(struct.name[:-2])
