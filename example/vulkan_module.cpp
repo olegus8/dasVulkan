@@ -9387,16 +9387,16 @@ struct VkAabbPositionsKHRAnnotation
 
 MAKE_TYPE_FACTORY(VkAccelerationStructureInstanceKHR, VkAccelerationStructureInstanceKHR);
 
-__forceinline unsigned int VkAccelerationStructureInstanceKHR_get_instanceCustomIndex(const VkAccelerationStructureInstanceKHR &s) { return f.instanceCustomIndex; }
+__forceinline unsigned int VkAccelerationStructureInstanceKHR_get_instanceCustomIndex(const VkAccelerationStructureInstanceKHR &s) { return s.instanceCustomIndex; }
 __forceinline void VkAccelerationStructureInstanceKHR_set_instanceCustomIndex(VkAccelerationStructureInstanceKHR &s, unsigned int f) { s.instanceCustomIndex = f; }
 
-__forceinline unsigned int VkAccelerationStructureInstanceKHR_get_mask(const VkAccelerationStructureInstanceKHR &s) { return f.mask; }
+__forceinline unsigned int VkAccelerationStructureInstanceKHR_get_mask(const VkAccelerationStructureInstanceKHR &s) { return s.mask; }
 __forceinline void VkAccelerationStructureInstanceKHR_set_mask(VkAccelerationStructureInstanceKHR &s, unsigned int f) { s.mask = f; }
 
-__forceinline unsigned int VkAccelerationStructureInstanceKHR_get_instanceShaderBindingTableRecordOffset(const VkAccelerationStructureInstanceKHR &s) { return f.instanceShaderBindingTableRecordOffset; }
+__forceinline unsigned int VkAccelerationStructureInstanceKHR_get_instanceShaderBindingTableRecordOffset(const VkAccelerationStructureInstanceKHR &s) { return s.instanceShaderBindingTableRecordOffset; }
 __forceinline void VkAccelerationStructureInstanceKHR_set_instanceShaderBindingTableRecordOffset(VkAccelerationStructureInstanceKHR &s, unsigned int f) { s.instanceShaderBindingTableRecordOffset = f; }
 
-__forceinline unsigned int VkAccelerationStructureInstanceKHR_get_flags(const VkAccelerationStructureInstanceKHR &s) { return f.flags; }
+__forceinline unsigned int VkAccelerationStructureInstanceKHR_get_flags(const VkAccelerationStructureInstanceKHR &s) { return s.flags; }
 __forceinline void VkAccelerationStructureInstanceKHR_set_flags(VkAccelerationStructureInstanceKHR &s, unsigned int f) { s.flags = f; }
 
 struct VkAccelerationStructureInstanceKHRAnnotation
