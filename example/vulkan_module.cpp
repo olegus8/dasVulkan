@@ -2704,7 +2704,9 @@ MAKE_TYPE_FACTORY(VkPrivateDataSlotEXT, VkPrivateDataSlotEXT)
 // structs
 //
 
+
 MAKE_TYPE_FACTORY(VkExtent2D, VkExtent2D);
+
 struct VkExtent2DAnnotation
 : public ManagedStructureAnnotation<VkExtent2D,true,true> {
     VkExtent2DAnnotation(ModuleLibrary & ml)
@@ -2716,7 +2718,9 @@ struct VkExtent2DAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkExtent3D, VkExtent3D);
+
 struct VkExtent3DAnnotation
 : public ManagedStructureAnnotation<VkExtent3D,true,true> {
     VkExtent3DAnnotation(ModuleLibrary & ml)
@@ -2729,7 +2733,9 @@ struct VkExtent3DAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkOffset2D, VkOffset2D);
+
 struct VkOffset2DAnnotation
 : public ManagedStructureAnnotation<VkOffset2D,true,true> {
     VkOffset2DAnnotation(ModuleLibrary & ml)
@@ -2741,7 +2747,9 @@ struct VkOffset2DAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkOffset3D, VkOffset3D);
+
 struct VkOffset3DAnnotation
 : public ManagedStructureAnnotation<VkOffset3D,true,true> {
     VkOffset3DAnnotation(ModuleLibrary & ml)
@@ -2754,7 +2762,9 @@ struct VkOffset3DAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkRect2D, VkRect2D);
+
 struct VkRect2DAnnotation
 : public ManagedStructureAnnotation<VkRect2D,true,true> {
     VkRect2DAnnotation(ModuleLibrary & ml)
@@ -2766,7 +2776,9 @@ struct VkRect2DAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkBaseInStructure, VkBaseInStructure);
+
 struct VkBaseInStructureAnnotation
 : public ManagedStructureAnnotation<VkBaseInStructure,true,true> {
     VkBaseInStructureAnnotation(ModuleLibrary & ml)
@@ -2778,7 +2790,9 @@ struct VkBaseInStructureAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkBaseOutStructure, VkBaseOutStructure);
+
 struct VkBaseOutStructureAnnotation
 : public ManagedStructureAnnotation<VkBaseOutStructure,true,true> {
     VkBaseOutStructureAnnotation(ModuleLibrary & ml)
@@ -2790,7 +2804,9 @@ struct VkBaseOutStructureAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkBufferMemoryBarrier, VkBufferMemoryBarrier);
+
 struct VkBufferMemoryBarrierAnnotation
 : public ManagedStructureAnnotation<VkBufferMemoryBarrier,true,true> {
     VkBufferMemoryBarrierAnnotation(ModuleLibrary & ml)
@@ -2807,7 +2823,9 @@ struct VkBufferMemoryBarrierAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDispatchIndirectCommand, VkDispatchIndirectCommand);
+
 struct VkDispatchIndirectCommandAnnotation
 : public ManagedStructureAnnotation<VkDispatchIndirectCommand,true,true> {
     VkDispatchIndirectCommandAnnotation(ModuleLibrary & ml)
@@ -2820,7 +2838,9 @@ struct VkDispatchIndirectCommandAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDrawIndexedIndirectCommand, VkDrawIndexedIndirectCommand);
+
 struct VkDrawIndexedIndirectCommandAnnotation
 : public ManagedStructureAnnotation<VkDrawIndexedIndirectCommand,true,true> {
     VkDrawIndexedIndirectCommandAnnotation(ModuleLibrary & ml)
@@ -2835,7 +2855,9 @@ struct VkDrawIndexedIndirectCommandAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDrawIndirectCommand, VkDrawIndirectCommand);
+
 struct VkDrawIndirectCommandAnnotation
 : public ManagedStructureAnnotation<VkDrawIndirectCommand,true,true> {
     VkDrawIndirectCommandAnnotation(ModuleLibrary & ml)
@@ -2849,7 +2871,9 @@ struct VkDrawIndirectCommandAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkImageSubresourceRange, VkImageSubresourceRange);
+
 struct VkImageSubresourceRangeAnnotation
 : public ManagedStructureAnnotation<VkImageSubresourceRange,true,true> {
     VkImageSubresourceRangeAnnotation(ModuleLibrary & ml)
@@ -2864,7 +2888,9 @@ struct VkImageSubresourceRangeAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkImageMemoryBarrier, VkImageMemoryBarrier);
+
 struct VkImageMemoryBarrierAnnotation
 : public ManagedStructureAnnotation<VkImageMemoryBarrier,true,true> {
     VkImageMemoryBarrierAnnotation(ModuleLibrary & ml)
@@ -2884,7 +2910,9 @@ struct VkImageMemoryBarrierAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkMemoryBarrier, VkMemoryBarrier);
+
 struct VkMemoryBarrierAnnotation
 : public ManagedStructureAnnotation<VkMemoryBarrier,true,true> {
     VkMemoryBarrierAnnotation(ModuleLibrary & ml)
@@ -2898,7 +2926,9 @@ struct VkMemoryBarrierAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkAllocationCallbacks, VkAllocationCallbacks);
+
 struct VkAllocationCallbacksAnnotation
 : public ManagedStructureAnnotation<VkAllocationCallbacks,true,true> {
     VkAllocationCallbacksAnnotation(ModuleLibrary & ml)
@@ -2909,7 +2939,9 @@ struct VkAllocationCallbacksAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkApplicationInfo, VkApplicationInfo);
+
 struct VkApplicationInfoAnnotation
 : public ManagedStructureAnnotation<VkApplicationInfo,true,true> {
     VkApplicationInfoAnnotation(ModuleLibrary & ml)
@@ -2926,7 +2958,9 @@ struct VkApplicationInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkFormatProperties, VkFormatProperties);
+
 struct VkFormatPropertiesAnnotation
 : public ManagedStructureAnnotation<VkFormatProperties,true,true> {
     VkFormatPropertiesAnnotation(ModuleLibrary & ml)
@@ -2939,7 +2973,9 @@ struct VkFormatPropertiesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkImageFormatProperties, VkImageFormatProperties);
+
 struct VkImageFormatPropertiesAnnotation
 : public ManagedStructureAnnotation<VkImageFormatProperties,true,true> {
     VkImageFormatPropertiesAnnotation(ModuleLibrary & ml)
@@ -2953,7 +2989,9 @@ struct VkImageFormatPropertiesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkInstanceCreateInfo, VkInstanceCreateInfo);
+
 struct VkInstanceCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkInstanceCreateInfo,true,true> {
     VkInstanceCreateInfoAnnotation(ModuleLibrary & ml)
@@ -2971,7 +3009,9 @@ struct VkInstanceCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkMemoryHeap, VkMemoryHeap);
+
 struct VkMemoryHeapAnnotation
 : public ManagedStructureAnnotation<VkMemoryHeap,true,true> {
     VkMemoryHeapAnnotation(ModuleLibrary & ml)
@@ -2982,7 +3022,9 @@ struct VkMemoryHeapAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkMemoryType, VkMemoryType);
+
 struct VkMemoryTypeAnnotation
 : public ManagedStructureAnnotation<VkMemoryType,true,true> {
     VkMemoryTypeAnnotation(ModuleLibrary & ml)
@@ -2994,7 +3036,9 @@ struct VkMemoryTypeAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceFeatures, VkPhysicalDeviceFeatures);
+
 struct VkPhysicalDeviceFeaturesAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceFeatures,true,true> {
     VkPhysicalDeviceFeaturesAnnotation(ModuleLibrary & ml)
@@ -3059,7 +3103,9 @@ struct VkPhysicalDeviceFeaturesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceLimits, VkPhysicalDeviceLimits);
+
 struct VkPhysicalDeviceLimitsAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceLimits,true,true> {
     VkPhysicalDeviceLimitsAnnotation(ModuleLibrary & ml)
@@ -3166,7 +3212,9 @@ struct VkPhysicalDeviceLimitsAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceMemoryProperties, VkPhysicalDeviceMemoryProperties);
+
 struct VkPhysicalDeviceMemoryPropertiesAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceMemoryProperties,true,true> {
     VkPhysicalDeviceMemoryPropertiesAnnotation(ModuleLibrary & ml)
@@ -3180,7 +3228,9 @@ struct VkPhysicalDeviceMemoryPropertiesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceSparseProperties, VkPhysicalDeviceSparseProperties);
+
 struct VkPhysicalDeviceSparsePropertiesAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceSparseProperties,true,true> {
     VkPhysicalDeviceSparsePropertiesAnnotation(ModuleLibrary & ml)
@@ -3195,7 +3245,9 @@ struct VkPhysicalDeviceSparsePropertiesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceProperties, VkPhysicalDeviceProperties);
+
 struct VkPhysicalDevicePropertiesAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceProperties,true,true> {
     VkPhysicalDevicePropertiesAnnotation(ModuleLibrary & ml)
@@ -3213,7 +3265,9 @@ struct VkPhysicalDevicePropertiesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkQueueFamilyProperties, VkQueueFamilyProperties);
+
 struct VkQueueFamilyPropertiesAnnotation
 : public ManagedStructureAnnotation<VkQueueFamilyProperties,true,true> {
     VkQueueFamilyPropertiesAnnotation(ModuleLibrary & ml)
@@ -3227,7 +3281,9 @@ struct VkQueueFamilyPropertiesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDeviceQueueCreateInfo, VkDeviceQueueCreateInfo);
+
 struct VkDeviceQueueCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkDeviceQueueCreateInfo,true,true> {
     VkDeviceQueueCreateInfoAnnotation(ModuleLibrary & ml)
@@ -3243,7 +3299,9 @@ struct VkDeviceQueueCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDeviceCreateInfo, VkDeviceCreateInfo);
+
 struct VkDeviceCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkDeviceCreateInfo,true,true> {
     VkDeviceCreateInfoAnnotation(ModuleLibrary & ml)
@@ -3263,7 +3321,9 @@ struct VkDeviceCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkExtensionProperties, VkExtensionProperties);
+
 struct VkExtensionPropertiesAnnotation
 : public ManagedStructureAnnotation<VkExtensionProperties,true,true> {
     VkExtensionPropertiesAnnotation(ModuleLibrary & ml)
@@ -3274,7 +3334,9 @@ struct VkExtensionPropertiesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkLayerProperties, VkLayerProperties);
+
 struct VkLayerPropertiesAnnotation
 : public ManagedStructureAnnotation<VkLayerProperties,true,true> {
     VkLayerPropertiesAnnotation(ModuleLibrary & ml)
@@ -3286,7 +3348,9 @@ struct VkLayerPropertiesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkSubmitInfo, VkSubmitInfo);
+
 struct VkSubmitInfoAnnotation
 : public ManagedStructureAnnotation<VkSubmitInfo,true,true> {
     VkSubmitInfoAnnotation(ModuleLibrary & ml)
@@ -3305,7 +3369,9 @@ struct VkSubmitInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkMappedMemoryRange, VkMappedMemoryRange);
+
 struct VkMappedMemoryRangeAnnotation
 : public ManagedStructureAnnotation<VkMappedMemoryRange,true,true> {
     VkMappedMemoryRangeAnnotation(ModuleLibrary & ml)
@@ -3318,7 +3384,9 @@ struct VkMappedMemoryRangeAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkMemoryAllocateInfo, VkMemoryAllocateInfo);
+
 struct VkMemoryAllocateInfoAnnotation
 : public ManagedStructureAnnotation<VkMemoryAllocateInfo,true,true> {
     VkMemoryAllocateInfoAnnotation(ModuleLibrary & ml)
@@ -3331,7 +3399,9 @@ struct VkMemoryAllocateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkMemoryRequirements, VkMemoryRequirements);
+
 struct VkMemoryRequirementsAnnotation
 : public ManagedStructureAnnotation<VkMemoryRequirements,true,true> {
     VkMemoryRequirementsAnnotation(ModuleLibrary & ml)
@@ -3342,7 +3412,9 @@ struct VkMemoryRequirementsAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkSparseMemoryBind, VkSparseMemoryBind);
+
 struct VkSparseMemoryBindAnnotation
 : public ManagedStructureAnnotation<VkSparseMemoryBind,true,true> {
     VkSparseMemoryBindAnnotation(ModuleLibrary & ml)
@@ -3354,7 +3426,9 @@ struct VkSparseMemoryBindAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkSparseBufferMemoryBindInfo, VkSparseBufferMemoryBindInfo);
+
 struct VkSparseBufferMemoryBindInfoAnnotation
 : public ManagedStructureAnnotation<VkSparseBufferMemoryBindInfo,true,true> {
     VkSparseBufferMemoryBindInfoAnnotation(ModuleLibrary & ml)
@@ -3367,7 +3441,9 @@ struct VkSparseBufferMemoryBindInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkSparseImageOpaqueMemoryBindInfo, VkSparseImageOpaqueMemoryBindInfo);
+
 struct VkSparseImageOpaqueMemoryBindInfoAnnotation
 : public ManagedStructureAnnotation<VkSparseImageOpaqueMemoryBindInfo,true,true> {
     VkSparseImageOpaqueMemoryBindInfoAnnotation(ModuleLibrary & ml)
@@ -3380,7 +3456,9 @@ struct VkSparseImageOpaqueMemoryBindInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkImageSubresource, VkImageSubresource);
+
 struct VkImageSubresourceAnnotation
 : public ManagedStructureAnnotation<VkImageSubresource,true,true> {
     VkImageSubresourceAnnotation(ModuleLibrary & ml)
@@ -3393,7 +3471,9 @@ struct VkImageSubresourceAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkSparseImageMemoryBind, VkSparseImageMemoryBind);
+
 struct VkSparseImageMemoryBindAnnotation
 : public ManagedStructureAnnotation<VkSparseImageMemoryBind,true,true> {
     VkSparseImageMemoryBindAnnotation(ModuleLibrary & ml)
@@ -3408,7 +3488,9 @@ struct VkSparseImageMemoryBindAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkSparseImageMemoryBindInfo, VkSparseImageMemoryBindInfo);
+
 struct VkSparseImageMemoryBindInfoAnnotation
 : public ManagedStructureAnnotation<VkSparseImageMemoryBindInfo,true,true> {
     VkSparseImageMemoryBindInfoAnnotation(ModuleLibrary & ml)
@@ -3421,7 +3503,9 @@ struct VkSparseImageMemoryBindInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkBindSparseInfo, VkBindSparseInfo);
+
 struct VkBindSparseInfoAnnotation
 : public ManagedStructureAnnotation<VkBindSparseInfo,true,true> {
     VkBindSparseInfoAnnotation(ModuleLibrary & ml)
@@ -3443,7 +3527,9 @@ struct VkBindSparseInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkSparseImageFormatProperties, VkSparseImageFormatProperties);
+
 struct VkSparseImageFormatPropertiesAnnotation
 : public ManagedStructureAnnotation<VkSparseImageFormatProperties,true,true> {
     VkSparseImageFormatPropertiesAnnotation(ModuleLibrary & ml)
@@ -3456,7 +3542,9 @@ struct VkSparseImageFormatPropertiesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkSparseImageMemoryRequirements, VkSparseImageMemoryRequirements);
+
 struct VkSparseImageMemoryRequirementsAnnotation
 : public ManagedStructureAnnotation<VkSparseImageMemoryRequirements,true,true> {
     VkSparseImageMemoryRequirementsAnnotation(ModuleLibrary & ml)
@@ -3468,7 +3556,9 @@ struct VkSparseImageMemoryRequirementsAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkFenceCreateInfo, VkFenceCreateInfo);
+
 struct VkFenceCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkFenceCreateInfo,true,true> {
     VkFenceCreateInfoAnnotation(ModuleLibrary & ml)
@@ -3481,7 +3571,9 @@ struct VkFenceCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkSemaphoreCreateInfo, VkSemaphoreCreateInfo);
+
 struct VkSemaphoreCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkSemaphoreCreateInfo,true,true> {
     VkSemaphoreCreateInfoAnnotation(ModuleLibrary & ml)
@@ -3494,7 +3586,9 @@ struct VkSemaphoreCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkEventCreateInfo, VkEventCreateInfo);
+
 struct VkEventCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkEventCreateInfo,true,true> {
     VkEventCreateInfoAnnotation(ModuleLibrary & ml)
@@ -3507,7 +3601,9 @@ struct VkEventCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkQueryPoolCreateInfo, VkQueryPoolCreateInfo);
+
 struct VkQueryPoolCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkQueryPoolCreateInfo,true,true> {
     VkQueryPoolCreateInfoAnnotation(ModuleLibrary & ml)
@@ -3523,7 +3619,9 @@ struct VkQueryPoolCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkBufferCreateInfo, VkBufferCreateInfo);
+
 struct VkBufferCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkBufferCreateInfo,true,true> {
     VkBufferCreateInfoAnnotation(ModuleLibrary & ml)
@@ -3540,7 +3638,9 @@ struct VkBufferCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkBufferViewCreateInfo, VkBufferViewCreateInfo);
+
 struct VkBufferViewCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkBufferViewCreateInfo,true,true> {
     VkBufferViewCreateInfoAnnotation(ModuleLibrary & ml)
@@ -3555,7 +3655,9 @@ struct VkBufferViewCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkImageCreateInfo, VkImageCreateInfo);
+
 struct VkImageCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkImageCreateInfo,true,true> {
     VkImageCreateInfoAnnotation(ModuleLibrary & ml)
@@ -3580,7 +3682,9 @@ struct VkImageCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkSubresourceLayout, VkSubresourceLayout);
+
 struct VkSubresourceLayoutAnnotation
 : public ManagedStructureAnnotation<VkSubresourceLayout,true,true> {
     VkSubresourceLayoutAnnotation(ModuleLibrary & ml)
@@ -3590,7 +3694,9 @@ struct VkSubresourceLayoutAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkComponentMapping, VkComponentMapping);
+
 struct VkComponentMappingAnnotation
 : public ManagedStructureAnnotation<VkComponentMapping,true,true> {
     VkComponentMappingAnnotation(ModuleLibrary & ml)
@@ -3604,7 +3710,9 @@ struct VkComponentMappingAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkImageViewCreateInfo, VkImageViewCreateInfo);
+
 struct VkImageViewCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkImageViewCreateInfo,true,true> {
     VkImageViewCreateInfoAnnotation(ModuleLibrary & ml)
@@ -3622,7 +3730,9 @@ struct VkImageViewCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkShaderModuleCreateInfo, VkShaderModuleCreateInfo);
+
 struct VkShaderModuleCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkShaderModuleCreateInfo,true,true> {
     VkShaderModuleCreateInfoAnnotation(ModuleLibrary & ml)
@@ -3636,7 +3746,9 @@ struct VkShaderModuleCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPipelineCacheCreateInfo, VkPipelineCacheCreateInfo);
+
 struct VkPipelineCacheCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkPipelineCacheCreateInfo,true,true> {
     VkPipelineCacheCreateInfoAnnotation(ModuleLibrary & ml)
@@ -3650,7 +3762,9 @@ struct VkPipelineCacheCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkSpecializationMapEntry, VkSpecializationMapEntry);
+
 struct VkSpecializationMapEntryAnnotation
 : public ManagedStructureAnnotation<VkSpecializationMapEntry,true,true> {
     VkSpecializationMapEntryAnnotation(ModuleLibrary & ml)
@@ -3662,7 +3776,9 @@ struct VkSpecializationMapEntryAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkSpecializationInfo, VkSpecializationInfo);
+
 struct VkSpecializationInfoAnnotation
 : public ManagedStructureAnnotation<VkSpecializationInfo,true,true> {
     VkSpecializationInfoAnnotation(ModuleLibrary & ml)
@@ -3675,7 +3791,9 @@ struct VkSpecializationInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPipelineShaderStageCreateInfo, VkPipelineShaderStageCreateInfo);
+
 struct VkPipelineShaderStageCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkPipelineShaderStageCreateInfo,true,true> {
     VkPipelineShaderStageCreateInfoAnnotation(ModuleLibrary & ml)
@@ -3692,7 +3810,9 @@ struct VkPipelineShaderStageCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkComputePipelineCreateInfo, VkComputePipelineCreateInfo);
+
 struct VkComputePipelineCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkComputePipelineCreateInfo,true,true> {
     VkComputePipelineCreateInfoAnnotation(ModuleLibrary & ml)
@@ -3709,7 +3829,9 @@ struct VkComputePipelineCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkVertexInputBindingDescription, VkVertexInputBindingDescription);
+
 struct VkVertexInputBindingDescriptionAnnotation
 : public ManagedStructureAnnotation<VkVertexInputBindingDescription,true,true> {
     VkVertexInputBindingDescriptionAnnotation(ModuleLibrary & ml)
@@ -3722,7 +3844,9 @@ struct VkVertexInputBindingDescriptionAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkVertexInputAttributeDescription, VkVertexInputAttributeDescription);
+
 struct VkVertexInputAttributeDescriptionAnnotation
 : public ManagedStructureAnnotation<VkVertexInputAttributeDescription,true,true> {
     VkVertexInputAttributeDescriptionAnnotation(ModuleLibrary & ml)
@@ -3736,7 +3860,9 @@ struct VkVertexInputAttributeDescriptionAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPipelineVertexInputStateCreateInfo, VkPipelineVertexInputStateCreateInfo);
+
 struct VkPipelineVertexInputStateCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkPipelineVertexInputStateCreateInfo,true,true> {
     VkPipelineVertexInputStateCreateInfoAnnotation(ModuleLibrary & ml)
@@ -3753,7 +3879,9 @@ struct VkPipelineVertexInputStateCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPipelineInputAssemblyStateCreateInfo, VkPipelineInputAssemblyStateCreateInfo);
+
 struct VkPipelineInputAssemblyStateCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkPipelineInputAssemblyStateCreateInfo,true,true> {
     VkPipelineInputAssemblyStateCreateInfoAnnotation(ModuleLibrary & ml)
@@ -3768,7 +3896,9 @@ struct VkPipelineInputAssemblyStateCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPipelineTessellationStateCreateInfo, VkPipelineTessellationStateCreateInfo);
+
 struct VkPipelineTessellationStateCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkPipelineTessellationStateCreateInfo,true,true> {
     VkPipelineTessellationStateCreateInfoAnnotation(ModuleLibrary & ml)
@@ -3782,7 +3912,9 @@ struct VkPipelineTessellationStateCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkViewport, VkViewport);
+
 struct VkViewportAnnotation
 : public ManagedStructureAnnotation<VkViewport,true,true> {
     VkViewportAnnotation(ModuleLibrary & ml)
@@ -3798,7 +3930,9 @@ struct VkViewportAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPipelineViewportStateCreateInfo, VkPipelineViewportStateCreateInfo);
+
 struct VkPipelineViewportStateCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkPipelineViewportStateCreateInfo,true,true> {
     VkPipelineViewportStateCreateInfoAnnotation(ModuleLibrary & ml)
@@ -3815,7 +3949,9 @@ struct VkPipelineViewportStateCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPipelineRasterizationStateCreateInfo, VkPipelineRasterizationStateCreateInfo);
+
 struct VkPipelineRasterizationStateCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkPipelineRasterizationStateCreateInfo,true,true> {
     VkPipelineRasterizationStateCreateInfoAnnotation(ModuleLibrary & ml)
@@ -3838,7 +3974,9 @@ struct VkPipelineRasterizationStateCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPipelineMultisampleStateCreateInfo, VkPipelineMultisampleStateCreateInfo);
+
 struct VkPipelineMultisampleStateCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkPipelineMultisampleStateCreateInfo,true,true> {
     VkPipelineMultisampleStateCreateInfoAnnotation(ModuleLibrary & ml)
@@ -3857,7 +3995,9 @@ struct VkPipelineMultisampleStateCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkStencilOpState, VkStencilOpState);
+
 struct VkStencilOpStateAnnotation
 : public ManagedStructureAnnotation<VkStencilOpState,true,true> {
     VkStencilOpStateAnnotation(ModuleLibrary & ml)
@@ -3874,7 +4014,9 @@ struct VkStencilOpStateAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPipelineDepthStencilStateCreateInfo, VkPipelineDepthStencilStateCreateInfo);
+
 struct VkPipelineDepthStencilStateCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkPipelineDepthStencilStateCreateInfo,true,true> {
     VkPipelineDepthStencilStateCreateInfoAnnotation(ModuleLibrary & ml)
@@ -3896,7 +4038,9 @@ struct VkPipelineDepthStencilStateCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPipelineColorBlendAttachmentState, VkPipelineColorBlendAttachmentState);
+
 struct VkPipelineColorBlendAttachmentStateAnnotation
 : public ManagedStructureAnnotation<VkPipelineColorBlendAttachmentState,true,true> {
     VkPipelineColorBlendAttachmentStateAnnotation(ModuleLibrary & ml)
@@ -3914,7 +4058,9 @@ struct VkPipelineColorBlendAttachmentStateAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPipelineColorBlendStateCreateInfo, VkPipelineColorBlendStateCreateInfo);
+
 struct VkPipelineColorBlendStateCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkPipelineColorBlendStateCreateInfo,true,true> {
     VkPipelineColorBlendStateCreateInfoAnnotation(ModuleLibrary & ml)
@@ -3932,7 +4078,9 @@ struct VkPipelineColorBlendStateCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPipelineDynamicStateCreateInfo, VkPipelineDynamicStateCreateInfo);
+
 struct VkPipelineDynamicStateCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkPipelineDynamicStateCreateInfo,true,true> {
     VkPipelineDynamicStateCreateInfoAnnotation(ModuleLibrary & ml)
@@ -3947,7 +4095,9 @@ struct VkPipelineDynamicStateCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkGraphicsPipelineCreateInfo, VkGraphicsPipelineCreateInfo);
+
 struct VkGraphicsPipelineCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkGraphicsPipelineCreateInfo,true,true> {
     VkGraphicsPipelineCreateInfoAnnotation(ModuleLibrary & ml)
@@ -3976,7 +4126,9 @@ struct VkGraphicsPipelineCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPushConstantRange, VkPushConstantRange);
+
 struct VkPushConstantRangeAnnotation
 : public ManagedStructureAnnotation<VkPushConstantRange,true,true> {
     VkPushConstantRangeAnnotation(ModuleLibrary & ml)
@@ -3989,7 +4141,9 @@ struct VkPushConstantRangeAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPipelineLayoutCreateInfo, VkPipelineLayoutCreateInfo);
+
 struct VkPipelineLayoutCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkPipelineLayoutCreateInfo,true,true> {
     VkPipelineLayoutCreateInfoAnnotation(ModuleLibrary & ml)
@@ -4006,7 +4160,9 @@ struct VkPipelineLayoutCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkSamplerCreateInfo, VkSamplerCreateInfo);
+
 struct VkSamplerCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkSamplerCreateInfo,true,true> {
     VkSamplerCreateInfoAnnotation(ModuleLibrary & ml)
@@ -4034,7 +4190,9 @@ struct VkSamplerCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkCopyDescriptorSet, VkCopyDescriptorSet);
+
 struct VkCopyDescriptorSetAnnotation
 : public ManagedStructureAnnotation<VkCopyDescriptorSet,true,true> {
     VkCopyDescriptorSetAnnotation(ModuleLibrary & ml)
@@ -4053,7 +4211,9 @@ struct VkCopyDescriptorSetAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDescriptorBufferInfo, VkDescriptorBufferInfo);
+
 struct VkDescriptorBufferInfoAnnotation
 : public ManagedStructureAnnotation<VkDescriptorBufferInfo,true,true> {
     VkDescriptorBufferInfoAnnotation(ModuleLibrary & ml)
@@ -4064,7 +4224,9 @@ struct VkDescriptorBufferInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDescriptorImageInfo, VkDescriptorImageInfo);
+
 struct VkDescriptorImageInfoAnnotation
 : public ManagedStructureAnnotation<VkDescriptorImageInfo,true,true> {
     VkDescriptorImageInfoAnnotation(ModuleLibrary & ml)
@@ -4077,7 +4239,9 @@ struct VkDescriptorImageInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDescriptorPoolSize, VkDescriptorPoolSize);
+
 struct VkDescriptorPoolSizeAnnotation
 : public ManagedStructureAnnotation<VkDescriptorPoolSize,true,true> {
     VkDescriptorPoolSizeAnnotation(ModuleLibrary & ml)
@@ -4089,7 +4253,9 @@ struct VkDescriptorPoolSizeAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDescriptorPoolCreateInfo, VkDescriptorPoolCreateInfo);
+
 struct VkDescriptorPoolCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkDescriptorPoolCreateInfo,true,true> {
     VkDescriptorPoolCreateInfoAnnotation(ModuleLibrary & ml)
@@ -4105,7 +4271,9 @@ struct VkDescriptorPoolCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDescriptorSetAllocateInfo, VkDescriptorSetAllocateInfo);
+
 struct VkDescriptorSetAllocateInfoAnnotation
 : public ManagedStructureAnnotation<VkDescriptorSetAllocateInfo,true,true> {
     VkDescriptorSetAllocateInfoAnnotation(ModuleLibrary & ml)
@@ -4120,7 +4288,9 @@ struct VkDescriptorSetAllocateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDescriptorSetLayoutBinding, VkDescriptorSetLayoutBinding);
+
 struct VkDescriptorSetLayoutBindingAnnotation
 : public ManagedStructureAnnotation<VkDescriptorSetLayoutBinding,true,true> {
     VkDescriptorSetLayoutBindingAnnotation(ModuleLibrary & ml)
@@ -4135,7 +4305,9 @@ struct VkDescriptorSetLayoutBindingAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDescriptorSetLayoutCreateInfo, VkDescriptorSetLayoutCreateInfo);
+
 struct VkDescriptorSetLayoutCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkDescriptorSetLayoutCreateInfo,true,true> {
     VkDescriptorSetLayoutCreateInfoAnnotation(ModuleLibrary & ml)
@@ -4150,7 +4322,9 @@ struct VkDescriptorSetLayoutCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkWriteDescriptorSet, VkWriteDescriptorSet);
+
 struct VkWriteDescriptorSetAnnotation
 : public ManagedStructureAnnotation<VkWriteDescriptorSet,true,true> {
     VkWriteDescriptorSetAnnotation(ModuleLibrary & ml)
@@ -4170,7 +4344,9 @@ struct VkWriteDescriptorSetAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkAttachmentDescription, VkAttachmentDescription);
+
 struct VkAttachmentDescriptionAnnotation
 : public ManagedStructureAnnotation<VkAttachmentDescription,true,true> {
     VkAttachmentDescriptionAnnotation(ModuleLibrary & ml)
@@ -4189,7 +4365,9 @@ struct VkAttachmentDescriptionAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkAttachmentReference, VkAttachmentReference);
+
 struct VkAttachmentReferenceAnnotation
 : public ManagedStructureAnnotation<VkAttachmentReference,true,true> {
     VkAttachmentReferenceAnnotation(ModuleLibrary & ml)
@@ -4201,7 +4379,9 @@ struct VkAttachmentReferenceAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkFramebufferCreateInfo, VkFramebufferCreateInfo);
+
 struct VkFramebufferCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkFramebufferCreateInfo,true,true> {
     VkFramebufferCreateInfoAnnotation(ModuleLibrary & ml)
@@ -4220,7 +4400,9 @@ struct VkFramebufferCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkSubpassDescription, VkSubpassDescription);
+
 struct VkSubpassDescriptionAnnotation
 : public ManagedStructureAnnotation<VkSubpassDescription,true,true> {
     VkSubpassDescriptionAnnotation(ModuleLibrary & ml)
@@ -4240,7 +4422,9 @@ struct VkSubpassDescriptionAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkSubpassDependency, VkSubpassDependency);
+
 struct VkSubpassDependencyAnnotation
 : public ManagedStructureAnnotation<VkSubpassDependency,true,true> {
     VkSubpassDependencyAnnotation(ModuleLibrary & ml)
@@ -4257,7 +4441,9 @@ struct VkSubpassDependencyAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkRenderPassCreateInfo, VkRenderPassCreateInfo);
+
 struct VkRenderPassCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkRenderPassCreateInfo,true,true> {
     VkRenderPassCreateInfoAnnotation(ModuleLibrary & ml)
@@ -4276,7 +4462,9 @@ struct VkRenderPassCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkCommandPoolCreateInfo, VkCommandPoolCreateInfo);
+
 struct VkCommandPoolCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkCommandPoolCreateInfo,true,true> {
     VkCommandPoolCreateInfoAnnotation(ModuleLibrary & ml)
@@ -4290,7 +4478,9 @@ struct VkCommandPoolCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkCommandBufferAllocateInfo, VkCommandBufferAllocateInfo);
+
 struct VkCommandBufferAllocateInfoAnnotation
 : public ManagedStructureAnnotation<VkCommandBufferAllocateInfo,true,true> {
     VkCommandBufferAllocateInfoAnnotation(ModuleLibrary & ml)
@@ -4305,7 +4495,9 @@ struct VkCommandBufferAllocateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkCommandBufferInheritanceInfo, VkCommandBufferInheritanceInfo);
+
 struct VkCommandBufferInheritanceInfoAnnotation
 : public ManagedStructureAnnotation<VkCommandBufferInheritanceInfo,true,true> {
     VkCommandBufferInheritanceInfoAnnotation(ModuleLibrary & ml)
@@ -4323,7 +4515,9 @@ struct VkCommandBufferInheritanceInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkCommandBufferBeginInfo, VkCommandBufferBeginInfo);
+
 struct VkCommandBufferBeginInfoAnnotation
 : public ManagedStructureAnnotation<VkCommandBufferBeginInfo,true,true> {
     VkCommandBufferBeginInfoAnnotation(ModuleLibrary & ml)
@@ -4337,7 +4531,9 @@ struct VkCommandBufferBeginInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkBufferCopy, VkBufferCopy);
+
 struct VkBufferCopyAnnotation
 : public ManagedStructureAnnotation<VkBufferCopy,true,true> {
     VkBufferCopyAnnotation(ModuleLibrary & ml)
@@ -4347,7 +4543,9 @@ struct VkBufferCopyAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkImageSubresourceLayers, VkImageSubresourceLayers);
+
 struct VkImageSubresourceLayersAnnotation
 : public ManagedStructureAnnotation<VkImageSubresourceLayers,true,true> {
     VkImageSubresourceLayersAnnotation(ModuleLibrary & ml)
@@ -4361,7 +4559,9 @@ struct VkImageSubresourceLayersAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkBufferImageCopy, VkBufferImageCopy);
+
 struct VkBufferImageCopyAnnotation
 : public ManagedStructureAnnotation<VkBufferImageCopy,true,true> {
     VkBufferImageCopyAnnotation(ModuleLibrary & ml)
@@ -4376,7 +4576,9 @@ struct VkBufferImageCopyAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkClearColorValue, VkClearColorValue);
+
 struct VkClearColorValueAnnotation
 : public ManagedStructureAnnotation<VkClearColorValue,true,true> {
     VkClearColorValueAnnotation(ModuleLibrary & ml)
@@ -4389,7 +4591,9 @@ struct VkClearColorValueAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkClearDepthStencilValue, VkClearDepthStencilValue);
+
 struct VkClearDepthStencilValueAnnotation
 : public ManagedStructureAnnotation<VkClearDepthStencilValue,true,true> {
     VkClearDepthStencilValueAnnotation(ModuleLibrary & ml)
@@ -4401,7 +4605,9 @@ struct VkClearDepthStencilValueAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkClearValue, VkClearValue);
+
 struct VkClearValueAnnotation
 : public ManagedStructureAnnotation<VkClearValue,true,true> {
     VkClearValueAnnotation(ModuleLibrary & ml)
@@ -4413,7 +4619,9 @@ struct VkClearValueAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkClearAttachment, VkClearAttachment);
+
 struct VkClearAttachmentAnnotation
 : public ManagedStructureAnnotation<VkClearAttachment,true,true> {
     VkClearAttachmentAnnotation(ModuleLibrary & ml)
@@ -4426,7 +4634,9 @@ struct VkClearAttachmentAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkClearRect, VkClearRect);
+
 struct VkClearRectAnnotation
 : public ManagedStructureAnnotation<VkClearRect,true,true> {
     VkClearRectAnnotation(ModuleLibrary & ml)
@@ -4439,7 +4649,9 @@ struct VkClearRectAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkImageBlit, VkImageBlit);
+
 struct VkImageBlitAnnotation
 : public ManagedStructureAnnotation<VkImageBlit,true,true> {
     VkImageBlitAnnotation(ModuleLibrary & ml)
@@ -4453,7 +4665,9 @@ struct VkImageBlitAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkImageCopy, VkImageCopy);
+
 struct VkImageCopyAnnotation
 : public ManagedStructureAnnotation<VkImageCopy,true,true> {
     VkImageCopyAnnotation(ModuleLibrary & ml)
@@ -4468,7 +4682,9 @@ struct VkImageCopyAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkImageResolve, VkImageResolve);
+
 struct VkImageResolveAnnotation
 : public ManagedStructureAnnotation<VkImageResolve,true,true> {
     VkImageResolveAnnotation(ModuleLibrary & ml)
@@ -4483,7 +4699,9 @@ struct VkImageResolveAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkRenderPassBeginInfo, VkRenderPassBeginInfo);
+
 struct VkRenderPassBeginInfoAnnotation
 : public ManagedStructureAnnotation<VkRenderPassBeginInfo,true,true> {
     VkRenderPassBeginInfoAnnotation(ModuleLibrary & ml)
@@ -4500,7 +4718,9 @@ struct VkRenderPassBeginInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceSubgroupProperties, VkPhysicalDeviceSubgroupProperties);
+
 struct VkPhysicalDeviceSubgroupPropertiesAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceSubgroupProperties,true,true> {
     VkPhysicalDeviceSubgroupPropertiesAnnotation(ModuleLibrary & ml)
@@ -4516,7 +4736,9 @@ struct VkPhysicalDeviceSubgroupPropertiesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkBindBufferMemoryInfo, VkBindBufferMemoryInfo);
+
 struct VkBindBufferMemoryInfoAnnotation
 : public ManagedStructureAnnotation<VkBindBufferMemoryInfo,true,true> {
     VkBindBufferMemoryInfoAnnotation(ModuleLibrary & ml)
@@ -4530,7 +4752,9 @@ struct VkBindBufferMemoryInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkBindImageMemoryInfo, VkBindImageMemoryInfo);
+
 struct VkBindImageMemoryInfoAnnotation
 : public ManagedStructureAnnotation<VkBindImageMemoryInfo,true,true> {
     VkBindImageMemoryInfoAnnotation(ModuleLibrary & ml)
@@ -4544,7 +4768,9 @@ struct VkBindImageMemoryInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDevice16BitStorageFeatures, VkPhysicalDevice16BitStorageFeatures);
+
 struct VkPhysicalDevice16BitStorageFeaturesAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDevice16BitStorageFeatures,true,true> {
     VkPhysicalDevice16BitStorageFeaturesAnnotation(ModuleLibrary & ml)
@@ -4560,7 +4786,9 @@ struct VkPhysicalDevice16BitStorageFeaturesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkMemoryDedicatedRequirements, VkMemoryDedicatedRequirements);
+
 struct VkMemoryDedicatedRequirementsAnnotation
 : public ManagedStructureAnnotation<VkMemoryDedicatedRequirements,true,true> {
     VkMemoryDedicatedRequirementsAnnotation(ModuleLibrary & ml)
@@ -4574,7 +4802,9 @@ struct VkMemoryDedicatedRequirementsAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkMemoryDedicatedAllocateInfo, VkMemoryDedicatedAllocateInfo);
+
 struct VkMemoryDedicatedAllocateInfoAnnotation
 : public ManagedStructureAnnotation<VkMemoryDedicatedAllocateInfo,true,true> {
     VkMemoryDedicatedAllocateInfoAnnotation(ModuleLibrary & ml)
@@ -4588,7 +4818,9 @@ struct VkMemoryDedicatedAllocateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkMemoryAllocateFlagsInfo, VkMemoryAllocateFlagsInfo);
+
 struct VkMemoryAllocateFlagsInfoAnnotation
 : public ManagedStructureAnnotation<VkMemoryAllocateFlagsInfo,true,true> {
     VkMemoryAllocateFlagsInfoAnnotation(ModuleLibrary & ml)
@@ -4602,7 +4834,9 @@ struct VkMemoryAllocateFlagsInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDeviceGroupRenderPassBeginInfo, VkDeviceGroupRenderPassBeginInfo);
+
 struct VkDeviceGroupRenderPassBeginInfoAnnotation
 : public ManagedStructureAnnotation<VkDeviceGroupRenderPassBeginInfo,true,true> {
     VkDeviceGroupRenderPassBeginInfoAnnotation(ModuleLibrary & ml)
@@ -4617,7 +4851,9 @@ struct VkDeviceGroupRenderPassBeginInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDeviceGroupCommandBufferBeginInfo, VkDeviceGroupCommandBufferBeginInfo);
+
 struct VkDeviceGroupCommandBufferBeginInfoAnnotation
 : public ManagedStructureAnnotation<VkDeviceGroupCommandBufferBeginInfo,true,true> {
     VkDeviceGroupCommandBufferBeginInfoAnnotation(ModuleLibrary & ml)
@@ -4630,7 +4866,9 @@ struct VkDeviceGroupCommandBufferBeginInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDeviceGroupSubmitInfo, VkDeviceGroupSubmitInfo);
+
 struct VkDeviceGroupSubmitInfoAnnotation
 : public ManagedStructureAnnotation<VkDeviceGroupSubmitInfo,true,true> {
     VkDeviceGroupSubmitInfoAnnotation(ModuleLibrary & ml)
@@ -4648,7 +4886,9 @@ struct VkDeviceGroupSubmitInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDeviceGroupBindSparseInfo, VkDeviceGroupBindSparseInfo);
+
 struct VkDeviceGroupBindSparseInfoAnnotation
 : public ManagedStructureAnnotation<VkDeviceGroupBindSparseInfo,true,true> {
     VkDeviceGroupBindSparseInfoAnnotation(ModuleLibrary & ml)
@@ -4662,7 +4902,9 @@ struct VkDeviceGroupBindSparseInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkBindBufferMemoryDeviceGroupInfo, VkBindBufferMemoryDeviceGroupInfo);
+
 struct VkBindBufferMemoryDeviceGroupInfoAnnotation
 : public ManagedStructureAnnotation<VkBindBufferMemoryDeviceGroupInfo,true,true> {
     VkBindBufferMemoryDeviceGroupInfoAnnotation(ModuleLibrary & ml)
@@ -4676,7 +4918,9 @@ struct VkBindBufferMemoryDeviceGroupInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkBindImageMemoryDeviceGroupInfo, VkBindImageMemoryDeviceGroupInfo);
+
 struct VkBindImageMemoryDeviceGroupInfoAnnotation
 : public ManagedStructureAnnotation<VkBindImageMemoryDeviceGroupInfo,true,true> {
     VkBindImageMemoryDeviceGroupInfoAnnotation(ModuleLibrary & ml)
@@ -4692,7 +4936,9 @@ struct VkBindImageMemoryDeviceGroupInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceGroupProperties, VkPhysicalDeviceGroupProperties);
+
 struct VkPhysicalDeviceGroupPropertiesAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceGroupProperties,true,true> {
     VkPhysicalDeviceGroupPropertiesAnnotation(ModuleLibrary & ml)
@@ -4707,7 +4953,9 @@ struct VkPhysicalDeviceGroupPropertiesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDeviceGroupDeviceCreateInfo, VkDeviceGroupDeviceCreateInfo);
+
 struct VkDeviceGroupDeviceCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkDeviceGroupDeviceCreateInfo,true,true> {
     VkDeviceGroupDeviceCreateInfoAnnotation(ModuleLibrary & ml)
@@ -4721,7 +4969,9 @@ struct VkDeviceGroupDeviceCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkBufferMemoryRequirementsInfo2, VkBufferMemoryRequirementsInfo2);
+
 struct VkBufferMemoryRequirementsInfo2Annotation
 : public ManagedStructureAnnotation<VkBufferMemoryRequirementsInfo2,true,true> {
     VkBufferMemoryRequirementsInfo2Annotation(ModuleLibrary & ml)
@@ -4734,7 +4984,9 @@ struct VkBufferMemoryRequirementsInfo2Annotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkImageMemoryRequirementsInfo2, VkImageMemoryRequirementsInfo2);
+
 struct VkImageMemoryRequirementsInfo2Annotation
 : public ManagedStructureAnnotation<VkImageMemoryRequirementsInfo2,true,true> {
     VkImageMemoryRequirementsInfo2Annotation(ModuleLibrary & ml)
@@ -4747,7 +4999,9 @@ struct VkImageMemoryRequirementsInfo2Annotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkImageSparseMemoryRequirementsInfo2, VkImageSparseMemoryRequirementsInfo2);
+
 struct VkImageSparseMemoryRequirementsInfo2Annotation
 : public ManagedStructureAnnotation<VkImageSparseMemoryRequirementsInfo2,true,true> {
     VkImageSparseMemoryRequirementsInfo2Annotation(ModuleLibrary & ml)
@@ -4760,7 +5014,9 @@ struct VkImageSparseMemoryRequirementsInfo2Annotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkMemoryRequirements2, VkMemoryRequirements2);
+
 struct VkMemoryRequirements2Annotation
 : public ManagedStructureAnnotation<VkMemoryRequirements2,true,true> {
     VkMemoryRequirements2Annotation(ModuleLibrary & ml)
@@ -4773,7 +5029,9 @@ struct VkMemoryRequirements2Annotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkSparseImageMemoryRequirements2, VkSparseImageMemoryRequirements2);
+
 struct VkSparseImageMemoryRequirements2Annotation
 : public ManagedStructureAnnotation<VkSparseImageMemoryRequirements2,true,true> {
     VkSparseImageMemoryRequirements2Annotation(ModuleLibrary & ml)
@@ -4786,7 +5044,9 @@ struct VkSparseImageMemoryRequirements2Annotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceFeatures2, VkPhysicalDeviceFeatures2);
+
 struct VkPhysicalDeviceFeatures2Annotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceFeatures2,true,true> {
     VkPhysicalDeviceFeatures2Annotation(ModuleLibrary & ml)
@@ -4799,7 +5059,9 @@ struct VkPhysicalDeviceFeatures2Annotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceProperties2, VkPhysicalDeviceProperties2);
+
 struct VkPhysicalDeviceProperties2Annotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceProperties2,true,true> {
     VkPhysicalDeviceProperties2Annotation(ModuleLibrary & ml)
@@ -4812,7 +5074,9 @@ struct VkPhysicalDeviceProperties2Annotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkFormatProperties2, VkFormatProperties2);
+
 struct VkFormatProperties2Annotation
 : public ManagedStructureAnnotation<VkFormatProperties2,true,true> {
     VkFormatProperties2Annotation(ModuleLibrary & ml)
@@ -4825,7 +5089,9 @@ struct VkFormatProperties2Annotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkImageFormatProperties2, VkImageFormatProperties2);
+
 struct VkImageFormatProperties2Annotation
 : public ManagedStructureAnnotation<VkImageFormatProperties2,true,true> {
     VkImageFormatProperties2Annotation(ModuleLibrary & ml)
@@ -4838,7 +5104,9 @@ struct VkImageFormatProperties2Annotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceImageFormatInfo2, VkPhysicalDeviceImageFormatInfo2);
+
 struct VkPhysicalDeviceImageFormatInfo2Annotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceImageFormatInfo2,true,true> {
     VkPhysicalDeviceImageFormatInfo2Annotation(ModuleLibrary & ml)
@@ -4855,7 +5123,9 @@ struct VkPhysicalDeviceImageFormatInfo2Annotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkQueueFamilyProperties2, VkQueueFamilyProperties2);
+
 struct VkQueueFamilyProperties2Annotation
 : public ManagedStructureAnnotation<VkQueueFamilyProperties2,true,true> {
     VkQueueFamilyProperties2Annotation(ModuleLibrary & ml)
@@ -4868,7 +5138,9 @@ struct VkQueueFamilyProperties2Annotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceMemoryProperties2, VkPhysicalDeviceMemoryProperties2);
+
 struct VkPhysicalDeviceMemoryProperties2Annotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceMemoryProperties2,true,true> {
     VkPhysicalDeviceMemoryProperties2Annotation(ModuleLibrary & ml)
@@ -4881,7 +5153,9 @@ struct VkPhysicalDeviceMemoryProperties2Annotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkSparseImageFormatProperties2, VkSparseImageFormatProperties2);
+
 struct VkSparseImageFormatProperties2Annotation
 : public ManagedStructureAnnotation<VkSparseImageFormatProperties2,true,true> {
     VkSparseImageFormatProperties2Annotation(ModuleLibrary & ml)
@@ -4894,7 +5168,9 @@ struct VkSparseImageFormatProperties2Annotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceSparseImageFormatInfo2, VkPhysicalDeviceSparseImageFormatInfo2);
+
 struct VkPhysicalDeviceSparseImageFormatInfo2Annotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceSparseImageFormatInfo2,true,true> {
     VkPhysicalDeviceSparseImageFormatInfo2Annotation(ModuleLibrary & ml)
@@ -4911,7 +5187,9 @@ struct VkPhysicalDeviceSparseImageFormatInfo2Annotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDevicePointClippingProperties, VkPhysicalDevicePointClippingProperties);
+
 struct VkPhysicalDevicePointClippingPropertiesAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDevicePointClippingProperties,true,true> {
     VkPhysicalDevicePointClippingPropertiesAnnotation(ModuleLibrary & ml)
@@ -4924,7 +5202,9 @@ struct VkPhysicalDevicePointClippingPropertiesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkInputAttachmentAspectReference, VkInputAttachmentAspectReference);
+
 struct VkInputAttachmentAspectReferenceAnnotation
 : public ManagedStructureAnnotation<VkInputAttachmentAspectReference,true,true> {
     VkInputAttachmentAspectReferenceAnnotation(ModuleLibrary & ml)
@@ -4937,7 +5217,9 @@ struct VkInputAttachmentAspectReferenceAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkRenderPassInputAttachmentAspectCreateInfo, VkRenderPassInputAttachmentAspectCreateInfo);
+
 struct VkRenderPassInputAttachmentAspectCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkRenderPassInputAttachmentAspectCreateInfo,true,true> {
     VkRenderPassInputAttachmentAspectCreateInfoAnnotation(ModuleLibrary & ml)
@@ -4951,7 +5233,9 @@ struct VkRenderPassInputAttachmentAspectCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkImageViewUsageCreateInfo, VkImageViewUsageCreateInfo);
+
 struct VkImageViewUsageCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkImageViewUsageCreateInfo,true,true> {
     VkImageViewUsageCreateInfoAnnotation(ModuleLibrary & ml)
@@ -4964,7 +5248,9 @@ struct VkImageViewUsageCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPipelineTessellationDomainOriginStateCreateInfo, VkPipelineTessellationDomainOriginStateCreateInfo);
+
 struct VkPipelineTessellationDomainOriginStateCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkPipelineTessellationDomainOriginStateCreateInfo,true,true> {
     VkPipelineTessellationDomainOriginStateCreateInfoAnnotation(ModuleLibrary & ml)
@@ -4977,7 +5263,9 @@ struct VkPipelineTessellationDomainOriginStateCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkRenderPassMultiviewCreateInfo, VkRenderPassMultiviewCreateInfo);
+
 struct VkRenderPassMultiviewCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkRenderPassMultiviewCreateInfo,true,true> {
     VkRenderPassMultiviewCreateInfoAnnotation(ModuleLibrary & ml)
@@ -4995,7 +5283,9 @@ struct VkRenderPassMultiviewCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceMultiviewFeatures, VkPhysicalDeviceMultiviewFeatures);
+
 struct VkPhysicalDeviceMultiviewFeaturesAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceMultiviewFeatures,true,true> {
     VkPhysicalDeviceMultiviewFeaturesAnnotation(ModuleLibrary & ml)
@@ -5010,7 +5300,9 @@ struct VkPhysicalDeviceMultiviewFeaturesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceMultiviewProperties, VkPhysicalDeviceMultiviewProperties);
+
 struct VkPhysicalDeviceMultiviewPropertiesAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceMultiviewProperties,true,true> {
     VkPhysicalDeviceMultiviewPropertiesAnnotation(ModuleLibrary & ml)
@@ -5024,7 +5316,9 @@ struct VkPhysicalDeviceMultiviewPropertiesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceVariablePointersFeatures, VkPhysicalDeviceVariablePointersFeatures);
+
 struct VkPhysicalDeviceVariablePointersFeaturesAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceVariablePointersFeatures,true,true> {
     VkPhysicalDeviceVariablePointersFeaturesAnnotation(ModuleLibrary & ml)
@@ -5038,7 +5332,9 @@ struct VkPhysicalDeviceVariablePointersFeaturesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceProtectedMemoryFeatures, VkPhysicalDeviceProtectedMemoryFeatures);
+
 struct VkPhysicalDeviceProtectedMemoryFeaturesAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceProtectedMemoryFeatures,true,true> {
     VkPhysicalDeviceProtectedMemoryFeaturesAnnotation(ModuleLibrary & ml)
@@ -5051,7 +5347,9 @@ struct VkPhysicalDeviceProtectedMemoryFeaturesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceProtectedMemoryProperties, VkPhysicalDeviceProtectedMemoryProperties);
+
 struct VkPhysicalDeviceProtectedMemoryPropertiesAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceProtectedMemoryProperties,true,true> {
     VkPhysicalDeviceProtectedMemoryPropertiesAnnotation(ModuleLibrary & ml)
@@ -5064,7 +5362,9 @@ struct VkPhysicalDeviceProtectedMemoryPropertiesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDeviceQueueInfo2, VkDeviceQueueInfo2);
+
 struct VkDeviceQueueInfo2Annotation
 : public ManagedStructureAnnotation<VkDeviceQueueInfo2,true,true> {
     VkDeviceQueueInfo2Annotation(ModuleLibrary & ml)
@@ -5079,7 +5379,9 @@ struct VkDeviceQueueInfo2Annotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkProtectedSubmitInfo, VkProtectedSubmitInfo);
+
 struct VkProtectedSubmitInfoAnnotation
 : public ManagedStructureAnnotation<VkProtectedSubmitInfo,true,true> {
     VkProtectedSubmitInfoAnnotation(ModuleLibrary & ml)
@@ -5092,7 +5394,9 @@ struct VkProtectedSubmitInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkSamplerYcbcrConversionCreateInfo, VkSamplerYcbcrConversionCreateInfo);
+
 struct VkSamplerYcbcrConversionCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkSamplerYcbcrConversionCreateInfo,true,true> {
     VkSamplerYcbcrConversionCreateInfoAnnotation(ModuleLibrary & ml)
@@ -5112,7 +5416,9 @@ struct VkSamplerYcbcrConversionCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkSamplerYcbcrConversionInfo, VkSamplerYcbcrConversionInfo);
+
 struct VkSamplerYcbcrConversionInfoAnnotation
 : public ManagedStructureAnnotation<VkSamplerYcbcrConversionInfo,true,true> {
     VkSamplerYcbcrConversionInfoAnnotation(ModuleLibrary & ml)
@@ -5125,7 +5431,9 @@ struct VkSamplerYcbcrConversionInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkBindImagePlaneMemoryInfo, VkBindImagePlaneMemoryInfo);
+
 struct VkBindImagePlaneMemoryInfoAnnotation
 : public ManagedStructureAnnotation<VkBindImagePlaneMemoryInfo,true,true> {
     VkBindImagePlaneMemoryInfoAnnotation(ModuleLibrary & ml)
@@ -5138,7 +5446,9 @@ struct VkBindImagePlaneMemoryInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkImagePlaneMemoryRequirementsInfo, VkImagePlaneMemoryRequirementsInfo);
+
 struct VkImagePlaneMemoryRequirementsInfoAnnotation
 : public ManagedStructureAnnotation<VkImagePlaneMemoryRequirementsInfo,true,true> {
     VkImagePlaneMemoryRequirementsInfoAnnotation(ModuleLibrary & ml)
@@ -5151,7 +5461,9 @@ struct VkImagePlaneMemoryRequirementsInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceSamplerYcbcrConversionFeatures, VkPhysicalDeviceSamplerYcbcrConversionFeatures);
+
 struct VkPhysicalDeviceSamplerYcbcrConversionFeaturesAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceSamplerYcbcrConversionFeatures,true,true> {
     VkPhysicalDeviceSamplerYcbcrConversionFeaturesAnnotation(ModuleLibrary & ml)
@@ -5164,7 +5476,9 @@ struct VkPhysicalDeviceSamplerYcbcrConversionFeaturesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkSamplerYcbcrConversionImageFormatProperties, VkSamplerYcbcrConversionImageFormatProperties);
+
 struct VkSamplerYcbcrConversionImageFormatPropertiesAnnotation
 : public ManagedStructureAnnotation<VkSamplerYcbcrConversionImageFormatProperties,true,true> {
     VkSamplerYcbcrConversionImageFormatPropertiesAnnotation(ModuleLibrary & ml)
@@ -5177,7 +5491,9 @@ struct VkSamplerYcbcrConversionImageFormatPropertiesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDescriptorUpdateTemplateEntry, VkDescriptorUpdateTemplateEntry);
+
 struct VkDescriptorUpdateTemplateEntryAnnotation
 : public ManagedStructureAnnotation<VkDescriptorUpdateTemplateEntry,true,true> {
     VkDescriptorUpdateTemplateEntryAnnotation(ModuleLibrary & ml)
@@ -5191,7 +5507,9 @@ struct VkDescriptorUpdateTemplateEntryAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDescriptorUpdateTemplateCreateInfo, VkDescriptorUpdateTemplateCreateInfo);
+
 struct VkDescriptorUpdateTemplateCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkDescriptorUpdateTemplateCreateInfo,true,true> {
     VkDescriptorUpdateTemplateCreateInfoAnnotation(ModuleLibrary & ml)
@@ -5211,7 +5529,9 @@ struct VkDescriptorUpdateTemplateCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkExternalMemoryProperties, VkExternalMemoryProperties);
+
 struct VkExternalMemoryPropertiesAnnotation
 : public ManagedStructureAnnotation<VkExternalMemoryProperties,true,true> {
     VkExternalMemoryPropertiesAnnotation(ModuleLibrary & ml)
@@ -5224,7 +5544,9 @@ struct VkExternalMemoryPropertiesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceExternalImageFormatInfo, VkPhysicalDeviceExternalImageFormatInfo);
+
 struct VkPhysicalDeviceExternalImageFormatInfoAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceExternalImageFormatInfo,true,true> {
     VkPhysicalDeviceExternalImageFormatInfoAnnotation(ModuleLibrary & ml)
@@ -5237,7 +5559,9 @@ struct VkPhysicalDeviceExternalImageFormatInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkExternalImageFormatProperties, VkExternalImageFormatProperties);
+
 struct VkExternalImageFormatPropertiesAnnotation
 : public ManagedStructureAnnotation<VkExternalImageFormatProperties,true,true> {
     VkExternalImageFormatPropertiesAnnotation(ModuleLibrary & ml)
@@ -5250,7 +5574,9 @@ struct VkExternalImageFormatPropertiesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceExternalBufferInfo, VkPhysicalDeviceExternalBufferInfo);
+
 struct VkPhysicalDeviceExternalBufferInfoAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceExternalBufferInfo,true,true> {
     VkPhysicalDeviceExternalBufferInfoAnnotation(ModuleLibrary & ml)
@@ -5265,7 +5591,9 @@ struct VkPhysicalDeviceExternalBufferInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkExternalBufferProperties, VkExternalBufferProperties);
+
 struct VkExternalBufferPropertiesAnnotation
 : public ManagedStructureAnnotation<VkExternalBufferProperties,true,true> {
     VkExternalBufferPropertiesAnnotation(ModuleLibrary & ml)
@@ -5278,7 +5606,9 @@ struct VkExternalBufferPropertiesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceIDProperties, VkPhysicalDeviceIDProperties);
+
 struct VkPhysicalDeviceIDPropertiesAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceIDProperties,true,true> {
     VkPhysicalDeviceIDPropertiesAnnotation(ModuleLibrary & ml)
@@ -5295,7 +5625,9 @@ struct VkPhysicalDeviceIDPropertiesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkExternalMemoryImageCreateInfo, VkExternalMemoryImageCreateInfo);
+
 struct VkExternalMemoryImageCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkExternalMemoryImageCreateInfo,true,true> {
     VkExternalMemoryImageCreateInfoAnnotation(ModuleLibrary & ml)
@@ -5308,7 +5640,9 @@ struct VkExternalMemoryImageCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkExternalMemoryBufferCreateInfo, VkExternalMemoryBufferCreateInfo);
+
 struct VkExternalMemoryBufferCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkExternalMemoryBufferCreateInfo,true,true> {
     VkExternalMemoryBufferCreateInfoAnnotation(ModuleLibrary & ml)
@@ -5321,7 +5655,9 @@ struct VkExternalMemoryBufferCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkExportMemoryAllocateInfo, VkExportMemoryAllocateInfo);
+
 struct VkExportMemoryAllocateInfoAnnotation
 : public ManagedStructureAnnotation<VkExportMemoryAllocateInfo,true,true> {
     VkExportMemoryAllocateInfoAnnotation(ModuleLibrary & ml)
@@ -5334,7 +5670,9 @@ struct VkExportMemoryAllocateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceExternalFenceInfo, VkPhysicalDeviceExternalFenceInfo);
+
 struct VkPhysicalDeviceExternalFenceInfoAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceExternalFenceInfo,true,true> {
     VkPhysicalDeviceExternalFenceInfoAnnotation(ModuleLibrary & ml)
@@ -5347,7 +5685,9 @@ struct VkPhysicalDeviceExternalFenceInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkExternalFenceProperties, VkExternalFenceProperties);
+
 struct VkExternalFencePropertiesAnnotation
 : public ManagedStructureAnnotation<VkExternalFenceProperties,true,true> {
     VkExternalFencePropertiesAnnotation(ModuleLibrary & ml)
@@ -5362,7 +5702,9 @@ struct VkExternalFencePropertiesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkExportFenceCreateInfo, VkExportFenceCreateInfo);
+
 struct VkExportFenceCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkExportFenceCreateInfo,true,true> {
     VkExportFenceCreateInfoAnnotation(ModuleLibrary & ml)
@@ -5375,7 +5717,9 @@ struct VkExportFenceCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkExportSemaphoreCreateInfo, VkExportSemaphoreCreateInfo);
+
 struct VkExportSemaphoreCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkExportSemaphoreCreateInfo,true,true> {
     VkExportSemaphoreCreateInfoAnnotation(ModuleLibrary & ml)
@@ -5388,7 +5732,9 @@ struct VkExportSemaphoreCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceExternalSemaphoreInfo, VkPhysicalDeviceExternalSemaphoreInfo);
+
 struct VkPhysicalDeviceExternalSemaphoreInfoAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceExternalSemaphoreInfo,true,true> {
     VkPhysicalDeviceExternalSemaphoreInfoAnnotation(ModuleLibrary & ml)
@@ -5401,7 +5747,9 @@ struct VkPhysicalDeviceExternalSemaphoreInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkExternalSemaphoreProperties, VkExternalSemaphoreProperties);
+
 struct VkExternalSemaphorePropertiesAnnotation
 : public ManagedStructureAnnotation<VkExternalSemaphoreProperties,true,true> {
     VkExternalSemaphorePropertiesAnnotation(ModuleLibrary & ml)
@@ -5416,7 +5764,9 @@ struct VkExternalSemaphorePropertiesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceMaintenance3Properties, VkPhysicalDeviceMaintenance3Properties);
+
 struct VkPhysicalDeviceMaintenance3PropertiesAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceMaintenance3Properties,true,true> {
     VkPhysicalDeviceMaintenance3PropertiesAnnotation(ModuleLibrary & ml)
@@ -5429,7 +5779,9 @@ struct VkPhysicalDeviceMaintenance3PropertiesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDescriptorSetLayoutSupport, VkDescriptorSetLayoutSupport);
+
 struct VkDescriptorSetLayoutSupportAnnotation
 : public ManagedStructureAnnotation<VkDescriptorSetLayoutSupport,true,true> {
     VkDescriptorSetLayoutSupportAnnotation(ModuleLibrary & ml)
@@ -5442,7 +5794,9 @@ struct VkDescriptorSetLayoutSupportAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceShaderDrawParametersFeatures, VkPhysicalDeviceShaderDrawParametersFeatures);
+
 struct VkPhysicalDeviceShaderDrawParametersFeaturesAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceShaderDrawParametersFeatures,true,true> {
     VkPhysicalDeviceShaderDrawParametersFeaturesAnnotation(ModuleLibrary & ml)
@@ -5455,7 +5809,9 @@ struct VkPhysicalDeviceShaderDrawParametersFeaturesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceVulkan11Features, VkPhysicalDeviceVulkan11Features);
+
 struct VkPhysicalDeviceVulkan11FeaturesAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceVulkan11Features,true,true> {
     VkPhysicalDeviceVulkan11FeaturesAnnotation(ModuleLibrary & ml)
@@ -5479,7 +5835,9 @@ struct VkPhysicalDeviceVulkan11FeaturesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceVulkan11Properties, VkPhysicalDeviceVulkan11Properties);
+
 struct VkPhysicalDeviceVulkan11PropertiesAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceVulkan11Properties,true,true> {
     VkPhysicalDeviceVulkan11PropertiesAnnotation(ModuleLibrary & ml)
@@ -5505,7 +5863,9 @@ struct VkPhysicalDeviceVulkan11PropertiesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceVulkan12Features, VkPhysicalDeviceVulkan12Features);
+
 struct VkPhysicalDeviceVulkan12FeaturesAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceVulkan12Features,true,true> {
     VkPhysicalDeviceVulkan12FeaturesAnnotation(ModuleLibrary & ml)
@@ -5564,7 +5924,9 @@ struct VkPhysicalDeviceVulkan12FeaturesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkConformanceVersion, VkConformanceVersion);
+
 struct VkConformanceVersionAnnotation
 : public ManagedStructureAnnotation<VkConformanceVersion,true,true> {
     VkConformanceVersionAnnotation(ModuleLibrary & ml)
@@ -5578,7 +5940,9 @@ struct VkConformanceVersionAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceVulkan12Properties, VkPhysicalDeviceVulkan12Properties);
+
 struct VkPhysicalDeviceVulkan12PropertiesAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceVulkan12Properties,true,true> {
     VkPhysicalDeviceVulkan12PropertiesAnnotation(ModuleLibrary & ml)
@@ -5639,7 +6003,9 @@ struct VkPhysicalDeviceVulkan12PropertiesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkImageFormatListCreateInfo, VkImageFormatListCreateInfo);
+
 struct VkImageFormatListCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkImageFormatListCreateInfo,true,true> {
     VkImageFormatListCreateInfoAnnotation(ModuleLibrary & ml)
@@ -5653,7 +6019,9 @@ struct VkImageFormatListCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkAttachmentDescription2, VkAttachmentDescription2);
+
 struct VkAttachmentDescription2Annotation
 : public ManagedStructureAnnotation<VkAttachmentDescription2,true,true> {
     VkAttachmentDescription2Annotation(ModuleLibrary & ml)
@@ -5674,7 +6042,9 @@ struct VkAttachmentDescription2Annotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkAttachmentReference2, VkAttachmentReference2);
+
 struct VkAttachmentReference2Annotation
 : public ManagedStructureAnnotation<VkAttachmentReference2,true,true> {
     VkAttachmentReference2Annotation(ModuleLibrary & ml)
@@ -5689,7 +6059,9 @@ struct VkAttachmentReference2Annotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkSubpassDescription2, VkSubpassDescription2);
+
 struct VkSubpassDescription2Annotation
 : public ManagedStructureAnnotation<VkSubpassDescription2,true,true> {
     VkSubpassDescription2Annotation(ModuleLibrary & ml)
@@ -5712,7 +6084,9 @@ struct VkSubpassDescription2Annotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkSubpassDependency2, VkSubpassDependency2);
+
 struct VkSubpassDependency2Annotation
 : public ManagedStructureAnnotation<VkSubpassDependency2,true,true> {
     VkSubpassDependency2Annotation(ModuleLibrary & ml)
@@ -5732,7 +6106,9 @@ struct VkSubpassDependency2Annotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkRenderPassCreateInfo2, VkRenderPassCreateInfo2);
+
 struct VkRenderPassCreateInfo2Annotation
 : public ManagedStructureAnnotation<VkRenderPassCreateInfo2,true,true> {
     VkRenderPassCreateInfo2Annotation(ModuleLibrary & ml)
@@ -5753,7 +6129,9 @@ struct VkRenderPassCreateInfo2Annotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkSubpassBeginInfo, VkSubpassBeginInfo);
+
 struct VkSubpassBeginInfoAnnotation
 : public ManagedStructureAnnotation<VkSubpassBeginInfo,true,true> {
     VkSubpassBeginInfoAnnotation(ModuleLibrary & ml)
@@ -5766,7 +6144,9 @@ struct VkSubpassBeginInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkSubpassEndInfo, VkSubpassEndInfo);
+
 struct VkSubpassEndInfoAnnotation
 : public ManagedStructureAnnotation<VkSubpassEndInfo,true,true> {
     VkSubpassEndInfoAnnotation(ModuleLibrary & ml)
@@ -5778,7 +6158,9 @@ struct VkSubpassEndInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDevice8BitStorageFeatures, VkPhysicalDevice8BitStorageFeatures);
+
 struct VkPhysicalDevice8BitStorageFeaturesAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDevice8BitStorageFeatures,true,true> {
     VkPhysicalDevice8BitStorageFeaturesAnnotation(ModuleLibrary & ml)
@@ -5793,7 +6175,9 @@ struct VkPhysicalDevice8BitStorageFeaturesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceDriverProperties, VkPhysicalDeviceDriverProperties);
+
 struct VkPhysicalDeviceDriverPropertiesAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceDriverProperties,true,true> {
     VkPhysicalDeviceDriverPropertiesAnnotation(ModuleLibrary & ml)
@@ -5807,7 +6191,9 @@ struct VkPhysicalDeviceDriverPropertiesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceShaderAtomicInt64Features, VkPhysicalDeviceShaderAtomicInt64Features);
+
 struct VkPhysicalDeviceShaderAtomicInt64FeaturesAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceShaderAtomicInt64Features,true,true> {
     VkPhysicalDeviceShaderAtomicInt64FeaturesAnnotation(ModuleLibrary & ml)
@@ -5821,7 +6207,9 @@ struct VkPhysicalDeviceShaderAtomicInt64FeaturesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceShaderFloat16Int8Features, VkPhysicalDeviceShaderFloat16Int8Features);
+
 struct VkPhysicalDeviceShaderFloat16Int8FeaturesAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceShaderFloat16Int8Features,true,true> {
     VkPhysicalDeviceShaderFloat16Int8FeaturesAnnotation(ModuleLibrary & ml)
@@ -5835,7 +6223,9 @@ struct VkPhysicalDeviceShaderFloat16Int8FeaturesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceFloatControlsProperties, VkPhysicalDeviceFloatControlsProperties);
+
 struct VkPhysicalDeviceFloatControlsPropertiesAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceFloatControlsProperties,true,true> {
     VkPhysicalDeviceFloatControlsPropertiesAnnotation(ModuleLibrary & ml)
@@ -5864,7 +6254,9 @@ struct VkPhysicalDeviceFloatControlsPropertiesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDescriptorSetLayoutBindingFlagsCreateInfo, VkDescriptorSetLayoutBindingFlagsCreateInfo);
+
 struct VkDescriptorSetLayoutBindingFlagsCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkDescriptorSetLayoutBindingFlagsCreateInfo,true,true> {
     VkDescriptorSetLayoutBindingFlagsCreateInfoAnnotation(ModuleLibrary & ml)
@@ -5878,7 +6270,9 @@ struct VkDescriptorSetLayoutBindingFlagsCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceDescriptorIndexingFeatures, VkPhysicalDeviceDescriptorIndexingFeatures);
+
 struct VkPhysicalDeviceDescriptorIndexingFeaturesAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceDescriptorIndexingFeatures,true,true> {
     VkPhysicalDeviceDescriptorIndexingFeaturesAnnotation(ModuleLibrary & ml)
@@ -5910,7 +6304,9 @@ struct VkPhysicalDeviceDescriptorIndexingFeaturesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceDescriptorIndexingProperties, VkPhysicalDeviceDescriptorIndexingProperties);
+
 struct VkPhysicalDeviceDescriptorIndexingPropertiesAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceDescriptorIndexingProperties,true,true> {
     VkPhysicalDeviceDescriptorIndexingPropertiesAnnotation(ModuleLibrary & ml)
@@ -5945,7 +6341,9 @@ struct VkPhysicalDeviceDescriptorIndexingPropertiesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDescriptorSetVariableDescriptorCountAllocateInfo, VkDescriptorSetVariableDescriptorCountAllocateInfo);
+
 struct VkDescriptorSetVariableDescriptorCountAllocateInfoAnnotation
 : public ManagedStructureAnnotation<VkDescriptorSetVariableDescriptorCountAllocateInfo,true,true> {
     VkDescriptorSetVariableDescriptorCountAllocateInfoAnnotation(ModuleLibrary & ml)
@@ -5959,7 +6357,9 @@ struct VkDescriptorSetVariableDescriptorCountAllocateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDescriptorSetVariableDescriptorCountLayoutSupport, VkDescriptorSetVariableDescriptorCountLayoutSupport);
+
 struct VkDescriptorSetVariableDescriptorCountLayoutSupportAnnotation
 : public ManagedStructureAnnotation<VkDescriptorSetVariableDescriptorCountLayoutSupport,true,true> {
     VkDescriptorSetVariableDescriptorCountLayoutSupportAnnotation(ModuleLibrary & ml)
@@ -5972,7 +6372,9 @@ struct VkDescriptorSetVariableDescriptorCountLayoutSupportAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkSubpassDescriptionDepthStencilResolve, VkSubpassDescriptionDepthStencilResolve);
+
 struct VkSubpassDescriptionDepthStencilResolveAnnotation
 : public ManagedStructureAnnotation<VkSubpassDescriptionDepthStencilResolve,true,true> {
     VkSubpassDescriptionDepthStencilResolveAnnotation(ModuleLibrary & ml)
@@ -5987,7 +6389,9 @@ struct VkSubpassDescriptionDepthStencilResolveAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceDepthStencilResolveProperties, VkPhysicalDeviceDepthStencilResolveProperties);
+
 struct VkPhysicalDeviceDepthStencilResolvePropertiesAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceDepthStencilResolveProperties,true,true> {
     VkPhysicalDeviceDepthStencilResolvePropertiesAnnotation(ModuleLibrary & ml)
@@ -6003,7 +6407,9 @@ struct VkPhysicalDeviceDepthStencilResolvePropertiesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceScalarBlockLayoutFeatures, VkPhysicalDeviceScalarBlockLayoutFeatures);
+
 struct VkPhysicalDeviceScalarBlockLayoutFeaturesAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceScalarBlockLayoutFeatures,true,true> {
     VkPhysicalDeviceScalarBlockLayoutFeaturesAnnotation(ModuleLibrary & ml)
@@ -6016,7 +6422,9 @@ struct VkPhysicalDeviceScalarBlockLayoutFeaturesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkImageStencilUsageCreateInfo, VkImageStencilUsageCreateInfo);
+
 struct VkImageStencilUsageCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkImageStencilUsageCreateInfo,true,true> {
     VkImageStencilUsageCreateInfoAnnotation(ModuleLibrary & ml)
@@ -6029,7 +6437,9 @@ struct VkImageStencilUsageCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkSamplerReductionModeCreateInfo, VkSamplerReductionModeCreateInfo);
+
 struct VkSamplerReductionModeCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkSamplerReductionModeCreateInfo,true,true> {
     VkSamplerReductionModeCreateInfoAnnotation(ModuleLibrary & ml)
@@ -6042,7 +6452,9 @@ struct VkSamplerReductionModeCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceSamplerFilterMinmaxProperties, VkPhysicalDeviceSamplerFilterMinmaxProperties);
+
 struct VkPhysicalDeviceSamplerFilterMinmaxPropertiesAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceSamplerFilterMinmaxProperties,true,true> {
     VkPhysicalDeviceSamplerFilterMinmaxPropertiesAnnotation(ModuleLibrary & ml)
@@ -6056,7 +6468,9 @@ struct VkPhysicalDeviceSamplerFilterMinmaxPropertiesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceVulkanMemoryModelFeatures, VkPhysicalDeviceVulkanMemoryModelFeatures);
+
 struct VkPhysicalDeviceVulkanMemoryModelFeaturesAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceVulkanMemoryModelFeatures,true,true> {
     VkPhysicalDeviceVulkanMemoryModelFeaturesAnnotation(ModuleLibrary & ml)
@@ -6071,7 +6485,9 @@ struct VkPhysicalDeviceVulkanMemoryModelFeaturesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceImagelessFramebufferFeatures, VkPhysicalDeviceImagelessFramebufferFeatures);
+
 struct VkPhysicalDeviceImagelessFramebufferFeaturesAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceImagelessFramebufferFeatures,true,true> {
     VkPhysicalDeviceImagelessFramebufferFeaturesAnnotation(ModuleLibrary & ml)
@@ -6084,7 +6500,9 @@ struct VkPhysicalDeviceImagelessFramebufferFeaturesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkFramebufferAttachmentImageInfo, VkFramebufferAttachmentImageInfo);
+
 struct VkFramebufferAttachmentImageInfoAnnotation
 : public ManagedStructureAnnotation<VkFramebufferAttachmentImageInfo,true,true> {
     VkFramebufferAttachmentImageInfoAnnotation(ModuleLibrary & ml)
@@ -6103,7 +6521,9 @@ struct VkFramebufferAttachmentImageInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkFramebufferAttachmentsCreateInfo, VkFramebufferAttachmentsCreateInfo);
+
 struct VkFramebufferAttachmentsCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkFramebufferAttachmentsCreateInfo,true,true> {
     VkFramebufferAttachmentsCreateInfoAnnotation(ModuleLibrary & ml)
@@ -6117,7 +6537,9 @@ struct VkFramebufferAttachmentsCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkRenderPassAttachmentBeginInfo, VkRenderPassAttachmentBeginInfo);
+
 struct VkRenderPassAttachmentBeginInfoAnnotation
 : public ManagedStructureAnnotation<VkRenderPassAttachmentBeginInfo,true,true> {
     VkRenderPassAttachmentBeginInfoAnnotation(ModuleLibrary & ml)
@@ -6131,7 +6553,9 @@ struct VkRenderPassAttachmentBeginInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceUniformBufferStandardLayoutFeatures, VkPhysicalDeviceUniformBufferStandardLayoutFeatures);
+
 struct VkPhysicalDeviceUniformBufferStandardLayoutFeaturesAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceUniformBufferStandardLayoutFeatures,true,true> {
     VkPhysicalDeviceUniformBufferStandardLayoutFeaturesAnnotation(ModuleLibrary & ml)
@@ -6144,7 +6568,9 @@ struct VkPhysicalDeviceUniformBufferStandardLayoutFeaturesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceShaderSubgroupExtendedTypesFeatures, VkPhysicalDeviceShaderSubgroupExtendedTypesFeatures);
+
 struct VkPhysicalDeviceShaderSubgroupExtendedTypesFeaturesAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceShaderSubgroupExtendedTypesFeatures,true,true> {
     VkPhysicalDeviceShaderSubgroupExtendedTypesFeaturesAnnotation(ModuleLibrary & ml)
@@ -6157,7 +6583,9 @@ struct VkPhysicalDeviceShaderSubgroupExtendedTypesFeaturesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceSeparateDepthStencilLayoutsFeatures, VkPhysicalDeviceSeparateDepthStencilLayoutsFeatures);
+
 struct VkPhysicalDeviceSeparateDepthStencilLayoutsFeaturesAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceSeparateDepthStencilLayoutsFeatures,true,true> {
     VkPhysicalDeviceSeparateDepthStencilLayoutsFeaturesAnnotation(ModuleLibrary & ml)
@@ -6170,7 +6598,9 @@ struct VkPhysicalDeviceSeparateDepthStencilLayoutsFeaturesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkAttachmentReferenceStencilLayout, VkAttachmentReferenceStencilLayout);
+
 struct VkAttachmentReferenceStencilLayoutAnnotation
 : public ManagedStructureAnnotation<VkAttachmentReferenceStencilLayout,true,true> {
     VkAttachmentReferenceStencilLayoutAnnotation(ModuleLibrary & ml)
@@ -6183,7 +6613,9 @@ struct VkAttachmentReferenceStencilLayoutAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkAttachmentDescriptionStencilLayout, VkAttachmentDescriptionStencilLayout);
+
 struct VkAttachmentDescriptionStencilLayoutAnnotation
 : public ManagedStructureAnnotation<VkAttachmentDescriptionStencilLayout,true,true> {
     VkAttachmentDescriptionStencilLayoutAnnotation(ModuleLibrary & ml)
@@ -6197,7 +6629,9 @@ struct VkAttachmentDescriptionStencilLayoutAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceHostQueryResetFeatures, VkPhysicalDeviceHostQueryResetFeatures);
+
 struct VkPhysicalDeviceHostQueryResetFeaturesAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceHostQueryResetFeatures,true,true> {
     VkPhysicalDeviceHostQueryResetFeaturesAnnotation(ModuleLibrary & ml)
@@ -6210,7 +6644,9 @@ struct VkPhysicalDeviceHostQueryResetFeaturesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceTimelineSemaphoreFeatures, VkPhysicalDeviceTimelineSemaphoreFeatures);
+
 struct VkPhysicalDeviceTimelineSemaphoreFeaturesAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceTimelineSemaphoreFeatures,true,true> {
     VkPhysicalDeviceTimelineSemaphoreFeaturesAnnotation(ModuleLibrary & ml)
@@ -6223,7 +6659,9 @@ struct VkPhysicalDeviceTimelineSemaphoreFeaturesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceTimelineSemaphoreProperties, VkPhysicalDeviceTimelineSemaphoreProperties);
+
 struct VkPhysicalDeviceTimelineSemaphorePropertiesAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceTimelineSemaphoreProperties,true,true> {
     VkPhysicalDeviceTimelineSemaphorePropertiesAnnotation(ModuleLibrary & ml)
@@ -6235,7 +6673,9 @@ struct VkPhysicalDeviceTimelineSemaphorePropertiesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkSemaphoreTypeCreateInfo, VkSemaphoreTypeCreateInfo);
+
 struct VkSemaphoreTypeCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkSemaphoreTypeCreateInfo,true,true> {
     VkSemaphoreTypeCreateInfoAnnotation(ModuleLibrary & ml)
@@ -6248,7 +6688,9 @@ struct VkSemaphoreTypeCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkTimelineSemaphoreSubmitInfo, VkTimelineSemaphoreSubmitInfo);
+
 struct VkTimelineSemaphoreSubmitInfoAnnotation
 : public ManagedStructureAnnotation<VkTimelineSemaphoreSubmitInfo,true,true> {
     VkTimelineSemaphoreSubmitInfoAnnotation(ModuleLibrary & ml)
@@ -6264,7 +6706,9 @@ struct VkTimelineSemaphoreSubmitInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkSemaphoreWaitInfo, VkSemaphoreWaitInfo);
+
 struct VkSemaphoreWaitInfoAnnotation
 : public ManagedStructureAnnotation<VkSemaphoreWaitInfo,true,true> {
     VkSemaphoreWaitInfoAnnotation(ModuleLibrary & ml)
@@ -6280,7 +6724,9 @@ struct VkSemaphoreWaitInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkSemaphoreSignalInfo, VkSemaphoreSignalInfo);
+
 struct VkSemaphoreSignalInfoAnnotation
 : public ManagedStructureAnnotation<VkSemaphoreSignalInfo,true,true> {
     VkSemaphoreSignalInfoAnnotation(ModuleLibrary & ml)
@@ -6293,7 +6739,9 @@ struct VkSemaphoreSignalInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceBufferDeviceAddressFeatures, VkPhysicalDeviceBufferDeviceAddressFeatures);
+
 struct VkPhysicalDeviceBufferDeviceAddressFeaturesAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceBufferDeviceAddressFeatures,true,true> {
     VkPhysicalDeviceBufferDeviceAddressFeaturesAnnotation(ModuleLibrary & ml)
@@ -6308,7 +6756,9 @@ struct VkPhysicalDeviceBufferDeviceAddressFeaturesAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkBufferDeviceAddressInfo, VkBufferDeviceAddressInfo);
+
 struct VkBufferDeviceAddressInfoAnnotation
 : public ManagedStructureAnnotation<VkBufferDeviceAddressInfo,true,true> {
     VkBufferDeviceAddressInfoAnnotation(ModuleLibrary & ml)
@@ -6321,7 +6771,9 @@ struct VkBufferDeviceAddressInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkBufferOpaqueCaptureAddressCreateInfo, VkBufferOpaqueCaptureAddressCreateInfo);
+
 struct VkBufferOpaqueCaptureAddressCreateInfoAnnotation
 : public ManagedStructureAnnotation<VkBufferOpaqueCaptureAddressCreateInfo,true,true> {
     VkBufferOpaqueCaptureAddressCreateInfoAnnotation(ModuleLibrary & ml)
@@ -6333,7 +6785,9 @@ struct VkBufferOpaqueCaptureAddressCreateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkMemoryOpaqueCaptureAddressAllocateInfo, VkMemoryOpaqueCaptureAddressAllocateInfo);
+
 struct VkMemoryOpaqueCaptureAddressAllocateInfoAnnotation
 : public ManagedStructureAnnotation<VkMemoryOpaqueCaptureAddressAllocateInfo,true,true> {
     VkMemoryOpaqueCaptureAddressAllocateInfoAnnotation(ModuleLibrary & ml)
@@ -6345,7 +6799,9 @@ struct VkMemoryOpaqueCaptureAddressAllocateInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDeviceMemoryOpaqueCaptureAddressInfo, VkDeviceMemoryOpaqueCaptureAddressInfo);
+
 struct VkDeviceMemoryOpaqueCaptureAddressInfoAnnotation
 : public ManagedStructureAnnotation<VkDeviceMemoryOpaqueCaptureAddressInfo,true,true> {
     VkDeviceMemoryOpaqueCaptureAddressInfoAnnotation(ModuleLibrary & ml)
@@ -6358,7 +6814,9 @@ struct VkDeviceMemoryOpaqueCaptureAddressInfoAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkSurfaceCapabilitiesKHR, VkSurfaceCapabilitiesKHR);
+
 struct VkSurfaceCapabilitiesKHRAnnotation
 : public ManagedStructureAnnotation<VkSurfaceCapabilitiesKHR,true,true> {
     VkSurfaceCapabilitiesKHRAnnotation(ModuleLibrary & ml)
@@ -6378,7 +6836,9 @@ struct VkSurfaceCapabilitiesKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkSurfaceFormatKHR, VkSurfaceFormatKHR);
+
 struct VkSurfaceFormatKHRAnnotation
 : public ManagedStructureAnnotation<VkSurfaceFormatKHR,true,true> {
     VkSurfaceFormatKHRAnnotation(ModuleLibrary & ml)
@@ -6390,7 +6850,9 @@ struct VkSurfaceFormatKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkSwapchainCreateInfoKHR, VkSwapchainCreateInfoKHR);
+
 struct VkSwapchainCreateInfoKHRAnnotation
 : public ManagedStructureAnnotation<VkSwapchainCreateInfoKHR,true,true> {
     VkSwapchainCreateInfoKHRAnnotation(ModuleLibrary & ml)
@@ -6418,7 +6880,9 @@ struct VkSwapchainCreateInfoKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPresentInfoKHR, VkPresentInfoKHR);
+
 struct VkPresentInfoKHRAnnotation
 : public ManagedStructureAnnotation<VkPresentInfoKHR,true,true> {
     VkPresentInfoKHRAnnotation(ModuleLibrary & ml)
@@ -6436,7 +6900,9 @@ struct VkPresentInfoKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkImageSwapchainCreateInfoKHR, VkImageSwapchainCreateInfoKHR);
+
 struct VkImageSwapchainCreateInfoKHRAnnotation
 : public ManagedStructureAnnotation<VkImageSwapchainCreateInfoKHR,true,true> {
     VkImageSwapchainCreateInfoKHRAnnotation(ModuleLibrary & ml)
@@ -6449,7 +6915,9 @@ struct VkImageSwapchainCreateInfoKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkBindImageMemorySwapchainInfoKHR, VkBindImageMemorySwapchainInfoKHR);
+
 struct VkBindImageMemorySwapchainInfoKHRAnnotation
 : public ManagedStructureAnnotation<VkBindImageMemorySwapchainInfoKHR,true,true> {
     VkBindImageMemorySwapchainInfoKHRAnnotation(ModuleLibrary & ml)
@@ -6463,7 +6931,9 @@ struct VkBindImageMemorySwapchainInfoKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkAcquireNextImageInfoKHR, VkAcquireNextImageInfoKHR);
+
 struct VkAcquireNextImageInfoKHRAnnotation
 : public ManagedStructureAnnotation<VkAcquireNextImageInfoKHR,true,true> {
     VkAcquireNextImageInfoKHRAnnotation(ModuleLibrary & ml)
@@ -6479,7 +6949,9 @@ struct VkAcquireNextImageInfoKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDeviceGroupPresentCapabilitiesKHR, VkDeviceGroupPresentCapabilitiesKHR);
+
 struct VkDeviceGroupPresentCapabilitiesKHRAnnotation
 : public ManagedStructureAnnotation<VkDeviceGroupPresentCapabilitiesKHR,true,true> {
     VkDeviceGroupPresentCapabilitiesKHRAnnotation(ModuleLibrary & ml)
@@ -6493,7 +6965,9 @@ struct VkDeviceGroupPresentCapabilitiesKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDeviceGroupPresentInfoKHR, VkDeviceGroupPresentInfoKHR);
+
 struct VkDeviceGroupPresentInfoKHRAnnotation
 : public ManagedStructureAnnotation<VkDeviceGroupPresentInfoKHR,true,true> {
     VkDeviceGroupPresentInfoKHRAnnotation(ModuleLibrary & ml)
@@ -6508,7 +6982,9 @@ struct VkDeviceGroupPresentInfoKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDeviceGroupSwapchainCreateInfoKHR, VkDeviceGroupSwapchainCreateInfoKHR);
+
 struct VkDeviceGroupSwapchainCreateInfoKHRAnnotation
 : public ManagedStructureAnnotation<VkDeviceGroupSwapchainCreateInfoKHR,true,true> {
     VkDeviceGroupSwapchainCreateInfoKHRAnnotation(ModuleLibrary & ml)
@@ -6521,7 +6997,9 @@ struct VkDeviceGroupSwapchainCreateInfoKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDisplayModeParametersKHR, VkDisplayModeParametersKHR);
+
 struct VkDisplayModeParametersKHRAnnotation
 : public ManagedStructureAnnotation<VkDisplayModeParametersKHR,true,true> {
     VkDisplayModeParametersKHRAnnotation(ModuleLibrary & ml)
@@ -6533,7 +7011,9 @@ struct VkDisplayModeParametersKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDisplayModeCreateInfoKHR, VkDisplayModeCreateInfoKHR);
+
 struct VkDisplayModeCreateInfoKHRAnnotation
 : public ManagedStructureAnnotation<VkDisplayModeCreateInfoKHR,true,true> {
     VkDisplayModeCreateInfoKHRAnnotation(ModuleLibrary & ml)
@@ -6547,7 +7027,9 @@ struct VkDisplayModeCreateInfoKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDisplayModePropertiesKHR, VkDisplayModePropertiesKHR);
+
 struct VkDisplayModePropertiesKHRAnnotation
 : public ManagedStructureAnnotation<VkDisplayModePropertiesKHR,true,true> {
     VkDisplayModePropertiesKHRAnnotation(ModuleLibrary & ml)
@@ -6559,7 +7041,9 @@ struct VkDisplayModePropertiesKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDisplayPlaneCapabilitiesKHR, VkDisplayPlaneCapabilitiesKHR);
+
 struct VkDisplayPlaneCapabilitiesKHRAnnotation
 : public ManagedStructureAnnotation<VkDisplayPlaneCapabilitiesKHR,true,true> {
     VkDisplayPlaneCapabilitiesKHRAnnotation(ModuleLibrary & ml)
@@ -6578,7 +7062,9 @@ struct VkDisplayPlaneCapabilitiesKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDisplayPlanePropertiesKHR, VkDisplayPlanePropertiesKHR);
+
 struct VkDisplayPlanePropertiesKHRAnnotation
 : public ManagedStructureAnnotation<VkDisplayPlanePropertiesKHR,true,true> {
     VkDisplayPlanePropertiesKHRAnnotation(ModuleLibrary & ml)
@@ -6590,7 +7076,9 @@ struct VkDisplayPlanePropertiesKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDisplayPropertiesKHR, VkDisplayPropertiesKHR);
+
 struct VkDisplayPropertiesKHRAnnotation
 : public ManagedStructureAnnotation<VkDisplayPropertiesKHR,true,true> {
     VkDisplayPropertiesKHRAnnotation(ModuleLibrary & ml)
@@ -6607,7 +7095,9 @@ struct VkDisplayPropertiesKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDisplaySurfaceCreateInfoKHR, VkDisplaySurfaceCreateInfoKHR);
+
 struct VkDisplaySurfaceCreateInfoKHRAnnotation
 : public ManagedStructureAnnotation<VkDisplaySurfaceCreateInfoKHR,true,true> {
     VkDisplaySurfaceCreateInfoKHRAnnotation(ModuleLibrary & ml)
@@ -6627,7 +7117,9 @@ struct VkDisplaySurfaceCreateInfoKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDisplayPresentInfoKHR, VkDisplayPresentInfoKHR);
+
 struct VkDisplayPresentInfoKHRAnnotation
 : public ManagedStructureAnnotation<VkDisplayPresentInfoKHR,true,true> {
     VkDisplayPresentInfoKHRAnnotation(ModuleLibrary & ml)
@@ -6642,7 +7134,9 @@ struct VkDisplayPresentInfoKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkImportMemoryFdInfoKHR, VkImportMemoryFdInfoKHR);
+
 struct VkImportMemoryFdInfoKHRAnnotation
 : public ManagedStructureAnnotation<VkImportMemoryFdInfoKHR,true,true> {
     VkImportMemoryFdInfoKHRAnnotation(ModuleLibrary & ml)
@@ -6656,7 +7150,9 @@ struct VkImportMemoryFdInfoKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkMemoryFdPropertiesKHR, VkMemoryFdPropertiesKHR);
+
 struct VkMemoryFdPropertiesKHRAnnotation
 : public ManagedStructureAnnotation<VkMemoryFdPropertiesKHR,true,true> {
     VkMemoryFdPropertiesKHRAnnotation(ModuleLibrary & ml)
@@ -6669,7 +7165,9 @@ struct VkMemoryFdPropertiesKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkMemoryGetFdInfoKHR, VkMemoryGetFdInfoKHR);
+
 struct VkMemoryGetFdInfoKHRAnnotation
 : public ManagedStructureAnnotation<VkMemoryGetFdInfoKHR,true,true> {
     VkMemoryGetFdInfoKHRAnnotation(ModuleLibrary & ml)
@@ -6683,7 +7181,9 @@ struct VkMemoryGetFdInfoKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkImportSemaphoreFdInfoKHR, VkImportSemaphoreFdInfoKHR);
+
 struct VkImportSemaphoreFdInfoKHRAnnotation
 : public ManagedStructureAnnotation<VkImportSemaphoreFdInfoKHR,true,true> {
     VkImportSemaphoreFdInfoKHRAnnotation(ModuleLibrary & ml)
@@ -6699,7 +7199,9 @@ struct VkImportSemaphoreFdInfoKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkSemaphoreGetFdInfoKHR, VkSemaphoreGetFdInfoKHR);
+
 struct VkSemaphoreGetFdInfoKHRAnnotation
 : public ManagedStructureAnnotation<VkSemaphoreGetFdInfoKHR,true,true> {
     VkSemaphoreGetFdInfoKHRAnnotation(ModuleLibrary & ml)
@@ -6713,7 +7215,9 @@ struct VkSemaphoreGetFdInfoKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDevicePushDescriptorPropertiesKHR, VkPhysicalDevicePushDescriptorPropertiesKHR);
+
 struct VkPhysicalDevicePushDescriptorPropertiesKHRAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDevicePushDescriptorPropertiesKHR,true,true> {
     VkPhysicalDevicePushDescriptorPropertiesKHRAnnotation(ModuleLibrary & ml)
@@ -6726,7 +7230,9 @@ struct VkPhysicalDevicePushDescriptorPropertiesKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkRectLayerKHR, VkRectLayerKHR);
+
 struct VkRectLayerKHRAnnotation
 : public ManagedStructureAnnotation<VkRectLayerKHR,true,true> {
     VkRectLayerKHRAnnotation(ModuleLibrary & ml)
@@ -6739,7 +7245,9 @@ struct VkRectLayerKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPresentRegionKHR, VkPresentRegionKHR);
+
 struct VkPresentRegionKHRAnnotation
 : public ManagedStructureAnnotation<VkPresentRegionKHR,true,true> {
     VkPresentRegionKHRAnnotation(ModuleLibrary & ml)
@@ -6751,7 +7259,9 @@ struct VkPresentRegionKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPresentRegionsKHR, VkPresentRegionsKHR);
+
 struct VkPresentRegionsKHRAnnotation
 : public ManagedStructureAnnotation<VkPresentRegionsKHR,true,true> {
     VkPresentRegionsKHRAnnotation(ModuleLibrary & ml)
@@ -6765,7 +7275,9 @@ struct VkPresentRegionsKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkSharedPresentSurfaceCapabilitiesKHR, VkSharedPresentSurfaceCapabilitiesKHR);
+
 struct VkSharedPresentSurfaceCapabilitiesKHRAnnotation
 : public ManagedStructureAnnotation<VkSharedPresentSurfaceCapabilitiesKHR,true,true> {
     VkSharedPresentSurfaceCapabilitiesKHRAnnotation(ModuleLibrary & ml)
@@ -6778,7 +7290,9 @@ struct VkSharedPresentSurfaceCapabilitiesKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkImportFenceFdInfoKHR, VkImportFenceFdInfoKHR);
+
 struct VkImportFenceFdInfoKHRAnnotation
 : public ManagedStructureAnnotation<VkImportFenceFdInfoKHR,true,true> {
     VkImportFenceFdInfoKHRAnnotation(ModuleLibrary & ml)
@@ -6794,7 +7308,9 @@ struct VkImportFenceFdInfoKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkFenceGetFdInfoKHR, VkFenceGetFdInfoKHR);
+
 struct VkFenceGetFdInfoKHRAnnotation
 : public ManagedStructureAnnotation<VkFenceGetFdInfoKHR,true,true> {
     VkFenceGetFdInfoKHRAnnotation(ModuleLibrary & ml)
@@ -6808,7 +7324,9 @@ struct VkFenceGetFdInfoKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDevicePerformanceQueryFeaturesKHR, VkPhysicalDevicePerformanceQueryFeaturesKHR);
+
 struct VkPhysicalDevicePerformanceQueryFeaturesKHRAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDevicePerformanceQueryFeaturesKHR,true,true> {
     VkPhysicalDevicePerformanceQueryFeaturesKHRAnnotation(ModuleLibrary & ml)
@@ -6822,7 +7340,9 @@ struct VkPhysicalDevicePerformanceQueryFeaturesKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDevicePerformanceQueryPropertiesKHR, VkPhysicalDevicePerformanceQueryPropertiesKHR);
+
 struct VkPhysicalDevicePerformanceQueryPropertiesKHRAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDevicePerformanceQueryPropertiesKHR,true,true> {
     VkPhysicalDevicePerformanceQueryPropertiesKHRAnnotation(ModuleLibrary & ml)
@@ -6835,7 +7355,9 @@ struct VkPhysicalDevicePerformanceQueryPropertiesKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPerformanceCounterKHR, VkPerformanceCounterKHR);
+
 struct VkPerformanceCounterKHRAnnotation
 : public ManagedStructureAnnotation<VkPerformanceCounterKHR,true,true> {
     VkPerformanceCounterKHRAnnotation(ModuleLibrary & ml)
@@ -6851,7 +7373,9 @@ struct VkPerformanceCounterKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPerformanceCounterDescriptionKHR, VkPerformanceCounterDescriptionKHR);
+
 struct VkPerformanceCounterDescriptionKHRAnnotation
 : public ManagedStructureAnnotation<VkPerformanceCounterDescriptionKHR,true,true> {
     VkPerformanceCounterDescriptionKHRAnnotation(ModuleLibrary & ml)
@@ -6864,7 +7388,9 @@ struct VkPerformanceCounterDescriptionKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkQueryPoolPerformanceCreateInfoKHR, VkQueryPoolPerformanceCreateInfoKHR);
+
 struct VkQueryPoolPerformanceCreateInfoKHRAnnotation
 : public ManagedStructureAnnotation<VkQueryPoolPerformanceCreateInfoKHR,true,true> {
     VkQueryPoolPerformanceCreateInfoKHRAnnotation(ModuleLibrary & ml)
@@ -6879,7 +7405,9 @@ struct VkQueryPoolPerformanceCreateInfoKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPerformanceCounterResultKHR, VkPerformanceCounterResultKHR);
+
 struct VkPerformanceCounterResultKHRAnnotation
 : public ManagedStructureAnnotation<VkPerformanceCounterResultKHR,true,true> {
     VkPerformanceCounterResultKHRAnnotation(ModuleLibrary & ml)
@@ -6894,7 +7422,9 @@ struct VkPerformanceCounterResultKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkAcquireProfilingLockInfoKHR, VkAcquireProfilingLockInfoKHR);
+
 struct VkAcquireProfilingLockInfoKHRAnnotation
 : public ManagedStructureAnnotation<VkAcquireProfilingLockInfoKHR,true,true> {
     VkAcquireProfilingLockInfoKHRAnnotation(ModuleLibrary & ml)
@@ -6907,7 +7437,9 @@ struct VkAcquireProfilingLockInfoKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPerformanceQuerySubmitInfoKHR, VkPerformanceQuerySubmitInfoKHR);
+
 struct VkPerformanceQuerySubmitInfoKHRAnnotation
 : public ManagedStructureAnnotation<VkPerformanceQuerySubmitInfoKHR,true,true> {
     VkPerformanceQuerySubmitInfoKHRAnnotation(ModuleLibrary & ml)
@@ -6920,7 +7452,9 @@ struct VkPerformanceQuerySubmitInfoKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceSurfaceInfo2KHR, VkPhysicalDeviceSurfaceInfo2KHR);
+
 struct VkPhysicalDeviceSurfaceInfo2KHRAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceSurfaceInfo2KHR,true,true> {
     VkPhysicalDeviceSurfaceInfo2KHRAnnotation(ModuleLibrary & ml)
@@ -6933,7 +7467,9 @@ struct VkPhysicalDeviceSurfaceInfo2KHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkSurfaceCapabilities2KHR, VkSurfaceCapabilities2KHR);
+
 struct VkSurfaceCapabilities2KHRAnnotation
 : public ManagedStructureAnnotation<VkSurfaceCapabilities2KHR,true,true> {
     VkSurfaceCapabilities2KHRAnnotation(ModuleLibrary & ml)
@@ -6946,7 +7482,9 @@ struct VkSurfaceCapabilities2KHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkSurfaceFormat2KHR, VkSurfaceFormat2KHR);
+
 struct VkSurfaceFormat2KHRAnnotation
 : public ManagedStructureAnnotation<VkSurfaceFormat2KHR,true,true> {
     VkSurfaceFormat2KHRAnnotation(ModuleLibrary & ml)
@@ -6959,7 +7497,9 @@ struct VkSurfaceFormat2KHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDisplayProperties2KHR, VkDisplayProperties2KHR);
+
 struct VkDisplayProperties2KHRAnnotation
 : public ManagedStructureAnnotation<VkDisplayProperties2KHR,true,true> {
     VkDisplayProperties2KHRAnnotation(ModuleLibrary & ml)
@@ -6972,7 +7512,9 @@ struct VkDisplayProperties2KHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDisplayPlaneProperties2KHR, VkDisplayPlaneProperties2KHR);
+
 struct VkDisplayPlaneProperties2KHRAnnotation
 : public ManagedStructureAnnotation<VkDisplayPlaneProperties2KHR,true,true> {
     VkDisplayPlaneProperties2KHRAnnotation(ModuleLibrary & ml)
@@ -6985,7 +7527,9 @@ struct VkDisplayPlaneProperties2KHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDisplayModeProperties2KHR, VkDisplayModeProperties2KHR);
+
 struct VkDisplayModeProperties2KHRAnnotation
 : public ManagedStructureAnnotation<VkDisplayModeProperties2KHR,true,true> {
     VkDisplayModeProperties2KHRAnnotation(ModuleLibrary & ml)
@@ -6998,7 +7542,9 @@ struct VkDisplayModeProperties2KHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDisplayPlaneInfo2KHR, VkDisplayPlaneInfo2KHR);
+
 struct VkDisplayPlaneInfo2KHRAnnotation
 : public ManagedStructureAnnotation<VkDisplayPlaneInfo2KHR,true,true> {
     VkDisplayPlaneInfo2KHRAnnotation(ModuleLibrary & ml)
@@ -7012,7 +7558,9 @@ struct VkDisplayPlaneInfo2KHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDisplayPlaneCapabilities2KHR, VkDisplayPlaneCapabilities2KHR);
+
 struct VkDisplayPlaneCapabilities2KHRAnnotation
 : public ManagedStructureAnnotation<VkDisplayPlaneCapabilities2KHR,true,true> {
     VkDisplayPlaneCapabilities2KHRAnnotation(ModuleLibrary & ml)
@@ -7025,7 +7573,9 @@ struct VkDisplayPlaneCapabilities2KHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceShaderClockFeaturesKHR, VkPhysicalDeviceShaderClockFeaturesKHR);
+
 struct VkPhysicalDeviceShaderClockFeaturesKHRAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceShaderClockFeaturesKHR,true,true> {
     VkPhysicalDeviceShaderClockFeaturesKHRAnnotation(ModuleLibrary & ml)
@@ -7039,7 +7589,9 @@ struct VkPhysicalDeviceShaderClockFeaturesKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkSurfaceProtectedCapabilitiesKHR, VkSurfaceProtectedCapabilitiesKHR);
+
 struct VkSurfaceProtectedCapabilitiesKHRAnnotation
 : public ManagedStructureAnnotation<VkSurfaceProtectedCapabilitiesKHR,true,true> {
     VkSurfaceProtectedCapabilitiesKHRAnnotation(ModuleLibrary & ml)
@@ -7052,7 +7604,9 @@ struct VkSurfaceProtectedCapabilitiesKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDevicePipelineExecutablePropertiesFeaturesKHR, VkPhysicalDevicePipelineExecutablePropertiesFeaturesKHR);
+
 struct VkPhysicalDevicePipelineExecutablePropertiesFeaturesKHRAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDevicePipelineExecutablePropertiesFeaturesKHR,true,true> {
     VkPhysicalDevicePipelineExecutablePropertiesFeaturesKHRAnnotation(ModuleLibrary & ml)
@@ -7065,7 +7619,9 @@ struct VkPhysicalDevicePipelineExecutablePropertiesFeaturesKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPipelineInfoKHR, VkPipelineInfoKHR);
+
 struct VkPipelineInfoKHRAnnotation
 : public ManagedStructureAnnotation<VkPipelineInfoKHR,true,true> {
     VkPipelineInfoKHRAnnotation(ModuleLibrary & ml)
@@ -7078,7 +7634,9 @@ struct VkPipelineInfoKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPipelineExecutablePropertiesKHR, VkPipelineExecutablePropertiesKHR);
+
 struct VkPipelineExecutablePropertiesKHRAnnotation
 : public ManagedStructureAnnotation<VkPipelineExecutablePropertiesKHR,true,true> {
     VkPipelineExecutablePropertiesKHRAnnotation(ModuleLibrary & ml)
@@ -7092,7 +7650,9 @@ struct VkPipelineExecutablePropertiesKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPipelineExecutableInfoKHR, VkPipelineExecutableInfoKHR);
+
 struct VkPipelineExecutableInfoKHRAnnotation
 : public ManagedStructureAnnotation<VkPipelineExecutableInfoKHR,true,true> {
     VkPipelineExecutableInfoKHRAnnotation(ModuleLibrary & ml)
@@ -7106,7 +7666,9 @@ struct VkPipelineExecutableInfoKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPipelineExecutableStatisticValueKHR, VkPipelineExecutableStatisticValueKHR);
+
 struct VkPipelineExecutableStatisticValueKHRAnnotation
 : public ManagedStructureAnnotation<VkPipelineExecutableStatisticValueKHR,true,true> {
     VkPipelineExecutableStatisticValueKHRAnnotation(ModuleLibrary & ml)
@@ -7119,7 +7681,9 @@ struct VkPipelineExecutableStatisticValueKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPipelineExecutableStatisticKHR, VkPipelineExecutableStatisticKHR);
+
 struct VkPipelineExecutableStatisticKHRAnnotation
 : public ManagedStructureAnnotation<VkPipelineExecutableStatisticKHR,true,true> {
     VkPipelineExecutableStatisticKHRAnnotation(ModuleLibrary & ml)
@@ -7133,7 +7697,9 @@ struct VkPipelineExecutableStatisticKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPipelineExecutableInternalRepresentationKHR, VkPipelineExecutableInternalRepresentationKHR);
+
 struct VkPipelineExecutableInternalRepresentationKHRAnnotation
 : public ManagedStructureAnnotation<VkPipelineExecutableInternalRepresentationKHR,true,true> {
     VkPipelineExecutableInternalRepresentationKHRAnnotation(ModuleLibrary & ml)
@@ -7147,7 +7713,9 @@ struct VkPipelineExecutableInternalRepresentationKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDebugReportCallbackCreateInfoEXT, VkDebugReportCallbackCreateInfoEXT);
+
 struct VkDebugReportCallbackCreateInfoEXTAnnotation
 : public ManagedStructureAnnotation<VkDebugReportCallbackCreateInfoEXT,true,true> {
     VkDebugReportCallbackCreateInfoEXTAnnotation(ModuleLibrary & ml)
@@ -7161,7 +7729,9 @@ struct VkDebugReportCallbackCreateInfoEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPipelineRasterizationStateRasterizationOrderAMD, VkPipelineRasterizationStateRasterizationOrderAMD);
+
 struct VkPipelineRasterizationStateRasterizationOrderAMDAnnotation
 : public ManagedStructureAnnotation<VkPipelineRasterizationStateRasterizationOrderAMD,true,true> {
     VkPipelineRasterizationStateRasterizationOrderAMDAnnotation(ModuleLibrary & ml)
@@ -7174,7 +7744,9 @@ struct VkPipelineRasterizationStateRasterizationOrderAMDAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDebugMarkerObjectNameInfoEXT, VkDebugMarkerObjectNameInfoEXT);
+
 struct VkDebugMarkerObjectNameInfoEXTAnnotation
 : public ManagedStructureAnnotation<VkDebugMarkerObjectNameInfoEXT,true,true> {
     VkDebugMarkerObjectNameInfoEXTAnnotation(ModuleLibrary & ml)
@@ -7188,7 +7760,9 @@ struct VkDebugMarkerObjectNameInfoEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDebugMarkerObjectTagInfoEXT, VkDebugMarkerObjectTagInfoEXT);
+
 struct VkDebugMarkerObjectTagInfoEXTAnnotation
 : public ManagedStructureAnnotation<VkDebugMarkerObjectTagInfoEXT,true,true> {
     VkDebugMarkerObjectTagInfoEXTAnnotation(ModuleLibrary & ml)
@@ -7202,7 +7776,9 @@ struct VkDebugMarkerObjectTagInfoEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDebugMarkerMarkerInfoEXT, VkDebugMarkerMarkerInfoEXT);
+
 struct VkDebugMarkerMarkerInfoEXTAnnotation
 : public ManagedStructureAnnotation<VkDebugMarkerMarkerInfoEXT,true,true> {
     VkDebugMarkerMarkerInfoEXTAnnotation(ModuleLibrary & ml)
@@ -7216,7 +7792,9 @@ struct VkDebugMarkerMarkerInfoEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDedicatedAllocationImageCreateInfoNV, VkDedicatedAllocationImageCreateInfoNV);
+
 struct VkDedicatedAllocationImageCreateInfoNVAnnotation
 : public ManagedStructureAnnotation<VkDedicatedAllocationImageCreateInfoNV,true,true> {
     VkDedicatedAllocationImageCreateInfoNVAnnotation(ModuleLibrary & ml)
@@ -7229,7 +7807,9 @@ struct VkDedicatedAllocationImageCreateInfoNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDedicatedAllocationBufferCreateInfoNV, VkDedicatedAllocationBufferCreateInfoNV);
+
 struct VkDedicatedAllocationBufferCreateInfoNVAnnotation
 : public ManagedStructureAnnotation<VkDedicatedAllocationBufferCreateInfoNV,true,true> {
     VkDedicatedAllocationBufferCreateInfoNVAnnotation(ModuleLibrary & ml)
@@ -7242,7 +7822,9 @@ struct VkDedicatedAllocationBufferCreateInfoNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDedicatedAllocationMemoryAllocateInfoNV, VkDedicatedAllocationMemoryAllocateInfoNV);
+
 struct VkDedicatedAllocationMemoryAllocateInfoNVAnnotation
 : public ManagedStructureAnnotation<VkDedicatedAllocationMemoryAllocateInfoNV,true,true> {
     VkDedicatedAllocationMemoryAllocateInfoNVAnnotation(ModuleLibrary & ml)
@@ -7256,7 +7838,9 @@ struct VkDedicatedAllocationMemoryAllocateInfoNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceTransformFeedbackFeaturesEXT, VkPhysicalDeviceTransformFeedbackFeaturesEXT);
+
 struct VkPhysicalDeviceTransformFeedbackFeaturesEXTAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceTransformFeedbackFeaturesEXT,true,true> {
     VkPhysicalDeviceTransformFeedbackFeaturesEXTAnnotation(ModuleLibrary & ml)
@@ -7270,7 +7854,9 @@ struct VkPhysicalDeviceTransformFeedbackFeaturesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceTransformFeedbackPropertiesEXT, VkPhysicalDeviceTransformFeedbackPropertiesEXT);
+
 struct VkPhysicalDeviceTransformFeedbackPropertiesEXTAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceTransformFeedbackPropertiesEXT,true,true> {
     VkPhysicalDeviceTransformFeedbackPropertiesEXTAnnotation(ModuleLibrary & ml)
@@ -7291,7 +7877,9 @@ struct VkPhysicalDeviceTransformFeedbackPropertiesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPipelineRasterizationStateStreamCreateInfoEXT, VkPipelineRasterizationStateStreamCreateInfoEXT);
+
 struct VkPipelineRasterizationStateStreamCreateInfoEXTAnnotation
 : public ManagedStructureAnnotation<VkPipelineRasterizationStateStreamCreateInfoEXT,true,true> {
     VkPipelineRasterizationStateStreamCreateInfoEXTAnnotation(ModuleLibrary & ml)
@@ -7305,7 +7893,9 @@ struct VkPipelineRasterizationStateStreamCreateInfoEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkImageViewHandleInfoNVX, VkImageViewHandleInfoNVX);
+
 struct VkImageViewHandleInfoNVXAnnotation
 : public ManagedStructureAnnotation<VkImageViewHandleInfoNVX,true,true> {
     VkImageViewHandleInfoNVXAnnotation(ModuleLibrary & ml)
@@ -7320,7 +7910,9 @@ struct VkImageViewHandleInfoNVXAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkImageViewAddressPropertiesNVX, VkImageViewAddressPropertiesNVX);
+
 struct VkImageViewAddressPropertiesNVXAnnotation
 : public ManagedStructureAnnotation<VkImageViewAddressPropertiesNVX,true,true> {
     VkImageViewAddressPropertiesNVXAnnotation(ModuleLibrary & ml)
@@ -7332,7 +7924,9 @@ struct VkImageViewAddressPropertiesNVXAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkTextureLODGatherFormatPropertiesAMD, VkTextureLODGatherFormatPropertiesAMD);
+
 struct VkTextureLODGatherFormatPropertiesAMDAnnotation
 : public ManagedStructureAnnotation<VkTextureLODGatherFormatPropertiesAMD,true,true> {
     VkTextureLODGatherFormatPropertiesAMDAnnotation(ModuleLibrary & ml)
@@ -7345,7 +7939,9 @@ struct VkTextureLODGatherFormatPropertiesAMDAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkShaderResourceUsageAMD, VkShaderResourceUsageAMD);
+
 struct VkShaderResourceUsageAMDAnnotation
 : public ManagedStructureAnnotation<VkShaderResourceUsageAMD,true,true> {
     VkShaderResourceUsageAMDAnnotation(ModuleLibrary & ml)
@@ -7358,7 +7954,9 @@ struct VkShaderResourceUsageAMDAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkShaderStatisticsInfoAMD, VkShaderStatisticsInfoAMD);
+
 struct VkShaderStatisticsInfoAMDAnnotation
 : public ManagedStructureAnnotation<VkShaderStatisticsInfoAMD,true,true> {
     VkShaderStatisticsInfoAMDAnnotation(ModuleLibrary & ml)
@@ -7375,7 +7973,9 @@ struct VkShaderStatisticsInfoAMDAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceCornerSampledImageFeaturesNV, VkPhysicalDeviceCornerSampledImageFeaturesNV);
+
 struct VkPhysicalDeviceCornerSampledImageFeaturesNVAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceCornerSampledImageFeaturesNV,true,true> {
     VkPhysicalDeviceCornerSampledImageFeaturesNVAnnotation(ModuleLibrary & ml)
@@ -7388,7 +7988,9 @@ struct VkPhysicalDeviceCornerSampledImageFeaturesNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkExternalImageFormatPropertiesNV, VkExternalImageFormatPropertiesNV);
+
 struct VkExternalImageFormatPropertiesNVAnnotation
 : public ManagedStructureAnnotation<VkExternalImageFormatPropertiesNV,true,true> {
     VkExternalImageFormatPropertiesNVAnnotation(ModuleLibrary & ml)
@@ -7402,7 +8004,9 @@ struct VkExternalImageFormatPropertiesNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkExternalMemoryImageCreateInfoNV, VkExternalMemoryImageCreateInfoNV);
+
 struct VkExternalMemoryImageCreateInfoNVAnnotation
 : public ManagedStructureAnnotation<VkExternalMemoryImageCreateInfoNV,true,true> {
     VkExternalMemoryImageCreateInfoNVAnnotation(ModuleLibrary & ml)
@@ -7415,7 +8019,9 @@ struct VkExternalMemoryImageCreateInfoNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkExportMemoryAllocateInfoNV, VkExportMemoryAllocateInfoNV);
+
 struct VkExportMemoryAllocateInfoNVAnnotation
 : public ManagedStructureAnnotation<VkExportMemoryAllocateInfoNV,true,true> {
     VkExportMemoryAllocateInfoNVAnnotation(ModuleLibrary & ml)
@@ -7428,7 +8034,9 @@ struct VkExportMemoryAllocateInfoNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkValidationFlagsEXT, VkValidationFlagsEXT);
+
 struct VkValidationFlagsEXTAnnotation
 : public ManagedStructureAnnotation<VkValidationFlagsEXT,true,true> {
     VkValidationFlagsEXTAnnotation(ModuleLibrary & ml)
@@ -7442,7 +8050,9 @@ struct VkValidationFlagsEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceTextureCompressionASTCHDRFeaturesEXT, VkPhysicalDeviceTextureCompressionASTCHDRFeaturesEXT);
+
 struct VkPhysicalDeviceTextureCompressionASTCHDRFeaturesEXTAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceTextureCompressionASTCHDRFeaturesEXT,true,true> {
     VkPhysicalDeviceTextureCompressionASTCHDRFeaturesEXTAnnotation(ModuleLibrary & ml)
@@ -7455,7 +8065,9 @@ struct VkPhysicalDeviceTextureCompressionASTCHDRFeaturesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkImageViewASTCDecodeModeEXT, VkImageViewASTCDecodeModeEXT);
+
 struct VkImageViewASTCDecodeModeEXTAnnotation
 : public ManagedStructureAnnotation<VkImageViewASTCDecodeModeEXT,true,true> {
     VkImageViewASTCDecodeModeEXTAnnotation(ModuleLibrary & ml)
@@ -7468,7 +8080,9 @@ struct VkImageViewASTCDecodeModeEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceASTCDecodeFeaturesEXT, VkPhysicalDeviceASTCDecodeFeaturesEXT);
+
 struct VkPhysicalDeviceASTCDecodeFeaturesEXTAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceASTCDecodeFeaturesEXT,true,true> {
     VkPhysicalDeviceASTCDecodeFeaturesEXTAnnotation(ModuleLibrary & ml)
@@ -7481,7 +8095,9 @@ struct VkPhysicalDeviceASTCDecodeFeaturesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkConditionalRenderingBeginInfoEXT, VkConditionalRenderingBeginInfoEXT);
+
 struct VkConditionalRenderingBeginInfoEXTAnnotation
 : public ManagedStructureAnnotation<VkConditionalRenderingBeginInfoEXT,true,true> {
     VkConditionalRenderingBeginInfoEXTAnnotation(ModuleLibrary & ml)
@@ -7495,7 +8111,9 @@ struct VkConditionalRenderingBeginInfoEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceConditionalRenderingFeaturesEXT, VkPhysicalDeviceConditionalRenderingFeaturesEXT);
+
 struct VkPhysicalDeviceConditionalRenderingFeaturesEXTAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceConditionalRenderingFeaturesEXT,true,true> {
     VkPhysicalDeviceConditionalRenderingFeaturesEXTAnnotation(ModuleLibrary & ml)
@@ -7509,7 +8127,9 @@ struct VkPhysicalDeviceConditionalRenderingFeaturesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkCommandBufferInheritanceConditionalRenderingInfoEXT, VkCommandBufferInheritanceConditionalRenderingInfoEXT);
+
 struct VkCommandBufferInheritanceConditionalRenderingInfoEXTAnnotation
 : public ManagedStructureAnnotation<VkCommandBufferInheritanceConditionalRenderingInfoEXT,true,true> {
     VkCommandBufferInheritanceConditionalRenderingInfoEXTAnnotation(ModuleLibrary & ml)
@@ -7522,7 +8142,9 @@ struct VkCommandBufferInheritanceConditionalRenderingInfoEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkViewportWScalingNV, VkViewportWScalingNV);
+
 struct VkViewportWScalingNVAnnotation
 : public ManagedStructureAnnotation<VkViewportWScalingNV,true,true> {
     VkViewportWScalingNVAnnotation(ModuleLibrary & ml)
@@ -7534,7 +8156,9 @@ struct VkViewportWScalingNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPipelineViewportWScalingStateCreateInfoNV, VkPipelineViewportWScalingStateCreateInfoNV);
+
 struct VkPipelineViewportWScalingStateCreateInfoNVAnnotation
 : public ManagedStructureAnnotation<VkPipelineViewportWScalingStateCreateInfoNV,true,true> {
     VkPipelineViewportWScalingStateCreateInfoNVAnnotation(ModuleLibrary & ml)
@@ -7549,7 +8173,9 @@ struct VkPipelineViewportWScalingStateCreateInfoNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkSurfaceCapabilities2EXT, VkSurfaceCapabilities2EXT);
+
 struct VkSurfaceCapabilities2EXTAnnotation
 : public ManagedStructureAnnotation<VkSurfaceCapabilities2EXT,true,true> {
     VkSurfaceCapabilities2EXTAnnotation(ModuleLibrary & ml)
@@ -7572,7 +8198,9 @@ struct VkSurfaceCapabilities2EXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDisplayPowerInfoEXT, VkDisplayPowerInfoEXT);
+
 struct VkDisplayPowerInfoEXTAnnotation
 : public ManagedStructureAnnotation<VkDisplayPowerInfoEXT,true,true> {
     VkDisplayPowerInfoEXTAnnotation(ModuleLibrary & ml)
@@ -7585,7 +8213,9 @@ struct VkDisplayPowerInfoEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDeviceEventInfoEXT, VkDeviceEventInfoEXT);
+
 struct VkDeviceEventInfoEXTAnnotation
 : public ManagedStructureAnnotation<VkDeviceEventInfoEXT,true,true> {
     VkDeviceEventInfoEXTAnnotation(ModuleLibrary & ml)
@@ -7598,7 +8228,9 @@ struct VkDeviceEventInfoEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDisplayEventInfoEXT, VkDisplayEventInfoEXT);
+
 struct VkDisplayEventInfoEXTAnnotation
 : public ManagedStructureAnnotation<VkDisplayEventInfoEXT,true,true> {
     VkDisplayEventInfoEXTAnnotation(ModuleLibrary & ml)
@@ -7611,7 +8243,9 @@ struct VkDisplayEventInfoEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkSwapchainCounterCreateInfoEXT, VkSwapchainCounterCreateInfoEXT);
+
 struct VkSwapchainCounterCreateInfoEXTAnnotation
 : public ManagedStructureAnnotation<VkSwapchainCounterCreateInfoEXT,true,true> {
     VkSwapchainCounterCreateInfoEXTAnnotation(ModuleLibrary & ml)
@@ -7624,7 +8258,9 @@ struct VkSwapchainCounterCreateInfoEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkRefreshCycleDurationGOOGLE, VkRefreshCycleDurationGOOGLE);
+
 struct VkRefreshCycleDurationGOOGLEAnnotation
 : public ManagedStructureAnnotation<VkRefreshCycleDurationGOOGLE,true,true> {
     VkRefreshCycleDurationGOOGLEAnnotation(ModuleLibrary & ml)
@@ -7634,7 +8270,9 @@ struct VkRefreshCycleDurationGOOGLEAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPastPresentationTimingGOOGLE, VkPastPresentationTimingGOOGLE);
+
 struct VkPastPresentationTimingGOOGLEAnnotation
 : public ManagedStructureAnnotation<VkPastPresentationTimingGOOGLE,true,true> {
     VkPastPresentationTimingGOOGLEAnnotation(ModuleLibrary & ml)
@@ -7645,7 +8283,9 @@ struct VkPastPresentationTimingGOOGLEAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPresentTimeGOOGLE, VkPresentTimeGOOGLE);
+
 struct VkPresentTimeGOOGLEAnnotation
 : public ManagedStructureAnnotation<VkPresentTimeGOOGLE,true,true> {
     VkPresentTimeGOOGLEAnnotation(ModuleLibrary & ml)
@@ -7656,7 +8296,9 @@ struct VkPresentTimeGOOGLEAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPresentTimesInfoGOOGLE, VkPresentTimesInfoGOOGLE);
+
 struct VkPresentTimesInfoGOOGLEAnnotation
 : public ManagedStructureAnnotation<VkPresentTimesInfoGOOGLE,true,true> {
     VkPresentTimesInfoGOOGLEAnnotation(ModuleLibrary & ml)
@@ -7670,7 +8312,9 @@ struct VkPresentTimesInfoGOOGLEAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX, VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX);
+
 struct VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVXAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX,true,true> {
     VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVXAnnotation(ModuleLibrary & ml)
@@ -7683,7 +8327,9 @@ struct VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVXAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkViewportSwizzleNV, VkViewportSwizzleNV);
+
 struct VkViewportSwizzleNVAnnotation
 : public ManagedStructureAnnotation<VkViewportSwizzleNV,true,true> {
     VkViewportSwizzleNVAnnotation(ModuleLibrary & ml)
@@ -7697,7 +8343,9 @@ struct VkViewportSwizzleNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPipelineViewportSwizzleStateCreateInfoNV, VkPipelineViewportSwizzleStateCreateInfoNV);
+
 struct VkPipelineViewportSwizzleStateCreateInfoNVAnnotation
 : public ManagedStructureAnnotation<VkPipelineViewportSwizzleStateCreateInfoNV,true,true> {
     VkPipelineViewportSwizzleStateCreateInfoNVAnnotation(ModuleLibrary & ml)
@@ -7712,7 +8360,9 @@ struct VkPipelineViewportSwizzleStateCreateInfoNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceDiscardRectanglePropertiesEXT, VkPhysicalDeviceDiscardRectanglePropertiesEXT);
+
 struct VkPhysicalDeviceDiscardRectanglePropertiesEXTAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceDiscardRectanglePropertiesEXT,true,true> {
     VkPhysicalDeviceDiscardRectanglePropertiesEXTAnnotation(ModuleLibrary & ml)
@@ -7725,7 +8375,9 @@ struct VkPhysicalDeviceDiscardRectanglePropertiesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPipelineDiscardRectangleStateCreateInfoEXT, VkPipelineDiscardRectangleStateCreateInfoEXT);
+
 struct VkPipelineDiscardRectangleStateCreateInfoEXTAnnotation
 : public ManagedStructureAnnotation<VkPipelineDiscardRectangleStateCreateInfoEXT,true,true> {
     VkPipelineDiscardRectangleStateCreateInfoEXTAnnotation(ModuleLibrary & ml)
@@ -7741,7 +8393,9 @@ struct VkPipelineDiscardRectangleStateCreateInfoEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceConservativeRasterizationPropertiesEXT, VkPhysicalDeviceConservativeRasterizationPropertiesEXT);
+
 struct VkPhysicalDeviceConservativeRasterizationPropertiesEXTAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceConservativeRasterizationPropertiesEXT,true,true> {
     VkPhysicalDeviceConservativeRasterizationPropertiesEXTAnnotation(ModuleLibrary & ml)
@@ -7762,7 +8416,9 @@ struct VkPhysicalDeviceConservativeRasterizationPropertiesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPipelineRasterizationConservativeStateCreateInfoEXT, VkPipelineRasterizationConservativeStateCreateInfoEXT);
+
 struct VkPipelineRasterizationConservativeStateCreateInfoEXTAnnotation
 : public ManagedStructureAnnotation<VkPipelineRasterizationConservativeStateCreateInfoEXT,true,true> {
     VkPipelineRasterizationConservativeStateCreateInfoEXTAnnotation(ModuleLibrary & ml)
@@ -7777,7 +8433,9 @@ struct VkPipelineRasterizationConservativeStateCreateInfoEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceDepthClipEnableFeaturesEXT, VkPhysicalDeviceDepthClipEnableFeaturesEXT);
+
 struct VkPhysicalDeviceDepthClipEnableFeaturesEXTAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceDepthClipEnableFeaturesEXT,true,true> {
     VkPhysicalDeviceDepthClipEnableFeaturesEXTAnnotation(ModuleLibrary & ml)
@@ -7790,7 +8448,9 @@ struct VkPhysicalDeviceDepthClipEnableFeaturesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPipelineRasterizationDepthClipStateCreateInfoEXT, VkPipelineRasterizationDepthClipStateCreateInfoEXT);
+
 struct VkPipelineRasterizationDepthClipStateCreateInfoEXTAnnotation
 : public ManagedStructureAnnotation<VkPipelineRasterizationDepthClipStateCreateInfoEXT,true,true> {
     VkPipelineRasterizationDepthClipStateCreateInfoEXTAnnotation(ModuleLibrary & ml)
@@ -7804,7 +8464,9 @@ struct VkPipelineRasterizationDepthClipStateCreateInfoEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkXYColorEXT, VkXYColorEXT);
+
 struct VkXYColorEXTAnnotation
 : public ManagedStructureAnnotation<VkXYColorEXT,true,true> {
     VkXYColorEXTAnnotation(ModuleLibrary & ml)
@@ -7816,7 +8478,9 @@ struct VkXYColorEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkHdrMetadataEXT, VkHdrMetadataEXT);
+
 struct VkHdrMetadataEXTAnnotation
 : public ManagedStructureAnnotation<VkHdrMetadataEXT,true,true> {
     VkHdrMetadataEXTAnnotation(ModuleLibrary & ml)
@@ -7836,7 +8500,9 @@ struct VkHdrMetadataEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDebugUtilsLabelEXT, VkDebugUtilsLabelEXT);
+
 struct VkDebugUtilsLabelEXTAnnotation
 : public ManagedStructureAnnotation<VkDebugUtilsLabelEXT,true,true> {
     VkDebugUtilsLabelEXTAnnotation(ModuleLibrary & ml)
@@ -7850,7 +8516,9 @@ struct VkDebugUtilsLabelEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDebugUtilsObjectNameInfoEXT, VkDebugUtilsObjectNameInfoEXT);
+
 struct VkDebugUtilsObjectNameInfoEXTAnnotation
 : public ManagedStructureAnnotation<VkDebugUtilsObjectNameInfoEXT,true,true> {
     VkDebugUtilsObjectNameInfoEXTAnnotation(ModuleLibrary & ml)
@@ -7864,7 +8532,9 @@ struct VkDebugUtilsObjectNameInfoEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDebugUtilsMessengerCallbackDataEXT, VkDebugUtilsMessengerCallbackDataEXT);
+
 struct VkDebugUtilsMessengerCallbackDataEXTAnnotation
 : public ManagedStructureAnnotation<VkDebugUtilsMessengerCallbackDataEXT,true,true> {
     VkDebugUtilsMessengerCallbackDataEXTAnnotation(ModuleLibrary & ml)
@@ -7886,7 +8556,9 @@ struct VkDebugUtilsMessengerCallbackDataEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDebugUtilsMessengerCreateInfoEXT, VkDebugUtilsMessengerCreateInfoEXT);
+
 struct VkDebugUtilsMessengerCreateInfoEXTAnnotation
 : public ManagedStructureAnnotation<VkDebugUtilsMessengerCreateInfoEXT,true,true> {
     VkDebugUtilsMessengerCreateInfoEXTAnnotation(ModuleLibrary & ml)
@@ -7902,7 +8574,9 @@ struct VkDebugUtilsMessengerCreateInfoEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDebugUtilsObjectTagInfoEXT, VkDebugUtilsObjectTagInfoEXT);
+
 struct VkDebugUtilsObjectTagInfoEXTAnnotation
 : public ManagedStructureAnnotation<VkDebugUtilsObjectTagInfoEXT,true,true> {
     VkDebugUtilsObjectTagInfoEXTAnnotation(ModuleLibrary & ml)
@@ -7916,7 +8590,9 @@ struct VkDebugUtilsObjectTagInfoEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceInlineUniformBlockFeaturesEXT, VkPhysicalDeviceInlineUniformBlockFeaturesEXT);
+
 struct VkPhysicalDeviceInlineUniformBlockFeaturesEXTAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceInlineUniformBlockFeaturesEXT,true,true> {
     VkPhysicalDeviceInlineUniformBlockFeaturesEXTAnnotation(ModuleLibrary & ml)
@@ -7930,7 +8606,9 @@ struct VkPhysicalDeviceInlineUniformBlockFeaturesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceInlineUniformBlockPropertiesEXT, VkPhysicalDeviceInlineUniformBlockPropertiesEXT);
+
 struct VkPhysicalDeviceInlineUniformBlockPropertiesEXTAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceInlineUniformBlockPropertiesEXT,true,true> {
     VkPhysicalDeviceInlineUniformBlockPropertiesEXTAnnotation(ModuleLibrary & ml)
@@ -7947,7 +8625,9 @@ struct VkPhysicalDeviceInlineUniformBlockPropertiesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkWriteDescriptorSetInlineUniformBlockEXT, VkWriteDescriptorSetInlineUniformBlockEXT);
+
 struct VkWriteDescriptorSetInlineUniformBlockEXTAnnotation
 : public ManagedStructureAnnotation<VkWriteDescriptorSetInlineUniformBlockEXT,true,true> {
     VkWriteDescriptorSetInlineUniformBlockEXTAnnotation(ModuleLibrary & ml)
@@ -7961,7 +8641,9 @@ struct VkWriteDescriptorSetInlineUniformBlockEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDescriptorPoolInlineUniformBlockCreateInfoEXT, VkDescriptorPoolInlineUniformBlockCreateInfoEXT);
+
 struct VkDescriptorPoolInlineUniformBlockCreateInfoEXTAnnotation
 : public ManagedStructureAnnotation<VkDescriptorPoolInlineUniformBlockCreateInfoEXT,true,true> {
     VkDescriptorPoolInlineUniformBlockCreateInfoEXTAnnotation(ModuleLibrary & ml)
@@ -7974,7 +8656,9 @@ struct VkDescriptorPoolInlineUniformBlockCreateInfoEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkSampleLocationEXT, VkSampleLocationEXT);
+
 struct VkSampleLocationEXTAnnotation
 : public ManagedStructureAnnotation<VkSampleLocationEXT,true,true> {
     VkSampleLocationEXTAnnotation(ModuleLibrary & ml)
@@ -7986,7 +8670,9 @@ struct VkSampleLocationEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkSampleLocationsInfoEXT, VkSampleLocationsInfoEXT);
+
 struct VkSampleLocationsInfoEXTAnnotation
 : public ManagedStructureAnnotation<VkSampleLocationsInfoEXT,true,true> {
     VkSampleLocationsInfoEXTAnnotation(ModuleLibrary & ml)
@@ -8002,7 +8688,9 @@ struct VkSampleLocationsInfoEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkAttachmentSampleLocationsEXT, VkAttachmentSampleLocationsEXT);
+
 struct VkAttachmentSampleLocationsEXTAnnotation
 : public ManagedStructureAnnotation<VkAttachmentSampleLocationsEXT,true,true> {
     VkAttachmentSampleLocationsEXTAnnotation(ModuleLibrary & ml)
@@ -8014,7 +8702,9 @@ struct VkAttachmentSampleLocationsEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkSubpassSampleLocationsEXT, VkSubpassSampleLocationsEXT);
+
 struct VkSubpassSampleLocationsEXTAnnotation
 : public ManagedStructureAnnotation<VkSubpassSampleLocationsEXT,true,true> {
     VkSubpassSampleLocationsEXTAnnotation(ModuleLibrary & ml)
@@ -8026,7 +8716,9 @@ struct VkSubpassSampleLocationsEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkRenderPassSampleLocationsBeginInfoEXT, VkRenderPassSampleLocationsBeginInfoEXT);
+
 struct VkRenderPassSampleLocationsBeginInfoEXTAnnotation
 : public ManagedStructureAnnotation<VkRenderPassSampleLocationsBeginInfoEXT,true,true> {
     VkRenderPassSampleLocationsBeginInfoEXTAnnotation(ModuleLibrary & ml)
@@ -8042,7 +8734,9 @@ struct VkRenderPassSampleLocationsBeginInfoEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPipelineSampleLocationsStateCreateInfoEXT, VkPipelineSampleLocationsStateCreateInfoEXT);
+
 struct VkPipelineSampleLocationsStateCreateInfoEXTAnnotation
 : public ManagedStructureAnnotation<VkPipelineSampleLocationsStateCreateInfoEXT,true,true> {
     VkPipelineSampleLocationsStateCreateInfoEXTAnnotation(ModuleLibrary & ml)
@@ -8056,7 +8750,9 @@ struct VkPipelineSampleLocationsStateCreateInfoEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceSampleLocationsPropertiesEXT, VkPhysicalDeviceSampleLocationsPropertiesEXT);
+
 struct VkPhysicalDeviceSampleLocationsPropertiesEXTAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceSampleLocationsPropertiesEXT,true,true> {
     VkPhysicalDeviceSampleLocationsPropertiesEXTAnnotation(ModuleLibrary & ml)
@@ -8073,7 +8769,9 @@ struct VkPhysicalDeviceSampleLocationsPropertiesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkMultisamplePropertiesEXT, VkMultisamplePropertiesEXT);
+
 struct VkMultisamplePropertiesEXTAnnotation
 : public ManagedStructureAnnotation<VkMultisamplePropertiesEXT,true,true> {
     VkMultisamplePropertiesEXTAnnotation(ModuleLibrary & ml)
@@ -8086,7 +8784,9 @@ struct VkMultisamplePropertiesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT, VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT);
+
 struct VkPhysicalDeviceBlendOperationAdvancedFeaturesEXTAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT,true,true> {
     VkPhysicalDeviceBlendOperationAdvancedFeaturesEXTAnnotation(ModuleLibrary & ml)
@@ -8099,7 +8799,9 @@ struct VkPhysicalDeviceBlendOperationAdvancedFeaturesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT);
+
 struct VkPhysicalDeviceBlendOperationAdvancedPropertiesEXTAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT,true,true> {
     VkPhysicalDeviceBlendOperationAdvancedPropertiesEXTAnnotation(ModuleLibrary & ml)
@@ -8117,7 +8819,9 @@ struct VkPhysicalDeviceBlendOperationAdvancedPropertiesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPipelineColorBlendAdvancedStateCreateInfoEXT, VkPipelineColorBlendAdvancedStateCreateInfoEXT);
+
 struct VkPipelineColorBlendAdvancedStateCreateInfoEXTAnnotation
 : public ManagedStructureAnnotation<VkPipelineColorBlendAdvancedStateCreateInfoEXT,true,true> {
     VkPipelineColorBlendAdvancedStateCreateInfoEXTAnnotation(ModuleLibrary & ml)
@@ -8132,7 +8836,9 @@ struct VkPipelineColorBlendAdvancedStateCreateInfoEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPipelineCoverageToColorStateCreateInfoNV, VkPipelineCoverageToColorStateCreateInfoNV);
+
 struct VkPipelineCoverageToColorStateCreateInfoNVAnnotation
 : public ManagedStructureAnnotation<VkPipelineCoverageToColorStateCreateInfoNV,true,true> {
     VkPipelineCoverageToColorStateCreateInfoNVAnnotation(ModuleLibrary & ml)
@@ -8147,7 +8853,9 @@ struct VkPipelineCoverageToColorStateCreateInfoNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPipelineCoverageModulationStateCreateInfoNV, VkPipelineCoverageModulationStateCreateInfoNV);
+
 struct VkPipelineCoverageModulationStateCreateInfoNVAnnotation
 : public ManagedStructureAnnotation<VkPipelineCoverageModulationStateCreateInfoNV,true,true> {
     VkPipelineCoverageModulationStateCreateInfoNVAnnotation(ModuleLibrary & ml)
@@ -8164,7 +8872,9 @@ struct VkPipelineCoverageModulationStateCreateInfoNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceShaderSMBuiltinsPropertiesNV, VkPhysicalDeviceShaderSMBuiltinsPropertiesNV);
+
 struct VkPhysicalDeviceShaderSMBuiltinsPropertiesNVAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceShaderSMBuiltinsPropertiesNV,true,true> {
     VkPhysicalDeviceShaderSMBuiltinsPropertiesNVAnnotation(ModuleLibrary & ml)
@@ -8178,7 +8888,9 @@ struct VkPhysicalDeviceShaderSMBuiltinsPropertiesNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceShaderSMBuiltinsFeaturesNV, VkPhysicalDeviceShaderSMBuiltinsFeaturesNV);
+
 struct VkPhysicalDeviceShaderSMBuiltinsFeaturesNVAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceShaderSMBuiltinsFeaturesNV,true,true> {
     VkPhysicalDeviceShaderSMBuiltinsFeaturesNVAnnotation(ModuleLibrary & ml)
@@ -8191,7 +8903,9 @@ struct VkPhysicalDeviceShaderSMBuiltinsFeaturesNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDrmFormatModifierPropertiesEXT, VkDrmFormatModifierPropertiesEXT);
+
 struct VkDrmFormatModifierPropertiesEXTAnnotation
 : public ManagedStructureAnnotation<VkDrmFormatModifierPropertiesEXT,true,true> {
     VkDrmFormatModifierPropertiesEXTAnnotation(ModuleLibrary & ml)
@@ -8203,7 +8917,9 @@ struct VkDrmFormatModifierPropertiesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDrmFormatModifierPropertiesListEXT, VkDrmFormatModifierPropertiesListEXT);
+
 struct VkDrmFormatModifierPropertiesListEXTAnnotation
 : public ManagedStructureAnnotation<VkDrmFormatModifierPropertiesListEXT,true,true> {
     VkDrmFormatModifierPropertiesListEXTAnnotation(ModuleLibrary & ml)
@@ -8217,7 +8933,9 @@ struct VkDrmFormatModifierPropertiesListEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceImageDrmFormatModifierInfoEXT, VkPhysicalDeviceImageDrmFormatModifierInfoEXT);
+
 struct VkPhysicalDeviceImageDrmFormatModifierInfoEXTAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceImageDrmFormatModifierInfoEXT,true,true> {
     VkPhysicalDeviceImageDrmFormatModifierInfoEXTAnnotation(ModuleLibrary & ml)
@@ -8232,7 +8950,9 @@ struct VkPhysicalDeviceImageDrmFormatModifierInfoEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkImageDrmFormatModifierListCreateInfoEXT, VkImageDrmFormatModifierListCreateInfoEXT);
+
 struct VkImageDrmFormatModifierListCreateInfoEXTAnnotation
 : public ManagedStructureAnnotation<VkImageDrmFormatModifierListCreateInfoEXT,true,true> {
     VkImageDrmFormatModifierListCreateInfoEXTAnnotation(ModuleLibrary & ml)
@@ -8246,7 +8966,9 @@ struct VkImageDrmFormatModifierListCreateInfoEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkImageDrmFormatModifierExplicitCreateInfoEXT, VkImageDrmFormatModifierExplicitCreateInfoEXT);
+
 struct VkImageDrmFormatModifierExplicitCreateInfoEXTAnnotation
 : public ManagedStructureAnnotation<VkImageDrmFormatModifierExplicitCreateInfoEXT,true,true> {
     VkImageDrmFormatModifierExplicitCreateInfoEXTAnnotation(ModuleLibrary & ml)
@@ -8260,7 +8982,9 @@ struct VkImageDrmFormatModifierExplicitCreateInfoEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkImageDrmFormatModifierPropertiesEXT, VkImageDrmFormatModifierPropertiesEXT);
+
 struct VkImageDrmFormatModifierPropertiesEXTAnnotation
 : public ManagedStructureAnnotation<VkImageDrmFormatModifierPropertiesEXT,true,true> {
     VkImageDrmFormatModifierPropertiesEXTAnnotation(ModuleLibrary & ml)
@@ -8272,7 +8996,9 @@ struct VkImageDrmFormatModifierPropertiesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkValidationCacheCreateInfoEXT, VkValidationCacheCreateInfoEXT);
+
 struct VkValidationCacheCreateInfoEXTAnnotation
 : public ManagedStructureAnnotation<VkValidationCacheCreateInfoEXT,true,true> {
     VkValidationCacheCreateInfoEXTAnnotation(ModuleLibrary & ml)
@@ -8286,7 +9012,9 @@ struct VkValidationCacheCreateInfoEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkShaderModuleValidationCacheCreateInfoEXT, VkShaderModuleValidationCacheCreateInfoEXT);
+
 struct VkShaderModuleValidationCacheCreateInfoEXTAnnotation
 : public ManagedStructureAnnotation<VkShaderModuleValidationCacheCreateInfoEXT,true,true> {
     VkShaderModuleValidationCacheCreateInfoEXTAnnotation(ModuleLibrary & ml)
@@ -8299,7 +9027,9 @@ struct VkShaderModuleValidationCacheCreateInfoEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkShadingRatePaletteNV, VkShadingRatePaletteNV);
+
 struct VkShadingRatePaletteNVAnnotation
 : public ManagedStructureAnnotation<VkShadingRatePaletteNV,true,true> {
     VkShadingRatePaletteNVAnnotation(ModuleLibrary & ml)
@@ -8311,7 +9041,9 @@ struct VkShadingRatePaletteNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPipelineViewportShadingRateImageStateCreateInfoNV, VkPipelineViewportShadingRateImageStateCreateInfoNV);
+
 struct VkPipelineViewportShadingRateImageStateCreateInfoNVAnnotation
 : public ManagedStructureAnnotation<VkPipelineViewportShadingRateImageStateCreateInfoNV,true,true> {
     VkPipelineViewportShadingRateImageStateCreateInfoNVAnnotation(ModuleLibrary & ml)
@@ -8326,7 +9058,9 @@ struct VkPipelineViewportShadingRateImageStateCreateInfoNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceShadingRateImageFeaturesNV, VkPhysicalDeviceShadingRateImageFeaturesNV);
+
 struct VkPhysicalDeviceShadingRateImageFeaturesNVAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceShadingRateImageFeaturesNV,true,true> {
     VkPhysicalDeviceShadingRateImageFeaturesNVAnnotation(ModuleLibrary & ml)
@@ -8340,7 +9074,9 @@ struct VkPhysicalDeviceShadingRateImageFeaturesNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceShadingRateImagePropertiesNV, VkPhysicalDeviceShadingRateImagePropertiesNV);
+
 struct VkPhysicalDeviceShadingRateImagePropertiesNVAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceShadingRateImagePropertiesNV,true,true> {
     VkPhysicalDeviceShadingRateImagePropertiesNVAnnotation(ModuleLibrary & ml)
@@ -8355,7 +9091,9 @@ struct VkPhysicalDeviceShadingRateImagePropertiesNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkCoarseSampleLocationNV, VkCoarseSampleLocationNV);
+
 struct VkCoarseSampleLocationNVAnnotation
 : public ManagedStructureAnnotation<VkCoarseSampleLocationNV,true,true> {
     VkCoarseSampleLocationNVAnnotation(ModuleLibrary & ml)
@@ -8368,7 +9106,9 @@ struct VkCoarseSampleLocationNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkCoarseSampleOrderCustomNV, VkCoarseSampleOrderCustomNV);
+
 struct VkCoarseSampleOrderCustomNVAnnotation
 : public ManagedStructureAnnotation<VkCoarseSampleOrderCustomNV,true,true> {
     VkCoarseSampleOrderCustomNVAnnotation(ModuleLibrary & ml)
@@ -8382,7 +9122,9 @@ struct VkCoarseSampleOrderCustomNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPipelineViewportCoarseSampleOrderStateCreateInfoNV, VkPipelineViewportCoarseSampleOrderStateCreateInfoNV);
+
 struct VkPipelineViewportCoarseSampleOrderStateCreateInfoNVAnnotation
 : public ManagedStructureAnnotation<VkPipelineViewportCoarseSampleOrderStateCreateInfoNV,true,true> {
     VkPipelineViewportCoarseSampleOrderStateCreateInfoNVAnnotation(ModuleLibrary & ml)
@@ -8397,7 +9139,9 @@ struct VkPipelineViewportCoarseSampleOrderStateCreateInfoNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkRayTracingShaderGroupCreateInfoNV, VkRayTracingShaderGroupCreateInfoNV);
+
 struct VkRayTracingShaderGroupCreateInfoNVAnnotation
 : public ManagedStructureAnnotation<VkRayTracingShaderGroupCreateInfoNV,true,true> {
     VkRayTracingShaderGroupCreateInfoNVAnnotation(ModuleLibrary & ml)
@@ -8414,7 +9158,9 @@ struct VkRayTracingShaderGroupCreateInfoNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkRayTracingPipelineCreateInfoNV, VkRayTracingPipelineCreateInfoNV);
+
 struct VkRayTracingPipelineCreateInfoNVAnnotation
 : public ManagedStructureAnnotation<VkRayTracingPipelineCreateInfoNV,true,true> {
     VkRayTracingPipelineCreateInfoNVAnnotation(ModuleLibrary & ml)
@@ -8435,7 +9181,9 @@ struct VkRayTracingPipelineCreateInfoNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkGeometryTrianglesNV, VkGeometryTrianglesNV);
+
 struct VkGeometryTrianglesNVAnnotation
 : public ManagedStructureAnnotation<VkGeometryTrianglesNV,true,true> {
     VkGeometryTrianglesNVAnnotation(ModuleLibrary & ml)
@@ -8454,7 +9202,9 @@ struct VkGeometryTrianglesNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkGeometryAABBNV, VkGeometryAABBNV);
+
 struct VkGeometryAABBNVAnnotation
 : public ManagedStructureAnnotation<VkGeometryAABBNV,true,true> {
     VkGeometryAABBNVAnnotation(ModuleLibrary & ml)
@@ -8469,7 +9219,9 @@ struct VkGeometryAABBNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkGeometryDataNV, VkGeometryDataNV);
+
 struct VkGeometryDataNVAnnotation
 : public ManagedStructureAnnotation<VkGeometryDataNV,true,true> {
     VkGeometryDataNVAnnotation(ModuleLibrary & ml)
@@ -8481,7 +9233,9 @@ struct VkGeometryDataNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkGeometryNV, VkGeometryNV);
+
 struct VkGeometryNVAnnotation
 : public ManagedStructureAnnotation<VkGeometryNV,true,true> {
     VkGeometryNVAnnotation(ModuleLibrary & ml)
@@ -8496,7 +9250,9 @@ struct VkGeometryNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkAccelerationStructureInfoNV, VkAccelerationStructureInfoNV);
+
 struct VkAccelerationStructureInfoNVAnnotation
 : public ManagedStructureAnnotation<VkAccelerationStructureInfoNV,true,true> {
     VkAccelerationStructureInfoNVAnnotation(ModuleLibrary & ml)
@@ -8513,7 +9269,9 @@ struct VkAccelerationStructureInfoNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkAccelerationStructureCreateInfoNV, VkAccelerationStructureCreateInfoNV);
+
 struct VkAccelerationStructureCreateInfoNVAnnotation
 : public ManagedStructureAnnotation<VkAccelerationStructureCreateInfoNV,true,true> {
     VkAccelerationStructureCreateInfoNVAnnotation(ModuleLibrary & ml)
@@ -8526,7 +9284,9 @@ struct VkAccelerationStructureCreateInfoNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkBindAccelerationStructureMemoryInfoKHR, VkBindAccelerationStructureMemoryInfoKHR);
+
 struct VkBindAccelerationStructureMemoryInfoKHRAnnotation
 : public ManagedStructureAnnotation<VkBindAccelerationStructureMemoryInfoKHR,true,true> {
     VkBindAccelerationStructureMemoryInfoKHRAnnotation(ModuleLibrary & ml)
@@ -8542,7 +9302,9 @@ struct VkBindAccelerationStructureMemoryInfoKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkWriteDescriptorSetAccelerationStructureKHR, VkWriteDescriptorSetAccelerationStructureKHR);
+
 struct VkWriteDescriptorSetAccelerationStructureKHRAnnotation
 : public ManagedStructureAnnotation<VkWriteDescriptorSetAccelerationStructureKHR,true,true> {
     VkWriteDescriptorSetAccelerationStructureKHRAnnotation(ModuleLibrary & ml)
@@ -8556,7 +9318,9 @@ struct VkWriteDescriptorSetAccelerationStructureKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkAccelerationStructureMemoryRequirementsInfoNV, VkAccelerationStructureMemoryRequirementsInfoNV);
+
 struct VkAccelerationStructureMemoryRequirementsInfoNVAnnotation
 : public ManagedStructureAnnotation<VkAccelerationStructureMemoryRequirementsInfoNV,true,true> {
     VkAccelerationStructureMemoryRequirementsInfoNVAnnotation(ModuleLibrary & ml)
@@ -8570,7 +9334,9 @@ struct VkAccelerationStructureMemoryRequirementsInfoNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceRayTracingPropertiesNV, VkPhysicalDeviceRayTracingPropertiesNV);
+
 struct VkPhysicalDeviceRayTracingPropertiesNVAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceRayTracingPropertiesNV,true,true> {
     VkPhysicalDeviceRayTracingPropertiesNVAnnotation(ModuleLibrary & ml)
@@ -8587,7 +9353,9 @@ struct VkPhysicalDeviceRayTracingPropertiesNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkTransformMatrixKHR, VkTransformMatrixKHR);
+
 struct VkTransformMatrixKHRAnnotation
 : public ManagedStructureAnnotation<VkTransformMatrixKHR,true,true> {
     VkTransformMatrixKHRAnnotation(ModuleLibrary & ml)
@@ -8598,7 +9366,9 @@ struct VkTransformMatrixKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkAabbPositionsKHR, VkAabbPositionsKHR);
+
 struct VkAabbPositionsKHRAnnotation
 : public ManagedStructureAnnotation<VkAabbPositionsKHR,true,true> {
     VkAabbPositionsKHRAnnotation(ModuleLibrary & ml)
@@ -8614,7 +9384,21 @@ struct VkAabbPositionsKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkAccelerationStructureInstanceKHR, VkAccelerationStructureInstanceKHR);
+
+__forceinline unsigned int VkAccelerationStructureInstanceKHR_get_instanceCustomIndex(const VkAccelerationStructureInstanceKHR &s) { return f.instanceCustomIndex; }
+__forceinline void VkAccelerationStructureInstanceKHR_set_instanceCustomIndex(VkAccelerationStructureInstanceKHR &s, unsigned int f) { s.instanceCustomIndex = f; }
+
+__forceinline unsigned int VkAccelerationStructureInstanceKHR_get_mask(const VkAccelerationStructureInstanceKHR &s) { return f.mask; }
+__forceinline void VkAccelerationStructureInstanceKHR_set_mask(VkAccelerationStructureInstanceKHR &s, unsigned int f) { s.mask = f; }
+
+__forceinline unsigned int VkAccelerationStructureInstanceKHR_get_instanceShaderBindingTableRecordOffset(const VkAccelerationStructureInstanceKHR &s) { return f.instanceShaderBindingTableRecordOffset; }
+__forceinline void VkAccelerationStructureInstanceKHR_set_instanceShaderBindingTableRecordOffset(VkAccelerationStructureInstanceKHR &s, unsigned int f) { s.instanceShaderBindingTableRecordOffset = f; }
+
+__forceinline unsigned int VkAccelerationStructureInstanceKHR_get_flags(const VkAccelerationStructureInstanceKHR &s) { return f.flags; }
+__forceinline void VkAccelerationStructureInstanceKHR_set_flags(VkAccelerationStructureInstanceKHR &s, unsigned int f) { s.flags = f; }
+
 struct VkAccelerationStructureInstanceKHRAnnotation
 : public ManagedStructureAnnotation<VkAccelerationStructureInstanceKHR,true,true> {
     VkAccelerationStructureInstanceKHRAnnotation(ModuleLibrary & ml)
@@ -8625,7 +9409,9 @@ struct VkAccelerationStructureInstanceKHRAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceRepresentativeFragmentTestFeaturesNV, VkPhysicalDeviceRepresentativeFragmentTestFeaturesNV);
+
 struct VkPhysicalDeviceRepresentativeFragmentTestFeaturesNVAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceRepresentativeFragmentTestFeaturesNV,true,true> {
     VkPhysicalDeviceRepresentativeFragmentTestFeaturesNVAnnotation(ModuleLibrary & ml)
@@ -8638,7 +9424,9 @@ struct VkPhysicalDeviceRepresentativeFragmentTestFeaturesNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPipelineRepresentativeFragmentTestStateCreateInfoNV, VkPipelineRepresentativeFragmentTestStateCreateInfoNV);
+
 struct VkPipelineRepresentativeFragmentTestStateCreateInfoNVAnnotation
 : public ManagedStructureAnnotation<VkPipelineRepresentativeFragmentTestStateCreateInfoNV,true,true> {
     VkPipelineRepresentativeFragmentTestStateCreateInfoNVAnnotation(ModuleLibrary & ml)
@@ -8651,7 +9439,9 @@ struct VkPipelineRepresentativeFragmentTestStateCreateInfoNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceImageViewImageFormatInfoEXT, VkPhysicalDeviceImageViewImageFormatInfoEXT);
+
 struct VkPhysicalDeviceImageViewImageFormatInfoEXTAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceImageViewImageFormatInfoEXT,true,true> {
     VkPhysicalDeviceImageViewImageFormatInfoEXTAnnotation(ModuleLibrary & ml)
@@ -8664,7 +9454,9 @@ struct VkPhysicalDeviceImageViewImageFormatInfoEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkFilterCubicImageViewImageFormatPropertiesEXT, VkFilterCubicImageViewImageFormatPropertiesEXT);
+
 struct VkFilterCubicImageViewImageFormatPropertiesEXTAnnotation
 : public ManagedStructureAnnotation<VkFilterCubicImageViewImageFormatPropertiesEXT,true,true> {
     VkFilterCubicImageViewImageFormatPropertiesEXTAnnotation(ModuleLibrary & ml)
@@ -8678,7 +9470,9 @@ struct VkFilterCubicImageViewImageFormatPropertiesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDeviceQueueGlobalPriorityCreateInfoEXT, VkDeviceQueueGlobalPriorityCreateInfoEXT);
+
 struct VkDeviceQueueGlobalPriorityCreateInfoEXTAnnotation
 : public ManagedStructureAnnotation<VkDeviceQueueGlobalPriorityCreateInfoEXT,true,true> {
     VkDeviceQueueGlobalPriorityCreateInfoEXTAnnotation(ModuleLibrary & ml)
@@ -8691,7 +9485,9 @@ struct VkDeviceQueueGlobalPriorityCreateInfoEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkImportMemoryHostPointerInfoEXT, VkImportMemoryHostPointerInfoEXT);
+
 struct VkImportMemoryHostPointerInfoEXTAnnotation
 : public ManagedStructureAnnotation<VkImportMemoryHostPointerInfoEXT,true,true> {
     VkImportMemoryHostPointerInfoEXTAnnotation(ModuleLibrary & ml)
@@ -8705,7 +9501,9 @@ struct VkImportMemoryHostPointerInfoEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkMemoryHostPointerPropertiesEXT, VkMemoryHostPointerPropertiesEXT);
+
 struct VkMemoryHostPointerPropertiesEXTAnnotation
 : public ManagedStructureAnnotation<VkMemoryHostPointerPropertiesEXT,true,true> {
     VkMemoryHostPointerPropertiesEXTAnnotation(ModuleLibrary & ml)
@@ -8718,7 +9516,9 @@ struct VkMemoryHostPointerPropertiesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceExternalMemoryHostPropertiesEXT, VkPhysicalDeviceExternalMemoryHostPropertiesEXT);
+
 struct VkPhysicalDeviceExternalMemoryHostPropertiesEXTAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceExternalMemoryHostPropertiesEXT,true,true> {
     VkPhysicalDeviceExternalMemoryHostPropertiesEXTAnnotation(ModuleLibrary & ml)
@@ -8730,7 +9530,9 @@ struct VkPhysicalDeviceExternalMemoryHostPropertiesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPipelineCompilerControlCreateInfoAMD, VkPipelineCompilerControlCreateInfoAMD);
+
 struct VkPipelineCompilerControlCreateInfoAMDAnnotation
 : public ManagedStructureAnnotation<VkPipelineCompilerControlCreateInfoAMD,true,true> {
     VkPipelineCompilerControlCreateInfoAMDAnnotation(ModuleLibrary & ml)
@@ -8743,7 +9545,9 @@ struct VkPipelineCompilerControlCreateInfoAMDAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkCalibratedTimestampInfoEXT, VkCalibratedTimestampInfoEXT);
+
 struct VkCalibratedTimestampInfoEXTAnnotation
 : public ManagedStructureAnnotation<VkCalibratedTimestampInfoEXT,true,true> {
     VkCalibratedTimestampInfoEXTAnnotation(ModuleLibrary & ml)
@@ -8756,7 +9560,9 @@ struct VkCalibratedTimestampInfoEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceShaderCorePropertiesAMD, VkPhysicalDeviceShaderCorePropertiesAMD);
+
 struct VkPhysicalDeviceShaderCorePropertiesAMDAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceShaderCorePropertiesAMD,true,true> {
     VkPhysicalDeviceShaderCorePropertiesAMDAnnotation(ModuleLibrary & ml)
@@ -8782,7 +9588,9 @@ struct VkPhysicalDeviceShaderCorePropertiesAMDAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDeviceMemoryOverallocationCreateInfoAMD, VkDeviceMemoryOverallocationCreateInfoAMD);
+
 struct VkDeviceMemoryOverallocationCreateInfoAMDAnnotation
 : public ManagedStructureAnnotation<VkDeviceMemoryOverallocationCreateInfoAMD,true,true> {
     VkDeviceMemoryOverallocationCreateInfoAMDAnnotation(ModuleLibrary & ml)
@@ -8795,7 +9603,9 @@ struct VkDeviceMemoryOverallocationCreateInfoAMDAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT, VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT);
+
 struct VkPhysicalDeviceVertexAttributeDivisorPropertiesEXTAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT,true,true> {
     VkPhysicalDeviceVertexAttributeDivisorPropertiesEXTAnnotation(ModuleLibrary & ml)
@@ -8808,7 +9618,9 @@ struct VkPhysicalDeviceVertexAttributeDivisorPropertiesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkVertexInputBindingDivisorDescriptionEXT, VkVertexInputBindingDivisorDescriptionEXT);
+
 struct VkVertexInputBindingDivisorDescriptionEXTAnnotation
 : public ManagedStructureAnnotation<VkVertexInputBindingDivisorDescriptionEXT,true,true> {
     VkVertexInputBindingDivisorDescriptionEXTAnnotation(ModuleLibrary & ml)
@@ -8820,7 +9632,9 @@ struct VkVertexInputBindingDivisorDescriptionEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPipelineVertexInputDivisorStateCreateInfoEXT, VkPipelineVertexInputDivisorStateCreateInfoEXT);
+
 struct VkPipelineVertexInputDivisorStateCreateInfoEXTAnnotation
 : public ManagedStructureAnnotation<VkPipelineVertexInputDivisorStateCreateInfoEXT,true,true> {
     VkPipelineVertexInputDivisorStateCreateInfoEXTAnnotation(ModuleLibrary & ml)
@@ -8834,7 +9648,9 @@ struct VkPipelineVertexInputDivisorStateCreateInfoEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceVertexAttributeDivisorFeaturesEXT, VkPhysicalDeviceVertexAttributeDivisorFeaturesEXT);
+
 struct VkPhysicalDeviceVertexAttributeDivisorFeaturesEXTAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceVertexAttributeDivisorFeaturesEXT,true,true> {
     VkPhysicalDeviceVertexAttributeDivisorFeaturesEXTAnnotation(ModuleLibrary & ml)
@@ -8848,7 +9664,9 @@ struct VkPhysicalDeviceVertexAttributeDivisorFeaturesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPipelineCreationFeedbackEXT, VkPipelineCreationFeedbackEXT);
+
 struct VkPipelineCreationFeedbackEXTAnnotation
 : public ManagedStructureAnnotation<VkPipelineCreationFeedbackEXT,true,true> {
     VkPipelineCreationFeedbackEXTAnnotation(ModuleLibrary & ml)
@@ -8859,7 +9677,9 @@ struct VkPipelineCreationFeedbackEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPipelineCreationFeedbackCreateInfoEXT, VkPipelineCreationFeedbackCreateInfoEXT);
+
 struct VkPipelineCreationFeedbackCreateInfoEXTAnnotation
 : public ManagedStructureAnnotation<VkPipelineCreationFeedbackCreateInfoEXT,true,true> {
     VkPipelineCreationFeedbackCreateInfoEXTAnnotation(ModuleLibrary & ml)
@@ -8874,7 +9694,9 @@ struct VkPipelineCreationFeedbackCreateInfoEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceComputeShaderDerivativesFeaturesNV, VkPhysicalDeviceComputeShaderDerivativesFeaturesNV);
+
 struct VkPhysicalDeviceComputeShaderDerivativesFeaturesNVAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceComputeShaderDerivativesFeaturesNV,true,true> {
     VkPhysicalDeviceComputeShaderDerivativesFeaturesNVAnnotation(ModuleLibrary & ml)
@@ -8888,7 +9710,9 @@ struct VkPhysicalDeviceComputeShaderDerivativesFeaturesNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceMeshShaderFeaturesNV, VkPhysicalDeviceMeshShaderFeaturesNV);
+
 struct VkPhysicalDeviceMeshShaderFeaturesNVAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceMeshShaderFeaturesNV,true,true> {
     VkPhysicalDeviceMeshShaderFeaturesNVAnnotation(ModuleLibrary & ml)
@@ -8902,7 +9726,9 @@ struct VkPhysicalDeviceMeshShaderFeaturesNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceMeshShaderPropertiesNV, VkPhysicalDeviceMeshShaderPropertiesNV);
+
 struct VkPhysicalDeviceMeshShaderPropertiesNVAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceMeshShaderPropertiesNV,true,true> {
     VkPhysicalDeviceMeshShaderPropertiesNVAnnotation(ModuleLibrary & ml)
@@ -8927,7 +9753,9 @@ struct VkPhysicalDeviceMeshShaderPropertiesNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDrawMeshTasksIndirectCommandNV, VkDrawMeshTasksIndirectCommandNV);
+
 struct VkDrawMeshTasksIndirectCommandNVAnnotation
 : public ManagedStructureAnnotation<VkDrawMeshTasksIndirectCommandNV,true,true> {
     VkDrawMeshTasksIndirectCommandNVAnnotation(ModuleLibrary & ml)
@@ -8939,7 +9767,9 @@ struct VkDrawMeshTasksIndirectCommandNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceFragmentShaderBarycentricFeaturesNV, VkPhysicalDeviceFragmentShaderBarycentricFeaturesNV);
+
 struct VkPhysicalDeviceFragmentShaderBarycentricFeaturesNVAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceFragmentShaderBarycentricFeaturesNV,true,true> {
     VkPhysicalDeviceFragmentShaderBarycentricFeaturesNVAnnotation(ModuleLibrary & ml)
@@ -8952,7 +9782,9 @@ struct VkPhysicalDeviceFragmentShaderBarycentricFeaturesNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceShaderImageFootprintFeaturesNV, VkPhysicalDeviceShaderImageFootprintFeaturesNV);
+
 struct VkPhysicalDeviceShaderImageFootprintFeaturesNVAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceShaderImageFootprintFeaturesNV,true,true> {
     VkPhysicalDeviceShaderImageFootprintFeaturesNVAnnotation(ModuleLibrary & ml)
@@ -8965,7 +9797,9 @@ struct VkPhysicalDeviceShaderImageFootprintFeaturesNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPipelineViewportExclusiveScissorStateCreateInfoNV, VkPipelineViewportExclusiveScissorStateCreateInfoNV);
+
 struct VkPipelineViewportExclusiveScissorStateCreateInfoNVAnnotation
 : public ManagedStructureAnnotation<VkPipelineViewportExclusiveScissorStateCreateInfoNV,true,true> {
     VkPipelineViewportExclusiveScissorStateCreateInfoNVAnnotation(ModuleLibrary & ml)
@@ -8979,7 +9813,9 @@ struct VkPipelineViewportExclusiveScissorStateCreateInfoNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceExclusiveScissorFeaturesNV, VkPhysicalDeviceExclusiveScissorFeaturesNV);
+
 struct VkPhysicalDeviceExclusiveScissorFeaturesNVAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceExclusiveScissorFeaturesNV,true,true> {
     VkPhysicalDeviceExclusiveScissorFeaturesNVAnnotation(ModuleLibrary & ml)
@@ -8992,7 +9828,9 @@ struct VkPhysicalDeviceExclusiveScissorFeaturesNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkQueueFamilyCheckpointPropertiesNV, VkQueueFamilyCheckpointPropertiesNV);
+
 struct VkQueueFamilyCheckpointPropertiesNVAnnotation
 : public ManagedStructureAnnotation<VkQueueFamilyCheckpointPropertiesNV,true,true> {
     VkQueueFamilyCheckpointPropertiesNVAnnotation(ModuleLibrary & ml)
@@ -9005,7 +9843,9 @@ struct VkQueueFamilyCheckpointPropertiesNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkCheckpointDataNV, VkCheckpointDataNV);
+
 struct VkCheckpointDataNVAnnotation
 : public ManagedStructureAnnotation<VkCheckpointDataNV,true,true> {
     VkCheckpointDataNVAnnotation(ModuleLibrary & ml)
@@ -9019,7 +9859,9 @@ struct VkCheckpointDataNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceShaderIntegerFunctions2FeaturesINTEL, VkPhysicalDeviceShaderIntegerFunctions2FeaturesINTEL);
+
 struct VkPhysicalDeviceShaderIntegerFunctions2FeaturesINTELAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceShaderIntegerFunctions2FeaturesINTEL,true,true> {
     VkPhysicalDeviceShaderIntegerFunctions2FeaturesINTELAnnotation(ModuleLibrary & ml)
@@ -9032,7 +9874,9 @@ struct VkPhysicalDeviceShaderIntegerFunctions2FeaturesINTELAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPerformanceValueDataINTEL, VkPerformanceValueDataINTEL);
+
 struct VkPerformanceValueDataINTELAnnotation
 : public ManagedStructureAnnotation<VkPerformanceValueDataINTEL,true,true> {
     VkPerformanceValueDataINTELAnnotation(ModuleLibrary & ml)
@@ -9046,7 +9890,9 @@ struct VkPerformanceValueDataINTELAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPerformanceValueINTEL, VkPerformanceValueINTEL);
+
 struct VkPerformanceValueINTELAnnotation
 : public ManagedStructureAnnotation<VkPerformanceValueINTEL,true,true> {
     VkPerformanceValueINTELAnnotation(ModuleLibrary & ml)
@@ -9058,7 +9904,9 @@ struct VkPerformanceValueINTELAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkInitializePerformanceApiInfoINTEL, VkInitializePerformanceApiInfoINTEL);
+
 struct VkInitializePerformanceApiInfoINTELAnnotation
 : public ManagedStructureAnnotation<VkInitializePerformanceApiInfoINTEL,true,true> {
     VkInitializePerformanceApiInfoINTELAnnotation(ModuleLibrary & ml)
@@ -9071,7 +9919,9 @@ struct VkInitializePerformanceApiInfoINTELAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkQueryPoolPerformanceQueryCreateInfoINTEL, VkQueryPoolPerformanceQueryCreateInfoINTEL);
+
 struct VkQueryPoolPerformanceQueryCreateInfoINTELAnnotation
 : public ManagedStructureAnnotation<VkQueryPoolPerformanceQueryCreateInfoINTEL,true,true> {
     VkQueryPoolPerformanceQueryCreateInfoINTELAnnotation(ModuleLibrary & ml)
@@ -9084,7 +9934,9 @@ struct VkQueryPoolPerformanceQueryCreateInfoINTELAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPerformanceMarkerInfoINTEL, VkPerformanceMarkerInfoINTEL);
+
 struct VkPerformanceMarkerInfoINTELAnnotation
 : public ManagedStructureAnnotation<VkPerformanceMarkerInfoINTEL,true,true> {
     VkPerformanceMarkerInfoINTELAnnotation(ModuleLibrary & ml)
@@ -9096,7 +9948,9 @@ struct VkPerformanceMarkerInfoINTELAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPerformanceStreamMarkerInfoINTEL, VkPerformanceStreamMarkerInfoINTEL);
+
 struct VkPerformanceStreamMarkerInfoINTELAnnotation
 : public ManagedStructureAnnotation<VkPerformanceStreamMarkerInfoINTEL,true,true> {
     VkPerformanceStreamMarkerInfoINTELAnnotation(ModuleLibrary & ml)
@@ -9109,7 +9963,9 @@ struct VkPerformanceStreamMarkerInfoINTELAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPerformanceOverrideInfoINTEL, VkPerformanceOverrideInfoINTEL);
+
 struct VkPerformanceOverrideInfoINTELAnnotation
 : public ManagedStructureAnnotation<VkPerformanceOverrideInfoINTEL,true,true> {
     VkPerformanceOverrideInfoINTELAnnotation(ModuleLibrary & ml)
@@ -9123,7 +9979,9 @@ struct VkPerformanceOverrideInfoINTELAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPerformanceConfigurationAcquireInfoINTEL, VkPerformanceConfigurationAcquireInfoINTEL);
+
 struct VkPerformanceConfigurationAcquireInfoINTELAnnotation
 : public ManagedStructureAnnotation<VkPerformanceConfigurationAcquireInfoINTEL,true,true> {
     VkPerformanceConfigurationAcquireInfoINTELAnnotation(ModuleLibrary & ml)
@@ -9136,7 +9994,9 @@ struct VkPerformanceConfigurationAcquireInfoINTELAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDevicePCIBusInfoPropertiesEXT, VkPhysicalDevicePCIBusInfoPropertiesEXT);
+
 struct VkPhysicalDevicePCIBusInfoPropertiesEXTAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDevicePCIBusInfoPropertiesEXT,true,true> {
     VkPhysicalDevicePCIBusInfoPropertiesEXTAnnotation(ModuleLibrary & ml)
@@ -9152,7 +10012,9 @@ struct VkPhysicalDevicePCIBusInfoPropertiesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDisplayNativeHdrSurfaceCapabilitiesAMD, VkDisplayNativeHdrSurfaceCapabilitiesAMD);
+
 struct VkDisplayNativeHdrSurfaceCapabilitiesAMDAnnotation
 : public ManagedStructureAnnotation<VkDisplayNativeHdrSurfaceCapabilitiesAMD,true,true> {
     VkDisplayNativeHdrSurfaceCapabilitiesAMDAnnotation(ModuleLibrary & ml)
@@ -9165,7 +10027,9 @@ struct VkDisplayNativeHdrSurfaceCapabilitiesAMDAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkSwapchainDisplayNativeHdrCreateInfoAMD, VkSwapchainDisplayNativeHdrCreateInfoAMD);
+
 struct VkSwapchainDisplayNativeHdrCreateInfoAMDAnnotation
 : public ManagedStructureAnnotation<VkSwapchainDisplayNativeHdrCreateInfoAMD,true,true> {
     VkSwapchainDisplayNativeHdrCreateInfoAMDAnnotation(ModuleLibrary & ml)
@@ -9178,7 +10042,9 @@ struct VkSwapchainDisplayNativeHdrCreateInfoAMDAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceFragmentDensityMapFeaturesEXT, VkPhysicalDeviceFragmentDensityMapFeaturesEXT);
+
 struct VkPhysicalDeviceFragmentDensityMapFeaturesEXTAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceFragmentDensityMapFeaturesEXT,true,true> {
     VkPhysicalDeviceFragmentDensityMapFeaturesEXTAnnotation(ModuleLibrary & ml)
@@ -9193,7 +10059,9 @@ struct VkPhysicalDeviceFragmentDensityMapFeaturesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceFragmentDensityMapPropertiesEXT, VkPhysicalDeviceFragmentDensityMapPropertiesEXT);
+
 struct VkPhysicalDeviceFragmentDensityMapPropertiesEXTAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceFragmentDensityMapPropertiesEXT,true,true> {
     VkPhysicalDeviceFragmentDensityMapPropertiesEXTAnnotation(ModuleLibrary & ml)
@@ -9208,7 +10076,9 @@ struct VkPhysicalDeviceFragmentDensityMapPropertiesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkRenderPassFragmentDensityMapCreateInfoEXT, VkRenderPassFragmentDensityMapCreateInfoEXT);
+
 struct VkRenderPassFragmentDensityMapCreateInfoEXTAnnotation
 : public ManagedStructureAnnotation<VkRenderPassFragmentDensityMapCreateInfoEXT,true,true> {
     VkRenderPassFragmentDensityMapCreateInfoEXTAnnotation(ModuleLibrary & ml)
@@ -9221,7 +10091,9 @@ struct VkRenderPassFragmentDensityMapCreateInfoEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceSubgroupSizeControlFeaturesEXT, VkPhysicalDeviceSubgroupSizeControlFeaturesEXT);
+
 struct VkPhysicalDeviceSubgroupSizeControlFeaturesEXTAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceSubgroupSizeControlFeaturesEXT,true,true> {
     VkPhysicalDeviceSubgroupSizeControlFeaturesEXTAnnotation(ModuleLibrary & ml)
@@ -9235,7 +10107,9 @@ struct VkPhysicalDeviceSubgroupSizeControlFeaturesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceSubgroupSizeControlPropertiesEXT, VkPhysicalDeviceSubgroupSizeControlPropertiesEXT);
+
 struct VkPhysicalDeviceSubgroupSizeControlPropertiesEXTAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceSubgroupSizeControlPropertiesEXT,true,true> {
     VkPhysicalDeviceSubgroupSizeControlPropertiesEXTAnnotation(ModuleLibrary & ml)
@@ -9251,7 +10125,9 @@ struct VkPhysicalDeviceSubgroupSizeControlPropertiesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPipelineShaderStageRequiredSubgroupSizeCreateInfoEXT, VkPipelineShaderStageRequiredSubgroupSizeCreateInfoEXT);
+
 struct VkPipelineShaderStageRequiredSubgroupSizeCreateInfoEXTAnnotation
 : public ManagedStructureAnnotation<VkPipelineShaderStageRequiredSubgroupSizeCreateInfoEXT,true,true> {
     VkPipelineShaderStageRequiredSubgroupSizeCreateInfoEXTAnnotation(ModuleLibrary & ml)
@@ -9264,7 +10140,9 @@ struct VkPipelineShaderStageRequiredSubgroupSizeCreateInfoEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceShaderCoreProperties2AMD, VkPhysicalDeviceShaderCoreProperties2AMD);
+
 struct VkPhysicalDeviceShaderCoreProperties2AMDAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceShaderCoreProperties2AMD,true,true> {
     VkPhysicalDeviceShaderCoreProperties2AMDAnnotation(ModuleLibrary & ml)
@@ -9278,7 +10156,9 @@ struct VkPhysicalDeviceShaderCoreProperties2AMDAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceCoherentMemoryFeaturesAMD, VkPhysicalDeviceCoherentMemoryFeaturesAMD);
+
 struct VkPhysicalDeviceCoherentMemoryFeaturesAMDAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceCoherentMemoryFeaturesAMD,true,true> {
     VkPhysicalDeviceCoherentMemoryFeaturesAMDAnnotation(ModuleLibrary & ml)
@@ -9291,7 +10171,9 @@ struct VkPhysicalDeviceCoherentMemoryFeaturesAMDAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceMemoryBudgetPropertiesEXT, VkPhysicalDeviceMemoryBudgetPropertiesEXT);
+
 struct VkPhysicalDeviceMemoryBudgetPropertiesEXTAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceMemoryBudgetPropertiesEXT,true,true> {
     VkPhysicalDeviceMemoryBudgetPropertiesEXTAnnotation(ModuleLibrary & ml)
@@ -9305,7 +10187,9 @@ struct VkPhysicalDeviceMemoryBudgetPropertiesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceMemoryPriorityFeaturesEXT, VkPhysicalDeviceMemoryPriorityFeaturesEXT);
+
 struct VkPhysicalDeviceMemoryPriorityFeaturesEXTAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceMemoryPriorityFeaturesEXT,true,true> {
     VkPhysicalDeviceMemoryPriorityFeaturesEXTAnnotation(ModuleLibrary & ml)
@@ -9318,7 +10202,9 @@ struct VkPhysicalDeviceMemoryPriorityFeaturesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkMemoryPriorityAllocateInfoEXT, VkMemoryPriorityAllocateInfoEXT);
+
 struct VkMemoryPriorityAllocateInfoEXTAnnotation
 : public ManagedStructureAnnotation<VkMemoryPriorityAllocateInfoEXT,true,true> {
     VkMemoryPriorityAllocateInfoEXTAnnotation(ModuleLibrary & ml)
@@ -9331,7 +10217,9 @@ struct VkMemoryPriorityAllocateInfoEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV, VkPhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV);
+
 struct VkPhysicalDeviceDedicatedAllocationImageAliasingFeaturesNVAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV,true,true> {
     VkPhysicalDeviceDedicatedAllocationImageAliasingFeaturesNVAnnotation(ModuleLibrary & ml)
@@ -9344,7 +10232,9 @@ struct VkPhysicalDeviceDedicatedAllocationImageAliasingFeaturesNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceBufferDeviceAddressFeaturesEXT, VkPhysicalDeviceBufferDeviceAddressFeaturesEXT);
+
 struct VkPhysicalDeviceBufferDeviceAddressFeaturesEXTAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceBufferDeviceAddressFeaturesEXT,true,true> {
     VkPhysicalDeviceBufferDeviceAddressFeaturesEXTAnnotation(ModuleLibrary & ml)
@@ -9359,7 +10249,9 @@ struct VkPhysicalDeviceBufferDeviceAddressFeaturesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkBufferDeviceAddressCreateInfoEXT, VkBufferDeviceAddressCreateInfoEXT);
+
 struct VkBufferDeviceAddressCreateInfoEXTAnnotation
 : public ManagedStructureAnnotation<VkBufferDeviceAddressCreateInfoEXT,true,true> {
     VkBufferDeviceAddressCreateInfoEXTAnnotation(ModuleLibrary & ml)
@@ -9371,7 +10263,9 @@ struct VkBufferDeviceAddressCreateInfoEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceToolPropertiesEXT, VkPhysicalDeviceToolPropertiesEXT);
+
 struct VkPhysicalDeviceToolPropertiesEXTAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceToolPropertiesEXT,true,true> {
     VkPhysicalDeviceToolPropertiesEXTAnnotation(ModuleLibrary & ml)
@@ -9384,7 +10278,9 @@ struct VkPhysicalDeviceToolPropertiesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkValidationFeaturesEXT, VkValidationFeaturesEXT);
+
 struct VkValidationFeaturesEXTAnnotation
 : public ManagedStructureAnnotation<VkValidationFeaturesEXT,true,true> {
     VkValidationFeaturesEXTAnnotation(ModuleLibrary & ml)
@@ -9400,7 +10296,9 @@ struct VkValidationFeaturesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkCooperativeMatrixPropertiesNV, VkCooperativeMatrixPropertiesNV);
+
 struct VkCooperativeMatrixPropertiesNVAnnotation
 : public ManagedStructureAnnotation<VkCooperativeMatrixPropertiesNV,true,true> {
     VkCooperativeMatrixPropertiesNVAnnotation(ModuleLibrary & ml)
@@ -9420,7 +10318,9 @@ struct VkCooperativeMatrixPropertiesNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceCooperativeMatrixFeaturesNV, VkPhysicalDeviceCooperativeMatrixFeaturesNV);
+
 struct VkPhysicalDeviceCooperativeMatrixFeaturesNVAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceCooperativeMatrixFeaturesNV,true,true> {
     VkPhysicalDeviceCooperativeMatrixFeaturesNVAnnotation(ModuleLibrary & ml)
@@ -9434,7 +10334,9 @@ struct VkPhysicalDeviceCooperativeMatrixFeaturesNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceCooperativeMatrixPropertiesNV, VkPhysicalDeviceCooperativeMatrixPropertiesNV);
+
 struct VkPhysicalDeviceCooperativeMatrixPropertiesNVAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceCooperativeMatrixPropertiesNV,true,true> {
     VkPhysicalDeviceCooperativeMatrixPropertiesNVAnnotation(ModuleLibrary & ml)
@@ -9447,7 +10349,9 @@ struct VkPhysicalDeviceCooperativeMatrixPropertiesNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceCoverageReductionModeFeaturesNV, VkPhysicalDeviceCoverageReductionModeFeaturesNV);
+
 struct VkPhysicalDeviceCoverageReductionModeFeaturesNVAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceCoverageReductionModeFeaturesNV,true,true> {
     VkPhysicalDeviceCoverageReductionModeFeaturesNVAnnotation(ModuleLibrary & ml)
@@ -9460,7 +10364,9 @@ struct VkPhysicalDeviceCoverageReductionModeFeaturesNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPipelineCoverageReductionStateCreateInfoNV, VkPipelineCoverageReductionStateCreateInfoNV);
+
 struct VkPipelineCoverageReductionStateCreateInfoNVAnnotation
 : public ManagedStructureAnnotation<VkPipelineCoverageReductionStateCreateInfoNV,true,true> {
     VkPipelineCoverageReductionStateCreateInfoNVAnnotation(ModuleLibrary & ml)
@@ -9474,7 +10380,9 @@ struct VkPipelineCoverageReductionStateCreateInfoNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkFramebufferMixedSamplesCombinationNV, VkFramebufferMixedSamplesCombinationNV);
+
 struct VkFramebufferMixedSamplesCombinationNVAnnotation
 : public ManagedStructureAnnotation<VkFramebufferMixedSamplesCombinationNV,true,true> {
     VkFramebufferMixedSamplesCombinationNVAnnotation(ModuleLibrary & ml)
@@ -9490,7 +10398,9 @@ struct VkFramebufferMixedSamplesCombinationNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceFragmentShaderInterlockFeaturesEXT, VkPhysicalDeviceFragmentShaderInterlockFeaturesEXT);
+
 struct VkPhysicalDeviceFragmentShaderInterlockFeaturesEXTAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceFragmentShaderInterlockFeaturesEXT,true,true> {
     VkPhysicalDeviceFragmentShaderInterlockFeaturesEXTAnnotation(ModuleLibrary & ml)
@@ -9505,7 +10415,9 @@ struct VkPhysicalDeviceFragmentShaderInterlockFeaturesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceYcbcrImageArraysFeaturesEXT, VkPhysicalDeviceYcbcrImageArraysFeaturesEXT);
+
 struct VkPhysicalDeviceYcbcrImageArraysFeaturesEXTAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceYcbcrImageArraysFeaturesEXT,true,true> {
     VkPhysicalDeviceYcbcrImageArraysFeaturesEXTAnnotation(ModuleLibrary & ml)
@@ -9518,7 +10430,9 @@ struct VkPhysicalDeviceYcbcrImageArraysFeaturesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkHeadlessSurfaceCreateInfoEXT, VkHeadlessSurfaceCreateInfoEXT);
+
 struct VkHeadlessSurfaceCreateInfoEXTAnnotation
 : public ManagedStructureAnnotation<VkHeadlessSurfaceCreateInfoEXT,true,true> {
     VkHeadlessSurfaceCreateInfoEXTAnnotation(ModuleLibrary & ml)
@@ -9531,7 +10445,9 @@ struct VkHeadlessSurfaceCreateInfoEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceLineRasterizationFeaturesEXT, VkPhysicalDeviceLineRasterizationFeaturesEXT);
+
 struct VkPhysicalDeviceLineRasterizationFeaturesEXTAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceLineRasterizationFeaturesEXT,true,true> {
     VkPhysicalDeviceLineRasterizationFeaturesEXTAnnotation(ModuleLibrary & ml)
@@ -9549,7 +10465,9 @@ struct VkPhysicalDeviceLineRasterizationFeaturesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceLineRasterizationPropertiesEXT, VkPhysicalDeviceLineRasterizationPropertiesEXT);
+
 struct VkPhysicalDeviceLineRasterizationPropertiesEXTAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceLineRasterizationPropertiesEXT,true,true> {
     VkPhysicalDeviceLineRasterizationPropertiesEXTAnnotation(ModuleLibrary & ml)
@@ -9562,7 +10480,9 @@ struct VkPhysicalDeviceLineRasterizationPropertiesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPipelineRasterizationLineStateCreateInfoEXT, VkPipelineRasterizationLineStateCreateInfoEXT);
+
 struct VkPipelineRasterizationLineStateCreateInfoEXTAnnotation
 : public ManagedStructureAnnotation<VkPipelineRasterizationLineStateCreateInfoEXT,true,true> {
     VkPipelineRasterizationLineStateCreateInfoEXTAnnotation(ModuleLibrary & ml)
@@ -9578,7 +10498,9 @@ struct VkPipelineRasterizationLineStateCreateInfoEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceShaderAtomicFloatFeaturesEXT, VkPhysicalDeviceShaderAtomicFloatFeaturesEXT);
+
 struct VkPhysicalDeviceShaderAtomicFloatFeaturesEXTAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceShaderAtomicFloatFeaturesEXT,true,true> {
     VkPhysicalDeviceShaderAtomicFloatFeaturesEXTAnnotation(ModuleLibrary & ml)
@@ -9602,7 +10524,9 @@ struct VkPhysicalDeviceShaderAtomicFloatFeaturesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceIndexTypeUint8FeaturesEXT, VkPhysicalDeviceIndexTypeUint8FeaturesEXT);
+
 struct VkPhysicalDeviceIndexTypeUint8FeaturesEXTAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceIndexTypeUint8FeaturesEXT,true,true> {
     VkPhysicalDeviceIndexTypeUint8FeaturesEXTAnnotation(ModuleLibrary & ml)
@@ -9615,7 +10539,9 @@ struct VkPhysicalDeviceIndexTypeUint8FeaturesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceExtendedDynamicStateFeaturesEXT, VkPhysicalDeviceExtendedDynamicStateFeaturesEXT);
+
 struct VkPhysicalDeviceExtendedDynamicStateFeaturesEXTAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceExtendedDynamicStateFeaturesEXT,true,true> {
     VkPhysicalDeviceExtendedDynamicStateFeaturesEXTAnnotation(ModuleLibrary & ml)
@@ -9628,7 +10554,9 @@ struct VkPhysicalDeviceExtendedDynamicStateFeaturesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXT, VkPhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXT);
+
 struct VkPhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXTAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXT,true,true> {
     VkPhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXTAnnotation(ModuleLibrary & ml)
@@ -9641,7 +10569,9 @@ struct VkPhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceDeviceGeneratedCommandsPropertiesNV, VkPhysicalDeviceDeviceGeneratedCommandsPropertiesNV);
+
 struct VkPhysicalDeviceDeviceGeneratedCommandsPropertiesNVAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceDeviceGeneratedCommandsPropertiesNV,true,true> {
     VkPhysicalDeviceDeviceGeneratedCommandsPropertiesNVAnnotation(ModuleLibrary & ml)
@@ -9662,7 +10592,9 @@ struct VkPhysicalDeviceDeviceGeneratedCommandsPropertiesNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceDeviceGeneratedCommandsFeaturesNV, VkPhysicalDeviceDeviceGeneratedCommandsFeaturesNV);
+
 struct VkPhysicalDeviceDeviceGeneratedCommandsFeaturesNVAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceDeviceGeneratedCommandsFeaturesNV,true,true> {
     VkPhysicalDeviceDeviceGeneratedCommandsFeaturesNVAnnotation(ModuleLibrary & ml)
@@ -9675,7 +10607,9 @@ struct VkPhysicalDeviceDeviceGeneratedCommandsFeaturesNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkGraphicsShaderGroupCreateInfoNV, VkGraphicsShaderGroupCreateInfoNV);
+
 struct VkGraphicsShaderGroupCreateInfoNVAnnotation
 : public ManagedStructureAnnotation<VkGraphicsShaderGroupCreateInfoNV,true,true> {
     VkGraphicsShaderGroupCreateInfoNVAnnotation(ModuleLibrary & ml)
@@ -9691,7 +10625,9 @@ struct VkGraphicsShaderGroupCreateInfoNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkGraphicsPipelineShaderGroupsCreateInfoNV, VkGraphicsPipelineShaderGroupsCreateInfoNV);
+
 struct VkGraphicsPipelineShaderGroupsCreateInfoNVAnnotation
 : public ManagedStructureAnnotation<VkGraphicsPipelineShaderGroupsCreateInfoNV,true,true> {
     VkGraphicsPipelineShaderGroupsCreateInfoNVAnnotation(ModuleLibrary & ml)
@@ -9707,7 +10643,9 @@ struct VkGraphicsPipelineShaderGroupsCreateInfoNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkBindShaderGroupIndirectCommandNV, VkBindShaderGroupIndirectCommandNV);
+
 struct VkBindShaderGroupIndirectCommandNVAnnotation
 : public ManagedStructureAnnotation<VkBindShaderGroupIndirectCommandNV,true,true> {
     VkBindShaderGroupIndirectCommandNVAnnotation(ModuleLibrary & ml)
@@ -9718,7 +10656,9 @@ struct VkBindShaderGroupIndirectCommandNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkBindIndexBufferIndirectCommandNV, VkBindIndexBufferIndirectCommandNV);
+
 struct VkBindIndexBufferIndirectCommandNVAnnotation
 : public ManagedStructureAnnotation<VkBindIndexBufferIndirectCommandNV,true,true> {
     VkBindIndexBufferIndirectCommandNVAnnotation(ModuleLibrary & ml)
@@ -9730,7 +10670,9 @@ struct VkBindIndexBufferIndirectCommandNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkBindVertexBufferIndirectCommandNV, VkBindVertexBufferIndirectCommandNV);
+
 struct VkBindVertexBufferIndirectCommandNVAnnotation
 : public ManagedStructureAnnotation<VkBindVertexBufferIndirectCommandNV,true,true> {
     VkBindVertexBufferIndirectCommandNVAnnotation(ModuleLibrary & ml)
@@ -9742,7 +10684,9 @@ struct VkBindVertexBufferIndirectCommandNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkSetStateFlagsIndirectCommandNV, VkSetStateFlagsIndirectCommandNV);
+
 struct VkSetStateFlagsIndirectCommandNVAnnotation
 : public ManagedStructureAnnotation<VkSetStateFlagsIndirectCommandNV,true,true> {
     VkSetStateFlagsIndirectCommandNVAnnotation(ModuleLibrary & ml)
@@ -9753,7 +10697,9 @@ struct VkSetStateFlagsIndirectCommandNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkIndirectCommandsStreamNV, VkIndirectCommandsStreamNV);
+
 struct VkIndirectCommandsStreamNVAnnotation
 : public ManagedStructureAnnotation<VkIndirectCommandsStreamNV,true,true> {
     VkIndirectCommandsStreamNVAnnotation(ModuleLibrary & ml)
@@ -9764,7 +10710,9 @@ struct VkIndirectCommandsStreamNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkIndirectCommandsLayoutTokenNV, VkIndirectCommandsLayoutTokenNV);
+
 struct VkIndirectCommandsLayoutTokenNVAnnotation
 : public ManagedStructureAnnotation<VkIndirectCommandsLayoutTokenNV,true,true> {
     VkIndirectCommandsLayoutTokenNVAnnotation(ModuleLibrary & ml)
@@ -9789,7 +10737,9 @@ struct VkIndirectCommandsLayoutTokenNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkIndirectCommandsLayoutCreateInfoNV, VkIndirectCommandsLayoutCreateInfoNV);
+
 struct VkIndirectCommandsLayoutCreateInfoNVAnnotation
 : public ManagedStructureAnnotation<VkIndirectCommandsLayoutCreateInfoNV,true,true> {
     VkIndirectCommandsLayoutCreateInfoNVAnnotation(ModuleLibrary & ml)
@@ -9807,7 +10757,9 @@ struct VkIndirectCommandsLayoutCreateInfoNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkGeneratedCommandsInfoNV, VkGeneratedCommandsInfoNV);
+
 struct VkGeneratedCommandsInfoNVAnnotation
 : public ManagedStructureAnnotation<VkGeneratedCommandsInfoNV,true,true> {
     VkGeneratedCommandsInfoNVAnnotation(ModuleLibrary & ml)
@@ -9828,7 +10780,9 @@ struct VkGeneratedCommandsInfoNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkGeneratedCommandsMemoryRequirementsInfoNV, VkGeneratedCommandsMemoryRequirementsInfoNV);
+
 struct VkGeneratedCommandsMemoryRequirementsInfoNVAnnotation
 : public ManagedStructureAnnotation<VkGeneratedCommandsMemoryRequirementsInfoNV,true,true> {
     VkGeneratedCommandsMemoryRequirementsInfoNVAnnotation(ModuleLibrary & ml)
@@ -9844,7 +10798,9 @@ struct VkGeneratedCommandsMemoryRequirementsInfoNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceTexelBufferAlignmentFeaturesEXT, VkPhysicalDeviceTexelBufferAlignmentFeaturesEXT);
+
 struct VkPhysicalDeviceTexelBufferAlignmentFeaturesEXTAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceTexelBufferAlignmentFeaturesEXT,true,true> {
     VkPhysicalDeviceTexelBufferAlignmentFeaturesEXTAnnotation(ModuleLibrary & ml)
@@ -9857,7 +10813,9 @@ struct VkPhysicalDeviceTexelBufferAlignmentFeaturesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceTexelBufferAlignmentPropertiesEXT, VkPhysicalDeviceTexelBufferAlignmentPropertiesEXT);
+
 struct VkPhysicalDeviceTexelBufferAlignmentPropertiesEXTAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceTexelBufferAlignmentPropertiesEXT,true,true> {
     VkPhysicalDeviceTexelBufferAlignmentPropertiesEXTAnnotation(ModuleLibrary & ml)
@@ -9871,7 +10829,9 @@ struct VkPhysicalDeviceTexelBufferAlignmentPropertiesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkRenderPassTransformBeginInfoQCOM, VkRenderPassTransformBeginInfoQCOM);
+
 struct VkRenderPassTransformBeginInfoQCOMAnnotation
 : public ManagedStructureAnnotation<VkRenderPassTransformBeginInfoQCOM,true,true> {
     VkRenderPassTransformBeginInfoQCOMAnnotation(ModuleLibrary & ml)
@@ -9884,7 +10844,9 @@ struct VkRenderPassTransformBeginInfoQCOMAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkCommandBufferInheritanceRenderPassTransformInfoQCOM, VkCommandBufferInheritanceRenderPassTransformInfoQCOM);
+
 struct VkCommandBufferInheritanceRenderPassTransformInfoQCOMAnnotation
 : public ManagedStructureAnnotation<VkCommandBufferInheritanceRenderPassTransformInfoQCOM,true,true> {
     VkCommandBufferInheritanceRenderPassTransformInfoQCOMAnnotation(ModuleLibrary & ml)
@@ -9898,7 +10860,9 @@ struct VkCommandBufferInheritanceRenderPassTransformInfoQCOMAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceRobustness2FeaturesEXT, VkPhysicalDeviceRobustness2FeaturesEXT);
+
 struct VkPhysicalDeviceRobustness2FeaturesEXTAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceRobustness2FeaturesEXT,true,true> {
     VkPhysicalDeviceRobustness2FeaturesEXTAnnotation(ModuleLibrary & ml)
@@ -9913,7 +10877,9 @@ struct VkPhysicalDeviceRobustness2FeaturesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceRobustness2PropertiesEXT, VkPhysicalDeviceRobustness2PropertiesEXT);
+
 struct VkPhysicalDeviceRobustness2PropertiesEXTAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceRobustness2PropertiesEXT,true,true> {
     VkPhysicalDeviceRobustness2PropertiesEXTAnnotation(ModuleLibrary & ml)
@@ -9925,7 +10891,9 @@ struct VkPhysicalDeviceRobustness2PropertiesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkSamplerCustomBorderColorCreateInfoEXT, VkSamplerCustomBorderColorCreateInfoEXT);
+
 struct VkSamplerCustomBorderColorCreateInfoEXTAnnotation
 : public ManagedStructureAnnotation<VkSamplerCustomBorderColorCreateInfoEXT,true,true> {
     VkSamplerCustomBorderColorCreateInfoEXTAnnotation(ModuleLibrary & ml)
@@ -9939,7 +10907,9 @@ struct VkSamplerCustomBorderColorCreateInfoEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceCustomBorderColorPropertiesEXT, VkPhysicalDeviceCustomBorderColorPropertiesEXT);
+
 struct VkPhysicalDeviceCustomBorderColorPropertiesEXTAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceCustomBorderColorPropertiesEXT,true,true> {
     VkPhysicalDeviceCustomBorderColorPropertiesEXTAnnotation(ModuleLibrary & ml)
@@ -9952,7 +10922,9 @@ struct VkPhysicalDeviceCustomBorderColorPropertiesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceCustomBorderColorFeaturesEXT, VkPhysicalDeviceCustomBorderColorFeaturesEXT);
+
 struct VkPhysicalDeviceCustomBorderColorFeaturesEXTAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceCustomBorderColorFeaturesEXT,true,true> {
     VkPhysicalDeviceCustomBorderColorFeaturesEXTAnnotation(ModuleLibrary & ml)
@@ -9966,7 +10938,9 @@ struct VkPhysicalDeviceCustomBorderColorFeaturesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDevicePrivateDataFeaturesEXT, VkPhysicalDevicePrivateDataFeaturesEXT);
+
 struct VkPhysicalDevicePrivateDataFeaturesEXTAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDevicePrivateDataFeaturesEXT,true,true> {
     VkPhysicalDevicePrivateDataFeaturesEXTAnnotation(ModuleLibrary & ml)
@@ -9979,7 +10953,9 @@ struct VkPhysicalDevicePrivateDataFeaturesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDevicePrivateDataCreateInfoEXT, VkDevicePrivateDataCreateInfoEXT);
+
 struct VkDevicePrivateDataCreateInfoEXTAnnotation
 : public ManagedStructureAnnotation<VkDevicePrivateDataCreateInfoEXT,true,true> {
     VkDevicePrivateDataCreateInfoEXTAnnotation(ModuleLibrary & ml)
@@ -9992,7 +10968,9 @@ struct VkDevicePrivateDataCreateInfoEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPrivateDataSlotCreateInfoEXT, VkPrivateDataSlotCreateInfoEXT);
+
 struct VkPrivateDataSlotCreateInfoEXTAnnotation
 : public ManagedStructureAnnotation<VkPrivateDataSlotCreateInfoEXT,true,true> {
     VkPrivateDataSlotCreateInfoEXTAnnotation(ModuleLibrary & ml)
@@ -10005,7 +10983,9 @@ struct VkPrivateDataSlotCreateInfoEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDevicePipelineCreationCacheControlFeaturesEXT, VkPhysicalDevicePipelineCreationCacheControlFeaturesEXT);
+
 struct VkPhysicalDevicePipelineCreationCacheControlFeaturesEXTAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDevicePipelineCreationCacheControlFeaturesEXT,true,true> {
     VkPhysicalDevicePipelineCreationCacheControlFeaturesEXTAnnotation(ModuleLibrary & ml)
@@ -10018,7 +10998,9 @@ struct VkPhysicalDevicePipelineCreationCacheControlFeaturesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceDiagnosticsConfigFeaturesNV, VkPhysicalDeviceDiagnosticsConfigFeaturesNV);
+
 struct VkPhysicalDeviceDiagnosticsConfigFeaturesNVAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceDiagnosticsConfigFeaturesNV,true,true> {
     VkPhysicalDeviceDiagnosticsConfigFeaturesNVAnnotation(ModuleLibrary & ml)
@@ -10031,7 +11013,9 @@ struct VkPhysicalDeviceDiagnosticsConfigFeaturesNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkDeviceDiagnosticsConfigCreateInfoNV, VkDeviceDiagnosticsConfigCreateInfoNV);
+
 struct VkDeviceDiagnosticsConfigCreateInfoNVAnnotation
 : public ManagedStructureAnnotation<VkDeviceDiagnosticsConfigCreateInfoNV,true,true> {
     VkDeviceDiagnosticsConfigCreateInfoNVAnnotation(ModuleLibrary & ml)
@@ -10044,7 +11028,9 @@ struct VkDeviceDiagnosticsConfigCreateInfoNVAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceFragmentDensityMap2FeaturesEXT, VkPhysicalDeviceFragmentDensityMap2FeaturesEXT);
+
 struct VkPhysicalDeviceFragmentDensityMap2FeaturesEXTAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceFragmentDensityMap2FeaturesEXT,true,true> {
     VkPhysicalDeviceFragmentDensityMap2FeaturesEXTAnnotation(ModuleLibrary & ml)
@@ -10057,7 +11043,9 @@ struct VkPhysicalDeviceFragmentDensityMap2FeaturesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceFragmentDensityMap2PropertiesEXT, VkPhysicalDeviceFragmentDensityMap2PropertiesEXT);
+
 struct VkPhysicalDeviceFragmentDensityMap2PropertiesEXTAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceFragmentDensityMap2PropertiesEXT,true,true> {
     VkPhysicalDeviceFragmentDensityMap2PropertiesEXTAnnotation(ModuleLibrary & ml)
@@ -10073,7 +11061,9 @@ struct VkPhysicalDeviceFragmentDensityMap2PropertiesEXTAnnotation
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
 };
+
 MAKE_TYPE_FACTORY(VkPhysicalDeviceImageRobustnessFeaturesEXT, VkPhysicalDeviceImageRobustnessFeaturesEXT);
+
 struct VkPhysicalDeviceImageRobustnessFeaturesEXTAnnotation
 : public ManagedStructureAnnotation<VkPhysicalDeviceImageRobustnessFeaturesEXT,true,true> {
     VkPhysicalDeviceImageRobustnessFeaturesEXTAnnotation(ModuleLibrary & ml)
@@ -10698,6 +11688,27 @@ public:
         addAnnotation(make_smart<VkPhysicalDeviceRayTracingPropertiesNVAnnotation>(lib));
         addAnnotation(make_smart<VkTransformMatrixKHRAnnotation>(lib));
         addAnnotation(make_smart<VkAabbPositionsKHRAnnotation>(lib));
+        
+        addExtern<DAS_BIND_FUN(VkAccelerationStructureInstanceKHR_get_instanceCustomIndex)>(*this, lib, "VkAccelerationStructureInstanceKHR_get_instanceCustomIndex",
+            SideEffects::none, "{field.getter_name}");
+        addExtern<DAS_BIND_FUN(VkAccelerationStructureInstanceKHR_set_instanceCustomIndex)>(*this, lib, "VkAccelerationStructureInstanceKHR_set_instanceCustomIndex",
+            SideEffects::modifyArgument, "{field.setter_name}");
+        
+        addExtern<DAS_BIND_FUN(VkAccelerationStructureInstanceKHR_get_mask)>(*this, lib, "VkAccelerationStructureInstanceKHR_get_mask",
+            SideEffects::none, "{field.getter_name}");
+        addExtern<DAS_BIND_FUN(VkAccelerationStructureInstanceKHR_set_mask)>(*this, lib, "VkAccelerationStructureInstanceKHR_set_mask",
+            SideEffects::modifyArgument, "{field.setter_name}");
+        
+        addExtern<DAS_BIND_FUN(VkAccelerationStructureInstanceKHR_get_instanceShaderBindingTableRecordOffset)>(*this, lib, "VkAccelerationStructureInstanceKHR_get_instanceShaderBindingTableRecordOffset",
+            SideEffects::none, "{field.getter_name}");
+        addExtern<DAS_BIND_FUN(VkAccelerationStructureInstanceKHR_set_instanceShaderBindingTableRecordOffset)>(*this, lib, "VkAccelerationStructureInstanceKHR_set_instanceShaderBindingTableRecordOffset",
+            SideEffects::modifyArgument, "{field.setter_name}");
+        
+        addExtern<DAS_BIND_FUN(VkAccelerationStructureInstanceKHR_get_flags)>(*this, lib, "VkAccelerationStructureInstanceKHR_get_flags",
+            SideEffects::none, "{field.getter_name}");
+        addExtern<DAS_BIND_FUN(VkAccelerationStructureInstanceKHR_set_flags)>(*this, lib, "VkAccelerationStructureInstanceKHR_set_flags",
+            SideEffects::modifyArgument, "{field.setter_name}");
+        
         addAnnotation(make_smart<VkAccelerationStructureInstanceKHRAnnotation>(lib));
         addAnnotation(make_smart<VkPhysicalDeviceRepresentativeFragmentTestFeaturesNVAnnotation>(lib));
         addAnnotation(make_smart<VkPipelineRepresentativeFragmentTestStateCreateInfoNVAnnotation>(lib));
