@@ -25,7 +25,7 @@ class Config(ConfigBase):
             or (field.is_array and ('char' in field.type))
 
             #TODO: generate accessors for these
-            or field.is_bit_field
+            #or field.is_bit_field
         ):
             field.ignore()
         for kw in [
