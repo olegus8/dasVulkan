@@ -11260,44 +11260,82 @@ public:
         // opaque structs
         //
 
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkBuffer", "VkBuffer", sizeof(VkBuffer), alignof(VkBuffer)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkImage", "VkImage", sizeof(VkImage), alignof(VkImage)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkInstance", "VkInstance", sizeof(VkInstance), alignof(VkInstance)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkPhysicalDevice", "VkPhysicalDevice", sizeof(VkPhysicalDevice), alignof(VkPhysicalDevice)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkDevice", "VkDevice", sizeof(VkDevice), alignof(VkDevice)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkQueue", "VkQueue", sizeof(VkQueue), alignof(VkQueue)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkSemaphore", "VkSemaphore", sizeof(VkSemaphore), alignof(VkSemaphore)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkCommandBuffer", "VkCommandBuffer", sizeof(VkCommandBuffer), alignof(VkCommandBuffer)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkFence", "VkFence", sizeof(VkFence), alignof(VkFence)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkDeviceMemory", "VkDeviceMemory", sizeof(VkDeviceMemory), alignof(VkDeviceMemory)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkEvent", "VkEvent", sizeof(VkEvent), alignof(VkEvent)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkQueryPool", "VkQueryPool", sizeof(VkQueryPool), alignof(VkQueryPool)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkBufferView", "VkBufferView", sizeof(VkBufferView), alignof(VkBufferView)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkImageView", "VkImageView", sizeof(VkImageView), alignof(VkImageView)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkShaderModule", "VkShaderModule", sizeof(VkShaderModule), alignof(VkShaderModule)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkPipelineCache", "VkPipelineCache", sizeof(VkPipelineCache), alignof(VkPipelineCache)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkPipelineLayout", "VkPipelineLayout", sizeof(VkPipelineLayout), alignof(VkPipelineLayout)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkPipeline", "VkPipeline", sizeof(VkPipeline), alignof(VkPipeline)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkRenderPass", "VkRenderPass", sizeof(VkRenderPass), alignof(VkRenderPass)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkDescriptorSetLayout", "VkDescriptorSetLayout", sizeof(VkDescriptorSetLayout), alignof(VkDescriptorSetLayout)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkSampler", "VkSampler", sizeof(VkSampler), alignof(VkSampler)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkDescriptorSet", "VkDescriptorSet", sizeof(VkDescriptorSet), alignof(VkDescriptorSet)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkDescriptorPool", "VkDescriptorPool", sizeof(VkDescriptorPool), alignof(VkDescriptorPool)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkFramebuffer", "VkFramebuffer", sizeof(VkFramebuffer), alignof(VkFramebuffer)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkCommandPool", "VkCommandPool", sizeof(VkCommandPool), alignof(VkCommandPool)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkSamplerYcbcrConversion", "VkSamplerYcbcrConversion", sizeof(VkSamplerYcbcrConversion), alignof(VkSamplerYcbcrConversion)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkDescriptorUpdateTemplate", "VkDescriptorUpdateTemplate", sizeof(VkDescriptorUpdateTemplate), alignof(VkDescriptorUpdateTemplate)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkSurfaceKHR", "VkSurfaceKHR", sizeof(VkSurfaceKHR), alignof(VkSurfaceKHR)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkSwapchainKHR", "VkSwapchainKHR", sizeof(VkSwapchainKHR), alignof(VkSwapchainKHR)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkDisplayKHR", "VkDisplayKHR", sizeof(VkDisplayKHR), alignof(VkDisplayKHR)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkDisplayModeKHR", "VkDisplayModeKHR", sizeof(VkDisplayModeKHR), alignof(VkDisplayModeKHR)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkDebugReportCallbackEXT", "VkDebugReportCallbackEXT", sizeof(VkDebugReportCallbackEXT), alignof(VkDebugReportCallbackEXT)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkDebugUtilsMessengerEXT", "VkDebugUtilsMessengerEXT", sizeof(VkDebugUtilsMessengerEXT), alignof(VkDebugUtilsMessengerEXT)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkValidationCacheEXT", "VkValidationCacheEXT", sizeof(VkValidationCacheEXT), alignof(VkValidationCacheEXT)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkAccelerationStructureKHR", "VkAccelerationStructureKHR", sizeof(VkAccelerationStructureKHR), alignof(VkAccelerationStructureKHR)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkPerformanceConfigurationINTEL", "VkPerformanceConfigurationINTEL", sizeof(VkPerformanceConfigurationINTEL), alignof(VkPerformanceConfigurationINTEL)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkIndirectCommandsLayoutNV", "VkIndirectCommandsLayoutNV", sizeof(VkIndirectCommandsLayoutNV), alignof(VkIndirectCommandsLayoutNV)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkPrivateDataSlotEXT", "VkPrivateDataSlotEXT", sizeof(VkPrivateDataSlotEXT), alignof(VkPrivateDataSlotEXT)));
+        addAnnotation(make_smart<DummyTypeAnnotation>("VkBuffer", "VkBuffer",
+            sizeof(VkBuffer), alignof(VkBuffer)));
+        addAnnotation(make_smart<DummyTypeAnnotation>("VkImage", "VkImage",
+            sizeof(VkImage), alignof(VkImage)));
+        addAnnotation(make_smart<DummyTypeAnnotation>("VkInstance", "VkInstance",
+            sizeof(VkInstance), alignof(VkInstance)));
+        addAnnotation(make_smart<DummyTypeAnnotation>("VkPhysicalDevice", "VkPhysicalDevice",
+            sizeof(VkPhysicalDevice), alignof(VkPhysicalDevice)));
+        addAnnotation(make_smart<DummyTypeAnnotation>("VkDevice", "VkDevice",
+            sizeof(VkDevice), alignof(VkDevice)));
+        addAnnotation(make_smart<DummyTypeAnnotation>("VkQueue", "VkQueue",
+            sizeof(VkQueue), alignof(VkQueue)));
+        addAnnotation(make_smart<DummyTypeAnnotation>("VkSemaphore", "VkSemaphore",
+            sizeof(VkSemaphore), alignof(VkSemaphore)));
+        addAnnotation(make_smart<DummyTypeAnnotation>("VkCommandBuffer", "VkCommandBuffer",
+            sizeof(VkCommandBuffer), alignof(VkCommandBuffer)));
+        addAnnotation(make_smart<DummyTypeAnnotation>("VkFence", "VkFence",
+            sizeof(VkFence), alignof(VkFence)));
+        addAnnotation(make_smart<DummyTypeAnnotation>("VkDeviceMemory", "VkDeviceMemory",
+            sizeof(VkDeviceMemory), alignof(VkDeviceMemory)));
+        addAnnotation(make_smart<DummyTypeAnnotation>("VkEvent", "VkEvent",
+            sizeof(VkEvent), alignof(VkEvent)));
+        addAnnotation(make_smart<DummyTypeAnnotation>("VkQueryPool", "VkQueryPool",
+            sizeof(VkQueryPool), alignof(VkQueryPool)));
+        addAnnotation(make_smart<DummyTypeAnnotation>("VkBufferView", "VkBufferView",
+            sizeof(VkBufferView), alignof(VkBufferView)));
+        addAnnotation(make_smart<DummyTypeAnnotation>("VkImageView", "VkImageView",
+            sizeof(VkImageView), alignof(VkImageView)));
+        addAnnotation(make_smart<DummyTypeAnnotation>("VkShaderModule", "VkShaderModule",
+            sizeof(VkShaderModule), alignof(VkShaderModule)));
+        addAnnotation(make_smart<DummyTypeAnnotation>("VkPipelineCache", "VkPipelineCache",
+            sizeof(VkPipelineCache), alignof(VkPipelineCache)));
+        addAnnotation(make_smart<DummyTypeAnnotation>("VkPipelineLayout", "VkPipelineLayout",
+            sizeof(VkPipelineLayout), alignof(VkPipelineLayout)));
+        addAnnotation(make_smart<DummyTypeAnnotation>("VkPipeline", "VkPipeline",
+            sizeof(VkPipeline), alignof(VkPipeline)));
+        addAnnotation(make_smart<DummyTypeAnnotation>("VkRenderPass", "VkRenderPass",
+            sizeof(VkRenderPass), alignof(VkRenderPass)));
+        addAnnotation(make_smart<DummyTypeAnnotation>("VkDescriptorSetLayout", "VkDescriptorSetLayout",
+            sizeof(VkDescriptorSetLayout), alignof(VkDescriptorSetLayout)));
+        addAnnotation(make_smart<DummyTypeAnnotation>("VkSampler", "VkSampler",
+            sizeof(VkSampler), alignof(VkSampler)));
+        addAnnotation(make_smart<DummyTypeAnnotation>("VkDescriptorSet", "VkDescriptorSet",
+            sizeof(VkDescriptorSet), alignof(VkDescriptorSet)));
+        addAnnotation(make_smart<DummyTypeAnnotation>("VkDescriptorPool", "VkDescriptorPool",
+            sizeof(VkDescriptorPool), alignof(VkDescriptorPool)));
+        addAnnotation(make_smart<DummyTypeAnnotation>("VkFramebuffer", "VkFramebuffer",
+            sizeof(VkFramebuffer), alignof(VkFramebuffer)));
+        addAnnotation(make_smart<DummyTypeAnnotation>("VkCommandPool", "VkCommandPool",
+            sizeof(VkCommandPool), alignof(VkCommandPool)));
+        addAnnotation(make_smart<DummyTypeAnnotation>("VkSamplerYcbcrConversion", "VkSamplerYcbcrConversion",
+            sizeof(VkSamplerYcbcrConversion), alignof(VkSamplerYcbcrConversion)));
+        addAnnotation(make_smart<DummyTypeAnnotation>("VkDescriptorUpdateTemplate", "VkDescriptorUpdateTemplate",
+            sizeof(VkDescriptorUpdateTemplate), alignof(VkDescriptorUpdateTemplate)));
+        addAnnotation(make_smart<DummyTypeAnnotation>("VkSurfaceKHR", "VkSurfaceKHR",
+            sizeof(VkSurfaceKHR), alignof(VkSurfaceKHR)));
+        addAnnotation(make_smart<DummyTypeAnnotation>("VkSwapchainKHR", "VkSwapchainKHR",
+            sizeof(VkSwapchainKHR), alignof(VkSwapchainKHR)));
+        addAnnotation(make_smart<DummyTypeAnnotation>("VkDisplayKHR", "VkDisplayKHR",
+            sizeof(VkDisplayKHR), alignof(VkDisplayKHR)));
+        addAnnotation(make_smart<DummyTypeAnnotation>("VkDisplayModeKHR", "VkDisplayModeKHR",
+            sizeof(VkDisplayModeKHR), alignof(VkDisplayModeKHR)));
+        addAnnotation(make_smart<DummyTypeAnnotation>("VkDebugReportCallbackEXT", "VkDebugReportCallbackEXT",
+            sizeof(VkDebugReportCallbackEXT), alignof(VkDebugReportCallbackEXT)));
+        addAnnotation(make_smart<DummyTypeAnnotation>("VkDebugUtilsMessengerEXT", "VkDebugUtilsMessengerEXT",
+            sizeof(VkDebugUtilsMessengerEXT), alignof(VkDebugUtilsMessengerEXT)));
+        addAnnotation(make_smart<DummyTypeAnnotation>("VkValidationCacheEXT", "VkValidationCacheEXT",
+            sizeof(VkValidationCacheEXT), alignof(VkValidationCacheEXT)));
+        addAnnotation(make_smart<DummyTypeAnnotation>("VkAccelerationStructureKHR", "VkAccelerationStructureKHR",
+            sizeof(VkAccelerationStructureKHR), alignof(VkAccelerationStructureKHR)));
+        addAnnotation(make_smart<DummyTypeAnnotation>("VkPerformanceConfigurationINTEL", "VkPerformanceConfigurationINTEL",
+            sizeof(VkPerformanceConfigurationINTEL), alignof(VkPerformanceConfigurationINTEL)));
+        addAnnotation(make_smart<DummyTypeAnnotation>("VkIndirectCommandsLayoutNV", "VkIndirectCommandsLayoutNV",
+            sizeof(VkIndirectCommandsLayoutNV), alignof(VkIndirectCommandsLayoutNV)));
+        addAnnotation(make_smart<DummyTypeAnnotation>("VkPrivateDataSlotEXT", "VkPrivateDataSlotEXT",
+            sizeof(VkPrivateDataSlotEXT), alignof(VkPrivateDataSlotEXT)));
 
         //
         // structs
