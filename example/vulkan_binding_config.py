@@ -15,6 +15,11 @@ class Config(ConfigBase):
     def save_ast(self):
         return True
 
+    @property
+    def configure_opaque_struct(self, struct):
+        if struct.name.endswith('_T'):
+            struct.set_dummy_type(struct.name[:-2])
+
     def configure_struct_field(self, field):
         #FIXME: make it work for all fields
         if (field.is_array
