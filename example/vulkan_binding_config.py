@@ -23,9 +23,6 @@ class Config(ConfigBase):
         #FIXME: make it work for all fields
         if (field.name.startswith('pfn')
             or (field.is_array and ('char' in field.type))
-
-            #TODO: generate accessors for these
-            #or field.is_bit_field
         ):
             field.ignore()
         for kw in [
