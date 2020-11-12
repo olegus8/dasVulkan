@@ -19,11 +19,12 @@ class Config(ConfigBase):
         if struct.name.endswith('_T'):
             struct.set_dummy_type(struct.name[:-2])
 
-    def configure_struct_field(self, field):
-        #FIXME: make it work for all fields
-        if field.name.startswith('pfn') and field.struct.name in [
+    def configure_struct(self, struct):
+        # These structs have function pointers, but we can probably
+        # live without them for a time being.
+        if struct.name in [
             'VkAllocationCallbacks',
             'VkDebugReportCallbackCreateInfoEXT',
             'VkDebugUtilsMessengerCreateInfoEXT',
         ]:
-            field.ignore()
+            struct.ignore()
