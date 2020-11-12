@@ -23,5 +23,6 @@ class Config(ConfigBase):
         #FIXME: make it work for all fields
         if field.name.startswith('pfn') and field.struct.name in [
             'VkAllocationCallbacks',
+            'VkDebugUtilsMessengerCreateInfoEXT',
         ]:
             field.ignore()

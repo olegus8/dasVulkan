@@ -8366,6 +8366,7 @@ struct VkDebugReportCallbackCreateInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
+        addField<DAS_BIND_MANAGED_FIELD(pfnCallback)>("pfnCallback");
         addField<DAS_BIND_MANAGED_FIELD(pUserData)>("pUserData");
     }
     void init() {
