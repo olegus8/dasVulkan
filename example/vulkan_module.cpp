@@ -2832,6 +2832,8 @@ struct VkBufferMemoryBarrierAnnotation
         addField<DAS_BIND_MANAGED_FIELD(srcQueueFamilyIndex)>("srcQueueFamilyIndex");
         addField<DAS_BIND_MANAGED_FIELD(dstQueueFamilyIndex)>("dstQueueFamilyIndex");
         addField<DAS_BIND_MANAGED_FIELD(buffer)>("buffer");
+        addField<DAS_BIND_MANAGED_FIELD(offset)>("offset");
+        addField<DAS_BIND_MANAGED_FIELD(size)>("size");
     }
     void init() {
     }
@@ -3018,6 +3020,7 @@ struct VkImageFormatPropertiesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(maxMipLevels)>("maxMipLevels");
         addField<DAS_BIND_MANAGED_FIELD(maxArrayLayers)>("maxArrayLayers");
         addField<DAS_BIND_MANAGED_FIELD(sampleCounts)>("sampleCounts");
+        addField<DAS_BIND_MANAGED_FIELD(maxResourceSize)>("maxResourceSize");
     }
     void init() {
     }
@@ -3054,6 +3057,7 @@ struct VkMemoryHeapAnnotation
 : public ManagedStructureAnnotation<VkMemoryHeap,true,true> {
     VkMemoryHeapAnnotation(ModuleLibrary & ml)
     : ManagedStructureAnnotation ("VkMemoryHeap", ml) {
+        addField<DAS_BIND_MANAGED_FIELD(size)>("size");
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
     }
     void init() {
@@ -3165,6 +3169,8 @@ struct VkPhysicalDeviceLimitsAnnotation
         addField<DAS_BIND_MANAGED_FIELD(maxPushConstantsSize)>("maxPushConstantsSize");
         addField<DAS_BIND_MANAGED_FIELD(maxMemoryAllocationCount)>("maxMemoryAllocationCount");
         addField<DAS_BIND_MANAGED_FIELD(maxSamplerAllocationCount)>("maxSamplerAllocationCount");
+        addField<DAS_BIND_MANAGED_FIELD(bufferImageGranularity)>("bufferImageGranularity");
+        addField<DAS_BIND_MANAGED_FIELD(sparseAddressSpaceSize)>("sparseAddressSpaceSize");
         addField<DAS_BIND_MANAGED_FIELD(maxBoundDescriptorSets)>("maxBoundDescriptorSets");
         addField<DAS_BIND_MANAGED_FIELD(maxPerStageDescriptorSamplers)>("maxPerStageDescriptorSamplers");
         addField<DAS_BIND_MANAGED_FIELD(maxPerStageDescriptorUniformBuffers)>("maxPerStageDescriptorUniformBuffers");
@@ -3218,6 +3224,10 @@ struct VkPhysicalDeviceLimitsAnnotation
         addField<DAS_BIND_MANAGED_FIELD(maxViewportDimensions)>("maxViewportDimensions");
         addField<DAS_BIND_MANAGED_FIELD(viewportBoundsRange)>("viewportBoundsRange");
         addField<DAS_BIND_MANAGED_FIELD(viewportSubPixelBits)>("viewportSubPixelBits");
+        addField<DAS_BIND_MANAGED_FIELD(minMemoryMapAlignment)>("minMemoryMapAlignment");
+        addField<DAS_BIND_MANAGED_FIELD(minTexelBufferOffsetAlignment)>("minTexelBufferOffsetAlignment");
+        addField<DAS_BIND_MANAGED_FIELD(minUniformBufferOffsetAlignment)>("minUniformBufferOffsetAlignment");
+        addField<DAS_BIND_MANAGED_FIELD(minStorageBufferOffsetAlignment)>("minStorageBufferOffsetAlignment");
         addField<DAS_BIND_MANAGED_FIELD(minTexelOffset)>("minTexelOffset");
         addField<DAS_BIND_MANAGED_FIELD(maxTexelOffset)>("maxTexelOffset");
         addField<DAS_BIND_MANAGED_FIELD(minTexelGatherOffset)>("minTexelGatherOffset");
@@ -3251,6 +3261,9 @@ struct VkPhysicalDeviceLimitsAnnotation
         addField<DAS_BIND_MANAGED_FIELD(lineWidthGranularity)>("lineWidthGranularity");
         addField<DAS_BIND_MANAGED_FIELD(strictLines)>("strictLines");
         addField<DAS_BIND_MANAGED_FIELD(standardSampleLocations)>("standardSampleLocations");
+        addField<DAS_BIND_MANAGED_FIELD(optimalBufferCopyOffsetAlignment)>("optimalBufferCopyOffsetAlignment");
+        addField<DAS_BIND_MANAGED_FIELD(optimalBufferCopyRowPitchAlignment)>("optimalBufferCopyRowPitchAlignment");
+        addField<DAS_BIND_MANAGED_FIELD(nonCoherentAtomSize)>("nonCoherentAtomSize");
     }
     void init() {
     }
@@ -3307,6 +3320,7 @@ struct VkPhysicalDevicePropertiesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(vendorID)>("vendorID");
         addField<DAS_BIND_MANAGED_FIELD(deviceID)>("deviceID");
         addField<DAS_BIND_MANAGED_FIELD(deviceType)>("deviceType");
+        addField<DAS_BIND_MANAGED_FIELD(deviceName)>("deviceName");
         addField<DAS_BIND_MANAGED_FIELD(pipelineCacheUUID)>("pipelineCacheUUID");
         addField<DAS_BIND_MANAGED_FIELD(limits)>("limits");
         addField<DAS_BIND_MANAGED_FIELD(sparseProperties)>("sparseProperties");
@@ -3386,6 +3400,7 @@ struct VkExtensionPropertiesAnnotation
 : public ManagedStructureAnnotation<VkExtensionProperties,true,true> {
     VkExtensionPropertiesAnnotation(ModuleLibrary & ml)
     : ManagedStructureAnnotation ("VkExtensionProperties", ml) {
+        addField<DAS_BIND_MANAGED_FIELD(extensionName)>("extensionName");
         addField<DAS_BIND_MANAGED_FIELD(specVersion)>("specVersion");
     }
     void init() {
@@ -3401,8 +3416,10 @@ struct VkLayerPropertiesAnnotation
 : public ManagedStructureAnnotation<VkLayerProperties,true,true> {
     VkLayerPropertiesAnnotation(ModuleLibrary & ml)
     : ManagedStructureAnnotation ("VkLayerProperties", ml) {
+        addField<DAS_BIND_MANAGED_FIELD(layerName)>("layerName");
         addField<DAS_BIND_MANAGED_FIELD(specVersion)>("specVersion");
         addField<DAS_BIND_MANAGED_FIELD(implementationVersion)>("implementationVersion");
+        addField<DAS_BIND_MANAGED_FIELD(description)>("description");
     }
     void init() {
     }
@@ -3443,6 +3460,8 @@ struct VkMappedMemoryRangeAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(memory)>("memory");
+        addField<DAS_BIND_MANAGED_FIELD(offset)>("offset");
+        addField<DAS_BIND_MANAGED_FIELD(size)>("size");
     }
     void init() {
     }
@@ -3459,6 +3478,7 @@ struct VkMemoryAllocateInfoAnnotation
     : ManagedStructureAnnotation ("VkMemoryAllocateInfo", ml) {
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
+        addField<DAS_BIND_MANAGED_FIELD(allocationSize)>("allocationSize");
         addField<DAS_BIND_MANAGED_FIELD(memoryTypeIndex)>("memoryTypeIndex");
     }
     void init() {
@@ -3474,6 +3494,8 @@ struct VkMemoryRequirementsAnnotation
 : public ManagedStructureAnnotation<VkMemoryRequirements,true,true> {
     VkMemoryRequirementsAnnotation(ModuleLibrary & ml)
     : ManagedStructureAnnotation ("VkMemoryRequirements", ml) {
+        addField<DAS_BIND_MANAGED_FIELD(size)>("size");
+        addField<DAS_BIND_MANAGED_FIELD(alignment)>("alignment");
         addField<DAS_BIND_MANAGED_FIELD(memoryTypeBits)>("memoryTypeBits");
     }
     void init() {
@@ -3489,7 +3511,10 @@ struct VkSparseMemoryBindAnnotation
 : public ManagedStructureAnnotation<VkSparseMemoryBind,true,true> {
     VkSparseMemoryBindAnnotation(ModuleLibrary & ml)
     : ManagedStructureAnnotation ("VkSparseMemoryBind", ml) {
+        addField<DAS_BIND_MANAGED_FIELD(resourceOffset)>("resourceOffset");
+        addField<DAS_BIND_MANAGED_FIELD(size)>("size");
         addField<DAS_BIND_MANAGED_FIELD(memory)>("memory");
+        addField<DAS_BIND_MANAGED_FIELD(memoryOffset)>("memoryOffset");
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
     }
     void init() {
@@ -3560,6 +3585,7 @@ struct VkSparseImageMemoryBindAnnotation
         addField<DAS_BIND_MANAGED_FIELD(offset)>("offset");
         addField<DAS_BIND_MANAGED_FIELD(extent)>("extent");
         addField<DAS_BIND_MANAGED_FIELD(memory)>("memory");
+        addField<DAS_BIND_MANAGED_FIELD(memoryOffset)>("memoryOffset");
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
     }
     void init() {
@@ -3637,6 +3663,9 @@ struct VkSparseImageMemoryRequirementsAnnotation
     : ManagedStructureAnnotation ("VkSparseImageMemoryRequirements", ml) {
         addField<DAS_BIND_MANAGED_FIELD(formatProperties)>("formatProperties");
         addField<DAS_BIND_MANAGED_FIELD(imageMipTailFirstLod)>("imageMipTailFirstLod");
+        addField<DAS_BIND_MANAGED_FIELD(imageMipTailSize)>("imageMipTailSize");
+        addField<DAS_BIND_MANAGED_FIELD(imageMipTailOffset)>("imageMipTailOffset");
+        addField<DAS_BIND_MANAGED_FIELD(imageMipTailStride)>("imageMipTailStride");
     }
     void init() {
     }
@@ -3725,6 +3754,7 @@ struct VkBufferCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
+        addField<DAS_BIND_MANAGED_FIELD(size)>("size");
         addField<DAS_BIND_MANAGED_FIELD(usage)>("usage");
         addField<DAS_BIND_MANAGED_FIELD(sharingMode)>("sharingMode");
         addField<DAS_BIND_MANAGED_FIELD(queueFamilyIndexCount)>("queueFamilyIndexCount");
@@ -3748,6 +3778,8 @@ struct VkBufferViewCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
         addField<DAS_BIND_MANAGED_FIELD(buffer)>("buffer");
         addField<DAS_BIND_MANAGED_FIELD(format)>("format");
+        addField<DAS_BIND_MANAGED_FIELD(offset)>("offset");
+        addField<DAS_BIND_MANAGED_FIELD(range)>("range");
     }
     void init() {
     }
@@ -3791,6 +3823,11 @@ struct VkSubresourceLayoutAnnotation
 : public ManagedStructureAnnotation<VkSubresourceLayout,true,true> {
     VkSubresourceLayoutAnnotation(ModuleLibrary & ml)
     : ManagedStructureAnnotation ("VkSubresourceLayout", ml) {
+        addField<DAS_BIND_MANAGED_FIELD(offset)>("offset");
+        addField<DAS_BIND_MANAGED_FIELD(size)>("size");
+        addField<DAS_BIND_MANAGED_FIELD(rowPitch)>("rowPitch");
+        addField<DAS_BIND_MANAGED_FIELD(arrayPitch)>("arrayPitch");
+        addField<DAS_BIND_MANAGED_FIELD(depthPitch)>("depthPitch");
     }
     void init() {
     }
@@ -3848,6 +3885,7 @@ struct VkShaderModuleCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
+        addField<DAS_BIND_MANAGED_FIELD(codeSize)>("codeSize");
         addField<DAS_BIND_MANAGED_FIELD(pCode)>("pCode");
     }
     void init() {
@@ -3866,6 +3904,7 @@ struct VkPipelineCacheCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
+        addField<DAS_BIND_MANAGED_FIELD(initialDataSize)>("initialDataSize");
         addField<DAS_BIND_MANAGED_FIELD(pInitialData)>("pInitialData");
     }
     void init() {
@@ -3883,6 +3922,7 @@ struct VkSpecializationMapEntryAnnotation
     : ManagedStructureAnnotation ("VkSpecializationMapEntry", ml) {
         addField<DAS_BIND_MANAGED_FIELD(constantID)>("constantID");
         addField<DAS_BIND_MANAGED_FIELD(offset)>("offset");
+        addField<DAS_BIND_MANAGED_FIELD(size)>("size");
     }
     void init() {
     }
@@ -3899,6 +3939,7 @@ struct VkSpecializationInfoAnnotation
     : ManagedStructureAnnotation ("VkSpecializationInfo", ml) {
         addField<DAS_BIND_MANAGED_FIELD(mapEntryCount)>("mapEntryCount");
         addField<DAS_BIND_MANAGED_FIELD(pMapEntries)>("pMapEntries");
+        addField<DAS_BIND_MANAGED_FIELD(dataSize)>("dataSize");
         addField<DAS_BIND_MANAGED_FIELD(pData)>("pData");
     }
     void init() {
@@ -4377,6 +4418,8 @@ struct VkDescriptorBufferInfoAnnotation
     VkDescriptorBufferInfoAnnotation(ModuleLibrary & ml)
     : ManagedStructureAnnotation ("VkDescriptorBufferInfo", ml) {
         addField<DAS_BIND_MANAGED_FIELD(buffer)>("buffer");
+        addField<DAS_BIND_MANAGED_FIELD(offset)>("offset");
+        addField<DAS_BIND_MANAGED_FIELD(range)>("range");
     }
     void init() {
     }
@@ -4732,6 +4775,9 @@ struct VkBufferCopyAnnotation
 : public ManagedStructureAnnotation<VkBufferCopy,true,true> {
     VkBufferCopyAnnotation(ModuleLibrary & ml)
     : ManagedStructureAnnotation ("VkBufferCopy", ml) {
+        addField<DAS_BIND_MANAGED_FIELD(srcOffset)>("srcOffset");
+        addField<DAS_BIND_MANAGED_FIELD(dstOffset)>("dstOffset");
+        addField<DAS_BIND_MANAGED_FIELD(size)>("size");
     }
     void init() {
     }
@@ -4764,6 +4810,7 @@ struct VkBufferImageCopyAnnotation
 : public ManagedStructureAnnotation<VkBufferImageCopy,true,true> {
     VkBufferImageCopyAnnotation(ModuleLibrary & ml)
     : ManagedStructureAnnotation ("VkBufferImageCopy", ml) {
+        addField<DAS_BIND_MANAGED_FIELD(bufferOffset)>("bufferOffset");
         addField<DAS_BIND_MANAGED_FIELD(bufferRowLength)>("bufferRowLength");
         addField<DAS_BIND_MANAGED_FIELD(bufferImageHeight)>("bufferImageHeight");
         addField<DAS_BIND_MANAGED_FIELD(imageSubresource)>("imageSubresource");
@@ -4967,6 +5014,7 @@ struct VkBindBufferMemoryInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(buffer)>("buffer");
         addField<DAS_BIND_MANAGED_FIELD(memory)>("memory");
+        addField<DAS_BIND_MANAGED_FIELD(memoryOffset)>("memoryOffset");
     }
     void init() {
     }
@@ -4985,6 +5033,7 @@ struct VkBindImageMemoryInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(image)>("image");
         addField<DAS_BIND_MANAGED_FIELD(memory)>("memory");
+        addField<DAS_BIND_MANAGED_FIELD(memoryOffset)>("memoryOffset");
     }
     void init() {
     }
@@ -5816,6 +5865,8 @@ struct VkDescriptorUpdateTemplateEntryAnnotation
         addField<DAS_BIND_MANAGED_FIELD(dstArrayElement)>("dstArrayElement");
         addField<DAS_BIND_MANAGED_FIELD(descriptorCount)>("descriptorCount");
         addField<DAS_BIND_MANAGED_FIELD(descriptorType)>("descriptorType");
+        addField<DAS_BIND_MANAGED_FIELD(offset)>("offset");
+        addField<DAS_BIND_MANAGED_FIELD(stride)>("stride");
     }
     void init() {
     }
@@ -6122,6 +6173,7 @@ struct VkPhysicalDeviceMaintenance3PropertiesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(maxPerSetDescriptors)>("maxPerSetDescriptors");
+        addField<DAS_BIND_MANAGED_FIELD(maxMemoryAllocationSize)>("maxMemoryAllocationSize");
     }
     void init() {
     }
@@ -6214,6 +6266,7 @@ struct VkPhysicalDeviceVulkan11PropertiesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(maxMultiviewInstanceIndex)>("maxMultiviewInstanceIndex");
         addField<DAS_BIND_MANAGED_FIELD(protectedNoFault)>("protectedNoFault");
         addField<DAS_BIND_MANAGED_FIELD(maxPerSetDescriptors)>("maxPerSetDescriptors");
+        addField<DAS_BIND_MANAGED_FIELD(maxMemoryAllocationSize)>("maxMemoryAllocationSize");
     }
     void init() {
     }
@@ -6312,6 +6365,8 @@ struct VkPhysicalDeviceVulkan12PropertiesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(driverID)>("driverID");
+        addField<DAS_BIND_MANAGED_FIELD(driverName)>("driverName");
+        addField<DAS_BIND_MANAGED_FIELD(driverInfo)>("driverInfo");
         addField<DAS_BIND_MANAGED_FIELD(conformanceVersion)>("conformanceVersion");
         addField<DAS_BIND_MANAGED_FIELD(denormBehaviorIndependence)>("denormBehaviorIndependence");
         addField<DAS_BIND_MANAGED_FIELD(roundingModeIndependence)>("roundingModeIndependence");
@@ -6359,6 +6414,7 @@ struct VkPhysicalDeviceVulkan12PropertiesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(independentResolve)>("independentResolve");
         addField<DAS_BIND_MANAGED_FIELD(filterMinmaxSingleComponentFormats)>("filterMinmaxSingleComponentFormats");
         addField<DAS_BIND_MANAGED_FIELD(filterMinmaxImageComponentMapping)>("filterMinmaxImageComponentMapping");
+        addField<DAS_BIND_MANAGED_FIELD(maxTimelineSemaphoreValueDifference)>("maxTimelineSemaphoreValueDifference");
         addField<DAS_BIND_MANAGED_FIELD(framebufferIntegerColorSampleCounts)>("framebufferIntegerColorSampleCounts");
     }
     void init() {
@@ -6567,6 +6623,8 @@ struct VkPhysicalDeviceDriverPropertiesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(driverID)>("driverID");
+        addField<DAS_BIND_MANAGED_FIELD(driverName)>("driverName");
+        addField<DAS_BIND_MANAGED_FIELD(driverInfo)>("driverInfo");
         addField<DAS_BIND_MANAGED_FIELD(conformanceVersion)>("conformanceVersion");
     }
     void init() {
@@ -7104,6 +7162,7 @@ struct VkPhysicalDeviceTimelineSemaphorePropertiesAnnotation
     : ManagedStructureAnnotation ("VkPhysicalDeviceTimelineSemaphoreProperties", ml) {
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
+        addField<DAS_BIND_MANAGED_FIELD(maxTimelineSemaphoreValueDifference)>("maxTimelineSemaphoreValueDifference");
     }
     void init() {
     }
@@ -7121,6 +7180,7 @@ struct VkSemaphoreTypeCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(semaphoreType)>("semaphoreType");
+        addField<DAS_BIND_MANAGED_FIELD(initialValue)>("initialValue");
     }
     void init() {
     }
@@ -7178,6 +7238,7 @@ struct VkSemaphoreSignalInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(semaphore)>("semaphore");
+        addField<DAS_BIND_MANAGED_FIELD(value)>("value");
     }
     void init() {
     }
@@ -7230,6 +7291,7 @@ struct VkBufferOpaqueCaptureAddressCreateInfoAnnotation
     : ManagedStructureAnnotation ("VkBufferOpaqueCaptureAddressCreateInfo", ml) {
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
+        addField<DAS_BIND_MANAGED_FIELD(opaqueCaptureAddress)>("opaqueCaptureAddress");
     }
     void init() {
     }
@@ -7246,6 +7308,7 @@ struct VkMemoryOpaqueCaptureAddressAllocateInfoAnnotation
     : ManagedStructureAnnotation ("VkMemoryOpaqueCaptureAddressAllocateInfo", ml) {
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
+        addField<DAS_BIND_MANAGED_FIELD(opaqueCaptureAddress)>("opaqueCaptureAddress");
     }
     void init() {
     }
@@ -7409,6 +7472,7 @@ struct VkAcquireNextImageInfoKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(swapchain)>("swapchain");
+        addField<DAS_BIND_MANAGED_FIELD(timeout)>("timeout");
         addField<DAS_BIND_MANAGED_FIELD(semaphore)>("semaphore");
         addField<DAS_BIND_MANAGED_FIELD(fence)>("fence");
         addField<DAS_BIND_MANAGED_FIELD(deviceMask)>("deviceMask");
@@ -7905,6 +7969,9 @@ struct VkPerformanceCounterDescriptionKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
+        addField<DAS_BIND_MANAGED_FIELD(name)>("name");
+        addField<DAS_BIND_MANAGED_FIELD(category)>("category");
+        addField<DAS_BIND_MANAGED_FIELD(description)>("description");
     }
     void init() {
     }
@@ -7941,6 +8008,7 @@ struct VkPerformanceCounterResultKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(int32)>("int32");
         addField<DAS_BIND_MANAGED_FIELD(int64)>("int64");
         addField<DAS_BIND_MANAGED_FIELD(uint32)>("uint32");
+        addField<DAS_BIND_MANAGED_FIELD(uint64)>("uint64");
         addField<DAS_BIND_MANAGED_FIELD(float32)>("float32");
         addField<DAS_BIND_MANAGED_FIELD(float64)>("float64");
     }
@@ -7960,6 +8028,7 @@ struct VkAcquireProfilingLockInfoKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
+        addField<DAS_BIND_MANAGED_FIELD(timeout)>("timeout");
     }
     void init() {
     }
@@ -8200,6 +8269,8 @@ struct VkPipelineExecutablePropertiesKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(stages)>("stages");
+        addField<DAS_BIND_MANAGED_FIELD(name)>("name");
+        addField<DAS_BIND_MANAGED_FIELD(description)>("description");
         addField<DAS_BIND_MANAGED_FIELD(subgroupSize)>("subgroupSize");
     }
     void init() {
@@ -8235,6 +8306,7 @@ struct VkPipelineExecutableStatisticValueKHRAnnotation
     : ManagedStructureAnnotation ("VkPipelineExecutableStatisticValueKHR", ml) {
         addField<DAS_BIND_MANAGED_FIELD(b32)>("b32");
         addField<DAS_BIND_MANAGED_FIELD(i64)>("i64");
+        addField<DAS_BIND_MANAGED_FIELD(u64)>("u64");
         addField<DAS_BIND_MANAGED_FIELD(f64)>("f64");
     }
     void init() {
@@ -8252,6 +8324,8 @@ struct VkPipelineExecutableStatisticKHRAnnotation
     : ManagedStructureAnnotation ("VkPipelineExecutableStatisticKHR", ml) {
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
+        addField<DAS_BIND_MANAGED_FIELD(name)>("name");
+        addField<DAS_BIND_MANAGED_FIELD(description)>("description");
         addField<DAS_BIND_MANAGED_FIELD(format)>("format");
         addField<DAS_BIND_MANAGED_FIELD(value)>("value");
     }
@@ -8270,7 +8344,10 @@ struct VkPipelineExecutableInternalRepresentationKHRAnnotation
     : ManagedStructureAnnotation ("VkPipelineExecutableInternalRepresentationKHR", ml) {
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
+        addField<DAS_BIND_MANAGED_FIELD(name)>("name");
+        addField<DAS_BIND_MANAGED_FIELD(description)>("description");
         addField<DAS_BIND_MANAGED_FIELD(isText)>("isText");
+        addField<DAS_BIND_MANAGED_FIELD(dataSize)>("dataSize");
         addField<DAS_BIND_MANAGED_FIELD(pData)>("pData");
     }
     void init() {
@@ -8324,6 +8401,7 @@ struct VkDebugMarkerObjectNameInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(objectType)>("objectType");
+        addField<DAS_BIND_MANAGED_FIELD(object)>("object");
         addField<DAS_BIND_MANAGED_FIELD(pObjectName)>("pObjectName");
     }
     void init() {
@@ -8342,6 +8420,9 @@ struct VkDebugMarkerObjectTagInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(objectType)>("objectType");
+        addField<DAS_BIND_MANAGED_FIELD(object)>("object");
+        addField<DAS_BIND_MANAGED_FIELD(tagName)>("tagName");
+        addField<DAS_BIND_MANAGED_FIELD(tagSize)>("tagSize");
         addField<DAS_BIND_MANAGED_FIELD(pTag)>("pTag");
     }
     void init() {
@@ -8449,6 +8530,7 @@ struct VkPhysicalDeviceTransformFeedbackPropertiesEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(maxTransformFeedbackStreams)>("maxTransformFeedbackStreams");
         addField<DAS_BIND_MANAGED_FIELD(maxTransformFeedbackBuffers)>("maxTransformFeedbackBuffers");
+        addField<DAS_BIND_MANAGED_FIELD(maxTransformFeedbackBufferSize)>("maxTransformFeedbackBufferSize");
         addField<DAS_BIND_MANAGED_FIELD(maxTransformFeedbackStreamDataSize)>("maxTransformFeedbackStreamDataSize");
         addField<DAS_BIND_MANAGED_FIELD(maxTransformFeedbackBufferDataSize)>("maxTransformFeedbackBufferDataSize");
         addField<DAS_BIND_MANAGED_FIELD(maxTransformFeedbackBufferDataStride)>("maxTransformFeedbackBufferDataStride");
@@ -8509,6 +8591,8 @@ struct VkImageViewAddressPropertiesNVXAnnotation
     : ManagedStructureAnnotation ("VkImageViewAddressPropertiesNVX", ml) {
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
+        addField<DAS_BIND_MANAGED_FIELD(deviceAddress)>("deviceAddress");
+        addField<DAS_BIND_MANAGED_FIELD(size)>("size");
     }
     void init() {
     }
@@ -8543,6 +8627,8 @@ struct VkShaderResourceUsageAMDAnnotation
         addField<DAS_BIND_MANAGED_FIELD(numUsedVgprs)>("numUsedVgprs");
         addField<DAS_BIND_MANAGED_FIELD(numUsedSgprs)>("numUsedSgprs");
         addField<DAS_BIND_MANAGED_FIELD(ldsSizePerLocalWorkGroup)>("ldsSizePerLocalWorkGroup");
+        addField<DAS_BIND_MANAGED_FIELD(ldsUsageSizeInBytes)>("ldsUsageSizeInBytes");
+        addField<DAS_BIND_MANAGED_FIELD(scratchMemUsageInBytes)>("scratchMemUsageInBytes");
     }
     void init() {
     }
@@ -8719,6 +8805,7 @@ struct VkConditionalRenderingBeginInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(buffer)>("buffer");
+        addField<DAS_BIND_MANAGED_FIELD(offset)>("offset");
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
     }
     void init() {
@@ -8899,6 +8986,7 @@ struct VkRefreshCycleDurationGOOGLEAnnotation
 : public ManagedStructureAnnotation<VkRefreshCycleDurationGOOGLE,true,true> {
     VkRefreshCycleDurationGOOGLEAnnotation(ModuleLibrary & ml)
     : ManagedStructureAnnotation ("VkRefreshCycleDurationGOOGLE", ml) {
+        addField<DAS_BIND_MANAGED_FIELD(refreshDuration)>("refreshDuration");
     }
     void init() {
     }
@@ -8914,6 +9002,10 @@ struct VkPastPresentationTimingGOOGLEAnnotation
     VkPastPresentationTimingGOOGLEAnnotation(ModuleLibrary & ml)
     : ManagedStructureAnnotation ("VkPastPresentationTimingGOOGLE", ml) {
         addField<DAS_BIND_MANAGED_FIELD(presentID)>("presentID");
+        addField<DAS_BIND_MANAGED_FIELD(desiredPresentTime)>("desiredPresentTime");
+        addField<DAS_BIND_MANAGED_FIELD(actualPresentTime)>("actualPresentTime");
+        addField<DAS_BIND_MANAGED_FIELD(earliestPresentTime)>("earliestPresentTime");
+        addField<DAS_BIND_MANAGED_FIELD(presentMargin)>("presentMargin");
     }
     void init() {
     }
@@ -8929,6 +9021,7 @@ struct VkPresentTimeGOOGLEAnnotation
     VkPresentTimeGOOGLEAnnotation(ModuleLibrary & ml)
     : ManagedStructureAnnotation ("VkPresentTimeGOOGLE", ml) {
         addField<DAS_BIND_MANAGED_FIELD(presentID)>("presentID");
+        addField<DAS_BIND_MANAGED_FIELD(desiredPresentTime)>("desiredPresentTime");
     }
     void init() {
     }
@@ -9192,6 +9285,7 @@ struct VkDebugUtilsObjectNameInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(objectType)>("objectType");
+        addField<DAS_BIND_MANAGED_FIELD(objectHandle)>("objectHandle");
         addField<DAS_BIND_MANAGED_FIELD(pObjectName)>("pObjectName");
     }
     void init() {
@@ -9256,6 +9350,9 @@ struct VkDebugUtilsObjectTagInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(objectType)>("objectType");
+        addField<DAS_BIND_MANAGED_FIELD(objectHandle)>("objectHandle");
+        addField<DAS_BIND_MANAGED_FIELD(tagName)>("tagName");
+        addField<DAS_BIND_MANAGED_FIELD(tagSize)>("tagSize");
         addField<DAS_BIND_MANAGED_FIELD(pTag)>("pTag");
     }
     void init() {
@@ -9622,6 +9719,7 @@ struct VkDrmFormatModifierPropertiesEXTAnnotation
 : public ManagedStructureAnnotation<VkDrmFormatModifierPropertiesEXT,true,true> {
     VkDrmFormatModifierPropertiesEXTAnnotation(ModuleLibrary & ml)
     : ManagedStructureAnnotation ("VkDrmFormatModifierPropertiesEXT", ml) {
+        addField<DAS_BIND_MANAGED_FIELD(drmFormatModifier)>("drmFormatModifier");
         addField<DAS_BIND_MANAGED_FIELD(drmFormatModifierPlaneCount)>("drmFormatModifierPlaneCount");
         addField<DAS_BIND_MANAGED_FIELD(drmFormatModifierTilingFeatures)>("drmFormatModifierTilingFeatures");
     }
@@ -9658,6 +9756,7 @@ struct VkPhysicalDeviceImageDrmFormatModifierInfoEXTAnnotation
     : ManagedStructureAnnotation ("VkPhysicalDeviceImageDrmFormatModifierInfoEXT", ml) {
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
+        addField<DAS_BIND_MANAGED_FIELD(drmFormatModifier)>("drmFormatModifier");
         addField<DAS_BIND_MANAGED_FIELD(sharingMode)>("sharingMode");
         addField<DAS_BIND_MANAGED_FIELD(queueFamilyIndexCount)>("queueFamilyIndexCount");
         addField<DAS_BIND_MANAGED_FIELD(pQueueFamilyIndices)>("pQueueFamilyIndices");
@@ -9695,6 +9794,7 @@ struct VkImageDrmFormatModifierExplicitCreateInfoEXTAnnotation
     : ManagedStructureAnnotation ("VkImageDrmFormatModifierExplicitCreateInfoEXT", ml) {
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
+        addField<DAS_BIND_MANAGED_FIELD(drmFormatModifier)>("drmFormatModifier");
         addField<DAS_BIND_MANAGED_FIELD(drmFormatModifierPlaneCount)>("drmFormatModifierPlaneCount");
         addField<DAS_BIND_MANAGED_FIELD(pPlaneLayouts)>("pPlaneLayouts");
     }
@@ -9713,6 +9813,7 @@ struct VkImageDrmFormatModifierPropertiesEXTAnnotation
     : ManagedStructureAnnotation ("VkImageDrmFormatModifierPropertiesEXT", ml) {
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
+        addField<DAS_BIND_MANAGED_FIELD(drmFormatModifier)>("drmFormatModifier");
     }
     void init() {
     }
@@ -9730,6 +9831,7 @@ struct VkValidationCacheCreateInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
+        addField<DAS_BIND_MANAGED_FIELD(initialDataSize)>("initialDataSize");
         addField<DAS_BIND_MANAGED_FIELD(pInitialData)>("pInitialData");
     }
     void init() {
@@ -9937,12 +10039,16 @@ struct VkGeometryTrianglesNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(vertexData)>("vertexData");
+        addField<DAS_BIND_MANAGED_FIELD(vertexOffset)>("vertexOffset");
         addField<DAS_BIND_MANAGED_FIELD(vertexCount)>("vertexCount");
+        addField<DAS_BIND_MANAGED_FIELD(vertexStride)>("vertexStride");
         addField<DAS_BIND_MANAGED_FIELD(vertexFormat)>("vertexFormat");
         addField<DAS_BIND_MANAGED_FIELD(indexData)>("indexData");
+        addField<DAS_BIND_MANAGED_FIELD(indexOffset)>("indexOffset");
         addField<DAS_BIND_MANAGED_FIELD(indexCount)>("indexCount");
         addField<DAS_BIND_MANAGED_FIELD(indexType)>("indexType");
         addField<DAS_BIND_MANAGED_FIELD(transformData)>("transformData");
+        addField<DAS_BIND_MANAGED_FIELD(transformOffset)>("transformOffset");
     }
     void init() {
     }
@@ -9962,6 +10068,7 @@ struct VkGeometryAABBNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(aabbData)>("aabbData");
         addField<DAS_BIND_MANAGED_FIELD(numAABBs)>("numAABBs");
         addField<DAS_BIND_MANAGED_FIELD(stride)>("stride");
+        addField<DAS_BIND_MANAGED_FIELD(offset)>("offset");
     }
     void init() {
     }
@@ -10034,6 +10141,7 @@ struct VkAccelerationStructureCreateInfoNVAnnotation
     : ManagedStructureAnnotation ("VkAccelerationStructureCreateInfoNV", ml) {
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
+        addField<DAS_BIND_MANAGED_FIELD(compactedSize)>("compactedSize");
         addField<DAS_BIND_MANAGED_FIELD(info)>("info");
     }
     void init() {
@@ -10053,6 +10161,7 @@ struct VkBindAccelerationStructureMemoryInfoKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(accelerationStructure)>("accelerationStructure");
         addField<DAS_BIND_MANAGED_FIELD(memory)>("memory");
+        addField<DAS_BIND_MANAGED_FIELD(memoryOffset)>("memoryOffset");
         addField<DAS_BIND_MANAGED_FIELD(deviceIndexCount)>("deviceIndexCount");
         addField<DAS_BIND_MANAGED_FIELD(pDeviceIndices)>("pDeviceIndices");
     }
@@ -10111,6 +10220,9 @@ struct VkPhysicalDeviceRayTracingPropertiesNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(maxRecursionDepth)>("maxRecursionDepth");
         addField<DAS_BIND_MANAGED_FIELD(maxShaderGroupStride)>("maxShaderGroupStride");
         addField<DAS_BIND_MANAGED_FIELD(shaderGroupBaseAlignment)>("shaderGroupBaseAlignment");
+        addField<DAS_BIND_MANAGED_FIELD(maxGeometryCount)>("maxGeometryCount");
+        addField<DAS_BIND_MANAGED_FIELD(maxInstanceCount)>("maxInstanceCount");
+        addField<DAS_BIND_MANAGED_FIELD(maxTriangleCount)>("maxTriangleCount");
         addField<DAS_BIND_MANAGED_FIELD(maxDescriptorSetAccelerationStructures)>("maxDescriptorSetAccelerationStructures");
     }
     void init() {
@@ -10174,6 +10286,7 @@ struct VkAccelerationStructureInstanceKHRAnnotation
     VkAccelerationStructureInstanceKHRAnnotation(ModuleLibrary & ml)
     : ManagedStructureAnnotation ("VkAccelerationStructureInstanceKHR", ml) {
         addField<DAS_BIND_MANAGED_FIELD(transform)>("transform");
+        addField<DAS_BIND_MANAGED_FIELD(accelerationStructureReference)>("accelerationStructureReference");
     }
     void init() {
     }
@@ -10311,6 +10424,7 @@ struct VkPhysicalDeviceExternalMemoryHostPropertiesEXTAnnotation
     : ManagedStructureAnnotation ("VkPhysicalDeviceExternalMemoryHostPropertiesEXT", ml) {
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
+        addField<DAS_BIND_MANAGED_FIELD(minImportedHostPointerAlignment)>("minImportedHostPointerAlignment");
     }
     void init() {
     }
@@ -10476,6 +10590,7 @@ struct VkPipelineCreationFeedbackEXTAnnotation
     VkPipelineCreationFeedbackEXTAnnotation(ModuleLibrary & ml)
     : ManagedStructureAnnotation ("VkPipelineCreationFeedbackEXT", ml) {
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
+        addField<DAS_BIND_MANAGED_FIELD(duration)>("duration");
     }
     void init() {
     }
@@ -10712,6 +10827,7 @@ struct VkPerformanceValueDataINTELAnnotation
     VkPerformanceValueDataINTELAnnotation(ModuleLibrary & ml)
     : ManagedStructureAnnotation ("VkPerformanceValueDataINTEL", ml) {
         addField<DAS_BIND_MANAGED_FIELD(value32)>("value32");
+        addField<DAS_BIND_MANAGED_FIELD(value64)>("value64");
         addField<DAS_BIND_MANAGED_FIELD(valueFloat)>("valueFloat");
         addField<DAS_BIND_MANAGED_FIELD(valueBool)>("valueBool");
         addField<DAS_BIND_MANAGED_FIELD(valueString)>("valueString");
@@ -10781,6 +10897,7 @@ struct VkPerformanceMarkerInfoINTELAnnotation
     : ManagedStructureAnnotation ("VkPerformanceMarkerInfoINTEL", ml) {
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
+        addField<DAS_BIND_MANAGED_FIELD(marker)>("marker");
     }
     void init() {
     }
@@ -10816,6 +10933,7 @@ struct VkPerformanceOverrideInfoINTELAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(type)>("type");
         addField<DAS_BIND_MANAGED_FIELD(enable)>("enable");
+        addField<DAS_BIND_MANAGED_FIELD(parameter)>("parameter");
     }
     void init() {
     }
@@ -11136,6 +11254,7 @@ struct VkBufferDeviceAddressCreateInfoEXTAnnotation
     : ManagedStructureAnnotation ("VkBufferDeviceAddressCreateInfoEXT", ml) {
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
+        addField<DAS_BIND_MANAGED_FIELD(deviceAddress)>("deviceAddress");
     }
     void init() {
     }
@@ -11152,7 +11271,11 @@ struct VkPhysicalDeviceToolPropertiesEXTAnnotation
     : ManagedStructureAnnotation ("VkPhysicalDeviceToolPropertiesEXT", ml) {
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
+        addField<DAS_BIND_MANAGED_FIELD(name)>("name");
+        addField<DAS_BIND_MANAGED_FIELD(version)>("version");
         addField<DAS_BIND_MANAGED_FIELD(purposes)>("purposes");
+        addField<DAS_BIND_MANAGED_FIELD(description)>("description");
+        addField<DAS_BIND_MANAGED_FIELD(layer)>("layer");
     }
     void init() {
     }
@@ -11589,6 +11712,7 @@ struct VkBindIndexBufferIndirectCommandNVAnnotation
 : public ManagedStructureAnnotation<VkBindIndexBufferIndirectCommandNV,true,true> {
     VkBindIndexBufferIndirectCommandNVAnnotation(ModuleLibrary & ml)
     : ManagedStructureAnnotation ("VkBindIndexBufferIndirectCommandNV", ml) {
+        addField<DAS_BIND_MANAGED_FIELD(bufferAddress)>("bufferAddress");
         addField<DAS_BIND_MANAGED_FIELD(size)>("size");
         addField<DAS_BIND_MANAGED_FIELD(indexType)>("indexType");
     }
@@ -11605,6 +11729,7 @@ struct VkBindVertexBufferIndirectCommandNVAnnotation
 : public ManagedStructureAnnotation<VkBindVertexBufferIndirectCommandNV,true,true> {
     VkBindVertexBufferIndirectCommandNVAnnotation(ModuleLibrary & ml)
     : ManagedStructureAnnotation ("VkBindVertexBufferIndirectCommandNV", ml) {
+        addField<DAS_BIND_MANAGED_FIELD(bufferAddress)>("bufferAddress");
         addField<DAS_BIND_MANAGED_FIELD(size)>("size");
         addField<DAS_BIND_MANAGED_FIELD(stride)>("stride");
     }
@@ -11637,6 +11762,7 @@ struct VkIndirectCommandsStreamNVAnnotation
     VkIndirectCommandsStreamNVAnnotation(ModuleLibrary & ml)
     : ManagedStructureAnnotation ("VkIndirectCommandsStreamNV", ml) {
         addField<DAS_BIND_MANAGED_FIELD(buffer)>("buffer");
+        addField<DAS_BIND_MANAGED_FIELD(offset)>("offset");
     }
     void init() {
     }
@@ -11711,8 +11837,12 @@ struct VkGeneratedCommandsInfoNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pStreams)>("pStreams");
         addField<DAS_BIND_MANAGED_FIELD(sequencesCount)>("sequencesCount");
         addField<DAS_BIND_MANAGED_FIELD(preprocessBuffer)>("preprocessBuffer");
+        addField<DAS_BIND_MANAGED_FIELD(preprocessOffset)>("preprocessOffset");
+        addField<DAS_BIND_MANAGED_FIELD(preprocessSize)>("preprocessSize");
         addField<DAS_BIND_MANAGED_FIELD(sequencesCountBuffer)>("sequencesCountBuffer");
+        addField<DAS_BIND_MANAGED_FIELD(sequencesCountOffset)>("sequencesCountOffset");
         addField<DAS_BIND_MANAGED_FIELD(sequencesIndexBuffer)>("sequencesIndexBuffer");
+        addField<DAS_BIND_MANAGED_FIELD(sequencesIndexOffset)>("sequencesIndexOffset");
     }
     void init() {
     }
@@ -11766,7 +11896,9 @@ struct VkPhysicalDeviceTexelBufferAlignmentPropertiesEXTAnnotation
     : ManagedStructureAnnotation ("VkPhysicalDeviceTexelBufferAlignmentPropertiesEXT", ml) {
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
+        addField<DAS_BIND_MANAGED_FIELD(storageTexelBufferOffsetAlignmentBytes)>("storageTexelBufferOffsetAlignmentBytes");
         addField<DAS_BIND_MANAGED_FIELD(storageTexelBufferOffsetSingleTexelAlignment)>("storageTexelBufferOffsetSingleTexelAlignment");
+        addField<DAS_BIND_MANAGED_FIELD(uniformTexelBufferOffsetAlignmentBytes)>("uniformTexelBufferOffsetAlignmentBytes");
         addField<DAS_BIND_MANAGED_FIELD(uniformTexelBufferOffsetSingleTexelAlignment)>("uniformTexelBufferOffsetSingleTexelAlignment");
     }
     void init() {
@@ -11838,6 +11970,8 @@ struct VkPhysicalDeviceRobustness2PropertiesEXTAnnotation
     : ManagedStructureAnnotation ("VkPhysicalDeviceRobustness2PropertiesEXT", ml) {
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
+        addField<DAS_BIND_MANAGED_FIELD(robustStorageBufferAccessSizeAlignment)>("robustStorageBufferAccessSizeAlignment");
+        addField<DAS_BIND_MANAGED_FIELD(robustUniformBufferAccessSizeAlignment)>("robustUniformBufferAccessSizeAlignment");
     }
     void init() {
     }
