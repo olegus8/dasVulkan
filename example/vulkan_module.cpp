@@ -11726,6 +11726,7 @@ public:
         addAnnotation(make_smart<VkPhysicalDeviceRayTracingPropertiesNVAnnotation>(lib));
         addAnnotation(make_smart<VkTransformMatrixKHRAnnotation>(lib));
         addAnnotation(make_smart<VkAabbPositionsKHRAnnotation>(lib));
+        addAnnotation(make_smart<VkAccelerationStructureInstanceKHRAnnotation>(lib));
         
         addExtern<DAS_BIND_FUN(VkAccelerationStructureInstanceKHR_get_instanceCustomIndex)>(*this, lib, "VkAccelerationStructureInstanceKHR_get_instanceCustomIndex",
             SideEffects::none, "{field.getter_name}");
@@ -11746,8 +11747,6 @@ public:
             SideEffects::none, "{field.getter_name}");
         addExtern<DAS_BIND_FUN(VkAccelerationStructureInstanceKHR_set_flags)>(*this, lib, "VkAccelerationStructureInstanceKHR_set_flags",
             SideEffects::modifyArgument, "{field.setter_name}");
-        
-        addAnnotation(make_smart<VkAccelerationStructureInstanceKHRAnnotation>(lib));
         addAnnotation(make_smart<VkPhysicalDeviceRepresentativeFragmentTestFeaturesNVAnnotation>(lib));
         addAnnotation(make_smart<VkPipelineRepresentativeFragmentTestStateCreateInfoNVAnnotation>(lib));
         addAnnotation(make_smart<VkPhysicalDeviceImageViewImageFormatInfoEXTAnnotation>(lib));
