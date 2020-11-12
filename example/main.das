@@ -11,4 +11,9 @@ def main
     let offset3d = [[VkOffset3D x=2]]
     assert(offset2d.x * 2 == offset3d.x)
 
+    // bit fields
+    var asi = [[VkAccelerationStructureInstanceKHR]]
+    VkAccelerationStructureInstanceKHR_set_mask(asi, 123u)
+    assert(VkAccelerationStructureInstanceKHR_get_mask(asi) == 123u)
+
     return true
