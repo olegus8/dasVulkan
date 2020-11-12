@@ -2714,6 +2714,8 @@ struct VkExtent2DAnnotation
         addField<DAS_BIND_MANAGED_FIELD(width)>("width");
         addField<DAS_BIND_MANAGED_FIELD(height)>("height");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -2729,6 +2731,8 @@ struct VkExtent3DAnnotation
         addField<DAS_BIND_MANAGED_FIELD(height)>("height");
         addField<DAS_BIND_MANAGED_FIELD(depth)>("depth");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -2742,6 +2746,8 @@ struct VkOffset2DAnnotation
     : ManagedStructureAnnotation ("VkOffset2D", ml) {
         addField<DAS_BIND_MANAGED_FIELD(x)>("x");
         addField<DAS_BIND_MANAGED_FIELD(y)>("y");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -2758,6 +2764,8 @@ struct VkOffset3DAnnotation
         addField<DAS_BIND_MANAGED_FIELD(y)>("y");
         addField<DAS_BIND_MANAGED_FIELD(z)>("z");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -2772,6 +2780,8 @@ struct VkRect2DAnnotation
         addField<DAS_BIND_MANAGED_FIELD(offset)>("offset");
         addField<DAS_BIND_MANAGED_FIELD(extent)>("extent");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -2784,6 +2794,8 @@ struct VkBaseInStructureAnnotation
     VkBaseInStructureAnnotation(ModuleLibrary & ml)
     : ManagedStructureAnnotation ("VkBaseInStructure", ml) {
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
+    }
+    void init() {
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
     }
     virtual bool isLocal() const override { return true; }
@@ -2798,6 +2810,8 @@ struct VkBaseOutStructureAnnotation
     VkBaseOutStructureAnnotation(ModuleLibrary & ml)
     : ManagedStructureAnnotation ("VkBaseOutStructure", ml) {
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
+    }
+    void init() {
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
     }
     virtual bool isLocal() const override { return true; }
@@ -2819,6 +2833,8 @@ struct VkBufferMemoryBarrierAnnotation
         addField<DAS_BIND_MANAGED_FIELD(dstQueueFamilyIndex)>("dstQueueFamilyIndex");
         addField<DAS_BIND_MANAGED_FIELD(buffer)>("buffer");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -2833,6 +2849,8 @@ struct VkDispatchIndirectCommandAnnotation
         addField<DAS_BIND_MANAGED_FIELD(x)>("x");
         addField<DAS_BIND_MANAGED_FIELD(y)>("y");
         addField<DAS_BIND_MANAGED_FIELD(z)>("z");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -2851,6 +2869,8 @@ struct VkDrawIndexedIndirectCommandAnnotation
         addField<DAS_BIND_MANAGED_FIELD(vertexOffset)>("vertexOffset");
         addField<DAS_BIND_MANAGED_FIELD(firstInstance)>("firstInstance");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -2866,6 +2886,8 @@ struct VkDrawIndirectCommandAnnotation
         addField<DAS_BIND_MANAGED_FIELD(instanceCount)>("instanceCount");
         addField<DAS_BIND_MANAGED_FIELD(firstVertex)>("firstVertex");
         addField<DAS_BIND_MANAGED_FIELD(firstInstance)>("firstInstance");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -2883,6 +2905,8 @@ struct VkImageSubresourceRangeAnnotation
         addField<DAS_BIND_MANAGED_FIELD(levelCount)>("levelCount");
         addField<DAS_BIND_MANAGED_FIELD(baseArrayLayer)>("baseArrayLayer");
         addField<DAS_BIND_MANAGED_FIELD(layerCount)>("layerCount");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -2906,6 +2930,8 @@ struct VkImageMemoryBarrierAnnotation
         addField<DAS_BIND_MANAGED_FIELD(image)>("image");
         addField<DAS_BIND_MANAGED_FIELD(subresourceRange)>("subresourceRange");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -2922,6 +2948,8 @@ struct VkMemoryBarrierAnnotation
         addField<DAS_BIND_MANAGED_FIELD(srcAccessMask)>("srcAccessMask");
         addField<DAS_BIND_MANAGED_FIELD(dstAccessMask)>("dstAccessMask");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -2934,6 +2962,8 @@ struct VkAllocationCallbacksAnnotation
     VkAllocationCallbacksAnnotation(ModuleLibrary & ml)
     : ManagedStructureAnnotation ("VkAllocationCallbacks", ml) {
         addField<DAS_BIND_MANAGED_FIELD(pUserData)>("pUserData");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -2954,6 +2984,8 @@ struct VkApplicationInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(engineVersion)>("engineVersion");
         addField<DAS_BIND_MANAGED_FIELD(apiVersion)>("apiVersion");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -2968,6 +3000,8 @@ struct VkFormatPropertiesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(linearTilingFeatures)>("linearTilingFeatures");
         addField<DAS_BIND_MANAGED_FIELD(optimalTilingFeatures)>("optimalTilingFeatures");
         addField<DAS_BIND_MANAGED_FIELD(bufferFeatures)>("bufferFeatures");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -2984,6 +3018,8 @@ struct VkImageFormatPropertiesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(maxMipLevels)>("maxMipLevels");
         addField<DAS_BIND_MANAGED_FIELD(maxArrayLayers)>("maxArrayLayers");
         addField<DAS_BIND_MANAGED_FIELD(sampleCounts)>("sampleCounts");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -3005,6 +3041,8 @@ struct VkInstanceCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(enabledExtensionCount)>("enabledExtensionCount");
         addField<DAS_BIND_MANAGED_FIELD(ppEnabledExtensionNames)>("ppEnabledExtensionNames");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -3017,6 +3055,8 @@ struct VkMemoryHeapAnnotation
     VkMemoryHeapAnnotation(ModuleLibrary & ml)
     : ManagedStructureAnnotation ("VkMemoryHeap", ml) {
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -3031,6 +3071,8 @@ struct VkMemoryTypeAnnotation
     : ManagedStructureAnnotation ("VkMemoryType", ml) {
         addField<DAS_BIND_MANAGED_FIELD(propertyFlags)>("propertyFlags");
         addField<DAS_BIND_MANAGED_FIELD(heapIndex)>("heapIndex");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -3098,6 +3140,8 @@ struct VkPhysicalDeviceFeaturesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sparseResidencyAliased)>("sparseResidencyAliased");
         addField<DAS_BIND_MANAGED_FIELD(variableMultisampleRate)>("variableMultisampleRate");
         addField<DAS_BIND_MANAGED_FIELD(inheritedQueries)>("inheritedQueries");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -3208,6 +3252,8 @@ struct VkPhysicalDeviceLimitsAnnotation
         addField<DAS_BIND_MANAGED_FIELD(strictLines)>("strictLines");
         addField<DAS_BIND_MANAGED_FIELD(standardSampleLocations)>("standardSampleLocations");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -3223,6 +3269,8 @@ struct VkPhysicalDeviceMemoryPropertiesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(memoryTypes)>("memoryTypes");
         addField<DAS_BIND_MANAGED_FIELD(memoryHeapCount)>("memoryHeapCount");
         addField<DAS_BIND_MANAGED_FIELD(memoryHeaps)>("memoryHeaps");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -3240,6 +3288,8 @@ struct VkPhysicalDeviceSparsePropertiesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(residencyStandard3DBlockShape)>("residencyStandard3DBlockShape");
         addField<DAS_BIND_MANAGED_FIELD(residencyAlignedMipSize)>("residencyAlignedMipSize");
         addField<DAS_BIND_MANAGED_FIELD(residencyNonResidentStrict)>("residencyNonResidentStrict");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -3261,6 +3311,8 @@ struct VkPhysicalDevicePropertiesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(limits)>("limits");
         addField<DAS_BIND_MANAGED_FIELD(sparseProperties)>("sparseProperties");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -3276,6 +3328,8 @@ struct VkQueueFamilyPropertiesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(queueCount)>("queueCount");
         addField<DAS_BIND_MANAGED_FIELD(timestampValidBits)>("timestampValidBits");
         addField<DAS_BIND_MANAGED_FIELD(minImageTransferGranularity)>("minImageTransferGranularity");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -3294,6 +3348,8 @@ struct VkDeviceQueueCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(queueFamilyIndex)>("queueFamilyIndex");
         addField<DAS_BIND_MANAGED_FIELD(queueCount)>("queueCount");
         addField<DAS_BIND_MANAGED_FIELD(pQueuePriorities)>("pQueuePriorities");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -3317,6 +3373,8 @@ struct VkDeviceCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(ppEnabledExtensionNames)>("ppEnabledExtensionNames");
         addField<DAS_BIND_MANAGED_FIELD(pEnabledFeatures)>("pEnabledFeatures");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -3329,6 +3387,8 @@ struct VkExtensionPropertiesAnnotation
     VkExtensionPropertiesAnnotation(ModuleLibrary & ml)
     : ManagedStructureAnnotation ("VkExtensionProperties", ml) {
         addField<DAS_BIND_MANAGED_FIELD(specVersion)>("specVersion");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -3343,6 +3403,8 @@ struct VkLayerPropertiesAnnotation
     : ManagedStructureAnnotation ("VkLayerProperties", ml) {
         addField<DAS_BIND_MANAGED_FIELD(specVersion)>("specVersion");
         addField<DAS_BIND_MANAGED_FIELD(implementationVersion)>("implementationVersion");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -3365,6 +3427,8 @@ struct VkSubmitInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(signalSemaphoreCount)>("signalSemaphoreCount");
         addField<DAS_BIND_MANAGED_FIELD(pSignalSemaphores)>("pSignalSemaphores");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -3379,6 +3443,8 @@ struct VkMappedMemoryRangeAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(memory)>("memory");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -3395,6 +3461,8 @@ struct VkMemoryAllocateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(memoryTypeIndex)>("memoryTypeIndex");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -3407,6 +3475,8 @@ struct VkMemoryRequirementsAnnotation
     VkMemoryRequirementsAnnotation(ModuleLibrary & ml)
     : ManagedStructureAnnotation ("VkMemoryRequirements", ml) {
         addField<DAS_BIND_MANAGED_FIELD(memoryTypeBits)>("memoryTypeBits");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -3421,6 +3491,8 @@ struct VkSparseMemoryBindAnnotation
     : ManagedStructureAnnotation ("VkSparseMemoryBind", ml) {
         addField<DAS_BIND_MANAGED_FIELD(memory)>("memory");
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -3437,6 +3509,8 @@ struct VkSparseBufferMemoryBindInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(bindCount)>("bindCount");
         addField<DAS_BIND_MANAGED_FIELD(pBinds)>("pBinds");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -3452,6 +3526,8 @@ struct VkSparseImageOpaqueMemoryBindInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(bindCount)>("bindCount");
         addField<DAS_BIND_MANAGED_FIELD(pBinds)>("pBinds");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -3466,6 +3542,8 @@ struct VkImageSubresourceAnnotation
         addField<DAS_BIND_MANAGED_FIELD(aspectMask)>("aspectMask");
         addField<DAS_BIND_MANAGED_FIELD(mipLevel)>("mipLevel");
         addField<DAS_BIND_MANAGED_FIELD(arrayLayer)>("arrayLayer");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -3484,6 +3562,8 @@ struct VkSparseImageMemoryBindAnnotation
         addField<DAS_BIND_MANAGED_FIELD(memory)>("memory");
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -3498,6 +3578,8 @@ struct VkSparseImageMemoryBindInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(image)>("image");
         addField<DAS_BIND_MANAGED_FIELD(bindCount)>("bindCount");
         addField<DAS_BIND_MANAGED_FIELD(pBinds)>("pBinds");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -3523,6 +3605,8 @@ struct VkBindSparseInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(signalSemaphoreCount)>("signalSemaphoreCount");
         addField<DAS_BIND_MANAGED_FIELD(pSignalSemaphores)>("pSignalSemaphores");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -3538,6 +3622,8 @@ struct VkSparseImageFormatPropertiesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(imageGranularity)>("imageGranularity");
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -3551,6 +3637,8 @@ struct VkSparseImageMemoryRequirementsAnnotation
     : ManagedStructureAnnotation ("VkSparseImageMemoryRequirements", ml) {
         addField<DAS_BIND_MANAGED_FIELD(formatProperties)>("formatProperties");
         addField<DAS_BIND_MANAGED_FIELD(imageMipTailFirstLod)>("imageMipTailFirstLod");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -3567,6 +3655,8 @@ struct VkFenceCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -3582,6 +3672,8 @@ struct VkSemaphoreCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -3596,6 +3688,8 @@ struct VkEventCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -3614,6 +3708,8 @@ struct VkQueryPoolCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(queryType)>("queryType");
         addField<DAS_BIND_MANAGED_FIELD(queryCount)>("queryCount");
         addField<DAS_BIND_MANAGED_FIELD(pipelineStatistics)>("pipelineStatistics");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -3634,6 +3730,8 @@ struct VkBufferCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(queueFamilyIndexCount)>("queueFamilyIndexCount");
         addField<DAS_BIND_MANAGED_FIELD(pQueueFamilyIndices)>("pQueueFamilyIndices");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -3650,6 +3748,8 @@ struct VkBufferViewCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
         addField<DAS_BIND_MANAGED_FIELD(buffer)>("buffer");
         addField<DAS_BIND_MANAGED_FIELD(format)>("format");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -3678,6 +3778,8 @@ struct VkImageCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pQueueFamilyIndices)>("pQueueFamilyIndices");
         addField<DAS_BIND_MANAGED_FIELD(initialLayout)>("initialLayout");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -3689,6 +3791,8 @@ struct VkSubresourceLayoutAnnotation
 : public ManagedStructureAnnotation<VkSubresourceLayout,true,true> {
     VkSubresourceLayoutAnnotation(ModuleLibrary & ml)
     : ManagedStructureAnnotation ("VkSubresourceLayout", ml) {
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -3705,6 +3809,8 @@ struct VkComponentMappingAnnotation
         addField<DAS_BIND_MANAGED_FIELD(g)>("g");
         addField<DAS_BIND_MANAGED_FIELD(b)>("b");
         addField<DAS_BIND_MANAGED_FIELD(a)>("a");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -3726,6 +3832,8 @@ struct VkImageViewCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(components)>("components");
         addField<DAS_BIND_MANAGED_FIELD(subresourceRange)>("subresourceRange");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -3741,6 +3849,8 @@ struct VkShaderModuleCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
         addField<DAS_BIND_MANAGED_FIELD(pCode)>("pCode");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -3758,6 +3868,8 @@ struct VkPipelineCacheCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
         addField<DAS_BIND_MANAGED_FIELD(pInitialData)>("pInitialData");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -3771,6 +3883,8 @@ struct VkSpecializationMapEntryAnnotation
     : ManagedStructureAnnotation ("VkSpecializationMapEntry", ml) {
         addField<DAS_BIND_MANAGED_FIELD(constantID)>("constantID");
         addField<DAS_BIND_MANAGED_FIELD(offset)>("offset");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -3786,6 +3900,8 @@ struct VkSpecializationInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(mapEntryCount)>("mapEntryCount");
         addField<DAS_BIND_MANAGED_FIELD(pMapEntries)>("pMapEntries");
         addField<DAS_BIND_MANAGED_FIELD(pData)>("pData");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -3806,6 +3922,8 @@ struct VkPipelineShaderStageCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pName)>("pName");
         addField<DAS_BIND_MANAGED_FIELD(pSpecializationInfo)>("pSpecializationInfo");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -3825,6 +3943,8 @@ struct VkComputePipelineCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(basePipelineHandle)>("basePipelineHandle");
         addField<DAS_BIND_MANAGED_FIELD(basePipelineIndex)>("basePipelineIndex");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -3839,6 +3959,8 @@ struct VkVertexInputBindingDescriptionAnnotation
         addField<DAS_BIND_MANAGED_FIELD(binding)>("binding");
         addField<DAS_BIND_MANAGED_FIELD(stride)>("stride");
         addField<DAS_BIND_MANAGED_FIELD(inputRate)>("inputRate");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -3855,6 +3977,8 @@ struct VkVertexInputAttributeDescriptionAnnotation
         addField<DAS_BIND_MANAGED_FIELD(binding)>("binding");
         addField<DAS_BIND_MANAGED_FIELD(format)>("format");
         addField<DAS_BIND_MANAGED_FIELD(offset)>("offset");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -3875,6 +3999,8 @@ struct VkPipelineVertexInputStateCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(vertexAttributeDescriptionCount)>("vertexAttributeDescriptionCount");
         addField<DAS_BIND_MANAGED_FIELD(pVertexAttributeDescriptions)>("pVertexAttributeDescriptions");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -3892,6 +4018,8 @@ struct VkPipelineInputAssemblyStateCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(topology)>("topology");
         addField<DAS_BIND_MANAGED_FIELD(primitiveRestartEnable)>("primitiveRestartEnable");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -3907,6 +4035,8 @@ struct VkPipelineTessellationStateCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
         addField<DAS_BIND_MANAGED_FIELD(patchControlPoints)>("patchControlPoints");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -3926,6 +4056,8 @@ struct VkViewportAnnotation
         addField<DAS_BIND_MANAGED_FIELD(minDepth)>("minDepth");
         addField<DAS_BIND_MANAGED_FIELD(maxDepth)>("maxDepth");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -3944,6 +4076,8 @@ struct VkPipelineViewportStateCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pViewports)>("pViewports");
         addField<DAS_BIND_MANAGED_FIELD(scissorCount)>("scissorCount");
         addField<DAS_BIND_MANAGED_FIELD(pScissors)>("pScissors");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -3970,6 +4104,8 @@ struct VkPipelineRasterizationStateCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(depthBiasSlopeFactor)>("depthBiasSlopeFactor");
         addField<DAS_BIND_MANAGED_FIELD(lineWidth)>("lineWidth");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -3991,6 +4127,8 @@ struct VkPipelineMultisampleStateCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(alphaToCoverageEnable)>("alphaToCoverageEnable");
         addField<DAS_BIND_MANAGED_FIELD(alphaToOneEnable)>("alphaToOneEnable");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -4009,6 +4147,8 @@ struct VkStencilOpStateAnnotation
         addField<DAS_BIND_MANAGED_FIELD(compareMask)>("compareMask");
         addField<DAS_BIND_MANAGED_FIELD(writeMask)>("writeMask");
         addField<DAS_BIND_MANAGED_FIELD(reference)>("reference");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -4034,6 +4174,8 @@ struct VkPipelineDepthStencilStateCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(minDepthBounds)>("minDepthBounds");
         addField<DAS_BIND_MANAGED_FIELD(maxDepthBounds)>("maxDepthBounds");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -4053,6 +4195,8 @@ struct VkPipelineColorBlendAttachmentStateAnnotation
         addField<DAS_BIND_MANAGED_FIELD(dstAlphaBlendFactor)>("dstAlphaBlendFactor");
         addField<DAS_BIND_MANAGED_FIELD(alphaBlendOp)>("alphaBlendOp");
         addField<DAS_BIND_MANAGED_FIELD(colorWriteMask)>("colorWriteMask");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -4074,6 +4218,8 @@ struct VkPipelineColorBlendStateCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pAttachments)>("pAttachments");
         addField<DAS_BIND_MANAGED_FIELD(blendConstants)>("blendConstants");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -4090,6 +4236,8 @@ struct VkPipelineDynamicStateCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
         addField<DAS_BIND_MANAGED_FIELD(dynamicStateCount)>("dynamicStateCount");
         addField<DAS_BIND_MANAGED_FIELD(pDynamicStates)>("pDynamicStates");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -4122,6 +4270,8 @@ struct VkGraphicsPipelineCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(basePipelineHandle)>("basePipelineHandle");
         addField<DAS_BIND_MANAGED_FIELD(basePipelineIndex)>("basePipelineIndex");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -4136,6 +4286,8 @@ struct VkPushConstantRangeAnnotation
         addField<DAS_BIND_MANAGED_FIELD(stageFlags)>("stageFlags");
         addField<DAS_BIND_MANAGED_FIELD(offset)>("offset");
         addField<DAS_BIND_MANAGED_FIELD(size)>("size");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -4155,6 +4307,8 @@ struct VkPipelineLayoutCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pSetLayouts)>("pSetLayouts");
         addField<DAS_BIND_MANAGED_FIELD(pushConstantRangeCount)>("pushConstantRangeCount");
         addField<DAS_BIND_MANAGED_FIELD(pPushConstantRanges)>("pPushConstantRanges");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -4186,6 +4340,8 @@ struct VkSamplerCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(borderColor)>("borderColor");
         addField<DAS_BIND_MANAGED_FIELD(unnormalizedCoordinates)>("unnormalizedCoordinates");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -4207,6 +4363,8 @@ struct VkCopyDescriptorSetAnnotation
         addField<DAS_BIND_MANAGED_FIELD(dstArrayElement)>("dstArrayElement");
         addField<DAS_BIND_MANAGED_FIELD(descriptorCount)>("descriptorCount");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -4219,6 +4377,8 @@ struct VkDescriptorBufferInfoAnnotation
     VkDescriptorBufferInfoAnnotation(ModuleLibrary & ml)
     : ManagedStructureAnnotation ("VkDescriptorBufferInfo", ml) {
         addField<DAS_BIND_MANAGED_FIELD(buffer)>("buffer");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -4235,6 +4395,8 @@ struct VkDescriptorImageInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(imageView)>("imageView");
         addField<DAS_BIND_MANAGED_FIELD(imageLayout)>("imageLayout");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -4248,6 +4410,8 @@ struct VkDescriptorPoolSizeAnnotation
     : ManagedStructureAnnotation ("VkDescriptorPoolSize", ml) {
         addField<DAS_BIND_MANAGED_FIELD(type)>("type");
         addField<DAS_BIND_MANAGED_FIELD(descriptorCount)>("descriptorCount");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -4267,6 +4431,8 @@ struct VkDescriptorPoolCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(poolSizeCount)>("poolSizeCount");
         addField<DAS_BIND_MANAGED_FIELD(pPoolSizes)>("pPoolSizes");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -4283,6 +4449,8 @@ struct VkDescriptorSetAllocateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(descriptorPool)>("descriptorPool");
         addField<DAS_BIND_MANAGED_FIELD(descriptorSetCount)>("descriptorSetCount");
         addField<DAS_BIND_MANAGED_FIELD(pSetLayouts)>("pSetLayouts");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -4301,6 +4469,8 @@ struct VkDescriptorSetLayoutBindingAnnotation
         addField<DAS_BIND_MANAGED_FIELD(stageFlags)>("stageFlags");
         addField<DAS_BIND_MANAGED_FIELD(pImmutableSamplers)>("pImmutableSamplers");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -4317,6 +4487,8 @@ struct VkDescriptorSetLayoutCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
         addField<DAS_BIND_MANAGED_FIELD(bindingCount)>("bindingCount");
         addField<DAS_BIND_MANAGED_FIELD(pBindings)>("pBindings");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -4340,6 +4512,8 @@ struct VkWriteDescriptorSetAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pBufferInfo)>("pBufferInfo");
         addField<DAS_BIND_MANAGED_FIELD(pTexelBufferView)>("pTexelBufferView");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -4361,6 +4535,8 @@ struct VkAttachmentDescriptionAnnotation
         addField<DAS_BIND_MANAGED_FIELD(initialLayout)>("initialLayout");
         addField<DAS_BIND_MANAGED_FIELD(finalLayout)>("finalLayout");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -4374,6 +4550,8 @@ struct VkAttachmentReferenceAnnotation
     : ManagedStructureAnnotation ("VkAttachmentReference", ml) {
         addField<DAS_BIND_MANAGED_FIELD(attachment)>("attachment");
         addField<DAS_BIND_MANAGED_FIELD(layout)>("layout");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -4395,6 +4573,8 @@ struct VkFramebufferCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(width)>("width");
         addField<DAS_BIND_MANAGED_FIELD(height)>("height");
         addField<DAS_BIND_MANAGED_FIELD(layers)>("layers");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -4418,6 +4598,8 @@ struct VkSubpassDescriptionAnnotation
         addField<DAS_BIND_MANAGED_FIELD(preserveAttachmentCount)>("preserveAttachmentCount");
         addField<DAS_BIND_MANAGED_FIELD(pPreserveAttachments)>("pPreserveAttachments");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -4436,6 +4618,8 @@ struct VkSubpassDependencyAnnotation
         addField<DAS_BIND_MANAGED_FIELD(srcAccessMask)>("srcAccessMask");
         addField<DAS_BIND_MANAGED_FIELD(dstAccessMask)>("dstAccessMask");
         addField<DAS_BIND_MANAGED_FIELD(dependencyFlags)>("dependencyFlags");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -4458,6 +4642,8 @@ struct VkRenderPassCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(dependencyCount)>("dependencyCount");
         addField<DAS_BIND_MANAGED_FIELD(pDependencies)>("pDependencies");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -4473,6 +4659,8 @@ struct VkCommandPoolCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
         addField<DAS_BIND_MANAGED_FIELD(queueFamilyIndex)>("queueFamilyIndex");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -4490,6 +4678,8 @@ struct VkCommandBufferAllocateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(commandPool)>("commandPool");
         addField<DAS_BIND_MANAGED_FIELD(level)>("level");
         addField<DAS_BIND_MANAGED_FIELD(commandBufferCount)>("commandBufferCount");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -4511,6 +4701,8 @@ struct VkCommandBufferInheritanceInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(queryFlags)>("queryFlags");
         addField<DAS_BIND_MANAGED_FIELD(pipelineStatistics)>("pipelineStatistics");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -4527,6 +4719,8 @@ struct VkCommandBufferBeginInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
         addField<DAS_BIND_MANAGED_FIELD(pInheritanceInfo)>("pInheritanceInfo");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -4538,6 +4732,8 @@ struct VkBufferCopyAnnotation
 : public ManagedStructureAnnotation<VkBufferCopy,true,true> {
     VkBufferCopyAnnotation(ModuleLibrary & ml)
     : ManagedStructureAnnotation ("VkBufferCopy", ml) {
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -4554,6 +4750,8 @@ struct VkImageSubresourceLayersAnnotation
         addField<DAS_BIND_MANAGED_FIELD(mipLevel)>("mipLevel");
         addField<DAS_BIND_MANAGED_FIELD(baseArrayLayer)>("baseArrayLayer");
         addField<DAS_BIND_MANAGED_FIELD(layerCount)>("layerCount");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -4572,6 +4770,8 @@ struct VkBufferImageCopyAnnotation
         addField<DAS_BIND_MANAGED_FIELD(imageOffset)>("imageOffset");
         addField<DAS_BIND_MANAGED_FIELD(imageExtent)>("imageExtent");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -4587,6 +4787,8 @@ struct VkClearColorValueAnnotation
         addField<DAS_BIND_MANAGED_FIELD(int32)>("int32");
         addField<DAS_BIND_MANAGED_FIELD(uint32)>("uint32");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -4601,6 +4803,8 @@ struct VkClearDepthStencilValueAnnotation
         addField<DAS_BIND_MANAGED_FIELD(depth)>("depth");
         addField<DAS_BIND_MANAGED_FIELD(stencil)>("stencil");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -4614,6 +4818,8 @@ struct VkClearValueAnnotation
     : ManagedStructureAnnotation ("VkClearValue", ml) {
         addField<DAS_BIND_MANAGED_FIELD(color)>("color");
         addField<DAS_BIND_MANAGED_FIELD(depthStencil)>("depthStencil");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -4630,6 +4836,8 @@ struct VkClearAttachmentAnnotation
         addField<DAS_BIND_MANAGED_FIELD(colorAttachment)>("colorAttachment");
         addField<DAS_BIND_MANAGED_FIELD(clearValue)>("clearValue");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -4644,6 +4852,8 @@ struct VkClearRectAnnotation
         addField<DAS_BIND_MANAGED_FIELD(rect)>("rect");
         addField<DAS_BIND_MANAGED_FIELD(baseArrayLayer)>("baseArrayLayer");
         addField<DAS_BIND_MANAGED_FIELD(layerCount)>("layerCount");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -4660,6 +4870,8 @@ struct VkImageBlitAnnotation
         addField<DAS_BIND_MANAGED_FIELD(srcOffsets)>("srcOffsets");
         addField<DAS_BIND_MANAGED_FIELD(dstSubresource)>("dstSubresource");
         addField<DAS_BIND_MANAGED_FIELD(dstOffsets)>("dstOffsets");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -4678,6 +4890,8 @@ struct VkImageCopyAnnotation
         addField<DAS_BIND_MANAGED_FIELD(dstOffset)>("dstOffset");
         addField<DAS_BIND_MANAGED_FIELD(extent)>("extent");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -4694,6 +4908,8 @@ struct VkImageResolveAnnotation
         addField<DAS_BIND_MANAGED_FIELD(dstSubresource)>("dstSubresource");
         addField<DAS_BIND_MANAGED_FIELD(dstOffset)>("dstOffset");
         addField<DAS_BIND_MANAGED_FIELD(extent)>("extent");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -4714,6 +4930,8 @@ struct VkRenderPassBeginInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(clearValueCount)>("clearValueCount");
         addField<DAS_BIND_MANAGED_FIELD(pClearValues)>("pClearValues");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -4732,6 +4950,8 @@ struct VkPhysicalDeviceSubgroupPropertiesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(supportedOperations)>("supportedOperations");
         addField<DAS_BIND_MANAGED_FIELD(quadOperationsInAllStages)>("quadOperationsInAllStages");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -4748,6 +4968,8 @@ struct VkBindBufferMemoryInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(buffer)>("buffer");
         addField<DAS_BIND_MANAGED_FIELD(memory)>("memory");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -4763,6 +4985,8 @@ struct VkBindImageMemoryInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(image)>("image");
         addField<DAS_BIND_MANAGED_FIELD(memory)>("memory");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -4782,6 +5006,8 @@ struct VkPhysicalDevice16BitStorageFeaturesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(storagePushConstant16)>("storagePushConstant16");
         addField<DAS_BIND_MANAGED_FIELD(storageInputOutput16)>("storageInputOutput16");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -4797,6 +5023,8 @@ struct VkMemoryDedicatedRequirementsAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(prefersDedicatedAllocation)>("prefersDedicatedAllocation");
         addField<DAS_BIND_MANAGED_FIELD(requiresDedicatedAllocation)>("requiresDedicatedAllocation");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -4814,6 +5042,8 @@ struct VkMemoryDedicatedAllocateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(image)>("image");
         addField<DAS_BIND_MANAGED_FIELD(buffer)>("buffer");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -4829,6 +5059,8 @@ struct VkMemoryAllocateFlagsInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
         addField<DAS_BIND_MANAGED_FIELD(deviceMask)>("deviceMask");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -4847,6 +5079,8 @@ struct VkDeviceGroupRenderPassBeginInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(deviceRenderAreaCount)>("deviceRenderAreaCount");
         addField<DAS_BIND_MANAGED_FIELD(pDeviceRenderAreas)>("pDeviceRenderAreas");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -4861,6 +5095,8 @@ struct VkDeviceGroupCommandBufferBeginInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(deviceMask)>("deviceMask");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -4882,6 +5118,8 @@ struct VkDeviceGroupSubmitInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(signalSemaphoreCount)>("signalSemaphoreCount");
         addField<DAS_BIND_MANAGED_FIELD(pSignalSemaphoreDeviceIndices)>("pSignalSemaphoreDeviceIndices");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -4898,6 +5136,8 @@ struct VkDeviceGroupBindSparseInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(resourceDeviceIndex)>("resourceDeviceIndex");
         addField<DAS_BIND_MANAGED_FIELD(memoryDeviceIndex)>("memoryDeviceIndex");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -4913,6 +5153,8 @@ struct VkBindBufferMemoryDeviceGroupInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(deviceIndexCount)>("deviceIndexCount");
         addField<DAS_BIND_MANAGED_FIELD(pDeviceIndices)>("pDeviceIndices");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -4932,6 +5174,8 @@ struct VkBindImageMemoryDeviceGroupInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(splitInstanceBindRegionCount)>("splitInstanceBindRegionCount");
         addField<DAS_BIND_MANAGED_FIELD(pSplitInstanceBindRegions)>("pSplitInstanceBindRegions");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -4949,6 +5193,8 @@ struct VkPhysicalDeviceGroupPropertiesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(physicalDevices)>("physicalDevices");
         addField<DAS_BIND_MANAGED_FIELD(subsetAllocation)>("subsetAllocation");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -4965,6 +5211,8 @@ struct VkDeviceGroupDeviceCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(physicalDeviceCount)>("physicalDeviceCount");
         addField<DAS_BIND_MANAGED_FIELD(pPhysicalDevices)>("pPhysicalDevices");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -4979,6 +5227,8 @@ struct VkBufferMemoryRequirementsInfo2Annotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(buffer)>("buffer");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -4995,6 +5245,8 @@ struct VkImageMemoryRequirementsInfo2Annotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(image)>("image");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -5009,6 +5261,8 @@ struct VkImageSparseMemoryRequirementsInfo2Annotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(image)>("image");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -5025,6 +5279,8 @@ struct VkMemoryRequirements2Annotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(memoryRequirements)>("memoryRequirements");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -5039,6 +5295,8 @@ struct VkSparseImageMemoryRequirements2Annotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(memoryRequirements)>("memoryRequirements");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -5055,6 +5313,8 @@ struct VkPhysicalDeviceFeatures2Annotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(features)>("features");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -5069,6 +5329,8 @@ struct VkPhysicalDeviceProperties2Annotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(properties)>("properties");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -5085,6 +5347,8 @@ struct VkFormatProperties2Annotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(formatProperties)>("formatProperties");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -5099,6 +5363,8 @@ struct VkImageFormatProperties2Annotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(imageFormatProperties)>("imageFormatProperties");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -5119,6 +5385,8 @@ struct VkPhysicalDeviceImageFormatInfo2Annotation
         addField<DAS_BIND_MANAGED_FIELD(usage)>("usage");
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -5133,6 +5401,8 @@ struct VkQueueFamilyProperties2Annotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(queueFamilyProperties)>("queueFamilyProperties");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -5149,6 +5419,8 @@ struct VkPhysicalDeviceMemoryProperties2Annotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(memoryProperties)>("memoryProperties");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -5163,6 +5435,8 @@ struct VkSparseImageFormatProperties2Annotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(properties)>("properties");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -5183,6 +5457,8 @@ struct VkPhysicalDeviceSparseImageFormatInfo2Annotation
         addField<DAS_BIND_MANAGED_FIELD(usage)>("usage");
         addField<DAS_BIND_MANAGED_FIELD(tiling)>("tiling");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -5198,6 +5474,8 @@ struct VkPhysicalDevicePointClippingPropertiesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(pointClippingBehavior)>("pointClippingBehavior");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -5212,6 +5490,8 @@ struct VkInputAttachmentAspectReferenceAnnotation
         addField<DAS_BIND_MANAGED_FIELD(subpass)>("subpass");
         addField<DAS_BIND_MANAGED_FIELD(inputAttachmentIndex)>("inputAttachmentIndex");
         addField<DAS_BIND_MANAGED_FIELD(aspectMask)>("aspectMask");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -5229,6 +5509,8 @@ struct VkRenderPassInputAttachmentAspectCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(aspectReferenceCount)>("aspectReferenceCount");
         addField<DAS_BIND_MANAGED_FIELD(pAspectReferences)>("pAspectReferences");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -5244,6 +5526,8 @@ struct VkImageViewUsageCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(usage)>("usage");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -5258,6 +5542,8 @@ struct VkPipelineTessellationDomainOriginStateCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(domainOrigin)>("domainOrigin");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -5279,6 +5565,8 @@ struct VkRenderPassMultiviewCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(correlationMaskCount)>("correlationMaskCount");
         addField<DAS_BIND_MANAGED_FIELD(pCorrelationMasks)>("pCorrelationMasks");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -5296,6 +5584,8 @@ struct VkPhysicalDeviceMultiviewFeaturesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(multiviewGeometryShader)>("multiviewGeometryShader");
         addField<DAS_BIND_MANAGED_FIELD(multiviewTessellationShader)>("multiviewTessellationShader");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -5311,6 +5601,8 @@ struct VkPhysicalDeviceMultiviewPropertiesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(maxMultiviewViewCount)>("maxMultiviewViewCount");
         addField<DAS_BIND_MANAGED_FIELD(maxMultiviewInstanceIndex)>("maxMultiviewInstanceIndex");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -5328,6 +5620,8 @@ struct VkPhysicalDeviceVariablePointersFeaturesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(variablePointersStorageBuffer)>("variablePointersStorageBuffer");
         addField<DAS_BIND_MANAGED_FIELD(variablePointers)>("variablePointers");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -5343,6 +5637,8 @@ struct VkPhysicalDeviceProtectedMemoryFeaturesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(protectedMemory)>("protectedMemory");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -5357,6 +5653,8 @@ struct VkPhysicalDeviceProtectedMemoryPropertiesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(protectedNoFault)>("protectedNoFault");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -5375,6 +5673,8 @@ struct VkDeviceQueueInfo2Annotation
         addField<DAS_BIND_MANAGED_FIELD(queueFamilyIndex)>("queueFamilyIndex");
         addField<DAS_BIND_MANAGED_FIELD(queueIndex)>("queueIndex");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -5389,6 +5689,8 @@ struct VkProtectedSubmitInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(protectedSubmit)>("protectedSubmit");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -5412,6 +5714,8 @@ struct VkSamplerYcbcrConversionCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(chromaFilter)>("chromaFilter");
         addField<DAS_BIND_MANAGED_FIELD(forceExplicitReconstruction)>("forceExplicitReconstruction");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -5426,6 +5730,8 @@ struct VkSamplerYcbcrConversionInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(conversion)>("conversion");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -5442,6 +5748,8 @@ struct VkBindImagePlaneMemoryInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(planeAspect)>("planeAspect");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -5456,6 +5764,8 @@ struct VkImagePlaneMemoryRequirementsInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(planeAspect)>("planeAspect");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -5472,6 +5782,8 @@ struct VkPhysicalDeviceSamplerYcbcrConversionFeaturesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(samplerYcbcrConversion)>("samplerYcbcrConversion");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -5486,6 +5798,8 @@ struct VkSamplerYcbcrConversionImageFormatPropertiesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(combinedImageSamplerDescriptorCount)>("combinedImageSamplerDescriptorCount");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -5502,6 +5816,8 @@ struct VkDescriptorUpdateTemplateEntryAnnotation
         addField<DAS_BIND_MANAGED_FIELD(dstArrayElement)>("dstArrayElement");
         addField<DAS_BIND_MANAGED_FIELD(descriptorCount)>("descriptorCount");
         addField<DAS_BIND_MANAGED_FIELD(descriptorType)>("descriptorType");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -5525,6 +5841,8 @@ struct VkDescriptorUpdateTemplateCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pipelineLayout)>("pipelineLayout");
         addField<DAS_BIND_MANAGED_FIELD(set)>("set");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -5539,6 +5857,8 @@ struct VkExternalMemoryPropertiesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(externalMemoryFeatures)>("externalMemoryFeatures");
         addField<DAS_BIND_MANAGED_FIELD(exportFromImportedHandleTypes)>("exportFromImportedHandleTypes");
         addField<DAS_BIND_MANAGED_FIELD(compatibleHandleTypes)>("compatibleHandleTypes");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -5555,6 +5875,8 @@ struct VkPhysicalDeviceExternalImageFormatInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(handleType)>("handleType");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -5569,6 +5891,8 @@ struct VkExternalImageFormatPropertiesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(externalMemoryProperties)>("externalMemoryProperties");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -5587,6 +5911,8 @@ struct VkPhysicalDeviceExternalBufferInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(usage)>("usage");
         addField<DAS_BIND_MANAGED_FIELD(handleType)>("handleType");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -5601,6 +5927,8 @@ struct VkExternalBufferPropertiesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(externalMemoryProperties)>("externalMemoryProperties");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -5621,6 +5949,8 @@ struct VkPhysicalDeviceIDPropertiesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(deviceNodeMask)>("deviceNodeMask");
         addField<DAS_BIND_MANAGED_FIELD(deviceLUIDValid)>("deviceLUIDValid");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -5635,6 +5965,8 @@ struct VkExternalMemoryImageCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(handleTypes)>("handleTypes");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -5651,6 +5983,8 @@ struct VkExternalMemoryBufferCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(handleTypes)>("handleTypes");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -5666,6 +6000,8 @@ struct VkExportMemoryAllocateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(handleTypes)>("handleTypes");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -5680,6 +6016,8 @@ struct VkPhysicalDeviceExternalFenceInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(handleType)>("handleType");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -5698,6 +6036,8 @@ struct VkExternalFencePropertiesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(compatibleHandleTypes)>("compatibleHandleTypes");
         addField<DAS_BIND_MANAGED_FIELD(externalFenceFeatures)>("externalFenceFeatures");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -5712,6 +6052,8 @@ struct VkExportFenceCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(handleTypes)>("handleTypes");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -5728,6 +6070,8 @@ struct VkExportSemaphoreCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(handleTypes)>("handleTypes");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -5742,6 +6086,8 @@ struct VkPhysicalDeviceExternalSemaphoreInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(handleType)>("handleType");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -5760,6 +6106,8 @@ struct VkExternalSemaphorePropertiesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(compatibleHandleTypes)>("compatibleHandleTypes");
         addField<DAS_BIND_MANAGED_FIELD(externalSemaphoreFeatures)>("externalSemaphoreFeatures");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -5774,6 +6122,8 @@ struct VkPhysicalDeviceMaintenance3PropertiesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(maxPerSetDescriptors)>("maxPerSetDescriptors");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -5790,6 +6140,8 @@ struct VkDescriptorSetLayoutSupportAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(supported)>("supported");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -5804,6 +6156,8 @@ struct VkPhysicalDeviceShaderDrawParametersFeaturesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(shaderDrawParameters)>("shaderDrawParameters");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -5830,6 +6184,8 @@ struct VkPhysicalDeviceVulkan11FeaturesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(protectedMemory)>("protectedMemory");
         addField<DAS_BIND_MANAGED_FIELD(samplerYcbcrConversion)>("samplerYcbcrConversion");
         addField<DAS_BIND_MANAGED_FIELD(shaderDrawParameters)>("shaderDrawParameters");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -5858,6 +6214,8 @@ struct VkPhysicalDeviceVulkan11PropertiesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(maxMultiviewInstanceIndex)>("maxMultiviewInstanceIndex");
         addField<DAS_BIND_MANAGED_FIELD(protectedNoFault)>("protectedNoFault");
         addField<DAS_BIND_MANAGED_FIELD(maxPerSetDescriptors)>("maxPerSetDescriptors");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -5920,6 +6278,8 @@ struct VkPhysicalDeviceVulkan12FeaturesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(shaderOutputLayer)>("shaderOutputLayer");
         addField<DAS_BIND_MANAGED_FIELD(subgroupBroadcastDynamicId)>("subgroupBroadcastDynamicId");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -5935,6 +6295,8 @@ struct VkConformanceVersionAnnotation
         addField<DAS_BIND_MANAGED_FIELD(minor)>("minor");
         addField<DAS_BIND_MANAGED_FIELD(subminor)>("subminor");
         addField<DAS_BIND_MANAGED_FIELD(patch)>("patch");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -5999,6 +6361,8 @@ struct VkPhysicalDeviceVulkan12PropertiesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(filterMinmaxImageComponentMapping)>("filterMinmaxImageComponentMapping");
         addField<DAS_BIND_MANAGED_FIELD(framebufferIntegerColorSampleCounts)>("framebufferIntegerColorSampleCounts");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -6014,6 +6378,8 @@ struct VkImageFormatListCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(viewFormatCount)>("viewFormatCount");
         addField<DAS_BIND_MANAGED_FIELD(pViewFormats)>("pViewFormats");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -6038,6 +6404,8 @@ struct VkAttachmentDescription2Annotation
         addField<DAS_BIND_MANAGED_FIELD(initialLayout)>("initialLayout");
         addField<DAS_BIND_MANAGED_FIELD(finalLayout)>("finalLayout");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -6054,6 +6422,8 @@ struct VkAttachmentReference2Annotation
         addField<DAS_BIND_MANAGED_FIELD(attachment)>("attachment");
         addField<DAS_BIND_MANAGED_FIELD(layout)>("layout");
         addField<DAS_BIND_MANAGED_FIELD(aspectMask)>("aspectMask");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -6080,6 +6450,8 @@ struct VkSubpassDescription2Annotation
         addField<DAS_BIND_MANAGED_FIELD(preserveAttachmentCount)>("preserveAttachmentCount");
         addField<DAS_BIND_MANAGED_FIELD(pPreserveAttachments)>("pPreserveAttachments");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -6101,6 +6473,8 @@ struct VkSubpassDependency2Annotation
         addField<DAS_BIND_MANAGED_FIELD(dstAccessMask)>("dstAccessMask");
         addField<DAS_BIND_MANAGED_FIELD(dependencyFlags)>("dependencyFlags");
         addField<DAS_BIND_MANAGED_FIELD(viewOffset)>("viewOffset");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -6125,6 +6499,8 @@ struct VkRenderPassCreateInfo2Annotation
         addField<DAS_BIND_MANAGED_FIELD(correlatedViewMaskCount)>("correlatedViewMaskCount");
         addField<DAS_BIND_MANAGED_FIELD(pCorrelatedViewMasks)>("pCorrelatedViewMasks");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -6140,6 +6516,8 @@ struct VkSubpassBeginInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(contents)>("contents");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -6153,6 +6531,8 @@ struct VkSubpassEndInfoAnnotation
     : ManagedStructureAnnotation ("VkSubpassEndInfo", ml) {
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -6171,6 +6551,8 @@ struct VkPhysicalDevice8BitStorageFeaturesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(uniformAndStorageBuffer8BitAccess)>("uniformAndStorageBuffer8BitAccess");
         addField<DAS_BIND_MANAGED_FIELD(storagePushConstant8)>("storagePushConstant8");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -6186,6 +6568,8 @@ struct VkPhysicalDeviceDriverPropertiesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(driverID)>("driverID");
         addField<DAS_BIND_MANAGED_FIELD(conformanceVersion)>("conformanceVersion");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -6203,6 +6587,8 @@ struct VkPhysicalDeviceShaderAtomicInt64FeaturesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(shaderBufferInt64Atomics)>("shaderBufferInt64Atomics");
         addField<DAS_BIND_MANAGED_FIELD(shaderSharedInt64Atomics)>("shaderSharedInt64Atomics");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -6218,6 +6604,8 @@ struct VkPhysicalDeviceShaderFloat16Int8FeaturesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(shaderFloat16)>("shaderFloat16");
         addField<DAS_BIND_MANAGED_FIELD(shaderInt8)>("shaderInt8");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -6250,6 +6638,8 @@ struct VkPhysicalDeviceFloatControlsPropertiesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(shaderRoundingModeRTZFloat32)>("shaderRoundingModeRTZFloat32");
         addField<DAS_BIND_MANAGED_FIELD(shaderRoundingModeRTZFloat64)>("shaderRoundingModeRTZFloat64");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -6265,6 +6655,8 @@ struct VkDescriptorSetLayoutBindingFlagsCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(bindingCount)>("bindingCount");
         addField<DAS_BIND_MANAGED_FIELD(pBindingFlags)>("pBindingFlags");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -6299,6 +6691,8 @@ struct VkPhysicalDeviceDescriptorIndexingFeaturesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(descriptorBindingPartiallyBound)>("descriptorBindingPartiallyBound");
         addField<DAS_BIND_MANAGED_FIELD(descriptorBindingVariableDescriptorCount)>("descriptorBindingVariableDescriptorCount");
         addField<DAS_BIND_MANAGED_FIELD(runtimeDescriptorArray)>("runtimeDescriptorArray");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -6337,6 +6731,8 @@ struct VkPhysicalDeviceDescriptorIndexingPropertiesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(maxDescriptorSetUpdateAfterBindStorageImages)>("maxDescriptorSetUpdateAfterBindStorageImages");
         addField<DAS_BIND_MANAGED_FIELD(maxDescriptorSetUpdateAfterBindInputAttachments)>("maxDescriptorSetUpdateAfterBindInputAttachments");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -6353,6 +6749,8 @@ struct VkDescriptorSetVariableDescriptorCountAllocateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(descriptorSetCount)>("descriptorSetCount");
         addField<DAS_BIND_MANAGED_FIELD(pDescriptorCounts)>("pDescriptorCounts");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -6367,6 +6765,8 @@ struct VkDescriptorSetVariableDescriptorCountLayoutSupportAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(maxVariableDescriptorCount)>("maxVariableDescriptorCount");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -6384,6 +6784,8 @@ struct VkSubpassDescriptionDepthStencilResolveAnnotation
         addField<DAS_BIND_MANAGED_FIELD(depthResolveMode)>("depthResolveMode");
         addField<DAS_BIND_MANAGED_FIELD(stencilResolveMode)>("stencilResolveMode");
         addField<DAS_BIND_MANAGED_FIELD(pDepthStencilResolveAttachment)>("pDepthStencilResolveAttachment");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -6403,6 +6805,8 @@ struct VkPhysicalDeviceDepthStencilResolvePropertiesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(independentResolveNone)>("independentResolveNone");
         addField<DAS_BIND_MANAGED_FIELD(independentResolve)>("independentResolve");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -6417,6 +6821,8 @@ struct VkPhysicalDeviceScalarBlockLayoutFeaturesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(scalarBlockLayout)>("scalarBlockLayout");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -6433,6 +6839,8 @@ struct VkImageStencilUsageCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(stencilUsage)>("stencilUsage");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -6447,6 +6855,8 @@ struct VkSamplerReductionModeCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(reductionMode)>("reductionMode");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -6463,6 +6873,8 @@ struct VkPhysicalDeviceSamplerFilterMinmaxPropertiesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(filterMinmaxSingleComponentFormats)>("filterMinmaxSingleComponentFormats");
         addField<DAS_BIND_MANAGED_FIELD(filterMinmaxImageComponentMapping)>("filterMinmaxImageComponentMapping");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -6481,6 +6893,8 @@ struct VkPhysicalDeviceVulkanMemoryModelFeaturesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(vulkanMemoryModelDeviceScope)>("vulkanMemoryModelDeviceScope");
         addField<DAS_BIND_MANAGED_FIELD(vulkanMemoryModelAvailabilityVisibilityChains)>("vulkanMemoryModelAvailabilityVisibilityChains");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -6495,6 +6909,8 @@ struct VkPhysicalDeviceImagelessFramebufferFeaturesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(imagelessFramebuffer)>("imagelessFramebuffer");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -6517,6 +6933,8 @@ struct VkFramebufferAttachmentImageInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(viewFormatCount)>("viewFormatCount");
         addField<DAS_BIND_MANAGED_FIELD(pViewFormats)>("pViewFormats");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -6532,6 +6950,8 @@ struct VkFramebufferAttachmentsCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(attachmentImageInfoCount)>("attachmentImageInfoCount");
         addField<DAS_BIND_MANAGED_FIELD(pAttachmentImageInfos)>("pAttachmentImageInfos");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -6549,6 +6969,8 @@ struct VkRenderPassAttachmentBeginInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(attachmentCount)>("attachmentCount");
         addField<DAS_BIND_MANAGED_FIELD(pAttachments)>("pAttachments");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -6563,6 +6985,8 @@ struct VkPhysicalDeviceUniformBufferStandardLayoutFeaturesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(uniformBufferStandardLayout)>("uniformBufferStandardLayout");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -6579,6 +7003,8 @@ struct VkPhysicalDeviceShaderSubgroupExtendedTypesFeaturesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(shaderSubgroupExtendedTypes)>("shaderSubgroupExtendedTypes");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -6594,6 +7020,8 @@ struct VkPhysicalDeviceSeparateDepthStencilLayoutsFeaturesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(separateDepthStencilLayouts)>("separateDepthStencilLayouts");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -6608,6 +7036,8 @@ struct VkAttachmentReferenceStencilLayoutAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(stencilLayout)>("stencilLayout");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -6625,6 +7055,8 @@ struct VkAttachmentDescriptionStencilLayoutAnnotation
         addField<DAS_BIND_MANAGED_FIELD(stencilInitialLayout)>("stencilInitialLayout");
         addField<DAS_BIND_MANAGED_FIELD(stencilFinalLayout)>("stencilFinalLayout");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -6639,6 +7071,8 @@ struct VkPhysicalDeviceHostQueryResetFeaturesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(hostQueryReset)>("hostQueryReset");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -6655,6 +7089,8 @@ struct VkPhysicalDeviceTimelineSemaphoreFeaturesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(timelineSemaphore)>("timelineSemaphore");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -6668,6 +7104,8 @@ struct VkPhysicalDeviceTimelineSemaphorePropertiesAnnotation
     : ManagedStructureAnnotation ("VkPhysicalDeviceTimelineSemaphoreProperties", ml) {
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -6683,6 +7121,8 @@ struct VkSemaphoreTypeCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(semaphoreType)>("semaphoreType");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -6702,6 +7142,8 @@ struct VkTimelineSemaphoreSubmitInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(signalSemaphoreValueCount)>("signalSemaphoreValueCount");
         addField<DAS_BIND_MANAGED_FIELD(pSignalSemaphoreValues)>("pSignalSemaphoreValues");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -6720,6 +7162,8 @@ struct VkSemaphoreWaitInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pSemaphores)>("pSemaphores");
         addField<DAS_BIND_MANAGED_FIELD(pValues)>("pValues");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -6734,6 +7178,8 @@ struct VkSemaphoreSignalInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(semaphore)>("semaphore");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -6752,6 +7198,8 @@ struct VkPhysicalDeviceBufferDeviceAddressFeaturesAnnotation
         addField<DAS_BIND_MANAGED_FIELD(bufferDeviceAddressCaptureReplay)>("bufferDeviceAddressCaptureReplay");
         addField<DAS_BIND_MANAGED_FIELD(bufferDeviceAddressMultiDevice)>("bufferDeviceAddressMultiDevice");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -6767,6 +7215,8 @@ struct VkBufferDeviceAddressInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(buffer)>("buffer");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -6780,6 +7230,8 @@ struct VkBufferOpaqueCaptureAddressCreateInfoAnnotation
     : ManagedStructureAnnotation ("VkBufferOpaqueCaptureAddressCreateInfo", ml) {
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -6795,6 +7247,8 @@ struct VkMemoryOpaqueCaptureAddressAllocateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -6809,6 +7263,8 @@ struct VkDeviceMemoryOpaqueCaptureAddressInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(memory)>("memory");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -6832,6 +7288,8 @@ struct VkSurfaceCapabilitiesKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(supportedCompositeAlpha)>("supportedCompositeAlpha");
         addField<DAS_BIND_MANAGED_FIELD(supportedUsageFlags)>("supportedUsageFlags");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -6845,6 +7303,8 @@ struct VkSurfaceFormatKHRAnnotation
     : ManagedStructureAnnotation ("VkSurfaceFormatKHR", ml) {
         addField<DAS_BIND_MANAGED_FIELD(format)>("format");
         addField<DAS_BIND_MANAGED_FIELD(colorSpace)>("colorSpace");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -6876,6 +7336,8 @@ struct VkSwapchainCreateInfoKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(clipped)>("clipped");
         addField<DAS_BIND_MANAGED_FIELD(oldSwapchain)>("oldSwapchain");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -6896,6 +7358,8 @@ struct VkPresentInfoKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pImageIndices)>("pImageIndices");
         addField<DAS_BIND_MANAGED_FIELD(pResults)>("pResults");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -6910,6 +7374,8 @@ struct VkImageSwapchainCreateInfoKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(swapchain)>("swapchain");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -6926,6 +7392,8 @@ struct VkBindImageMemorySwapchainInfoKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(swapchain)>("swapchain");
         addField<DAS_BIND_MANAGED_FIELD(imageIndex)>("imageIndex");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -6945,6 +7413,8 @@ struct VkAcquireNextImageInfoKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(fence)>("fence");
         addField<DAS_BIND_MANAGED_FIELD(deviceMask)>("deviceMask");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -6960,6 +7430,8 @@ struct VkDeviceGroupPresentCapabilitiesKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(presentMask)>("presentMask");
         addField<DAS_BIND_MANAGED_FIELD(modes)>("modes");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -6978,6 +7450,8 @@ struct VkDeviceGroupPresentInfoKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pDeviceMasks)>("pDeviceMasks");
         addField<DAS_BIND_MANAGED_FIELD(mode)>("mode");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -6993,6 +7467,8 @@ struct VkDeviceGroupSwapchainCreateInfoKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(modes)>("modes");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -7006,6 +7482,8 @@ struct VkDisplayModeParametersKHRAnnotation
     : ManagedStructureAnnotation ("VkDisplayModeParametersKHR", ml) {
         addField<DAS_BIND_MANAGED_FIELD(visibleRegion)>("visibleRegion");
         addField<DAS_BIND_MANAGED_FIELD(refreshRate)>("refreshRate");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -7023,6 +7501,8 @@ struct VkDisplayModeCreateInfoKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
         addField<DAS_BIND_MANAGED_FIELD(parameters)>("parameters");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -7036,6 +7516,8 @@ struct VkDisplayModePropertiesKHRAnnotation
     : ManagedStructureAnnotation ("VkDisplayModePropertiesKHR", ml) {
         addField<DAS_BIND_MANAGED_FIELD(displayMode)>("displayMode");
         addField<DAS_BIND_MANAGED_FIELD(parameters)>("parameters");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -7058,6 +7540,8 @@ struct VkDisplayPlaneCapabilitiesKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(minDstExtent)>("minDstExtent");
         addField<DAS_BIND_MANAGED_FIELD(maxDstExtent)>("maxDstExtent");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -7071,6 +7555,8 @@ struct VkDisplayPlanePropertiesKHRAnnotation
     : ManagedStructureAnnotation ("VkDisplayPlanePropertiesKHR", ml) {
         addField<DAS_BIND_MANAGED_FIELD(currentDisplay)>("currentDisplay");
         addField<DAS_BIND_MANAGED_FIELD(currentStackIndex)>("currentStackIndex");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -7090,6 +7576,8 @@ struct VkDisplayPropertiesKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(supportedTransforms)>("supportedTransforms");
         addField<DAS_BIND_MANAGED_FIELD(planeReorderPossible)>("planeReorderPossible");
         addField<DAS_BIND_MANAGED_FIELD(persistentContent)>("persistentContent");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -7113,6 +7601,8 @@ struct VkDisplaySurfaceCreateInfoKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(alphaMode)>("alphaMode");
         addField<DAS_BIND_MANAGED_FIELD(imageExtent)>("imageExtent");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -7130,6 +7620,8 @@ struct VkDisplayPresentInfoKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(dstRect)>("dstRect");
         addField<DAS_BIND_MANAGED_FIELD(persistent)>("persistent");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -7146,6 +7638,8 @@ struct VkImportMemoryFdInfoKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(handleType)>("handleType");
         addField<DAS_BIND_MANAGED_FIELD(fd)>("fd");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -7160,6 +7654,8 @@ struct VkMemoryFdPropertiesKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(memoryTypeBits)>("memoryTypeBits");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -7176,6 +7672,8 @@ struct VkMemoryGetFdInfoKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(memory)>("memory");
         addField<DAS_BIND_MANAGED_FIELD(handleType)>("handleType");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -7195,6 +7693,8 @@ struct VkImportSemaphoreFdInfoKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(handleType)>("handleType");
         addField<DAS_BIND_MANAGED_FIELD(fd)>("fd");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -7211,6 +7711,8 @@ struct VkSemaphoreGetFdInfoKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(semaphore)>("semaphore");
         addField<DAS_BIND_MANAGED_FIELD(handleType)>("handleType");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -7225,6 +7727,8 @@ struct VkPhysicalDevicePushDescriptorPropertiesKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(maxPushDescriptors)>("maxPushDescriptors");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -7241,6 +7745,8 @@ struct VkRectLayerKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(extent)>("extent");
         addField<DAS_BIND_MANAGED_FIELD(layer)>("layer");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -7254,6 +7760,8 @@ struct VkPresentRegionKHRAnnotation
     : ManagedStructureAnnotation ("VkPresentRegionKHR", ml) {
         addField<DAS_BIND_MANAGED_FIELD(rectangleCount)>("rectangleCount");
         addField<DAS_BIND_MANAGED_FIELD(pRectangles)>("pRectangles");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -7271,6 +7779,8 @@ struct VkPresentRegionsKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(swapchainCount)>("swapchainCount");
         addField<DAS_BIND_MANAGED_FIELD(pRegions)>("pRegions");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -7285,6 +7795,8 @@ struct VkSharedPresentSurfaceCapabilitiesKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(sharedPresentSupportedUsageFlags)>("sharedPresentSupportedUsageFlags");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -7304,6 +7816,8 @@ struct VkImportFenceFdInfoKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(handleType)>("handleType");
         addField<DAS_BIND_MANAGED_FIELD(fd)>("fd");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -7319,6 +7833,8 @@ struct VkFenceGetFdInfoKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(fence)>("fence");
         addField<DAS_BIND_MANAGED_FIELD(handleType)>("handleType");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -7336,6 +7852,8 @@ struct VkPhysicalDevicePerformanceQueryFeaturesKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(performanceCounterQueryPools)>("performanceCounterQueryPools");
         addField<DAS_BIND_MANAGED_FIELD(performanceCounterMultipleQueryPools)>("performanceCounterMultipleQueryPools");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -7350,6 +7868,8 @@ struct VkPhysicalDevicePerformanceQueryPropertiesKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(allowCommandBufferQueryCopies)>("allowCommandBufferQueryCopies");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -7369,6 +7889,8 @@ struct VkPerformanceCounterKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(storage)>("storage");
         addField<DAS_BIND_MANAGED_FIELD(uuid)>("uuid");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -7383,6 +7905,8 @@ struct VkPerformanceCounterDescriptionKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -7401,6 +7925,8 @@ struct VkQueryPoolPerformanceCreateInfoKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(counterIndexCount)>("counterIndexCount");
         addField<DAS_BIND_MANAGED_FIELD(pCounterIndices)>("pCounterIndices");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -7418,6 +7944,8 @@ struct VkPerformanceCounterResultKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(float32)>("float32");
         addField<DAS_BIND_MANAGED_FIELD(float64)>("float64");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -7432,6 +7960,8 @@ struct VkAcquireProfilingLockInfoKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -7448,6 +7978,8 @@ struct VkPerformanceQuerySubmitInfoKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(counterPassIndex)>("counterPassIndex");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -7462,6 +7994,8 @@ struct VkPhysicalDeviceSurfaceInfo2KHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(surface)>("surface");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -7478,6 +8012,8 @@ struct VkSurfaceCapabilities2KHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(surfaceCapabilities)>("surfaceCapabilities");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -7492,6 +8028,8 @@ struct VkSurfaceFormat2KHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(surfaceFormat)>("surfaceFormat");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -7508,6 +8046,8 @@ struct VkDisplayProperties2KHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(displayProperties)>("displayProperties");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -7523,6 +8063,8 @@ struct VkDisplayPlaneProperties2KHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(displayPlaneProperties)>("displayPlaneProperties");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -7537,6 +8079,8 @@ struct VkDisplayModeProperties2KHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(displayModeProperties)>("displayModeProperties");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -7554,6 +8098,8 @@ struct VkDisplayPlaneInfo2KHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(mode)>("mode");
         addField<DAS_BIND_MANAGED_FIELD(planeIndex)>("planeIndex");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -7568,6 +8114,8 @@ struct VkDisplayPlaneCapabilities2KHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(capabilities)>("capabilities");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -7585,6 +8133,8 @@ struct VkPhysicalDeviceShaderClockFeaturesKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(shaderSubgroupClock)>("shaderSubgroupClock");
         addField<DAS_BIND_MANAGED_FIELD(shaderDeviceClock)>("shaderDeviceClock");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -7599,6 +8149,8 @@ struct VkSurfaceProtectedCapabilitiesKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(supportsProtected)>("supportsProtected");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -7615,6 +8167,8 @@ struct VkPhysicalDevicePipelineExecutablePropertiesFeaturesKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(pipelineExecutableInfo)>("pipelineExecutableInfo");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -7629,6 +8183,8 @@ struct VkPipelineInfoKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(pipeline)>("pipeline");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -7646,6 +8202,8 @@ struct VkPipelineExecutablePropertiesKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(stages)>("stages");
         addField<DAS_BIND_MANAGED_FIELD(subgroupSize)>("subgroupSize");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -7662,6 +8220,8 @@ struct VkPipelineExecutableInfoKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pipeline)>("pipeline");
         addField<DAS_BIND_MANAGED_FIELD(executableIndex)>("executableIndex");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -7676,6 +8236,8 @@ struct VkPipelineExecutableStatisticValueKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(b32)>("b32");
         addField<DAS_BIND_MANAGED_FIELD(i64)>("i64");
         addField<DAS_BIND_MANAGED_FIELD(f64)>("f64");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -7693,6 +8255,8 @@ struct VkPipelineExecutableStatisticKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(format)>("format");
         addField<DAS_BIND_MANAGED_FIELD(value)>("value");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -7708,6 +8272,8 @@ struct VkPipelineExecutableInternalRepresentationKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(isText)>("isText");
         addField<DAS_BIND_MANAGED_FIELD(pData)>("pData");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -7725,6 +8291,8 @@ struct VkDebugReportCallbackCreateInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
         addField<DAS_BIND_MANAGED_FIELD(pUserData)>("pUserData");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -7739,6 +8307,8 @@ struct VkPipelineRasterizationStateRasterizationOrderAMDAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(rasterizationOrder)>("rasterizationOrder");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -7756,6 +8326,8 @@ struct VkDebugMarkerObjectNameInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(objectType)>("objectType");
         addField<DAS_BIND_MANAGED_FIELD(pObjectName)>("pObjectName");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -7771,6 +8343,8 @@ struct VkDebugMarkerObjectTagInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(objectType)>("objectType");
         addField<DAS_BIND_MANAGED_FIELD(pTag)>("pTag");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -7788,6 +8362,8 @@ struct VkDebugMarkerMarkerInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pMarkerName)>("pMarkerName");
         addField<DAS_BIND_MANAGED_FIELD(color)>("color");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -7803,6 +8379,8 @@ struct VkDedicatedAllocationImageCreateInfoNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(dedicatedAllocation)>("dedicatedAllocation");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -7817,6 +8395,8 @@ struct VkDedicatedAllocationBufferCreateInfoNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(dedicatedAllocation)>("dedicatedAllocation");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -7834,6 +8414,8 @@ struct VkDedicatedAllocationMemoryAllocateInfoNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(image)>("image");
         addField<DAS_BIND_MANAGED_FIELD(buffer)>("buffer");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -7849,6 +8431,8 @@ struct VkPhysicalDeviceTransformFeedbackFeaturesEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(transformFeedback)>("transformFeedback");
         addField<DAS_BIND_MANAGED_FIELD(geometryStreams)>("geometryStreams");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -7873,6 +8457,8 @@ struct VkPhysicalDeviceTransformFeedbackPropertiesEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(transformFeedbackRasterizationStreamSelect)>("transformFeedbackRasterizationStreamSelect");
         addField<DAS_BIND_MANAGED_FIELD(transformFeedbackDraw)>("transformFeedbackDraw");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -7888,6 +8474,8 @@ struct VkPipelineRasterizationStateStreamCreateInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
         addField<DAS_BIND_MANAGED_FIELD(rasterizationStream)>("rasterizationStream");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -7906,6 +8494,8 @@ struct VkImageViewHandleInfoNVXAnnotation
         addField<DAS_BIND_MANAGED_FIELD(descriptorType)>("descriptorType");
         addField<DAS_BIND_MANAGED_FIELD(sampler)>("sampler");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -7919,6 +8509,8 @@ struct VkImageViewAddressPropertiesNVXAnnotation
     : ManagedStructureAnnotation ("VkImageViewAddressPropertiesNVX", ml) {
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -7935,6 +8527,8 @@ struct VkTextureLODGatherFormatPropertiesAMDAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(supportsTextureGatherLODBiasAMD)>("supportsTextureGatherLODBiasAMD");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -7949,6 +8543,8 @@ struct VkShaderResourceUsageAMDAnnotation
         addField<DAS_BIND_MANAGED_FIELD(numUsedVgprs)>("numUsedVgprs");
         addField<DAS_BIND_MANAGED_FIELD(numUsedSgprs)>("numUsedSgprs");
         addField<DAS_BIND_MANAGED_FIELD(ldsSizePerLocalWorkGroup)>("ldsSizePerLocalWorkGroup");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -7969,6 +8565,8 @@ struct VkShaderStatisticsInfoAMDAnnotation
         addField<DAS_BIND_MANAGED_FIELD(numAvailableSgprs)>("numAvailableSgprs");
         addField<DAS_BIND_MANAGED_FIELD(computeWorkGroupSize)>("computeWorkGroupSize");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -7983,6 +8581,8 @@ struct VkPhysicalDeviceCornerSampledImageFeaturesNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(cornerSampledImage)>("cornerSampledImage");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -8000,6 +8600,8 @@ struct VkExternalImageFormatPropertiesNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(exportFromImportedHandleTypes)>("exportFromImportedHandleTypes");
         addField<DAS_BIND_MANAGED_FIELD(compatibleHandleTypes)>("compatibleHandleTypes");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -8015,6 +8617,8 @@ struct VkExternalMemoryImageCreateInfoNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(handleTypes)>("handleTypes");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -8029,6 +8633,8 @@ struct VkExportMemoryAllocateInfoNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(handleTypes)>("handleTypes");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -8046,6 +8652,8 @@ struct VkValidationFlagsEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(disabledValidationCheckCount)>("disabledValidationCheckCount");
         addField<DAS_BIND_MANAGED_FIELD(pDisabledValidationChecks)>("pDisabledValidationChecks");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -8060,6 +8668,8 @@ struct VkPhysicalDeviceTextureCompressionASTCHDRFeaturesEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(textureCompressionASTC_HDR)>("textureCompressionASTC_HDR");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -8076,6 +8686,8 @@ struct VkImageViewASTCDecodeModeEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(decodeMode)>("decodeMode");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -8090,6 +8702,8 @@ struct VkPhysicalDeviceASTCDecodeFeaturesEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(decodeModeSharedExponent)>("decodeModeSharedExponent");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -8107,6 +8721,8 @@ struct VkConditionalRenderingBeginInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(buffer)>("buffer");
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -8123,6 +8739,8 @@ struct VkPhysicalDeviceConditionalRenderingFeaturesEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(conditionalRendering)>("conditionalRendering");
         addField<DAS_BIND_MANAGED_FIELD(inheritedConditionalRendering)>("inheritedConditionalRendering");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -8138,6 +8756,8 @@ struct VkCommandBufferInheritanceConditionalRenderingInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(conditionalRenderingEnable)>("conditionalRenderingEnable");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -8151,6 +8771,8 @@ struct VkViewportWScalingNVAnnotation
     : ManagedStructureAnnotation ("VkViewportWScalingNV", ml) {
         addField<DAS_BIND_MANAGED_FIELD(xcoeff)>("xcoeff");
         addField<DAS_BIND_MANAGED_FIELD(ycoeff)>("ycoeff");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -8168,6 +8790,8 @@ struct VkPipelineViewportWScalingStateCreateInfoNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(viewportWScalingEnable)>("viewportWScalingEnable");
         addField<DAS_BIND_MANAGED_FIELD(viewportCount)>("viewportCount");
         addField<DAS_BIND_MANAGED_FIELD(pViewportWScalings)>("pViewportWScalings");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -8194,6 +8818,8 @@ struct VkSurfaceCapabilities2EXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(supportedUsageFlags)>("supportedUsageFlags");
         addField<DAS_BIND_MANAGED_FIELD(supportedSurfaceCounters)>("supportedSurfaceCounters");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -8208,6 +8834,8 @@ struct VkDisplayPowerInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(powerState)>("powerState");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -8224,6 +8852,8 @@ struct VkDeviceEventInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(deviceEvent)>("deviceEvent");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -8238,6 +8868,8 @@ struct VkDisplayEventInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(displayEvent)>("displayEvent");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -8254,6 +8886,8 @@ struct VkSwapchainCounterCreateInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(surfaceCounters)>("surfaceCounters");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -8265,6 +8899,8 @@ struct VkRefreshCycleDurationGOOGLEAnnotation
 : public ManagedStructureAnnotation<VkRefreshCycleDurationGOOGLE,true,true> {
     VkRefreshCycleDurationGOOGLEAnnotation(ModuleLibrary & ml)
     : ManagedStructureAnnotation ("VkRefreshCycleDurationGOOGLE", ml) {
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -8279,6 +8915,8 @@ struct VkPastPresentationTimingGOOGLEAnnotation
     : ManagedStructureAnnotation ("VkPastPresentationTimingGOOGLE", ml) {
         addField<DAS_BIND_MANAGED_FIELD(presentID)>("presentID");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -8291,6 +8929,8 @@ struct VkPresentTimeGOOGLEAnnotation
     VkPresentTimeGOOGLEAnnotation(ModuleLibrary & ml)
     : ManagedStructureAnnotation ("VkPresentTimeGOOGLE", ml) {
         addField<DAS_BIND_MANAGED_FIELD(presentID)>("presentID");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -8308,6 +8948,8 @@ struct VkPresentTimesInfoGOOGLEAnnotation
         addField<DAS_BIND_MANAGED_FIELD(swapchainCount)>("swapchainCount");
         addField<DAS_BIND_MANAGED_FIELD(pTimes)>("pTimes");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -8322,6 +8964,8 @@ struct VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVXAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(perViewPositionAllComponents)>("perViewPositionAllComponents");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -8338,6 +8982,8 @@ struct VkViewportSwizzleNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(y)>("y");
         addField<DAS_BIND_MANAGED_FIELD(z)>("z");
         addField<DAS_BIND_MANAGED_FIELD(w)>("w");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -8356,6 +9002,8 @@ struct VkPipelineViewportSwizzleStateCreateInfoNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(viewportCount)>("viewportCount");
         addField<DAS_BIND_MANAGED_FIELD(pViewportSwizzles)>("pViewportSwizzles");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -8370,6 +9018,8 @@ struct VkPhysicalDeviceDiscardRectanglePropertiesEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(maxDiscardRectangles)>("maxDiscardRectangles");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -8388,6 +9038,8 @@ struct VkPipelineDiscardRectangleStateCreateInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(discardRectangleMode)>("discardRectangleMode");
         addField<DAS_BIND_MANAGED_FIELD(discardRectangleCount)>("discardRectangleCount");
         addField<DAS_BIND_MANAGED_FIELD(pDiscardRectangles)>("pDiscardRectangles");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -8412,6 +9064,8 @@ struct VkPhysicalDeviceConservativeRasterizationPropertiesEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(fullyCoveredFragmentShaderInputVariable)>("fullyCoveredFragmentShaderInputVariable");
         addField<DAS_BIND_MANAGED_FIELD(conservativeRasterizationPostDepthCoverage)>("conservativeRasterizationPostDepthCoverage");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -8429,6 +9083,8 @@ struct VkPipelineRasterizationConservativeStateCreateInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(conservativeRasterizationMode)>("conservativeRasterizationMode");
         addField<DAS_BIND_MANAGED_FIELD(extraPrimitiveOverestimationSize)>("extraPrimitiveOverestimationSize");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -8443,6 +9099,8 @@ struct VkPhysicalDeviceDepthClipEnableFeaturesEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(depthClipEnable)>("depthClipEnable");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -8460,6 +9118,8 @@ struct VkPipelineRasterizationDepthClipStateCreateInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
         addField<DAS_BIND_MANAGED_FIELD(depthClipEnable)>("depthClipEnable");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -8473,6 +9133,8 @@ struct VkXYColorEXTAnnotation
     : ManagedStructureAnnotation ("VkXYColorEXT", ml) {
         addField<DAS_BIND_MANAGED_FIELD(x)>("x");
         addField<DAS_BIND_MANAGED_FIELD(y)>("y");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -8496,6 +9158,8 @@ struct VkHdrMetadataEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(maxContentLightLevel)>("maxContentLightLevel");
         addField<DAS_BIND_MANAGED_FIELD(maxFrameAverageLightLevel)>("maxFrameAverageLightLevel");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -8512,6 +9176,8 @@ struct VkDebugUtilsLabelEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pLabelName)>("pLabelName");
         addField<DAS_BIND_MANAGED_FIELD(color)>("color");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -8527,6 +9193,8 @@ struct VkDebugUtilsObjectNameInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(objectType)>("objectType");
         addField<DAS_BIND_MANAGED_FIELD(pObjectName)>("pObjectName");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -8552,6 +9220,8 @@ struct VkDebugUtilsMessengerCallbackDataEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(objectCount)>("objectCount");
         addField<DAS_BIND_MANAGED_FIELD(pObjects)>("pObjects");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -8570,6 +9240,8 @@ struct VkDebugUtilsMessengerCreateInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(messageType)>("messageType");
         addField<DAS_BIND_MANAGED_FIELD(pUserData)>("pUserData");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -8586,6 +9258,8 @@ struct VkDebugUtilsObjectTagInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(objectType)>("objectType");
         addField<DAS_BIND_MANAGED_FIELD(pTag)>("pTag");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -8601,6 +9275,8 @@ struct VkPhysicalDeviceInlineUniformBlockFeaturesEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(inlineUniformBlock)>("inlineUniformBlock");
         addField<DAS_BIND_MANAGED_FIELD(descriptorBindingInlineUniformBlockUpdateAfterBind)>("descriptorBindingInlineUniformBlockUpdateAfterBind");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -8621,6 +9297,8 @@ struct VkPhysicalDeviceInlineUniformBlockPropertiesEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(maxDescriptorSetInlineUniformBlocks)>("maxDescriptorSetInlineUniformBlocks");
         addField<DAS_BIND_MANAGED_FIELD(maxDescriptorSetUpdateAfterBindInlineUniformBlocks)>("maxDescriptorSetUpdateAfterBindInlineUniformBlocks");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -8637,6 +9315,8 @@ struct VkWriteDescriptorSetInlineUniformBlockEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(dataSize)>("dataSize");
         addField<DAS_BIND_MANAGED_FIELD(pData)>("pData");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -8652,6 +9332,8 @@ struct VkDescriptorPoolInlineUniformBlockCreateInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(maxInlineUniformBlockBindings)>("maxInlineUniformBlockBindings");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -8665,6 +9347,8 @@ struct VkSampleLocationEXTAnnotation
     : ManagedStructureAnnotation ("VkSampleLocationEXT", ml) {
         addField<DAS_BIND_MANAGED_FIELD(x)>("x");
         addField<DAS_BIND_MANAGED_FIELD(y)>("y");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -8684,6 +9368,8 @@ struct VkSampleLocationsInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sampleLocationsCount)>("sampleLocationsCount");
         addField<DAS_BIND_MANAGED_FIELD(pSampleLocations)>("pSampleLocations");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -8698,6 +9384,8 @@ struct VkAttachmentSampleLocationsEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(attachmentIndex)>("attachmentIndex");
         addField<DAS_BIND_MANAGED_FIELD(sampleLocationsInfo)>("sampleLocationsInfo");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -8711,6 +9399,8 @@ struct VkSubpassSampleLocationsEXTAnnotation
     : ManagedStructureAnnotation ("VkSubpassSampleLocationsEXT", ml) {
         addField<DAS_BIND_MANAGED_FIELD(subpassIndex)>("subpassIndex");
         addField<DAS_BIND_MANAGED_FIELD(sampleLocationsInfo)>("sampleLocationsInfo");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -8730,6 +9420,8 @@ struct VkRenderPassSampleLocationsBeginInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(postSubpassSampleLocationsCount)>("postSubpassSampleLocationsCount");
         addField<DAS_BIND_MANAGED_FIELD(pPostSubpassSampleLocations)>("pPostSubpassSampleLocations");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -8745,6 +9437,8 @@ struct VkPipelineSampleLocationsStateCreateInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(sampleLocationsEnable)>("sampleLocationsEnable");
         addField<DAS_BIND_MANAGED_FIELD(sampleLocationsInfo)>("sampleLocationsInfo");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -8765,6 +9459,8 @@ struct VkPhysicalDeviceSampleLocationsPropertiesEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sampleLocationSubPixelBits)>("sampleLocationSubPixelBits");
         addField<DAS_BIND_MANAGED_FIELD(variableSampleLocations)>("variableSampleLocations");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -8780,6 +9476,8 @@ struct VkMultisamplePropertiesEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(maxSampleLocationGridSize)>("maxSampleLocationGridSize");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -8794,6 +9492,8 @@ struct VkPhysicalDeviceBlendOperationAdvancedFeaturesEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(advancedBlendCoherentOperations)>("advancedBlendCoherentOperations");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -8815,6 +9515,8 @@ struct VkPhysicalDeviceBlendOperationAdvancedPropertiesEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(advancedBlendCorrelatedOverlap)>("advancedBlendCorrelatedOverlap");
         addField<DAS_BIND_MANAGED_FIELD(advancedBlendAllOperations)>("advancedBlendAllOperations");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -8832,6 +9534,8 @@ struct VkPipelineColorBlendAdvancedStateCreateInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(dstPremultiplied)>("dstPremultiplied");
         addField<DAS_BIND_MANAGED_FIELD(blendOverlap)>("blendOverlap");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -8848,6 +9552,8 @@ struct VkPipelineCoverageToColorStateCreateInfoNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
         addField<DAS_BIND_MANAGED_FIELD(coverageToColorEnable)>("coverageToColorEnable");
         addField<DAS_BIND_MANAGED_FIELD(coverageToColorLocation)>("coverageToColorLocation");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -8868,6 +9574,8 @@ struct VkPipelineCoverageModulationStateCreateInfoNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(coverageModulationTableCount)>("coverageModulationTableCount");
         addField<DAS_BIND_MANAGED_FIELD(pCoverageModulationTable)>("pCoverageModulationTable");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -8884,6 +9592,8 @@ struct VkPhysicalDeviceShaderSMBuiltinsPropertiesNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(shaderSMCount)>("shaderSMCount");
         addField<DAS_BIND_MANAGED_FIELD(shaderWarpsPerSM)>("shaderWarpsPerSM");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -8899,6 +9609,8 @@ struct VkPhysicalDeviceShaderSMBuiltinsFeaturesNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(shaderSMBuiltins)>("shaderSMBuiltins");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -8912,6 +9624,8 @@ struct VkDrmFormatModifierPropertiesEXTAnnotation
     : ManagedStructureAnnotation ("VkDrmFormatModifierPropertiesEXT", ml) {
         addField<DAS_BIND_MANAGED_FIELD(drmFormatModifierPlaneCount)>("drmFormatModifierPlaneCount");
         addField<DAS_BIND_MANAGED_FIELD(drmFormatModifierTilingFeatures)>("drmFormatModifierTilingFeatures");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -8928,6 +9642,8 @@ struct VkDrmFormatModifierPropertiesListEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(drmFormatModifierCount)>("drmFormatModifierCount");
         addField<DAS_BIND_MANAGED_FIELD(pDrmFormatModifierProperties)>("pDrmFormatModifierProperties");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -8946,6 +9662,8 @@ struct VkPhysicalDeviceImageDrmFormatModifierInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(queueFamilyIndexCount)>("queueFamilyIndexCount");
         addField<DAS_BIND_MANAGED_FIELD(pQueueFamilyIndices)>("pQueueFamilyIndices");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -8961,6 +9679,8 @@ struct VkImageDrmFormatModifierListCreateInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(drmFormatModifierCount)>("drmFormatModifierCount");
         addField<DAS_BIND_MANAGED_FIELD(pDrmFormatModifiers)>("pDrmFormatModifiers");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -8978,6 +9698,8 @@ struct VkImageDrmFormatModifierExplicitCreateInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(drmFormatModifierPlaneCount)>("drmFormatModifierPlaneCount");
         addField<DAS_BIND_MANAGED_FIELD(pPlaneLayouts)>("pPlaneLayouts");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -8991,6 +9713,8 @@ struct VkImageDrmFormatModifierPropertiesEXTAnnotation
     : ManagedStructureAnnotation ("VkImageDrmFormatModifierPropertiesEXT", ml) {
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -9008,6 +9732,8 @@ struct VkValidationCacheCreateInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
         addField<DAS_BIND_MANAGED_FIELD(pInitialData)>("pInitialData");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -9023,6 +9749,8 @@ struct VkShaderModuleValidationCacheCreateInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(validationCache)>("validationCache");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -9036,6 +9764,8 @@ struct VkShadingRatePaletteNVAnnotation
     : ManagedStructureAnnotation ("VkShadingRatePaletteNV", ml) {
         addField<DAS_BIND_MANAGED_FIELD(shadingRatePaletteEntryCount)>("shadingRatePaletteEntryCount");
         addField<DAS_BIND_MANAGED_FIELD(pShadingRatePaletteEntries)>("pShadingRatePaletteEntries");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -9054,6 +9784,8 @@ struct VkPipelineViewportShadingRateImageStateCreateInfoNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(viewportCount)>("viewportCount");
         addField<DAS_BIND_MANAGED_FIELD(pShadingRatePalettes)>("pShadingRatePalettes");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -9069,6 +9801,8 @@ struct VkPhysicalDeviceShadingRateImageFeaturesNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(shadingRateImage)>("shadingRateImage");
         addField<DAS_BIND_MANAGED_FIELD(shadingRateCoarseSampleOrder)>("shadingRateCoarseSampleOrder");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -9087,6 +9821,8 @@ struct VkPhysicalDeviceShadingRateImagePropertiesNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(shadingRatePaletteSize)>("shadingRatePaletteSize");
         addField<DAS_BIND_MANAGED_FIELD(shadingRateMaxCoarseSamples)>("shadingRateMaxCoarseSamples");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -9101,6 +9837,8 @@ struct VkCoarseSampleLocationNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pixelX)>("pixelX");
         addField<DAS_BIND_MANAGED_FIELD(pixelY)>("pixelY");
         addField<DAS_BIND_MANAGED_FIELD(sample)>("sample");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -9118,6 +9856,8 @@ struct VkCoarseSampleOrderCustomNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sampleLocationCount)>("sampleLocationCount");
         addField<DAS_BIND_MANAGED_FIELD(pSampleLocations)>("pSampleLocations");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -9134,6 +9874,8 @@ struct VkPipelineViewportCoarseSampleOrderStateCreateInfoNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sampleOrderType)>("sampleOrderType");
         addField<DAS_BIND_MANAGED_FIELD(customSampleOrderCount)>("customSampleOrderCount");
         addField<DAS_BIND_MANAGED_FIELD(pCustomSampleOrders)>("pCustomSampleOrders");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -9153,6 +9895,8 @@ struct VkRayTracingShaderGroupCreateInfoNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(closestHitShader)>("closestHitShader");
         addField<DAS_BIND_MANAGED_FIELD(anyHitShader)>("anyHitShader");
         addField<DAS_BIND_MANAGED_FIELD(intersectionShader)>("intersectionShader");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -9177,6 +9921,8 @@ struct VkRayTracingPipelineCreateInfoNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(basePipelineHandle)>("basePipelineHandle");
         addField<DAS_BIND_MANAGED_FIELD(basePipelineIndex)>("basePipelineIndex");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -9198,6 +9944,8 @@ struct VkGeometryTrianglesNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(indexType)>("indexType");
         addField<DAS_BIND_MANAGED_FIELD(transformData)>("transformData");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -9215,6 +9963,8 @@ struct VkGeometryAABBNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(numAABBs)>("numAABBs");
         addField<DAS_BIND_MANAGED_FIELD(stride)>("stride");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -9228,6 +9978,8 @@ struct VkGeometryDataNVAnnotation
     : ManagedStructureAnnotation ("VkGeometryDataNV", ml) {
         addField<DAS_BIND_MANAGED_FIELD(triangles)>("triangles");
         addField<DAS_BIND_MANAGED_FIELD(aabbs)>("aabbs");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -9245,6 +9997,8 @@ struct VkGeometryNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(geometryType)>("geometryType");
         addField<DAS_BIND_MANAGED_FIELD(geometry)>("geometry");
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -9265,6 +10019,8 @@ struct VkAccelerationStructureInfoNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(geometryCount)>("geometryCount");
         addField<DAS_BIND_MANAGED_FIELD(pGeometries)>("pGeometries");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -9279,6 +10035,8 @@ struct VkAccelerationStructureCreateInfoNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(info)>("info");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -9298,6 +10056,8 @@ struct VkBindAccelerationStructureMemoryInfoKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(deviceIndexCount)>("deviceIndexCount");
         addField<DAS_BIND_MANAGED_FIELD(pDeviceIndices)>("pDeviceIndices");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -9314,6 +10074,8 @@ struct VkWriteDescriptorSetAccelerationStructureKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(accelerationStructureCount)>("accelerationStructureCount");
         addField<DAS_BIND_MANAGED_FIELD(pAccelerationStructures)>("pAccelerationStructures");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -9329,6 +10091,8 @@ struct VkAccelerationStructureMemoryRequirementsInfoNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(type)>("type");
         addField<DAS_BIND_MANAGED_FIELD(accelerationStructure)>("accelerationStructure");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -9349,6 +10113,8 @@ struct VkPhysicalDeviceRayTracingPropertiesNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(shaderGroupBaseAlignment)>("shaderGroupBaseAlignment");
         addField<DAS_BIND_MANAGED_FIELD(maxDescriptorSetAccelerationStructures)>("maxDescriptorSetAccelerationStructures");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -9361,6 +10127,8 @@ struct VkTransformMatrixKHRAnnotation
     VkTransformMatrixKHRAnnotation(ModuleLibrary & ml)
     : ManagedStructureAnnotation ("VkTransformMatrixKHR", ml) {
         addField<DAS_BIND_MANAGED_FIELD(matrix)>("matrix");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -9379,6 +10147,8 @@ struct VkAabbPositionsKHRAnnotation
         addField<DAS_BIND_MANAGED_FIELD(maxX)>("maxX");
         addField<DAS_BIND_MANAGED_FIELD(maxY)>("maxY");
         addField<DAS_BIND_MANAGED_FIELD(maxZ)>("maxZ");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -9405,6 +10175,8 @@ struct VkAccelerationStructureInstanceKHRAnnotation
     : ManagedStructureAnnotation ("VkAccelerationStructureInstanceKHR", ml) {
         addField<DAS_BIND_MANAGED_FIELD(transform)>("transform");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -9419,6 +10191,8 @@ struct VkPhysicalDeviceRepresentativeFragmentTestFeaturesNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(representativeFragmentTest)>("representativeFragmentTest");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -9435,6 +10209,8 @@ struct VkPipelineRepresentativeFragmentTestStateCreateInfoNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(representativeFragmentTestEnable)>("representativeFragmentTestEnable");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -9449,6 +10225,8 @@ struct VkPhysicalDeviceImageViewImageFormatInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(imageViewType)>("imageViewType");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -9466,6 +10244,8 @@ struct VkFilterCubicImageViewImageFormatPropertiesEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(filterCubic)>("filterCubic");
         addField<DAS_BIND_MANAGED_FIELD(filterCubicMinmax)>("filterCubicMinmax");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -9480,6 +10260,8 @@ struct VkDeviceQueueGlobalPriorityCreateInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(globalPriority)>("globalPriority");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -9497,6 +10279,8 @@ struct VkImportMemoryHostPointerInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(handleType)>("handleType");
         addField<DAS_BIND_MANAGED_FIELD(pHostPointer)>("pHostPointer");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -9512,6 +10296,8 @@ struct VkMemoryHostPointerPropertiesEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(memoryTypeBits)>("memoryTypeBits");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -9525,6 +10311,8 @@ struct VkPhysicalDeviceExternalMemoryHostPropertiesEXTAnnotation
     : ManagedStructureAnnotation ("VkPhysicalDeviceExternalMemoryHostPropertiesEXT", ml) {
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -9541,6 +10329,8 @@ struct VkPipelineCompilerControlCreateInfoAMDAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(compilerControlFlags)>("compilerControlFlags");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -9555,6 +10345,8 @@ struct VkCalibratedTimestampInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(timeDomain)>("timeDomain");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -9584,6 +10376,8 @@ struct VkPhysicalDeviceShaderCorePropertiesAMDAnnotation
         addField<DAS_BIND_MANAGED_FIELD(maxVgprAllocation)>("maxVgprAllocation");
         addField<DAS_BIND_MANAGED_FIELD(vgprAllocationGranularity)>("vgprAllocationGranularity");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -9598,6 +10392,8 @@ struct VkDeviceMemoryOverallocationCreateInfoAMDAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(overallocationBehavior)>("overallocationBehavior");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -9614,6 +10410,8 @@ struct VkPhysicalDeviceVertexAttributeDivisorPropertiesEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(maxVertexAttribDivisor)>("maxVertexAttribDivisor");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -9627,6 +10425,8 @@ struct VkVertexInputBindingDivisorDescriptionEXTAnnotation
     : ManagedStructureAnnotation ("VkVertexInputBindingDivisorDescriptionEXT", ml) {
         addField<DAS_BIND_MANAGED_FIELD(binding)>("binding");
         addField<DAS_BIND_MANAGED_FIELD(divisor)>("divisor");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -9644,6 +10444,8 @@ struct VkPipelineVertexInputDivisorStateCreateInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(vertexBindingDivisorCount)>("vertexBindingDivisorCount");
         addField<DAS_BIND_MANAGED_FIELD(pVertexBindingDivisors)>("pVertexBindingDivisors");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -9660,6 +10462,8 @@ struct VkPhysicalDeviceVertexAttributeDivisorFeaturesEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(vertexAttributeInstanceRateDivisor)>("vertexAttributeInstanceRateDivisor");
         addField<DAS_BIND_MANAGED_FIELD(vertexAttributeInstanceRateZeroDivisor)>("vertexAttributeInstanceRateZeroDivisor");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -9672,6 +10476,8 @@ struct VkPipelineCreationFeedbackEXTAnnotation
     VkPipelineCreationFeedbackEXTAnnotation(ModuleLibrary & ml)
     : ManagedStructureAnnotation ("VkPipelineCreationFeedbackEXT", ml) {
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -9690,6 +10496,8 @@ struct VkPipelineCreationFeedbackCreateInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pipelineStageCreationFeedbackCount)>("pipelineStageCreationFeedbackCount");
         addField<DAS_BIND_MANAGED_FIELD(pPipelineStageCreationFeedbacks)>("pPipelineStageCreationFeedbacks");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -9706,6 +10514,8 @@ struct VkPhysicalDeviceComputeShaderDerivativesFeaturesNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(computeDerivativeGroupQuads)>("computeDerivativeGroupQuads");
         addField<DAS_BIND_MANAGED_FIELD(computeDerivativeGroupLinear)>("computeDerivativeGroupLinear");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -9721,6 +10531,8 @@ struct VkPhysicalDeviceMeshShaderFeaturesNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(taskShader)>("taskShader");
         addField<DAS_BIND_MANAGED_FIELD(meshShader)>("meshShader");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -9749,6 +10561,8 @@ struct VkPhysicalDeviceMeshShaderPropertiesNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(meshOutputPerVertexGranularity)>("meshOutputPerVertexGranularity");
         addField<DAS_BIND_MANAGED_FIELD(meshOutputPerPrimitiveGranularity)>("meshOutputPerPrimitiveGranularity");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -9762,6 +10576,8 @@ struct VkDrawMeshTasksIndirectCommandNVAnnotation
     : ManagedStructureAnnotation ("VkDrawMeshTasksIndirectCommandNV", ml) {
         addField<DAS_BIND_MANAGED_FIELD(taskCount)>("taskCount");
         addField<DAS_BIND_MANAGED_FIELD(firstTask)>("firstTask");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -9778,6 +10594,8 @@ struct VkPhysicalDeviceFragmentShaderBarycentricFeaturesNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(fragmentShaderBarycentric)>("fragmentShaderBarycentric");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -9792,6 +10610,8 @@ struct VkPhysicalDeviceShaderImageFootprintFeaturesNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(imageFootprint)>("imageFootprint");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -9809,6 +10629,8 @@ struct VkPipelineViewportExclusiveScissorStateCreateInfoNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(exclusiveScissorCount)>("exclusiveScissorCount");
         addField<DAS_BIND_MANAGED_FIELD(pExclusiveScissors)>("pExclusiveScissors");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -9824,6 +10646,8 @@ struct VkPhysicalDeviceExclusiveScissorFeaturesNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(exclusiveScissor)>("exclusiveScissor");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -9838,6 +10662,8 @@ struct VkQueueFamilyCheckpointPropertiesNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(checkpointExecutionStageMask)>("checkpointExecutionStageMask");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -9855,6 +10681,8 @@ struct VkCheckpointDataNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(stage)>("stage");
         addField<DAS_BIND_MANAGED_FIELD(pCheckpointMarker)>("pCheckpointMarker");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -9869,6 +10697,8 @@ struct VkPhysicalDeviceShaderIntegerFunctions2FeaturesINTELAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(shaderIntegerFunctions2)>("shaderIntegerFunctions2");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -9886,6 +10716,8 @@ struct VkPerformanceValueDataINTELAnnotation
         addField<DAS_BIND_MANAGED_FIELD(valueBool)>("valueBool");
         addField<DAS_BIND_MANAGED_FIELD(valueString)>("valueString");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -9899,6 +10731,8 @@ struct VkPerformanceValueINTELAnnotation
     : ManagedStructureAnnotation ("VkPerformanceValueINTEL", ml) {
         addField<DAS_BIND_MANAGED_FIELD(type)>("type");
         addField<DAS_BIND_MANAGED_FIELD(data)>("data");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -9915,6 +10749,8 @@ struct VkInitializePerformanceApiInfoINTELAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(pUserData)>("pUserData");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -9930,6 +10766,8 @@ struct VkQueryPoolPerformanceQueryCreateInfoINTELAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(performanceCountersSampling)>("performanceCountersSampling");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -9943,6 +10781,8 @@ struct VkPerformanceMarkerInfoINTELAnnotation
     : ManagedStructureAnnotation ("VkPerformanceMarkerInfoINTEL", ml) {
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -9958,6 +10798,8 @@ struct VkPerformanceStreamMarkerInfoINTELAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(marker)>("marker");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -9975,6 +10817,8 @@ struct VkPerformanceOverrideInfoINTELAnnotation
         addField<DAS_BIND_MANAGED_FIELD(type)>("type");
         addField<DAS_BIND_MANAGED_FIELD(enable)>("enable");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -9989,6 +10833,8 @@ struct VkPerformanceConfigurationAcquireInfoINTELAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(type)>("type");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -10008,6 +10854,8 @@ struct VkPhysicalDevicePCIBusInfoPropertiesEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pciDevice)>("pciDevice");
         addField<DAS_BIND_MANAGED_FIELD(pciFunction)>("pciFunction");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -10023,6 +10871,8 @@ struct VkDisplayNativeHdrSurfaceCapabilitiesAMDAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(localDimmingSupport)>("localDimmingSupport");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -10037,6 +10887,8 @@ struct VkSwapchainDisplayNativeHdrCreateInfoAMDAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(localDimmingEnable)>("localDimmingEnable");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -10055,6 +10907,8 @@ struct VkPhysicalDeviceFragmentDensityMapFeaturesEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(fragmentDensityMapDynamic)>("fragmentDensityMapDynamic");
         addField<DAS_BIND_MANAGED_FIELD(fragmentDensityMapNonSubsampledImages)>("fragmentDensityMapNonSubsampledImages");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -10072,6 +10926,8 @@ struct VkPhysicalDeviceFragmentDensityMapPropertiesEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(maxFragmentDensityTexelSize)>("maxFragmentDensityTexelSize");
         addField<DAS_BIND_MANAGED_FIELD(fragmentDensityInvocations)>("fragmentDensityInvocations");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -10086,6 +10942,8 @@ struct VkRenderPassFragmentDensityMapCreateInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(fragmentDensityMapAttachment)>("fragmentDensityMapAttachment");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -10102,6 +10960,8 @@ struct VkPhysicalDeviceSubgroupSizeControlFeaturesEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(subgroupSizeControl)>("subgroupSizeControl");
         addField<DAS_BIND_MANAGED_FIELD(computeFullSubgroups)>("computeFullSubgroups");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -10121,6 +10981,8 @@ struct VkPhysicalDeviceSubgroupSizeControlPropertiesEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(maxComputeWorkgroupSubgroups)>("maxComputeWorkgroupSubgroups");
         addField<DAS_BIND_MANAGED_FIELD(requiredSubgroupSizeStages)>("requiredSubgroupSizeStages");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -10135,6 +10997,8 @@ struct VkPipelineShaderStageRequiredSubgroupSizeCreateInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(requiredSubgroupSize)>("requiredSubgroupSize");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -10152,6 +11016,8 @@ struct VkPhysicalDeviceShaderCoreProperties2AMDAnnotation
         addField<DAS_BIND_MANAGED_FIELD(shaderCoreFeatures)>("shaderCoreFeatures");
         addField<DAS_BIND_MANAGED_FIELD(activeComputeUnitCount)>("activeComputeUnitCount");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -10166,6 +11032,8 @@ struct VkPhysicalDeviceCoherentMemoryFeaturesAMDAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(deviceCoherentMemory)>("deviceCoherentMemory");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -10183,6 +11051,8 @@ struct VkPhysicalDeviceMemoryBudgetPropertiesEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(heapBudget)>("heapBudget");
         addField<DAS_BIND_MANAGED_FIELD(heapUsage)>("heapUsage");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -10197,6 +11067,8 @@ struct VkPhysicalDeviceMemoryPriorityFeaturesEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(memoryPriority)>("memoryPriority");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -10213,6 +11085,8 @@ struct VkMemoryPriorityAllocateInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(priority)>("priority");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -10227,6 +11101,8 @@ struct VkPhysicalDeviceDedicatedAllocationImageAliasingFeaturesNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(dedicatedAllocationImageAliasing)>("dedicatedAllocationImageAliasing");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -10245,6 +11121,8 @@ struct VkPhysicalDeviceBufferDeviceAddressFeaturesEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(bufferDeviceAddressCaptureReplay)>("bufferDeviceAddressCaptureReplay");
         addField<DAS_BIND_MANAGED_FIELD(bufferDeviceAddressMultiDevice)>("bufferDeviceAddressMultiDevice");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -10258,6 +11136,8 @@ struct VkBufferDeviceAddressCreateInfoEXTAnnotation
     : ManagedStructureAnnotation ("VkBufferDeviceAddressCreateInfoEXT", ml) {
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -10273,6 +11153,8 @@ struct VkPhysicalDeviceToolPropertiesEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(purposes)>("purposes");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -10291,6 +11173,8 @@ struct VkValidationFeaturesEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pEnabledValidationFeatures)>("pEnabledValidationFeatures");
         addField<DAS_BIND_MANAGED_FIELD(disabledValidationFeatureCount)>("disabledValidationFeatureCount");
         addField<DAS_BIND_MANAGED_FIELD(pDisabledValidationFeatures)>("pDisabledValidationFeatures");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -10314,6 +11198,8 @@ struct VkCooperativeMatrixPropertiesNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(DType)>("DType");
         addField<DAS_BIND_MANAGED_FIELD(scope)>("scope");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -10330,6 +11216,8 @@ struct VkPhysicalDeviceCooperativeMatrixFeaturesNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(cooperativeMatrix)>("cooperativeMatrix");
         addField<DAS_BIND_MANAGED_FIELD(cooperativeMatrixRobustBufferAccess)>("cooperativeMatrixRobustBufferAccess");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -10344,6 +11232,8 @@ struct VkPhysicalDeviceCooperativeMatrixPropertiesNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(cooperativeMatrixSupportedStages)>("cooperativeMatrixSupportedStages");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -10360,6 +11250,8 @@ struct VkPhysicalDeviceCoverageReductionModeFeaturesNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(coverageReductionMode)>("coverageReductionMode");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -10375,6 +11267,8 @@ struct VkPipelineCoverageReductionStateCreateInfoNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
         addField<DAS_BIND_MANAGED_FIELD(coverageReductionMode)>("coverageReductionMode");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -10394,6 +11288,8 @@ struct VkFramebufferMixedSamplesCombinationNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(depthStencilSamples)>("depthStencilSamples");
         addField<DAS_BIND_MANAGED_FIELD(colorSamples)>("colorSamples");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -10411,6 +11307,8 @@ struct VkPhysicalDeviceFragmentShaderInterlockFeaturesEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(fragmentShaderPixelInterlock)>("fragmentShaderPixelInterlock");
         addField<DAS_BIND_MANAGED_FIELD(fragmentShaderShadingRateInterlock)>("fragmentShaderShadingRateInterlock");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -10426,6 +11324,8 @@ struct VkPhysicalDeviceYcbcrImageArraysFeaturesEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(ycbcrImageArrays)>("ycbcrImageArrays");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -10440,6 +11340,8 @@ struct VkHeadlessSurfaceCreateInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -10461,6 +11363,8 @@ struct VkPhysicalDeviceLineRasterizationFeaturesEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(stippledBresenhamLines)>("stippledBresenhamLines");
         addField<DAS_BIND_MANAGED_FIELD(stippledSmoothLines)>("stippledSmoothLines");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -10475,6 +11379,8 @@ struct VkPhysicalDeviceLineRasterizationPropertiesEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(lineSubPixelPrecisionBits)>("lineSubPixelPrecisionBits");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -10493,6 +11399,8 @@ struct VkPipelineRasterizationLineStateCreateInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(stippledLineEnable)>("stippledLineEnable");
         addField<DAS_BIND_MANAGED_FIELD(lineStippleFactor)>("lineStippleFactor");
         addField<DAS_BIND_MANAGED_FIELD(lineStipplePattern)>("lineStipplePattern");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -10520,6 +11428,8 @@ struct VkPhysicalDeviceShaderAtomicFloatFeaturesEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sparseImageFloat32Atomics)>("sparseImageFloat32Atomics");
         addField<DAS_BIND_MANAGED_FIELD(sparseImageFloat32AtomicAdd)>("sparseImageFloat32AtomicAdd");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -10534,6 +11444,8 @@ struct VkPhysicalDeviceIndexTypeUint8FeaturesEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(indexTypeUint8)>("indexTypeUint8");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -10550,6 +11462,8 @@ struct VkPhysicalDeviceExtendedDynamicStateFeaturesEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(extendedDynamicState)>("extendedDynamicState");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -10564,6 +11478,8 @@ struct VkPhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(shaderDemoteToHelperInvocation)>("shaderDemoteToHelperInvocation");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -10588,6 +11504,8 @@ struct VkPhysicalDeviceDeviceGeneratedCommandsPropertiesNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(minSequencesIndexBufferOffsetAlignment)>("minSequencesIndexBufferOffsetAlignment");
         addField<DAS_BIND_MANAGED_FIELD(minIndirectCommandsBufferOffsetAlignment)>("minIndirectCommandsBufferOffsetAlignment");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -10602,6 +11520,8 @@ struct VkPhysicalDeviceDeviceGeneratedCommandsFeaturesNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(deviceGeneratedCommands)>("deviceGeneratedCommands");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -10621,6 +11541,8 @@ struct VkGraphicsShaderGroupCreateInfoNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pVertexInputState)>("pVertexInputState");
         addField<DAS_BIND_MANAGED_FIELD(pTessellationState)>("pTessellationState");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -10639,6 +11561,8 @@ struct VkGraphicsPipelineShaderGroupsCreateInfoNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pipelineCount)>("pipelineCount");
         addField<DAS_BIND_MANAGED_FIELD(pPipelines)>("pPipelines");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -10651,6 +11575,8 @@ struct VkBindShaderGroupIndirectCommandNVAnnotation
     VkBindShaderGroupIndirectCommandNVAnnotation(ModuleLibrary & ml)
     : ManagedStructureAnnotation ("VkBindShaderGroupIndirectCommandNV", ml) {
         addField<DAS_BIND_MANAGED_FIELD(groupIndex)>("groupIndex");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -10666,6 +11592,8 @@ struct VkBindIndexBufferIndirectCommandNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(size)>("size");
         addField<DAS_BIND_MANAGED_FIELD(indexType)>("indexType");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -10680,6 +11608,8 @@ struct VkBindVertexBufferIndirectCommandNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(size)>("size");
         addField<DAS_BIND_MANAGED_FIELD(stride)>("stride");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -10693,6 +11623,8 @@ struct VkSetStateFlagsIndirectCommandNVAnnotation
     : ManagedStructureAnnotation ("VkSetStateFlagsIndirectCommandNV", ml) {
         addField<DAS_BIND_MANAGED_FIELD(data)>("data");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -10705,6 +11637,8 @@ struct VkIndirectCommandsStreamNVAnnotation
     VkIndirectCommandsStreamNVAnnotation(ModuleLibrary & ml)
     : ManagedStructureAnnotation ("VkIndirectCommandsStreamNV", ml) {
         addField<DAS_BIND_MANAGED_FIELD(buffer)>("buffer");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -10733,6 +11667,8 @@ struct VkIndirectCommandsLayoutTokenNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pIndexTypes)>("pIndexTypes");
         addField<DAS_BIND_MANAGED_FIELD(pIndexTypeValues)>("pIndexTypeValues");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -10752,6 +11688,8 @@ struct VkIndirectCommandsLayoutCreateInfoNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pTokens)>("pTokens");
         addField<DAS_BIND_MANAGED_FIELD(streamCount)>("streamCount");
         addField<DAS_BIND_MANAGED_FIELD(pStreamStrides)>("pStreamStrides");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -10776,6 +11714,8 @@ struct VkGeneratedCommandsInfoNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sequencesCountBuffer)>("sequencesCountBuffer");
         addField<DAS_BIND_MANAGED_FIELD(sequencesIndexBuffer)>("sequencesIndexBuffer");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -10794,6 +11734,8 @@ struct VkGeneratedCommandsMemoryRequirementsInfoNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(indirectCommandsLayout)>("indirectCommandsLayout");
         addField<DAS_BIND_MANAGED_FIELD(maxSequencesCount)>("maxSequencesCount");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -10808,6 +11750,8 @@ struct VkPhysicalDeviceTexelBufferAlignmentFeaturesEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(texelBufferAlignment)>("texelBufferAlignment");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -10825,6 +11769,8 @@ struct VkPhysicalDeviceTexelBufferAlignmentPropertiesEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(storageTexelBufferOffsetSingleTexelAlignment)>("storageTexelBufferOffsetSingleTexelAlignment");
         addField<DAS_BIND_MANAGED_FIELD(uniformTexelBufferOffsetSingleTexelAlignment)>("uniformTexelBufferOffsetSingleTexelAlignment");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -10839,6 +11785,8 @@ struct VkRenderPassTransformBeginInfoQCOMAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(transform)>("transform");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -10855,6 +11803,8 @@ struct VkCommandBufferInheritanceRenderPassTransformInfoQCOMAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(transform)>("transform");
         addField<DAS_BIND_MANAGED_FIELD(renderArea)>("renderArea");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -10873,6 +11823,8 @@ struct VkPhysicalDeviceRobustness2FeaturesEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(robustImageAccess2)>("robustImageAccess2");
         addField<DAS_BIND_MANAGED_FIELD(nullDescriptor)>("nullDescriptor");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -10886,6 +11838,8 @@ struct VkPhysicalDeviceRobustness2PropertiesEXTAnnotation
     : ManagedStructureAnnotation ("VkPhysicalDeviceRobustness2PropertiesEXT", ml) {
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -10903,6 +11857,8 @@ struct VkSamplerCustomBorderColorCreateInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(customBorderColor)>("customBorderColor");
         addField<DAS_BIND_MANAGED_FIELD(format)>("format");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -10917,6 +11873,8 @@ struct VkPhysicalDeviceCustomBorderColorPropertiesEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(maxCustomBorderColorSamplers)>("maxCustomBorderColorSamplers");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -10934,6 +11892,8 @@ struct VkPhysicalDeviceCustomBorderColorFeaturesEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(customBorderColors)>("customBorderColors");
         addField<DAS_BIND_MANAGED_FIELD(customBorderColorWithoutFormat)>("customBorderColorWithoutFormat");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -10948,6 +11908,8 @@ struct VkPhysicalDevicePrivateDataFeaturesEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(privateData)>("privateData");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -10964,6 +11926,8 @@ struct VkDevicePrivateDataCreateInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(privateDataSlotRequestCount)>("privateDataSlotRequestCount");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -10978,6 +11942,8 @@ struct VkPrivateDataSlotCreateInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -10994,6 +11960,8 @@ struct VkPhysicalDevicePipelineCreationCacheControlFeaturesEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(pipelineCreationCacheControl)>("pipelineCreationCacheControl");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -11008,6 +11976,8 @@ struct VkPhysicalDeviceDiagnosticsConfigFeaturesNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(diagnosticsConfig)>("diagnosticsConfig");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -11024,6 +11994,8 @@ struct VkDeviceDiagnosticsConfigCreateInfoNVAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -11038,6 +12010,8 @@ struct VkPhysicalDeviceFragmentDensityMap2FeaturesEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(fragmentDensityMapDeferred)>("fragmentDensityMapDeferred");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
@@ -11057,6 +12031,8 @@ struct VkPhysicalDeviceFragmentDensityMap2PropertiesEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(maxSubsampledArrayLayers)>("maxSubsampledArrayLayers");
         addField<DAS_BIND_MANAGED_FIELD(maxDescriptorSetSubsampledSamplers)>("maxDescriptorSetSubsampledSamplers");
     }
+    void init() {
+    }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
@@ -11071,6 +12047,8 @@ struct VkPhysicalDeviceImageRobustnessFeaturesEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(robustImageAccess)>("robustImageAccess");
+    }
+    void init() {
     }
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
