@@ -21,5 +21,7 @@ class Config(ConfigBase):
 
     def configure_struct_field(self, field):
         #FIXME: make it work for all fields
-        if field.name.startswith('pfn'):
+        if field.name.startswith('pfn') and field.struct.name in [
+            'VkAllocationCallbacks',
+        ]:
             field.ignore()
