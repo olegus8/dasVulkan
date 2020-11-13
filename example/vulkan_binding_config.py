@@ -28,3 +28,6 @@ class Config(ConfigBase):
             'VkDebugUtilsMessengerCreateInfoEXT',
         ]:
             field.ignore()
+
+    def configure_function(self, func):
+        func.ignore()
