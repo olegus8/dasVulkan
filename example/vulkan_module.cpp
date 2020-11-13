@@ -13319,10 +13319,6 @@ public:
             SideEffects::worstDefault, "vkGetImageViewHandleNVX");
         addExtern<DAS_BIND_FUN(vkGetImageViewAddressNVX)>(*this, lib, "vkGetImageViewAddressNVX",
             SideEffects::worstDefault, "vkGetImageViewAddressNVX");
-        addExtern<DAS_BIND_FUN(vkCmdDrawIndirectCountAMD)>(*this, lib, "vkCmdDrawIndirectCountAMD",
-            SideEffects::worstDefault, "vkCmdDrawIndirectCountAMD");
-        addExtern<DAS_BIND_FUN(vkCmdDrawIndexedIndirectCountAMD)>(*this, lib, "vkCmdDrawIndexedIndirectCountAMD",
-            SideEffects::worstDefault, "vkCmdDrawIndexedIndirectCountAMD");
         addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceExternalImageFormatPropertiesNV)>(*this, lib, "vkGetPhysicalDeviceExternalImageFormatPropertiesNV",
             SideEffects::worstDefault, "vkGetPhysicalDeviceExternalImageFormatPropertiesNV");
         addExtern<DAS_BIND_FUN(vkCmdSetViewportWScalingNV)>(*this, lib, "vkCmdSetViewportWScalingNV",
@@ -13357,8 +13353,6 @@ public:
             SideEffects::worstDefault, "vkCmdWriteAccelerationStructuresPropertiesNV");
         addExtern<DAS_BIND_FUN(vkCompileDeferredNV)>(*this, lib, "vkCompileDeferredNV",
             SideEffects::worstDefault, "vkCompileDeferredNV");
-        addExtern<DAS_BIND_FUN(vkCmdWriteBufferMarkerAMD)>(*this, lib, "vkCmdWriteBufferMarkerAMD",
-            SideEffects::worstDefault, "vkCmdWriteBufferMarkerAMD");
         addExtern<DAS_BIND_FUN(vkCmdDrawMeshTasksNV)>(*this, lib, "vkCmdDrawMeshTasksNV",
             SideEffects::worstDefault, "vkCmdDrawMeshTasksNV");
         addExtern<DAS_BIND_FUN(vkCmdDrawMeshTasksIndirectNV)>(*this, lib, "vkCmdDrawMeshTasksIndirectNV",
@@ -13371,8 +13365,6 @@ public:
             SideEffects::worstDefault, "vkCmdSetCheckpointNV");
         addExtern<DAS_BIND_FUN(vkGetQueueCheckpointDataNV)>(*this, lib, "vkGetQueueCheckpointDataNV",
             SideEffects::worstDefault, "vkGetQueueCheckpointDataNV");
-        addExtern<DAS_BIND_FUN(vkSetLocalDimmingAMD)>(*this, lib, "vkSetLocalDimmingAMD",
-            SideEffects::worstDefault, "vkSetLocalDimmingAMD");
         addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceCooperativeMatrixPropertiesNV)>(*this, lib, "vkGetPhysicalDeviceCooperativeMatrixPropertiesNV",
             SideEffects::worstDefault, "vkGetPhysicalDeviceCooperativeMatrixPropertiesNV");
         addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV)>(*this, lib, "vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV",
