@@ -34,6 +34,7 @@ class Config(ConfigBase):
         or  'PFN_' in func.type
         or  func.name.endswith('KHR')
         or  func.name.endswith('EXT')
+        or  func.name.endswith('INTEL')
         ):
             func.ignore()
         

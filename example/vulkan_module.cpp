@@ -13315,196 +13315,6 @@ public:
             SideEffects::worstDefault, "vkGetBufferOpaqueCaptureAddress");
         addExtern<DAS_BIND_FUN(vkGetDeviceMemoryOpaqueCaptureAddress)>(*this, lib, "vkGetDeviceMemoryOpaqueCaptureAddress",
             SideEffects::worstDefault, "vkGetDeviceMemoryOpaqueCaptureAddress");
-        addExtern<DAS_BIND_FUN(vkDestroySurfaceKHR)>(*this, lib, "vkDestroySurfaceKHR",
-            SideEffects::worstDefault, "vkDestroySurfaceKHR");
-        addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceSurfaceSupportKHR)>(*this, lib, "vkGetPhysicalDeviceSurfaceSupportKHR",
-            SideEffects::worstDefault, "vkGetPhysicalDeviceSurfaceSupportKHR");
-        addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceSurfaceCapabilitiesKHR)>(*this, lib, "vkGetPhysicalDeviceSurfaceCapabilitiesKHR",
-            SideEffects::worstDefault, "vkGetPhysicalDeviceSurfaceCapabilitiesKHR");
-        addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceSurfaceFormatsKHR)>(*this, lib, "vkGetPhysicalDeviceSurfaceFormatsKHR",
-            SideEffects::worstDefault, "vkGetPhysicalDeviceSurfaceFormatsKHR");
-        addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceSurfacePresentModesKHR)>(*this, lib, "vkGetPhysicalDeviceSurfacePresentModesKHR",
-            SideEffects::worstDefault, "vkGetPhysicalDeviceSurfacePresentModesKHR");
-        addExtern<DAS_BIND_FUN(vkCreateSwapchainKHR)>(*this, lib, "vkCreateSwapchainKHR",
-            SideEffects::worstDefault, "vkCreateSwapchainKHR");
-        addExtern<DAS_BIND_FUN(vkDestroySwapchainKHR)>(*this, lib, "vkDestroySwapchainKHR",
-            SideEffects::worstDefault, "vkDestroySwapchainKHR");
-        addExtern<DAS_BIND_FUN(vkGetSwapchainImagesKHR)>(*this, lib, "vkGetSwapchainImagesKHR",
-            SideEffects::worstDefault, "vkGetSwapchainImagesKHR");
-        addExtern<DAS_BIND_FUN(vkAcquireNextImageKHR)>(*this, lib, "vkAcquireNextImageKHR",
-            SideEffects::worstDefault, "vkAcquireNextImageKHR");
-        addExtern<DAS_BIND_FUN(vkQueuePresentKHR)>(*this, lib, "vkQueuePresentKHR",
-            SideEffects::worstDefault, "vkQueuePresentKHR");
-        addExtern<DAS_BIND_FUN(vkGetDeviceGroupPresentCapabilitiesKHR)>(*this, lib, "vkGetDeviceGroupPresentCapabilitiesKHR",
-            SideEffects::worstDefault, "vkGetDeviceGroupPresentCapabilitiesKHR");
-        addExtern<DAS_BIND_FUN(vkGetDeviceGroupSurfacePresentModesKHR)>(*this, lib, "vkGetDeviceGroupSurfacePresentModesKHR",
-            SideEffects::worstDefault, "vkGetDeviceGroupSurfacePresentModesKHR");
-        addExtern<DAS_BIND_FUN(vkGetPhysicalDevicePresentRectanglesKHR)>(*this, lib, "vkGetPhysicalDevicePresentRectanglesKHR",
-            SideEffects::worstDefault, "vkGetPhysicalDevicePresentRectanglesKHR");
-        addExtern<DAS_BIND_FUN(vkAcquireNextImage2KHR)>(*this, lib, "vkAcquireNextImage2KHR",
-            SideEffects::worstDefault, "vkAcquireNextImage2KHR");
-        addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceDisplayPropertiesKHR)>(*this, lib, "vkGetPhysicalDeviceDisplayPropertiesKHR",
-            SideEffects::worstDefault, "vkGetPhysicalDeviceDisplayPropertiesKHR");
-        addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceDisplayPlanePropertiesKHR)>(*this, lib, "vkGetPhysicalDeviceDisplayPlanePropertiesKHR",
-            SideEffects::worstDefault, "vkGetPhysicalDeviceDisplayPlanePropertiesKHR");
-        addExtern<DAS_BIND_FUN(vkGetDisplayPlaneSupportedDisplaysKHR)>(*this, lib, "vkGetDisplayPlaneSupportedDisplaysKHR",
-            SideEffects::worstDefault, "vkGetDisplayPlaneSupportedDisplaysKHR");
-        addExtern<DAS_BIND_FUN(vkGetDisplayModePropertiesKHR)>(*this, lib, "vkGetDisplayModePropertiesKHR",
-            SideEffects::worstDefault, "vkGetDisplayModePropertiesKHR");
-        addExtern<DAS_BIND_FUN(vkCreateDisplayModeKHR)>(*this, lib, "vkCreateDisplayModeKHR",
-            SideEffects::worstDefault, "vkCreateDisplayModeKHR");
-        addExtern<DAS_BIND_FUN(vkGetDisplayPlaneCapabilitiesKHR)>(*this, lib, "vkGetDisplayPlaneCapabilitiesKHR",
-            SideEffects::worstDefault, "vkGetDisplayPlaneCapabilitiesKHR");
-        addExtern<DAS_BIND_FUN(vkCreateDisplayPlaneSurfaceKHR)>(*this, lib, "vkCreateDisplayPlaneSurfaceKHR",
-            SideEffects::worstDefault, "vkCreateDisplayPlaneSurfaceKHR");
-        addExtern<DAS_BIND_FUN(vkCreateSharedSwapchainsKHR)>(*this, lib, "vkCreateSharedSwapchainsKHR",
-            SideEffects::worstDefault, "vkCreateSharedSwapchainsKHR");
-        addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceFeatures2KHR)>(*this, lib, "vkGetPhysicalDeviceFeatures2KHR",
-            SideEffects::worstDefault, "vkGetPhysicalDeviceFeatures2KHR");
-        addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceProperties2KHR)>(*this, lib, "vkGetPhysicalDeviceProperties2KHR",
-            SideEffects::worstDefault, "vkGetPhysicalDeviceProperties2KHR");
-        addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceFormatProperties2KHR)>(*this, lib, "vkGetPhysicalDeviceFormatProperties2KHR",
-            SideEffects::worstDefault, "vkGetPhysicalDeviceFormatProperties2KHR");
-        addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceImageFormatProperties2KHR)>(*this, lib, "vkGetPhysicalDeviceImageFormatProperties2KHR",
-            SideEffects::worstDefault, "vkGetPhysicalDeviceImageFormatProperties2KHR");
-        addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceQueueFamilyProperties2KHR)>(*this, lib, "vkGetPhysicalDeviceQueueFamilyProperties2KHR",
-            SideEffects::worstDefault, "vkGetPhysicalDeviceQueueFamilyProperties2KHR");
-        addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceMemoryProperties2KHR)>(*this, lib, "vkGetPhysicalDeviceMemoryProperties2KHR",
-            SideEffects::worstDefault, "vkGetPhysicalDeviceMemoryProperties2KHR");
-        addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceSparseImageFormatProperties2KHR)>(*this, lib, "vkGetPhysicalDeviceSparseImageFormatProperties2KHR",
-            SideEffects::worstDefault, "vkGetPhysicalDeviceSparseImageFormatProperties2KHR");
-        addExtern<DAS_BIND_FUN(vkGetDeviceGroupPeerMemoryFeaturesKHR)>(*this, lib, "vkGetDeviceGroupPeerMemoryFeaturesKHR",
-            SideEffects::worstDefault, "vkGetDeviceGroupPeerMemoryFeaturesKHR");
-        addExtern<DAS_BIND_FUN(vkCmdSetDeviceMaskKHR)>(*this, lib, "vkCmdSetDeviceMaskKHR",
-            SideEffects::worstDefault, "vkCmdSetDeviceMaskKHR");
-        addExtern<DAS_BIND_FUN(vkCmdDispatchBaseKHR)>(*this, lib, "vkCmdDispatchBaseKHR",
-            SideEffects::worstDefault, "vkCmdDispatchBaseKHR");
-        addExtern<DAS_BIND_FUN(vkTrimCommandPoolKHR)>(*this, lib, "vkTrimCommandPoolKHR",
-            SideEffects::worstDefault, "vkTrimCommandPoolKHR");
-        addExtern<DAS_BIND_FUN(vkEnumeratePhysicalDeviceGroupsKHR)>(*this, lib, "vkEnumeratePhysicalDeviceGroupsKHR",
-            SideEffects::worstDefault, "vkEnumeratePhysicalDeviceGroupsKHR");
-        addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceExternalBufferPropertiesKHR)>(*this, lib, "vkGetPhysicalDeviceExternalBufferPropertiesKHR",
-            SideEffects::worstDefault, "vkGetPhysicalDeviceExternalBufferPropertiesKHR");
-        addExtern<DAS_BIND_FUN(vkGetMemoryFdKHR)>(*this, lib, "vkGetMemoryFdKHR",
-            SideEffects::worstDefault, "vkGetMemoryFdKHR");
-        addExtern<DAS_BIND_FUN(vkGetMemoryFdPropertiesKHR)>(*this, lib, "vkGetMemoryFdPropertiesKHR",
-            SideEffects::worstDefault, "vkGetMemoryFdPropertiesKHR");
-        addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceExternalSemaphorePropertiesKHR)>(*this, lib, "vkGetPhysicalDeviceExternalSemaphorePropertiesKHR",
-            SideEffects::worstDefault, "vkGetPhysicalDeviceExternalSemaphorePropertiesKHR");
-        addExtern<DAS_BIND_FUN(vkImportSemaphoreFdKHR)>(*this, lib, "vkImportSemaphoreFdKHR",
-            SideEffects::worstDefault, "vkImportSemaphoreFdKHR");
-        addExtern<DAS_BIND_FUN(vkGetSemaphoreFdKHR)>(*this, lib, "vkGetSemaphoreFdKHR",
-            SideEffects::worstDefault, "vkGetSemaphoreFdKHR");
-        addExtern<DAS_BIND_FUN(vkCmdPushDescriptorSetKHR)>(*this, lib, "vkCmdPushDescriptorSetKHR",
-            SideEffects::worstDefault, "vkCmdPushDescriptorSetKHR");
-        addExtern<DAS_BIND_FUN(vkCmdPushDescriptorSetWithTemplateKHR)>(*this, lib, "vkCmdPushDescriptorSetWithTemplateKHR",
-            SideEffects::worstDefault, "vkCmdPushDescriptorSetWithTemplateKHR");
-        addExtern<DAS_BIND_FUN(vkCreateDescriptorUpdateTemplateKHR)>(*this, lib, "vkCreateDescriptorUpdateTemplateKHR",
-            SideEffects::worstDefault, "vkCreateDescriptorUpdateTemplateKHR");
-        addExtern<DAS_BIND_FUN(vkDestroyDescriptorUpdateTemplateKHR)>(*this, lib, "vkDestroyDescriptorUpdateTemplateKHR",
-            SideEffects::worstDefault, "vkDestroyDescriptorUpdateTemplateKHR");
-        addExtern<DAS_BIND_FUN(vkUpdateDescriptorSetWithTemplateKHR)>(*this, lib, "vkUpdateDescriptorSetWithTemplateKHR",
-            SideEffects::worstDefault, "vkUpdateDescriptorSetWithTemplateKHR");
-        addExtern<DAS_BIND_FUN(vkCreateRenderPass2KHR)>(*this, lib, "vkCreateRenderPass2KHR",
-            SideEffects::worstDefault, "vkCreateRenderPass2KHR");
-        addExtern<DAS_BIND_FUN(vkCmdBeginRenderPass2KHR)>(*this, lib, "vkCmdBeginRenderPass2KHR",
-            SideEffects::worstDefault, "vkCmdBeginRenderPass2KHR");
-        addExtern<DAS_BIND_FUN(vkCmdNextSubpass2KHR)>(*this, lib, "vkCmdNextSubpass2KHR",
-            SideEffects::worstDefault, "vkCmdNextSubpass2KHR");
-        addExtern<DAS_BIND_FUN(vkCmdEndRenderPass2KHR)>(*this, lib, "vkCmdEndRenderPass2KHR",
-            SideEffects::worstDefault, "vkCmdEndRenderPass2KHR");
-        addExtern<DAS_BIND_FUN(vkGetSwapchainStatusKHR)>(*this, lib, "vkGetSwapchainStatusKHR",
-            SideEffects::worstDefault, "vkGetSwapchainStatusKHR");
-        addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceExternalFencePropertiesKHR)>(*this, lib, "vkGetPhysicalDeviceExternalFencePropertiesKHR",
-            SideEffects::worstDefault, "vkGetPhysicalDeviceExternalFencePropertiesKHR");
-        addExtern<DAS_BIND_FUN(vkImportFenceFdKHR)>(*this, lib, "vkImportFenceFdKHR",
-            SideEffects::worstDefault, "vkImportFenceFdKHR");
-        addExtern<DAS_BIND_FUN(vkGetFenceFdKHR)>(*this, lib, "vkGetFenceFdKHR",
-            SideEffects::worstDefault, "vkGetFenceFdKHR");
-        addExtern<DAS_BIND_FUN(vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR)>(*this, lib, "vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR",
-            SideEffects::worstDefault, "vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR");
-        addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR)>(*this, lib, "vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR",
-            SideEffects::worstDefault, "vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR");
-        addExtern<DAS_BIND_FUN(vkAcquireProfilingLockKHR)>(*this, lib, "vkAcquireProfilingLockKHR",
-            SideEffects::worstDefault, "vkAcquireProfilingLockKHR");
-        addExtern<DAS_BIND_FUN(vkReleaseProfilingLockKHR)>(*this, lib, "vkReleaseProfilingLockKHR",
-            SideEffects::worstDefault, "vkReleaseProfilingLockKHR");
-        addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceSurfaceCapabilities2KHR)>(*this, lib, "vkGetPhysicalDeviceSurfaceCapabilities2KHR",
-            SideEffects::worstDefault, "vkGetPhysicalDeviceSurfaceCapabilities2KHR");
-        addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceSurfaceFormats2KHR)>(*this, lib, "vkGetPhysicalDeviceSurfaceFormats2KHR",
-            SideEffects::worstDefault, "vkGetPhysicalDeviceSurfaceFormats2KHR");
-        addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceDisplayProperties2KHR)>(*this, lib, "vkGetPhysicalDeviceDisplayProperties2KHR",
-            SideEffects::worstDefault, "vkGetPhysicalDeviceDisplayProperties2KHR");
-        addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceDisplayPlaneProperties2KHR)>(*this, lib, "vkGetPhysicalDeviceDisplayPlaneProperties2KHR",
-            SideEffects::worstDefault, "vkGetPhysicalDeviceDisplayPlaneProperties2KHR");
-        addExtern<DAS_BIND_FUN(vkGetDisplayModeProperties2KHR)>(*this, lib, "vkGetDisplayModeProperties2KHR",
-            SideEffects::worstDefault, "vkGetDisplayModeProperties2KHR");
-        addExtern<DAS_BIND_FUN(vkGetDisplayPlaneCapabilities2KHR)>(*this, lib, "vkGetDisplayPlaneCapabilities2KHR",
-            SideEffects::worstDefault, "vkGetDisplayPlaneCapabilities2KHR");
-        addExtern<DAS_BIND_FUN(vkGetImageMemoryRequirements2KHR)>(*this, lib, "vkGetImageMemoryRequirements2KHR",
-            SideEffects::worstDefault, "vkGetImageMemoryRequirements2KHR");
-        addExtern<DAS_BIND_FUN(vkGetBufferMemoryRequirements2KHR)>(*this, lib, "vkGetBufferMemoryRequirements2KHR",
-            SideEffects::worstDefault, "vkGetBufferMemoryRequirements2KHR");
-        addExtern<DAS_BIND_FUN(vkGetImageSparseMemoryRequirements2KHR)>(*this, lib, "vkGetImageSparseMemoryRequirements2KHR",
-            SideEffects::worstDefault, "vkGetImageSparseMemoryRequirements2KHR");
-        addExtern<DAS_BIND_FUN(vkCreateSamplerYcbcrConversionKHR)>(*this, lib, "vkCreateSamplerYcbcrConversionKHR",
-            SideEffects::worstDefault, "vkCreateSamplerYcbcrConversionKHR");
-        addExtern<DAS_BIND_FUN(vkDestroySamplerYcbcrConversionKHR)>(*this, lib, "vkDestroySamplerYcbcrConversionKHR",
-            SideEffects::worstDefault, "vkDestroySamplerYcbcrConversionKHR");
-        addExtern<DAS_BIND_FUN(vkBindBufferMemory2KHR)>(*this, lib, "vkBindBufferMemory2KHR",
-            SideEffects::worstDefault, "vkBindBufferMemory2KHR");
-        addExtern<DAS_BIND_FUN(vkBindImageMemory2KHR)>(*this, lib, "vkBindImageMemory2KHR",
-            SideEffects::worstDefault, "vkBindImageMemory2KHR");
-        addExtern<DAS_BIND_FUN(vkGetDescriptorSetLayoutSupportKHR)>(*this, lib, "vkGetDescriptorSetLayoutSupportKHR",
-            SideEffects::worstDefault, "vkGetDescriptorSetLayoutSupportKHR");
-        addExtern<DAS_BIND_FUN(vkCmdDrawIndirectCountKHR)>(*this, lib, "vkCmdDrawIndirectCountKHR",
-            SideEffects::worstDefault, "vkCmdDrawIndirectCountKHR");
-        addExtern<DAS_BIND_FUN(vkCmdDrawIndexedIndirectCountKHR)>(*this, lib, "vkCmdDrawIndexedIndirectCountKHR",
-            SideEffects::worstDefault, "vkCmdDrawIndexedIndirectCountKHR");
-        addExtern<DAS_BIND_FUN(vkGetSemaphoreCounterValueKHR)>(*this, lib, "vkGetSemaphoreCounterValueKHR",
-            SideEffects::worstDefault, "vkGetSemaphoreCounterValueKHR");
-        addExtern<DAS_BIND_FUN(vkWaitSemaphoresKHR)>(*this, lib, "vkWaitSemaphoresKHR",
-            SideEffects::worstDefault, "vkWaitSemaphoresKHR");
-        addExtern<DAS_BIND_FUN(vkSignalSemaphoreKHR)>(*this, lib, "vkSignalSemaphoreKHR",
-            SideEffects::worstDefault, "vkSignalSemaphoreKHR");
-        addExtern<DAS_BIND_FUN(vkGetBufferDeviceAddressKHR)>(*this, lib, "vkGetBufferDeviceAddressKHR",
-            SideEffects::worstDefault, "vkGetBufferDeviceAddressKHR");
-        addExtern<DAS_BIND_FUN(vkGetBufferOpaqueCaptureAddressKHR)>(*this, lib, "vkGetBufferOpaqueCaptureAddressKHR",
-            SideEffects::worstDefault, "vkGetBufferOpaqueCaptureAddressKHR");
-        addExtern<DAS_BIND_FUN(vkGetDeviceMemoryOpaqueCaptureAddressKHR)>(*this, lib, "vkGetDeviceMemoryOpaqueCaptureAddressKHR",
-            SideEffects::worstDefault, "vkGetDeviceMemoryOpaqueCaptureAddressKHR");
-        addExtern<DAS_BIND_FUN(vkGetPipelineExecutablePropertiesKHR)>(*this, lib, "vkGetPipelineExecutablePropertiesKHR",
-            SideEffects::worstDefault, "vkGetPipelineExecutablePropertiesKHR");
-        addExtern<DAS_BIND_FUN(vkGetPipelineExecutableStatisticsKHR)>(*this, lib, "vkGetPipelineExecutableStatisticsKHR",
-            SideEffects::worstDefault, "vkGetPipelineExecutableStatisticsKHR");
-        addExtern<DAS_BIND_FUN(vkGetPipelineExecutableInternalRepresentationsKHR)>(*this, lib, "vkGetPipelineExecutableInternalRepresentationsKHR",
-            SideEffects::worstDefault, "vkGetPipelineExecutableInternalRepresentationsKHR");
-        addExtern<DAS_BIND_FUN(vkCreateDebugReportCallbackEXT)>(*this, lib, "vkCreateDebugReportCallbackEXT",
-            SideEffects::worstDefault, "vkCreateDebugReportCallbackEXT");
-        addExtern<DAS_BIND_FUN(vkDestroyDebugReportCallbackEXT)>(*this, lib, "vkDestroyDebugReportCallbackEXT",
-            SideEffects::worstDefault, "vkDestroyDebugReportCallbackEXT");
-        addExtern<DAS_BIND_FUN(vkDebugMarkerSetObjectTagEXT)>(*this, lib, "vkDebugMarkerSetObjectTagEXT",
-            SideEffects::worstDefault, "vkDebugMarkerSetObjectTagEXT");
-        addExtern<DAS_BIND_FUN(vkDebugMarkerSetObjectNameEXT)>(*this, lib, "vkDebugMarkerSetObjectNameEXT",
-            SideEffects::worstDefault, "vkDebugMarkerSetObjectNameEXT");
-        addExtern<DAS_BIND_FUN(vkCmdDebugMarkerBeginEXT)>(*this, lib, "vkCmdDebugMarkerBeginEXT",
-            SideEffects::worstDefault, "vkCmdDebugMarkerBeginEXT");
-        addExtern<DAS_BIND_FUN(vkCmdDebugMarkerEndEXT)>(*this, lib, "vkCmdDebugMarkerEndEXT",
-            SideEffects::worstDefault, "vkCmdDebugMarkerEndEXT");
-        addExtern<DAS_BIND_FUN(vkCmdDebugMarkerInsertEXT)>(*this, lib, "vkCmdDebugMarkerInsertEXT",
-            SideEffects::worstDefault, "vkCmdDebugMarkerInsertEXT");
-        addExtern<DAS_BIND_FUN(vkCmdBindTransformFeedbackBuffersEXT)>(*this, lib, "vkCmdBindTransformFeedbackBuffersEXT",
-            SideEffects::worstDefault, "vkCmdBindTransformFeedbackBuffersEXT");
-        addExtern<DAS_BIND_FUN(vkCmdBeginTransformFeedbackEXT)>(*this, lib, "vkCmdBeginTransformFeedbackEXT",
-            SideEffects::worstDefault, "vkCmdBeginTransformFeedbackEXT");
-        addExtern<DAS_BIND_FUN(vkCmdEndTransformFeedbackEXT)>(*this, lib, "vkCmdEndTransformFeedbackEXT",
-            SideEffects::worstDefault, "vkCmdEndTransformFeedbackEXT");
-        addExtern<DAS_BIND_FUN(vkCmdBeginQueryIndexedEXT)>(*this, lib, "vkCmdBeginQueryIndexedEXT",
-            SideEffects::worstDefault, "vkCmdBeginQueryIndexedEXT");
-        addExtern<DAS_BIND_FUN(vkCmdEndQueryIndexedEXT)>(*this, lib, "vkCmdEndQueryIndexedEXT",
-            SideEffects::worstDefault, "vkCmdEndQueryIndexedEXT");
-        addExtern<DAS_BIND_FUN(vkCmdDrawIndirectByteCountEXT)>(*this, lib, "vkCmdDrawIndirectByteCountEXT",
-            SideEffects::worstDefault, "vkCmdDrawIndirectByteCountEXT");
         addExtern<DAS_BIND_FUN(vkGetImageViewHandleNVX)>(*this, lib, "vkGetImageViewHandleNVX",
             SideEffects::worstDefault, "vkGetImageViewHandleNVX");
         addExtern<DAS_BIND_FUN(vkGetImageViewAddressNVX)>(*this, lib, "vkGetImageViewAddressNVX",
@@ -13515,66 +13325,12 @@ public:
             SideEffects::worstDefault, "vkCmdDrawIndexedIndirectCountAMD");
         addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceExternalImageFormatPropertiesNV)>(*this, lib, "vkGetPhysicalDeviceExternalImageFormatPropertiesNV",
             SideEffects::worstDefault, "vkGetPhysicalDeviceExternalImageFormatPropertiesNV");
-        addExtern<DAS_BIND_FUN(vkCmdBeginConditionalRenderingEXT)>(*this, lib, "vkCmdBeginConditionalRenderingEXT",
-            SideEffects::worstDefault, "vkCmdBeginConditionalRenderingEXT");
-        addExtern<DAS_BIND_FUN(vkCmdEndConditionalRenderingEXT)>(*this, lib, "vkCmdEndConditionalRenderingEXT",
-            SideEffects::worstDefault, "vkCmdEndConditionalRenderingEXT");
         addExtern<DAS_BIND_FUN(vkCmdSetViewportWScalingNV)>(*this, lib, "vkCmdSetViewportWScalingNV",
             SideEffects::worstDefault, "vkCmdSetViewportWScalingNV");
-        addExtern<DAS_BIND_FUN(vkReleaseDisplayEXT)>(*this, lib, "vkReleaseDisplayEXT",
-            SideEffects::worstDefault, "vkReleaseDisplayEXT");
-        addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceSurfaceCapabilities2EXT)>(*this, lib, "vkGetPhysicalDeviceSurfaceCapabilities2EXT",
-            SideEffects::worstDefault, "vkGetPhysicalDeviceSurfaceCapabilities2EXT");
-        addExtern<DAS_BIND_FUN(vkDisplayPowerControlEXT)>(*this, lib, "vkDisplayPowerControlEXT",
-            SideEffects::worstDefault, "vkDisplayPowerControlEXT");
-        addExtern<DAS_BIND_FUN(vkRegisterDeviceEventEXT)>(*this, lib, "vkRegisterDeviceEventEXT",
-            SideEffects::worstDefault, "vkRegisterDeviceEventEXT");
-        addExtern<DAS_BIND_FUN(vkRegisterDisplayEventEXT)>(*this, lib, "vkRegisterDisplayEventEXT",
-            SideEffects::worstDefault, "vkRegisterDisplayEventEXT");
-        addExtern<DAS_BIND_FUN(vkGetSwapchainCounterEXT)>(*this, lib, "vkGetSwapchainCounterEXT",
-            SideEffects::worstDefault, "vkGetSwapchainCounterEXT");
         addExtern<DAS_BIND_FUN(vkGetRefreshCycleDurationGOOGLE)>(*this, lib, "vkGetRefreshCycleDurationGOOGLE",
             SideEffects::worstDefault, "vkGetRefreshCycleDurationGOOGLE");
         addExtern<DAS_BIND_FUN(vkGetPastPresentationTimingGOOGLE)>(*this, lib, "vkGetPastPresentationTimingGOOGLE",
             SideEffects::worstDefault, "vkGetPastPresentationTimingGOOGLE");
-        addExtern<DAS_BIND_FUN(vkCmdSetDiscardRectangleEXT)>(*this, lib, "vkCmdSetDiscardRectangleEXT",
-            SideEffects::worstDefault, "vkCmdSetDiscardRectangleEXT");
-        addExtern<DAS_BIND_FUN(vkSetHdrMetadataEXT)>(*this, lib, "vkSetHdrMetadataEXT",
-            SideEffects::worstDefault, "vkSetHdrMetadataEXT");
-        addExtern<DAS_BIND_FUN(vkSetDebugUtilsObjectNameEXT)>(*this, lib, "vkSetDebugUtilsObjectNameEXT",
-            SideEffects::worstDefault, "vkSetDebugUtilsObjectNameEXT");
-        addExtern<DAS_BIND_FUN(vkSetDebugUtilsObjectTagEXT)>(*this, lib, "vkSetDebugUtilsObjectTagEXT",
-            SideEffects::worstDefault, "vkSetDebugUtilsObjectTagEXT");
-        addExtern<DAS_BIND_FUN(vkQueueBeginDebugUtilsLabelEXT)>(*this, lib, "vkQueueBeginDebugUtilsLabelEXT",
-            SideEffects::worstDefault, "vkQueueBeginDebugUtilsLabelEXT");
-        addExtern<DAS_BIND_FUN(vkQueueEndDebugUtilsLabelEXT)>(*this, lib, "vkQueueEndDebugUtilsLabelEXT",
-            SideEffects::worstDefault, "vkQueueEndDebugUtilsLabelEXT");
-        addExtern<DAS_BIND_FUN(vkQueueInsertDebugUtilsLabelEXT)>(*this, lib, "vkQueueInsertDebugUtilsLabelEXT",
-            SideEffects::worstDefault, "vkQueueInsertDebugUtilsLabelEXT");
-        addExtern<DAS_BIND_FUN(vkCmdBeginDebugUtilsLabelEXT)>(*this, lib, "vkCmdBeginDebugUtilsLabelEXT",
-            SideEffects::worstDefault, "vkCmdBeginDebugUtilsLabelEXT");
-        addExtern<DAS_BIND_FUN(vkCmdEndDebugUtilsLabelEXT)>(*this, lib, "vkCmdEndDebugUtilsLabelEXT",
-            SideEffects::worstDefault, "vkCmdEndDebugUtilsLabelEXT");
-        addExtern<DAS_BIND_FUN(vkCmdInsertDebugUtilsLabelEXT)>(*this, lib, "vkCmdInsertDebugUtilsLabelEXT",
-            SideEffects::worstDefault, "vkCmdInsertDebugUtilsLabelEXT");
-        addExtern<DAS_BIND_FUN(vkCreateDebugUtilsMessengerEXT)>(*this, lib, "vkCreateDebugUtilsMessengerEXT",
-            SideEffects::worstDefault, "vkCreateDebugUtilsMessengerEXT");
-        addExtern<DAS_BIND_FUN(vkDestroyDebugUtilsMessengerEXT)>(*this, lib, "vkDestroyDebugUtilsMessengerEXT",
-            SideEffects::worstDefault, "vkDestroyDebugUtilsMessengerEXT");
-        addExtern<DAS_BIND_FUN(vkSubmitDebugUtilsMessageEXT)>(*this, lib, "vkSubmitDebugUtilsMessageEXT",
-            SideEffects::worstDefault, "vkSubmitDebugUtilsMessageEXT");
-        addExtern<DAS_BIND_FUN(vkCmdSetSampleLocationsEXT)>(*this, lib, "vkCmdSetSampleLocationsEXT",
-            SideEffects::worstDefault, "vkCmdSetSampleLocationsEXT");
-        addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceMultisamplePropertiesEXT)>(*this, lib, "vkGetPhysicalDeviceMultisamplePropertiesEXT",
-            SideEffects::worstDefault, "vkGetPhysicalDeviceMultisamplePropertiesEXT");
-        addExtern<DAS_BIND_FUN(vkGetImageDrmFormatModifierPropertiesEXT)>(*this, lib, "vkGetImageDrmFormatModifierPropertiesEXT",
-            SideEffects::worstDefault, "vkGetImageDrmFormatModifierPropertiesEXT");
-        addExtern<DAS_BIND_FUN(vkCreateValidationCacheEXT)>(*this, lib, "vkCreateValidationCacheEXT",
-            SideEffects::worstDefault, "vkCreateValidationCacheEXT");
-        addExtern<DAS_BIND_FUN(vkDestroyValidationCacheEXT)>(*this, lib, "vkDestroyValidationCacheEXT",
-            SideEffects::worstDefault, "vkDestroyValidationCacheEXT");
-        addExtern<DAS_BIND_FUN(vkMergeValidationCachesEXT)>(*this, lib, "vkMergeValidationCachesEXT",
-            SideEffects::worstDefault, "vkMergeValidationCachesEXT");
         addExtern<DAS_BIND_FUN(vkCmdBindShadingRateImageNV)>(*this, lib, "vkCmdBindShadingRateImageNV",
             SideEffects::worstDefault, "vkCmdBindShadingRateImageNV");
         addExtern<DAS_BIND_FUN(vkCmdSetViewportShadingRatePaletteNV)>(*this, lib, "vkCmdSetViewportShadingRatePaletteNV",
@@ -13583,14 +13339,10 @@ public:
             SideEffects::worstDefault, "vkCmdSetCoarseSampleOrderNV");
         addExtern<DAS_BIND_FUN(vkCreateAccelerationStructureNV)>(*this, lib, "vkCreateAccelerationStructureNV",
             SideEffects::worstDefault, "vkCreateAccelerationStructureNV");
-        addExtern<DAS_BIND_FUN(vkDestroyAccelerationStructureKHR)>(*this, lib, "vkDestroyAccelerationStructureKHR",
-            SideEffects::worstDefault, "vkDestroyAccelerationStructureKHR");
         addExtern<DAS_BIND_FUN(vkDestroyAccelerationStructureNV)>(*this, lib, "vkDestroyAccelerationStructureNV",
             SideEffects::worstDefault, "vkDestroyAccelerationStructureNV");
         addExtern<DAS_BIND_FUN(vkGetAccelerationStructureMemoryRequirementsNV)>(*this, lib, "vkGetAccelerationStructureMemoryRequirementsNV",
             SideEffects::worstDefault, "vkGetAccelerationStructureMemoryRequirementsNV");
-        addExtern<DAS_BIND_FUN(vkBindAccelerationStructureMemoryKHR)>(*this, lib, "vkBindAccelerationStructureMemoryKHR",
-            SideEffects::worstDefault, "vkBindAccelerationStructureMemoryKHR");
         addExtern<DAS_BIND_FUN(vkBindAccelerationStructureMemoryNV)>(*this, lib, "vkBindAccelerationStructureMemoryNV",
             SideEffects::worstDefault, "vkBindAccelerationStructureMemoryNV");
         addExtern<DAS_BIND_FUN(vkCmdBuildAccelerationStructureNV)>(*this, lib, "vkCmdBuildAccelerationStructureNV",
@@ -13601,20 +13353,12 @@ public:
             SideEffects::worstDefault, "vkCmdTraceRaysNV");
         addExtern<DAS_BIND_FUN(vkCreateRayTracingPipelinesNV)>(*this, lib, "vkCreateRayTracingPipelinesNV",
             SideEffects::worstDefault, "vkCreateRayTracingPipelinesNV");
-        addExtern<DAS_BIND_FUN(vkCmdWriteAccelerationStructuresPropertiesKHR)>(*this, lib, "vkCmdWriteAccelerationStructuresPropertiesKHR",
-            SideEffects::worstDefault, "vkCmdWriteAccelerationStructuresPropertiesKHR");
         addExtern<DAS_BIND_FUN(vkCmdWriteAccelerationStructuresPropertiesNV)>(*this, lib, "vkCmdWriteAccelerationStructuresPropertiesNV",
             SideEffects::worstDefault, "vkCmdWriteAccelerationStructuresPropertiesNV");
         addExtern<DAS_BIND_FUN(vkCompileDeferredNV)>(*this, lib, "vkCompileDeferredNV",
             SideEffects::worstDefault, "vkCompileDeferredNV");
-        addExtern<DAS_BIND_FUN(vkGetMemoryHostPointerPropertiesEXT)>(*this, lib, "vkGetMemoryHostPointerPropertiesEXT",
-            SideEffects::worstDefault, "vkGetMemoryHostPointerPropertiesEXT");
         addExtern<DAS_BIND_FUN(vkCmdWriteBufferMarkerAMD)>(*this, lib, "vkCmdWriteBufferMarkerAMD",
             SideEffects::worstDefault, "vkCmdWriteBufferMarkerAMD");
-        addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceCalibrateableTimeDomainsEXT)>(*this, lib, "vkGetPhysicalDeviceCalibrateableTimeDomainsEXT",
-            SideEffects::worstDefault, "vkGetPhysicalDeviceCalibrateableTimeDomainsEXT");
-        addExtern<DAS_BIND_FUN(vkGetCalibratedTimestampsEXT)>(*this, lib, "vkGetCalibratedTimestampsEXT",
-            SideEffects::worstDefault, "vkGetCalibratedTimestampsEXT");
         addExtern<DAS_BIND_FUN(vkCmdDrawMeshTasksNV)>(*this, lib, "vkCmdDrawMeshTasksNV",
             SideEffects::worstDefault, "vkCmdDrawMeshTasksNV");
         addExtern<DAS_BIND_FUN(vkCmdDrawMeshTasksIndirectNV)>(*this, lib, "vkCmdDrawMeshTasksIndirectNV",
@@ -13647,44 +13391,10 @@ public:
             SideEffects::worstDefault, "vkGetPerformanceParameterINTEL");
         addExtern<DAS_BIND_FUN(vkSetLocalDimmingAMD)>(*this, lib, "vkSetLocalDimmingAMD",
             SideEffects::worstDefault, "vkSetLocalDimmingAMD");
-        addExtern<DAS_BIND_FUN(vkGetBufferDeviceAddressEXT)>(*this, lib, "vkGetBufferDeviceAddressEXT",
-            SideEffects::worstDefault, "vkGetBufferDeviceAddressEXT");
-        addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceToolPropertiesEXT)>(*this, lib, "vkGetPhysicalDeviceToolPropertiesEXT",
-            SideEffects::worstDefault, "vkGetPhysicalDeviceToolPropertiesEXT");
         addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceCooperativeMatrixPropertiesNV)>(*this, lib, "vkGetPhysicalDeviceCooperativeMatrixPropertiesNV",
             SideEffects::worstDefault, "vkGetPhysicalDeviceCooperativeMatrixPropertiesNV");
         addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV)>(*this, lib, "vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV",
             SideEffects::worstDefault, "vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV");
-        addExtern<DAS_BIND_FUN(vkCreateHeadlessSurfaceEXT)>(*this, lib, "vkCreateHeadlessSurfaceEXT",
-            SideEffects::worstDefault, "vkCreateHeadlessSurfaceEXT");
-        addExtern<DAS_BIND_FUN(vkCmdSetLineStippleEXT)>(*this, lib, "vkCmdSetLineStippleEXT",
-            SideEffects::worstDefault, "vkCmdSetLineStippleEXT");
-        addExtern<DAS_BIND_FUN(vkResetQueryPoolEXT)>(*this, lib, "vkResetQueryPoolEXT",
-            SideEffects::worstDefault, "vkResetQueryPoolEXT");
-        addExtern<DAS_BIND_FUN(vkCmdSetCullModeEXT)>(*this, lib, "vkCmdSetCullModeEXT",
-            SideEffects::worstDefault, "vkCmdSetCullModeEXT");
-        addExtern<DAS_BIND_FUN(vkCmdSetFrontFaceEXT)>(*this, lib, "vkCmdSetFrontFaceEXT",
-            SideEffects::worstDefault, "vkCmdSetFrontFaceEXT");
-        addExtern<DAS_BIND_FUN(vkCmdSetPrimitiveTopologyEXT)>(*this, lib, "vkCmdSetPrimitiveTopologyEXT",
-            SideEffects::worstDefault, "vkCmdSetPrimitiveTopologyEXT");
-        addExtern<DAS_BIND_FUN(vkCmdSetViewportWithCountEXT)>(*this, lib, "vkCmdSetViewportWithCountEXT",
-            SideEffects::worstDefault, "vkCmdSetViewportWithCountEXT");
-        addExtern<DAS_BIND_FUN(vkCmdSetScissorWithCountEXT)>(*this, lib, "vkCmdSetScissorWithCountEXT",
-            SideEffects::worstDefault, "vkCmdSetScissorWithCountEXT");
-        addExtern<DAS_BIND_FUN(vkCmdBindVertexBuffers2EXT)>(*this, lib, "vkCmdBindVertexBuffers2EXT",
-            SideEffects::worstDefault, "vkCmdBindVertexBuffers2EXT");
-        addExtern<DAS_BIND_FUN(vkCmdSetDepthTestEnableEXT)>(*this, lib, "vkCmdSetDepthTestEnableEXT",
-            SideEffects::worstDefault, "vkCmdSetDepthTestEnableEXT");
-        addExtern<DAS_BIND_FUN(vkCmdSetDepthWriteEnableEXT)>(*this, lib, "vkCmdSetDepthWriteEnableEXT",
-            SideEffects::worstDefault, "vkCmdSetDepthWriteEnableEXT");
-        addExtern<DAS_BIND_FUN(vkCmdSetDepthCompareOpEXT)>(*this, lib, "vkCmdSetDepthCompareOpEXT",
-            SideEffects::worstDefault, "vkCmdSetDepthCompareOpEXT");
-        addExtern<DAS_BIND_FUN(vkCmdSetDepthBoundsTestEnableEXT)>(*this, lib, "vkCmdSetDepthBoundsTestEnableEXT",
-            SideEffects::worstDefault, "vkCmdSetDepthBoundsTestEnableEXT");
-        addExtern<DAS_BIND_FUN(vkCmdSetStencilTestEnableEXT)>(*this, lib, "vkCmdSetStencilTestEnableEXT",
-            SideEffects::worstDefault, "vkCmdSetStencilTestEnableEXT");
-        addExtern<DAS_BIND_FUN(vkCmdSetStencilOpEXT)>(*this, lib, "vkCmdSetStencilOpEXT",
-            SideEffects::worstDefault, "vkCmdSetStencilOpEXT");
         addExtern<DAS_BIND_FUN(vkGetGeneratedCommandsMemoryRequirementsNV)>(*this, lib, "vkGetGeneratedCommandsMemoryRequirementsNV",
             SideEffects::worstDefault, "vkGetGeneratedCommandsMemoryRequirementsNV");
         addExtern<DAS_BIND_FUN(vkCmdPreprocessGeneratedCommandsNV)>(*this, lib, "vkCmdPreprocessGeneratedCommandsNV",
@@ -13697,14 +13407,6 @@ public:
             SideEffects::worstDefault, "vkCreateIndirectCommandsLayoutNV");
         addExtern<DAS_BIND_FUN(vkDestroyIndirectCommandsLayoutNV)>(*this, lib, "vkDestroyIndirectCommandsLayoutNV",
             SideEffects::worstDefault, "vkDestroyIndirectCommandsLayoutNV");
-        addExtern<DAS_BIND_FUN(vkCreatePrivateDataSlotEXT)>(*this, lib, "vkCreatePrivateDataSlotEXT",
-            SideEffects::worstDefault, "vkCreatePrivateDataSlotEXT");
-        addExtern<DAS_BIND_FUN(vkDestroyPrivateDataSlotEXT)>(*this, lib, "vkDestroyPrivateDataSlotEXT",
-            SideEffects::worstDefault, "vkDestroyPrivateDataSlotEXT");
-        addExtern<DAS_BIND_FUN(vkSetPrivateDataEXT)>(*this, lib, "vkSetPrivateDataEXT",
-            SideEffects::worstDefault, "vkSetPrivateDataEXT");
-        addExtern<DAS_BIND_FUN(vkGetPrivateDataEXT)>(*this, lib, "vkGetPrivateDataEXT",
-            SideEffects::worstDefault, "vkGetPrivateDataEXT");
     }
 };
 
