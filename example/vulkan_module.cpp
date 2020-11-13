@@ -13371,24 +13371,6 @@ public:
             SideEffects::worstDefault, "vkCmdSetCheckpointNV");
         addExtern<DAS_BIND_FUN(vkGetQueueCheckpointDataNV)>(*this, lib, "vkGetQueueCheckpointDataNV",
             SideEffects::worstDefault, "vkGetQueueCheckpointDataNV");
-        addExtern<DAS_BIND_FUN(vkInitializePerformanceApiINTEL)>(*this, lib, "vkInitializePerformanceApiINTEL",
-            SideEffects::worstDefault, "vkInitializePerformanceApiINTEL");
-        addExtern<DAS_BIND_FUN(vkUninitializePerformanceApiINTEL)>(*this, lib, "vkUninitializePerformanceApiINTEL",
-            SideEffects::worstDefault, "vkUninitializePerformanceApiINTEL");
-        addExtern<DAS_BIND_FUN(vkCmdSetPerformanceMarkerINTEL)>(*this, lib, "vkCmdSetPerformanceMarkerINTEL",
-            SideEffects::worstDefault, "vkCmdSetPerformanceMarkerINTEL");
-        addExtern<DAS_BIND_FUN(vkCmdSetPerformanceStreamMarkerINTEL)>(*this, lib, "vkCmdSetPerformanceStreamMarkerINTEL",
-            SideEffects::worstDefault, "vkCmdSetPerformanceStreamMarkerINTEL");
-        addExtern<DAS_BIND_FUN(vkCmdSetPerformanceOverrideINTEL)>(*this, lib, "vkCmdSetPerformanceOverrideINTEL",
-            SideEffects::worstDefault, "vkCmdSetPerformanceOverrideINTEL");
-        addExtern<DAS_BIND_FUN(vkAcquirePerformanceConfigurationINTEL)>(*this, lib, "vkAcquirePerformanceConfigurationINTEL",
-            SideEffects::worstDefault, "vkAcquirePerformanceConfigurationINTEL");
-        addExtern<DAS_BIND_FUN(vkReleasePerformanceConfigurationINTEL)>(*this, lib, "vkReleasePerformanceConfigurationINTEL",
-            SideEffects::worstDefault, "vkReleasePerformanceConfigurationINTEL");
-        addExtern<DAS_BIND_FUN(vkQueueSetPerformanceConfigurationINTEL)>(*this, lib, "vkQueueSetPerformanceConfigurationINTEL",
-            SideEffects::worstDefault, "vkQueueSetPerformanceConfigurationINTEL");
-        addExtern<DAS_BIND_FUN(vkGetPerformanceParameterINTEL)>(*this, lib, "vkGetPerformanceParameterINTEL",
-            SideEffects::worstDefault, "vkGetPerformanceParameterINTEL");
         addExtern<DAS_BIND_FUN(vkSetLocalDimmingAMD)>(*this, lib, "vkSetLocalDimmingAMD",
             SideEffects::worstDefault, "vkSetLocalDimmingAMD");
         addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceCooperativeMatrixPropertiesNV)>(*this, lib, "vkGetPhysicalDeviceCooperativeMatrixPropertiesNV",
