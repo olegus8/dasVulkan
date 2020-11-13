@@ -30,6 +30,7 @@ class Config(ConfigBase):
             field.ignore()
 
     def configure_function(self, func):
+        #TODO: make these work
         if ('size_t' in func.type
         or  'PFN_' in func.type
         or  func.name.endswith('KHR')

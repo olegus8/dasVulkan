@@ -13323,10 +13323,6 @@ public:
             SideEffects::worstDefault, "vkGetPhysicalDeviceExternalImageFormatPropertiesNV");
         addExtern<DAS_BIND_FUN(vkCmdSetViewportWScalingNV)>(*this, lib, "vkCmdSetViewportWScalingNV",
             SideEffects::worstDefault, "vkCmdSetViewportWScalingNV");
-        addExtern<DAS_BIND_FUN(vkGetRefreshCycleDurationGOOGLE)>(*this, lib, "vkGetRefreshCycleDurationGOOGLE",
-            SideEffects::worstDefault, "vkGetRefreshCycleDurationGOOGLE");
-        addExtern<DAS_BIND_FUN(vkGetPastPresentationTimingGOOGLE)>(*this, lib, "vkGetPastPresentationTimingGOOGLE",
-            SideEffects::worstDefault, "vkGetPastPresentationTimingGOOGLE");
         addExtern<DAS_BIND_FUN(vkCmdBindShadingRateImageNV)>(*this, lib, "vkCmdBindShadingRateImageNV",
             SideEffects::worstDefault, "vkCmdBindShadingRateImageNV");
         addExtern<DAS_BIND_FUN(vkCmdSetViewportShadingRatePaletteNV)>(*this, lib, "vkCmdSetViewportShadingRatePaletteNV",
