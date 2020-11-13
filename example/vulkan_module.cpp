@@ -12985,10 +12985,6 @@ public:
             SideEffects::worstDefault, "vkGetPhysicalDeviceQueueFamilyProperties");
         addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceMemoryProperties)>(*this, lib, "vkGetPhysicalDeviceMemoryProperties",
             SideEffects::worstDefault, "vkGetPhysicalDeviceMemoryProperties");
-        addExtern<DAS_BIND_FUN(vkGetInstanceProcAddr)>(*this, lib, "vkGetInstanceProcAddr",
-            SideEffects::worstDefault, "vkGetInstanceProcAddr");
-        addExtern<DAS_BIND_FUN(vkGetDeviceProcAddr)>(*this, lib, "vkGetDeviceProcAddr",
-            SideEffects::worstDefault, "vkGetDeviceProcAddr");
         addExtern<DAS_BIND_FUN(vkCreateDevice)>(*this, lib, "vkCreateDevice",
             SideEffects::worstDefault, "vkCreateDevice");
         addExtern<DAS_BIND_FUN(vkDestroyDevice)>(*this, lib, "vkDestroyDevice",

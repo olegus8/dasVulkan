@@ -30,9 +30,10 @@ class Config(ConfigBase):
             field.ignore()
 
     def configure_function(self, func):
-        for kw in [
-            'size_t',
-            'PFN_',
-        ]:
-            if kw in func.type:
-                func.ignore()
+        if ('size_t' in func.type
+        or  'PFN_' in func.type
+        or  func.name.endswith('KHR')
+        or  func.name.endswith('EXT')
+        ):
+            func.ignore()
+        
