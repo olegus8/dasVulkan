@@ -30,10 +30,9 @@ class Config(ConfigBase):
             field.ignore()
 
     def configure_function(self, func):
-        if 'size_t' in func.type:
-            func.ignore()
-        return
-        if func.name not in [
-            'vkCreateInstance',
+        for kw in [
+            'size_t',
+            'PFN_',
         ]:
-            func.ignore()
+            if kw in func.type:
+                func.ignore()
