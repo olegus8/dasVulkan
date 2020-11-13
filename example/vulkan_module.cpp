@@ -13315,10 +13315,6 @@ public:
             SideEffects::worstDefault, "vkGetBufferOpaqueCaptureAddress");
         addExtern<DAS_BIND_FUN(vkGetDeviceMemoryOpaqueCaptureAddress)>(*this, lib, "vkGetDeviceMemoryOpaqueCaptureAddress",
             SideEffects::worstDefault, "vkGetDeviceMemoryOpaqueCaptureAddress");
-        addExtern<DAS_BIND_FUN(vkGetImageViewHandleNVX)>(*this, lib, "vkGetImageViewHandleNVX",
-            SideEffects::worstDefault, "vkGetImageViewHandleNVX");
-        addExtern<DAS_BIND_FUN(vkGetImageViewAddressNVX)>(*this, lib, "vkGetImageViewAddressNVX",
-            SideEffects::worstDefault, "vkGetImageViewAddressNVX");
     }
 };
 
