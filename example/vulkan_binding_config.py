@@ -39,6 +39,7 @@ class Config(ConfigBase):
         or  func.name.endswith('AMD')
         or  func.name.endswith('GOOGLE')
         or  func.name.endswith('NV')
+        or  func.name.endswith('NVX')
         ):
             func.ignore()
         
