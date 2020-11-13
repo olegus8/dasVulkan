@@ -30,4 +30,4 @@ class Config(ConfigBase):
             field.ignore()
 
     def configure_function(self, func):
-        func.ignore()
+        pass
