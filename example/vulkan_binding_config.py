@@ -30,4 +30,7 @@ class Config(ConfigBase):
             field.ignore()
 
     def configure_function(self, func):
-        pass
+        if func.name not in [
+            'vkCreateInstance',
+        ]:
+            func.ignore()
