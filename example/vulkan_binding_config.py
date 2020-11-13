@@ -30,8 +30,8 @@ class Config(ConfigBase):
             field.ignore()
 
     def configure_function(self, func):
-        return
         if func.name not in [
             'vkCreateInstance',
+            'vkGetQueryPoolResults',
         ]:
             func.ignore()

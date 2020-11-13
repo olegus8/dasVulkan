@@ -12969,6 +12969,8 @@ public:
 
         addExtern<DAS_BIND_FUN(vkCreateInstance)>(*this, lib, "vkCreateInstance",
             SideEffects::worstDefault, "vkCreateInstance");
+        addExtern<DAS_BIND_FUN(vkGetQueryPoolResults)>(*this, lib, "vkGetQueryPoolResults",
+            SideEffects::worstDefault, "vkGetQueryPoolResults");
     }
 };
 
