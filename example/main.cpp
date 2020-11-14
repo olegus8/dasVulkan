@@ -94,6 +94,7 @@ int main( int argc, char * argv[] ) {
     // register modules
     NEED_ALL_DEFAULT_MODULES;
     NEED_MODULE(Module_vulkan);
+    NEED_MODULE(Module_app);
 
     uint64_t timeStamp = ref_time_ticks();
     bool ok = true;

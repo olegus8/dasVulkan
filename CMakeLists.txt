@@ -12,6 +12,7 @@ IF(NOT DAS_VULKAN_INCLUDED)
         SET(DAS_VULKAN_DIR ${CMAKE_SOURCE_DIR}/modules/dasVulkan)
 
         SET(DAS_VULKAN_EXAMPLE_SRC
+            ${DAS_VULKAN_DIR}/example/app_module.cpp
             ${DAS_VULKAN_DIR}/example/main.cpp
             ${DAS_VULKAN_DIR}/example/vulkan_module.cpp
             ${DAS_VULKAN_DIR}/example/vulkan_module_generated.inc
