@@ -2,16 +2,6 @@ options log
 
 require vulkan
 
-class Foo
-    x, y : int = 0
-    [export] def Foo
-        Foo`set(self,1,1)
-    def set(X,Y:int)
-        x = X
-        y = Y
-    def finalize
-        print("finalized\n")
-
 [export]
 def main
     print("\nstarted\n")
@@ -36,9 +26,6 @@ def main
     print("{length(devs)} devices found\n")
 
     vkDestroyInstance(inst, null)
-
-    var f = new Foo()
-    delete *f
 
     print("finished\n")
     return true
