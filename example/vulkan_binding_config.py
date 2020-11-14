@@ -14,7 +14,7 @@ class Config(ConfigBase):
     def configure_opaque_struct(self, struct):
         if struct.name.endswith('_T'):
             type_name = struct.name[:-2]
-            struct.set_type_name(type_name)
+            struct.set_das_type(type_name)
 
     def configure_struct_field(self, field):
         # These structs have function pointers, but we can probably
