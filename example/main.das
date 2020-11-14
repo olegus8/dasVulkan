@@ -25,6 +25,12 @@ def main
 
     print("{length(devs)} devices found\n")
 
+    for dev in devs
+        var props:VkPhysicalDeviceProperties
+        unsafe
+            vkGetPhysicalDeviceProperties(dev, addr(props))
+        print("{props}\n")
+
     vkDestroyInstance(inst, null)
 
     print("finished\n")
