@@ -2,6 +2,7 @@ options log
 
 require vulkan
 require app
+require strings
 
 
 class Instance
@@ -13,7 +14,7 @@ class Instance
         self->_init_instance()
         self->_init_phys_devs()
 
-    def _init_instance()
+    def _init_instance
         let inst_info <- [[VkInstanceCreateInfo
             sType = VkStructureType VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO
         ]]
@@ -21,7 +22,7 @@ class Instance
             verify(VkResult VK_SUCCESS == vkCreateInstance(
                 addr(inst_info), null, addr(_vk_inst)))
 
-    def _init_phys_devs()
+    def _init_phys_devs
         var vk_devs : array<VkPhysicalDevice>
         unsafe
             var dev_cnt:uint
@@ -37,6 +38,7 @@ class Instance
     def finalize
         delete phys_devs
         vkDestroyInstance(_vk_inst, null)
+        print("instance finalized\n")
 
 
 class PhysicalDevice
@@ -49,14 +51,29 @@ class PhysicalDevice
         unsafe
             vkGetPhysicalDeviceProperties(_vk_dev, addr(_vk_props))
 
+    def name
+        var bytes : array<uint8>
+        for c in _vk_props.deviceName
+            unsafe
+                bytes |> emplace(reinterpret<uint8>(c))
+        return string(bytes)
+
+    def finalize
+        print("physical device finalized\n")
+
 
 [export]
 def main
     print("\nstarted\n")
 
     var inst = new Instance()
-    print("{length(inst.phys_devs)} devices found\n")
-    delete *inst
+    print("{length(inst.phys_devs)} devices found:\n")
+
+    for dev in inst.phys_devs
+        print("  {dev->name()}\n")
+
+    unsafe
+        delete inst
 
     print("finished\n")
     return true
