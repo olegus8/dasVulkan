@@ -14,6 +14,7 @@ IF(NOT DAS_VULKAN_INCLUDED)
         SET(DAS_VULKAN_EXAMPLE_SRC
             ${DAS_VULKAN_DIR}/example/main.cpp
             ${DAS_VULKAN_DIR}/example/vulkan_module.cpp
+            ${DAS_VULKAN_DIR}/example/vulkan_module_generated.inc
         )
 
         add_executable(dasVulkanExample ${DAS_VULKAN_EXAMPLE_SRC})
@@ -24,7 +25,7 @@ IF(NOT DAS_VULKAN_INCLUDED)
         IF(DAS_BINDER_INCLUDED)
             DAS_BINDER(
                 ${Vulkan_INCLUDE_DIR}/vulkan/vulkan.h
-                ${DAS_VULKAN_DIR}/example/vulkan_module.cpp
+                ${DAS_VULKAN_DIR}/example/vulkan_module_generated.inc
                 ${DAS_VULKAN_DIR}/example/vulkan_binding_config.py
             )
         ELSE()
