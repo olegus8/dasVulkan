@@ -4,6 +4,7 @@ require vulkan
 
 [export]
 def main
+    print("\nstarted\n")
     // enums
     assert(VkResult VK_SUCCESS == VkResult VK_SUCCESS)
     assert(VkResult VK_SUCCESS != VkResult VK_NOT_READY)
@@ -21,5 +22,9 @@ def main
     var pInstInfo = new VkInstanceCreateInfo
     var pInst = new VkInstance
     vkCreateInstance(pInstInfo, null, pInst)
+    print("instance created\n")
+    vkDestroyInstance(pInst, null)
+    print("instance destroyed\n")
 
+    print("finished\n")
     return true
