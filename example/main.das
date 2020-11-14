@@ -14,8 +14,8 @@ def main
     ]]
     var inst:VkInstance
     unsafe
-        verify(VkResult VK_SUCCESS == vkCreateInstance(addr(inst_info), null,
-            addr(inst)))
+        verify(VkResult VK_SUCCESS == vkCreateInstance(
+            addr(inst_info), null, addr(inst)))
 
     var dev_cnt:uint
     unsafe
