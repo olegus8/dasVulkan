@@ -3,7 +3,7 @@ options log
 require vulkan
 require app
 
-class Foo : SmartObject
+class Foo
     x, y : int = 0
     def finalize
         print("finalized\n")
