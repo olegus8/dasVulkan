@@ -26,7 +26,7 @@ class Instance
         unsafe
             var dev_cnt:uint
             verify(VkResult VK_SUCCESS == vkEnumeratePhysicalDevices(
-                inst, addr(dev_cnt), null))
+                self._vk_inst, addr(dev_cnt), null))
             vk_devs |> resize(int(dev_cnt))
             verify(VkResult VK_SUCCESS == vkEnumeratePhysicalDevices(
                 self._vk_inst, addr(dev_cnt), addr(vk_devs[0])))
