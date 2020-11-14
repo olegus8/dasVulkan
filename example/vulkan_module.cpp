@@ -5,7 +5,7 @@
 using namespace das;
 
 template <typename VK_TYPE>
-struct VulkanHandleAnnotation : DummyTypeAnnotation {
+struct VulkanHandleAnnotation<VK_TYPE> : DummyTypeAnnotation {
     VulkanHandleAnnotation(const string & name, const string & cppName, size_t sz, size_t al)
         : DummyTypeAnnotation(name, cppName, sz, al) {
     }
