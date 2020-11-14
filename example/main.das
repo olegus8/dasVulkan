@@ -25,15 +25,17 @@ def main
     var inst_info <- new [[VkInstanceCreateInfo()
         sType = VkStructureType VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO
     ]]
-    var inst <- new VkInstance
-    verify(VkResult VK_SUCCESS == vkCreateInstance(inst_info, null, inst))
+    var inst:VkInstance
+    unsafe
+        verify(VkResult VK_SUCCESS == vkCreateInstance(inst_info, null,
+            addr(inst)))
 
     var dev_cnt:uint
     unsafe
         verify(VkResult VK_SUCCESS == vkEnumeratePhysicalDevices(
-            *inst, addr(dev_cnt), null))
+            inst, addr(dev_cnt), null))
 
-    vkDestroyInstance(*inst, null)
+    vkDestroyInstance(inst, null)
 
     print("finished\n")
     return true
