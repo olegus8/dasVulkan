@@ -3,7 +3,7 @@ options log
 require vulkan
 require app
 
-class Foo
+class Foo : SmartObject
     x, y : int = 0
     def finalize
         print("finalized\n")
@@ -42,6 +42,8 @@ def main
     var foo <- new Foo()
     unsafe
         delete foo
+
+    var sm <- new SmartObject
 
     print("finished\n")
     return true
