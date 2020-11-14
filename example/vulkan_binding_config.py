@@ -13,8 +13,9 @@ class Config(ConfigBase):
 
     def configure_opaque_struct(self, struct):
         if struct.name.endswith('_T'):
-            struct.set_type_name(struct.name[:-2])
-            struct.set_annotation_type('VulkanHandleAnnotation')
+            type_name = struct.name[:-2]
+            struct.set_type_name(type_name)
+            struct.set_annotation_type(f'VulkanHandleAnnotation<{type_name}>')
 
     def configure_struct_field(self, field):
         # These structs have function pointers, but we can probably
