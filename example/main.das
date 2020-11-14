@@ -19,11 +19,11 @@ def main
     VkAccelerationStructureInstanceKHR_set_mask(asi, 123u)
     assert(VkAccelerationStructureInstanceKHR_get_mask(asi) == 123u)
 
-    var pInstInfo = new VkInstanceCreateInfo
-    var pInst = new VkInstance
-    verify(VkResult VK_SUCCESS == vkCreateInstance(pInstInfo, null, pInst))
+    var instInfo = new VkInstanceCreateInfo
+    var inst = new VkInstance
+    verify(VkResult VK_SUCCESS == vkCreateInstance(instInfo, null, inst))
     print("instance created\n")
-    vkDestroyInstance(*pInst, null)
+    vkDestroyInstance(*inst, null)
     print("instance destroyed\n")
     print("finished\n")
     return true
