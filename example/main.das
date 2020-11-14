@@ -20,6 +20,6 @@ def main
 
     var instInfo = [[VkInstanceCreateInfo]]
     var inst = [[VkInstance]]
-    vkCreateInstance(instInfo, null, inst)
+    //vkCreateInstance(instInfo, null, inst)
 
     return true

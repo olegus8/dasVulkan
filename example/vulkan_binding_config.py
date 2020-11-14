@@ -8,10 +8,6 @@ class Config(ConfigBase):
         return 'vulkan'
 
     @property
-    def c_header_include(self):
-        return 'vulkan/vulkan.h'
-
-    @property
     def save_ast(self):
         return True
 
