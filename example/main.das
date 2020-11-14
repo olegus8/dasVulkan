@@ -32,6 +32,7 @@ class Instance
                 self._vk_inst, addr(dev_cnt), addr(vk_devs[0])))
         for d in vk_devs
             phys_devs |> emplace(PhysicalDevice(d))
+        delete vk_devs
 
     def finalize
         delete self.phys_devs
