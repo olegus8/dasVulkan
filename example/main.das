@@ -2,9 +2,6 @@ options log
 
 require vulkan
 
-typedef
-    UIntPtr = smart_ptr<uint>
-
 [export]
 def main
     print("\nstarted\n")
