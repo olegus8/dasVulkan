@@ -9,7 +9,7 @@ typedef
 def main
     print("\nstarted\n")
 
-    var inst_info <- [[VkInstanceCreateInfo()
+    var inst_info <- [[VkInstanceCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO
     ]]
     var inst:VkInstance
