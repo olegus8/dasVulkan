@@ -21,7 +21,7 @@ def main
 
     var pInstInfo = new VkInstanceCreateInfo
     var pInst = new VkInstance
-    vkCreateInstance(pInstInfo, null, pInst)
+    verify(VkResult VK_SUCCESS == vkCreateInstance(pInstInfo, null, pInst))
     print("instance created\n")
     vkDestroyInstance(*pInst, null)
     print("instance destroyed\n")
