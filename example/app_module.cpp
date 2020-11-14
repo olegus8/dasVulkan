@@ -21,7 +21,7 @@ public:
         ModuleLibrary lib;
         lib.addModule(this);
         lib.addBuiltInModule();
-        addAnnotation(make_smart<TestObjectSmartAnnotation>(lib));
+        addAnnotation(make_smart<SmartObjectAnnotation>(lib));
     }
 };
 
