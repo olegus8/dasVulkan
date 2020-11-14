@@ -7,7 +7,7 @@ using namespace das;
 template <typename VK_TYPE>
 struct VulkanHandleAnnotation : ManagedValueAnnotation<VK_TYPE> {
     VulkanHandleAnnotation(const string & name, const string & cppName)
-        : ManagedValueAnnotation(name, cppName) {
+        : ManagedValueAnnotation<VK_TYPE>(name, cppName) {
     }
     virtual bool canNew() const override { return true; }
     virtual bool canDelete() const override { return true; }
