@@ -6,7 +6,7 @@ require app
 
 class Instance
     
-    phys_devs : array<PhysicalDevice>
+    phys_devs : array<PhysicalDevice?>
     _vk_inst : VkInstance
 
     def Instance
@@ -31,7 +31,7 @@ class Instance
             verify(VkResult VK_SUCCESS == vkEnumeratePhysicalDevices(
                 _vk_inst, addr(dev_cnt), addr(vk_devs[0])))
         for d in vk_devs
-            phys_devs |> emplace(PhysicalDevice(d))
+            phys_devs |> emplace(new PhysicalDevice(d))
         delete vk_devs
 
     def finalize
