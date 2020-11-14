@@ -13,6 +13,10 @@ struct VulkanHandleAnnotation : DummyTypeAnnotation {
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
+    virtual bool canNew() const override { return true; }
+    virtual bool canDelete() const override { return true; }
+    virtual bool isPod() const override { return true; }
+    virtual bool isRawPod() const override { return true; }
 };
 
 #include "vulkan_module_generated.inc"
