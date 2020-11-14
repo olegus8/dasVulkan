@@ -23,8 +23,8 @@ def main
     var pInst = new VkInstance
     vkCreateInstance(pInstInfo, null, pInst)
     print("instance created\n")
-    vkDestroyInstance(pInst, null)
-    print("instance destroyed\n")
-
+    if pInst != null
+        vkDestroyInstance(*pInst, null)
+        print("instance destroyed\n")
     print("finished\n")
     return true
