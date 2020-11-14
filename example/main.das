@@ -14,12 +14,16 @@ def main
         verify(VkResult VK_SUCCESS == vkCreateInstance(
             addr(inst_info), null, addr(inst)))
 
-    var dev_cnt:uint
+    var devs:array<VkPhysicalDevice>
     unsafe
+        var dev_cnt:uint
         verify(VkResult VK_SUCCESS == vkEnumeratePhysicalDevices(
             inst, addr(dev_cnt), null))
+        devs |> resize(int(dev_cnt))
+        verify(VkResult VK_SUCCESS == vkEnumeratePhysicalDevices(
+            inst, addr(dev_cnt), addr(devs[0])))
 
-    print("{int(dev_cnt)} devices found\n")
+    print("{length(devs)} devices found\n")
 
     vkDestroyInstance(inst, null)
 
