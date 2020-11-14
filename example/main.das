@@ -3,6 +3,12 @@ options log
 require vulkan
 require app
 
+//TODO: try the following pattern: wrap all vulkan resources into das classes,
+//  share them only via references, and never store pointers to them.
+//  destroy the resources in finalizers.
+//  like instance.physical_devices will add all physical devices and iterate
+//  over them by references. then "delete instance" will destroy the devices.
+
 class Foo
     x, y : int = 0
     finalized : bool = false
