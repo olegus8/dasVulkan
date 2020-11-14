@@ -1,3 +1,5 @@
+options log
+
 require vulkan
 
 [export]
@@ -15,5 +17,9 @@ def main
     var asi = [[VkAccelerationStructureInstanceKHR]]
     VkAccelerationStructureInstanceKHR_set_mask(asi, 123u)
     assert(VkAccelerationStructureInstanceKHR_get_mask(asi) == 123u)
+
+    var instInfo = [[VkInstanceCreateInfo]]
+    var inst = [[VkInstance]]
+    vkCreateInstance(instInfo, null, inst)
 
     return true
