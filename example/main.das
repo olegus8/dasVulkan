@@ -22,12 +22,12 @@ def main
     VkAccelerationStructureInstanceKHR_set_mask(asi, 123u)
     assert(VkAccelerationStructureInstanceKHR_get_mask(asi) == 123u)
 
-    var inst_info <- new [[VkInstanceCreateInfo()
+    var inst_info <- [[VkInstanceCreateInfo()
         sType = VkStructureType VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO
     ]]
     var inst:VkInstance
     unsafe
-        verify(VkResult VK_SUCCESS == vkCreateInstance(inst_info, null,
+        verify(VkResult VK_SUCCESS == vkCreateInstance(addr(inst_info), null,
             addr(inst)))
 
     var dev_cnt:uint
