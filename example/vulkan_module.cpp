@@ -5,7 +5,7 @@
 using namespace das;
 
 template <typename VK_TYPE>
-struct VulkanHandleAnnotation<VK_TYPE> : DummyTypeAnnotation {
+struct VulkanHandleAnnotation : DummyTypeAnnotation {
     VulkanHandleAnnotation(const string & name, const string & cppName, size_t sz, size_t al)
         : DummyTypeAnnotation(name, cppName, sz, al) {
     }
@@ -23,6 +23,7 @@ struct VulkanHandleAnnotation<VK_TYPE> : DummyTypeAnnotation {
     }
     virtual SimNode * simulateDeletePtr ( Context & context, const LineInfo & at, SimNode * sube, uint32_t count ) const override {
         return context.code->makeNode<SimNode_DeleteHandlePtr<VK_TYPE,false>>(at,sube,count);
+    }
 };
 
 #include "vulkan_module_generated.inc"
