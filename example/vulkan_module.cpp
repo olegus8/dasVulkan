@@ -2,6 +2,8 @@
 
 #include "vulkan/vulkan.h"
 
+using namespace das;
+
 struct VulkanHandleAnnotation : DummyTypeAnnotation {
     virtual bool isRefType() const override { return false; }
     virtual bool isLocal() const override { return true; }
