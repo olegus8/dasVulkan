@@ -2,6 +2,11 @@ options log
 
 require vulkan
 
+class Foo
+    x, y : int = 0
+    def finalize
+        print("finalized\n")
+
 [export]
 def main
     print("\nstarted\n")
@@ -29,9 +34,13 @@ def main
         var props:VkPhysicalDeviceProperties
         unsafe
             vkGetPhysicalDeviceProperties(dev, addr(props))
-        print("{props}\n")
+        print("got props\n")
 
     vkDestroyInstance(inst, null)
+
+    var foo <- new Foo()
+    unsafe
+        delete foo
 
     print("finished\n")
     return true
