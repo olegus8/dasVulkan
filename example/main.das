@@ -18,8 +18,8 @@ def main
     VkAccelerationStructureInstanceKHR_set_mask(asi, 123u)
     assert(VkAccelerationStructureInstanceKHR_get_mask(asi) == 123u)
 
-    var instInfo = [[VkInstanceCreateInfo]]
+    var pInstInfo = new VkInstanceCreateInfo
     var pInst = new VkInstance
-    //vkCreateInstance(instInfo, null, pInst)
+    vkCreateInstance(pInstInfo, null, pInst)
 
     return true
