@@ -12367,81 +12367,81 @@ public:
         // opaque structs
         //
 
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkBuffer", "VkBuffer",
+        addAnnotation(make_smart<VulkanHandleAnnotation>("VkBuffer", "VkBuffer",
             sizeof(VkBuffer), alignof(VkBuffer)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkImage", "VkImage",
+        addAnnotation(make_smart<VulkanHandleAnnotation>("VkImage", "VkImage",
             sizeof(VkImage), alignof(VkImage)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkInstance", "VkInstance",
+        addAnnotation(make_smart<VulkanHandleAnnotation>("VkInstance", "VkInstance",
             sizeof(VkInstance), alignof(VkInstance)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkPhysicalDevice", "VkPhysicalDevice",
+        addAnnotation(make_smart<VulkanHandleAnnotation>("VkPhysicalDevice", "VkPhysicalDevice",
             sizeof(VkPhysicalDevice), alignof(VkPhysicalDevice)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkDevice", "VkDevice",
+        addAnnotation(make_smart<VulkanHandleAnnotation>("VkDevice", "VkDevice",
             sizeof(VkDevice), alignof(VkDevice)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkQueue", "VkQueue",
+        addAnnotation(make_smart<VulkanHandleAnnotation>("VkQueue", "VkQueue",
             sizeof(VkQueue), alignof(VkQueue)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkSemaphore", "VkSemaphore",
+        addAnnotation(make_smart<VulkanHandleAnnotation>("VkSemaphore", "VkSemaphore",
             sizeof(VkSemaphore), alignof(VkSemaphore)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkCommandBuffer", "VkCommandBuffer",
+        addAnnotation(make_smart<VulkanHandleAnnotation>("VkCommandBuffer", "VkCommandBuffer",
             sizeof(VkCommandBuffer), alignof(VkCommandBuffer)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkFence", "VkFence",
+        addAnnotation(make_smart<VulkanHandleAnnotation>("VkFence", "VkFence",
             sizeof(VkFence), alignof(VkFence)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkDeviceMemory", "VkDeviceMemory",
+        addAnnotation(make_smart<VulkanHandleAnnotation>("VkDeviceMemory", "VkDeviceMemory",
             sizeof(VkDeviceMemory), alignof(VkDeviceMemory)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkEvent", "VkEvent",
+        addAnnotation(make_smart<VulkanHandleAnnotation>("VkEvent", "VkEvent",
             sizeof(VkEvent), alignof(VkEvent)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkQueryPool", "VkQueryPool",
+        addAnnotation(make_smart<VulkanHandleAnnotation>("VkQueryPool", "VkQueryPool",
             sizeof(VkQueryPool), alignof(VkQueryPool)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkBufferView", "VkBufferView",
+        addAnnotation(make_smart<VulkanHandleAnnotation>("VkBufferView", "VkBufferView",
             sizeof(VkBufferView), alignof(VkBufferView)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkImageView", "VkImageView",
+        addAnnotation(make_smart<VulkanHandleAnnotation>("VkImageView", "VkImageView",
             sizeof(VkImageView), alignof(VkImageView)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkShaderModule", "VkShaderModule",
+        addAnnotation(make_smart<VulkanHandleAnnotation>("VkShaderModule", "VkShaderModule",
             sizeof(VkShaderModule), alignof(VkShaderModule)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkPipelineCache", "VkPipelineCache",
+        addAnnotation(make_smart<VulkanHandleAnnotation>("VkPipelineCache", "VkPipelineCache",
             sizeof(VkPipelineCache), alignof(VkPipelineCache)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkPipelineLayout", "VkPipelineLayout",
+        addAnnotation(make_smart<VulkanHandleAnnotation>("VkPipelineLayout", "VkPipelineLayout",
             sizeof(VkPipelineLayout), alignof(VkPipelineLayout)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkPipeline", "VkPipeline",
+        addAnnotation(make_smart<VulkanHandleAnnotation>("VkPipeline", "VkPipeline",
             sizeof(VkPipeline), alignof(VkPipeline)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkRenderPass", "VkRenderPass",
+        addAnnotation(make_smart<VulkanHandleAnnotation>("VkRenderPass", "VkRenderPass",
             sizeof(VkRenderPass), alignof(VkRenderPass)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkDescriptorSetLayout", "VkDescriptorSetLayout",
+        addAnnotation(make_smart<VulkanHandleAnnotation>("VkDescriptorSetLayout", "VkDescriptorSetLayout",
             sizeof(VkDescriptorSetLayout), alignof(VkDescriptorSetLayout)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkSampler", "VkSampler",
+        addAnnotation(make_smart<VulkanHandleAnnotation>("VkSampler", "VkSampler",
             sizeof(VkSampler), alignof(VkSampler)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkDescriptorSet", "VkDescriptorSet",
+        addAnnotation(make_smart<VulkanHandleAnnotation>("VkDescriptorSet", "VkDescriptorSet",
             sizeof(VkDescriptorSet), alignof(VkDescriptorSet)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkDescriptorPool", "VkDescriptorPool",
+        addAnnotation(make_smart<VulkanHandleAnnotation>("VkDescriptorPool", "VkDescriptorPool",
             sizeof(VkDescriptorPool), alignof(VkDescriptorPool)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkFramebuffer", "VkFramebuffer",
+        addAnnotation(make_smart<VulkanHandleAnnotation>("VkFramebuffer", "VkFramebuffer",
             sizeof(VkFramebuffer), alignof(VkFramebuffer)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkCommandPool", "VkCommandPool",
+        addAnnotation(make_smart<VulkanHandleAnnotation>("VkCommandPool", "VkCommandPool",
             sizeof(VkCommandPool), alignof(VkCommandPool)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkSamplerYcbcrConversion", "VkSamplerYcbcrConversion",
+        addAnnotation(make_smart<VulkanHandleAnnotation>("VkSamplerYcbcrConversion", "VkSamplerYcbcrConversion",
             sizeof(VkSamplerYcbcrConversion), alignof(VkSamplerYcbcrConversion)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkDescriptorUpdateTemplate", "VkDescriptorUpdateTemplate",
+        addAnnotation(make_smart<VulkanHandleAnnotation>("VkDescriptorUpdateTemplate", "VkDescriptorUpdateTemplate",
             sizeof(VkDescriptorUpdateTemplate), alignof(VkDescriptorUpdateTemplate)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkSurfaceKHR", "VkSurfaceKHR",
+        addAnnotation(make_smart<VulkanHandleAnnotation>("VkSurfaceKHR", "VkSurfaceKHR",
             sizeof(VkSurfaceKHR), alignof(VkSurfaceKHR)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkSwapchainKHR", "VkSwapchainKHR",
+        addAnnotation(make_smart<VulkanHandleAnnotation>("VkSwapchainKHR", "VkSwapchainKHR",
             sizeof(VkSwapchainKHR), alignof(VkSwapchainKHR)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkDisplayKHR", "VkDisplayKHR",
+        addAnnotation(make_smart<VulkanHandleAnnotation>("VkDisplayKHR", "VkDisplayKHR",
             sizeof(VkDisplayKHR), alignof(VkDisplayKHR)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkDisplayModeKHR", "VkDisplayModeKHR",
+        addAnnotation(make_smart<VulkanHandleAnnotation>("VkDisplayModeKHR", "VkDisplayModeKHR",
             sizeof(VkDisplayModeKHR), alignof(VkDisplayModeKHR)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkDebugReportCallbackEXT", "VkDebugReportCallbackEXT",
+        addAnnotation(make_smart<VulkanHandleAnnotation>("VkDebugReportCallbackEXT", "VkDebugReportCallbackEXT",
             sizeof(VkDebugReportCallbackEXT), alignof(VkDebugReportCallbackEXT)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkDebugUtilsMessengerEXT", "VkDebugUtilsMessengerEXT",
+        addAnnotation(make_smart<VulkanHandleAnnotation>("VkDebugUtilsMessengerEXT", "VkDebugUtilsMessengerEXT",
             sizeof(VkDebugUtilsMessengerEXT), alignof(VkDebugUtilsMessengerEXT)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkValidationCacheEXT", "VkValidationCacheEXT",
+        addAnnotation(make_smart<VulkanHandleAnnotation>("VkValidationCacheEXT", "VkValidationCacheEXT",
             sizeof(VkValidationCacheEXT), alignof(VkValidationCacheEXT)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkAccelerationStructureKHR", "VkAccelerationStructureKHR",
+        addAnnotation(make_smart<VulkanHandleAnnotation>("VkAccelerationStructureKHR", "VkAccelerationStructureKHR",
             sizeof(VkAccelerationStructureKHR), alignof(VkAccelerationStructureKHR)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkPerformanceConfigurationINTEL", "VkPerformanceConfigurationINTEL",
+        addAnnotation(make_smart<VulkanHandleAnnotation>("VkPerformanceConfigurationINTEL", "VkPerformanceConfigurationINTEL",
             sizeof(VkPerformanceConfigurationINTEL), alignof(VkPerformanceConfigurationINTEL)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkIndirectCommandsLayoutNV", "VkIndirectCommandsLayoutNV",
+        addAnnotation(make_smart<VulkanHandleAnnotation>("VkIndirectCommandsLayoutNV", "VkIndirectCommandsLayoutNV",
             sizeof(VkIndirectCommandsLayoutNV), alignof(VkIndirectCommandsLayoutNV)));
-        addAnnotation(make_smart<DummyTypeAnnotation>("VkPrivateDataSlotEXT", "VkPrivateDataSlotEXT",
+        addAnnotation(make_smart<VulkanHandleAnnotation>("VkPrivateDataSlotEXT", "VkPrivateDataSlotEXT",
             sizeof(VkPrivateDataSlotEXT), alignof(VkPrivateDataSlotEXT)));
 
         //
