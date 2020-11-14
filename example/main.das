@@ -34,6 +34,7 @@ def main
     unsafe
         verify(VkResult VK_SUCCESS == vkEnumeratePhysicalDevices(
             inst, addr(dev_cnt), null))
+        print("{int(dev_cnt)} devices found\n")
 
     vkDestroyInstance(inst, null)
 
