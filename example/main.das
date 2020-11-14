@@ -5,8 +5,13 @@ require app
 
 class Foo
     x, y : int = 0
+    finalized : bool = false
     def finalize
-        print("finalized\n")
+        if ! self.finalized
+            print("finalized\n")
+            self.finalized = true
+        else
+            print("already finalized\n")
 
 [export]
 def main
@@ -40,8 +45,8 @@ def main
     vkDestroyInstance(inst, null)
 
     var foo <- new Foo()
-    unsafe
-        delete foo
+    delete *foo
+    delete *foo
 
     var sm <- new SmartObject
 
