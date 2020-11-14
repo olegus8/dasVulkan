@@ -2,6 +2,12 @@
 
 #include "vulkan/vulkan.h"
 
-//TODO: add all custom module code here
+struct VulkanHandleAnnotation : DummyTypeTypeAnnotation {
+    virtual bool isRefType() const override { return false; }
+    virtual bool isLocal() const override { return true; }
+    virtual bool canCopy() const override { return true; }
+    virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
+};
 
 #include "vulkan_module_generated.inc"
