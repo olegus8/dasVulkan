@@ -1,6 +1,7 @@
 options log
 
-require vulkan, app
+require vulkan
+require app
 
 class Foo
     x, y : int = 0
