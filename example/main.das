@@ -74,7 +74,6 @@ def main
 
     let monitor : GLFWmonitor_DasHandle
     let gl_window : GLFWwindow_DasHandle
-
     var window = glfwCreateWindow(WIDTH, HEIGHT, "Vulkan", monitor, gl_window)
 
     var inst = new Instance()
@@ -85,6 +84,9 @@ def main
 
     unsafe
         delete inst
+
+    while ! glfwWindowShouldClose(window)
+        glfwPollEvents()
 
     glfwDestroyWindow(window);
     glfwTerminate()
