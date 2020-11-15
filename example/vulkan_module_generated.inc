@@ -13356,6 +13356,244 @@ public:
             SideEffects::worstDefault, "vkGetBufferOpaqueCaptureAddress");
         addExtern<DAS_BIND_FUN(vkGetDeviceMemoryOpaqueCaptureAddress)>(*this, lib, "vkGetDeviceMemoryOpaqueCaptureAddress",
             SideEffects::worstDefault, "vkGetDeviceMemoryOpaqueCaptureAddress");
+        addExtern<DAS_BIND_FUN(glfwInit)>(*this, lib, "glfwInit",
+            SideEffects::worstDefault, "glfwInit");
+        addExtern<DAS_BIND_FUN(glfwTerminate)>(*this, lib, "glfwTerminate",
+            SideEffects::worstDefault, "glfwTerminate");
+        addExtern<DAS_BIND_FUN(glfwInitHint)>(*this, lib, "glfwInitHint",
+            SideEffects::worstDefault, "glfwInitHint");
+        addExtern<DAS_BIND_FUN(glfwGetVersion)>(*this, lib, "glfwGetVersion",
+            SideEffects::worstDefault, "glfwGetVersion");
+        addExtern<DAS_BIND_FUN(glfwGetVersionString)>(*this, lib, "glfwGetVersionString",
+            SideEffects::worstDefault, "glfwGetVersionString");
+        addExtern<DAS_BIND_FUN(glfwGetError)>(*this, lib, "glfwGetError",
+            SideEffects::worstDefault, "glfwGetError");
+        addExtern<DAS_BIND_FUN(glfwSetErrorCallback)>(*this, lib, "glfwSetErrorCallback",
+            SideEffects::worstDefault, "glfwSetErrorCallback");
+        addExtern<DAS_BIND_FUN(glfwGetMonitors)>(*this, lib, "glfwGetMonitors",
+            SideEffects::worstDefault, "glfwGetMonitors");
+        addExtern<DAS_BIND_FUN(glfwGetPrimaryMonitor)>(*this, lib, "glfwGetPrimaryMonitor",
+            SideEffects::worstDefault, "glfwGetPrimaryMonitor");
+        addExtern<DAS_BIND_FUN(glfwGetMonitorPos)>(*this, lib, "glfwGetMonitorPos",
+            SideEffects::worstDefault, "glfwGetMonitorPos");
+        addExtern<DAS_BIND_FUN(glfwGetMonitorWorkarea)>(*this, lib, "glfwGetMonitorWorkarea",
+            SideEffects::worstDefault, "glfwGetMonitorWorkarea");
+        addExtern<DAS_BIND_FUN(glfwGetMonitorPhysicalSize)>(*this, lib, "glfwGetMonitorPhysicalSize",
+            SideEffects::worstDefault, "glfwGetMonitorPhysicalSize");
+        addExtern<DAS_BIND_FUN(glfwGetMonitorContentScale)>(*this, lib, "glfwGetMonitorContentScale",
+            SideEffects::worstDefault, "glfwGetMonitorContentScale");
+        addExtern<DAS_BIND_FUN(glfwGetMonitorName)>(*this, lib, "glfwGetMonitorName",
+            SideEffects::worstDefault, "glfwGetMonitorName");
+        addExtern<DAS_BIND_FUN(glfwSetMonitorUserPointer)>(*this, lib, "glfwSetMonitorUserPointer",
+            SideEffects::worstDefault, "glfwSetMonitorUserPointer");
+        addExtern<DAS_BIND_FUN(glfwGetMonitorUserPointer)>(*this, lib, "glfwGetMonitorUserPointer",
+            SideEffects::worstDefault, "glfwGetMonitorUserPointer");
+        addExtern<DAS_BIND_FUN(glfwSetMonitorCallback)>(*this, lib, "glfwSetMonitorCallback",
+            SideEffects::worstDefault, "glfwSetMonitorCallback");
+        addExtern<DAS_BIND_FUN(glfwGetVideoModes)>(*this, lib, "glfwGetVideoModes",
+            SideEffects::worstDefault, "glfwGetVideoModes");
+        addExtern<DAS_BIND_FUN(glfwGetVideoMode)>(*this, lib, "glfwGetVideoMode",
+            SideEffects::worstDefault, "glfwGetVideoMode");
+        addExtern<DAS_BIND_FUN(glfwSetGamma)>(*this, lib, "glfwSetGamma",
+            SideEffects::worstDefault, "glfwSetGamma");
+        addExtern<DAS_BIND_FUN(glfwGetGammaRamp)>(*this, lib, "glfwGetGammaRamp",
+            SideEffects::worstDefault, "glfwGetGammaRamp");
+        addExtern<DAS_BIND_FUN(glfwSetGammaRamp)>(*this, lib, "glfwSetGammaRamp",
+            SideEffects::worstDefault, "glfwSetGammaRamp");
+        addExtern<DAS_BIND_FUN(glfwDefaultWindowHints)>(*this, lib, "glfwDefaultWindowHints",
+            SideEffects::worstDefault, "glfwDefaultWindowHints");
+        addExtern<DAS_BIND_FUN(glfwWindowHint)>(*this, lib, "glfwWindowHint",
+            SideEffects::worstDefault, "glfwWindowHint");
+        addExtern<DAS_BIND_FUN(glfwWindowHintString)>(*this, lib, "glfwWindowHintString",
+            SideEffects::worstDefault, "glfwWindowHintString");
+        addExtern<DAS_BIND_FUN(glfwCreateWindow)>(*this, lib, "glfwCreateWindow",
+            SideEffects::worstDefault, "glfwCreateWindow");
+        addExtern<DAS_BIND_FUN(glfwDestroyWindow)>(*this, lib, "glfwDestroyWindow",
+            SideEffects::worstDefault, "glfwDestroyWindow");
+        addExtern<DAS_BIND_FUN(glfwWindowShouldClose)>(*this, lib, "glfwWindowShouldClose",
+            SideEffects::worstDefault, "glfwWindowShouldClose");
+        addExtern<DAS_BIND_FUN(glfwSetWindowShouldClose)>(*this, lib, "glfwSetWindowShouldClose",
+            SideEffects::worstDefault, "glfwSetWindowShouldClose");
+        addExtern<DAS_BIND_FUN(glfwSetWindowTitle)>(*this, lib, "glfwSetWindowTitle",
+            SideEffects::worstDefault, "glfwSetWindowTitle");
+        addExtern<DAS_BIND_FUN(glfwSetWindowIcon)>(*this, lib, "glfwSetWindowIcon",
+            SideEffects::worstDefault, "glfwSetWindowIcon");
+        addExtern<DAS_BIND_FUN(glfwGetWindowPos)>(*this, lib, "glfwGetWindowPos",
+            SideEffects::worstDefault, "glfwGetWindowPos");
+        addExtern<DAS_BIND_FUN(glfwSetWindowPos)>(*this, lib, "glfwSetWindowPos",
+            SideEffects::worstDefault, "glfwSetWindowPos");
+        addExtern<DAS_BIND_FUN(glfwGetWindowSize)>(*this, lib, "glfwGetWindowSize",
+            SideEffects::worstDefault, "glfwGetWindowSize");
+        addExtern<DAS_BIND_FUN(glfwSetWindowSizeLimits)>(*this, lib, "glfwSetWindowSizeLimits",
+            SideEffects::worstDefault, "glfwSetWindowSizeLimits");
+        addExtern<DAS_BIND_FUN(glfwSetWindowAspectRatio)>(*this, lib, "glfwSetWindowAspectRatio",
+            SideEffects::worstDefault, "glfwSetWindowAspectRatio");
+        addExtern<DAS_BIND_FUN(glfwSetWindowSize)>(*this, lib, "glfwSetWindowSize",
+            SideEffects::worstDefault, "glfwSetWindowSize");
+        addExtern<DAS_BIND_FUN(glfwGetFramebufferSize)>(*this, lib, "glfwGetFramebufferSize",
+            SideEffects::worstDefault, "glfwGetFramebufferSize");
+        addExtern<DAS_BIND_FUN(glfwGetWindowFrameSize)>(*this, lib, "glfwGetWindowFrameSize",
+            SideEffects::worstDefault, "glfwGetWindowFrameSize");
+        addExtern<DAS_BIND_FUN(glfwGetWindowContentScale)>(*this, lib, "glfwGetWindowContentScale",
+            SideEffects::worstDefault, "glfwGetWindowContentScale");
+        addExtern<DAS_BIND_FUN(glfwGetWindowOpacity)>(*this, lib, "glfwGetWindowOpacity",
+            SideEffects::worstDefault, "glfwGetWindowOpacity");
+        addExtern<DAS_BIND_FUN(glfwSetWindowOpacity)>(*this, lib, "glfwSetWindowOpacity",
+            SideEffects::worstDefault, "glfwSetWindowOpacity");
+        addExtern<DAS_BIND_FUN(glfwIconifyWindow)>(*this, lib, "glfwIconifyWindow",
+            SideEffects::worstDefault, "glfwIconifyWindow");
+        addExtern<DAS_BIND_FUN(glfwRestoreWindow)>(*this, lib, "glfwRestoreWindow",
+            SideEffects::worstDefault, "glfwRestoreWindow");
+        addExtern<DAS_BIND_FUN(glfwMaximizeWindow)>(*this, lib, "glfwMaximizeWindow",
+            SideEffects::worstDefault, "glfwMaximizeWindow");
+        addExtern<DAS_BIND_FUN(glfwShowWindow)>(*this, lib, "glfwShowWindow",
+            SideEffects::worstDefault, "glfwShowWindow");
+        addExtern<DAS_BIND_FUN(glfwHideWindow)>(*this, lib, "glfwHideWindow",
+            SideEffects::worstDefault, "glfwHideWindow");
+        addExtern<DAS_BIND_FUN(glfwFocusWindow)>(*this, lib, "glfwFocusWindow",
+            SideEffects::worstDefault, "glfwFocusWindow");
+        addExtern<DAS_BIND_FUN(glfwRequestWindowAttention)>(*this, lib, "glfwRequestWindowAttention",
+            SideEffects::worstDefault, "glfwRequestWindowAttention");
+        addExtern<DAS_BIND_FUN(glfwGetWindowMonitor)>(*this, lib, "glfwGetWindowMonitor",
+            SideEffects::worstDefault, "glfwGetWindowMonitor");
+        addExtern<DAS_BIND_FUN(glfwSetWindowMonitor)>(*this, lib, "glfwSetWindowMonitor",
+            SideEffects::worstDefault, "glfwSetWindowMonitor");
+        addExtern<DAS_BIND_FUN(glfwGetWindowAttrib)>(*this, lib, "glfwGetWindowAttrib",
+            SideEffects::worstDefault, "glfwGetWindowAttrib");
+        addExtern<DAS_BIND_FUN(glfwSetWindowAttrib)>(*this, lib, "glfwSetWindowAttrib",
+            SideEffects::worstDefault, "glfwSetWindowAttrib");
+        addExtern<DAS_BIND_FUN(glfwSetWindowUserPointer)>(*this, lib, "glfwSetWindowUserPointer",
+            SideEffects::worstDefault, "glfwSetWindowUserPointer");
+        addExtern<DAS_BIND_FUN(glfwGetWindowUserPointer)>(*this, lib, "glfwGetWindowUserPointer",
+            SideEffects::worstDefault, "glfwGetWindowUserPointer");
+        addExtern<DAS_BIND_FUN(glfwSetWindowPosCallback)>(*this, lib, "glfwSetWindowPosCallback",
+            SideEffects::worstDefault, "glfwSetWindowPosCallback");
+        addExtern<DAS_BIND_FUN(glfwSetWindowSizeCallback)>(*this, lib, "glfwSetWindowSizeCallback",
+            SideEffects::worstDefault, "glfwSetWindowSizeCallback");
+        addExtern<DAS_BIND_FUN(glfwSetWindowCloseCallback)>(*this, lib, "glfwSetWindowCloseCallback",
+            SideEffects::worstDefault, "glfwSetWindowCloseCallback");
+        addExtern<DAS_BIND_FUN(glfwSetWindowRefreshCallback)>(*this, lib, "glfwSetWindowRefreshCallback",
+            SideEffects::worstDefault, "glfwSetWindowRefreshCallback");
+        addExtern<DAS_BIND_FUN(glfwSetWindowFocusCallback)>(*this, lib, "glfwSetWindowFocusCallback",
+            SideEffects::worstDefault, "glfwSetWindowFocusCallback");
+        addExtern<DAS_BIND_FUN(glfwSetWindowIconifyCallback)>(*this, lib, "glfwSetWindowIconifyCallback",
+            SideEffects::worstDefault, "glfwSetWindowIconifyCallback");
+        addExtern<DAS_BIND_FUN(glfwSetWindowMaximizeCallback)>(*this, lib, "glfwSetWindowMaximizeCallback",
+            SideEffects::worstDefault, "glfwSetWindowMaximizeCallback");
+        addExtern<DAS_BIND_FUN(glfwSetFramebufferSizeCallback)>(*this, lib, "glfwSetFramebufferSizeCallback",
+            SideEffects::worstDefault, "glfwSetFramebufferSizeCallback");
+        addExtern<DAS_BIND_FUN(glfwSetWindowContentScaleCallback)>(*this, lib, "glfwSetWindowContentScaleCallback",
+            SideEffects::worstDefault, "glfwSetWindowContentScaleCallback");
+        addExtern<DAS_BIND_FUN(glfwPollEvents)>(*this, lib, "glfwPollEvents",
+            SideEffects::worstDefault, "glfwPollEvents");
+        addExtern<DAS_BIND_FUN(glfwWaitEvents)>(*this, lib, "glfwWaitEvents",
+            SideEffects::worstDefault, "glfwWaitEvents");
+        addExtern<DAS_BIND_FUN(glfwWaitEventsTimeout)>(*this, lib, "glfwWaitEventsTimeout",
+            SideEffects::worstDefault, "glfwWaitEventsTimeout");
+        addExtern<DAS_BIND_FUN(glfwPostEmptyEvent)>(*this, lib, "glfwPostEmptyEvent",
+            SideEffects::worstDefault, "glfwPostEmptyEvent");
+        addExtern<DAS_BIND_FUN(glfwGetInputMode)>(*this, lib, "glfwGetInputMode",
+            SideEffects::worstDefault, "glfwGetInputMode");
+        addExtern<DAS_BIND_FUN(glfwSetInputMode)>(*this, lib, "glfwSetInputMode",
+            SideEffects::worstDefault, "glfwSetInputMode");
+        addExtern<DAS_BIND_FUN(glfwRawMouseMotionSupported)>(*this, lib, "glfwRawMouseMotionSupported",
+            SideEffects::worstDefault, "glfwRawMouseMotionSupported");
+        addExtern<DAS_BIND_FUN(glfwGetKeyName)>(*this, lib, "glfwGetKeyName",
+            SideEffects::worstDefault, "glfwGetKeyName");
+        addExtern<DAS_BIND_FUN(glfwGetKeyScancode)>(*this, lib, "glfwGetKeyScancode",
+            SideEffects::worstDefault, "glfwGetKeyScancode");
+        addExtern<DAS_BIND_FUN(glfwGetKey)>(*this, lib, "glfwGetKey",
+            SideEffects::worstDefault, "glfwGetKey");
+        addExtern<DAS_BIND_FUN(glfwGetMouseButton)>(*this, lib, "glfwGetMouseButton",
+            SideEffects::worstDefault, "glfwGetMouseButton");
+        addExtern<DAS_BIND_FUN(glfwGetCursorPos)>(*this, lib, "glfwGetCursorPos",
+            SideEffects::worstDefault, "glfwGetCursorPos");
+        addExtern<DAS_BIND_FUN(glfwSetCursorPos)>(*this, lib, "glfwSetCursorPos",
+            SideEffects::worstDefault, "glfwSetCursorPos");
+        addExtern<DAS_BIND_FUN(glfwCreateCursor)>(*this, lib, "glfwCreateCursor",
+            SideEffects::worstDefault, "glfwCreateCursor");
+        addExtern<DAS_BIND_FUN(glfwCreateStandardCursor)>(*this, lib, "glfwCreateStandardCursor",
+            SideEffects::worstDefault, "glfwCreateStandardCursor");
+        addExtern<DAS_BIND_FUN(glfwDestroyCursor)>(*this, lib, "glfwDestroyCursor",
+            SideEffects::worstDefault, "glfwDestroyCursor");
+        addExtern<DAS_BIND_FUN(glfwSetCursor)>(*this, lib, "glfwSetCursor",
+            SideEffects::worstDefault, "glfwSetCursor");
+        addExtern<DAS_BIND_FUN(glfwSetKeyCallback)>(*this, lib, "glfwSetKeyCallback",
+            SideEffects::worstDefault, "glfwSetKeyCallback");
+        addExtern<DAS_BIND_FUN(glfwSetCharCallback)>(*this, lib, "glfwSetCharCallback",
+            SideEffects::worstDefault, "glfwSetCharCallback");
+        addExtern<DAS_BIND_FUN(glfwSetCharModsCallback)>(*this, lib, "glfwSetCharModsCallback",
+            SideEffects::worstDefault, "glfwSetCharModsCallback");
+        addExtern<DAS_BIND_FUN(glfwSetMouseButtonCallback)>(*this, lib, "glfwSetMouseButtonCallback",
+            SideEffects::worstDefault, "glfwSetMouseButtonCallback");
+        addExtern<DAS_BIND_FUN(glfwSetCursorPosCallback)>(*this, lib, "glfwSetCursorPosCallback",
+            SideEffects::worstDefault, "glfwSetCursorPosCallback");
+        addExtern<DAS_BIND_FUN(glfwSetCursorEnterCallback)>(*this, lib, "glfwSetCursorEnterCallback",
+            SideEffects::worstDefault, "glfwSetCursorEnterCallback");
+        addExtern<DAS_BIND_FUN(glfwSetScrollCallback)>(*this, lib, "glfwSetScrollCallback",
+            SideEffects::worstDefault, "glfwSetScrollCallback");
+        addExtern<DAS_BIND_FUN(glfwSetDropCallback)>(*this, lib, "glfwSetDropCallback",
+            SideEffects::worstDefault, "glfwSetDropCallback");
+        addExtern<DAS_BIND_FUN(glfwJoystickPresent)>(*this, lib, "glfwJoystickPresent",
+            SideEffects::worstDefault, "glfwJoystickPresent");
+        addExtern<DAS_BIND_FUN(glfwGetJoystickAxes)>(*this, lib, "glfwGetJoystickAxes",
+            SideEffects::worstDefault, "glfwGetJoystickAxes");
+        addExtern<DAS_BIND_FUN(glfwGetJoystickButtons)>(*this, lib, "glfwGetJoystickButtons",
+            SideEffects::worstDefault, "glfwGetJoystickButtons");
+        addExtern<DAS_BIND_FUN(glfwGetJoystickHats)>(*this, lib, "glfwGetJoystickHats",
+            SideEffects::worstDefault, "glfwGetJoystickHats");
+        addExtern<DAS_BIND_FUN(glfwGetJoystickName)>(*this, lib, "glfwGetJoystickName",
+            SideEffects::worstDefault, "glfwGetJoystickName");
+        addExtern<DAS_BIND_FUN(glfwGetJoystickGUID)>(*this, lib, "glfwGetJoystickGUID",
+            SideEffects::worstDefault, "glfwGetJoystickGUID");
+        addExtern<DAS_BIND_FUN(glfwSetJoystickUserPointer)>(*this, lib, "glfwSetJoystickUserPointer",
+            SideEffects::worstDefault, "glfwSetJoystickUserPointer");
+        addExtern<DAS_BIND_FUN(glfwGetJoystickUserPointer)>(*this, lib, "glfwGetJoystickUserPointer",
+            SideEffects::worstDefault, "glfwGetJoystickUserPointer");
+        addExtern<DAS_BIND_FUN(glfwJoystickIsGamepad)>(*this, lib, "glfwJoystickIsGamepad",
+            SideEffects::worstDefault, "glfwJoystickIsGamepad");
+        addExtern<DAS_BIND_FUN(glfwSetJoystickCallback)>(*this, lib, "glfwSetJoystickCallback",
+            SideEffects::worstDefault, "glfwSetJoystickCallback");
+        addExtern<DAS_BIND_FUN(glfwUpdateGamepadMappings)>(*this, lib, "glfwUpdateGamepadMappings",
+            SideEffects::worstDefault, "glfwUpdateGamepadMappings");
+        addExtern<DAS_BIND_FUN(glfwGetGamepadName)>(*this, lib, "glfwGetGamepadName",
+            SideEffects::worstDefault, "glfwGetGamepadName");
+        addExtern<DAS_BIND_FUN(glfwGetGamepadState)>(*this, lib, "glfwGetGamepadState",
+            SideEffects::worstDefault, "glfwGetGamepadState");
+        addExtern<DAS_BIND_FUN(glfwSetClipboardString)>(*this, lib, "glfwSetClipboardString",
+            SideEffects::worstDefault, "glfwSetClipboardString");
+        addExtern<DAS_BIND_FUN(glfwGetClipboardString)>(*this, lib, "glfwGetClipboardString",
+            SideEffects::worstDefault, "glfwGetClipboardString");
+        addExtern<DAS_BIND_FUN(glfwGetTime)>(*this, lib, "glfwGetTime",
+            SideEffects::worstDefault, "glfwGetTime");
+        addExtern<DAS_BIND_FUN(glfwSetTime)>(*this, lib, "glfwSetTime",
+            SideEffects::worstDefault, "glfwSetTime");
+        addExtern<DAS_BIND_FUN(glfwGetTimerValue)>(*this, lib, "glfwGetTimerValue",
+            SideEffects::worstDefault, "glfwGetTimerValue");
+        addExtern<DAS_BIND_FUN(glfwGetTimerFrequency)>(*this, lib, "glfwGetTimerFrequency",
+            SideEffects::worstDefault, "glfwGetTimerFrequency");
+        addExtern<DAS_BIND_FUN(glfwMakeContextCurrent)>(*this, lib, "glfwMakeContextCurrent",
+            SideEffects::worstDefault, "glfwMakeContextCurrent");
+        addExtern<DAS_BIND_FUN(glfwGetCurrentContext)>(*this, lib, "glfwGetCurrentContext",
+            SideEffects::worstDefault, "glfwGetCurrentContext");
+        addExtern<DAS_BIND_FUN(glfwSwapBuffers)>(*this, lib, "glfwSwapBuffers",
+            SideEffects::worstDefault, "glfwSwapBuffers");
+        addExtern<DAS_BIND_FUN(glfwSwapInterval)>(*this, lib, "glfwSwapInterval",
+            SideEffects::worstDefault, "glfwSwapInterval");
+        addExtern<DAS_BIND_FUN(glfwExtensionSupported)>(*this, lib, "glfwExtensionSupported",
+            SideEffects::worstDefault, "glfwExtensionSupported");
+        addExtern<DAS_BIND_FUN(glfwGetProcAddress)>(*this, lib, "glfwGetProcAddress",
+            SideEffects::worstDefault, "glfwGetProcAddress");
+        addExtern<DAS_BIND_FUN(glfwVulkanSupported)>(*this, lib, "glfwVulkanSupported",
+            SideEffects::worstDefault, "glfwVulkanSupported");
+        addExtern<DAS_BIND_FUN(glfwGetRequiredInstanceExtensions)>(*this, lib, "glfwGetRequiredInstanceExtensions",
+            SideEffects::worstDefault, "glfwGetRequiredInstanceExtensions");
+        addExtern<DAS_BIND_FUN(glfwGetInstanceProcAddress)>(*this, lib, "glfwGetInstanceProcAddress",
+            SideEffects::worstDefault, "glfwGetInstanceProcAddress");
+        addExtern<DAS_BIND_FUN(glfwGetPhysicalDevicePresentationSupport)>(*this, lib, "glfwGetPhysicalDevicePresentationSupport",
+            SideEffects::worstDefault, "glfwGetPhysicalDevicePresentationSupport");
+        addExtern<DAS_BIND_FUN(glfwCreateWindowSurface)>(*this, lib, "glfwCreateWindowSurface",
+            SideEffects::worstDefault, "glfwCreateWindowSurface");
     }
 };
 
