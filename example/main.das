@@ -86,7 +86,7 @@ def main
     unsafe
         delete inst
 
-    while ! glfwWindowShouldClose(window)
+    while glfwWindowShouldClose(window) == 0
         glfwPollEvents()
 
     glfwDestroyWindow(window);
