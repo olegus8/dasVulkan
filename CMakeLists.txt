@@ -5,9 +5,10 @@ IF(NOT DAS_VULKAN_INCLUDED)
     include(${CMAKE_SOURCE_DIR}/modules/dasBinder/CMakeLists.txt)
 
     find_package(Vulkan)
+    find_package(glfw3)
 
-    IF(NOT Vulkan_FOUND)
-        MESSAGE(STATUS "Vulkan SDK not found. Not building dasVulkan.")
+    IF(NOT Vulkan_FOUND OR NOT glfw3_FOUND)
+        MESSAGE(STATUS "Prerequisites not found. Not building dasVulkan.")
     ELSE()
         SET(DAS_VULKAN_DIR ${CMAKE_SOURCE_DIR}/modules/dasVulkan)
 
