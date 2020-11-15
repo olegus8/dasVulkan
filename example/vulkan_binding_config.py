@@ -15,6 +15,10 @@ class Config(ConfigBase):
         if struct.name.endswith('_T'):
             struct.set_das_type(struct.name[:-2])
 
+        #TODO: make it work
+        if struct.name.startswith('GLFW'):
+            struct.ignore()
+
     def configure_struct_field(self, field):
         # These structs have function pointers, but we can probably
         # live without them for a time being.
