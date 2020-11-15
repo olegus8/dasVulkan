@@ -2694,9 +2694,6 @@ MAKE_TYPE_FACTORY(VkAccelerationStructureKHR, VkAccelerationStructureKHR)
 MAKE_TYPE_FACTORY(VkPerformanceConfigurationINTEL, VkPerformanceConfigurationINTEL)
 MAKE_TYPE_FACTORY(VkIndirectCommandsLayoutNV, VkIndirectCommandsLayoutNV)
 MAKE_TYPE_FACTORY(VkPrivateDataSlotEXT, VkPrivateDataSlotEXT)
-MAKE_TYPE_FACTORY(GLFWmonitor, GLFWmonitor)
-MAKE_TYPE_FACTORY(GLFWwindow, GLFWwindow)
-MAKE_TYPE_FACTORY(GLFWcursor, GLFWcursor)
 
 //
 // structs
@@ -12479,9 +12476,6 @@ public:
         addAnnotation(make_smart<ManagedValueAnnotation<VkPerformanceConfigurationINTEL>>("VkPerformanceConfigurationINTEL", "VkPerformanceConfigurationINTEL"));
         addAnnotation(make_smart<ManagedValueAnnotation<VkIndirectCommandsLayoutNV>>("VkIndirectCommandsLayoutNV", "VkIndirectCommandsLayoutNV"));
         addAnnotation(make_smart<ManagedValueAnnotation<VkPrivateDataSlotEXT>>("VkPrivateDataSlotEXT", "VkPrivateDataSlotEXT"));
-        addAnnotation(make_smart<ManagedValueAnnotation<GLFWmonitor>>("GLFWmonitor", "GLFWmonitor"));
-        addAnnotation(make_smart<ManagedValueAnnotation<GLFWwindow>>("GLFWwindow", "GLFWwindow"));
-        addAnnotation(make_smart<ManagedValueAnnotation<GLFWcursor>>("GLFWcursor", "GLFWcursor"));
 
         //
         // structs
