@@ -18,7 +18,6 @@ class Config(ConfigBase):
             ptr_type = struct.name + '_DasHandle'
             struct.set_das_type(ptr_type)
             struct.define_ptr_type(ptr_type)
-            struct.ignore()
 
     def configure_struct_field(self, field):
         # These structs have function pointers, but we can probably
