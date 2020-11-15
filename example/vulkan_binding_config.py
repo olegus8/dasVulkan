@@ -45,5 +45,5 @@ class Config(ConfigBase):
 
         if func.name not in [
             'glfwInit',
-        ]
+        ]:
             func.ignore()
