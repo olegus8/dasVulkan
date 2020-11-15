@@ -43,8 +43,6 @@ class Config(ConfigBase):
         ):
             func.ignore()
 
-        if False and func.name.startswith('glfw') and func.name not in [
-            'glfwInit',
-            'glfwCreateWindow',
+        if func.name.startswith('glfw') and func.name in [
         ]:
             func.ignore()
