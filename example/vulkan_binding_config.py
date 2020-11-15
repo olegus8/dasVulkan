@@ -43,9 +43,10 @@ class Config(ConfigBase):
         ):
             func.ignore()
 
-        if func.name in [
-            'glfwGetProcAddress',
-            'glfwGetInstanceProcAddress',
-            'glfwSetJoystickCallback',
-        ]:
-            func.ignore()
+        if func.name.startswith('glfw'):
+            for kw in [
+                'ProcAddress',
+                'Callback',
+            ]:
+                if kw in func.name:
+                    func.ignore()

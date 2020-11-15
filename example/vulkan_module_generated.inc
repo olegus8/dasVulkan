@@ -13552,8 +13552,6 @@ public:
             SideEffects::worstDefault, "glfwGetJoystickUserPointer");
         addExtern<DAS_BIND_FUN(glfwJoystickIsGamepad)>(*this, lib, "glfwJoystickIsGamepad",
             SideEffects::worstDefault, "glfwJoystickIsGamepad");
-        addExtern<DAS_BIND_FUN(glfwSetJoystickCallback)>(*this, lib, "glfwSetJoystickCallback",
-            SideEffects::worstDefault, "glfwSetJoystickCallback");
         addExtern<DAS_BIND_FUN(glfwUpdateGamepadMappings)>(*this, lib, "glfwUpdateGamepadMappings",
             SideEffects::worstDefault, "glfwUpdateGamepadMappings");
         addExtern<DAS_BIND_FUN(glfwGetGamepadName)>(*this, lib, "glfwGetGamepadName",
