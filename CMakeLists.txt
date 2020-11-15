@@ -29,12 +29,15 @@ IF(NOT DAS_VULKAN_INCLUDED)
             ${Vulkan_INCLUDE_DIR}
         )
         SETUP_CPP11(dasVulkanExample)
+        
+        get_target_property(DAS_VULKAN_INCLUDE_DIRS dasVulkanExample INCLUDE_DIRECTORIES)
 
         IF(DAS_BINDER_INCLUDED)
             DAS_BINDER(
                 ${DAS_VULKAN_DIR}/example/vulkan_headers_to_bind.h
                 ${DAS_VULKAN_DIR}/example/vulkan_module_generated.inc
                 ${DAS_VULKAN_DIR}/example/vulkan_binding_config.py
+                ${DAS_VULKAN_INCLUDE_DIRS}
             )
         ELSE()
             MESSAGE(STATUS "dasBinder not found. Using pre-generated Vulkan bindings.")
