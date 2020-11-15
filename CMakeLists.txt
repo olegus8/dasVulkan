@@ -25,7 +25,9 @@ IF(NOT DAS_VULKAN_INCLUDED)
             ${Vulkan_LIBRARY}
             glfw
         )
-        TARGET_INCLUDE_DIRECTORIES(dasVulkanExample PUBLIC ${Vulkan_INCLUDE_DIR})
+        TARGET_INCLUDE_DIRECTORIES(dasVulkanExample PUBLIC
+            ${Vulkan_INCLUDE_DIR}
+        )
         SETUP_CPP11(dasVulkanExample)
 
         IF(DAS_BINDER_INCLUDED)
