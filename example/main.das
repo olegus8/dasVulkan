@@ -63,9 +63,19 @@ class PhysicalDevice
 
 [export]
 def main
+    let WIDTH = 800
+    let HEIGHT = 600
+
     print("\nstarted\n")
 
     glfwInit()
+    glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API)
+    glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE)
+
+    let monitor : GLFWmonitor_DasHandle
+    let gl_window : GLFWwindow_DasHandle
+
+    var window = glfwCreateWindow(WIDTH, HEIGHT, "Vulkan", monitor, gl_window)
 
     var inst = new Instance()
     print("{length(inst.phys_devs)} devices found:\n")
@@ -76,6 +86,7 @@ def main
     unsafe
         delete inst
 
+    glfwDestroyWindow(window);
     glfwTerminate()
 
     print("finished\n")
