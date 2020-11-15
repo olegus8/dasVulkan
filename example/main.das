@@ -1,7 +1,6 @@
 options log
 
 require vulkan
-require app
 require strings
 
 
