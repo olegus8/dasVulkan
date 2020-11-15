@@ -13586,8 +13586,6 @@ public:
             SideEffects::worstDefault, "glfwVulkanSupported");
         addExtern<DAS_BIND_FUN(glfwGetRequiredInstanceExtensions)>(*this, lib, "glfwGetRequiredInstanceExtensions",
             SideEffects::worstDefault, "glfwGetRequiredInstanceExtensions");
-        addExtern<DAS_BIND_FUN(glfwGetInstanceProcAddress)>(*this, lib, "glfwGetInstanceProcAddress",
-            SideEffects::worstDefault, "glfwGetInstanceProcAddress");
         addExtern<DAS_BIND_FUN(glfwGetPhysicalDevicePresentationSupport)>(*this, lib, "glfwGetPhysicalDevicePresentationSupport",
             SideEffects::worstDefault, "glfwGetPhysicalDevicePresentationSupport");
         addExtern<DAS_BIND_FUN(glfwCreateWindowSurface)>(*this, lib, "glfwCreateWindowSurface",
