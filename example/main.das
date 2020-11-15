@@ -65,6 +65,8 @@ class PhysicalDevice
 def main
     print("\nstarted\n")
 
+    glfwInit()
+
     var inst = new Instance()
     print("{length(inst.phys_devs)} devices found:\n")
 
@@ -73,6 +75,8 @@ def main
 
     unsafe
         delete inst
+
+    glfwTerminate()
 
     print("finished\n")
     return true
