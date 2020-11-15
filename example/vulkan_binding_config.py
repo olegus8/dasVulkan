@@ -8,6 +8,10 @@ class Config(ConfigBase):
         return 'vulkan'
 
     @property
+    def c_headers_to_extract_defines_from(self):
+        return ['GLFW/glfw3.h']
+
+    @property
     def save_ast(self):
         return True
 
