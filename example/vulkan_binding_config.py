@@ -45,5 +45,6 @@ class Config(ConfigBase):
 
         if func.name in [
             'glfwGetProcAddress',
+            'glfwGetInstanceProcAddress',
         ]:
             func.ignore()
