@@ -8,6 +8,10 @@ class Config(ConfigBase):
         return 'vulkan'
 
     @property
+    def c_header_to_bind(self):
+        return 'vulkan_headers_to_bind.h'
+
+    @property
     def save_ast(self):
         return True
 
