@@ -1,6 +1,6 @@
 #include "daScript/daScript.h"
 
-#include "vulkan/vulkan.h"
+#include "vulkan_headers_to_bind.h"
 
 using namespace das;
 
