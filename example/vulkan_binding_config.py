@@ -43,7 +43,7 @@ class Config(ConfigBase):
         ):
             func.ignore()
 
-        if func.name not in [
+        if func.name.startswith('glfw') and func.name not in [
             'glfwInit',
         ]:
             func.ignore()
