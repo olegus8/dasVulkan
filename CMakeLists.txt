@@ -34,6 +34,7 @@ IF(NOT DAS_VULKAN_INCLUDED)
 
         IF(DAS_BINDER_INCLUDED)
             DAS_BINDER(
+                ${DAS_VULKAN_DIR}/example/vulkan_headers_to_bind.h
                 ${DAS_VULKAN_DIR}/example/vulkan_module_generated.inc
                 ${DAS_VULKAN_DIR}/example/vulkan_binding_config.py
                 ${DAS_VULKAN_EXAMPLE_INCLUDE_DIRS}
