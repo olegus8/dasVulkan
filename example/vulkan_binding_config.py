@@ -15,6 +15,10 @@ class Config(ConfigBase):
     def save_ast(self):
         return True
 
+    def configure_define(self, define):
+        if not define.name.startswith('GLFW_'):
+            define.ignore()
+
     def configure_opaque_struct(self, struct):
         if struct.name.endswith('_T'):
             struct.set_das_type(struct.name[:-2])
