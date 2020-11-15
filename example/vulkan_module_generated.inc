@@ -2694,6 +2694,12 @@ MAKE_TYPE_FACTORY(VkAccelerationStructureKHR, VkAccelerationStructureKHR)
 MAKE_TYPE_FACTORY(VkPerformanceConfigurationINTEL, VkPerformanceConfigurationINTEL)
 MAKE_TYPE_FACTORY(VkIndirectCommandsLayoutNV, VkIndirectCommandsLayoutNV)
 MAKE_TYPE_FACTORY(VkPrivateDataSlotEXT, VkPrivateDataSlotEXT)
+typedef GLFWmonitor * GLFWmonitor_DasHandle;
+MAKE_TYPE_FACTORY(GLFWmonitor_DasHandle, GLFWmonitor_DasHandle)
+typedef GLFWwindow * GLFWwindow_DasHandle;
+MAKE_TYPE_FACTORY(GLFWwindow_DasHandle, GLFWwindow_DasHandle)
+typedef GLFWcursor * GLFWcursor_DasHandle;
+MAKE_TYPE_FACTORY(GLFWcursor_DasHandle, GLFWcursor_DasHandle)
 
 //
 // structs
@@ -12476,6 +12482,9 @@ public:
         addAnnotation(make_smart<ManagedValueAnnotation<VkPerformanceConfigurationINTEL>>("VkPerformanceConfigurationINTEL", "VkPerformanceConfigurationINTEL"));
         addAnnotation(make_smart<ManagedValueAnnotation<VkIndirectCommandsLayoutNV>>("VkIndirectCommandsLayoutNV", "VkIndirectCommandsLayoutNV"));
         addAnnotation(make_smart<ManagedValueAnnotation<VkPrivateDataSlotEXT>>("VkPrivateDataSlotEXT", "VkPrivateDataSlotEXT"));
+        addAnnotation(make_smart<ManagedValueAnnotation<GLFWmonitor_DasHandle>>("GLFWmonitor_DasHandle", "GLFWmonitor_DasHandle"));
+        addAnnotation(make_smart<ManagedValueAnnotation<GLFWwindow_DasHandle>>("GLFWwindow_DasHandle", "GLFWwindow_DasHandle"));
+        addAnnotation(make_smart<ManagedValueAnnotation<GLFWcursor_DasHandle>>("GLFWcursor_DasHandle", "GLFWcursor_DasHandle"));
 
         //
         // structs

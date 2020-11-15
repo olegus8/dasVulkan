@@ -40,7 +40,10 @@ class Config(ConfigBase):
         or  func.name.endswith('GOOGLE')
         or  func.name.endswith('NV')
         or  func.name.endswith('NVX')
-        or  func.name.startswith('glfw')
         ):
             func.ignore()
-        
+
+        if func.name not in [
+            'glfwInit',
+        ]
+            func.ignore()
