@@ -45,5 +45,6 @@ class Config(ConfigBase):
 
         if func.name.startswith('glfw') and func.name not in [
             'glfwInit',
+            'glfwCreateWindow',
         ]:
             func.ignore()
