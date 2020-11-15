@@ -14,9 +14,10 @@ class Config(ConfigBase):
     def configure_opaque_struct(self, struct):
         if struct.name.endswith('_T'):
             struct.set_das_type(struct.name[:-2])
-
-        #TODO: make it work
         if struct.name.startswith('GLFW'):
+            ptr_type = struct.name + '_DasHandle'
+            struct.set_das_type(ptr_type)
+            struct.define_ptr_type(ptr_type)
             struct.ignore()
 
     def configure_struct_field(self, field):
