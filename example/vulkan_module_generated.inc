@@ -13582,8 +13582,6 @@ public:
             SideEffects::worstDefault, "glfwSwapInterval");
         addExtern<DAS_BIND_FUN(glfwExtensionSupported)>(*this, lib, "glfwExtensionSupported",
             SideEffects::worstDefault, "glfwExtensionSupported");
-        addExtern<DAS_BIND_FUN(glfwGetProcAddress)>(*this, lib, "glfwGetProcAddress",
-            SideEffects::worstDefault, "glfwGetProcAddress");
         addExtern<DAS_BIND_FUN(glfwVulkanSupported)>(*this, lib, "glfwVulkanSupported",
             SideEffects::worstDefault, "glfwVulkanSupported");
         addExtern<DAS_BIND_FUN(glfwGetRequiredInstanceExtensions)>(*this, lib, "glfwGetRequiredInstanceExtensions",
