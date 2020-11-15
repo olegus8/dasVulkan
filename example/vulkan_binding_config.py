@@ -8,16 +8,16 @@ class Config(ConfigBase):
         return 'vulkan'
 
     @property
-    def c_headers_to_extract_defines_from(self):
+    def c_headers_to_extract_macro_consts_from(self):
         return ['GLFW/glfw3.h']
 
     @property
     def save_ast(self):
         return True
 
-    def configure_define(self, define):
-        if not define.name.startswith('GLFW_'):
-            define.ignore()
+    def configure_macro_const(self, macro_const):
+        if not macro_const.name.startswith('GLFW_'):
+            macro_const.ignore()
 
     def configure_opaque_struct(self, struct):
         if struct.name.endswith('_T'):
