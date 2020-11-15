@@ -2,10 +2,10 @@ IF(NOT DAS_VULKAN_INCLUDED)
     SET(DAS_VULKAN_INCLUDED TRUE)
     MESSAGE(STATUS "dasVulkan module included.")
 
-    include(${CMAKE_SOURCE_DIR}/modules/dasBinder/CMakeLists.txt)
+    INCLUDE(${CMAKE_SOURCE_DIR}/modules/dasBinder/CMakeLists.txt)
 
-    find_package(Vulkan)
-    find_package(glfw3)
+    FIND_PACKAGE(Vulkan)
+    FIND_PACKAGE(glfw3)
 
     IF(NOT Vulkan_FOUND OR NOT glfw3_FOUND)
         MESSAGE(STATUS "Prerequisites not found. Not building dasVulkan.")
@@ -19,7 +19,7 @@ IF(NOT DAS_VULKAN_INCLUDED)
             ${DAS_VULKAN_DIR}/example/vulkan_module_generated.inc
         )
 
-        add_executable(dasVulkanExample ${DAS_VULKAN_EXAMPLE_SRC})
+        ADD_EXECUTABLE(dasVulkanExample ${DAS_VULKAN_EXAMPLE_SRC})
         TARGET_LINK_LIBRARIES(dasVulkanExample
             libDaScript
             ${Vulkan_LIBRARY}
@@ -30,7 +30,11 @@ IF(NOT DAS_VULKAN_INCLUDED)
         )
         SETUP_CPP11(dasVulkanExample)
         
-        get_target_property(DAS_VULKAN_EXAMPLE_INCLUDE_DIRS dasVulkanExample INCLUDE_DIRECTORIES)
+        GET_TARGET_PROPERTY(DAS_VULKAN_EXAMPLE_INCLUDE_DIRS dasVulkanExample INCLUDE_DIRECTORIES)
+
+        SET(DAS_VULKAN_HEADERS_TO_BIND
+            ${DAS_VULKAN_DIR}/example/vulkan_headers_to_bind.h
+        )
 
         IF(DAS_BINDER_INCLUDED)
             DAS_BINDER(
