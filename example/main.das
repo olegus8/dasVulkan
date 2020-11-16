@@ -72,10 +72,8 @@ def main
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API)
     glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE)
 
-    let dummy_monitor : GLFWmonitor_DasHandle
-    let dummy_window : GLFWwindow_DasHandle
     var window = glfwCreateWindow(WIDTH, HEIGHT, "dasVulkanExample",
-        dummy_monitor, dummy_window)
+        [[GLFWmonitor_DasHandle]], [[GLFWwindow_DasHandle]])
 
     var inst = new Instance()
     print("{length(inst.phys_devs)} devices found:\n")
