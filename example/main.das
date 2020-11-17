@@ -5,8 +5,7 @@ require strings
 
 
 def for_each_physical_device(instance : VkInstance; b : block)
-    let MAX_DEVICES = 10
-    var devices : VkPhysicalDevice[MAX_DEVICES]
+    var devices : VkPhysicalDevice[10]
     var dev_cnt:uint
     unsafe
         verify(VkResult VK_SUCCESS ==
@@ -73,7 +72,7 @@ def main
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API)
     glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE)
 
-    with_window([width=800, height=600, title="dasVulkanExample"]) <| $(window)
+    with_window(800, 600, "dasVulkanExample") <| $(window)
         with_instance() <| $(instance)
             print("found following devices:\n")
             instance |> for_each_physical_device() <| $(device)
