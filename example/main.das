@@ -55,7 +55,7 @@ def with_instance(b : block<(inst:VkInstance)>)
     instance |> vkDestroyInstance(null)
 
 
-def with_surface(window, instance, b)
+def with_surface(window, instance; b : block<(s:VkSurfaceKHR)>)
     var surface : VkSurfaceKHR
     unsafe
         verify(VkResult VK_SUCCESS == instance |> glfwCreateWindowSurface(
@@ -76,12 +76,9 @@ def main
             device |> with_props() <| $(props)
                 print("  {props.deviceName |> to_string()}\n")
         with_window(800, 600, "dasVulkanExample") <| $(window)
-            pass
-/*
             with_surface(window, instance) <| $(surface)
                 while window |> glfwWindowShouldClose() != 0
                     glfwPollEvents()
-*/
 
     glfwTerminate()
     print("finished\n")
