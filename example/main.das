@@ -92,6 +92,21 @@ def get_required_extensions()
     return <- exts_array
 
 
+class Window
+
+    _glfw_window : GLFWwindow_DasHandle
+
+    def Window(width, height, title)
+        _glfw_window = glfwCreateWindow(width, height, title,
+            [[GLFWmonitor_DasHandle]], [[GLFWwindow_DasHandle]])
+
+    def should_close
+        return _glfw_window |> glfwWindowShouldClose != 0
+
+    def finalize
+        _glfw_window |> glfwDestroyWindow
+
+
 class HelloTriangleApp
 
     height : 600
@@ -101,10 +116,10 @@ class HelloTriangleApp
     _window : Window?
 
     def run
-        _init_window()
-        _init_vulkan()
-        _main_loop()
-        _cleanup()
+        self->_init_window()
+        self->_init_vulkan()
+        self->_main_loop()
+        self->_cleanup()
 
     def _init_window
         glfwInit()
@@ -113,44 +128,32 @@ class HelloTriangleApp
         _window = new Window(width=width, height=height,
             title="dasVulkanExample")
 
+    def _init_vulkan
+        _instance = new Instance()
+        print("{length(inst.phys_devs)} devices found:\n")
+        for dev in _instance.phys_devs
+            print("  {dev->name()}\n")
 
-class Window
+    def _main_loop
+        while ! window->should_close()
+            glfwPollEvents()
 
-    _glfw_window : GLFWwindow_DasHandle
+    def _cleanup
+        unsafe
+            delete _instance
+        unsafe
+            delete _window
+        glfwTerminate()
 
-    def Window(width, height, title)
-        _glfw_window = glfwCreateWindow(width, height, title,
-            [[GLFWmonitor_DasHandle]], [[GLFWwindow_DasHandle]])
 
 [export]
 def main
+    print("\nstarted\n")
+
     var app = new HelloTriangleApp()
     app->run()
     unsafe
         delete app
-
-    let WIDTH = 800
-    let HEIGHT = 600
-
-    print("\nstarted\n")
-
-    var window = glfwCreateWindow(WIDTH, HEIGHT, "dasVulkanExample",
-        [[GLFWmonitor_DasHandle]], [[GLFWwindow_DasHandle]])
-
-    var inst = new Instance()
-    print("{length(inst.phys_devs)} devices found:\n")
-
-    for dev in inst.phys_devs
-        print("  {dev->name()}\n")
-
-    unsafe
-        delete inst
-
-    while glfwWindowShouldClose(window) == 0
-        glfwPollEvents()
-
-    glfwDestroyWindow(window);
-    glfwTerminate()
 
     print("finished\n")
     return true
