@@ -61,6 +61,18 @@ def to_string( bytes : int8[] )
     unsafe
         return reinterpret<string>(addr(bytes[0]))
 
+def required_extensions()
+    var exts_array : array<string>
+    var ext_count : uint
+    var exts : string const ?
+    unsafe
+        exts = glfwGetRequiredInstanceExtensions(addr(ext_count))
+    
+    exts_array |> reserve(int(ext_count))
+    for i in range(ext_count)
+        unsafe
+            exts_array |> push(exts[i])
+    return <- exts_array
 
 [export]
 def main
@@ -75,13 +87,6 @@ def main
 
     var window = glfwCreateWindow(WIDTH, HEIGHT, "dasVulkanExample",
         [[GLFWmonitor_DasHandle]], [[GLFWwindow_DasHandle]])
-
-    var ext_count : uint
-    var exts : string const ?
-    unsafe
-        exts = glfwGetRequiredInstanceExtensions(addr(ext_count))
-
-    print("extensions count: {int(ext_count)}\n")
 
     var inst = new Instance()
     print("{length(inst.phys_devs)} devices found:\n")
