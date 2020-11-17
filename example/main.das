@@ -14,6 +14,7 @@ class Instance
         self->_init_phys_devs()
 
     def _init_instance
+        let exts <- get_required_extensions()
         let inst_info <- [[VkInstanceCreateInfo
             sType = VkStructureType VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO
         ]]
@@ -61,7 +62,7 @@ def to_string( bytes : int8[] )
     unsafe
         return reinterpret<string>(addr(bytes[0]))
 
-def required_extensions()
+def get_required_extensions()
     var exts_array : array<string>
     var ext_count : uint
     var exts : string const ?
