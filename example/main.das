@@ -65,7 +65,7 @@ def with_surface(window, instance; b : block<(s:VkSurfaceKHR)>)
 
 [export]
 def main
-    print("started\n")
+    print("\nstarted\n")
     glfwInit()
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API)
     glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE)
