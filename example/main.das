@@ -7,7 +7,7 @@ require strings
 class Instance
     
     phys_devs : array<PhysicalDevice?>
-    _vk_inst : VkInstance
+    _instance : VkInstance
 
     def Instance
         self->_init_instance()
@@ -20,10 +20,10 @@ class Instance
         unsafe
             var dev_cnt:uint
             verify(VkResult VK_SUCCESS ==
-                _vk_inst |> vkEnumeratePhysicalDevices(addr(dev_cnt), null))
+                _instance |> vkEnumeratePhysicalDevices(addr(dev_cnt), null))
             vk_devs |> resize(int(dev_cnt))
             verify(VkResult VK_SUCCESS ==
-                _vk_inst |> vkEnumeratePhysicalDevices(
+                _instance |> vkEnumeratePhysicalDevices(
                     addr(dev_cnt), addr(vk_devs[0])))
         for d in vk_devs
             phys_devs |> emplace(new PhysicalDevice(d))
@@ -31,30 +31,14 @@ class Instance
 
     def finalize
         delete phys_devs
-        _vk_inst |> vkDestroyInstance(null)
+        _instance |> vkDestroyInstance(null)
         print("instance finalized\n")
-
-
-class PhysicalDevice
-
-    _vk_dev : VkPhysicalDevice
-    _vk_props : VkPhysicalDeviceProperties
-
-    def PhysicalDevice(vk_dev : VkPhysicalDevice)
-        _vk_dev = vk_dev
-        unsafe
-            _vk_dev |> vkGetPhysicalDeviceProperties(addr(_vk_props))
-
-    def name
-        return _vk_props.deviceName |> to_string
-
-    def finalize
-        print("physical device finalized\n")
 
 
 def to_string( bytes : int8[] )
     unsafe
         return reinterpret<string>(addr(bytes[0]))
+
 
 def get_required_extensions()
     var exts_array : array<string>
@@ -70,19 +54,11 @@ def get_required_extensions()
     return <- exts_array
 
 
-class Window
-
-    _glfw_window : GLFWwindow_DasHandle
-
-    def Window(width, height : int; title : string)
-        _glfw_window = glfwCreateWindow(width, height, title,
-            [[GLFWmonitor_DasHandle]], [[GLFWwindow_DasHandle]])
-
-    def should_close
-        return _glfw_window |> glfwWindowShouldClose() != 0
-
-    def finalize
-        _glfw_window |> glfwDestroyWindow()
+def with_props(device : VkPhysicalDevice&, b : block)
+    var props : VkPhysicalDeviceProperties
+    unsafe
+        device |> vkGetPhysicalDeviceProperties(addr(_vk_props))
+    b(props)
 
 
 def with_window(width, height, title, b)
@@ -92,7 +68,7 @@ def with_window(width, height, title, b)
     window |> glfwDestroyWindow()
 
 
-def with_vk_inst(b)
+def with_instance(b)
     var inst_info <- [[VkInstanceCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO
     ]]
@@ -129,13 +105,14 @@ def main
     glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE)
 
     with_window([width=800, height=600, title="dasVulkanExample"]) <| $(window)
-        with_vk_inst() <| $(instance)
+        with_instance() <| $(instance)
             print("found following devices:\n"
             //TODO: try iterator here
-            //for dev in _instance.phys_devs
+            //for dev in instance |> physical_devices
             //    print("  {dev->name()}\n")
             with_surface(window, instance) <| $(surface)
-                pass
+                while window |> glfwWindowShouldClose() != 0
+                    glfwPollEvents()
 
     glfwTerminate()
     return true
