@@ -67,6 +67,7 @@ def with_surface(window, instance, b)
 
 [export]
 def main
+    print("started\n")
     glfwInit()
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API)
     glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE)
@@ -82,4 +83,5 @@ def main
                     glfwPollEvents()
 
     glfwTerminate()
+    print("finished\n")
     return true
