@@ -4,15 +4,15 @@ require vulkan
 require strings
 
 
-def for_each_physical_device(instance : VkInstance; b : block<VkPhysicalDevice>)
+def for_each_physical_device(inst : VkInstance; b : block<VkPhysicalDevice>)
     var devices : VkPhysicalDevice[10]
     var dev_cnt:uint
     unsafe
         verify(VkResult VK_SUCCESS ==
-            instance |> vkEnumeratePhysicalDevices(addr(dev_cnt), null))
+            inst |> vkEnumeratePhysicalDevices(addr(dev_cnt), null))
         assert(dev_cnt < 10u)
         verify(VkResult VK_SUCCESS ==
-            instance |> vkEnumeratePhysicalDevices(
+            inst |> vkEnumeratePhysicalDevices(
                 addr(dev_cnt), addr(devices[0])))
     for i in range(dev_cnt)
         invoke(b, devices[i])
