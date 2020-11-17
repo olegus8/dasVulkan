@@ -27,7 +27,6 @@ def with_props(device : VkPhysicalDevice; b : block<(VkPhysicalDeviceProperties)
         device |> vkGetPhysicalDeviceProperties(addr(props))
     b(props)
 
-/*
 
 def with_window(width, height, title, b)
     var window = glfwCreateWindow(width, height, title,
@@ -62,7 +61,6 @@ def with_surface(window, instance, b)
             window, null, addr(surface)))
     invoke(b, surface)
     instance |> vkDestroySurfaceKHR(surface, null)
-*/
 
 [export]
 def main
