@@ -4,18 +4,20 @@ require vulkan
 require strings
 
 
-let physical_devices <- generator<VkPhysicalDevice>(instance : VkInstance) <|
-    let MAX_DEVICES = 10
-    var devices : VkPhysicalDevice[MAX_DEVICES]
-    var dev_cnt:uint
-    unsafe
-        verify(VkResult VK_SUCCESS == instance |> vkEnumeratePhysicalDevices(
-            addr(dev_cnt), null))
-        assert(dev_cnt < length(devices))
-        verify(VkResult VK_SUCCESS == instance |> vkEnumeratePhysicalDevices(
-            addr(dev_cnt), addr(devices[0])))
-    for i in range(dev_cnt)
-        yield devices[i]
+let
+    physical_devices <- generator<VkPhysicalDevice>(instance : VkInstance) <|
+        let MAX_DEVICES = 10
+        var devices : VkPhysicalDevice[MAX_DEVICES]
+        var dev_cnt:uint
+        unsafe
+            verify(VkResult VK_SUCCESS ==
+                instance |> vkEnumeratePhysicalDevices(addr(dev_cnt), null))
+            assert(dev_cnt < length(devices))
+            verify(VkResult VK_SUCCESS ==
+                instance |> vkEnumeratePhysicalDevices(
+                    addr(dev_cnt), addr(devices[0])))
+        for i in range(dev_cnt)
+            yield devices[i]
 
 
 def to_string( bytes : int8[] )
