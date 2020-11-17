@@ -4,35 +4,19 @@ require vulkan
 require strings
 
 
-class Instance
-    
-    phys_devs : array<PhysicalDevice?>
-    _instance : VkInstance
-
-    def Instance
-        self->_init_instance()
-        self->_init_phys_devs()
-
-    def _init_instance
-
-    def _init_phys_devs
-        var vk_devs : array<VkPhysicalDevice>
-        unsafe
-            var dev_cnt:uint
-            verify(VkResult VK_SUCCESS ==
-                _instance |> vkEnumeratePhysicalDevices(addr(dev_cnt), null))
-            vk_devs |> resize(int(dev_cnt))
-            verify(VkResult VK_SUCCESS ==
-                _instance |> vkEnumeratePhysicalDevices(
-                    addr(dev_cnt), addr(vk_devs[0])))
-        for d in vk_devs
-            phys_devs |> emplace(new PhysicalDevice(d))
-        delete vk_devs
-
-    def finalize
-        delete phys_devs
-        _instance |> vkDestroyInstance(null)
-        print("instance finalized\n")
+let physical_devices <- generator<VkPhysicalDevice>(instance : VkInstance) <|
+    let MAX_DEVICES = 10
+    var devices : VkPhysicalDevice[MAX_DEVICES]
+    var dev_cnt:uint
+    unsafe
+        verify(VkResult VK_SUCCESS ==
+            instance |> vkEnumeratePhysicalDevices(addr(dev_cnt), null))
+        assert(dev_cnt < length(devices))
+        verify(VkResult VK_SUCCESS ==
+            instance |> vkEnumeratePhysicalDevices(
+                addr(dev_cnt), addr(devices[0])))
+    for i in range(dev_cnt)
+        yield devices[i]
 
 
 def to_string( bytes : int8[] )
