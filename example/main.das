@@ -101,6 +101,13 @@ def main
     for dev in inst.phys_devs
         print("  {dev->name()}\n")
 
+    var surface : VkSurfaceKHR
+    unsafe
+        verify(VkResult VK_SUCCESS == glfwCreateWindowSurface(
+            inst._vk_inst, window, null, addr(surface)))
+    vkDestroySurfaceKHR(inst._vk_inst, surface, null)
+    surface = [[VkSurfaceKHR]]
+
     unsafe
         delete inst
 
