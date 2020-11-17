@@ -4,7 +4,7 @@ require vulkan
 require strings
 
 
-def for_each_physical_device(instance : VkInstance, b : block)
+def for_each_physical_device(instance : VkInstance; b : block)
     let MAX_DEVICES = 10
     var devices : VkPhysicalDevice[MAX_DEVICES]
     var dev_cnt:uint
@@ -24,7 +24,7 @@ def to_string( bytes : int8[] )
         return reinterpret<string>(addr(bytes[0]))
 
 
-def with_props(device : VkPhysicalDevice&, b : block)
+def with_props(device : VkPhysicalDevice; b : block)
     var props : VkPhysicalDeviceProperties
     unsafe
         device |> vkGetPhysicalDeviceProperties(addr(_vk_props))
