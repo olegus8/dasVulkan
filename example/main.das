@@ -80,6 +80,12 @@ def main
     var window = glfwCreateWindow(WIDTH, HEIGHT, "dasVulkanExample",
         [[GLFWmonitor_DasHandle]], [[GLFWwindow_DasHandle]])
 
+    var ext_count : uint
+    unsafe
+        var exts = glfwGetRequiredInstanceExtensions(addr(ext_count))
+
+    print("extensions count: {int(ext_count)}\n")
+
     var inst = new Instance()
     print("{length(inst.phys_devs)} devices found:\n")
 
