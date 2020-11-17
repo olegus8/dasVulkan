@@ -15,7 +15,7 @@ def for_each_physical_device(inst : VkInstance; b : block<VkPhysicalDevice>)
             inst |> vkEnumeratePhysicalDevices(addr(count), addr(devices[0])))
     for i in range(dev_cnt)
         invoke(b, devices[i])
-
+/*
 
 def to_string( bytes : int8[] )
     unsafe
@@ -62,7 +62,7 @@ def with_surface(window, instance, b)
             window, null, addr(surface)))
     invoke(b, surface)
     instance |> vkDestroySurfaceKHR(surface, null)
-
+*/
 
 [export]
 def main
@@ -71,6 +71,7 @@ def main
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API)
     glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE)
 
+/*
     with_window(800, 600, "dasVulkanExample") <| $(window)
         with_instance() <| $(instance)
             print("found following devices:\n")
@@ -80,6 +81,7 @@ def main
             with_surface(window, instance) <| $(surface)
                 while window |> glfwWindowShouldClose() != 0
                     glfwPollEvents()
+*/
 
     glfwTerminate()
     print("finished\n")
