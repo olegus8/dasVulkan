@@ -81,12 +81,6 @@ def main
     for dev in inst.phys_devs
         print("  {dev->name()}\n")
 
-    var surface : VkSurfaceKHR
-
-    unsafe
-        verify(VkResult VK_SUCCESS == glfwCreateWindowSurface(
-            inst._vk_inst, window, null, addr(surface)))
-
     unsafe
         delete inst
 
