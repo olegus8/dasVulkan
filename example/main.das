@@ -28,7 +28,7 @@ def with_props(device : VkPhysicalDevice; b : block<(VkPhysicalDeviceProperties)
     b(props)
 
 
-def with_window(width, height, title, b)
+def with_window(width, height, title; b : block<(GLFWwindow_DasHandle)>)
     var window = glfwCreateWindow(width, height, title,
         [[GLFWmonitor_DasHandle]], [[GLFWwindow_DasHandle]])
     invoke(b, window)
@@ -69,8 +69,9 @@ def main
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API)
     glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE)
 
-/*
     with_window(800, 600, "dasVulkanExample") <| $(window)
+        pass
+/*
         with_instance() <| $(instance)
             print("found following devices:\n")
             instance |> for_each_physical_device() <| $(device)
