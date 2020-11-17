@@ -14,19 +14,6 @@ class Instance
         self->_init_phys_devs()
 
     def _init_instance
-        var inst_info <- [[VkInstanceCreateInfo
-            sType = VkStructureType VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO
-        ]]
-
-        let exts <- get_required_extensions()
-        inst_info.enabledExtensionCount = uint(length(exts))
-        unsafe
-            reinterpret<string const ?>(inst_info.ppEnabledExtensionNames) = (
-                addr(exts[0]))
-
-        unsafe
-            verify(VkResult VK_SUCCESS == vkCreateInstance(
-                addr(inst_info), null, addr(_vk_inst)))
 
     def _init_phys_devs
         var vk_devs : array<VkPhysicalDevice>
@@ -137,9 +124,6 @@ class HelloTriangleApp
 
     def _init_vulkan
         _instance = new Instance()
-        print("{length(inst.phys_devs)} devices found:\n")
-        for dev in _instance.phys_devs
-            print("  {dev->name()}\n")
 
         _surface = new Surface(window=_window, instance=_instance)
 
@@ -156,9 +140,28 @@ class HelloTriangleApp
 def with_window(width, height, title, b: block)
     var window = glfwCreateWindow(width, height, title,
         [[GLFWmonitor_DasHandle]], [[GLFWwindow_DasHandle]])
-    b(window)
+    invoke(b, window)
     window |> glfwDestroyWindow()
 
+def with_vk_inst(b: block)
+    var inst_info <- [[VkInstanceCreateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO
+    ]]
+
+    let exts <- get_required_extensions()
+    inst_info.enabledExtensionCount = uint(length(exts))
+    unsafe
+        reinterpret<string const ?>(inst_info.ppEnabledExtensionNames) = (
+            addr(exts[0]))
+
+    var vk_inst : VkInstance
+    unsafe
+        verify(VkResult VK_SUCCESS == vkCreateInstance(
+            addr(inst_info), null, addr(vk_inst)))
+
+    invoke(b, vk_inst)
+
+    vk_inst |> vkDestroyInstance(null)
 
 [export]
 def main
@@ -168,6 +171,10 @@ def main
 
     with_window([width=800, height=600, title="dasVulkanExample"]) <| $(window)
         with_vk_inst() <| $(vk_inst)
+            print("found following devices:\n"
+            //TODO: try iterator here
+            //for dev in _instance.phys_devs
+            //    print("  {dev->name()}\n")
             with_surface(window, vk_inst) <| $(surface)
                 pass
 
