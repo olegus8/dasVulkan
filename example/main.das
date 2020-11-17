@@ -8,9 +8,11 @@ class Instance
     
     phys_devs : array<PhysicalDevice?>
     _vk_inst : VkInstance
+    surface : Surface
 
     def Instance
         self->_init_instance()
+        self->_init_surface()
         self->_init_phys_devs()
 
     def _init_instance
@@ -27,6 +29,14 @@ class Instance
         unsafe
             verify(VkResult VK_SUCCESS == vkCreateInstance(
                 addr(inst_info), null, addr(_vk_inst)))
+
+    def _init_surface
+        _vk_surface : VkSurfaceKHR
+        unsafe
+            verify(VkResult VK_SUCCESS == glfwCreateWindowSurface(
+                inst._vk_inst, window, null, addr(surface)))
+        vkDestroySurfaceKHR(inst._vk_inst, surface, null)
+        surface = [[VkSurfaceKHR]]
 
     def _init_phys_devs
         var vk_devs : array<VkPhysicalDevice>
@@ -81,16 +91,48 @@ def get_required_extensions()
             exts_array |> push(exts[i])
     return <- exts_array
 
+
+class HelloTriangleApp
+
+    height : 600
+    width : 800
+
+    _instance : Instance?
+    _window : Window?
+
+    def run
+        _init_window()
+        _init_vulkan()
+        _main_loop()
+        _cleanup()
+
+    def _init_window
+        glfwInit()
+        glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API)
+        glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE)
+        _window = new Window(width=width, height=height,
+            title="dasVulkanExample")
+
+
+class Window
+
+    _glfw_window : GLFWwindow_DasHandle
+
+    def Window(width, height, title)
+        _glfw_window = glfwCreateWindow(width, height, title,
+            [[GLFWmonitor_DasHandle]], [[GLFWwindow_DasHandle]])
+
 [export]
 def main
+    var app = new HelloTriangleApp()
+    app->run()
+    unsafe
+        delete app
+
     let WIDTH = 800
     let HEIGHT = 600
 
     print("\nstarted\n")
-
-    glfwInit()
-    glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API)
-    glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE)
 
     var window = glfwCreateWindow(WIDTH, HEIGHT, "dasVulkanExample",
         [[GLFWmonitor_DasHandle]], [[GLFWwindow_DasHandle]])
@@ -100,13 +142,6 @@ def main
 
     for dev in inst.phys_devs
         print("  {dev->name()}\n")
-
-    var surface : VkSurfaceKHR
-    unsafe
-        verify(VkResult VK_SUCCESS == glfwCreateWindowSurface(
-            inst._vk_inst, window, null, addr(surface)))
-    vkDestroySurfaceKHR(inst._vk_inst, surface, null)
-    surface = [[VkSurfaceKHR]]
 
     unsafe
         delete inst
