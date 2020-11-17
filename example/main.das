@@ -87,7 +87,7 @@ class Window
 
     _glfw_window : GLFWwindow_DasHandle
 
-    def Window(width, height, title)
+    def Window(width : int, height : int, title : string)
         _glfw_window = glfwCreateWindow(width, height, title,
             [[GLFWmonitor_DasHandle]], [[GLFWwindow_DasHandle]])
 
