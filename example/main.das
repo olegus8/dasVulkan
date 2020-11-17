@@ -51,14 +51,19 @@ class PhysicalDevice
             vkGetPhysicalDeviceProperties(_vk_dev, addr(_vk_props))
 
     def name
-        var bytes : array<uint8>
-        for c in _vk_props.deviceName
-            unsafe
-                bytes |> emplace(reinterpret<uint8>(c))
-        return string(bytes)
+        return to_string(_vk_props.deviceName)
 
     def finalize
         print("physical device finalized\n")
+
+
+def to_string( bytes : int8[] )
+    var ubytes : array<uint8>
+    ubytes |> reserve(length(bytes))
+    for b in bytes
+        unsafe
+            ubytes |> emplace(reinterpret<uint8>(b))
+    return string(ubytes)
 
 
 [export]
