@@ -4,20 +4,19 @@ require vulkan
 require strings
 
 
-let
-    physical_devices <- generator<VkPhysicalDevice>(instance : VkInstance) <|
-        let MAX_DEVICES = 10
-        var devices : VkPhysicalDevice[MAX_DEVICES]
-        var dev_cnt:uint
-        unsafe
-            verify(VkResult VK_SUCCESS ==
-                instance |> vkEnumeratePhysicalDevices(addr(dev_cnt), null))
-            assert(dev_cnt < length(devices))
-            verify(VkResult VK_SUCCESS ==
-                instance |> vkEnumeratePhysicalDevices(
-                    addr(dev_cnt), addr(devices[0])))
-        for i in range(dev_cnt)
-            yield devices[i]
+def for_each_physical_device(instance : VkInstance, b : block)
+    let MAX_DEVICES = 10
+    var devices : VkPhysicalDevice[MAX_DEVICES]
+    var dev_cnt:uint
+    unsafe
+        verify(VkResult VK_SUCCESS ==
+            instance |> vkEnumeratePhysicalDevices(addr(dev_cnt), null))
+        assert(dev_cnt < length(devices))
+        verify(VkResult VK_SUCCESS ==
+            instance |> vkEnumeratePhysicalDevices(
+                addr(dev_cnt), addr(devices[0])))
+    for i in range(dev_cnt)
+        invoke(b, devices[i])
 
 
 def to_string( bytes : int8[] )
@@ -77,7 +76,7 @@ def main
     with_window([width=800, height=600, title="dasVulkanExample"]) <| $(window)
         with_instance() <| $(instance)
             print("found following devices:\n"
-            for device in instance |> physical_devices
+            instance |> for_each_physical_device() <| $(device)
                 device |> with_props <| $(props)
                     print("  {props.deviceName |> to_string}\n")
             with_surface(window, instance) <| $(surface)
