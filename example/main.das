@@ -5,15 +5,14 @@ require strings
 
 
 def for_each_physical_device(inst : VkInstance; b : block<VkPhysicalDevice>)
-    var devices : VkPhysicalDevice[10]
-    var dev_cnt:uint
+    var devices : VkPhysicalDevice[10] //TODO: make this use MAX_DEVICES
+    var count : uint
     unsafe
         verify(VkResult VK_SUCCESS ==
-            inst |> vkEnumeratePhysicalDevices(addr(dev_cnt), null))
+            inst |> vkEnumeratePhysicalDevices(addr(count), null))
         assert(dev_cnt < 10u)
         verify(VkResult VK_SUCCESS ==
-            inst |> vkEnumeratePhysicalDevices(
-                addr(dev_cnt), addr(devices[0])))
+            inst |> vkEnumeratePhysicalDevices(addr(count), addr(devices[0])))
     for i in range(dev_cnt)
         invoke(b, devices[i])
 
