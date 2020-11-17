@@ -77,8 +77,9 @@ def main
         [[GLFWmonitor_DasHandle]], [[GLFWwindow_DasHandle]])
 
     var ext_count : uint
+    var exts : string const ?
     unsafe
-        var exts = glfwGetRequiredInstanceExtensions(addr(ext_count))
+        exts = glfwGetRequiredInstanceExtensions(addr(ext_count))
 
     print("extensions count: {int(ext_count)}\n")
 
