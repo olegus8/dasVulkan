@@ -10,10 +10,10 @@ def for_each_physical_device(inst : VkInstance; b : block<VkPhysicalDevice>)
     unsafe
         verify(VkResult VK_SUCCESS ==
             inst |> vkEnumeratePhysicalDevices(addr(count), null))
-        assert(dev_cnt < 10u)
+        assert(count < 10u)
         verify(VkResult VK_SUCCESS ==
             inst |> vkEnumeratePhysicalDevices(addr(count), addr(devices[0])))
-    for i in range(dev_cnt)
+    for i in range(count)
         invoke(b, devices[i])
 /*
 
