@@ -38,6 +38,12 @@ class Config(ConfigBase):
             field.ignore()
 
     def configure_function(self, func):
+        # whitelist
+        if func.name in [
+            'vkDestroySurfaceKHR',
+        ]:
+            return
+
         #TODO: make these work
         if ('size_t' in func.type
         or  'PFN_' in func.type
