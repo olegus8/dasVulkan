@@ -74,9 +74,9 @@ def main
     with_window([width=800, height=600, title="dasVulkanExample"]) <| $(window)
         with_instance() <| $(instance)
             print("found following devices:\n"
-            //TODO: try iterator here
-            //for dev in instance |> physical_devices
-            //    print("  {dev->name()}\n")
+            for device in instance |> physical_devices
+                device |> with_props <| $(props)
+                    print("  {props.deviceName |> to_string}\n")
             with_surface(window, instance) <| $(surface)
                 while window |> glfwWindowShouldClose() != 0
                     glfwPollEvents()
