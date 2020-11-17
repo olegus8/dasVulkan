@@ -15,19 +15,19 @@ def for_each_physical_device(inst : VkInstance; b : block<(VkPhysicalDevice)>)
             inst |> vkEnumeratePhysicalDevices(addr(count), addr(devices[0])))
     for i in range(count)
         invoke(b, devices[i])
-/*
 
 def to_string( bytes : int8[] )
     unsafe
         return reinterpret<string>(addr(bytes[0]))
 
 
-def with_props(device : VkPhysicalDevice; b : block)
+def with_props(device : VkPhysicalDevice; b : block<(VkPhysicalDeviceProperties)>)
     var props : VkPhysicalDeviceProperties
     unsafe
-        device |> vkGetPhysicalDeviceProperties(addr(_vk_props))
+        device |> vkGetPhysicalDeviceProperties(addr(props))
     b(props)
 
+/*
 
 def with_window(width, height, title, b)
     var window = glfwCreateWindow(width, height, title,
