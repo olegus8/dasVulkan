@@ -9,12 +9,11 @@ let physical_devices <- generator<VkPhysicalDevice>(instance : VkInstance) <|
     var devices : VkPhysicalDevice[MAX_DEVICES]
     var dev_cnt:uint
     unsafe
-        verify(VkResult VK_SUCCESS ==
-            instance |> vkEnumeratePhysicalDevices(addr(dev_cnt), null))
+        verify(VkResult VK_SUCCESS == instance |> vkEnumeratePhysicalDevices(
+            addr(dev_cnt), null))
         assert(dev_cnt < length(devices))
-        verify(VkResult VK_SUCCESS ==
-            instance |> vkEnumeratePhysicalDevices(
-                addr(dev_cnt), addr(devices[0])))
+        verify(VkResult VK_SUCCESS == instance |> vkEnumeratePhysicalDevices(
+            addr(dev_cnt), addr(devices[0])))
     for i in range(dev_cnt)
         yield devices[i]
 
