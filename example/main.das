@@ -132,9 +132,6 @@ class HelloTriangleApp
         self->_cleanup()
 
     def _init_window
-        glfwInit()
-        glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API)
-        glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE)
         _window = new Window(width=WIDTH, height=HEIGHT,
             title="dasVulkanExample")
 
@@ -155,17 +152,24 @@ class HelloTriangleApp
             delete _surface
             delete _instance
             delete _window
-        glfwTerminate()
+
+def with_window(width, height, title, b: block)
+    var window = glfwCreateWindow(width, height, title,
+        [[GLFWmonitor_DasHandle]], [[GLFWwindow_DasHandle]])
+    b(window)
+    window |> glfwDestroyWindow()
 
 
 [export]
 def main
-    print("\nstarted\n")
+    glfwInit()
+    glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API)
+    glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE)
 
-    var app = new HelloTriangleApp()
-    app->run()
-    unsafe
-        delete app
+    with_window([width=800, height=600, title="dasVulkanExample"]) <| $(window)
+        with_vk_inst() <| $(vk_inst)
+            with_surface(window, vk_inst) <| $(surface)
+                pass
 
-    print("finished\n")
+    glfwTerminate()
     return true
