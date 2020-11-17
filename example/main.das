@@ -25,7 +25,7 @@ def with_props(device : VkPhysicalDevice; b : block<(p:VkPhysicalDevicePropertie
     var props : VkPhysicalDeviceProperties
     unsafe
         device |> vkGetPhysicalDeviceProperties(addr(props))
-    b(props)
+    invoke(b, props)
 
 
 def with_window(width, height, title; b : block<(w:GLFWwindow_DasHandle)>)
