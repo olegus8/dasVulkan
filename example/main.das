@@ -58,12 +58,8 @@ class PhysicalDevice
 
 
 def to_string( bytes : int8[] )
-    var ubytes : array<uint8>
-    ubytes |> reserve(length(bytes))
-    for b in bytes
-        unsafe
-            ubytes |> emplace(reinterpret<uint8>(b))
-    return string(ubytes)
+    unsafe
+        return reinterpret<string>(addr(bytes[0]))
 
 
 [export]
