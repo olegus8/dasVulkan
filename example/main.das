@@ -85,65 +85,14 @@ class Window
         _glfw_window |> glfwDestroyWindow()
 
 
-class Surface
-
-    _window : Window?
-    _instance : Instance?
-    _vk_surface : VkSurfaceKHR
-
-    def Surface(window : Window?; instance : Instance?)
-        _window = window
-        _instance = instance
-        unsafe
-            verify(VkResult VK_SUCCESS ==
-                _instance._vk_inst |> glfwCreateWindowSurface(
-                    window._glfw_window, null, addr(_vk_surface)))
-
-    def finalize
-        _instance._vk_inst |> vkDestroySurfaceKHR(_vk_surface, null)
-
-
-class HelloTriangleApp
-
-    HEIGHT : int = 600
-    WIDTH : int = 800
-
-    _instance : Instance?
-    _window : Window?
-    _surface : Surface?
-
-    def run
-        self->_init_window()
-        self->_init_vulkan()
-        self->_main_loop()
-        self->_cleanup()
-
-    def _init_window
-        _window = new Window(width=WIDTH, height=HEIGHT,
-            title="dasVulkanExample")
-
-    def _init_vulkan
-        _instance = new Instance()
-
-        _surface = new Surface(window=_window, instance=_instance)
-
-    def _main_loop
-        while ! window->should_close()
-            glfwPollEvents()
-
-    def _cleanup
-        unsafe
-            delete _surface
-            delete _instance
-            delete _window
-
-def with_window(width, height, title, b: block)
+def with_window(width, height, title, b)
     var window = glfwCreateWindow(width, height, title,
         [[GLFWmonitor_DasHandle]], [[GLFWwindow_DasHandle]])
     invoke(b, window)
     window |> glfwDestroyWindow()
 
-def with_vk_inst(b: block)
+
+def with_vk_inst(b)
     var inst_info <- [[VkInstanceCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO
     ]]
@@ -154,14 +103,24 @@ def with_vk_inst(b: block)
         reinterpret<string const ?>(inst_info.ppEnabledExtensionNames) = (
             addr(exts[0]))
 
-    var vk_inst : VkInstance
+    var instance : VkInstance
     unsafe
         verify(VkResult VK_SUCCESS == vkCreateInstance(
-            addr(inst_info), null, addr(vk_inst)))
+            addr(inst_info), null, addr(instance)))
 
-    invoke(b, vk_inst)
+    invoke(b, instance)
 
-    vk_inst |> vkDestroyInstance(null)
+    instance |> vkDestroyInstance(null)
+
+
+def with_surface(window, instance, b)
+    var surface : VkSurfaceKHR
+    unsafe
+        verify(VkResult VK_SUCCESS == instance |> glfwCreateWindowSurface(
+            window, null, addr(surface)))
+    invoke(b, surface)
+    instance |> vkDestroySurfaceKHR(surface, null)
+
 
 [export]
 def main
@@ -170,12 +129,12 @@ def main
     glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE)
 
     with_window([width=800, height=600, title="dasVulkanExample"]) <| $(window)
-        with_vk_inst() <| $(vk_inst)
+        with_vk_inst() <| $(instance)
             print("found following devices:\n"
             //TODO: try iterator here
             //for dev in _instance.phys_devs
             //    print("  {dev->name()}\n")
-            with_surface(window, vk_inst) <| $(surface)
+            with_surface(window, instance) <| $(surface)
                 pass
 
     glfwTerminate()
