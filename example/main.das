@@ -4,7 +4,7 @@ require vulkan
 require strings
 
 
-def for_each_physical_device(inst : VkInstance; b : block<(VkPhysicalDevice)>)
+def for_each_physical_device(inst : VkInstance; b : block<(d:VkPhysicalDevice)>)
     var devices : VkPhysicalDevice[10] //TODO: make this use MAX_DEVICES
     var count : uint
     unsafe
@@ -21,14 +21,14 @@ def to_string( bytes : int8[] )
         return reinterpret<string>(addr(bytes[0]))
 
 
-def with_props(device : VkPhysicalDevice; b : block<(VkPhysicalDeviceProperties)>)
+def with_props(device : VkPhysicalDevice; b : block<(p:VkPhysicalDeviceProperties)>)
     var props : VkPhysicalDeviceProperties
     unsafe
         device |> vkGetPhysicalDeviceProperties(addr(props))
     b(props)
 
 
-def with_window(width, height, title; b : block<(GLFWwindow_DasHandle)>)
+def with_window(width, height, title; b : block<(w:GLFWwindow_DasHandle)>)
     var window = glfwCreateWindow(width, height, title,
         [[GLFWmonitor_DasHandle]], [[GLFWwindow_DasHandle]])
     invoke(b, window)
