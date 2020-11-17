@@ -63,6 +63,7 @@ def with_surface(window, instance; b : block<(s:VkSurfaceKHR)>)
     invoke(b, surface)
     instance |> vkDestroySurfaceKHR(surface, null)
 
+
 [export]
 def main
     print("\nstarted\n")
