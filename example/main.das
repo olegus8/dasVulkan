@@ -87,15 +87,15 @@ class Window
 
     _glfw_window : GLFWwindow_DasHandle
 
-    def Window(width : int, height : int, title : string)
+    def Window(width, height : int; title : string)
         _glfw_window = glfwCreateWindow(width, height, title,
             [[GLFWmonitor_DasHandle]], [[GLFWwindow_DasHandle]])
 
     def should_close
-        return _glfw_window |> glfwWindowShouldClose != 0
+        return _glfw_window |> glfwWindowShouldClose() != 0
 
     def finalize
-        _glfw_window |> glfwDestroyWindow
+        _glfw_window |> glfwDestroyWindow()
 
 
 class Surface
@@ -104,7 +104,7 @@ class Surface
     _instance : Instance?
     _vk_surface : VkSurfaceKHR
 
-    def Surface(window, instance)
+    def Surface(window : Window?; instance : Instance?)
         _window = window
         _instance = instance
         unsafe
@@ -118,8 +118,8 @@ class Surface
 
 class HelloTriangleApp
 
-    height : 600
-    width : 800
+    HEIGHT : int = 600
+    WIDTH : int = 800
 
     _instance : Instance?
     _window : Window?
@@ -135,7 +135,7 @@ class HelloTriangleApp
         glfwInit()
         glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API)
         glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE)
-        _window = new Window(width=width, height=height,
+        _window = new Window(width=WIDTH, height=HEIGHT,
             title="dasVulkanExample")
 
     def _init_vulkan
