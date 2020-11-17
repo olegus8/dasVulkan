@@ -72,12 +72,11 @@ def main
 
     with_window(800, 600, "dasVulkanExample") <| $(window)
         with_instance() <| $(instance)
-            pass
-/*
             print("found following devices:\n")
             instance |> for_each_physical_device() <| $(device)
                 device |> with_props() <| $(props)
                     print("  {props.deviceName |> to_string()}\n")
+/*
             with_surface(window, instance) <| $(surface)
                 while window |> glfwWindowShouldClose() != 0
                     glfwPollEvents()
