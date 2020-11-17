@@ -4,9 +4,7 @@ require vulkan
 require strings
 
 
-def for_each_physical_device(instance : VkInstance;
-    b : block<device:VkPhysicalDevice>
-)
+def for_each_physical_device(instance : VkInstance; b : block<VkPhysicalDevice>)
     var devices : VkPhysicalDevice[10]
     var dev_cnt:uint
     unsafe
