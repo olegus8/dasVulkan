@@ -4,7 +4,7 @@ require vulkan
 require strings
 
 
-def for_each_physical_device(inst : VkInstance; b : block<VkPhysicalDevice>)
+def for_each_physical_device(inst : VkInstance; b : block<(VkPhysicalDevice)>)
     var devices : VkPhysicalDevice[10] //TODO: make this use MAX_DEVICES
     var count : uint
     unsafe
