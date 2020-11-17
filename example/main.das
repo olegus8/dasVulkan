@@ -4,13 +4,15 @@ require vulkan
 require strings
 
 
-def for_each_physical_device(instance : VkInstance; b : block)
+def for_each_physical_device(instance : VkInstance;
+    b : block<device:VkPhysicalDevice>
+)
     var devices : VkPhysicalDevice[10]
     var dev_cnt:uint
     unsafe
         verify(VkResult VK_SUCCESS ==
             instance |> vkEnumeratePhysicalDevices(addr(dev_cnt), null))
-        assert(dev_cnt < length(devices))
+        assert(dev_cnt < 10u)
         verify(VkResult VK_SUCCESS ==
             instance |> vkEnumeratePhysicalDevices(
                 addr(dev_cnt), addr(devices[0])))
