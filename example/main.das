@@ -14,10 +14,16 @@ class Instance
         self->_init_phys_devs()
 
     def _init_instance
-        let exts <- get_required_extensions()
-        let inst_info <- [[VkInstanceCreateInfo
+        var inst_info <- [[VkInstanceCreateInfo
             sType = VkStructureType VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO
         ]]
+
+        let exts <- get_required_extensions()
+        inst_info.enabledExtensionCount = uint(length(exts))
+        unsafe
+            reinterpret<string const ?>(inst_info.ppEnabledExtensionNames) = (
+                addr(exts[0]))
+
         unsafe
             verify(VkResult VK_SUCCESS == vkCreateInstance(
                 addr(inst_info), null, addr(_vk_inst)))
