@@ -35,14 +35,15 @@ def with_window(width, height, title; b : block<(w:GLFWwindow_DasHandle)>)
     window |> glfwDestroyWindow()
 
 
-def with_instance(b)
+def with_instance(b : block<(inst:VkInstance)>)
     var inst_info <- [[VkInstanceCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO
     ]]
 
     unsafe
-        inst_info.ppEnabledExtensionNames = glfwGetRequiredInstanceExtensions(
-            addr(inst_info.enabledExtensionCount))
+        reinterpret<string const ?>(inst_info.ppEnabledExtensionNames) = (
+            glfwGetRequiredInstanceExtensions(
+                addr(inst_info.enabledExtensionCount)))
 
     var instance : VkInstance
     unsafe
@@ -70,9 +71,9 @@ def main
     glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE)
 
     with_window(800, 600, "dasVulkanExample") <| $(window)
-        pass
-/*
         with_instance() <| $(instance)
+            pass
+/*
             print("found following devices:\n")
             instance |> for_each_physical_device() <| $(device)
                 device |> with_props() <| $(props)
