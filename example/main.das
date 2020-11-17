@@ -23,20 +23,6 @@ def to_string( bytes : int8[] )
         return reinterpret<string>(addr(bytes[0]))
 
 
-def get_required_extensions()
-    var exts_array : array<string>
-    var ext_count : uint
-    var exts : string const ?
-    unsafe
-        exts = glfwGetRequiredInstanceExtensions(addr(ext_count))
-    
-    exts_array |> reserve(int(ext_count))
-    for i in range(ext_count)
-        unsafe
-            exts_array |> push(exts[i])
-    return <- exts_array
-
-
 def with_props(device : VkPhysicalDevice&, b : block)
     var props : VkPhysicalDeviceProperties
     unsafe
@@ -56,11 +42,9 @@ def with_instance(b)
         sType = VkStructureType VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO
     ]]
 
-    let exts <- get_required_extensions()
-    inst_info.enabledExtensionCount = uint(length(exts))
     unsafe
-        reinterpret<string const ?>(inst_info.ppEnabledExtensionNames) = (
-            addr(exts[0]))
+        inst_info.ppEnabledExtensionNames = glfwGetRequiredInstanceExtensions(
+            addr(inst_info.enabledExtensionCount))
 
     var instance : VkInstance
     unsafe
