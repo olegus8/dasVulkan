@@ -77,7 +77,7 @@ def main
                 print("  {props.deviceName |> to_string()}\n")
         with_window(800, 600, "dasVulkanExample") <| $(window)
             with_surface(window, instance) <| $(surface)
-                while window |> glfwWindowShouldClose() != 0
+                while window |> glfwWindowShouldClose() == 0
                     glfwPollEvents()
 
     glfwTerminate()
