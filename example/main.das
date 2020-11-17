@@ -8,11 +8,9 @@ class Instance
     
     phys_devs : array<PhysicalDevice?>
     _vk_inst : VkInstance
-    surface : Surface
 
     def Instance
         self->_init_instance()
-        self->_init_surface()
         self->_init_phys_devs()
 
     def _init_instance
@@ -30,30 +28,23 @@ class Instance
             verify(VkResult VK_SUCCESS == vkCreateInstance(
                 addr(inst_info), null, addr(_vk_inst)))
 
-    def _init_surface
-        _vk_surface : VkSurfaceKHR
-        unsafe
-            verify(VkResult VK_SUCCESS == glfwCreateWindowSurface(
-                inst._vk_inst, window, null, addr(surface)))
-        vkDestroySurfaceKHR(inst._vk_inst, surface, null)
-        surface = [[VkSurfaceKHR]]
-
     def _init_phys_devs
         var vk_devs : array<VkPhysicalDevice>
         unsafe
             var dev_cnt:uint
-            verify(VkResult VK_SUCCESS == vkEnumeratePhysicalDevices(
-                _vk_inst, addr(dev_cnt), null))
+            verify(VkResult VK_SUCCESS ==
+                _vk_inst |> vkEnumeratePhysicalDevices(addr(dev_cnt), null))
             vk_devs |> resize(int(dev_cnt))
-            verify(VkResult VK_SUCCESS == vkEnumeratePhysicalDevices(
-                _vk_inst, addr(dev_cnt), addr(vk_devs[0])))
+            verify(VkResult VK_SUCCESS ==
+                _vk_inst |> vkEnumeratePhysicalDevices(
+                    addr(dev_cnt), addr(vk_devs[0])))
         for d in vk_devs
             phys_devs |> emplace(new PhysicalDevice(d))
         delete vk_devs
 
     def finalize
         delete phys_devs
-        vkDestroyInstance(_vk_inst, null)
+        _vk_inst |> vkDestroyInstance(null)
         print("instance finalized\n")
 
 
@@ -65,10 +56,10 @@ class PhysicalDevice
     def PhysicalDevice(vk_dev : VkPhysicalDevice)
         _vk_dev = vk_dev
         unsafe
-            vkGetPhysicalDeviceProperties(_vk_dev, addr(_vk_props))
+            _vk_dev |> vkGetPhysicalDeviceProperties(addr(_vk_props))
 
     def name
-        return to_string(_vk_props.deviceName)
+        return _vk_props.deviceName |> to_string
 
     def finalize
         print("physical device finalized\n")
@@ -107,6 +98,24 @@ class Window
         _glfw_window |> glfwDestroyWindow
 
 
+class Surface
+
+    _window : Window?
+    _instance : Instance?
+    _vk_surface : VkSurfaceKHR
+
+    def Surface(window, instance)
+        _window = window
+        _instance = instance
+        unsafe
+            verify(VkResult VK_SUCCESS ==
+                _instance._vk_inst |> glfwCreateWindowSurface(
+                    window._glfw_window, null, addr(_vk_surface)))
+
+    def finalize
+        _instance._vk_inst |> vkDestroySurfaceKHR(_vk_surface, null)
+
+
 class HelloTriangleApp
 
     height : 600
@@ -114,6 +123,7 @@ class HelloTriangleApp
 
     _instance : Instance?
     _window : Window?
+    _surface : Surface?
 
     def run
         self->_init_window()
@@ -134,14 +144,16 @@ class HelloTriangleApp
         for dev in _instance.phys_devs
             print("  {dev->name()}\n")
 
+        _surface = new Surface(window=_window, instance=_instance)
+
     def _main_loop
         while ! window->should_close()
             glfwPollEvents()
 
     def _cleanup
         unsafe
+            delete _surface
             delete _instance
-        unsafe
             delete _window
         glfwTerminate()
 
