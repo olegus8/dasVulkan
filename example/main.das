@@ -70,12 +70,13 @@ def main
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API)
     glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE)
 
-    with_window(800, 600, "dasVulkanExample") <| $(window)
-        with_instance() <| $(instance)
-            print("found following devices:\n")
-            instance |> for_each_physical_device() <| $(device)
-                device |> with_props() <| $(props)
-                    print("  {props.deviceName |> to_string()}\n")
+    with_instance() <| $(instance)
+        print("found following devices:\n")
+        instance |> for_each_physical_device() <| $(device)
+            device |> with_props() <| $(props)
+                print("  {props.deviceName |> to_string()}\n")
+        with_window(800, 600, "dasVulkanExample") <| $(window)
+            pass
 /*
             with_surface(window, instance) <| $(surface)
                 while window |> glfwWindowShouldClose() != 0
