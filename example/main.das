@@ -89,7 +89,7 @@ def get_suitability_score(device)
             VkPhysicalDeviceType VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU
         )
             score += 1000
-    device |> with_ext_props() <| $(ext_props)
+    device |> with_ext_props() <| $(exts)
         pass
     return score
 
