@@ -124,7 +124,7 @@ def with_queue_create_infos(device, surface;
             let priorities <- [[float[] 1.0f]]
             var priorities_addr : float?
             unsafe
-                priority_addr = addr(priorities[0])
+                priorities_addr = addr(priorities[0])
             let families <- [[auto[] qfam_present; qfam_graphics]]
             let infos <- [{for fam in families; [[
                 VkDeviceQueueCreateInfo
