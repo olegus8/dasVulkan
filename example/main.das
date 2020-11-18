@@ -49,23 +49,24 @@ def with_queue_families(device : VkPhysicalDevice; b : block<(families: array<Vk
     invoke(b, families)
 
 
-def with_queue_family_present(device : VkPhysicalDevice; surface : VkSurfaceKHR; b : block<(index:int)>)
+def with_queue_family_present(device : VkPhysicalDevice; surface : VkSurfaceKHR; b : block<(index:uint)>)
     device |> with_queue_families() <| $(families)
         for index in range(families |> length())
-            var supported : uint = 0
-            verify(VkResult VK_SUCCESS ==
-                device |> vkGetPhysicalDeviceSurfaceSupportKHR(
-                    index, surface, addr(supported)))
+            var supported : uint = 0u
+            unsafe
+                verify(VkResult VK_SUCCESS ==
+                    device |> vkGetPhysicalDeviceSurfaceSupportKHR(
+                        index, surface, addr(supported)))
             if supported != 0u
-                invoke(b, index)
+                invoke(b, uint(index))
                 break
 
 
-def with_queue_family_graphics(device : VkPhysicalDevice; b : block<(index:int)>)
+def with_queue_family_graphics(device : VkPhysicalDevice; b : block<(index:uint)>)
     device |> with_queue_families() <| $(families)
         for index, family in range(families |> length()), families
             if family.queueFlags & VkQueueFlagBits VK_QUEUE_GRAPHICS_BIT
-                invoke(b, index)
+                invoke(b, uint(index))
                 break
 
 
