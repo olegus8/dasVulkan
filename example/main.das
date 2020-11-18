@@ -69,7 +69,7 @@ def with_queue_family_graphics(device : VkPhysicalDevice; b : block<(index:uint)
             unsafe
                 graphics_bit = reinterpret<uint>(
                     VkQueueFlagBits VK_QUEUE_GRAPHICS_BIT)
-            if family.queueFlags & graphics_bit
+            if family.queueFlags & graphics_bit != 0u
                 invoke(b, uint(index))
                 break
 
