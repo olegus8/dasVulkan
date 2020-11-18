@@ -102,6 +102,22 @@ def to_string( bytes : int8[] )
         return reinterpret<string>(addr(bytes[0]))
 
 
+def with_formats(device, surface;
+    b : block<(formats:array<VkSurfaceFormatKHR>)>
+)
+    var formats : array<VkSurfaceFormatKHR>
+    var count : uint
+    unsafe
+        verify(VkResult VK_SUCCESS ==
+            device |> vkGetPhysicalDeviceSurfaceFormatsKHR(
+                surface, addr(count), null))
+        formats |> resize(int(count))
+        verify(VkResult VK_SUCCESS ==
+            device |> vkGetPhysicalDeviceSurfaceFormatsKHR(
+                surface, addr(count), addr(formats[0])))
+    invoke(b, formats)
+
+
 def with_ext_props(device;
     b : block<(props:table<uint;VkExtensionProperties>)>
 )
