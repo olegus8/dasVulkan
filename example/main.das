@@ -4,8 +4,8 @@ require vulkan
 require strings
 
 
-def with_physical_devices(inst : VkInstance;
-    b : block<(d:array<VkPhysicalDevice>)>
+def with_physical_devices(
+    inst : VkInstance; b : block<(d:array<VkPhysicalDevice>)>
 )
     var devices : array<VkPhysicalDevice>
     var count : uint
@@ -64,7 +64,9 @@ def with_queue_family_present(
                 break
 
 
-def with_queue_family_graphics(device : VkPhysicalDevice; b : block<(index:uint)>)
+def with_queue_family_graphics(
+    device : VkPhysicalDevice; b : block<(index:uint)>
+)
     device |> with_queue_families() <| $(families)
         for index, family in range(families |> length()), families
             var graphics_bit : uint
