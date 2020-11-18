@@ -13360,6 +13360,10 @@ public:
             SideEffects::worstDefault, "vkDestroySurfaceKHR");
         addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceSurfaceSupportKHR)>(*this, lib, "vkGetPhysicalDeviceSurfaceSupportKHR",
             SideEffects::worstDefault, "vkGetPhysicalDeviceSurfaceSupportKHR");
+        addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceSurfaceFormatsKHR)>(*this, lib, "vkGetPhysicalDeviceSurfaceFormatsKHR",
+            SideEffects::worstDefault, "vkGetPhysicalDeviceSurfaceFormatsKHR");
+        addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceSurfacePresentModesKHR)>(*this, lib, "vkGetPhysicalDeviceSurfacePresentModesKHR",
+            SideEffects::worstDefault, "vkGetPhysicalDeviceSurfacePresentModesKHR");
         addExtern<DAS_BIND_FUN(glfwInit)>(*this, lib, "glfwInit",
             SideEffects::worstDefault, "glfwInit");
         addExtern<DAS_BIND_FUN(glfwTerminate)>(*this, lib, "glfwTerminate",
