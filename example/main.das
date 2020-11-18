@@ -108,6 +108,31 @@ def to_string( bytes : int8[] )
         return reinterpret<string>(addr(bytes[0]))
 
 
+def with_logical_device(phys_dev, surface;
+    b : block<(device:VkDevice)>
+)
+    pass
+
+
+def with_queue_create_infos(device, surface;
+    b : block<(infos:array<VkDeviceQueueCreateInfo>)>
+)
+    device |> with_queue_family_present(surface) <| $(qfam_present)
+        device |> with_queue_family_graphics() <| $(qfam_graphics)
+            let priorities <- [[float[] 1.0f]]
+            var priorities_addr : float?
+            unsafe
+                priority_addr = addr(priorities[0])
+            let infos <- [{for fam in [[auto qfam_present; qfam_graphics]] [[
+                VkDeviceQueueCreateInfo
+                    sType = (VkStructureType
+                        VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO),
+                    queueFamilyIndex = fam,
+                    queueCount = uint(priorities |> length()),
+                    pQueuePriorities = priorities_addr
+            ]]}]
+
+
 def with_formats(device, surface;
     b : block<(formats:array<VkSurfaceFormatKHR>)>
 )
