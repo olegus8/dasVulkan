@@ -121,14 +121,14 @@ def with_queue_create_infos(device, surface;
 )
     var families : array<uint>
     device |> with_queue_family_present(surface) <| $(qfam)
-        families.push(qfam)
+        families |> push(qfam)
     device |> with_queue_family_graphics() <| $(qfam)
-        families.push(qfam)
+        families |> push(qfam)
 
     var priorities : array<float>
     priorities.reserve(families |> length())
     for family in families
-        priorities.push(1.0f)
+        priorities |> push(1.0f)
 
     var priorities_addr : float?
     unsafe
