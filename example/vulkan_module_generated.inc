@@ -13358,6 +13358,8 @@ public:
             SideEffects::worstDefault, "vkGetDeviceMemoryOpaqueCaptureAddress");
         addExtern<DAS_BIND_FUN(vkDestroySurfaceKHR)>(*this, lib, "vkDestroySurfaceKHR",
             SideEffects::worstDefault, "vkDestroySurfaceKHR");
+        addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceSurfaceSupportKHR)>(*this, lib, "vkGetPhysicalDeviceSurfaceSupportKHR",
+            SideEffects::worstDefault, "vkGetPhysicalDeviceSurfaceSupportKHR");
         addExtern<DAS_BIND_FUN(glfwInit)>(*this, lib, "glfwInit",
             SideEffects::worstDefault, "glfwInit");
         addExtern<DAS_BIND_FUN(glfwTerminate)>(*this, lib, "glfwTerminate",

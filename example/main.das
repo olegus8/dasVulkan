@@ -52,11 +52,11 @@ def with_queue_families(device : VkPhysicalDevice; b : block<(families: array<Vk
 def with_queue_family_present(device : VkPhysicalDevice; surface : VkSurfaceKHR; b : block<(index:int)>)
     device |> with_queue_families() <| $(families)
         for index in range(families |> length())
-            var supported = false
+            var supported : uint = 0
             verify(VkResult VK_SUCCESS ==
                 device |> vkGetPhysicalDeviceSurfaceSupportKHR(
                     index, surface, addr(supported)))
-            if supported
+            if supported != 0u
                 invoke(b, index)
                 break
 
