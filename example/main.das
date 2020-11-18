@@ -5,7 +5,7 @@ require strings
 
 
 def for_each_physical_device(inst : VkInstance; b : block<(d:VkPhysicalDevice)>)
-    inst |> with_physical_devices() <| $(devices : array<VkPhysicalDevice>)
+    inst |> with_physical_devices() <| $(devices)
         for device in devices
             invoke(b, device)
 
@@ -23,13 +23,13 @@ def with_physical_devices(inst : VkInstance; b : block<(d:array<VkPhysicalDevice
 
 
 def with_best_physical_device(inst : VkInstance; surface : VkSurfaceKHR; b : block<(d:VkPhysicalDevice)>)
-    inst |> with_physical_devices() <| $(devices : array<VkPhysicalDevice>)
+    inst |> with_physical_devices() <| $(devices)
         var best_score : int = 0
         var best_device : VkPhysicalDevice
         for device in devices
             var score = device |> get_suitability_score()
-            device |> with_queue_family_present(surface) <| $(present_i : int)
-                device |> with_queue_family_graphics() <| $(graphics_i : int)
+            device |> with_queue_family_present(surface) <| $(present_i)
+                device |> with_queue_family_graphics() <| $(graphics_i)
                     if score > best_score
                         best_score = score
                         best_device = device
@@ -50,7 +50,7 @@ def with_queue_families(device : VkPhysicalDevice; b : block<(families: array<Vk
 
 
 def with_queue_family_present(device : VkPhysicalDevice; surface : VkSurfaceKHR; b : block<(index:int)>)
-    device |> with_queue_families() <| $(families : array<VkQueueFamilyProperties>)
+    device |> with_queue_families() <| $(families)
         for index in range(len(families))
             var supported = false
             verify(VkResult VK_SUCCESS ==
@@ -62,7 +62,7 @@ def with_queue_family_present(device : VkPhysicalDevice; surface : VkSurfaceKHR;
 
 
 def with_queue_family_graphics(device : VkPhysicalDevice; b : block<(index:int)>)
-    device |> with_queue_families() <| $(families : array<VkQueueFamilyProperties>)
+    device |> with_queue_families() <| $(families)
         for index, family in range(len(families)), families
             if family.queueFlags & VkQueueFlagBits VK_QUEUE_GRAPHICS_BIT
                 invoke(b, index)
