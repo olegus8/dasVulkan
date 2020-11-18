@@ -33,7 +33,7 @@ def with_best_physical_device(inst, surface; b : block<(d:VkPhysicalDevice)>)
 
 
 def with_queue_families(
-    device, b : block<(families: array<VkQueueFamilyProperties>)>
+    device; b : block<(families: array<VkQueueFamilyProperties>)>
 )
     var families : array<VkQueueFamilyProperties>
     var count : uint
