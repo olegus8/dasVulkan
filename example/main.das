@@ -21,6 +21,21 @@ def with_physical_devices(inst : VkInstance; b : block<(d:array<VkPhysicalDevice
             inst |> vkEnumeratePhysicalDevices(addr(count), addr(devices[0])))
     invoke(b, devices)
 
+
+def with_best_physical_device(inst : VkInstance; b : block<(d:VkPhysicalDevice)>)
+    inst |> with_physical_devices() <| $(devices : array<VkPhysicalDevice>)
+        var best_score : int
+        var best_device : VkPhysicalDevice
+        for device in devices
+            var score = device |> get_suitability_score()
+            if score > best_score
+                best_score = score
+                best_device = device
+        if best_score == 0
+            panic("No suitable physical device found.")
+        invoke(b, best_device)
+
+
 def to_string( bytes : int8[] )
     unsafe
         return reinterpret<string>(addr(bytes[0]))
