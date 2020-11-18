@@ -91,7 +91,7 @@ def get_suitability_score(device)
             score += 1000
     device |> with_ext_props() <| $(exts)
         for required_ext in REQUIRED_EXTENSIONS
-            if ! key_exists(exts, required_ext)
+            if ! key_exists(exts, hash(required_ext))
                 score = 0
                 break
     return score
@@ -103,7 +103,7 @@ def to_string( bytes : int8[] )
 
 
 def with_ext_props(device;
-    b : block<(props:table<string;VkExtensionProperties>)>
+    b : block<(props:table<uint;VkExtensionProperties>)>
 )
     var props : array<VkExtensionProperties>
     var count : uint
@@ -116,11 +116,10 @@ def with_ext_props(device;
             device |> vkEnumerateDeviceExtensionProperties(
                 reinterpret<string>(null), addr(count), addr(props[0])))
 
-    var props_table : table<string; VkExtensionProperties>
+    var props_table : table<uint; VkExtensionProperties>
     for prop in props
         let name <- prop.extensionName |> to_string()
-        print("extension found: {name}\n")
-        props_table[name] <- prop
+        props_table[hash(name)] <- prop
     invoke(b, props_table)
 
 
