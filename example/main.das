@@ -140,13 +140,11 @@ def main
     glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE)
 
     with_instance() <| $(instance)
-        print("found following devices:\n")
-        instance |> for_each_physical_device() <| $(device)
-            device |> with_props() <| $(props)
-                print("  {props.deviceName |> to_string()}\n")
         with_window(800, 600, "dasVulkanExample") <| $(window)
             with_surface(window, instance) <| $(surface)
                 instance |> with_best_physical_device(surface) <| $(device)
+                    device |> with_props() <| $(props)
+                        print("Using {props.deviceName |> to_string()}\n")
                     while window |> glfwWindowShouldClose() == 0
                         glfwPollEvents()
 
