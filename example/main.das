@@ -25,9 +25,9 @@ def with_best_physical_device(inst : VkInstance; surface : VkSurfaceKHR;
         var best_score : int = 0
         var best_device : VkPhysicalDevice
         for device in devices
-            var score = device |> get_suitability_score()
             device |> with_queue_family_present(surface) <| $(present_i)
                 device |> with_queue_family_graphics() <| $(graphics_i)
+                    var score = device |> get_suitability_score()
                     if score > best_score
                         best_score = score
                         best_device = device
