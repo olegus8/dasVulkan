@@ -36,7 +36,9 @@ def with_best_physical_device(inst : VkInstance; surface : VkSurfaceKHR;
         invoke(b, best_device)
 
 
-def with_queue_families(device : VkPhysicalDevice; b : block<(families: array<VkQueueFamilyProperties>)>)
+def with_queue_families(device : VkPhysicalDevice;
+    b : block<(families: array<VkQueueFamilyProperties>)>
+)
     var families : array<VkQueueFamilyProperties>
     var count : uint
     unsafe
@@ -47,7 +49,9 @@ def with_queue_families(device : VkPhysicalDevice; b : block<(families: array<Vk
     invoke(b, families)
 
 
-def with_queue_family_present(device : VkPhysicalDevice; surface : VkSurfaceKHR; b : block<(index:uint)>)
+def with_queue_family_present(
+    device : VkPhysicalDevice; surface : VkSurfaceKHR; b : block<(index:uint)>
+)
     device |> with_queue_families() <| $(families)
         for index in range(families |> length())
             var supported : uint = 0u
