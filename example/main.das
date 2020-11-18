@@ -118,6 +118,22 @@ def with_formats(device, surface;
     invoke(b, formats)
 
 
+def with_present_modes(device, surface;
+    b : block<(formats:array<VkPresentModeKHR>)>
+)
+    var modes : array<VkPresentModeKHR>
+    var count : uint
+    unsafe
+        verify(VkResult VK_SUCCESS ==
+            device |> vkGetPhysicalDeviceSurfacePresentModesKHR(
+                surface, addr(count), null))
+        modes |> resize(int(count))
+        verify(VkResult VK_SUCCESS ==
+            device |> vkGetPhysicalDeviceSurfacePresentModesKHR(
+                surface, addr(count), addr(modes[0])))
+    invoke(b, modes)
+
+
 def with_ext_props(device;
     b : block<(props:table<uint;VkExtensionProperties>)>
 )
