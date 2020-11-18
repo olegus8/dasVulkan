@@ -114,8 +114,8 @@ def with_ext_props(device;
                 reinterpret<string>(null), addr(count), addr(props[0])))
 
     var props_table : table<string; VkExtensionProperties>
-    for prop in props:
-        props_table[prop.extensionName |> to_string()] = prop
+    for prop in props
+        props_table[prop.extensionName |> to_string()] <- prop
     invoke(b, props_table)
 
 
