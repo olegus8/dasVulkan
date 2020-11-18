@@ -5,7 +5,7 @@ require strings
 
 
 let
-    required_extensions = [[auto
+    REQUIRED_EXTENSIONS = [[auto
         "VK_KHR_swapchain"
     ]]
 
@@ -90,7 +90,10 @@ def get_suitability_score(device)
         )
             score += 1000
     device |> with_ext_props() <| $(exts)
-        pass
+        for required_ext in REQUIRED_EXTENSIONS
+            if ! exts |> key_exists(required_ext)
+                score = 0
+                break
     return score
 
 
