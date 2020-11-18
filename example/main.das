@@ -4,9 +4,7 @@ require vulkan
 require strings
 
 
-def with_physical_devices(
-    inst : VkInstance; b : block<(d:array<VkPhysicalDevice>)>
-)
+def with_physical_devices(inst; b : block<(d:array<VkPhysicalDevice>)>)
     var devices : array<VkPhysicalDevice>
     var count : uint
     unsafe
@@ -18,9 +16,7 @@ def with_physical_devices(
     invoke(b, devices)
 
 
-def with_best_physical_device(inst : VkInstance; surface : VkSurfaceKHR;
-    b : block<(d:VkPhysicalDevice)>
-)
+def with_best_physical_device(inst, surface; b : block<(d:VkPhysicalDevice)>)
     inst |> with_physical_devices() <| $(devices)
         var best_score : int = 0
         var best_device : VkPhysicalDevice
@@ -36,8 +32,8 @@ def with_best_physical_device(inst : VkInstance; surface : VkSurfaceKHR;
         invoke(b, best_device)
 
 
-def with_queue_families(device : VkPhysicalDevice;
-    b : block<(families: array<VkQueueFamilyProperties>)>
+def with_queue_families(
+    device, b : block<(families: array<VkQueueFamilyProperties>)>
 )
     var families : array<VkQueueFamilyProperties>
     var count : uint
@@ -49,9 +45,7 @@ def with_queue_families(device : VkPhysicalDevice;
     invoke(b, families)
 
 
-def with_queue_family_present(
-    device : VkPhysicalDevice; surface : VkSurfaceKHR; b : block<(index:uint)>
-)
+def with_queue_family_present(device, surface; b : block<(index:uint)>)
     var found_index = -1
     device |> with_queue_families() <| $(families)
         for index in range(families |> length())
@@ -67,9 +61,7 @@ def with_queue_family_present(
         invoke(b, uint(found_index))
 
 
-def with_queue_family_graphics(
-    device : VkPhysicalDevice; b : block<(index:uint)>
-)
+def with_queue_family_graphics(device; b : block<(index:uint)>)
     var found_index = -1
     device |> with_queue_families() <| $(families)
         for index, family in range(families |> length()), families
@@ -84,13 +76,17 @@ def with_queue_family_graphics(
         invoke(b, uint(found_index))
 
 
-def get_suitability_score(device : VkPhysicalDevice)
+def get_suitability_score(device)
     var score = 1
-    device |> with_props() <| $(props : VkPhysicalDeviceProperties)
+    device |> with_props() <| $(props)
         if (props.deviceType ==
             VkPhysicalDeviceType VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU
         )
             score += 1000
+/*
+    device |> with_ext_props() <| $(props)
+        pass
+*/
     return score
 
 
@@ -99,7 +95,15 @@ def to_string( bytes : int8[] )
         return reinterpret<string>(addr(bytes[0]))
 
 
-def with_props(device : VkPhysicalDevice; b : block<(p:VkPhysicalDeviceProperties)>)
+/*
+def with_ext_props(device : VkPhysicalDevice;
+    b : block<(props:array<VkExtensionProperties>)>
+) 
+*/
+    
+
+
+def with_props(device; b : block<(p:VkPhysicalDeviceProperties)>)
     var props : VkPhysicalDeviceProperties
     unsafe
         device |> vkGetPhysicalDeviceProperties(addr(props))
