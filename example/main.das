@@ -56,7 +56,7 @@ def with_queue_family_present(device : VkPhysicalDevice; surface : VkSurfaceKHR;
             unsafe
                 verify(VkResult VK_SUCCESS ==
                     device |> vkGetPhysicalDeviceSurfaceSupportKHR(
-                        index, surface, addr(supported)))
+                        uint(index), surface, addr(supported)))
             if supported != 0u
                 invoke(b, uint(index))
                 break
