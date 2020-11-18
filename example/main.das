@@ -52,7 +52,7 @@ def with_queue_families(device : VkPhysicalDevice; b : block<(families: array<Vk
 def with_queue_family_present(device : VkPhysicalDevice; surface : VkSurfaceKHR; b : block<(index:int)>)
     device |> with_queue_families() <| $(families : array<VkQueueFamilyProperties>)
         for index in range(len(families))
-            bool supported = false
+            var supported = false
             verify(VkResult VK_SUCCESS ==
                 device |> vkGetPhysicalDeviceSurfaceSupportKHR(
                     index, surface, addr(supported)))
@@ -139,8 +139,9 @@ def main
                 print("  {props.deviceName |> to_string()}\n")
         with_window(800, 600, "dasVulkanExample") <| $(window)
             with_surface(window, instance) <| $(surface)
-                while window |> glfwWindowShouldClose() == 0
-                    glfwPollEvents()
+                inst |> with_best_physical_device(surface) <| $(device)
+                    while window |> glfwWindowShouldClose() == 0
+                        glfwPollEvents()
 
     glfwTerminate()
     print("finished\n")
