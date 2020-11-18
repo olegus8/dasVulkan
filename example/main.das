@@ -10,6 +10,9 @@ let
     ]]
 
 
+//TODO: free all dynamic arrays manually. they don't get deleted automatically
+
+
 def with_physical_devices(inst; b : block<(d:array<VkPhysicalDevice>)>)
     var devices : array<VkPhysicalDevice>
     var count : uint
@@ -121,7 +124,6 @@ def with_device(instance, surface; b : block<(device:VkDevice)>)
 def with_queue_create_infos(device, surface;
     b : block<(infos:array<VkDeviceQueueCreateInfo>)>
 )
-    //TODO: delete all arrays manually. they not freed automatically
     var families : array<uint>
     device |> with_queue_family_present(surface) <| $(qfam)
         families |> push(qfam)
