@@ -108,10 +108,12 @@ def to_string( bytes : int8[] )
         return reinterpret<string>(addr(bytes[0]))
 
 
-def with_logical_device(phys_dev, surface;
-    b : block<(device:VkDevice)>
-)
-    pass
+def with_device(instance, surface; b : block<(device:VkDevice)>)
+    instance |> with_best_physical_device(surface) <| $(phys_dev)
+        phys_dev |> with_props() <| $(props)
+            print("Using {props.deviceName |> to_string()}\n")
+        phys_dev |> with_queue_create_infos(surface) <| $(queue_infos)
+            pass
 
 
 def with_queue_create_infos(device, surface;
@@ -239,9 +241,7 @@ def main
     with_instance() <| $(instance)
         with_window(800, 600, "dasVulkanExample") <| $(window)
             window |> with_surface(instance) <| $(surface)
-                instance |> with_best_physical_device(surface) <| $(device)
-                    device |> with_props() <| $(props)
-                        print("Using {props.deviceName |> to_string()}\n")
+                instance |> with_device(surface) <| $(device)
                     while window |> glfwWindowShouldClose() == 0
                         glfwPollEvents()
 
