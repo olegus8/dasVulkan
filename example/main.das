@@ -139,7 +139,7 @@ def main
                 print("  {props.deviceName |> to_string()}\n")
         with_window(800, 600, "dasVulkanExample") <| $(window)
             with_surface(window, instance) <| $(surface)
-                inst |> with_best_physical_device(surface) <| $(device)
+                instance |> with_best_physical_device(surface) <| $(device)
                     while window |> glfwWindowShouldClose() == 0
                         glfwPollEvents()
 
