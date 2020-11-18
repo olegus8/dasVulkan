@@ -4,6 +4,12 @@ require vulkan
 require strings
 
 
+let
+    required_extensions = [[auto
+        "VK_KHR_swapchain"
+    ]]
+
+
 def with_physical_devices(inst; b : block<(d:array<VkPhysicalDevice>)>)
     var devices : array<VkPhysicalDevice>
     var count : uint
