@@ -4,13 +4,17 @@ require vulkan
 require strings
 
 
-def for_each_physical_device(inst : VkInstance; b : block<(d:VkPhysicalDevice)>)
+def for_each_physical_device(inst : VkInstance;
+    b : block<(d:VkPhysicalDevice)>
+)
     inst |> with_physical_devices() <| $(devices)
         for device in devices
             invoke(b, device)
 
 
-def with_physical_devices(inst : VkInstance; b : block<(d:array<VkPhysicalDevice>)>)
+def with_physical_devices(inst : VkInstance;
+    b : block<(d:array<VkPhysicalDevice>)>
+)
     var devices : array<VkPhysicalDevice>
     var count : uint
     unsafe
@@ -22,7 +26,9 @@ def with_physical_devices(inst : VkInstance; b : block<(d:array<VkPhysicalDevice
     invoke(b, devices)
 
 
-def with_best_physical_device(inst : VkInstance; surface : VkSurfaceKHR; b : block<(d:VkPhysicalDevice)>)
+def with_best_physical_device(inst : VkInstance; surface : VkSurfaceKHR;
+    b : block<(d:VkPhysicalDevice)>
+)
     inst |> with_physical_devices() <| $(devices)
         var best_score : int = 0
         var best_device : VkPhysicalDevice
