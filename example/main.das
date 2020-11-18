@@ -65,10 +65,11 @@ def with_queue_family_present(device : VkPhysicalDevice; surface : VkSurfaceKHR;
 def with_queue_family_graphics(device : VkPhysicalDevice; b : block<(index:uint)>)
     device |> with_queue_families() <| $(families)
         for index, family in range(families |> length()), families
-            var supported = false
+            var graphics_bit : uint
             unsafe
-                supported = family.queueFlags & reinterpret<uint>(VkQueueFlagBits VK_QUEUE_GRAPHICS_BIT) != 0u
-            if supported
+                graphics_bit = reinterpret<uint>(
+                    VkQueueFlagBits VK_QUEUE_GRAPHICS_BIT)
+            if family.queueFlags & graphics_bit
                 invoke(b, uint(index))
                 break
 
