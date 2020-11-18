@@ -52,6 +52,7 @@ def with_queue_families(device : VkPhysicalDevice;
 def with_queue_family_present(
     device : VkPhysicalDevice; surface : VkSurfaceKHR; b : block<(index:uint)>
 )
+    var found_index = -1
     device |> with_queue_families() <| $(families)
         for index in range(families |> length())
             var supported : uint = 0u
@@ -60,13 +61,16 @@ def with_queue_family_present(
                     device |> vkGetPhysicalDeviceSurfaceSupportKHR(
                         uint(index), surface, addr(supported)))
             if supported != 0u
-                invoke(b, uint(index))
+                found_index = index
                 break
+    if found_index != -1
+        invoke(b, uint(found_index))
 
 
 def with_queue_family_graphics(
     device : VkPhysicalDevice; b : block<(index:uint)>
 )
+    var found_index = -1
     device |> with_queue_families() <| $(families)
         for index, family in range(families |> length()), families
             var graphics_bit : uint
@@ -74,8 +78,10 @@ def with_queue_family_graphics(
                 graphics_bit = reinterpret<uint>(
                     VkQueueFlagBits VK_QUEUE_GRAPHICS_BIT)
             if (family.queueFlags & graphics_bit) != 0u
-                invoke(b, uint(index))
+                found_index = index
                 break
+    if found_index != -1
+        invoke(b, uint(found_index))
 
 
 def get_suitability_score(device : VkPhysicalDevice)
