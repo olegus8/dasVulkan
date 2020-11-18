@@ -119,26 +119,34 @@ def with_device(instance, surface; b : block<(device:VkDevice)>)
 def with_queue_create_infos(device, surface;
     b : block<(infos:array<VkDeviceQueueCreateInfo>)>
 )
-    device |> with_queue_family_present(surface) <| $(qfam_present)
-        device |> with_queue_family_graphics() <| $(qfam_graphics)
-            let priorities <- [[float[] 1.0f]]
-            var priorities_addr : float?
-            unsafe
-                priorities_addr = reinterpret<float?>(addr(priorities[0]))
+    var families : array<uint>
+    device |> with_queue_family_present(surface) <| $(qfam)
+        families.push(qfam)
+    device |> with_queue_family_graphics() <| $(qfam)
+        families.push(qfam)
 
-            var infos : array<VkDeviceQueueCreateInfo>
-            let families <- [[auto[] qfam_present; qfam_graphics]]
-            infos |> reserve(families |> length())
-            for family in families
-                infos |> emplace(<- [[
-                    VkDeviceQueueCreateInfo
-                        sType = (VkStructureType
-                            VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO),
-                        queueFamilyIndex = fam,
-                        queueCount = uint(priorities |> length()),
-                        pQueuePriorities = priorities_addr
-                ]])
-            invoke(b, infos)
+    var priorities : array<float>
+    priorities.reserve(families |> length())
+    for family in families
+        priorities.push(1.0f)
+
+    var priorities_addr : float?
+    unsafe
+        priorities_addr = reinterpret<float?>(addr(priorities[0]))
+
+    var infos : array<VkDeviceQueueCreateInfo>
+    infos |> reserve(families |> length())
+
+    for family in families
+        infos |> emplace(<- [[
+            VkDeviceQueueCreateInfo
+                sType = (VkStructureType
+                    VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO),
+                queueFamilyIndex = fam,
+                queueCount = uint(priorities |> length()),
+                pQueuePriorities = priorities_addr
+        ]])
+    invoke(b, infos)
 
 
 def with_formats(device, surface;
