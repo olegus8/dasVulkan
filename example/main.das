@@ -1,11 +1,11 @@
-options log
+options log, log_infer_passes
 
 require vulkan
 require strings
 
 
 let
-    REQUIRED_EXTENSIONS = [[auto
+    REQUIRED_EXTENSIONS = [[auto[]
         "VK_KHR_swapchain"
     ]]
 
@@ -91,7 +91,7 @@ def get_suitability_score(device)
             score += 1000
     device |> with_ext_props() <| $(exts)
         for required_ext in REQUIRED_EXTENSIONS
-            if ! exts |> key_exists(required_ext)
+            if ! key_exists(exts, required_ext)
                 score = 0
                 break
     return score
@@ -118,7 +118,9 @@ def with_ext_props(device;
 
     var props_table : table<string; VkExtensionProperties>
     for prop in props
-        props_table[prop.extensionName |> to_string()] <- prop
+        let name <- prop.extensionName |> to_string()
+        print("extension found: {name}\n")
+        props_table[name] <- prop
     invoke(b, props_table)
 
 
