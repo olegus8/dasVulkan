@@ -141,7 +141,7 @@ def main
 
     with_instance() <| $(instance)
         with_window(800, 600, "dasVulkanExample") <| $(window)
-            with_surface(window, instance) <| $(surface)
+            window |> with_surface(instance) <| $(surface)
                 instance |> with_best_physical_device(surface) <| $(device)
                     device |> with_props() <| $(props)
                         print("Using {props.deviceName |> to_string()}\n")
