@@ -83,10 +83,8 @@ def get_suitability_score(device)
             VkPhysicalDeviceType VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU
         )
             score += 1000
-/*
-    device |> with_ext_props() <| $(props)
+    device |> with_ext_props() <| $(ext_props)
         pass
-*/
     return score
 
 
@@ -101,11 +99,11 @@ def with_ext_props(device; b : block<(props:array<VkExtensionProperties>)>)
     unsafe
         verify(VkResult VK_SUCCESS ==
             device |> vkEnumerateDeviceExtensionProperties(
-                null, addr(count), null))
+                reinterpret<string>(null), addr(count), null))
         props |> resize(int(count))
         verify(VkResult VK_SUCCESS ==
             device |> vkEnumerateDeviceExtensionProperties(
-                null, addr(count), addr(props[0])))
+                reinterpret<string>(null), addr(count), addr(props[0])))
     invoke(b, props)
 
 
