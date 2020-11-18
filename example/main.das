@@ -77,7 +77,9 @@ def with_queue_family_graphics(device : VkPhysicalDevice; b : block<(index:uint)
 def get_suitability_score(device : VkPhysicalDevice)
     var score = 1
     device |> with_props() <| $(props : VkPhysicalDeviceProperties)
-        if props.deviceType == VkPhysicalDeviceType VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU
+        if (props.deviceType ==
+            VkPhysicalDeviceType VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU
+        )
             score += 1000
     return score
 
