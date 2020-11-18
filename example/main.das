@@ -29,13 +29,34 @@ def with_best_physical_device(inst, surface; b : block<(d:VkPhysicalDevice)>)
         for device in devices
             device |> with_queue_family_present(surface) <| $(present_i)
                 device |> with_queue_family_graphics() <| $(graphics_i)
-                    var score = device |> get_suitability_score()
+                    var score = device |> get_suitability_score(surface)
                     if score > best_score
                         best_score = score
                         best_device = device
         if best_score == 0
             panic("No suitable physical device found.")
         invoke(b, best_device)
+
+
+def get_suitability_score(device, surface)
+    var score = 1
+    device |> with_props() <| $(props)
+        if (props.deviceType ==
+            VkPhysicalDeviceType VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU
+        )
+            score += 1000
+    device |> with_ext_props() <| $(exts)
+        for required_ext in REQUIRED_EXTENSIONS
+            if ! key_exists(exts, hash(required_ext))
+                score = 0
+                break
+    device |> with_formats(surface) <| $(formats)
+        if formats |> length() == 0
+            score = 0
+    device |> with_present_modes(surface) <| $(modes)
+        if modes |> length() == 0
+            score = 0
+    return score
 
 
 def with_queue_families(
@@ -80,21 +101,6 @@ def with_queue_family_graphics(device; b : block<(index:uint)>)
                 break
     if found_index != -1
         invoke(b, uint(found_index))
-
-
-def get_suitability_score(device)
-    var score = 1
-    device |> with_props() <| $(props)
-        if (props.deviceType ==
-            VkPhysicalDeviceType VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU
-        )
-            score += 1000
-    device |> with_ext_props() <| $(exts)
-        for required_ext in REQUIRED_EXTENSIONS
-            if ! key_exists(exts, hash(required_ext))
-                score = 0
-                break
-    return score
 
 
 def to_string( bytes : int8[] )
