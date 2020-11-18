@@ -99,7 +99,9 @@ def to_string( bytes : int8[] )
         return reinterpret<string>(addr(bytes[0]))
 
 
-def with_ext_props(device; b : block<(props:array<VkExtensionProperties>)>)
+def with_ext_props(device;
+    b : block<(props:table<string;VkExtensionProperties>)>
+)
     var props : array<VkExtensionProperties>
     var count : uint
     unsafe
@@ -110,7 +112,11 @@ def with_ext_props(device; b : block<(props:array<VkExtensionProperties>)>)
         verify(VkResult VK_SUCCESS ==
             device |> vkEnumerateDeviceExtensionProperties(
                 reinterpret<string>(null), addr(count), addr(props[0])))
-    invoke(b, props)
+
+    var props_table : table<string; VkExtensionProperties>
+    for prop in props:
+        props_table[prop.extensionName |> to_string()] = prop
+    invoke(b, props_table)
 
 
 def with_props(device; b : block<(p:VkPhysicalDeviceProperties)>)
