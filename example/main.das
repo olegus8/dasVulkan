@@ -65,7 +65,7 @@ def with_queue_family_present(device : VkPhysicalDevice; surface : VkSurfaceKHR;
 def with_queue_family_graphics(device : VkPhysicalDevice; b : block<(index:uint)>)
     device |> with_queue_families() <| $(families)
         for index, family in range(families |> length()), families
-            if family.queueFlags & VkQueueFlagBits VK_QUEUE_GRAPHICS_BIT
+            if family.queueFlags & uint(VkQueueFlagBits VK_QUEUE_GRAPHICS_BIT)
                 invoke(b, uint(index))
                 break
 
