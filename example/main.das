@@ -113,6 +113,8 @@ def with_device(instance, surface; b : block<(device:VkDevice)>)
         phys_dev |> with_props() <| $(props)
             print("Using {props.deviceName |> to_string()}\n")
         phys_dev |> with_queue_create_infos(surface) <| $(queue_infos)
+            //TODO: finish creating logical device
+            invoke(b, [[VkDevice]])
             pass
 
 
@@ -141,7 +143,7 @@ def with_queue_create_infos(device, surface;
             VkDeviceQueueCreateInfo
                 sType = (VkStructureType
                     VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO),
-                queueFamilyIndex = fam,
+                queueFamilyIndex = family,
                 queueCount = uint(priorities |> length()),
                 pQueuePriorities = priorities_addr
         ]])
