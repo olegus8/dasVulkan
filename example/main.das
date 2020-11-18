@@ -126,7 +126,7 @@ def with_queue_create_infos(device, surface;
         families |> push(qfam)
 
     var priorities : array<float>
-    priorities.reserve(families |> length())
+    priorities |> reserve(families |> length())
     for family in families
         priorities |> push(1.0f)
 
@@ -136,9 +136,8 @@ def with_queue_create_infos(device, surface;
 
     var infos : array<VkDeviceQueueCreateInfo>
     infos |> reserve(families |> length())
-
     for family in families
-        infos |> emplace(<- [[
+        infos |> emplace([[
             VkDeviceQueueCreateInfo
                 sType = (VkStructureType
                     VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO),
