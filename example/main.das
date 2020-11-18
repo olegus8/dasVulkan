@@ -125,15 +125,20 @@ def with_queue_create_infos(device, surface;
             var priorities_addr : float?
             unsafe
                 priorities_addr = reinterpret<float?>(addr(priorities[0]))
+
+            var infos : array<VkDeviceQueueCreateInfo>
             let families <- [[auto[] qfam_present; qfam_graphics]]
-            let infos <- [{for fam in families; [[
-                VkDeviceQueueCreateInfo
-                    sType = (VkStructureType
-                        VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO),
-                    queueFamilyIndex = fam,
-                    queueCount = uint(priorities |> length()),
-                    pQueuePriorities = priorities_addr
-            ]]}]
+            infos |> reserve(families |> length())
+            for family in families
+                infos |> emplace(<- [[
+                    VkDeviceQueueCreateInfo
+                        sType = (VkStructureType
+                            VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO),
+                        queueFamilyIndex = fam,
+                        queueCount = uint(priorities |> length()),
+                        pQueuePriorities = priorities_addr
+                ]])
+            invoke(b, infos)
 
 
 def with_formats(device, surface;
