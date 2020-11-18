@@ -4,14 +4,6 @@ require vulkan
 require strings
 
 
-def for_each_physical_device(inst : VkInstance;
-    b : block<(d:VkPhysicalDevice)>
-)
-    inst |> with_physical_devices() <| $(devices)
-        for device in devices
-            invoke(b, device)
-
-
 def with_physical_devices(inst : VkInstance;
     b : block<(d:array<VkPhysicalDevice>)>
 )
