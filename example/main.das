@@ -5,16 +5,21 @@ require strings
 
 
 def for_each_physical_device(inst : VkInstance; b : block<(d:VkPhysicalDevice)>)
-    var devices : VkPhysicalDevice[10] //TODO: make this use MAX_DEVICES
+    inst |> with_physical_devices() <| $(devices : array<VkPhysicalDevice>)
+        for device in devices
+            invoke(b, device)
+
+
+def with_physical_devices(inst : VkInstance; b : block<(d:array<VkPhysicalDevice>)>)
+    var devices : array<VkPhysicalDevice>
     var count : uint
     unsafe
         verify(VkResult VK_SUCCESS ==
             inst |> vkEnumeratePhysicalDevices(addr(count), null))
-        assert(count < 10u)
+        devices |> resize(int(count))
         verify(VkResult VK_SUCCESS ==
             inst |> vkEnumeratePhysicalDevices(addr(count), addr(devices[0])))
-    for i in range(count)
-        invoke(b, devices[i])
+    invoke(b, devices)
 
 def to_string( bytes : int8[] )
     unsafe
