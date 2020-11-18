@@ -22,18 +22,59 @@ def with_physical_devices(inst : VkInstance; b : block<(d:array<VkPhysicalDevice
     invoke(b, devices)
 
 
-def with_best_physical_device(inst : VkInstance; b : block<(d:VkPhysicalDevice)>)
+def with_best_physical_device(inst : VkInstance; surface : VkSurfaceKHR; b : block<(d:VkPhysicalDevice)>)
     inst |> with_physical_devices() <| $(devices : array<VkPhysicalDevice>)
-        var best_score : int
+        var best_score : int = 0
         var best_device : VkPhysicalDevice
         for device in devices
             var score = device |> get_suitability_score()
-            if score > best_score
-                best_score = score
-                best_device = device
+            device |> with_queue_family_present(surface) <| $(present_i : int)
+                device |> with_queue_family_graphics() <| $(graphics_i : int)
+                    if score > best_score
+                        best_score = score
+                        best_device = device
         if best_score == 0
             panic("No suitable physical device found.")
         invoke(b, best_device)
+
+
+def with_queue_families(device : VkPhysicalDevice; b : block<(families: array<VkQueueFamilyProperties>)>)
+    var families : array<VkQueueFamilyProperties>
+    var count : uint
+    unsafe
+        device |> vkGetPhysicalDeviceQueueFamilyProperties(addr(count), null)
+        families |> resize(int(count))
+        device |> vkGetPhysicalDeviceQueueFamilyProperties(
+            addr(count), addr(families[0]))
+    invoke(b, families)
+
+
+def with_queue_family_present(device : VkPhysicalDevice; surface : VkSurfaceKHR; b : block<(index:int)>)
+    device |> with_queue_families() <| $(families : array<VkQueueFamilyProperties>)
+        for index in range(len(families))
+            bool supported = false
+            verify(VkResult VK_SUCCESS ==
+                device |> vkGetPhysicalDeviceSurfaceSupportKHR(
+                    index, surface, addr(supported)))
+            if supported
+                invoke(b, index)
+                break
+
+
+def with_queue_family_graphics(device : VkPhysicalDevice; b : block<(index:int)>)
+    device |> with_queue_families() <| $(families : array<VkQueueFamilyProperties>)
+        for index, family in range(len(families)), families
+            if family.queueFlags & VkQueueFlagBits VK_QUEUE_GRAPHICS_BIT
+                invoke(b, index)
+                break
+
+
+def get_suitability_score(device : VkPhysicalDevice)
+    var score = 0
+    device |> with_props() <| $(props : VkPhysicalDeviceProperties)
+        if props.deviceType == VkPhysicalDeviceType VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU
+            score += 1000
+    return score
 
 
 def to_string( bytes : int8[] )
