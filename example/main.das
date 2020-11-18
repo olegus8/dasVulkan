@@ -134,7 +134,7 @@ def with_surface(window, instance; b : block<(s:VkSurfaceKHR)>)
 
 [export]
 def main
-    print("\nstarted\n")
+    print("\nStarted\n")
     glfwInit()
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API)
     glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE)
@@ -149,5 +149,5 @@ def main
                         glfwPollEvents()
 
     glfwTerminate()
-    print("finished\n")
+    print("Finished\n")
     return true
