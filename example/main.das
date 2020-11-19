@@ -9,8 +9,7 @@ let
         "VK_KHR_swapchain"
     ]]
 
-
-//TODO: free all dynamic arrays manually. they don't get deleted automatically
+    MAX_PHYSICAL_DEVICES = 10
 
 
 def with_physical_devices(inst; b : block<(d:array<VkPhysicalDevice>)>)
