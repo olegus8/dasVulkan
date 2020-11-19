@@ -103,30 +103,27 @@ def to_string( bytes : int8[] )
         return reinterpret<string>(addr(bytes[0]))
 
 
-def with_device(instance, surface; b : block<(device:VkDevice)>)
-    instance |> with_best_physical_device(surface) <| $(phys_dev)
-        phys_dev |> with_props() <| $(props)
-            print("Using {props.deviceName |> to_string()}\n")
-        phys_dev |> with_queue_create_infos(surface) <| $(queue_infos)
-            let features : VkPhysicalDeviceFeatures
-            var device : VkDevice
-            unsafe
-                let create_info = [[VkDeviceCreateInfo
-                    sType = (VkStructureType
-                        VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO),
-                    pQueueCreateInfos = addr(queue_infos[0]),
-                    queueCreateInfoCount = uint(queue_infos |> length()),
-                    pEnabledFeatures = addr(features),
-                    enabledExtensionCount = uint(
-                        REQUIRED_EXTENSIONS |> length()),
-                    ppEnabledExtensionNames = reinterpret<string?>(
-                        addr(REQUIRED_EXTENSIONS[0]))
-                ]]
-                verify(VkResult VK_SUCCESS == vkCreateDevice(
-                    phys_dev, addr(create_info), null, addr(device)))
-            b |> invoke(device)
-            device |> vkDeviceWaitIdle()
-            device |> vkDestroyDevice(null)
+def with_device(instance, phys_dev, surface; b : block<(device:VkDevice)>)
+    phys_dev |> with_queue_create_infos(surface) <| $(queue_infos)
+        let features : VkPhysicalDeviceFeatures
+        var device : VkDevice
+        unsafe
+            let create_info = [[VkDeviceCreateInfo
+                sType = (VkStructureType
+                    VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO),
+                pQueueCreateInfos = addr(queue_infos[0]),
+                queueCreateInfoCount = uint(queue_infos |> length()),
+                pEnabledFeatures = addr(features),
+                enabledExtensionCount = uint(
+                    REQUIRED_EXTENSIONS |> length()),
+                ppEnabledExtensionNames = reinterpret<string?>(
+                    addr(REQUIRED_EXTENSIONS[0]))
+            ]]
+            verify(VkResult VK_SUCCESS == vkCreateDevice(
+                phys_dev, addr(create_info), null, addr(device)))
+        b |> invoke(device)
+        device |> vkDeviceWaitIdle()
+        device |> vkDestroyDevice(null)
 
 
 def with_queue_create_infos(device, surface;
@@ -263,10 +260,27 @@ def with_surface(window, instance; b : block<(s:VkSurfaceKHR)>)
     instance |> vkDestroySurfaceKHR(surface, null)
 
 
-def with_swap_chain(device, surface; b : block<(sc:VkSwapchainKHR)>)
+def with_swap_chain(device, phys_dev, surface; b : block<(sc:VkSwapchainKHR)>)
+    
     //TODO: create swapchain
     b |> invoke([[VkSwapchainKHR]])
 
+def with_graphics(width, height, title; b : block<(
+    instance : VkInstance;
+    window : GLFWwindow_DasHandle;
+    surface : VkSurfaceKHR;
+    phys_dev : VkPhysicalDevice;
+    device : VkDevice;
+    swap_chain : VkSwapchainKHR
+)>)
+    with_instance() <| $(instance)
+        with_window(width, height, title) <| $(window)
+            window |> with_surface(instance) <| $(surface)
+                instance |> with_best_physical_device(surface) <| $(phys_dev)
+                    instance |> with_device(phys_dev, surface) <| $(device)
+                        device |> with_swap_chain(surface) <| $(swap_chain)
+                            b |> invoke(instance, window, surface, phys_dev,
+                                device, swap_chain)
 
 [export]
 def main
@@ -275,13 +289,13 @@ def main
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API)
     glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE)
 
-    with_instance() <| $(instance)
-        with_window(800, 600, "dasVulkanExample") <| $(window)
-            window |> with_surface(instance) <| $(surface)
-                instance |> with_device(surface) <| $(device)
-                    device |> with_swap_chain(surface) <| $(swap_chain)
-                        while window |> glfwWindowShouldClose() == 0
-                            glfwPollEvents()
+    with_graphics(800, 600, "dasVulkanExample") <| $(
+        instance, window, surface, phys_dev, device, swap_chain
+    )
+        phys_dev |> with_props() <| $(props)
+            print("Using {props.deviceName |> to_string()}\n")
+        while window |> glfwWindowShouldClose() == 0
+            glfwPollEvents()
 
     glfwTerminate()
     print("Finished\n")
