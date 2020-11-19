@@ -211,6 +211,18 @@ def with_present_modes(device, surface;
     delete modes
 
 
+def with_best_present_mode(device, surface; b : block<(mode:VkPresentModekHR)>)
+    device |> with_present_modes(surface) <| $(modes)
+        for preferred in [[auto[]
+            VkPresentModeKHR VK_PRESENT_MODE_MAILBOX_KHR;
+            VkPresentModeKHR VK_PRESENT_MODE_FIFO_KHR
+        ]]
+            for mode in modes
+                if mode == preferred
+                    b |> invoke(mode)
+                    return
+
+
 def with_ext_props(device;
     b : block<(props:table<uint;VkExtensionProperties>)>
 )
