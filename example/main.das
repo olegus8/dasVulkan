@@ -115,9 +115,25 @@ def with_device(instance, surface; b : block<(device:VkDevice)>)
         phys_dev |> with_props() <| $(props)
             print("Using {props.deviceName |> to_string()}\n")
         phys_dev |> with_queue_create_infos(surface) <| $(queue_infos)
-            //TODO: finish creating logical device
-            invoke(b, [[VkDevice]])
-            pass
+            let features : VkPhysicalDeviceFeatures
+            var device : VkDevice
+            unsafe
+                let create_info = [[VkDeviceCreateInfo
+                    sType = (VkStructureType
+                        VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO),
+                    pQueueCreateInfos = addr(queue_infos[0]),
+                    queueCreateInfoCount = uint(queue_infos |> length()),
+                    pEnabledFeatures = addr(features),
+                    enabledExtensionCount = uint(
+                        REQUIRED_EXTENSIONS |> length()),
+                    ppEnabledExtensionNames = reinterpret<string?>(
+                        addr(REQUIRED_EXTENSIONS[0]),
+                ]]
+                verify(VkResult VK_SUCCESS == vkCreateDevice(
+                    phys_dev, addr(create_info), null, addr(device)))
+            b |> invoke(device)
+            device |> vkDeviceWaitIdle()
+            device |> vkDestroyDevice(null)
 
 
 def with_queue_create_infos(device, surface;
