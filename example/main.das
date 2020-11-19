@@ -183,7 +183,7 @@ def with_best_format(device, surface; b : block<(format:VkSurfaceFormatKHR)>)
         // picking ideal format if available
         for format in formats
             if (format.format == VkFormat VK_FORMAT_B8G8R8A8_SRGB
-            &&  format.colorSpace == (VkColorSpace
+            &&  format.colorSpace == (VkColorSpaceKHR
                     VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)
             )
                 b |> invoke(format)
