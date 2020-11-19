@@ -273,14 +273,14 @@ def with_graphics(width, height, title; b : block<(
     device : VkDevice;
     swap_chain : VkSwapchainKHR
 )>)
-    with_instance() <| $(instance)
-        with_window(width, height, title) <| $(window)
-            window |> with_surface(instance) <| $(surface)
-                instance |> with_best_physical_device(surface) <| $(phys_dev)
-                    instance |> with_device(phys_dev, surface) <| $(device)
-                        device |> with_swap_chain(phys_dev, surface) <| $(swap_chain)
-                            b |> invoke(instance, window, surface, phys_dev,
-                                device, swap_chain)
+    with_instance() <| $(instance) {
+    with_window(width, height, title) <| $(window) {
+    window |> with_surface(instance) <| $(surface) {
+    instance |> with_best_physical_device(surface) <| $(phys_dev) {
+    instance |> with_device(phys_dev, surface) <| $(device) {
+    device |> with_swap_chain(phys_dev, surface) <| $(swap_chain) {
+        b |> invoke(instance, window, surface, phys_dev, device, swap_chain);
+    }}}}}}
 
 [export]
 def main
