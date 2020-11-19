@@ -9,8 +9,6 @@ let
         "VK_KHR_swapchain"
     ]]
 
-    MAX_PHYSICAL_DEVICES = 10
-
 
 def with_physical_devices(inst; b : block<(d:array<VkPhysicalDevice>)>)
     var devices : array<VkPhysicalDevice>
