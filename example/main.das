@@ -263,6 +263,11 @@ def with_surface(window, instance; b : block<(s:VkSurfaceKHR)>)
     instance |> vkDestroySurfaceKHR(surface, null)
 
 
+def with_swap_chain(device, surface; b : block<(sc:VkSwapchainKHR)>)
+    //TODO: create swapchain
+    b |> invoke([[VkSwapchainKHR]])
+
+
 [export]
 def main
     print("\nStarted\n")
@@ -274,8 +279,9 @@ def main
         with_window(800, 600, "dasVulkanExample") <| $(window)
             window |> with_surface(instance) <| $(surface)
                 instance |> with_device(surface) <| $(device)
-                    while window |> glfwWindowShouldClose() == 0
-                        glfwPollEvents()
+                    device |> with_swap_chain(surface) <| $(swap_chain)
+                        while window |> glfwWindowShouldClose() == 0
+                            glfwPollEvents()
 
     glfwTerminate()
     print("Finished\n")
