@@ -147,7 +147,7 @@ def with_queue_create_infos(device, surface;
 
     var priorities : array<float>
     priorities |> reserve(families |> length())
-    for family in families
+    for family in families |> keys()
         priorities |> push(1.0f)
 
     var priorities_addr : float?
