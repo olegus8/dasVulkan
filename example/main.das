@@ -76,7 +76,7 @@ def with_queue_families(
 def with_graphics_queue_family(device, surface; b : block<(index:uint)>)
     var found_index = -1
     device |> with_queue_families() <| $(families)
-        for index in range(families |> length())
+        for index, family in range(INT_MAX), families
             var can_present : uint = 0u
             var graphics_bit : uint
             unsafe
@@ -86,21 +86,6 @@ def with_graphics_queue_family(device, surface; b : block<(index:uint)>)
                 graphics_bit = reinterpret<uint>(
                     VkQueueFlagBits VK_QUEUE_GRAPHICS_BIT)
             if (family.queueFlags & graphics_bit) != 0u && can_present != 0u
-                found_index = index
-                break
-    if found_index != -1
-        b |> invoke(uint(found_index))
-
-
-def with_queue_family_graphics(device; b : block<(index:uint)>)
-    var found_index = -1
-    device |> with_queue_families() <| $(families)
-        for index, family in range(families |> length()), families
-            var graphics_bit : uint
-            unsafe
-                graphics_bit = reinterpret<uint>(
-                    VkQueueFlagBits VK_QUEUE_GRAPHICS_BIT)
-            if (family.queueFlags & graphics_bit) != 0u
                 found_index = index
                 break
     if found_index != -1
