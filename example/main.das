@@ -278,7 +278,7 @@ def with_graphics(width, height, title; b : block<(
             window |> with_surface(instance) <| $(surface)
                 instance |> with_best_physical_device(surface) <| $(phys_dev)
                     instance |> with_device(phys_dev, surface) <| $(device)
-                        device |> with_swap_chain(surface) <| $(swap_chain)
+                        device |> with_swap_chain(phys_dev, surface) <| $(swap_chain)
                             b |> invoke(instance, window, surface, phys_dev,
                                 device, swap_chain)
 
