@@ -28,11 +28,10 @@ def with_best_physical_device(inst, surface; b : block<(d:VkPhysicalDevice)>)
         var best_score : int = 0
         var best_device : VkPhysicalDevice
         for device in devices
-            device |> with_graphics_queue_family(surface) <| $(graphics_i)
-                var score = device |> get_suitability_score(surface)
-                if score > best_score
-                    best_score = score
-                    best_device = device
+            var score = device |> get_suitability_score(surface)
+            if score > best_score
+                best_score = score
+                best_device = device
         if best_score == 0
             panic("No suitable physical device found.")
         b |> invoke(best_device)
@@ -40,6 +39,13 @@ def with_best_physical_device(inst, surface; b : block<(d:VkPhysicalDevice)>)
 
 def get_suitability_score(device, surface)
     var score = 1
+
+    var can_graphics = false
+    device |> with_graphics_queue_family(surface) <| $(graphics_i)
+        can_graphics = true
+    if ! can_graphics
+        score = 0
+    
     device |> with_props() <| $(props)
         if (props.deviceType ==
             VkPhysicalDeviceType VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU
@@ -77,7 +83,7 @@ def with_graphics_queue_family(device, surface; b : block<(index:uint)>)
     var found_index = -1
     device |> with_queue_families() <| $(families)
         for family, index in families, range(INT_MAX)
-            var can_present : uint = 0u
+            var can_present : uint
             var graphics_bit : uint
             unsafe
                 verify(VkResult VK_SUCCESS ==
