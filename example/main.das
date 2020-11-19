@@ -19,7 +19,7 @@ def with_physical_devices(inst; b : block<(d:array<VkPhysicalDevice>)>)
         devices |> resize(int(count))
         verify(VkResult VK_SUCCESS ==
             inst |> vkEnumeratePhysicalDevices(addr(count), addr(devices[0])))
-    invoke(b, devices)
+    b |> invoke(devices)
     delete devices
 
 
@@ -36,7 +36,7 @@ def with_best_physical_device(inst, surface; b : block<(d:VkPhysicalDevice)>)
                         best_device = device
         if best_score == 0
             panic("No suitable physical device found.")
-        invoke(b, best_device)
+        b |> invoke(best_device)
 
 
 def get_suitability_score(device, surface)
@@ -70,7 +70,7 @@ def with_queue_families(
         families |> resize(int(count))
         device |> vkGetPhysicalDeviceQueueFamilyProperties(
             addr(count), addr(families[0]))
-    invoke(b, families)
+    b |> invoke(families)
     delete families
 
 
@@ -87,7 +87,7 @@ def with_queue_family_present(device, surface; b : block<(index:uint)>)
                 found_index = index
                 break
     if found_index != -1
-        invoke(b, uint(found_index))
+        b |> invoke(uint(found_index))
 
 
 def with_queue_family_graphics(device; b : block<(index:uint)>)
@@ -102,7 +102,7 @@ def with_queue_family_graphics(device; b : block<(index:uint)>)
                 found_index = index
                 break
     if found_index != -1
-        invoke(b, uint(found_index))
+        b |> invoke(uint(found_index))
 
 
 def to_string( bytes : int8[] )
@@ -166,7 +166,7 @@ def with_queue_create_infos(device, surface;
                 pQueuePriorities = priorities_addr
         ]])
 
-    invoke(b, infos)
+    b |> invoke(infos)
 
     delete families
     delete priorities
@@ -186,7 +186,7 @@ def with_formats(device, surface;
         verify(VkResult VK_SUCCESS ==
             device |> vkGetPhysicalDeviceSurfaceFormatsKHR(
                 surface, addr(count), addr(formats[0])))
-    invoke(b, formats)
+    b |> invoke(formats)
     delete formats
 
 
@@ -203,7 +203,7 @@ def with_present_modes(device, surface;
         verify(VkResult VK_SUCCESS ==
             device |> vkGetPhysicalDeviceSurfacePresentModesKHR(
                 surface, addr(count), addr(modes[0])))
-    invoke(b, modes)
+    b |> invoke(modes)
     delete modes
 
 
@@ -225,7 +225,7 @@ def with_ext_props(device;
     for prop in props
         let name <- prop.extensionName |> to_string()
         props_table[hash(name)] <- prop
-    invoke(b, props_table)
+    b |> invoke(props_table)
     delete props
 
 
@@ -233,13 +233,13 @@ def with_props(device; b : block<(p:VkPhysicalDeviceProperties)>)
     var props : VkPhysicalDeviceProperties
     unsafe
         device |> vkGetPhysicalDeviceProperties(addr(props))
-    invoke(b, props)
+    b |> invoke(props)
 
 
 def with_window(width, height, title; b : block<(w:GLFWwindow_DasHandle)>)
     var window = glfwCreateWindow(width, height, title,
         [[GLFWmonitor_DasHandle]], [[GLFWwindow_DasHandle]])
-    invoke(b, window)
+    b |> invoke(window)
     window |> glfwDestroyWindow()
 
 
@@ -258,7 +258,7 @@ def with_instance(b : block<(inst:VkInstance)>)
         verify(VkResult VK_SUCCESS == vkCreateInstance(
             addr(inst_info), null, addr(instance)))
 
-    invoke(b, instance)
+    b |> invoke(instance)
 
     instance |> vkDestroyInstance(null)
 
@@ -268,7 +268,7 @@ def with_surface(window, instance; b : block<(s:VkSurfaceKHR)>)
     unsafe
         verify(VkResult VK_SUCCESS == instance |> glfwCreateWindowSurface(
             window, null, addr(surface)))
-    invoke(b, surface)
+    b |> invoke(surface)
     instance |> vkDestroySurfaceKHR(surface, null)
 
 
