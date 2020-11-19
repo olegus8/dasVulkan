@@ -178,6 +178,22 @@ def with_formats(device, surface;
     delete formats
 
 
+def with_best_format(device, surface; b : block<(format:VkSurfaceFormatKHR)>)
+    device |> with_formats(surface) <| $(formats)
+        // picking ideal format if available
+        for format in formats
+            if (format.format == VkFormat VK_FORMAT_B8G8R8A8_SRGB
+            &&  format.colorSpace == (VkColorSpace
+                    VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)
+            )
+                b |> invoke(format)
+                return
+        // if no ideal found, picking anything
+        for format in formats
+            b |> invoke(format)
+            return
+
+
 def with_present_modes(device, surface;
     b : block<(formats:array<VkPresentModeKHR>)>
 )
@@ -261,9 +277,9 @@ def with_surface(window, instance; b : block<(s:VkSurfaceKHR)>)
 
 
 def with_swap_chain(device, phys_dev, surface; b : block<(sc:VkSwapchainKHR)>)
-    
-    //TODO: create swapchain
-    b |> invoke([[VkSwapchainKHR]])
+    phys_dev |> with_best_format(surface) <| $(format)
+        //TODO: create swapchain
+        b |> invoke([[VkSwapchainKHR]])
 
 
 def with_graphics(width, height, title; b : block<(
