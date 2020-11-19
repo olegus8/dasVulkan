@@ -211,7 +211,7 @@ def with_present_modes(device, surface;
     delete modes
 
 
-def with_best_present_mode(device, surface; b : block<(mode:VkPresentModekHR)>)
+def with_best_present_mode(device, surface; b : block<(mode:VkPresentModeKHR)>)
     device |> with_present_modes(surface) <| $(modes)
         for preferred in [[auto[]
             VkPresentModeKHR VK_PRESENT_MODE_MAILBOX_KHR;
