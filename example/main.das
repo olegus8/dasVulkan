@@ -127,7 +127,7 @@ def with_device(instance, surface; b : block<(device:VkDevice)>)
                     enabledExtensionCount = uint(
                         REQUIRED_EXTENSIONS |> length()),
                     ppEnabledExtensionNames = reinterpret<string?>(
-                        addr(REQUIRED_EXTENSIONS[0]),
+                        addr(REQUIRED_EXTENSIONS[0])
                 ]]
                 verify(VkResult VK_SUCCESS == vkCreateDevice(
                     phys_dev, addr(create_info), null, addr(device)))
