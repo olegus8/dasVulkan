@@ -290,8 +290,9 @@ def with_surface(window, instance; b : block<(s:VkSurfaceKHR)>)
 
 def with_swap_chain(device, phys_dev, surface; b : block<(sc:VkSwapchainKHR)>)
     phys_dev |> with_best_format(surface) <| $(format)
-        //TODO: create swapchain
-        b |> invoke([[VkSwapchainKHR]])
+        phys_dev |> with_best_present_mode(surface) <| $(present_mode)
+            //TODO: create swapchain
+            b |> invoke([[VkSwapchainKHR]])
 
 
 def with_graphics(width, height, title; b : block<(
