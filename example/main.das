@@ -139,11 +139,11 @@ def with_device(instance, surface; b : block<(device:VkDevice)>)
 def with_queue_create_infos(device, surface;
     b : block<(infos:array<VkDeviceQueueCreateInfo>)>
 )
-    var families : array<uint>
+    var families : table<uint;bool>
     device |> with_queue_family_present(surface) <| $(qfam)
-        families |> push(qfam)
+        families[qfam] = true
     device |> with_queue_family_graphics() <| $(qfam)
-        families |> push(qfam)
+        families[qfam] = true
 
     var priorities : array<float>
     priorities |> reserve(families |> length())
@@ -156,7 +156,7 @@ def with_queue_create_infos(device, surface;
 
     var infos : array<VkDeviceQueueCreateInfo>
     infos |> reserve(families |> length())
-    for family in families
+    for family in families |> keys()
         infos |> emplace([[
             VkDeviceQueueCreateInfo
                 sType = (VkStructureType
