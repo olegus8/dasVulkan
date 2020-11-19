@@ -40,10 +40,10 @@ def with_best_physical_device(inst, surface; b : block<(d:VkPhysicalDevice)>)
 def get_suitability_score(device, surface)
     var score = 1
 
-    var can_graphics = false
+    var has_graphics = false
     device |> with_graphics_queue_family(surface) <| $(graphics_i)
-        can_graphics = true
-    if ! can_graphics
+        has_graphics = true
+    if ! has_graphics
         score = 0
     
     device |> with_props() <| $(props)
