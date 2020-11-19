@@ -76,7 +76,7 @@ def with_queue_families(
 def with_graphics_queue_family(device, surface; b : block<(index:uint)>)
     var found_index = -1
     device |> with_queue_families() <| $(families)
-        for index, family in range(INT_MAX), families
+        for family, index in families, range(INT_MAX)
             var can_present : uint = 0u
             var graphics_bit : uint
             unsafe
