@@ -23,6 +23,7 @@ def with_physical_devices(inst; b : block<(d:array<VkPhysicalDevice>)>)
         verify(VkResult VK_SUCCESS ==
             inst |> vkEnumeratePhysicalDevices(addr(count), addr(devices[0])))
     invoke(b, devices)
+    delete devices
 
 
 def with_best_physical_device(inst, surface; b : block<(d:VkPhysicalDevice)>)
@@ -73,6 +74,7 @@ def with_queue_families(
         device |> vkGetPhysicalDeviceQueueFamilyProperties(
             addr(count), addr(families[0]))
     invoke(b, families)
+    delete families
 
 
 def with_queue_family_present(device, surface; b : block<(index:uint)>)
@@ -150,7 +152,12 @@ def with_queue_create_infos(device, surface;
                 queueCount = uint(priorities |> length()),
                 pQueuePriorities = priorities_addr
         ]])
+
     invoke(b, infos)
+
+    delete families
+    delete priorities
+    delete infos
 
 
 def with_formats(device, surface;
@@ -167,6 +174,7 @@ def with_formats(device, surface;
             device |> vkGetPhysicalDeviceSurfaceFormatsKHR(
                 surface, addr(count), addr(formats[0])))
     invoke(b, formats)
+    delete formats
 
 
 def with_present_modes(device, surface;
@@ -183,6 +191,7 @@ def with_present_modes(device, surface;
             device |> vkGetPhysicalDeviceSurfacePresentModesKHR(
                 surface, addr(count), addr(modes[0])))
     invoke(b, modes)
+    delete modes
 
 
 def with_ext_props(device;
@@ -204,6 +213,7 @@ def with_ext_props(device;
         let name <- prop.extensionName |> to_string()
         props_table[hash(name)] <- prop
     invoke(b, props_table)
+    delete props
 
 
 def with_props(device; b : block<(p:VkPhysicalDeviceProperties)>)
