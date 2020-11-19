@@ -28,12 +28,11 @@ def with_best_physical_device(inst, surface; b : block<(d:VkPhysicalDevice)>)
         var best_score : int = 0
         var best_device : VkPhysicalDevice
         for device in devices
-            device |> with_queue_family_present(surface) <| $(present_i)
-                device |> with_queue_family_graphics() <| $(graphics_i)
-                    var score = device |> get_suitability_score(surface)
-                    if score > best_score
-                        best_score = score
-                        best_device = device
+            device |> with_graphics_queue_family(surface) <| $(graphics_i)
+                var score = device |> get_suitability_score(surface)
+                if score > best_score
+                    best_score = score
+                    best_device = device
         if best_score == 0
             panic("No suitable physical device found.")
         b |> invoke(best_device)
@@ -74,16 +73,19 @@ def with_queue_families(
     delete families
 
 
-def with_queue_family_present(device, surface; b : block<(index:uint)>)
+def with_graphics_queue_family(device, surface; b : block<(index:uint)>)
     var found_index = -1
     device |> with_queue_families() <| $(families)
         for index in range(families |> length())
-            var supported : uint = 0u
+            var can_present : uint = 0u
+            var graphics_bit : uint
             unsafe
                 verify(VkResult VK_SUCCESS ==
                     device |> vkGetPhysicalDeviceSurfaceSupportKHR(
-                        uint(index), surface, addr(supported)))
-            if supported != 0u
+                        uint(index), surface, addr(can_present)))
+                graphics_bit = reinterpret<uint>(
+                    VkQueueFlagBits VK_QUEUE_GRAPHICS_BIT)
+            if (family.queueFlags & graphics_bit) != 0u && can_present != 0u
                 found_index = index
                 break
     if found_index != -1
@@ -139,15 +141,13 @@ def with_device(instance, surface; b : block<(device:VkDevice)>)
 def with_queue_create_infos(device, surface;
     b : block<(infos:array<VkDeviceQueueCreateInfo>)>
 )
-    var families : table<uint;bool>
-    device |> with_queue_family_present(surface) <| $(qfam)
-        families[qfam] = true
-    device |> with_queue_family_graphics() <| $(qfam)
-        families[qfam] = true
+    var families : array<uint>
+    device |> with_graphics_queue_family(surface) <| $(qfam)
+        families |> push(qfam)
 
     var priorities : array<float>
     priorities |> reserve(families |> length())
-    for family in families |> keys()
+    for family in families
         priorities |> push(1.0f)
 
     var priorities_addr : float?
@@ -156,7 +156,7 @@ def with_queue_create_infos(device, surface;
 
     var infos : array<VkDeviceQueueCreateInfo>
     infos |> reserve(families |> length())
-    for family in families |> keys()
+    for family in families
         infos |> emplace([[
             VkDeviceQueueCreateInfo
                 sType = (VkStructureType
