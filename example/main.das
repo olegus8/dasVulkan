@@ -335,9 +335,8 @@ def with_swap_chain(device, phys_dev, surface, window, surf_fmt, present_mode;
     ]]
 
     var swap_chain : VkSwapchainKHR
-    unsafe
-        verify(VkResult VK_SUCCESS == device |> vkCreateSwapchainKHR(
-            addr(create_info), null, addr(swap_chain)))
+    verify(VkResult VK_SUCCESS == device |> vkCreateSwapchainKHR(
+        safe_addr_const(create_info), null, safe_addr(swap_chain)))
     b |> invoke(swap_chain)
     device |> vkDestroySwapchainKHR(swap_chain, null)
 
