@@ -42,8 +42,14 @@ def safe_addr_const(x)
         return addr(x)
 
 
-//TODO: make this return temporary type
+//TODO: make this better
 def safe_addr_heap(var x : auto&)
+    unsafe
+        return addr(x)
+
+
+//TODO: make this better
+def safe_addr_field(var x : auto&)
     unsafe
         return addr(x)
 
@@ -285,7 +291,7 @@ def with_instance(b : block<(inst:VkInstance)>)
     ]]
 
     let exts = glfwGetRequiredInstanceExtensions(
-        safe_addr(inst_info.enabledExtensionCount)))
+        safe_addr_field(inst_info.enabledExtensionCount))
 
     unsafe
         reinterpret<string const?>(inst_info.ppEnabledExtensionNames) = exts
