@@ -9,7 +9,7 @@ class Config(ConfigBase):
 
     @property
     def c_headers_to_extract_macro_consts_from(self):
-        return ['GLFW/glfw3.h', 'vulkan/vulkan.h']
+        return ['GLFW/glfw3.h', 'vulkan/vulkan_core.h']
 
     @property
     def save_ast(self):
