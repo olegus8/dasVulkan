@@ -284,9 +284,7 @@ def with_instance(b : block<(inst:VkInstance)>)
     unsafe
         verify(VkResult VK_SUCCESS == vkCreateInstance(
             addr(inst_info), null, addr(instance)))
-
     b |> invoke(instance)
-
     instance |> vkDestroyInstance(null)
 
 
