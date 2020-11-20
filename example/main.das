@@ -37,15 +37,20 @@ def safe_addr_const(x)
         return addr(x)
 
 
+def safe_addr_heap(var x : auto&)
+    unsafe
+        return addr(x)
+
+
 def with_physical_devices(inst; b : block<(d:array<VkPhysicalDevice>)>)
     var devices : array<VkPhysicalDevice>
     var count : uint
+    verify(VkResult VK_SUCCESS == inst |> vkEnumeratePhysicalDevices(
+        safe_addr(count), null))
+    devices |> resize(int(count))
     unsafe
-        verify(VkResult VK_SUCCESS ==
-            inst |> vkEnumeratePhysicalDevices(addr(count), null))
-        devices |> resize(int(count))
-        verify(VkResult VK_SUCCESS ==
-            inst |> vkEnumeratePhysicalDevices(addr(count), addr(devices[0])))
+        verify(VkResult VK_SUCCESS == inst |> vkEnumeratePhysicalDevices(
+            safe_addr(count), addr(devices[0])))
     b |> invoke(devices)
     delete devices
 
