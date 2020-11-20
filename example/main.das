@@ -296,12 +296,8 @@ def with_swap_chain(device, phys_dev, surf_fmt, present_mode;
 
 
 def with_graphics(width, height, title; b : block<(
-    instance : VkInstance;
     window : GLFWwindow_DasHandle;
-    surface : VkSurfaceKHR;
-    phys_dev : VkPhysicalDevice;
-    device : VkDevice;
-    swap_chain : VkSwapchainKHR
+    phys_dev : VkPhysicalDevice
 )>)
     with_instance() <| $(instance) {
     with_window(width, height, title) <| $(window) {
@@ -313,7 +309,7 @@ def with_graphics(width, height, title; b : block<(
     device |> with_swap_chain(phys_dev, surf_fmt, present_mode)
         <| $(swap_chain)
     {
-        b |> invoke(instance, window, surface, phys_dev, device, swap_chain);
+        b |> invoke(window, phys_dev);
     }}}}}}}}
 
 
@@ -324,9 +320,7 @@ def main
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API)
     glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE)
 
-    with_graphics(800, 600, "dasVulkanExample") <| $(
-        instance, window, surface, phys_dev, device, swap_chain
-    )
+    with_graphics(800, 600, "dasVulkanExample") <| $(window, phys_dev)
         phys_dev |> with_props() <| $(props)
             print("Using {props.deviceName |> to_string()}\n")
         while window |> glfwWindowShouldClose() == 0
