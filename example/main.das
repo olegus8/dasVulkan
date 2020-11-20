@@ -390,10 +390,10 @@ def with_swap_chain_image_views(device, images, surf_fmt;
     views |> resize(images |> length())
     for image, view in images, views
         let no_swizzle = VkComponentSwizzle VK_COMPONENT_SWIZZLE_IDENTITY
-        let create_info <- [[VkImageCreateInfo
+        let create_info <- [[VkImageViewCreateInfo
             sType = VkStructureType VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO,
             image = image,
-            viewType = VK_IMAGE_VIEW_TYPE_2D,
+            viewType = VkImageViewType VK_IMAGE_VIEW_TYPE_2D,
             format = surf_fmt,
             components = [[VkComponentMapping
                 r = no_swizzle,
