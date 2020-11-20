@@ -217,14 +217,13 @@ def with_present_modes(device, surface;
 )
     var modes : array<VkPresentModeKHR>
     var count : uint
-    unsafe
-        verify(VkResult VK_SUCCESS ==
-            device |> vkGetPhysicalDeviceSurfacePresentModesKHR(
-                surface, addr(count), null))
-        modes |> resize(int(count))
-        verify(VkResult VK_SUCCESS ==
-            device |> vkGetPhysicalDeviceSurfacePresentModesKHR(
-                surface, addr(count), addr(modes[0])))
+    verify(VkResult VK_SUCCESS ==
+        device |> vkGetPhysicalDeviceSurfacePresentModesKHR(
+            surface, safe_addr(count), null))
+    modes |> resize(int(count))
+    verify(VkResult VK_SUCCESS ==
+        device |> vkGetPhysicalDeviceSurfacePresentModesKHR(
+            surface, safe_addr(count), safe_addr_heap(modes[0])))
     b |> invoke(modes)
     delete modes
 
