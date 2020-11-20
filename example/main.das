@@ -436,7 +436,7 @@ def with_render_pass(device, surf_fmt; b : block<(rp:VkRenderPass)>)
     ]]
     var att_ref_addr : VkAttachmentReference?
     unsafe
-        att_ref_addr = addr(att_ref)
+        att_ref_addr = reinterpret<VkAttachmentReference?>(addr(att_ref))
     let subpass <- [[VkSubpassDescription
         pipelineBindPoint = (
             VkPipelineBindPoint VK_PIPELINE_BIND_POINT_GRAPHICS),
