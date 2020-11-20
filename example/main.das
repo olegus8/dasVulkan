@@ -284,9 +284,11 @@ def with_instance(b : block<(inst:VkInstance)>)
         sType = VkStructureType VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO
     ]]
 
-    inst_info.ppEnabledExtensionNames = (
-        glfwGetRequiredInstanceExtensions(
-            safe_addr(inst_info.enabledExtensionCount)))
+    let exts = glfwGetRequiredInstanceExtensions(
+        safe_addr(inst_info.enabledExtensionCount)))
+
+    unsafe
+        reinterpret<string const?>(inst_info.ppEnabledExtensionNames) = exts
 
     var instance : VkInstance
     unsafe
