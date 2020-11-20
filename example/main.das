@@ -383,6 +383,31 @@ def with_swap_chain_images(device, swap_chain; b : block<(d:array<VkImage>)>)
     delete images
 
 
+def with_swap_chain_image_views(device, images, surf_fmt;
+    b : block<(d:array<VkImageView>)>
+)
+    var views : array<VkImageView>
+    views |> resize(images |> length())
+    for image, view in images, views
+        let no_swizzle = VkComponentSwizzle VK_COMPONENT_SWIZZLE_IDENTITY
+        let create_info <- [[VkImageCreateInfo
+            sType = VkStructureType VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO,
+            image = image,
+            viewType = VK_IMAGE_VIEW_TYPE_2D,
+            format = surf_fmt,
+            components.r = no_swizzle,
+            components.g = no_swizzle,
+            components.b = no_swizzle,
+            components.a = no_swizzle,
+        ]]
+
+    b |> invoke(views)
+
+    for view in views
+        device |> vkDestroyImageView(view, null)
+    delete views
+
+
 def with_graphics(width, height, title; b : block<(
     window : GLFWwindow_DasHandle;
     phys_dev : VkPhysicalDevice
