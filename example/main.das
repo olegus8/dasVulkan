@@ -425,10 +425,10 @@ def with_render_pass(device, surf_fmt; b : block<(rp:VkRenderPass)>)
         samples = to_uint(VkSampleCountFlagBits VK_SAMPLE_COUNT_1_BIT),
         loadOp = VkAttachmentLoadOp VK_ATTACHMENT_LOAD_OP_CLEAR,
         storeOp = VkAttachmentStoreOp VK_ATTACHMENT_STORE_OP_STORE,
-        stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE,
-        stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE,
-        initialLayout = VK_IMAGE_LAYOUT_UNDEFINED,
-        finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR
+        stencilLoadOp = VkAttachmentLoadOp VK_ATTACHMENT_LOAD_OP_DONT_CARE,
+        stencilStoreOp = VkAttachmentStoreOp VK_ATTACHMENT_STORE_OP_DONT_CARE,
+        initialLayout = VkImageLayout VK_IMAGE_LAYOUT_UNDEFINED,
+        finalLayout = VkImageLayout VK_IMAGE_LAYOUT_PRESENT_SRC_KHR
     ]]
 
 
