@@ -329,6 +329,8 @@ def with_swap_chain(device, phys_dev, surface, window, surf_fmt, present_mode;
     
     b |> invoke(swap_chain)
 
+    device |> vkDestroySwapchainKHR(swap_chain, null)
+
 
 def get_swap_extent(device, surface, window)
     var caps <- device |> get_capabilities(surface)
