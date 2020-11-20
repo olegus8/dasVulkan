@@ -191,7 +191,7 @@ def with_formats(device, surface;
     formats |> resize(int(count))
     verify(VkResult VK_SUCCESS ==
         device |> vkGetPhysicalDeviceSurfaceFormatsKHR(
-            surface, safe_addr(count), safe_addr_const(formats[0])))
+            surface, safe_addr(count), safe_addr_heap(formats[0])))
     b |> invoke(formats)
     delete formats
 
