@@ -50,7 +50,7 @@ def with_physical_devices(inst; b : block<(d:array<VkPhysicalDevice>)>)
         safe_addr(count), null))
     devices |> resize(int(count))
     verify(VkResult VK_SUCCESS == inst |> vkEnumeratePhysicalDevices(
-        safe_addr(count), unsafe_addr_heap(devices[0])))
+        safe_addr(count), safe_addr_heap(devices[0])))
     b |> invoke(devices)
     delete devices
 
@@ -103,11 +103,11 @@ def with_queue_families(
 )
     var families : array<VkQueueFamilyProperties>
     var count : uint
-    unsafe
-        device |> vkGetPhysicalDeviceQueueFamilyProperties(addr(count), null)
-        families |> resize(int(count))
-        device |> vkGetPhysicalDeviceQueueFamilyProperties(
-            addr(count), addr(families[0]))
+    device |> vkGetPhysicalDeviceQueueFamilyProperties(
+        safe_addr(count), null)
+    families |> resize(int(count))
+    device |> vkGetPhysicalDeviceQueueFamilyProperties(
+        safe_addr(count), safe_addr_heap(families[0]))
     b |> invoke(families)
     delete families
 
