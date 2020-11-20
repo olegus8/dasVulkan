@@ -37,8 +37,8 @@ def safe_addr_const(x)
         return addr(x)
 
 
-//TODO: this is for pointers to heap. what to do about them?
-def unsafe_addr(var x : auto&)
+//TODO: make this return temporary type
+def safe_addr_heap(var x : auto&)
     unsafe
         return addr(x)
 
@@ -50,7 +50,7 @@ def with_physical_devices(inst; b : block<(d:array<VkPhysicalDevice>)>)
         safe_addr(count), null))
     devices |> resize(int(count))
     verify(VkResult VK_SUCCESS == inst |> vkEnumeratePhysicalDevices(
-        safe_addr(count), unsafe_addr(devices[0])))
+        safe_addr(count), unsafe_addr_heap(devices[0])))
     b |> invoke(devices)
     delete devices
 
