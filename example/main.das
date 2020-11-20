@@ -3,6 +3,7 @@ options log, log_infer_passes
 require vulkan
 require strings
 require math
+require daslib/safe_addr
 
 
 let
@@ -30,24 +31,10 @@ def to_uint(x)
         return reinterpret<uint>(x)
 
 
-//TODO: add some safety checks?
-def safe_addr(x)
+//TODO: can we reuse safe_addr here?
+def safe_addr_const(x)
     unsafe
         return addr(x)
-
-
-//TODO: add some safety checks?
-def safe_addr_val(var x : auto&)
-    unsafe
-        return addr(x)
-
-
-def with_addr(x: auto(T); b : block<(a:T ?)>)
-    b |> invoke(safe_addr(x))
-
-
-def with_addr_val(var x: auto(T)&; b : block<(a:T - & ?)>)
-    b |> invoke(safe_addr_val(x))
 
 
 def with_physical_devices(inst; b : block<(d:array<VkPhysicalDevice>)>)
@@ -458,7 +445,7 @@ def with_render_pass(device, surf_fmt; b : block<(rp:VkRenderPass)>)
         pipelineBindPoint = (
             VkPipelineBindPoint VK_PIPELINE_BIND_POINT_GRAPHICS),
         colorAttachmentCount = uint(att_refs |> length()),
-        pColorAttachments = safe_addr(att_refs[0])
+        pColorAttachments = safe_addr_const(att_refs[0])
     ]]]]
     let deps <- [[auto[] [[VkSubpassDependency
         srcSubpass = VK_SUBPASS_EXTERNAL,
@@ -475,15 +462,15 @@ def with_render_pass(device, surf_fmt; b : block<(rp:VkRenderPass)>)
         sType = (VkStructureType
             VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO),
         attachmentCount = uint(atts |> length()),
-        pAttachments = safe_addr(atts[0]),
+        pAttachments = safe_addr_const(atts[0]),
         subpassCount = uint(subs |> length()),
-        pSubpasses = safe_addr(subs[0]),
+        pSubpasses = safe_addr_const(subs[0]),
         dependencyCount = uint(deps |> length()),
-        pDependencies = safe_addr(deps[0])
+        pDependencies = safe_addr_const(deps[0])
     ]]
     var rpass : VkRenderPass;
     verify(VkResult VK_SUCCESS == device |> vkCreateRenderPass(
-        safe_addr(create_info), null, safe_addr_val(rpass)))
+        safe_addr_const(create_info), null, safe_addr(rpass)))
     b |> invoke(rpass)
     device |> vkDestroyRenderPass(rpass, null)
 
