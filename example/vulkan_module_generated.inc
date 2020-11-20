@@ -13366,6 +13366,8 @@ public:
             SideEffects::worstDefault, "vkGetPhysicalDeviceSurfaceFormatsKHR");
         addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceSurfacePresentModesKHR)>(*this, lib, "vkGetPhysicalDeviceSurfacePresentModesKHR",
             SideEffects::worstDefault, "vkGetPhysicalDeviceSurfacePresentModesKHR");
+        addExtern<DAS_BIND_FUN(vkCreateSwapchainKHR)>(*this, lib, "vkCreateSwapchainKHR",
+            SideEffects::worstDefault, "vkCreateSwapchainKHR");
         addExtern<DAS_BIND_FUN(glfwInit)>(*this, lib, "glfwInit",
             SideEffects::worstDefault, "glfwInit");
         addExtern<DAS_BIND_FUN(glfwTerminate)>(*this, lib, "glfwTerminate",

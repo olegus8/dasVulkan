@@ -42,6 +42,7 @@ class Config(ConfigBase):
         if func.name in [
             'vkCreateSwapchainKHR',
             'vkDestroySurfaceKHR',
+            'vkDestroySwapchainKHR',
             'vkGetPhysicalDeviceSurfaceCapabilitiesKHR',
             'vkGetPhysicalDeviceSurfaceFormatsKHR',
             'vkGetPhysicalDeviceSurfacePresentModesKHR',
