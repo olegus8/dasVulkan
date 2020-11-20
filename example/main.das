@@ -64,11 +64,12 @@ def get_suitability_score(device, surface)
     if ! has_graphics
         score = 0
     
-    device |> with_properties() <| $(props)
-        if (props.deviceType ==
-            VkPhysicalDeviceType VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU
-        )
-            score += 1000
+    var props <- device |> get_properties()
+    if (props.deviceType ==
+        VkPhysicalDeviceType VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU
+    )
+        score += 1000
+
     device |> with_ext_props() <| $(exts)
         for required_ext in REQUIRED_EXTENSIONS
             if ! key_exists(exts, hash(required_ext))
@@ -258,11 +259,11 @@ def with_ext_props(device;
     delete props
 
 
-def with_properties(device; b : block<(p:VkPhysicalDeviceProperties)>)
+def get_properties(device)
     var props : VkPhysicalDeviceProperties
     unsafe
         device |> vkGetPhysicalDeviceProperties(addr(props))
-    b |> invoke(props)
+    return <- props
 
 
 def with_window(width, height, title; b : block<(w:GLFWwindow_DasHandle)>)
@@ -399,8 +400,8 @@ def main
     glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE)
 
     with_graphics(800, 600, "dasVulkanExample") <| $(window, phys_dev)
-        phys_dev |> with_properties() <| $(props)
-            print("Using {props.deviceName |> to_string()}\n")
+        var props <- phys_dev |> get_properties()
+        print("Using {props.deviceName |> to_string()}\n")
         while window |> glfwWindowShouldClose() == 0
             glfwPollEvents()
 
