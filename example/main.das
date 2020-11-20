@@ -443,6 +443,14 @@ def with_render_pass(device, surf_fmt; b : block<(rp:VkRenderPass)>)
         colorAttachmentCount = 1u,
         pColorAttachments = att_ref_addr
     ]]
+    let subpass_dep <- [[VkSubpassDependency
+        srcSubpass = VK_SUBPASS_EXTERNAL,
+        dstSubpass = 0,
+        srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT,
+        srcAccessMask = 0,
+        dstStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT,
+        dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT
+    ]]
 
 
 def with_graphics(width, height, title; b : block<(
