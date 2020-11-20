@@ -47,6 +47,7 @@ class Config(ConfigBase):
             'vkGetPhysicalDeviceSurfaceFormatsKHR',
             'vkGetPhysicalDeviceSurfacePresentModesKHR',
             'vkGetPhysicalDeviceSurfaceSupportKHR',
+            'vkGetSwapchainImagesKHR',
         ]:
             return
 
