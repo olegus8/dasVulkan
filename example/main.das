@@ -430,10 +430,18 @@ def with_render_pass(device, surf_fmt; b : block<(rp:VkRenderPass)>)
         initialLayout = VkImageLayout VK_IMAGE_LAYOUT_UNDEFINED,
         finalLayout = VkImageLayout VK_IMAGE_LAYOUT_PRESENT_SRC_KHR
     ]]
-
     let att_ref <- [[VkAttachmentReference
         attachment = 0u,
         layout = VkImageLayout VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL
+    ]]
+    var att_ref_addr : VkAttachmentReference?
+    unsafe
+        att_ref_addr = addr(att_ref)
+    let subpass <- [[VkSubpassDescription
+        pipelineBindPoint = (
+            VkPipelineBindPoint VK_PIPELINE_BIND_POINT_GRAPHICS),
+        subpass.colorAttachmentCount = 1u,
+        subpass.pColorAttachments = att_ref_addr
     ]]
 
 
