@@ -30,10 +30,13 @@ def to_uint(x)
         return reinterpret<uint>(x)
 
 
-//TODO: make it "with_addr" instead, and use temp vars
+//TODO: add some safety checks?
 def safe_addr(x)
     unsafe
         return addr(x)
+
+
+//TODO: add some safety checks?
 def safe_addr_val(var x : auto&)
     unsafe
         return addr(x)
