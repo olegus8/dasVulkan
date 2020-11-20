@@ -370,6 +370,19 @@ def get_capabilities(device, surface)
     return <- caps
 
 
+def with_swap_chain_images(device, swap_chain; b : block<(d:array<VkImage>)>)
+    var images : array<VkImage>
+    var count : uint
+    unsafe
+        verify(VkResult VK_SUCCESS == device |> vkGetSwapchainImagesKHR(
+            swap_chain, addr(count), null))
+        images |> resize(int(count))
+        verify(VkResult VK_SUCCESS == device |> vkGetSwapchainImagesKHR(
+            swap_chain, addr(count), addr(images[0])))
+    b |> invoke(images)
+    delete images
+
+
 def with_graphics(width, height, title; b : block<(
     window : GLFWwindow_DasHandle;
     phys_dev : VkPhysicalDevice
@@ -384,6 +397,7 @@ def with_graphics(width, height, title; b : block<(
     device |> with_swap_chain(
         phys_dev, surface, window, surf_fmt, present_mode
     ) <| $(swap_chain)
+    device |> with_swap_chain_images(swap_chain) <| $(sc_imgs)
     {
         b |> invoke(window, phys_dev);
     }}}}}}}}
