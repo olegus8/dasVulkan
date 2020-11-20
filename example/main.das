@@ -2,6 +2,7 @@ options log, log_infer_passes
 
 require vulkan
 require strings
+require math
 
 
 let
