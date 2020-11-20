@@ -34,9 +34,6 @@ def to_uint(x)
 def safe_addr(x)
     unsafe
         return addr(x)
-def safe_addr_var(var x)
-    unsafe
-        return addr(x)
 def safe_addr_val(var x : auto&)
     unsafe
         return addr(x)
@@ -469,13 +466,13 @@ def with_render_pass(device, surf_fmt; b : block<(rp:VkRenderPass)>)
         pAttachments = safe_addr(atts[0]),
         subpassCount = uint(subs |> length()),
         pSubpasses = safe_addr(subs[0]),
-        dependencyCount = uint(deps |> length());
+        dependencyCount = uint(deps |> length()),
         pDependencies = safe_addr(deps[0])
     ]]
 
     var render_pass : VkRenderPass
     verify(VkResult VK_SUCCESS == device |> vkCreateRenderPass(
-        safe_addr(create_info), null, safe_addr(render_pass)))
+        safe_addr(create_info), null, safe_addr_val(render_pass)))
     b |> invoke(render_pass)
     device |> vkDestroyRenderPass(render_pass, null)
 
