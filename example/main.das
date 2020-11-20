@@ -461,9 +461,9 @@ def with_render_pass(device, surf_fmt; b : block<(rp:VkRenderPass)>)
         sType = VkStructureType VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO,
         attachmentCount = uint(atts |> length()),
         pAttachments = safe_addr(atts[0]),
-        subpassCount = uint(subs),
+        subpassCount = uint(subs |> length()),
         pSubpasses = safe_addr(subs[0]),
-        dependencyCount = uint(deps);
+        dependencyCount = uint(deps |> length());
         pDependencies = safe_addr(deps[0])
     ]]
 
