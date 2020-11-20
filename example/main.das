@@ -458,9 +458,9 @@ def with_render_pass(device, surf_fmt; b : block<(rp:VkRenderPass)>)
             VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT)
     ]]]]
     let create_info <- [[VkRenderPassCreateInfo
-        sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO,
-        attachmentCount = uint(attrs |> length()),
-        pAttachments = safe_addr(attrs[0]),
+        sType = VkStructureType VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO,
+        attachmentCount = uint(atts |> length()),
+        pAttachments = safe_addr(atts[0]),
         subpassCount = uint(subs);
         pSubpasses = safe_addr(subs[0]),
         dependencyCount = uint(deps);
