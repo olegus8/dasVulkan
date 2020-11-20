@@ -136,15 +136,15 @@ def with_device(instance, phys_dev, surface; b : block<(device:VkDevice)>)
         var device : VkDevice
         let create_info = [[VkDeviceCreateInfo
             sType = VkStructureType VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO,
-            pQueueCreateInfos = safe_addr_heap(queue_infos[0]),
+            pQueueCreateInfos = safe_addr_const(queue_infos[0]),
             queueCreateInfoCount = uint(queue_infos |> length()),
-            pEnabledFeatures = safe_addr(features),
+            pEnabledFeatures = safe_addr_const(features),
             enabledExtensionCount = uint(REQUIRED_EXTENSIONS |> length()),
-            ppEnabledExtensionNames = safe_addr(to_string(
+            ppEnabledExtensionNames = safe_addr_const(to_string(
                 REQUIRED_EXTENSIONS[0]))
         ]]
         verify(VkResult VK_SUCCESS == vkCreateDevice(
-            phys_dev, addr(create_info), null, addr(device)))
+            phys_dev, safe_addr_const(create_info), null, safe_addr(device)))
         b |> invoke(device)
         device |> vkDeviceWaitIdle()
         device |> vkDestroyDevice(null)
