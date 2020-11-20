@@ -99,7 +99,6 @@ def with_queue_families(
 
 
 def with_graphics_queue_family(device, surface; b : block<(index:uint)>)
-    var found_index = -1
     device |> with_queue_families() <| $(families)
         for family, index in families, range(INT_MAX)
             var can_present : uint
@@ -111,10 +110,8 @@ def with_graphics_queue_family(device, surface; b : block<(index:uint)>)
                 graphics_bit = reinterpret<uint>(
                     VkQueueFlagBits VK_QUEUE_GRAPHICS_BIT)
             if (family.queueFlags & graphics_bit) != 0u && can_present != 0u
-                found_index = index
+                b |> invoke(uint(index))
                 break
-    if found_index != -1
-        b |> invoke(uint(found_index))
 
 
 def with_device(instance, phys_dev, surface; b : block<(device:VkDevice)>)
