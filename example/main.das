@@ -111,7 +111,7 @@ def with_graphics_queue_family(device, surface; b : block<(index:uint)>)
                     VkQueueFlagBits VK_QUEUE_GRAPHICS_BIT)
             if (family.queueFlags & graphics_bit) != 0u && can_present != 0u
                 b |> invoke(uint(index))
-                break
+                return
 
 
 def with_device(instance, phys_dev, surface; b : block<(device:VkDevice)>)
