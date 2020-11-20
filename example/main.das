@@ -314,6 +314,8 @@ def with_swap_chain(device, phys_dev, surface, window, surf_fmt, present_mode;
 
     let create_info = [[VkSwapchainCreateInfoKHR
         sType = VkStructureType VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR,
+        surface = surface,
+        minImageCount = img_count,
         imageFormat = surf_fmt.format,
         imageColorSpace = surf_fmt.colorSpace,
         imageExtent = [[VkExtent2D width=extent[0], height=extent[1]]],
