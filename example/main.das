@@ -403,10 +403,10 @@ def with_swap_chain_image_views(device, images, surf_fmt;
             subresourceRange = [[VkImageSubresourceRange
                 aspectMask = to_uint(
                     VkImageAspectFlagBits VK_IMAGE_ASPECT_COLOR_BIT),
-                baseMipLevel = 0,
-                levelCount = 1,
-                baseArrayLayer = 0,
-                layerCount = 1]]
+                baseMipLevel = 0u,
+                levelCount = 1u,
+                baseArrayLayer = 0u,
+                layerCount = 1u]]
         ]]
         unsafe
             verify(VkResult VK_SUCCESS == device |> vkCreateImageView(
