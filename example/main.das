@@ -396,8 +396,6 @@ def main
     print("\nStarted\n")
     glfwInit()
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API)
-
-    //TODO: make it resizable
     glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE)
 
     with_graphics(800, 600, "dasVulkanExample") <| $(window, phys_dev)
