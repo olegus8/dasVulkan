@@ -24,6 +24,10 @@ def to_string( bytes : int8[] )
     unsafe
         return reinterpret<string>(addr(bytes[0]))
 
+def to_string( bytes : void? )
+    unsafe
+        return reinterpret<string>(bytes)
+
 
 //TODO: figure out what to do with it. it's for enum -> uint
 def to_uint(x)
