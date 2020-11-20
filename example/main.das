@@ -422,7 +422,7 @@ def with_swap_chain_image_views(device, images, surf_fmt;
 def with_render_pass(device, surf_fmt; b : block<(rp:VkRenderPass)>)
     let color_att <- [[VkAttachmentDescription
         format = surf_fmt.format,
-        samples = to_uint(VkSampleCountFlagBits VK_SAMPLE_COUNT_1_BIT),
+        samples = VkSampleCountFlagBits VK_SAMPLE_COUNT_1_BIT,
         loadOp = VkAttachmentLoadOp VK_ATTACHMENT_LOAD_OP_CLEAR,
         storeOp = VkAttachmentStoreOp VK_ATTACHMENT_STORE_OP_STORE,
         stencilLoadOp = VkAttachmentLoadOp VK_ATTACHMENT_LOAD_OP_DONT_CARE,
