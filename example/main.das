@@ -444,45 +444,47 @@ def with_render_pass(device, surf_fmt; b : block<(rp:VkRenderPass)>)
         initialLayout = VkImageLayout VK_IMAGE_LAYOUT_UNDEFINED,
         finalLayout = VkImageLayout VK_IMAGE_LAYOUT_PRESENT_SRC_KHR
     ]]]]
+    atts[0] |> with_addr() <| $(atts_p) {
     let att_refs <- [[auto[] [[VkAttachmentReference
         attachment = 0u,
         layout = VkImageLayout VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL
-    ]]]]
-    att_refs[0] |> with_addr() <| $(att_refs_p)
-        let subs <- [[auto[] [[VkSubpassDescription
-            pipelineBindPoint = (
-                VkPipelineBindPoint VK_PIPELINE_BIND_POINT_GRAPHICS),
-            colorAttachmentCount = uint(att_refs |> length()),
-            pColorAttachments = att_refs_p
-        ]]]]
-        let deps <- [[auto[] [[VkSubpassDependency
-            srcSubpass = VK_SUBPASS_EXTERNAL,
-            dstSubpass = 0u,
-            srcStageMask = to_uint(VkPipelineStageFlagBits
-                VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT),
-            srcAccessMask = 0u,
-            dstStageMask = to_uint(VkPipelineStageFlagBits
-                VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT),
-            dstAccessMask = to_uint(VkAccessFlagBits
-                VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT)
-        ]]]]
-        atts[0] |> with_addr() <| $(atts_p)
-            let create_info <- [[VkRenderPassCreateInfo
-                sType = (VkStructureType
-                    VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO),
-                attachmentCount = uint(atts |> length()),
-                pAttachments = atts_p,
-                subpassCount = uint(subs |> length()),
-                pSubpasses = safe_addr(subs[0]),
-                dependencyCount = uint(deps |> length()),
-                pDependencies = safe_addr(deps[0])
-            ]]
-
-            var render_pass : VkRenderPass
-            verify(VkResult VK_SUCCESS == device |> vkCreateRenderPass(
-                safe_addr(create_info), null, safe_addr_val(render_pass)))
-            b |> invoke(render_pass)
-            device |> vkDestroyRenderPass(render_pass, null)
+    ]]]];
+    att_refs[0] |> with_addr() <| $(att_refs_p) {
+    let subs <- [[auto[] [[VkSubpassDescription
+        pipelineBindPoint = (
+            VkPipelineBindPoint VK_PIPELINE_BIND_POINT_GRAPHICS),
+        colorAttachmentCount = uint(att_refs |> length()),
+        pColorAttachments = att_refs_p
+    ]]]];
+    subs[0] |> with_addr() <| $(subs_p) {
+    let deps <- [[auto[] [[VkSubpassDependency
+        srcSubpass = VK_SUBPASS_EXTERNAL,
+        dstSubpass = 0u,
+        srcStageMask = to_uint(VkPipelineStageFlagBits
+            VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT),
+        srcAccessMask = 0u,
+        dstStageMask = to_uint(VkPipelineStageFlagBits
+            VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT),
+        dstAccessMask = to_uint(VkAccessFlagBits
+            VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT)
+    ]]]];
+    deps[0] |> with_addr <| $(deps_p) {
+        let create_info <- [[VkRenderPassCreateInfo
+            sType = (VkStructureType
+                VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO),
+            attachmentCount = uint(atts |> length()),
+            pAttachments = atts_p,
+            subpassCount = uint(subs |> length()),
+            pSubpasses = subs_p,
+            dependencyCount = uint(deps |> length()),
+            pDependencies = deps_p,
+        ]];
+        var render_pass : VkRenderPass;
+        verify(VkResult VK_SUCCESS == device |> vkCreateRenderPass(
+            safe_addr(create_info), null, safe_addr_val(render_pass)))
+        b |> invoke(render_pass);
+        device |> vkDestroyRenderPass(render_pass, null);
+    }}}}
 
 
 def with_graphics(width, height, title; b : block<(
