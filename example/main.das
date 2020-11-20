@@ -420,7 +420,7 @@ def with_swap_chain_image_views(device, images, surf_fmt;
 
 
 def with_render_pass(device, surf_fmt; b : block<(rp:VkRenderPass)>)
-    let color_att <- [[VkAttachmentDescription
+    let att <- [[VkAttachmentDescription
         format = surf_fmt.format,
         samples = VkSampleCountFlagBits VK_SAMPLE_COUNT_1_BIT,
         loadOp = VkAttachmentLoadOp VK_ATTACHMENT_LOAD_OP_CLEAR,
@@ -429,6 +429,11 @@ def with_render_pass(device, surf_fmt; b : block<(rp:VkRenderPass)>)
         stencilStoreOp = VkAttachmentStoreOp VK_ATTACHMENT_STORE_OP_DONT_CARE,
         initialLayout = VkImageLayout VK_IMAGE_LAYOUT_UNDEFINED,
         finalLayout = VkImageLayout VK_IMAGE_LAYOUT_PRESENT_SRC_KHR
+    ]]
+
+    let att_ref <- [[VkAttachmentReference
+        attachment = 0,
+        layout = VkImageLayout VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL
     ]]
 
 
