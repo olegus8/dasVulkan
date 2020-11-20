@@ -315,7 +315,8 @@ def with_swap_chain(device, phys_dev, surface, window, surf_fmt, present_mode;
         imageUsage = VkImageUsage VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT,
         imageSharingMode = VkSharingMode VK_SHARING_MODE_EXCLUSIVE,
         preTransform = caps.currentTransform,
-        compositeAlpha = VkCompositeAlphaKHR VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR,
+        compositeAlpha = (
+            VkCompositeAlphaFlagBitsKHR VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR),
         presentMode = present_mode,
         clipped = 1
     ]]
