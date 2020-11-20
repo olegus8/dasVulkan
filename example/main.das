@@ -291,9 +291,10 @@ def with_surface(window, instance; b : block<(s:VkSurfaceKHR)>)
 def with_swap_chain(device, phys_dev, surface, surf_fmt, present_mode;
     b : block<(sc:VkSwapchainKHR)>
 )
-    phys_dev |> with_capabilities(surface) <| $(caps)
-        //TODO: create swapchain
-        b |> invoke([[VkSwapchainKHR]])
+    var caps <- phys_dev |> get_capabilities(surface)
+    var extent <- phys_dev |> get_swap_extent(surface)
+    //TODO: create swapchain
+    b |> invoke([[VkSwapchainKHR]])
 
 
 def get_swap_extent(device, surface)
