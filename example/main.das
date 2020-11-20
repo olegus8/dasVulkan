@@ -469,22 +469,23 @@ def with_render_pass(device, surf_fmt; b : block<(rp:VkRenderPass)>)
             VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT)
     ]]]];
     deps[0] |> with_addr() <| $(deps_p) {
-        let create_info <- [[VkRenderPassCreateInfo
-            sType = (VkStructureType
-                VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO),
-            attachmentCount = uint(atts |> length()),
-            pAttachments = atts_p,
-            subpassCount = uint(subs |> length()),
-            pSubpasses = subs_p,
-            dependencyCount = uint(deps |> length()),
-            pDependencies = deps_p
-        ]];
+    let create_info <- [[VkRenderPassCreateInfo
+        sType = (VkStructureType
+            VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO),
+        attachmentCount = uint(atts |> length()),
+        pAttachments = atts_p,
+        subpassCount = uint(subs |> length()),
+        pSubpasses = subs_p,
+        dependencyCount = uint(deps |> length()),
+        pDependencies = deps_p
+    ]];
+    create_info |> with_addr() <| $(create_info_p) {
         var render_pass : VkRenderPass;
         verify(VkResult VK_SUCCESS == device |> vkCreateRenderPass(
-            safe_addr(create_info), null, safe_addr_val(render_pass)));
+            create_info_p, null, safe_addr_val(render_pass)));
         b |> invoke(render_pass);
         device |> vkDestroyRenderPass(render_pass, null);
-    }}}}
+    }}}}}
 
 
 def with_graphics(width, height, title; b : block<(
