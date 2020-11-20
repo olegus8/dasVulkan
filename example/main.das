@@ -44,7 +44,7 @@ def with_addr(x: auto(T); b : block<(a:T ?)>)
         b |> invoke(addr(x))
 
 
-def with_addr_val(x: auto(T); b : block<(a:T - & ?)>)
+def with_addr_val(var x: auto(T); b : block<(a:T - & ?)>)
     unsafe
         b |> invoke(addr(x))
 
@@ -491,7 +491,7 @@ def with_render_pass(device, surf_fmt; b : block<(rp:VkRenderPass)>)
             create_info_p, null, rpass_p));
         b |> invoke(rpass);
         device |> vkDestroyRenderPass(rpass, null);
-    }}}}}
+    }}}}}}
 
 
 def with_graphics(width, height, title; b : block<(
