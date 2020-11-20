@@ -134,20 +134,17 @@ def with_device(instance, phys_dev, surface; b : block<(device:VkDevice)>)
     phys_dev |> with_queue_create_infos(surface) <| $(queue_infos)
         let features : VkPhysicalDeviceFeatures
         var device : VkDevice
-        unsafe
-            let create_info = [[VkDeviceCreateInfo
-                sType = (VkStructureType
-                    VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO),
-                pQueueCreateInfos = addr(queue_infos[0]),
-                queueCreateInfoCount = uint(queue_infos |> length()),
-                pEnabledFeatures = addr(features),
-                enabledExtensionCount = uint(
-                    REQUIRED_EXTENSIONS |> length()),
-                ppEnabledExtensionNames = reinterpret<string?>(
-                    addr(REQUIRED_EXTENSIONS[0]))
-            ]]
-            verify(VkResult VK_SUCCESS == vkCreateDevice(
-                phys_dev, addr(create_info), null, addr(device)))
+        let create_info = [[VkDeviceCreateInfo
+            sType = VkStructureType VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO,
+            pQueueCreateInfos = safe_addr_heap(queue_infos[0]),
+            queueCreateInfoCount = uint(queue_infos |> length()),
+            pEnabledFeatures = safe_addr(features),
+            enabledExtensionCount = uint(REQUIRED_EXTENSIONS |> length()),
+            ppEnabledExtensionNames = safe_addr(to_string(
+                REQUIRED_EXTENSIONS[0]))
+        ]]
+        verify(VkResult VK_SUCCESS == vkCreateDevice(
+            phys_dev, addr(create_info), null, addr(device)))
         b |> invoke(device)
         device |> vkDeviceWaitIdle()
         device |> vkDestroyDevice(null)
