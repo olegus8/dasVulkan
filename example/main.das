@@ -467,6 +467,12 @@ def with_render_pass(device, surf_fmt; b : block<(rp:VkRenderPass)>)
         pDependencies = safe_addr(deps[0])
     ]]
 
+    var render_pass : VkRenderPass
+    verify(VkResult VK_SUCCESS == device |> vkCreateRenderPass(
+        safe_addr(create_info), null, safe_addr(render_pass)))
+    b |> invoke(render_pass)
+    device |> vkDestroyRenderPass(render_pass, null)
+
 
 def with_graphics(width, height, title; b : block<(
     window : GLFWwindow_DasHandle;
