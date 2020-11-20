@@ -16,8 +16,13 @@ class Config(ConfigBase):
         return True
 
     def configure_macro_const(self, macro_const):
-        if not macro_const.name.startswith('GLFW_'):
-            macro_const.ignore()
+        for prefix in [
+            'GLFW_',
+            'VK_',
+        ]:
+            if macro_const.name.startswith(prefix):
+                return
+        macro_const.ignore()
 
     def configure_opaque_struct(self, struct):
         if struct.name.endswith('_T'):
