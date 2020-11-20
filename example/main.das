@@ -44,7 +44,7 @@ def with_addr(x: auto(T); b : block<(a:T ?)>)
         b |> invoke(addr(x))
 
 
-def with_addr_val(x: auto(T); b : block<(a:T ?)>)
+def with_addr_val(x: auto(T); b : block<(a:T - & ?)>)
     unsafe
         b |> invoke(addr(x))
 
@@ -485,10 +485,10 @@ def with_render_pass(device, surf_fmt; b : block<(rp:VkRenderPass)>)
         pDependencies = deps_p
     ]];
     create_info |> with_addr() <| $(create_info_p) {
-        var rpass : VkRenderPass;
-        //TODO: make it work with rpass |> with_addr_val
+    var rpass : VkRenderPass;
+    rpass |> with_addr_val() <| $(rpass_p) {
         verify(VkResult VK_SUCCESS == device |> vkCreateRenderPass(
-            create_info_p, null, safe_addr_val(rpass)));
+            create_info_p, null, rpass_p));
         b |> invoke(rpass);
         device |> vkDestroyRenderPass(rpass, null);
     }}}}}
