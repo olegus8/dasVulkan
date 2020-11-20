@@ -367,10 +367,9 @@ def get_framebuffer_size(window)
 
 def get_capabilities(device, surface)
     var caps : VkSurfaceCapabilitiesKHR
-    unsafe
-        verify(VkResult VK_SUCCESS ==
-            device |> vkGetPhysicalDeviceSurfaceCapabilitiesKHR(
-                surface, addr(caps)))
+    verify(VkResult VK_SUCCESS ==
+        device |> vkGetPhysicalDeviceSurfaceCapabilitiesKHR(
+            surface, safe_addr(caps)))
     return <- caps
 
 
