@@ -401,7 +401,8 @@ def with_swap_chain_image_views(device, images, surf_fmt;
                 b = no_swizzle,
                 a = no_swizzle]],
             subresourceRange = [[VkImageSubresourceRange
-                aspectMask = VkImageAspectFlagBits VK_IMAGE_ASPECT_COLOR_BIT,
+                aspectMask = to_uint(
+                    VkImageAspectFlagBits VK_IMAGE_ASPECT_COLOR_BIT),
                 baseMipLevel = 0,
                 levelCount = 1,
                 baseArrayLayer = 0,
