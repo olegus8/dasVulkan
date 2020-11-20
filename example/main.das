@@ -307,7 +307,7 @@ def with_swap_chain(device, phys_dev, surface, window, surf_fmt, present_mode;
     var caps <- phys_dev |> get_capabilities(surface)
     var extent <- phys_dev |> get_swap_extent(surface, window)
 
-    // multi-buffering
+    // we want at least one spare image for multi-buffering
     var img_count : uint = caps.minImageCount + 1u
     if caps.maxImageCount > 0u
         img_count = min(img_count, caps.maxImageCount)
