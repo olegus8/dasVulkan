@@ -11,6 +11,17 @@ let
     ]]
 
 
+//TODO: move to math?
+def clamp(t, a, b : uint)
+    return min(max(t, a), b)
+
+
+//TODO: move to stdlib?
+def to_string( bytes : int8[] )
+    unsafe
+        return reinterpret<string>(addr(bytes[0]))
+
+
 def with_physical_devices(inst; b : block<(d:array<VkPhysicalDevice>)>)
     var devices : array<VkPhysicalDevice>
     var count : uint
@@ -97,11 +108,6 @@ def with_graphics_queue_family(device, surface; b : block<(index:uint)>)
                 break
     if found_index != -1
         b |> invoke(uint(found_index))
-
-
-def to_string( bytes : int8[] )
-    unsafe
-        return reinterpret<string>(addr(bytes[0]))
 
 
 def with_device(instance, phys_dev, surface; b : block<(device:VkDevice)>)
@@ -314,10 +320,6 @@ def get_swap_extent(device, surface, window)
             clamp(fb_size[1],
                 caps.minImageExtent.height,
                 caps.maxImageExtent.height))
-
-
-def clamp(t, a, b : uint)
-    return min(max(t, a), b)
 
 
 def get_framebuffer_size(window)
