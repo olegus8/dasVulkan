@@ -480,12 +480,13 @@ def with_render_pass(device, surf_fmt; b : block<(rp:VkRenderPass)>)
         pDependencies = deps_p
     ]];
     create_info |> with_addr() <| $(create_info_p) {
-        var render_pass : VkRenderPass;
+    var rpass : VkRenderPass;
+    render_pass |> with_addr() <| $(rpass_p) {
         verify(VkResult VK_SUCCESS == device |> vkCreateRenderPass(
-            create_info_p, null, safe_addr_val(render_pass)));
-        b |> invoke(render_pass);
-        device |> vkDestroyRenderPass(render_pass, null);
-    }}}}}
+            create_info_p, null, rpass));
+        b |> invoke(rpass);
+        device |> vkDestroyRenderPass(rpass, null);
+    }}}}}}
 
 
 def with_graphics(width, height, title; b : block<(
