@@ -116,16 +116,18 @@ def with_graphics_queue_family(device, surface; b : block<(index:uint)>)
     device |> with_queue_families() <| $(families)
         for family, index in families, range(INT_MAX)
             var can_present : uint
-            var graphics_bit : uint
-            unsafe
-                verify(VkResult VK_SUCCESS ==
-                    device |> vkGetPhysicalDeviceSurfaceSupportKHR(
-                        uint(index), surface, addr(can_present)))
-                graphics_bit = reinterpret<uint>(
-                    VkQueueFlagBits VK_QUEUE_GRAPHICS_BIT)
-            if (family.queueFlags & graphics_bit) != 0u && can_present != 0u
-                b |> invoke(uint(index))
-                return
+            verify(VkResult VK_SUCCESS ==
+                device |> vkGetPhysicalDeviceSurfaceSupportKHR(
+                    uint(index), surface, safe_addr(can_present)))
+            if can_present == 0u
+                continue
+
+            var graphics_bit = to_uint(VkQueueFlagBits VK_QUEUE_GRAPHICS_BIT)
+            if family.queueFlags & graphics_bit == 0u
+                continue
+
+            b |> invoke(uint(index))
+            return
 
 
 def with_device(instance, phys_dev, surface; b : block<(device:VkDevice)>)
