@@ -399,7 +399,16 @@ def with_swap_chain_image_views(device, images, surf_fmt;
             components.g = no_swizzle,
             components.b = no_swizzle,
             components.a = no_swizzle,
+            subresourceRange = [[VkImageSubresourceRange
+                aspectMask = VK_IMAGE_ASPECT_COLOR_BIT,
+                baseMipLevel = 0,
+                levelCount = 1,
+                baseArrayLayer = 0,
+                layerCount = 1]]
         ]]
+        unsafe
+            verify(VkResult VK_SUCCESS == device |> vkCreateImageView(
+                addr(create_info), null, addr(view)))
 
     b |> invoke(views)
 
