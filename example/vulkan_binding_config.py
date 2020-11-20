@@ -41,6 +41,7 @@ class Config(ConfigBase):
         # whitelist
         if func.name in [
             'vkDestroySurfaceKHR',
+            'vkGetPhysicalDeviceSurfaceCapabilitiesKHR',
             'vkGetPhysicalDeviceSurfaceFormatsKHR',
             'vkGetPhysicalDeviceSurfacePresentModesKHR',
             'vkGetPhysicalDeviceSurfaceSupportKHR',
