@@ -161,10 +161,6 @@ def with_queue_create_infos(device, surface;
     for family in families
         priorities |> push(1.0f)
 
-    var priorities_addr : float?
-    unsafe
-        priorities_addr = reinterpret<float?>(addr(priorities[0]))
-
     var infos : array<VkDeviceQueueCreateInfo>
     infos |> reserve(families |> length())
     for family in families
@@ -174,7 +170,7 @@ def with_queue_create_infos(device, surface;
                     VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO),
                 queueFamilyIndex = family,
                 queueCount = uint(priorities |> length()),
-                pQueuePriorities = priorities_addr
+                pQueuePriorities = safe_addr_const(priorities[0])
         ]])
 
     b |> invoke(infos)
@@ -189,14 +185,13 @@ def with_formats(device, surface;
 )
     var formats : array<VkSurfaceFormatKHR>
     var count : uint
-    unsafe
-        verify(VkResult VK_SUCCESS ==
-            device |> vkGetPhysicalDeviceSurfaceFormatsKHR(
-                surface, addr(count), null))
-        formats |> resize(int(count))
-        verify(VkResult VK_SUCCESS ==
-            device |> vkGetPhysicalDeviceSurfaceFormatsKHR(
-                surface, addr(count), addr(formats[0])))
+    verify(VkResult VK_SUCCESS ==
+        device |> vkGetPhysicalDeviceSurfaceFormatsKHR(
+            surface, safe_addr(count), null))
+    formats |> resize(int(count))
+    verify(VkResult VK_SUCCESS ==
+        device |> vkGetPhysicalDeviceSurfaceFormatsKHR(
+            surface, safe_addr(count), safe_addr_const(formats[0])))
     b |> invoke(formats)
     delete formats
 
