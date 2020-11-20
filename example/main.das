@@ -44,7 +44,7 @@ def with_addr(x: auto(T); b : block<(a:T ?)>)
         b |> invoke(addr(x))
 
 
-def with_addr_val(var x: auto(T); b : block<(a:T - & ?)>)
+def with_addr_val(var x: auto(T)&; b : block<(a:T - & ?)>)
     unsafe
         b |> invoke(addr(x))
 
