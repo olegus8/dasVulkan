@@ -140,8 +140,7 @@ def with_device(instance, phys_dev, surface; b : block<(device:VkDevice)>)
             queueCreateInfoCount = uint(queue_infos |> length()),
             pEnabledFeatures = safe_addr_const(features),
             enabledExtensionCount = uint(REQUIRED_EXTENSIONS |> length()),
-            ppEnabledExtensionNames = safe_addr_const(to_string(
-                REQUIRED_EXTENSIONS[0]))
+            ppEnabledExtensionNames = safe_addr_const(REQUIRED_EXTENSIONS[0])
         ]]
         verify(VkResult VK_SUCCESS == vkCreateDevice(
             phys_dev, safe_addr_const(create_info), null, safe_addr(device)))
