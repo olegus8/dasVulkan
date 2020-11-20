@@ -299,9 +299,8 @@ def with_instance(b : block<(inst:VkInstance)>)
 
 def with_surface(window, instance; b : block<(s:VkSurfaceKHR)>)
     var surface : VkSurfaceKHR
-    unsafe
-        verify(VkResult VK_SUCCESS == instance |> glfwCreateWindowSurface(
-            window, null, addr(surface)))
+    verify(VkResult VK_SUCCESS == instance |> glfwCreateWindowSurface(
+        window, null, safe_addr(surface)))
     b |> invoke(surface)
     instance |> vkDestroySurfaceKHR(surface, null)
 
