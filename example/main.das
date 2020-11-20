@@ -325,7 +325,7 @@ def with_swap_chain(device, phys_dev, surface, window, surf_fmt, present_mode;
         compositeAlpha = (
             VkCompositeAlphaFlagBitsKHR VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR),
         presentMode = present_mode,
-        clipped = 1u //TODO: use VK_TRUE
+        clipped = uint(VK_TRUE)
     ]]
 
     var swap_chain : VkSwapchainKHR
@@ -443,16 +443,16 @@ def with_render_pass(device, surf_fmt; b : block<(rp:VkRenderPass)>)
         colorAttachmentCount = 1u,
         pColorAttachments = att_ref_addr
     ]]
-    /*
     let subpass_dep <- [[VkSubpassDependency
         srcSubpass = VK_SUBPASS_EXTERNAL,
         dstSubpass = 0,
-        srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT,
+        srcStageMask = (VkPipelineStageFlagBits
+            VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT),
         srcAccessMask = 0,
-        dstStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT,
-        dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT
+        dstStageMask = (VkPipelineStageFlagBits
+            VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT),
+        dstAccessMask = VkAccessFlagBits VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT
     ]]
-    */
 
 
 def with_graphics(width, height, title; b : block<(
