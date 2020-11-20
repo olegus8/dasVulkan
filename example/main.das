@@ -43,13 +43,7 @@ def safe_addr_const(x)
 
 
 //TODO: make this better
-def safe_addr_heap(var x : auto&)
-    unsafe
-        return addr(x)
-
-
-//TODO: make this better
-def safe_addr_field(var x : auto&)
+def safe_addr_val(var x : auto&)
     unsafe
         return addr(x)
 
@@ -61,7 +55,7 @@ def with_physical_devices(inst; b : block<(d:array<VkPhysicalDevice>)>)
         safe_addr(count), null))
     devices |> resize(int(count))
     verify(VkResult VK_SUCCESS == inst |> vkEnumeratePhysicalDevices(
-        safe_addr(count), safe_addr_heap(devices[0])))
+        safe_addr(count), safe_addr_val(devices[0])))
     b |> invoke(devices)
     delete devices
 
@@ -118,7 +112,7 @@ def with_queue_families(
         safe_addr(count), null)
     families |> resize(int(count))
     device |> vkGetPhysicalDeviceQueueFamilyProperties(
-        safe_addr(count), safe_addr_heap(families[0]))
+        safe_addr(count), safe_addr_val(families[0]))
     b |> invoke(families)
     delete families
 
@@ -202,7 +196,7 @@ def with_formats(device, surface;
     formats |> resize(int(count))
     verify(VkResult VK_SUCCESS ==
         device |> vkGetPhysicalDeviceSurfaceFormatsKHR(
-            surface, safe_addr(count), safe_addr_heap(formats[0])))
+            surface, safe_addr(count), safe_addr_val(formats[0])))
     b |> invoke(formats)
     delete formats
 
@@ -234,7 +228,7 @@ def with_present_modes(device, surface;
     modes |> resize(int(count))
     verify(VkResult VK_SUCCESS ==
         device |> vkGetPhysicalDeviceSurfacePresentModesKHR(
-            surface, safe_addr(count), safe_addr_heap(modes[0])))
+            surface, safe_addr(count), safe_addr_val(modes[0])))
     b |> invoke(modes)
     delete modes
 
@@ -262,7 +256,7 @@ def with_ext_props(device;
     props |> resize(int(count))
     verify(VkResult VK_SUCCESS ==
         device |> vkEnumerateDeviceExtensionProperties(
-            to_string(null), safe_addr(count), safe_addr_heap(props[0])))
+            to_string(null), safe_addr(count), safe_addr_val(props[0])))
 
     var props_table : table<uint; VkExtensionProperties>
     for prop in props
@@ -291,15 +285,14 @@ def with_instance(b : block<(inst:VkInstance)>)
     ]]
 
     let exts = glfwGetRequiredInstanceExtensions(
-        safe_addr_field(inst_info.enabledExtensionCount))
+        safe_addr_val(inst_info.enabledExtensionCount))
 
     unsafe
         reinterpret<string const?>(inst_info.ppEnabledExtensionNames) = exts
 
     var instance : VkInstance
-    unsafe
-        verify(VkResult VK_SUCCESS == vkCreateInstance(
-            addr(inst_info), null, addr(instance)))
+    verify(VkResult VK_SUCCESS == vkCreateInstance(
+        safe_addr(inst_info), null, safe_addr(instance)))
     b |> invoke(instance)
     instance |> vkDestroyInstance(null)
 
