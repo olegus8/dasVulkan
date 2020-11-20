@@ -376,12 +376,11 @@ def get_capabilities(device, surface)
 def with_swap_chain_images(device, swap_chain; b : block<(d:array<VkImage>)>)
     var images : array<VkImage>
     var count : uint
-    unsafe
-        verify(VkResult VK_SUCCESS == device |> vkGetSwapchainImagesKHR(
-            swap_chain, addr(count), null))
-        images |> resize(int(count))
-        verify(VkResult VK_SUCCESS == device |> vkGetSwapchainImagesKHR(
-            swap_chain, addr(count), addr(images[0])))
+    verify(VkResult VK_SUCCESS == device |> vkGetSwapchainImagesKHR(
+        swap_chain, safe_addr(count), null))
+    images |> resize(int(count))
+    verify(VkResult VK_SUCCESS == device |> vkGetSwapchainImagesKHR(
+        swap_chain, safe_addr(count), safe_addr_val(images[0])))
     b |> invoke(images)
     delete images
 
