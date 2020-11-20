@@ -300,8 +300,32 @@ def with_swap_chain(device, phys_dev, surface, window, surf_fmt, present_mode;
 )
     var caps <- phys_dev |> get_capabilities(surface)
     var extent <- phys_dev |> get_swap_extent(surface, window)
-    //TODO: create swapchain
-    b |> invoke([[VkSwapchainKHR]])
+
+    // multi-buffering
+    var img_count : uint = caps.minImageCount + 1u
+    if caps.maxImageCount > 0
+        img_count = min(img_count, caps.maxImageCount)
+
+    let create_info = [[VkSwapchainCreateInfoKHR
+        sType = VkStructureType VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR,
+        imageFormat = surf_fmt.format,
+        imageColorSpace = surf_fmt.colorSpace,
+        imageExtent = [[VkExtent2D width=extent[0], height=extent[1]]],
+        imageArrayLayers = 1, // 2 for stereoscopic
+        imageUsage = VkImageUsage VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT,
+        imageSharingMode = VkSharingMode VK_SHARING_MODE_EXCLUSIVE,
+        preTransform = caps.currentTransform,
+        compositeAlpha = VkCompositeAlphaKHR VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR,
+        presentMode = present_mode,
+        clipped = 1,
+    ]]
+
+    var swap_chain : VkSwapchainKHR
+    unsafe
+        verify(VkResult VK_SUCCESS == device |> vkCreateSwapchainKHR(
+            addr(create_info), null, addr(swap_chain)))
+    
+    b |> invoke(swap_chain)
 
 
 def get_swap_extent(device, surface, window)
