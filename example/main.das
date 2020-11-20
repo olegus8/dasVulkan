@@ -288,19 +288,19 @@ def with_surface(window, instance; b : block<(s:VkSurfaceKHR)>)
     instance |> vkDestroySurfaceKHR(surface, null)
 
 
-def with_swap_chain(device, phys_dev, surface, surf_fmt, present_mode;
+def with_swap_chain(device, phys_dev, surface, window, surf_fmt, present_mode;
     b : block<(sc:VkSwapchainKHR)>
 )
     var caps <- phys_dev |> get_capabilities(surface)
-    var extent <- phys_dev |> get_swap_extent(surface)
+    var extent <- phys_dev |> get_swap_extent(surface, window)
     //TODO: create swapchain
     b |> invoke([[VkSwapchainKHR]])
 
 
-def get_swap_extent(device, surface)
+def get_swap_extent(device, surface, window)
     var caps <- device |> get_capabilities(surface)
 
-    if caps.currentExtent.width != UINT32_MAX
+    if caps.currentExtent.width != UINT_MAX
         return uint2(
             caps.currentExtent.width,
             caps.currentExtent.height)
@@ -346,8 +346,9 @@ def with_graphics(width, height, title; b : block<(
     instance |> with_device(phys_dev, surface) <| $(device) {
     phys_dev |> with_best_format(surface) <| $(surf_fmt) {
     phys_dev |> with_best_present_mode(surface) <| $(present_mode) {
-    device |> with_swap_chain(phys_dev, surface, surf_fmt, present_mode)
-        <| $(swap_chain)
+    device |> with_swap_chain(
+        phys_dev, surface, window, surf_fmt, present_mode
+    ) <| $(swap_chain)
     {
         b |> invoke(window, phys_dev);
     }}}}}}}}
