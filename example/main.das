@@ -419,6 +419,10 @@ def with_swap_chain_image_views(device, images, surf_fmt;
     delete views
 
 
+def with_render_pass(device, surf_fmt; b : block<(rp:VkRenderPass)>)
+    pass
+
+
 def with_graphics(width, height, title; b : block<(
     window : GLFWwindow_DasHandle;
     phys_dev : VkPhysicalDevice
@@ -435,7 +439,7 @@ def with_graphics(width, height, title; b : block<(
     ) <| $(swap_chain) {
     device |> with_swap_chain_images(swap_chain) <| $(sc_imgs) {
     device |> with_swap_chain_image_views(sc_imgs, surf_fmt) <| $(sc_views) {
-    device |> with_render_pass() <| $(render_pass)
+    device |> with_render_pass(surf_fmt) <| $(render_pass)
     {
         b |> invoke(window, phys_dev);
     }}}}}}}}}}}
