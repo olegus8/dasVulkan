@@ -13864,6 +13864,7 @@ public:
         addConstant(*this,"GLFW_COCOA_MENUBAR",0x00051002);
         addConstant(*this,"GLFW_DONT_CARE",-1);
         addConstant(*this,"VK_VERSION_1_0",1);
+        addConstant(*this,"VK_API_VERSION_1_0",VK_MAKE_VERSION(1, 0, 0)// Patch version should always be set to 0);
         addConstant(*this,"VK_HEADER_VERSION",148);
         addConstant(*this,"VK_HEADER_VERSION_COMPLETE",VK_MAKE_VERSION(1, 2, VK_HEADER_VERSION));
         addConstant(*this,"VK_NULL_HANDLE",0);
@@ -13883,10 +13884,12 @@ public:
         addConstant(*this,"VK_MAX_EXTENSION_NAME_SIZE",256);
         addConstant(*this,"VK_MAX_DESCRIPTION_SIZE",256);
         addConstant(*this,"VK_VERSION_1_1",1);
+        addConstant(*this,"VK_API_VERSION_1_1",VK_MAKE_VERSION(1, 1, 0)// Patch version should always be set to 0);
         addConstant(*this,"VK_MAX_DEVICE_GROUP_SIZE",32);
         addConstant(*this,"VK_LUID_SIZE",8);
         addConstant(*this,"VK_QUEUE_FAMILY_EXTERNAL",(~0U-1));
         addConstant(*this,"VK_VERSION_1_2",1);
+        addConstant(*this,"VK_API_VERSION_1_2",VK_MAKE_VERSION(1, 2, 0)// Patch version should always be set to 0);
         addConstant(*this,"VK_MAX_DRIVER_NAME_SIZE",256);
         addConstant(*this,"VK_MAX_DRIVER_INFO_SIZE",256);
         addConstant(*this,"VK_KHR_surface",1);
