@@ -123,7 +123,7 @@ def with_graphics_queue_family(device, surface; b : block<(index:uint)>)
                 continue
 
             var graphics_bit = to_uint(VkQueueFlagBits VK_QUEUE_GRAPHICS_BIT)
-            if family.queueFlags & graphics_bit == 0u
+            if (family.queueFlags & graphics_bit) == 0u
                 continue
 
             b |> invoke(uint(index))
