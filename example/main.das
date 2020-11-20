@@ -440,8 +440,8 @@ def with_render_pass(device, surf_fmt; b : block<(rp:VkRenderPass)>)
     let subpass <- [[VkSubpassDescription
         pipelineBindPoint = (
             VkPipelineBindPoint VK_PIPELINE_BIND_POINT_GRAPHICS),
-        subpass.colorAttachmentCount = 1u,
-        subpass.pColorAttachments = att_ref_addr
+        colorAttachmentCount = 1u,
+        pColorAttachments = att_ref_addr
     ]]
 
 
