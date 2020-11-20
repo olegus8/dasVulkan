@@ -40,13 +40,11 @@ def safe_addr_val(var x : auto&)
 
 
 def with_addr(x: auto(T); b : block<(a:T ?)>)
-    unsafe
-        b |> invoke(addr(x))
+    b |> invoke(safe_addr(x))
 
 
 def with_addr_val(var x: auto(T)&; b : block<(a:T - & ?)>)
-    unsafe
-        b |> invoke(addr(x))
+    b |> invoke(safe_addr_val(x))
 
 
 def with_physical_devices(inst; b : block<(d:array<VkPhysicalDevice>)>)
