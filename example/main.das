@@ -34,6 +34,12 @@ def to_uint(x)
 def safe_addr(x)
     unsafe
         return addr(x)
+def safe_addr_var(var x)
+    unsafe
+        return addr(x)
+def safe_addr_val(var x : auto&)
+    unsafe
+        return addr(x)
 
 
 def with_physical_devices(inst; b : block<(d:array<VkPhysicalDevice>)>)
