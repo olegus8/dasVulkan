@@ -468,7 +468,7 @@ def with_render_pass(device, surf_fmt; b : block<(rp:VkRenderPass)>)
         dstAccessMask = to_uint(VkAccessFlagBits
             VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT)
     ]]]];
-    deps[0] |> with_addr <| $(deps_p) {
+    deps[0] |> with_addr() <| $(deps_p) {
         let create_info <- [[VkRenderPassCreateInfo
             sType = (VkStructureType
                 VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO),
@@ -477,11 +477,11 @@ def with_render_pass(device, surf_fmt; b : block<(rp:VkRenderPass)>)
             subpassCount = uint(subs |> length()),
             pSubpasses = subs_p,
             dependencyCount = uint(deps |> length()),
-            pDependencies = deps_p,
+            pDependencies = deps_p
         ]];
         var render_pass : VkRenderPass;
         verify(VkResult VK_SUCCESS == device |> vkCreateRenderPass(
-            safe_addr(create_info), null, safe_addr_val(render_pass)))
+            safe_addr(create_info), null, safe_addr_val(render_pass)));
         b |> invoke(render_pass);
         device |> vkDestroyRenderPass(render_pass, null);
     }}}}
