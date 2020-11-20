@@ -245,14 +245,13 @@ def with_ext_props(device;
 )
     var props : array<VkExtensionProperties>
     var count : uint
-    unsafe
-        verify(VkResult VK_SUCCESS ==
-            device |> vkEnumerateDeviceExtensionProperties(
-                reinterpret<string>(null), addr(count), null))
-        props |> resize(int(count))
-        verify(VkResult VK_SUCCESS ==
-            device |> vkEnumerateDeviceExtensionProperties(
-                reinterpret<string>(null), addr(count), addr(props[0])))
+    verify(VkResult VK_SUCCESS ==
+        device |> vkEnumerateDeviceExtensionProperties(
+            to_string(null), safe_addr(count), null))
+    props |> resize(int(count))
+    verify(VkResult VK_SUCCESS ==
+        device |> vkEnumerateDeviceExtensionProperties(
+            to_string(null), safe_addr(count), safe_addr_heap(props[0])))
 
     var props_table : table<uint; VkExtensionProperties>
     for prop in props
