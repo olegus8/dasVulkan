@@ -44,6 +44,11 @@ def with_addr(x: auto(T); b : block<(a:T ?)>)
         b |> invoke(addr(x))
 
 
+def with_addr_val(x: auto(T)&; b : block<(a:T ?)>)
+    unsafe
+        b |> invoke(addr(x))
+
+
 def with_physical_devices(inst; b : block<(d:array<VkPhysicalDevice>)>)
     var devices : array<VkPhysicalDevice>
     var count : uint
@@ -481,7 +486,7 @@ def with_render_pass(device, surf_fmt; b : block<(rp:VkRenderPass)>)
     ]];
     create_info |> with_addr() <| $(create_info_p) {
     var rpass : VkRenderPass;
-    rpass |> with_addr() <| $(rpass_p) {
+    rpass |> with_addr_val() <| $(rpass_p) {
         verify(VkResult VK_SUCCESS == device |> vkCreateRenderPass(
             create_info_p, null, rpass));
         b |> invoke(rpass);
