@@ -486,6 +486,7 @@ def with_render_pass(device, surf_fmt; b : block<(rp:VkRenderPass)>)
     ]];
     create_info |> with_addr() <| $(create_info_p) {
         var rpass : VkRenderPass;
+        //TODO: make it work with rpass |> with_addr_val
         verify(VkResult VK_SUCCESS == device |> vkCreateRenderPass(
             create_info_p, null, safe_addr_val(rpass)));
         b |> invoke(rpass);
