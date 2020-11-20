@@ -312,7 +312,8 @@ def with_swap_chain(device, phys_dev, surface, window, surf_fmt, present_mode;
         imageColorSpace = surf_fmt.colorSpace,
         imageExtent = [[VkExtent2D width=extent[0], height=extent[1]]],
         imageArrayLayers = 1, // 2 for stereoscopic
-        imageUsage = VkImageUsage VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT,
+        imageUsage = (
+            VkImageUsageFlagBits VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT),
         imageSharingMode = VkSharingMode VK_SHARING_MODE_EXCLUSIVE,
         preTransform = caps.currentTransform,
         compositeAlpha = (
