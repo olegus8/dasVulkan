@@ -288,11 +288,11 @@ def with_surface(window, instance; b : block<(s:VkSurfaceKHR)>)
     instance |> vkDestroySurfaceKHR(surface, null)
 
 
-def with_swap_chain(device, phys_dev, surface; b : block<(sc:VkSwapchainKHR)>)
-    phys_dev |> with_best_format(surface) <| $(format)
-        phys_dev |> with_best_present_mode(surface) <| $(present_mode)
-            //TODO: create swapchain
-            b |> invoke([[VkSwapchainKHR]])
+def with_swap_chain(device, phys_dev, surf_fmt, present_mode;
+    b : block<(sc:VkSwapchainKHR)>
+)
+    //TODO: create swapchain
+    b |> invoke([[VkSwapchainKHR]])
 
 
 def with_graphics(width, height, title; b : block<(
@@ -308,9 +308,13 @@ def with_graphics(width, height, title; b : block<(
     window |> with_surface(instance) <| $(surface) {
     instance |> with_best_physical_device(surface) <| $(phys_dev) {
     instance |> with_device(phys_dev, surface) <| $(device) {
-    device |> with_swap_chain(phys_dev, surface) <| $(swap_chain) {
+    phys_dev |> with_best_format(surface) <| $(surf_fmt) {
+    phys_dev |> with_best_present_mode(surface) <| $(present_mode) {
+    device |> with_swap_chain(phys_dev, surf_fmt, present_mode)
+        <| $(swap_chain)
+    {
         b |> invoke(instance, window, surface, phys_dev, device, swap_chain);
-    }}}}}}
+    }}}}}}}}
 
 
 [export]
