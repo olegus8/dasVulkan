@@ -31,7 +31,7 @@ def to_uint(x)
         return reinterpret<uint>(x)
 
 
-//TODO: can we reuse safe_addr here?
+//TODO: can we extend safe_addr to constants?
 def safe_addr_const(x)
     unsafe
         return addr(x)
