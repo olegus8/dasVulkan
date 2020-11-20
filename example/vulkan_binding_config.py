@@ -40,6 +40,7 @@ class Config(ConfigBase):
     def configure_function(self, func):
         # whitelist
         if func.name in [
+            'vkCreateSwapchainKHR',
             'vkDestroySurfaceKHR',
             'vkGetPhysicalDeviceSurfaceCapabilitiesKHR',
             'vkGetPhysicalDeviceSurfaceFormatsKHR',
