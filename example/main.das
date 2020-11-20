@@ -268,8 +268,7 @@ def with_ext_props(device;
 
 def get_properties(device)
     var props : VkPhysicalDeviceProperties
-    unsafe
-        device |> vkGetPhysicalDeviceProperties(addr(props))
+    device |> vkGetPhysicalDeviceProperties(safe_addr(props))
     return <- props
 
 
