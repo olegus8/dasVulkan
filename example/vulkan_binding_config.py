@@ -16,6 +16,9 @@ class Config(ConfigBase):
         return True
 
     def configure_macro_const(self, macro_const):
+        if '"' in macro_const.value:
+            macro_const.ignore()
+            return
         for prefix in [
             'VK_API_VERSION',
         ]:
