@@ -291,8 +291,20 @@ def with_surface(window, instance; b : block<(s:VkSurfaceKHR)>)
 def with_swap_chain(device, phys_dev, surf_fmt, present_mode;
     b : block<(sc:VkSwapchainKHR)>
 )
-    //TODO: create swapchain
-    b |> invoke([[VkSwapchainKHR]])
+    phys_dev |> with_capabilities(surface) <| $(caps)
+        //TODO: create swapchain
+        b |> invoke([[VkSwapchainKHR]])
+
+
+def with_capabilities(device, surface;
+    b : block<(caps:VkSurfaceCapabilitiesKHR)>
+)
+    var caps : VkSurfaceCapabilitiesKHR
+    unsafe
+        verify(VkResult VK_SUCCESS ==
+            device |> vkGetPhysicalDeviceSurfaceCapabilitiesKHR(
+                surface, addr(caps)))
+    b |> invoke(caps)
 
 
 def with_graphics(width, height, title; b : block<(
