@@ -446,12 +446,13 @@ def with_render_pass(device, surf_fmt; b : block<(rp:VkRenderPass)>)
     let subpass_dep <- [[VkSubpassDependency
         srcSubpass = VK_SUBPASS_EXTERNAL,
         dstSubpass = 0,
-        srcStageMask = (VkPipelineStageFlagBits
+        srcStageMask = to_uint(VkPipelineStageFlagBits
             VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT),
         srcAccessMask = 0,
-        dstStageMask = (VkPipelineStageFlagBits
+        dstStageMask = to_uint(VkPipelineStageFlagBits
             VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT),
-        dstAccessMask = VkAccessFlagBits VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT
+        dstAccessMask = to_uint(VkAccessFlagBits
+            VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT)
     ]]
 
 
