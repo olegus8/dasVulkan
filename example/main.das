@@ -434,10 +434,11 @@ def with_graphics(width, height, title; b : block<(
         phys_dev, surface, window, surf_fmt, present_mode
     ) <| $(swap_chain) {
     device |> with_swap_chain_images(swap_chain) <| $(sc_imgs) {
-    device |> with_swap_chain_image_views(sc_imgs, surf_fmt) <| $(sc_views)
+    device |> with_swap_chain_image_views(sc_imgs, surf_fmt) <| $(sc_views) {
+    device |> with_render_pass() <| $(render_pass)
     {
         b |> invoke(window, phys_dev);
-    }}}}}}}}}}
+    }}}}}}}}}}}
 
 
 [export]
