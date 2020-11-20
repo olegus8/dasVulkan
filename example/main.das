@@ -394,7 +394,7 @@ def with_swap_chain_image_views(device, images, surf_fmt;
             sType = VkStructureType VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO,
             image = image,
             viewType = VkImageViewType VK_IMAGE_VIEW_TYPE_2D,
-            format = surf_fmt,
+            format = surf_fmt.format,
             components = [[VkComponentMapping
                 r = no_swizzle,
                 g = no_swizzle,
