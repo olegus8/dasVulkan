@@ -296,15 +296,42 @@ def with_swap_chain(device, phys_dev, surface, surf_fmt, present_mode;
         b |> invoke([[VkSwapchainKHR]])
 
 
-def with_capabilities(device, surface;
-    b : block<(caps:VkSurfaceCapabilitiesKHR)>
-)
+def get_swap_extent(device, surface)
+    var caps <- device |> get_capabilities(surface)
+
+    if caps.currentExtent.width != UINT32_MAX
+        return uint2(
+            caps.currentExtent.width,
+            caps.currentExtent.height)
+    else
+        var fb_size = window |> get_framebuffer_size()
+        return uint2(
+            clamp(fb_size[0],
+                caps.minImageExtent.width,
+                caps.maxImageExtent.width),
+            clamp(fb_size[1],
+                caps.minImageExtent.height,
+                caps.maxImageExtent.height))
+
+
+def clamp(t, a, b : uint)
+    return min(max(t, a), b)
+
+
+def get_framebuffer_size(window)
+    var width, height : int
+    unsafe
+        window |> glfwGetFramebufferSize(addr(width), addr(height))
+    return uint2(uint(width), uint(height))
+
+
+def get_capabilities(device, surface)
     var caps : VkSurfaceCapabilitiesKHR
     unsafe
         verify(VkResult VK_SUCCESS ==
             device |> vkGetPhysicalDeviceSurfaceCapabilitiesKHR(
                 surface, addr(caps)))
-    b |> invoke(caps)
+    return <- caps
 
 
 def with_graphics(width, height, title; b : block<(
