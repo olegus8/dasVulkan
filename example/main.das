@@ -39,7 +39,7 @@ def safe_addr_val(var x : auto&)
         return addr(x)
 
 
-def with_addr(x; b : block<(a)>)
+def with_addr(x: auto(T); b : block<(a:T ?)>)
     unsafe
         b |> invoke(addr(x))
 
@@ -448,12 +448,12 @@ def with_render_pass(device, surf_fmt; b : block<(rp:VkRenderPass)>)
         attachment = 0u,
         layout = VkImageLayout VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL
     ]]]]
-    att_refs[0] |> with_addr() <| $(att_refs_addr)
+    att_refs[0] |> with_addr() <| $(att_refs_p)
         let subs <- [[auto[] [[VkSubpassDescription
             pipelineBindPoint = (
                 VkPipelineBindPoint VK_PIPELINE_BIND_POINT_GRAPHICS),
             colorAttachmentCount = uint(att_refs |> length()),
-            pColorAttachments = att_refs_addr
+            pColorAttachments = att_refs_p
         ]]]]
         let deps <- [[auto[] [[VkSubpassDependency
             srcSubpass = VK_SUBPASS_EXTERNAL,
@@ -466,21 +466,23 @@ def with_render_pass(device, surf_fmt; b : block<(rp:VkRenderPass)>)
             dstAccessMask = to_uint(VkAccessFlagBits
                 VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT)
         ]]]]
-        let create_info <- [[VkRenderPassCreateInfo
-            sType = VkStructureType VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO,
-            attachmentCount = uint(atts |> length()),
-            pAttachments = safe_addr(atts[0]),
-            subpassCount = uint(subs |> length()),
-            pSubpasses = safe_addr(subs[0]),
-            dependencyCount = uint(deps |> length()),
-            pDependencies = safe_addr(deps[0])
-        ]]
+        atts[0] |> with_addr() <| $(atts_p)
+            let create_info <- [[VkRenderPassCreateInfo
+                sType = (VkStructureType
+                    VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO),
+                attachmentCount = uint(atts |> length()),
+                pAttachments = atts_p,
+                subpassCount = uint(subs |> length()),
+                pSubpasses = safe_addr(subs[0]),
+                dependencyCount = uint(deps |> length()),
+                pDependencies = safe_addr(deps[0])
+            ]]
 
-        var render_pass : VkRenderPass
-        verify(VkResult VK_SUCCESS == device |> vkCreateRenderPass(
-            safe_addr(create_info), null, safe_addr_val(render_pass)))
-        b |> invoke(render_pass)
-        device |> vkDestroyRenderPass(render_pass, null)
+            var render_pass : VkRenderPass
+            verify(VkResult VK_SUCCESS == device |> vkCreateRenderPass(
+                safe_addr(create_info), null, safe_addr_val(render_pass)))
+            b |> invoke(render_pass)
+            device |> vkDestroyRenderPass(render_pass, null)
 
 
 def with_graphics(width, height, title; b : block<(
