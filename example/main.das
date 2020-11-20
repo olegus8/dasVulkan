@@ -395,10 +395,11 @@ def with_swap_chain_image_views(device, images, surf_fmt;
             image = image,
             viewType = VK_IMAGE_VIEW_TYPE_2D,
             format = surf_fmt,
-            components.r = no_swizzle,
-            components.g = no_swizzle,
-            components.b = no_swizzle,
-            components.a = no_swizzle,
+            components = [[VkComponentMapping
+                r = no_swizzle,
+                g = no_swizzle,
+                b = no_swizzle,
+                a = no_swizzle]],
             subresourceRange = [[VkImageSubresourceRange
                 aspectMask = VK_IMAGE_ASPECT_COLOR_BIT,
                 baseMipLevel = 0,
