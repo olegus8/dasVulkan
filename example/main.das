@@ -432,7 +432,7 @@ def with_render_pass(device, surf_fmt; b : block<(rp:VkRenderPass)>)
     ]]
 
     let att_ref <- [[VkAttachmentReference
-        attachment = 0,
+        attachment = 0u,
         layout = VkImageLayout VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL
     ]]
 
