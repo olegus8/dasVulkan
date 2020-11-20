@@ -22,6 +22,12 @@ def to_string( bytes : int8[] )
         return reinterpret<string>(addr(bytes[0]))
 
 
+//TODO: figure out what to do with it. it's for enum -> uint
+def to_uint(x)
+    unsafe
+        return reinterpret<uint>(x)
+
+
 def with_physical_devices(inst; b : block<(d:array<VkPhysicalDevice>)>)
     var devices : array<VkPhysicalDevice>
     var count : uint
@@ -303,7 +309,7 @@ def with_swap_chain(device, phys_dev, surface, window, surf_fmt, present_mode;
 
     // multi-buffering
     var img_count : uint = caps.minImageCount + 1u
-    if caps.maxImageCount > 0
+    if caps.maxImageCount > 0u
         img_count = min(img_count, caps.maxImageCount)
 
     let create_info = [[VkSwapchainCreateInfoKHR
@@ -311,15 +317,15 @@ def with_swap_chain(device, phys_dev, surface, window, surf_fmt, present_mode;
         imageFormat = surf_fmt.format,
         imageColorSpace = surf_fmt.colorSpace,
         imageExtent = [[VkExtent2D width=extent[0], height=extent[1]]],
-        imageArrayLayers = 1, // 2 for stereoscopic
-        imageUsage = (
+        imageArrayLayers = 1u, // 2 for stereoscopic
+        imageUsage = to_uint(
             VkImageUsageFlagBits VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT),
         imageSharingMode = VkSharingMode VK_SHARING_MODE_EXCLUSIVE,
         preTransform = caps.currentTransform,
         compositeAlpha = (
             VkCompositeAlphaFlagBitsKHR VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR),
         presentMode = present_mode,
-        clipped = 1
+        clipped = 1u
     ]]
 
     var swap_chain : VkSwapchainKHR
