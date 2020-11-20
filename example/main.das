@@ -361,8 +361,7 @@ def get_swap_extent(device, surface, window)
 
 def get_framebuffer_size(window)
     var width, height : int
-    unsafe
-        window |> glfwGetFramebufferSize(addr(width), addr(height))
+    window |> glfwGetFramebufferSize(safe_addr(width), safe_addr(height))
     return uint2(uint(width), uint(height))
 
 
