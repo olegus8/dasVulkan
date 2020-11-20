@@ -6,8 +6,10 @@ require math
 
 
 let
+    MAX_FRAMES_IN_FLIGHT = 2
+
     REQUIRED_EXTENSIONS = [[auto[]
-        "VK_KHR_swapchain"
+        "VK_KHR_swapchain" //TODO: use VK_KHR_SWAPCHAIN_EXTENSION_NAME
     ]]
 
 
@@ -323,7 +325,7 @@ def with_swap_chain(device, phys_dev, surface, window, surf_fmt, present_mode;
         compositeAlpha = (
             VkCompositeAlphaFlagBitsKHR VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR),
         presentMode = present_mode,
-        clipped = 1u
+        clipped = 1u //TODO: use VK_TRUE
     ]]
 
     var swap_chain : VkSwapchainKHR
