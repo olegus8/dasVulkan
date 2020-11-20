@@ -410,9 +410,8 @@ def with_swap_chain_image_views(device, images, surf_fmt;
                 baseArrayLayer = 0u,
                 layerCount = 1u]]
         ]]
-        unsafe
-            verify(VkResult VK_SUCCESS == device |> vkCreateImageView(
-                addr(create_info), null, addr(view)))
+        verify(VkResult VK_SUCCESS == device |> vkCreateImageView(
+            safe_addr_const(create_info), null, safe_addr(view)))
 
     b |> invoke(views)
 
