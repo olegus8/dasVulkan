@@ -30,6 +30,12 @@ def to_uint(x)
         return reinterpret<uint>(x)
 
 
+//TODO: make it "with_addr" instead, and use temp vars
+def safe_addr(x)
+    unsafe
+        return addr(x)
+
+
 def with_physical_devices(inst; b : block<(d:array<VkPhysicalDevice>)>)
     var devices : array<VkPhysicalDevice>
     var count : uint
@@ -420,7 +426,7 @@ def with_swap_chain_image_views(device, images, surf_fmt;
 
 
 def with_render_pass(device, surf_fmt; b : block<(rp:VkRenderPass)>)
-    let att <- [[VkAttachmentDescription
+    let atts <- [[auto[] [[VkAttachmentDescription
         format = surf_fmt.format,
         samples = VkSampleCountFlagBits VK_SAMPLE_COUNT_1_BIT,
         loadOp = VkAttachmentLoadOp VK_ATTACHMENT_LOAD_OP_CLEAR,
@@ -429,21 +435,18 @@ def with_render_pass(device, surf_fmt; b : block<(rp:VkRenderPass)>)
         stencilStoreOp = VkAttachmentStoreOp VK_ATTACHMENT_STORE_OP_DONT_CARE,
         initialLayout = VkImageLayout VK_IMAGE_LAYOUT_UNDEFINED,
         finalLayout = VkImageLayout VK_IMAGE_LAYOUT_PRESENT_SRC_KHR
-    ]]
-    let att_ref <- [[VkAttachmentReference
+    ]]]]
+    let att_refs <- [[auto[] [[VkAttachmentReference
         attachment = 0u,
         layout = VkImageLayout VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL
-    ]]
-    var att_ref_addr : VkAttachmentReference?
-    unsafe
-        att_ref_addr = reinterpret<VkAttachmentReference?>(addr(att_ref))
-    let subpass <- [[VkSubpassDescription
+    ]]]]
+    let subs <- [[auto[] [[VkSubpassDescription
         pipelineBindPoint = (
             VkPipelineBindPoint VK_PIPELINE_BIND_POINT_GRAPHICS),
-        colorAttachmentCount = 1u,
-        pColorAttachments = att_ref_addr
-    ]]
-    let subpass_dep <- [[VkSubpassDependency
+        colorAttachmentCount = uint(att_refs |> length()),
+        pColorAttachments = safe_addr(att_refs[0])
+    ]]]]
+    let deps <- [[auto[] [[VkSubpassDependency
         srcSubpass = VK_SUBPASS_EXTERNAL,
         dstSubpass = 0u,
         srcStageMask = to_uint(VkPipelineStageFlagBits
@@ -453,6 +456,15 @@ def with_render_pass(device, surf_fmt; b : block<(rp:VkRenderPass)>)
             VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT),
         dstAccessMask = to_uint(VkAccessFlagBits
             VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT)
+    ]]]]
+    let create_info <- [[VkRenderPassCreateInfo
+        sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO,
+        attachmentCount = uint(attrs |> length()),
+        pAttachments = safe_addr(attrs[0]),
+        subpassCount = uint(subs);
+        pSubpasses = safe_addr(subs[0]),
+        dependencyCount = uint(deps);
+        pDependencies = safe_addr(deps[0])
     ]]
 
 
