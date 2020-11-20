@@ -317,7 +317,7 @@ def with_swap_chain(device, phys_dev, surface, window, surf_fmt, present_mode;
         preTransform = caps.currentTransform,
         compositeAlpha = VkCompositeAlphaKHR VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR,
         presentMode = present_mode,
-        clipped = 1,
+        clipped = 1
     ]]
 
     var swap_chain : VkSwapchainKHR
