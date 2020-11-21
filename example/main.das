@@ -468,7 +468,7 @@ def with_shader_module(device, name; b : block<(m:VkShaderModule)>)
     let code_fpath = "{get_das_root()}/modules/dasVulkan/example/{name}.spv"
     var code : string
     var code_size : uint64
-    fpath |> fopen("rb") <| $(f)
+    code_fpath |> fopen("rb") <| $(f)
         code <- f |> read()
         code_size = (f |> fstat()).size
     var code_ptr : uint?
