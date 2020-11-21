@@ -37,7 +37,7 @@ def to_uint(x)
 
 
 //TODO: can we extend safe_addr to constants?
-def safe_addr_const(x : auto(T)) : T ? #
+def safe_addr_plain(x : auto(T)) : T ? #
     unsafe
         return reinterpret<T?#>(addr(x))
 
@@ -141,14 +141,14 @@ def with_device(instance, phys_dev, surface; b : block<(device:VkDevice)>)
         var device : VkDevice
         let create_info = [[VkDeviceCreateInfo
             sType = VkStructureType VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO,
-            pQueueCreateInfos = safe_addr_const(queue_infos[0]),
+            pQueueCreateInfos = safe_addr_plain(queue_infos[0]),
             queueCreateInfoCount = uint(queue_infos |> length()),
-            pEnabledFeatures = safe_addr_const(features),
+            pEnabledFeatures = safe_addr_plain(features),
             enabledExtensionCount = uint(REQUIRED_EXTENSIONS |> length()),
-            ppEnabledExtensionNames = safe_addr_const(REQUIRED_EXTENSIONS[0])
+            ppEnabledExtensionNames = safe_addr_plain(REQUIRED_EXTENSIONS[0])
         ]]
         verify(VkResult VK_SUCCESS == vkCreateDevice(
-            phys_dev, safe_addr_const(create_info), null, safe_addr(device)))
+            phys_dev, safe_addr_plain(create_info), null, safe_addr(device)))
         b |> invoke(device)
         device |> vkDeviceWaitIdle()
         device |> vkDestroyDevice(null)
@@ -175,7 +175,7 @@ def with_queue_create_infos(device, surface;
                     VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO),
                 queueFamilyIndex = family,
                 queueCount = uint(priorities |> length()),
-                pQueuePriorities = safe_addr_const(priorities[0])
+                pQueuePriorities = safe_addr_plain(priorities[0])
         ]])
 
     b |> invoke(infos)
@@ -336,7 +336,7 @@ def with_swap_chain(device, phys_dev, surface, window, surf_fmt, present_mode;
 
     var swap_chain : VkSwapchainKHR
     verify(VkResult VK_SUCCESS == device |> vkCreateSwapchainKHR(
-        safe_addr_const(create_info), null, safe_addr(swap_chain)))
+        safe_addr_plain(create_info), null, safe_addr(swap_chain)))
     b |> invoke(swap_chain)
     device |> vkDestroySwapchainKHR(swap_chain, null)
 
@@ -411,7 +411,7 @@ def with_swap_chain_image_views(device, images, surf_fmt;
                 layerCount = 1u]]
         ]]
         verify(VkResult VK_SUCCESS == device |> vkCreateImageView(
-            safe_addr_const(create_info), null, safe_addr(view)))
+            safe_addr_plain(create_info), null, safe_addr(view)))
 
     b |> invoke(views)
 
@@ -439,7 +439,7 @@ def with_render_pass(device, surf_fmt; b : block<(rp:VkRenderPass)>)
         pipelineBindPoint = (
             VkPipelineBindPoint VK_PIPELINE_BIND_POINT_GRAPHICS),
         colorAttachmentCount = uint(att_refs |> length()),
-        pColorAttachments = safe_addr_const(att_refs[0])
+        pColorAttachments = safe_addr_plain(att_refs[0])
     ]]]]
     let deps <- [[auto[] [[VkSubpassDependency
         srcSubpass = VK_SUBPASS_EXTERNAL,
@@ -456,15 +456,15 @@ def with_render_pass(device, surf_fmt; b : block<(rp:VkRenderPass)>)
         sType = (VkStructureType
             VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO),
         attachmentCount = uint(atts |> length()),
-        pAttachments = safe_addr_const(atts[0]),
+        pAttachments = safe_addr_plain(atts[0]),
         subpassCount = uint(subs |> length()),
-        pSubpasses = safe_addr_const(subs[0]),
+        pSubpasses = safe_addr_plain(subs[0]),
         dependencyCount = uint(deps |> length()),
-        pDependencies = safe_addr_const(deps[0])
+        pDependencies = safe_addr_plain(deps[0])
     ]]
     var rpass : VkRenderPass;
     verify(VkResult VK_SUCCESS == device |> vkCreateRenderPass(
-        safe_addr_const(create_info), null, safe_addr(rpass)))
+        safe_addr_plain(create_info), null, safe_addr(rpass)))
     b |> invoke(rpass)
     device |> vkDestroyRenderPass(rpass, null)
 
