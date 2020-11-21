@@ -586,6 +586,20 @@ def with_graphics_pipeline(
         rasterizationSamples = VkSampleCountFlagBits VK_SAMPLE_COUNT_1_BIT,
         minSampleShading = 1.0f
     ]]
+    let blending_atts <- [[auto[] [[VkPipelineColorBlendAttachmentState
+        colorWriteMask =
+            uint(VkColorComponentFlagBits VK_COLOR_COMPONENT_R_BIT) |
+            uint(VkColorComponentFlagBits VK_COLOR_COMPONENT_G_BIT) |
+            uint(VkColorComponentFlagBits VK_COLOR_COMPONENT_B_BIT) |
+            uint(VkColorComponentFlagBits VK_COLOR_COMPONENT_A_BIT)
+    ]]]]
+    let blending <- [[VkPipelineColorBlendStateCreateInfo
+        sType = (VkStructureType
+            VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO),
+        attachmentCount = uint(blending_atts |> length()),
+        pAttachments = blending_atts |> safe_addr()
+    ]]
+    //TODO: create pipeline
     b |> invoke([[VkPipeline]])
 
 
