@@ -349,7 +349,7 @@ def get_swap_extent(device, surface, window)
             caps.currentExtent.width,
             caps.currentExtent.height)
     else
-        var fb_size = window |> get_framebuffer_size()
+        let fb_size = window |> get_framebuffer_size()
         return uint2(
             clamp(fb_size[0],
                 caps.minImageExtent.width,
@@ -547,10 +547,13 @@ def with_graphics_pipeline(
         topology = VkPrimitiveTopology VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST,
         primitiveRestartEnable = uint(VK_FALSE)
     ]]
-    var extent <- phys_dev |> get_swap_extent(surface, window)
+    let extent <- phys_dev |> get_swap_extent(surface, window)
     let viewport <- [[VkViewport
         x = 0.0f, y = 0.0f, minDepth = 0.0f, maxDepth = 1.0f,
         width = float(extent[0]), height = float(extent[1])
+    ]]
+    let scissor <- [[VkRect2D
+        extent = [[VkExtent2D width=extent[0], height=extent[1]]]
     ]]
     //TODO: create pipeline
     b |> invoke([[VkPipeline]])
