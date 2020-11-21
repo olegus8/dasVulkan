@@ -535,7 +535,7 @@ def with_graphics_pipeline(
     let input_assembly <- [[VkPipelineInputAssemblyStateCreateInfo
         sType = (VkStructureType 
             VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO),
-        topology = VkPrimitiveTopology VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST,
+        topology = VkPrimitiveTopology VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST
     ]]
 
     ///////////////
@@ -577,7 +577,7 @@ def with_graphics_pipeline(
             VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO),
         polygonMode = VkPolygonMode VK_POLYGON_MODE_FILL,
         lineWidth = 1.0f,
-        cullMode = VkCullModeFlagBits VK_CULL_MODE_BACK_BIT,
+        cullMode = uint(VkCullModeFlagBits VK_CULL_MODE_BACK_BIT),
         frontFace = VkFrontFace VK_FRONT_FACE_CLOCKWISE
     ]]
     b |> invoke([[VkPipeline]])
