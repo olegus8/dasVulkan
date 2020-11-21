@@ -501,8 +501,8 @@ def with_pipeline_layout(device; b : block<(layout:VkPipelineLayout)>)
     device |> vkDestroyPipelineLayout(layout, null)
 
 
-def with_graphics_pipeline(
-    device, phys_dev, surface, window, layout, vert_shmod, frag_shmod;
+def with_graphics_pipeline(device, phys_dev, surface, window, layout,
+    render_pass, vert_shmod, frag_shmod;
     b : block<(p:VkPipeline)>
 )
     ////////////////////
@@ -615,12 +615,7 @@ def with_graphics_pipeline(
         pMultisampleState = multisampling |> safe_addr(),
         pColorBlendState = blending |> safe_addr(),
         layout = layout,
-
-      // Which render pass and subpass will be using this pipeline.
-      // Pipeline can be used by multiple render passes, but they all must
-      // be compatible.
-      // ("Graphics pipeline basics" -> "Conclusion")
-      pipelineInfo.renderPass = renderPass;
+        renderPass = render_pass,
       pipelineInfo.subpass = 0;
 
       // Can specify the pipeline with which this one has much in common.
@@ -653,8 +648,8 @@ def with_graphics(width, height, title; b : block<(
     device |> with_swap_chain_image_views(sc_imgs, surf_fmt) <| $(sc_views) {
     device |> with_render_pass(surf_fmt) <| $(render_pass) {
     device |> with_pipeline_layout() <| $(layout) {
-    device |> with_graphics_pipeline(
-        phys_dev, surface, window, layout, vert_shmod, frag_shmod
+    device |> with_graphics_pipeline(phys_dev, surface, window, layout,
+        render_pass, vert_shmod, frag_shmod
     ) <| $(pipeline)
     {
         b |> invoke(window, phys_dev);
