@@ -521,7 +521,7 @@ def with_graphics_pipeline(device, vert_shmod, frag_shmod;
             pName = "main"
         ]]
     ]]
-    let vtx_bindings <- [[VkVertexInputBindingDescription[] [[
+    let vtx_bindings <- [[auto[] [[VkVertexInputBindingDescription
         binding = 0u,
         stride = typeinfo(sizeof type<Vertex>),
         inputRate = VkVertexInputRate VK_VERTEX_INPUT_RATE_VERTEX
