@@ -487,7 +487,18 @@ def with_shader_module(device, name; b : block<(m:VkShaderModule)>)
 
 
 def with_pipeline_layout(device; b : block<(layout:VkPipelineLayout)>)
-    pass
+    let create_info <- [[ VkPipelineLayoutCreateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO,
+        setLayoutCount = 0u,
+        pSetLayouts = null,
+        pushConstantRangeCount = 0u,
+        pPushConstantRanges = null
+    ]]
+    var layout : VkPipelineLayout
+    verify(VkResult VK_SUCCESS == device |> vkCreatePipelineLayout(
+        create_info |> safe_addr(), null, layout |> safe_addr()))
+    b |> invoke(layout)
+    device |> vkDestroyPipelineLayout(layout, null)
 
 
 def with_graphics(width, height, title; b : block<(
