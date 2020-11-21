@@ -472,6 +472,20 @@ def with_render_pass(device, surf_fmt; b : block<(rp:VkRenderPass)>)
     device |> vkDestroyRenderPass(rpass, null)
 
 
+def with_shader_module(device, name; b : block<(m:VkShaderModule)>)
+    let shader_data <- read_data("{name}.spv")
+    let create_info <- [[VkShaderModuleCreateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO,
+        codeSize = shader_data |> length(),
+        pCode = reinterpret<uint?>(shader_data)
+    ]]
+    var shmod : VkShaderModule
+    verify(VkResult VK_SUCCESS == device |> vkCreateShaderModule(
+        create_info |> safe_addr(), null, shmod |> safe_addr()))
+    b |> invoke(shmod)
+    device |> vkDestroyShaderModule(shmod, null)
+
+
 def with_graphics(width, height, title; b : block<(
     window : GLFWwindow_DasHandle;
     phys_dev : VkPhysicalDevice
@@ -483,8 +497,8 @@ def with_graphics(width, height, title; b : block<(
     instance |> with_device(phys_dev, surface) <| $(device) {
     phys_dev |> with_best_format(surface) <| $(surf_fmt) {
     phys_dev |> with_best_present_mode(surface) <| $(present_mode) {
-    let vert_spv <- read_data("vert.spv");
-    let frag_spv <- read_data("frag.spv");
+    device |> with_shader_module("vert") <| $(vert_shader) {
+    device |> with_shader_module("frag") <| $(vert_shader) {
     device |> with_swap_chain(
         phys_dev, surface, window, surf_fmt, present_mode
     ) <| $(swap_chain) {
@@ -493,7 +507,7 @@ def with_graphics(width, height, title; b : block<(
     device |> with_render_pass(surf_fmt) <| $(render_pass)
     {
         b |> invoke(window, phys_dev);
-    }}}}}}}}}}}
+    }}}}}}}}}}}}}
 
 
 [export]
