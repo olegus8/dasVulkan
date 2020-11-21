@@ -42,10 +42,10 @@ def safe_addr_const(x)
         return addr(x)
 
 
-//TODO: make this better
-def safe_addr_val(var x : auto&)
+//TODO: this is for example for heap
+def safe_addr_val(var x : auto(T)&) : T-& ? #
     unsafe
-        return addr(x)
+        return reinterpret<T-&?#>(addr(x))
 
 
 def with_physical_devices(inst; b : block<(d:array<VkPhysicalDevice>)>)
