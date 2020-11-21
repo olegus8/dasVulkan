@@ -463,6 +463,9 @@ def with_render_pass(device, surf_fmt; b : block<(rp:VkRenderPass)>)
     device |> vkDestroyRenderPass(rpass, null)
 
 
+def with_shader_spv(fname; b : block<(s:string)>)
+
+
 def with_graphics(width, height, title; b : block<(
     window : GLFWwindow_DasHandle;
     phys_dev : VkPhysicalDevice
@@ -474,6 +477,8 @@ def with_graphics(width, height, title; b : block<(
     instance |> with_device(phys_dev, surface) <| $(device) {
     phys_dev |> with_best_format(surface) <| $(surf_fmt) {
     phys_dev |> with_best_present_mode(surface) <| $(present_mode) {
+    let vert_spv <- read_shader("vert.spv");
+    let frag_spv <- read_shader("frag.spv");
     device |> with_swap_chain(
         phys_dev, surface, window, surf_fmt, present_mode
     ) <| $(swap_chain) {
