@@ -474,7 +474,6 @@ def with_shader_module(device, name; b : block<(m:VkShaderModule)>)
     var code_ptr : uint?
     unsafe
         code_ptr = reinterpret<uint?>(code)
-
     let create_info <- [[VkShaderModuleCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO,
         codeSize = code_size,
