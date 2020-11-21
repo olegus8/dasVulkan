@@ -547,11 +547,19 @@ def with_graphics_pipeline(
         primitiveRestartEnable = uint(VK_FALSE)
     ]]
     let extent <- phys_dev |> get_swap_extent(surface, window)
-    let viewport <- [[VkViewport
+    let viewports <- [[auto[] [[VkViewport
         x = 0.0f, y = 0.0f, minDepth = 0.0f, maxDepth = 1.0f,
         width = float(extent.width), height = float(extent.height)
+    ]]]]
+    let scissors <- [[auto[] [[VkRect2D extent = extent]]]]
+    let viewport_info <- [[VkPipelineViewportStateCreateInfo
+        sType = (VkStructureType
+            VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO),
+        viewportCount = uint(viewports |> length()),
+        pViewports = viewports |> safe_addr(),
+        scissorCount = uint(scissors |> length()),
+        pScissors = scissors |> safe_addr()
     ]]
-    let scissor <- [[VkRect2D extent = extent]]
     //TODO: create pipeline
     b |> invoke([[VkPipeline]])
 
