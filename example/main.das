@@ -544,11 +544,9 @@ def with_graphics_pipeline(
         sType = (VkStructureType 
             VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO),
         topology = VkPrimitiveTopology VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST,
-        primitiveRestartEnable = uint(VK_FALSE)
     ]]
     let extent <- phys_dev |> get_swap_extent(surface, window)
-    let viewports <- [[auto[] [[VkViewport
-        x = 0.0f, y = 0.0f, minDepth = 0.0f, maxDepth = 1.0f,
+    let viewports <- [[auto[] [[VkViewport minDepth = 0.0f, maxDepth = 1.0f,
         width = float(extent.width), height = float(extent.height)
     ]]]]
     let scissors <- [[auto[] [[VkRect2D extent = extent]]]]
@@ -560,7 +558,14 @@ def with_graphics_pipeline(
         scissorCount = uint(scissors |> length()),
         pScissors = scissors |> safe_addr()
     ]]
-    //TODO: create pipeline
+    let rasterizer <- [[VkPipelineRasterizationStateCreateInfo
+        sType = (VkStructureType
+            VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO),
+        polygonMode = VkPolygonMode VK_POLYGON_MODE_FILL,
+        lineWidth = 1.0f,
+        cullMode = VkCullModeFlagBits VK_CULL_MODE_BACK_BIT,
+        frontFace = VkFrontFace VK_FRONT_FACE_CLOCKWISE
+    ]]
     b |> invoke([[VkPipeline]])
 
 
