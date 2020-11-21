@@ -3780,7 +3780,7 @@ struct VkBufferViewCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(buffer)>("buffer");
         addField<DAS_BIND_MANAGED_FIELD(format)>("format");
         addField<DAS_BIND_MANAGED_FIELD(offset)>("offset");
-        addField<DAS_BIND_MANAGED_FIELD(range)>("range");
+        addField<DAS_BIND_MANAGED_FIELD(range)>("range_");
     }
     void init() {
     }
@@ -3960,7 +3960,7 @@ struct VkPipelineShaderStageCreateInfoAnnotation
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
         addField<DAS_BIND_MANAGED_FIELD(stage)>("stage");
-        addField<DAS_BIND_MANAGED_FIELD(module)>("module");
+        addField<DAS_BIND_MANAGED_FIELD(module)>("module_");
         addField<DAS_BIND_MANAGED_FIELD(pName)>("pName");
         addField<DAS_BIND_MANAGED_FIELD(pSpecializationInfo)>("pSpecializationInfo");
     }
@@ -4420,7 +4420,7 @@ struct VkDescriptorBufferInfoAnnotation
     : ManagedStructureAnnotation ("VkDescriptorBufferInfo", ml) {
         addField<DAS_BIND_MANAGED_FIELD(buffer)>("buffer");
         addField<DAS_BIND_MANAGED_FIELD(offset)>("offset");
-        addField<DAS_BIND_MANAGED_FIELD(range)>("range");
+        addField<DAS_BIND_MANAGED_FIELD(range)>("range_");
     }
     void init() {
     }
@@ -4452,7 +4452,7 @@ struct VkDescriptorPoolSizeAnnotation
 : public ManagedStructureAnnotation<VkDescriptorPoolSize,true,true> {
     VkDescriptorPoolSizeAnnotation(ModuleLibrary & ml)
     : ManagedStructureAnnotation ("VkDescriptorPoolSize", ml) {
-        addField<DAS_BIND_MANAGED_FIELD(type)>("type");
+        addField<DAS_BIND_MANAGED_FIELD(type)>("type_");
         addField<DAS_BIND_MANAGED_FIELD(descriptorCount)>("descriptorCount");
     }
     void init() {
@@ -5430,7 +5430,7 @@ struct VkPhysicalDeviceImageFormatInfo2Annotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(format)>("format");
-        addField<DAS_BIND_MANAGED_FIELD(type)>("type");
+        addField<DAS_BIND_MANAGED_FIELD(type)>("type_");
         addField<DAS_BIND_MANAGED_FIELD(tiling)>("tiling");
         addField<DAS_BIND_MANAGED_FIELD(usage)>("usage");
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
@@ -5502,7 +5502,7 @@ struct VkPhysicalDeviceSparseImageFormatInfo2Annotation
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
         addField<DAS_BIND_MANAGED_FIELD(format)>("format");
-        addField<DAS_BIND_MANAGED_FIELD(type)>("type");
+        addField<DAS_BIND_MANAGED_FIELD(type)>("type_");
         addField<DAS_BIND_MANAGED_FIELD(samples)>("samples");
         addField<DAS_BIND_MANAGED_FIELD(usage)>("usage");
         addField<DAS_BIND_MANAGED_FIELD(tiling)>("tiling");
@@ -8007,9 +8007,9 @@ struct VkPerformanceCounterResultKHRAnnotation
     VkPerformanceCounterResultKHRAnnotation(ModuleLibrary & ml)
     : ManagedStructureAnnotation ("VkPerformanceCounterResultKHR", ml) {
         addField<DAS_BIND_MANAGED_FIELD(int32)>("int32");
-        addField<DAS_BIND_MANAGED_FIELD(int64)>("int64");
+        addField<DAS_BIND_MANAGED_FIELD(int64)>("int64_");
         addField<DAS_BIND_MANAGED_FIELD(uint32)>("uint32");
-        addField<DAS_BIND_MANAGED_FIELD(uint64)>("uint64");
+        addField<DAS_BIND_MANAGED_FIELD(uint64)>("uint64_");
         addField<DAS_BIND_MANAGED_FIELD(float32)>("float32");
         addField<DAS_BIND_MANAGED_FIELD(float64)>("float64");
     }
@@ -9993,7 +9993,7 @@ struct VkRayTracingShaderGroupCreateInfoNVAnnotation
     : ManagedStructureAnnotation ("VkRayTracingShaderGroupCreateInfoNV", ml) {
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
-        addField<DAS_BIND_MANAGED_FIELD(type)>("type");
+        addField<DAS_BIND_MANAGED_FIELD(type)>("type_");
         addField<DAS_BIND_MANAGED_FIELD(generalShader)>("generalShader");
         addField<DAS_BIND_MANAGED_FIELD(closestHitShader)>("closestHitShader");
         addField<DAS_BIND_MANAGED_FIELD(anyHitShader)>("anyHitShader");
@@ -10121,7 +10121,7 @@ struct VkAccelerationStructureInfoNVAnnotation
     : ManagedStructureAnnotation ("VkAccelerationStructureInfoNV", ml) {
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
-        addField<DAS_BIND_MANAGED_FIELD(type)>("type");
+        addField<DAS_BIND_MANAGED_FIELD(type)>("type_");
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
         addField<DAS_BIND_MANAGED_FIELD(instanceCount)>("instanceCount");
         addField<DAS_BIND_MANAGED_FIELD(geometryCount)>("geometryCount");
@@ -10199,7 +10199,7 @@ struct VkAccelerationStructureMemoryRequirementsInfoNVAnnotation
     : ManagedStructureAnnotation ("VkAccelerationStructureMemoryRequirementsInfoNV", ml) {
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
-        addField<DAS_BIND_MANAGED_FIELD(type)>("type");
+        addField<DAS_BIND_MANAGED_FIELD(type)>("type_");
         addField<DAS_BIND_MANAGED_FIELD(accelerationStructure)>("accelerationStructure");
     }
     void init() {
@@ -10846,7 +10846,7 @@ struct VkPerformanceValueINTELAnnotation
 : public ManagedStructureAnnotation<VkPerformanceValueINTEL,true,true> {
     VkPerformanceValueINTELAnnotation(ModuleLibrary & ml)
     : ManagedStructureAnnotation ("VkPerformanceValueINTEL", ml) {
-        addField<DAS_BIND_MANAGED_FIELD(type)>("type");
+        addField<DAS_BIND_MANAGED_FIELD(type)>("type_");
         addField<DAS_BIND_MANAGED_FIELD(data)>("data");
     }
     void init() {
@@ -10932,7 +10932,7 @@ struct VkPerformanceOverrideInfoINTELAnnotation
     : ManagedStructureAnnotation ("VkPerformanceOverrideInfoINTEL", ml) {
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
-        addField<DAS_BIND_MANAGED_FIELD(type)>("type");
+        addField<DAS_BIND_MANAGED_FIELD(type)>("type_");
         addField<DAS_BIND_MANAGED_FIELD(enable)>("enable");
         addField<DAS_BIND_MANAGED_FIELD(parameter)>("parameter");
     }
@@ -10951,7 +10951,7 @@ struct VkPerformanceConfigurationAcquireInfoINTELAnnotation
     : ManagedStructureAnnotation ("VkPerformanceConfigurationAcquireInfoINTEL", ml) {
         addField<DAS_BIND_MANAGED_FIELD(sType)>("sType");
         addField<DAS_BIND_MANAGED_FIELD(pNext)>("pNext");
-        addField<DAS_BIND_MANAGED_FIELD(type)>("type");
+        addField<DAS_BIND_MANAGED_FIELD(type)>("type_");
     }
     void init() {
     }
