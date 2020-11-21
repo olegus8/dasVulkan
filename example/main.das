@@ -547,10 +547,7 @@ def with_graphics_pipeline(device, vert_shmod, frag_shmod;
         primitiveRestartEnable = uint(VK_FALSE)
     ]]
     let viewport <- [[VkViewport
-        x = 0.0f,
-        y = 0.0f,
-        minDepth = 0.0f,
-        maxDepth = 1.0f
+        x = 0.0f, y = 0.0f, minDepth = 0.0f, maxDepth = 1.0f
     ]]
     //TODO: create pipeline
     b |> invoke([[VkPipeline]])
