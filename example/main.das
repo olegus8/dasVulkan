@@ -580,6 +580,12 @@ def with_graphics_pipeline(
         cullMode = uint(VkCullModeFlagBits VK_CULL_MODE_BACK_BIT),
         frontFace = VkFrontFace VK_FRONT_FACE_CLOCKWISE
     ]]
+    let multisampling <- [[VkPipelineMultisampleStateCreateInfo
+        sType = (VkStructureType
+            VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO),
+        rasterizationSamples = VkSampleCountFlagBits VK_SAMPLE_COUNT_1_BIT,
+        minSampleShading = 1.0f
+    ]]
     b |> invoke([[VkPipeline]])
 
 
