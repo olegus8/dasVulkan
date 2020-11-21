@@ -603,7 +603,8 @@ def with_graphics_pipeline(device, phys_dev, surface, window, layout,
     //////////////////////////
     // creating pipeline
     //////////////////////////
-    let pipe_info <- [[VkGraphicsPipelineCreateInfo
+
+    let pipe_infos <- [[auto[] [[VkGraphicsPipelineCreateInfo
         sType = (VkStructureType
             VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO),
         stageCount = uint(stages |> length()),
@@ -617,10 +618,15 @@ def with_graphics_pipeline(device, phys_dev, surface, window, layout,
         layout = layout,
         renderPass = render_pass,
         basePipelineIndex = -1,
-    ]]
-
-    //TODO: create pipeline
-    b |> invoke([[VkPipeline]])
+    ]]]]
+    var pipes : VkPipeline[pipe_infos |> length()]
+    verify(VkResult VK_SUCCESS == device |> vkCreateGraphicsPipelines(
+        VK_NULL_HANDLE,
+        uint(pipe_infos |> length()), pipes_infos[0] |> safe_addr(),
+        null, pipes[0] |> safe_addr()))
+    b |> invoke(pipes[0])
+    for pipe in pipes
+        device |> vkDestroyPipeline(pipe, null)
 
 
 def with_graphics(width, height, title; b : block<(
