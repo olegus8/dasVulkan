@@ -505,18 +505,10 @@ def with_graphics_pipeline(
     device, phys_dev, surface, window, vert_shmod, frag_shmod;
     b : block<(p:VkPipeline)>
 )
-    let shader_stages <- [[auto[]
-        [[VkPipelineShaderStageCreateInfo module_ = vert_shmod, pName = "main",
-            sType = (VkStructureType
-                VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO),
-            stage = VkShaderStageFlagBits VK_SHADER_STAGE_VERTEX_BIT
-        ]],
-        [[VkPipelineShaderStageCreateInfo module_ = frag_shmod, pName = "main",
-            sType = (VkStructureType
-                VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO),
-            stage = VkShaderStageFlagBits VK_SHADER_STAGE_FRAGMENT_BIT
-        ]]
-    ]]
+    ////////////////////
+    // vertex format
+    ////////////////////
+
     let vtx_bindings <- [[auto[] [[VkVertexInputBindingDescription
         binding = 0u,
         stride = uint(typeinfo(sizeof type<Vertex>)),
@@ -545,6 +537,11 @@ def with_graphics_pipeline(
             VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO),
         topology = VkPrimitiveTopology VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST,
     ]]
+
+    ///////////////
+    // viewport
+    ///////////////
+
     let extent <- phys_dev |> get_swap_extent(surface, window)
     let viewports <- [[auto[] [[VkViewport minDepth = 0.0f, maxDepth = 1.0f,
         width = float(extent.width), height = float(extent.height)
@@ -557,6 +554,23 @@ def with_graphics_pipeline(
         pViewports = viewports |> safe_addr(),
         scissorCount = uint(scissors |> length()),
         pScissors = scissors |> safe_addr()
+    ]]
+
+    ///////////////////////
+    // rest of the stuff
+    ///////////////////////
+
+    let shader_stages <- [[auto[]
+        [[VkPipelineShaderStageCreateInfo module_ = vert_shmod, pName = "main",
+            sType = (VkStructureType
+                VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO),
+            stage = VkShaderStageFlagBits VK_SHADER_STAGE_VERTEX_BIT
+        ]],
+        [[VkPipelineShaderStageCreateInfo module_ = frag_shmod, pName = "main",
+            sType = (VkStructureType
+                VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO),
+            stage = VkShaderStageFlagBits VK_SHADER_STAGE_FRAGMENT_BIT
+        ]]
     ]]
     let rasterizer <- [[VkPipelineRasterizationStateCreateInfo
         sType = (VkStructureType
