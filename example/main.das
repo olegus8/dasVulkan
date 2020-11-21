@@ -543,7 +543,7 @@ def with_graphics(width, height, title; b : block<(
     device |> with_graphics_pipeline() <| $(pipeline)
     {
         b |> invoke(window, phys_dev);
-    }}}}}}}}}}}}}}
+    }}}}}}}}}}}}}}}
 
 
 [export]
