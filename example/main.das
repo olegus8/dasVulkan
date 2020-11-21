@@ -506,19 +506,15 @@ def with_graphics_pipeline(device, vert_shmod, frag_shmod;
     b : block<(p:VkPipeline)>
 )
     let shader_stages <- [[auto[]
-        [[VkPipelineShaderStageCreateInfo
+        [[VkPipelineShaderStageCreateInfo module_ = vert_shmod, pName = "main"
             sType = (VkStructureType
                 VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO),
             stage = VkShaderStageFlagBits VK_SHADER_STAGE_VERTEX_BIT,
-            module_ = vert_shmod,
-            pName = "main"
         ]],
-        [[VkPipelineShaderStageCreateInfo
+        [[VkPipelineShaderStageCreateInfo module_ = frag_shmod, pName = "main"
             sType = (VkStructureType
                 VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO),
             stage = VkShaderStageFlagBits VK_SHADER_STAGE_FRAGMENT_BIT,
-            module_ = frag_shmod,
-            pName = "main"
         ]]
     ]]
     let vtx_bindings <- [[auto[] [[VkVertexInputBindingDescription
@@ -527,15 +523,11 @@ def with_graphics_pipeline(device, vert_shmod, frag_shmod;
         inputRate = VkVertexInputRate VK_VERTEX_INPUT_RATE_VERTEX
     ]]]]
     let vtx_attrs <- [[auto[]
-        [[VkVertexInputAttributeDescription
-            binding = 0u,
-            location = 0u,
+        [[VkVertexInputAttributeDescription binding = 0u, location = 0u,
             format = VkFormat VK_FORMAT_R32G32_SFLOAT,
             offset = uint(typeinfo(offsetof<position> type<Vertex>))
         ]];
-        [[VkVertexInputAttributeDescription
-            binding = 0u,
-            location = 1u,
+        [[VkVertexInputAttributeDescription binding = 0u, location = 1u,
             format = VkFormat VK_FORMAT_R32G32B32_SFLOAT,
             offset = uint(typeinfo(offsetof<color> type<Vertex>))
         ]]
@@ -552,7 +544,13 @@ def with_graphics_pipeline(device, vert_shmod, frag_shmod;
         sType = (VkStructureType 
             VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO),
         topology = VkPrimitiveTopology VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST,
-        primitiveRestartEnable = VK_FALSE
+        primitiveRestartEnable = uint(VK_FALSE)
+    ]]
+    let viewport <- [[VkViewport
+        x = 0.0f,
+        y = 0.0f,
+        minDepth = 0.0f,
+        maxDepth = 1.0f
     ]]
     //TODO: create pipeline
     b |> invoke([[VkPipeline]])
