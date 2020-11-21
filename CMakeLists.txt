@@ -20,7 +20,7 @@ IF(NOT DAS_VULKAN_INCLUDED)
                 DEPENDS ${input_src}
                 OUTPUT ${input_dir}/${input_name}.spv
                 WORKING_DIRECTORY ${input_dir}
-                COMMAND ${DAS_VULKAN_GLSL_EXE} ${input_name}.${input_name_ext} -o ${input_name}.spv
+                COMMAND ${DAS_VULKAN_GLSL_EXE} ${input_name_ext} -o ${input_name}.spv
                 COMMENT "glsl ${input} to ${input_dir}/${input_name}.spv")
         ENDIF()
     ENDMACRO()
