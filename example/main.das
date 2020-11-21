@@ -474,10 +474,13 @@ def with_render_pass(device, surf_fmt; b : block<(rp:VkRenderPass)>)
 
 def with_shader_module(device, name; b : block<(m:VkShaderModule)>)
     let shader_data <- read_data("{name}.spv")
+    var shader_data_ptr : uint?
+    unsafe
+        shader_data_ptr = reinterpret<uint?>(shader_data)
     let create_info <- [[VkShaderModuleCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO,
-        codeSize = shader_data |> length(),
-        pCode = reinterpret<uint?>(shader_data)
+        codeSize = uint64(shader_data |> length()),
+        pCode = shader_data_ptr
     ]]
     var shmod : VkShaderModule
     verify(VkResult VK_SUCCESS == device |> vkCreateShaderModule(
