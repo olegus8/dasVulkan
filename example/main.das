@@ -502,7 +502,8 @@ def with_pipeline_layout(device; b : block<(layout:VkPipelineLayout)>)
     device |> vkDestroyPipelineLayout(layout, null)
 
 
-def with_graphics_pipeline(device, vert_shmod, frag_shmod;
+def with_graphics_pipeline(
+    device, phys_dev, surface, window, vert_shmod, frag_shmod;
     b : block<(p:VkPipeline)>
 )
     let shader_stages <- [[auto[]
@@ -546,8 +547,10 @@ def with_graphics_pipeline(device, vert_shmod, frag_shmod;
         topology = VkPrimitiveTopology VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST,
         primitiveRestartEnable = uint(VK_FALSE)
     ]]
+    var extent <- phys_dev |> get_swap_extent(surface, window)
     let viewport <- [[VkViewport
-        x = 0.0f, y = 0.0f, minDepth = 0.0f, maxDepth = 1.0f
+        x = 0.0f, y = 0.0f, minDepth = 0.0f, maxDepth = 1.0f,
+        width = float(extent[0]), height = float(extent[1])
     ]]
     //TODO: create pipeline
     b |> invoke([[VkPipeline]])
@@ -573,7 +576,9 @@ def with_graphics(width, height, title; b : block<(
     device |> with_swap_chain_image_views(sc_imgs, surf_fmt) <| $(sc_views) {
     device |> with_render_pass(surf_fmt) <| $(render_pass) {
     device |> with_pipeline_layout() <| $(layout) {
-    device |> with_graphics_pipeline(vert_shmod, frag_shmod) <| $(pipeline)
+    device |> with_graphics_pipeline(
+        phys_dev, surface, window, vert_shmod, frag_shmod
+    ) <| $(pipeline)
     {
         b |> invoke(window, phys_dev);
     }}}}}}}}}}}}}}}
