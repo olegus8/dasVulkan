@@ -551,9 +551,7 @@ def with_graphics_pipeline(
         x = 0.0f, y = 0.0f, minDepth = 0.0f, maxDepth = 1.0f,
         width = float(extent.width), height = float(extent.height)
     ]]
-    let scissor <- [[VkRect2D
-        extent = [[VkExtent2D width=extent[0], height=extent[1]]]
-    ]]
+    let scissor <- [[VkRect2D extent = extent]]
     //TODO: create pipeline
     b |> invoke([[VkPipeline]])
 
