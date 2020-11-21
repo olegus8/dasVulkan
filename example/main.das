@@ -505,14 +505,16 @@ def with_pipeline_layout(device; b : block<(layout:VkPipelineLayout)>)
 def with_graphics_pipeline(device, vert_shmod, frag_shmod;
     b : block<(p:VkPipeline)>
 )
-    let shader_stages <- [[VkPipelineShaderStageCreateInfo[]
-        [[  sType = (VkStructureType
+    let shader_stages <- [[auto[]
+        [[VkPipelineShaderStageCreateInfo
+            sType = (VkStructureType
                 VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO),
             stage = VkShaderStageFlagBits VK_SHADER_STAGE_VERTEX_BIT,
             module_ = vert_shmod,
             pName = "main"
         ]],
-        [[  sType = (VkStructureType
+        [[VkPipelineShaderStageCreateInfo
+            sType = (VkStructureType
                 VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO),
             stage = VkShaderStageFlagBits VK_SHADER_STAGE_FRAGMENT_BIT,
             module_ = frag_shmod,
