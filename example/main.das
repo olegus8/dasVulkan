@@ -502,7 +502,7 @@ def with_pipeline_layout(device; b : block<(layout:VkPipelineLayout)>)
 
 
 def with_graphics_pipeline(
-    device, phys_dev, surface, window, vert_shmod, frag_shmod;
+    device, phys_dev, surface, window, layout, vert_shmod, frag_shmod;
     b : block<(p:VkPipeline)>
 )
     ////////////////////
@@ -599,6 +599,11 @@ def with_graphics_pipeline(
         attachmentCount = uint(blending_atts |> length()),
         pAttachments = blending_atts |> safe_addr()
     ]]
+
+    //////////////////////////
+    // creating pipeline
+    //////////////////////////
+
     //TODO: create pipeline
     b |> invoke([[VkPipeline]])
 
@@ -624,7 +629,7 @@ def with_graphics(width, height, title; b : block<(
     device |> with_render_pass(surf_fmt) <| $(render_pass) {
     device |> with_pipeline_layout() <| $(layout) {
     device |> with_graphics_pipeline(
-        phys_dev, surface, window, vert_shmod, frag_shmod
+        phys_dev, surface, window, layout, vert_shmod, frag_shmod
     ) <| $(pipeline)
     {
         b |> invoke(window, phys_dev);
