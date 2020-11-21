@@ -616,13 +616,8 @@ def with_graphics_pipeline(device, phys_dev, surface, window, layout,
         pColorBlendState = blending |> safe_addr(),
         layout = layout,
         renderPass = render_pass,
-      pipelineInfo.subpass = 0;
-
-      // Can specify the pipeline with which this one has much in common.
-      // Such pipelines can be switched faster.
-      // ("Graphics pipeline basics" -> "Conclusion")
-      pipelineInfo.basePipelineHandle = VK_NULL_HANDLE;
-      pipelineInfo.basePipelineIndex = -1;
+        basePipelineIndex = -1,
+    ]]
 
     //TODO: create pipeline
     b |> invoke([[VkPipeline]])
