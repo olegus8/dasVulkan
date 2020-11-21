@@ -516,6 +516,8 @@ def with_graphics_pipeline(device, vert_shmod, frag_shmod;
             pName = "main"
         ]]
     ]]
+    //TODO: create pipeline
+    b |> invoke([[VkPipeline]])
 
 
 def with_graphics(width, height, title; b : block<(
