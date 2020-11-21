@@ -497,6 +497,11 @@ def with_pipeline_layout(device; b : block<(layout:VkPipelineLayout)>)
     device |> vkDestroyPipelineLayout(layout, null)
 
 
+struct Vertex
+    position : float2
+    color : float3
+
+
 def with_graphics_pipeline(device, vert_shmod, frag_shmod;
     b : block<(p:VkPipeline)>
 )
@@ -515,6 +520,14 @@ def with_graphics_pipeline(device, vert_shmod, frag_shmod;
             module_ = frag_shmod,
             pName = "main"
         ]]
+    ]]
+    let vtx_input <- [[
+        sType = (VkStructureType
+            VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO),
+        vertexBindingDescriptionCount = uint(vtx_bindings |> length()),
+        pVertexBindingDescriptions = vtx_bindngs[0] |> safe_addr(),
+        vertexAttributeDescriptionCount = uint(vtx_attrs |> length()),
+        pVertexAttributeDescriptions = vtx_attrs[0] |> safe_addr()
     ]]
     //TODO: create pipeline
     b |> invoke([[VkPipeline]])
