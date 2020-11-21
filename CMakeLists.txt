@@ -54,8 +54,8 @@ IF(NOT DAS_VULKAN_INCLUDED)
         
         GET_TARGET_PROPERTY(DAS_VULKAN_EXAMPLE_INCLUDE_DIRS dasVulkanExample INCLUDE_DIRECTORIES)
 
-        DAS_VULKAN_COMPILE_SHADER(${DAS_VULKAN_DIR}/example/vert.glsl)
-        DAS_VULKAN_COMPILE_SHADER(${DAS_VULKAN_DIR}/example/frag.glsl)
+        DAS_VULKAN_COMPILE_SHADER(${DAS_VULKAN_DIR}/example/vert.glsl vert)
+        DAS_VULKAN_COMPILE_SHADER(${DAS_VULKAN_DIR}/example/frag.glsl frag)
 
         SET(DAS_VULKAN_HEADERS_TO_BIND
             ${DAS_VULKAN_DIR}/example/vulkan_headers_to_bind.h
