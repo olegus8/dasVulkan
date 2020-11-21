@@ -531,8 +531,8 @@ def with_graphics(width, height, title; b : block<(
     instance |> with_device(phys_dev, surface) <| $(device) {
     phys_dev |> with_best_format(surface) <| $(surf_fmt) {
     phys_dev |> with_best_present_mode(surface) <| $(present_mode) {
-    device |> with_shader_module("vert") <| $(vert_shader) {
-    device |> with_shader_module("frag") <| $(frag_shader) {
+    device |> with_shader_module("vert") <| $(vert_shmod) {
+    device |> with_shader_module("frag") <| $(frag_shmod) {
     device |> with_swap_chain(
         phys_dev, surface, window, surf_fmt, present_mode
     ) <| $(swap_chain) {
