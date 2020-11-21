@@ -505,27 +505,33 @@ struct Vertex
 def with_graphics_pipeline(device, vert_shmod, frag_shmod;
     b : block<(p:VkPipeline)>
 )
-    let shader_stages <- [[auto[]
-        [[VkPipelineShaderStageCreateInfo
-            sType = (VkStructureType
+    let shader_stages <- [[VkPipelineShaderStageCreateInfo[]
+        [[  sType = (VkStructureType
                 VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO),
             stage = VkShaderStageFlagBits VK_SHADER_STAGE_VERTEX_BIT,
             module_ = vert_shmod,
             pName = "main"
         ]],
-        [[VkPipelineShaderStageCreateInfo
-            sType = (VkStructureType
+        [[  sType = (VkStructureType
                 VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO),
             stage = VkShaderStageFlagBits VK_SHADER_STAGE_FRAGMENT_BIT,
             module_ = frag_shmod,
             pName = "main"
         ]]
     ]]
-    let vtx_bindings <- [[auto[] [[VkVertexInputBindingDescription
-        binding = 0,
+    let vtx_bindings <- [[VkVertexInputBindingDescription[] [[
+        binding = 0u,
         stride = sizeof(Vertex),
         inputRate = VkVertexInputRate VK_VERTEX_INPUT_RATE_VERTEX
     ]]]]
+    let vtx_attrs <- [[VkVertexInputAttributeDescription[]
+        [[  binding = 0u,
+            location = 0u,
+            format = VkFormat VK_FORMAT_R32G32_SFLOAT,
+
+      attributeDescriptions[0].offset = offsetof(Vertex, pos);
+        ]],
+    ]]
     let vtx_input <- [[
         sType = (VkStructureType
             VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO),
