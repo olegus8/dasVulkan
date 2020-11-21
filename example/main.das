@@ -42,6 +42,14 @@ def safe_addr_val(var x : auto(T)&) : T-& ? #
         return reinterpret<T-&?#>(addr(x))
 
 
+def read_data(fname)
+    var data : string
+    let fpath = "{get_das_root}/modules/dasVulkan/examples/{fname}"
+    fpath |> fopen("rb") <| $(f)
+        data <- f |> fread()
+    return <- data
+
+
 def with_physical_devices(inst; b : block<(d:array<VkPhysicalDevice>)>)
     var devices : array<VkPhysicalDevice>
     var count : uint
@@ -463,14 +471,6 @@ def with_render_pass(device, surf_fmt; b : block<(rp:VkRenderPass)>)
     device |> vkDestroyRenderPass(rpass, null)
 
 
-def read_shader(fname)
-    var data : string
-    let fpath = "{get_das_root}/modules/dasVulkan/examples/{fname}"
-    fpath |> fopen("rb") <| $(f)
-        data <- f |> fread()
-    return <- data
-
-
 def with_graphics(width, height, title; b : block<(
     window : GLFWwindow_DasHandle;
     phys_dev : VkPhysicalDevice
@@ -482,8 +482,8 @@ def with_graphics(width, height, title; b : block<(
     instance |> with_device(phys_dev, surface) <| $(device) {
     phys_dev |> with_best_format(surface) <| $(surf_fmt) {
     phys_dev |> with_best_present_mode(surface) <| $(present_mode) {
-    let vert_spv <- read_shader("vert.spv");
-    let frag_spv <- read_shader("frag.spv");
+    let vert_spv <- read_data("vert.spv");
+    let frag_spv <- read_data("frag.spv");
     device |> with_swap_chain(
         phys_dev, surface, window, surf_fmt, present_mode
     ) <| $(swap_chain) {
