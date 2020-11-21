@@ -611,13 +611,10 @@ def with_graphics_pipeline(
         pVertexInputState = vtx_input |> safe_addr(),
         pInputAssemblyState = input_assembly |> safe_addr(),
         pViewportState = viewport_info |> safe_addr(),
-      pipelineInfo.pRasterizationState = &rasterizer;
-      pipelineInfo.pMultisampleState = &multisampling;
-      pipelineInfo.pDepthStencilState = nullptr;
-      pipelineInfo.pColorBlendState = &colorBlending;
-      pipelineInfo.pDynamicState = nullptr;
-
-      pipelineInfo.layout = pipelineLayout;
+        pRasterizationState = rasterizer |> safe_addr(),
+        pMultisampleState = multisampling |> safe_addr(),
+        pColorBlendState = blending |> safe_addr(),
+        layout = layout,
 
       // Which render pass and subpass will be using this pipeline.
       // Pipeline can be used by multiple render passes, but they all must
