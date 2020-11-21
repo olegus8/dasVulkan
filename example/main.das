@@ -308,8 +308,8 @@ def with_surface(window, instance; b : block<(s:VkSurfaceKHR)>)
 def with_swap_chain(device, phys_dev, surface, window, surf_fmt, present_mode;
     b : block<(sc:VkSwapchainKHR)>
 )
-    var caps <- phys_dev |> get_capabilities(surface)
-    var extent <- phys_dev |> get_swap_extent(surface, window)
+    let caps <- phys_dev |> get_capabilities(surface)
+    let extent <- phys_dev |> get_swap_extent(surface, window)
 
     // we want at least one spare image for multi-buffering
     var img_count : uint = caps.minImageCount + 1u
@@ -342,7 +342,7 @@ def with_swap_chain(device, phys_dev, surface, window, surf_fmt, present_mode;
 
 
 def get_swap_extent(device, surface, window)
-    var caps <- device |> get_capabilities(surface)
+    let caps <- device |> get_capabilities(surface)
 
     if caps.currentExtent.width != UINT_MAX
         return uint2(
