@@ -486,6 +486,10 @@ def with_shader_module(device, name; b : block<(m:VkShaderModule)>)
     device |> vkDestroyShaderModule(shmod, null)
 
 
+def with_pipeline_layout(device; b : block<(layout:VkPipelineLayout)>)
+    pass
+
+
 def with_graphics(width, height, title; b : block<(
     window : GLFWwindow_DasHandle;
     phys_dev : VkPhysicalDevice
@@ -504,10 +508,11 @@ def with_graphics(width, height, title; b : block<(
     ) <| $(swap_chain) {
     device |> with_swap_chain_images(swap_chain) <| $(sc_imgs) {
     device |> with_swap_chain_image_views(sc_imgs, surf_fmt) <| $(sc_views) {
-    device |> with_render_pass(surf_fmt) <| $(render_pass)
+    device |> with_render_pass(surf_fmt) <| $(render_pass) {
+    device |> with_pipeline_layout() <| $(layout)
     {
         b |> invoke(window, phys_dev);
-    }}}}}}}}}}}}}
+    }}}}}}}}}}}}}}
 
 
 [export]
