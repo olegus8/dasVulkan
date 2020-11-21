@@ -6,8 +6,26 @@ IF(NOT DAS_VULKAN_INCLUDED)
 
     FIND_PACKAGE(Vulkan)
     FIND_PACKAGE(glfw3)
+	FIND_PROGRAM(DAS_VULKAN_GLSL_EXE glslc)
 
-    IF(NOT Vulkan_FOUND OR NOT glfw3_FOUND)
+    MACRO(DAS_VULKAN_COMPILE_SHADER input)
+        IF(NOT DAS_VULKAN_GLSL_EXE)
+            MESSAGE(STATUS "glslc not found. Will use precompiled shaders.")
+        ELSE()
+            get_filename_component(input_src ${input} ABSOLUTE)
+            get_filename_component(input_dir ${input_src} DIRECTORY)
+            get_filename_component(input_name ${input} NAME_WE)
+            get_filename_component(input_name_ext ${input} NAME)
+            ADD_CUSTOM_COMMAND(
+                DEPENDS ${input_src}
+                OUTPUT ${input_dir}/${input_name}.spv
+                WORKING_DIRECTORY ${input_dir}
+                COMMAND ${DAS_VULKAN_GLSL_EXE} ${input_name}.${input_name_ext} -o ${input_name}.spv
+                COMMENT "glsl ${input} to ${input_dir}/${input_name}.spv")
+        ENDIF()
+    ENDMACRO()
+
+    IF(NOT Vulkan_FOUND OR NOT glfw3_FOUND OR NOT DAS_VULKAN_GLSL_EXE)
         MESSAGE(STATUS "Prerequisites not found. Not building dasVulkan.")
     ELSE()
         SET(DAS_VULKAN_DIR ${CMAKE_SOURCE_DIR}/modules/dasVulkan)
@@ -17,6 +35,8 @@ IF(NOT DAS_VULKAN_INCLUDED)
             ${DAS_VULKAN_DIR}/example/vulkan_headers_to_bind.h
             ${DAS_VULKAN_DIR}/example/vulkan_module.cpp
             ${DAS_VULKAN_DIR}/example/vulkan_module_generated.inc
+            ${DAS_VULKAN_DIR}/example/vert.spv
+            ${DAS_VULKAN_DIR}/example/frag.spv
         )
 
         ADD_EXECUTABLE(dasVulkanExample ${DAS_VULKAN_EXAMPLE_SRC})
@@ -31,6 +51,9 @@ IF(NOT DAS_VULKAN_INCLUDED)
         SETUP_CPP11(dasVulkanExample)
         
         GET_TARGET_PROPERTY(DAS_VULKAN_EXAMPLE_INCLUDE_DIRS dasVulkanExample INCLUDE_DIRECTORIES)
+
+        DAS_VULKAN_COMPILE_SHADER(${DAS_VULKAN_DIR}/example/vert.glsl)
+        DAS_VULKAN_COMPILE_SHADER(${DAS_VULKAN_DIR}/example/frag.glsl)
 
         SET(DAS_VULKAN_HEADERS_TO_BIND
             ${DAS_VULKAN_DIR}/example/vulkan_headers_to_bind.h
