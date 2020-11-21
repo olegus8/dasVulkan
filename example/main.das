@@ -548,6 +548,12 @@ def with_graphics_pipeline(device, vert_shmod, frag_shmod;
         vertexAttributeDescriptionCount = uint(vtx_attrs |> length()),
         pVertexAttributeDescriptions = vtx_attrs[0] |> safe_addr()
     ]]
+    let input_assembly <- [[VkPipelineInputAssemblyStateCreateInfo
+        sType = (VkStructureType 
+            VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO),
+        topology = VkPrimitiveTopology VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST,
+        primitiveRestartEnable = VK_FALSE
+    ]]
     //TODO: create pipeline
     b |> invoke([[VkPipeline]])
 
