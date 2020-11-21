@@ -521,11 +521,16 @@ def with_graphics_pipeline(device, vert_shmod, frag_shmod;
             pName = "main"
         ]]
     ]]
+    let vtx_bindings <- [[auto[] [[VkVertexInputBindingDescription
+        binding = 0,
+        stride = sizeof(Vertex),
+        inputRate = VkVertexInputRate VK_VERTEX_INPUT_RATE_VERTEX
+    ]]]]
     let vtx_input <- [[
         sType = (VkStructureType
             VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO),
         vertexBindingDescriptionCount = uint(vtx_bindings |> length()),
-        pVertexBindingDescriptions = vtx_bindngs[0] |> safe_addr(),
+        pVertexBindingDescriptions = vtx_bindings[0] |> safe_addr(),
         vertexAttributeDescriptionCount = uint(vtx_attrs |> length()),
         pVertexAttributeDescriptions = vtx_attrs[0] |> safe_addr()
     ]]
