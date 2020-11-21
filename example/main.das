@@ -330,7 +330,7 @@ def with_swap_chain(device, phys_dev, surface, window, surf_fmt, present_mode;
 
     var swap_chain : VkSwapchainKHR
     verify(VkResult VK_SUCCESS == device |> vkCreateSwapchainKHR(
-        safe_addr_plain(create_info), null, safe_addr(swap_chain)))
+        safe_addr(create_info), null, safe_addr(swap_chain)))
     b |> invoke(swap_chain)
     device |> vkDestroySwapchainKHR(swap_chain, null)
 
@@ -405,7 +405,7 @@ def with_swap_chain_image_views(device, images, surf_fmt;
                 layerCount = 1u]]
         ]]
         verify(VkResult VK_SUCCESS == device |> vkCreateImageView(
-            safe_addr_plain(create_info), null, safe_addr(view)))
+            safe_addr(create_info), null, safe_addr(view)))
 
     b |> invoke(views)
 
@@ -433,7 +433,7 @@ def with_render_pass(device, surf_fmt; b : block<(rp:VkRenderPass)>)
         pipelineBindPoint = (
             VkPipelineBindPoint VK_PIPELINE_BIND_POINT_GRAPHICS),
         colorAttachmentCount = uint(att_refs |> length()),
-        pColorAttachments = safe_addr_plain(att_refs[0])
+        pColorAttachments = safe_addr(att_refs[0])
     ]]]]
     let deps <- [[auto[] [[VkSubpassDependency
         srcSubpass = VK_SUBPASS_EXTERNAL,
@@ -450,15 +450,15 @@ def with_render_pass(device, surf_fmt; b : block<(rp:VkRenderPass)>)
         sType = (VkStructureType
             VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO),
         attachmentCount = uint(atts |> length()),
-        pAttachments = safe_addr_plain(atts[0]),
+        pAttachments = safe_addr(atts[0]),
         subpassCount = uint(subs |> length()),
-        pSubpasses = safe_addr_plain(subs[0]),
+        pSubpasses = safe_addr(subs[0]),
         dependencyCount = uint(deps |> length()),
-        pDependencies = safe_addr_plain(deps[0])
+        pDependencies = safe_addr(deps[0])
     ]]
     var rpass : VkRenderPass;
     verify(VkResult VK_SUCCESS == device |> vkCreateRenderPass(
-        safe_addr_plain(create_info), null, safe_addr(rpass)))
+        safe_addr(create_info), null, safe_addr(rpass)))
     b |> invoke(rpass)
     device |> vkDestroyRenderPass(rpass, null)
 
