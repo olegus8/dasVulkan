@@ -37,9 +37,9 @@ def to_uint(x)
 
 
 //TODO: can we extend safe_addr to constants?
-def safe_addr_const(x)
+def safe_addr_const(x : auto(T)) : T ? #
     unsafe
-        return addr(x)
+        return reinterpret<T?#>(addr(x))
 
 
 //TODO: this is for example for heap
