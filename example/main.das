@@ -474,6 +474,7 @@ def with_render_pass(device, surf_fmt; b : block<(rp:VkRenderPass)>)
 
 def with_shader_module(device, name; b : block<(m:VkShaderModule)>)
     let code <- read_data("{name}.spv")
+    print("shader {name} code size is {code |> length()}\n")
     var code_ptr : uint?
     unsafe
         code_ptr = reinterpret<uint?>(code)
