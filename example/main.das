@@ -36,7 +36,7 @@ def to_uint(x)
         return reinterpret<uint>(x)
 
 
-//TODO: this is for references to constant object
+//TODO: this is for constant objects
 def safe_addr_plain(x : auto(T)) : T ? #
     unsafe
         return reinterpret<T?#>(addr(x))
