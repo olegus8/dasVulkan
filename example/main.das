@@ -565,7 +565,7 @@ def with_graphics_pipeline(device, phys_dev, surface, window, layout,
             sType = (VkStructureType
                 VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO),
             stage = VkShaderStageFlagBits VK_SHADER_STAGE_VERTEX_BIT
-        ]],
+        ]];
         [[VkPipelineShaderStageCreateInfo module_ = frag_shmod, pName = "main",
             sType = (VkStructureType
                 VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO),
