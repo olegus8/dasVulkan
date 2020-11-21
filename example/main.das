@@ -560,7 +560,7 @@ def with_graphics_pipeline(
     // rest of the stuff
     ///////////////////////
 
-    let shader_stages <- [[auto[]
+    let stages <- [[auto[]
         [[VkPipelineShaderStageCreateInfo module_ = vert_shmod, pName = "main",
             sType = (VkStructureType
                 VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO),
@@ -603,6 +603,34 @@ def with_graphics_pipeline(
     //////////////////////////
     // creating pipeline
     //////////////////////////
+    let pipe_info <- [[VkGraphicsPipelineCreateInfo
+        sType = (VkStructureType
+            VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO),
+        stageCount = uint(stages |> length()),
+        pStages = stages |> safe_addr(),
+        pVertexInputState = vtx_input |> safe_addr(),
+        pInputAssemblyState = input_assembly |> safe_addr(),
+        pViewportState = viewport_info |> safe_addr(),
+      pipelineInfo.pRasterizationState = &rasterizer;
+      pipelineInfo.pMultisampleState = &multisampling;
+      pipelineInfo.pDepthStencilState = nullptr;
+      pipelineInfo.pColorBlendState = &colorBlending;
+      pipelineInfo.pDynamicState = nullptr;
+
+      pipelineInfo.layout = pipelineLayout;
+
+      // Which render pass and subpass will be using this pipeline.
+      // Pipeline can be used by multiple render passes, but they all must
+      // be compatible.
+      // ("Graphics pipeline basics" -> "Conclusion")
+      pipelineInfo.renderPass = renderPass;
+      pipelineInfo.subpass = 0;
+
+      // Can specify the pipeline with which this one has much in common.
+      // Such pipelines can be switched faster.
+      // ("Graphics pipeline basics" -> "Conclusion")
+      pipelineInfo.basePipelineHandle = VK_NULL_HANDLE;
+      pipelineInfo.basePipelineIndex = -1;
 
     //TODO: create pipeline
     b |> invoke([[VkPipeline]])
