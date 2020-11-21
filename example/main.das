@@ -469,7 +469,7 @@ def with_shader_module(device, name; b : block<(m:VkShaderModule)>)
     var code : string
     var code_size : uint64
     code_fpath |> fopen("rb") <| $(f)
-        code <- f |> read()
+        code <- f |> fread()
         code_size = (f |> fstat()).size
     var code_ptr : uint?
     unsafe
