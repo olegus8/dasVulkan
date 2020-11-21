@@ -45,7 +45,7 @@ def safe_addr_val(var x : auto(T)&) : T-& ? #
 
 def read_data(fname)
     var data : string
-    let fpath = "{get_das_root()}/modules/dasVulkan/examples/{fname}"
+    let fpath = "{get_das_root()}/modules/dasVulkan/example/{fname}"
     fpath |> fopen("rb") <| $(f)
         data <- f |> fread()
     return <- data
