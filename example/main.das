@@ -617,7 +617,7 @@ def with_graphics_pipeline(device, phys_dev, surface, window, layout,
         pColorBlendState = blending |> safe_addr(),
         layout = layout,
         renderPass = render_pass,
-        basePipelineIndex = -1,
+        basePipelineIndex = -1
     ]]]]
     var pipes : VkPipeline[pipe_infos |> length()]
     verify(VkResult VK_SUCCESS == device |> vkCreateGraphicsPipelines(
