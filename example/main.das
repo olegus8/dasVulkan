@@ -608,7 +608,7 @@ def with_graphics_pipeline(device, phys_dev, surface, window, layout,
         sType = (VkStructureType
             VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO),
         stageCount = uint(stages |> length()),
-        pStages = stages |> safe_addr(),
+        pStages = stages[0] |> safe_addr(),
         pVertexInputState = vtx_input |> safe_addr(),
         pInputAssemblyState = input_assembly |> safe_addr(),
         pViewportState = viewport_info |> safe_addr(),
