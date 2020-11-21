@@ -463,7 +463,12 @@ def with_render_pass(device, surf_fmt; b : block<(rp:VkRenderPass)>)
     device |> vkDestroyRenderPass(rpass, null)
 
 
-def with_shader_spv(fname; b : block<(s:string)>)
+def read_shader_spv(fname)
+    var data : string
+    let fpath = "{get_das_root}/modules/dasVulkan/examples/{fname}"
+    fpath |> fopen("rb") <| $(f)
+        data <- f |> fread()
+    return <- data
 
 
 def with_graphics(width, height, title; b : block<(
