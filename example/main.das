@@ -501,6 +501,20 @@ def with_pipeline_layout(device; b : block<(layout:VkPipelineLayout)>)
     device |> vkDestroyPipelineLayout(layout, null)
 
 
+def with_pipeline_creation_context(
+    device, phys_dev, surface, window, vert_shmod, frag_shmod;
+    b : block<(
+        stages,
+        vtx_input,
+        input_assembly,
+        viewport,
+        rasterizer,
+        multisampling,
+        blending
+    )>
+)
+
+
 def with_graphics_pipeline(device, phys_dev, surface, window, layout,
     render_pass, vert_shmod, frag_shmod;
     b : block<(p:VkPipeline)>
@@ -600,35 +614,42 @@ def with_graphics_pipeline(device, phys_dev, surface, window, layout,
         pAttachments = blending_atts |> safe_addr()
     ]]
 
-    //////////////////////////
-    // creating pipeline
-    //////////////////////////
 
-    let pipe_infos <- [[auto[] [[VkGraphicsPipelineCreateInfo
-        sType = (VkStructureType
-            VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO),
-        stageCount = uint(stages |> length()),
-        pStages = stages[0] |> safe_addr(),
-        pVertexInputState = vtx_input |> safe_addr(),
-        pInputAssemblyState = input_assembly |> safe_addr(),
-        pViewportState = viewport_info |> safe_addr(),
-        pRasterizationState = rasterizer |> safe_addr(),
-        pMultisampleState = multisampling |> safe_addr(),
-        pColorBlendState = blending |> safe_addr(),
-        layout = layout,
-        renderPass = render_pass,
-        basePipelineIndex = -1
-    ]]]]
-    var pipes : array<VkPipeline>
-    pipes |> resize(pipe_infos |> length())
-    verify(VkResult VK_SUCCESS == device |> vkCreateGraphicsPipelines(
-        [[VkPipelineCache]],
-        uint(pipe_infos |> length()), pipe_infos[0] |> safe_addr(),
-        null, pipes[0] |> safe_addr_val()))
-    b |> invoke(pipes[0])
-    for pipe in pipes
-        device |> vkDestroyPipeline(pipe, null)
-    delete pipes
+def with_graphics_pipeline(
+    device, phys_dev, surface, window, vert_shmod, frag_shmod,
+    layout, render_pass;
+    b : block<(p:VkPipeline)>
+)
+    with_pipeline_creation_context(
+        device, phys_dev, surface, window, vert_shmod, frag_shmod
+    ) |> $(stages, vtx_input, input_assembly, viewport, rasterizer,
+        multisampling, blending
+    )
+        let pipe_infos <- [[auto[] [[VkGraphicsPipelineCreateInfo
+            sType = (VkStructureType
+                VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO),
+            stageCount = uint(stages |> length()),
+            pStages = stages[0] |> safe_addr(),
+            pVertexInputState = vtx_input |> safe_addr(),
+            pInputAssemblyState = input_assembly |> safe_addr(),
+            pViewportState = viewport |> safe_addr(),
+            pRasterizationState = rasterizer |> safe_addr(),
+            pMultisampleState = multisampling |> safe_addr(),
+            pColorBlendState = blending |> safe_addr(),
+            layout = layout,
+            renderPass = render_pass,
+            basePipelineIndex = -1
+        ]]]]
+        var pipes : array<VkPipeline>
+        pipes |> resize(pipe_infos |> length())
+        verify(VkResult VK_SUCCESS == device |> vkCreateGraphicsPipelines(
+            [[VkPipelineCache]],
+            uint(pipe_infos |> length()), pipe_infos[0] |> safe_addr(),
+            null, pipes[0] |> safe_addr_val()))
+        b |> invoke(pipes[0])
+        for pipe in pipes
+            device |> vkDestroyPipeline(pipe, null)
+        delete pipes
 
 
 def with_graphics(width, height, title; b : block<(
@@ -651,8 +672,8 @@ def with_graphics(width, height, title; b : block<(
     device |> with_swap_chain_image_views(sc_imgs, surf_fmt) <| $(sc_views) {
     device |> with_render_pass(surf_fmt) <| $(render_pass) {
     device |> with_pipeline_layout() <| $(layout) {
-    device |> with_graphics_pipeline(phys_dev, surface, window, layout,
-        render_pass, vert_shmod, frag_shmod
+    device |> with_graphics_pipeline(phys_dev, surface, window,
+        vert_shmod, frag_shmod, layout, render_pass,
     ) <| $(pipeline)
     {
         b |> invoke(window, phys_dev);
