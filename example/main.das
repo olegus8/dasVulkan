@@ -623,7 +623,7 @@ def with_graphics_pipeline(device, phys_dev, surface, window, layout,
     pipes |> resize(pipe_infos |> length())
     verify(VkResult VK_SUCCESS == device |> vkCreateGraphicsPipelines(
         VK_NULL_HANDLE,
-        uint(pipe_infos |> length()), pipes_infos[0] |> safe_addr(),
+        uint(pipe_infos |> length()), pipe_infos[0] |> safe_addr(),
         null, pipes[0] |> safe_addr_val()))
     b |> invoke(pipes[0])
     for pipe in pipes
