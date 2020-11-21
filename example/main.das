@@ -523,7 +523,7 @@ def with_graphics_pipeline(device, vert_shmod, frag_shmod;
     ]]
     let vtx_bindings <- [[auto[] [[VkVertexInputBindingDescription
         binding = 0u,
-        stride = typeinfo(sizeof type<Vertex>),
+        stride = uint(typeinfo(sizeof type<Vertex>)),
         inputRate = VkVertexInputRate VK_VERTEX_INPUT_RATE_VERTEX
     ]]]]
     let vtx_attrs <- [[auto[]
@@ -531,13 +531,13 @@ def with_graphics_pipeline(device, vert_shmod, frag_shmod;
             binding = 0u,
             location = 0u,
             format = VkFormat VK_FORMAT_R32G32_SFLOAT,
-            offset = typeinfo(offsetof<position> type<Vertex>)
+            offset = uint(typeinfo(offsetof<position> type<Vertex>))
         ]],
         [[VkVertexInputAttributeDescription
             binding = 0u,
             location = 1u,
             format = VkFormat VK_FORMAT_R32G32B32_SFLOAT,
-            offset = typeinfo(offsetof<color> type<Vertex>)
+            offset = uint(typeinfo(offsetof<color> type<Vertex>))
         ]]
     ]]
     let vtx_input <- [[VkPipelineVertexInputStateCreateInfo
