@@ -30,12 +30,6 @@ def to_string(bytes : void?)
         return reinterpret<string>(bytes)
 
 
-//TODO: figure out what to do with it. it's for enum -> uint
-def to_uint(x)
-    unsafe
-        return reinterpret<uint>(x)
-
-
 //TODO: this is for constant objects
 def safe_addr_plain(x : auto(T)) : T ? #
     unsafe
@@ -127,7 +121,7 @@ def with_graphics_queue_family(device, surface; b : block<(index:uint)>)
             if can_present == 0u
                 continue
 
-            var graphics_bit = to_uint(VkQueueFlagBits VK_QUEUE_GRAPHICS_BIT)
+            var graphics_bit = uint(VkQueueFlagBits VK_QUEUE_GRAPHICS_BIT)
             if (family.queueFlags & graphics_bit) == 0u
                 continue
 
@@ -324,7 +318,7 @@ def with_swap_chain(device, phys_dev, surface, window, surf_fmt, present_mode;
         imageColorSpace = surf_fmt.colorSpace,
         imageExtent = [[VkExtent2D width=extent[0], height=extent[1]]],
         imageArrayLayers = 1u, // 2 for stereoscopic
-        imageUsage = to_uint(
+        imageUsage = uint(
             VkImageUsageFlagBits VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT),
         imageSharingMode = VkSharingMode VK_SHARING_MODE_EXCLUSIVE,
         preTransform = caps.currentTransform,
@@ -403,7 +397,7 @@ def with_swap_chain_image_views(device, images, surf_fmt;
                 b = no_swizzle,
                 a = no_swizzle]],
             subresourceRange = [[VkImageSubresourceRange
-                aspectMask = to_uint(
+                aspectMask = uint(
                     VkImageAspectFlagBits VK_IMAGE_ASPECT_COLOR_BIT),
                 baseMipLevel = 0u,
                 levelCount = 1u,
@@ -444,12 +438,12 @@ def with_render_pass(device, surf_fmt; b : block<(rp:VkRenderPass)>)
     let deps <- [[auto[] [[VkSubpassDependency
         srcSubpass = VK_SUBPASS_EXTERNAL,
         dstSubpass = 0u,
-        srcStageMask = to_uint(VkPipelineStageFlagBits
+        srcStageMask = uint(VkPipelineStageFlagBits
             VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT),
         srcAccessMask = 0u,
-        dstStageMask = to_uint(VkPipelineStageFlagBits
+        dstStageMask = uint(VkPipelineStageFlagBits
             VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT),
-        dstAccessMask = to_uint(VkAccessFlagBits
+        dstAccessMask = uint(VkAccessFlagBits
             VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT)
     ]]]]
     let create_info <- [[VkRenderPassCreateInfo
