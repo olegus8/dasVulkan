@@ -619,7 +619,8 @@ def with_graphics_pipeline(device, phys_dev, surface, window, layout,
         renderPass = render_pass,
         basePipelineIndex = -1
     ]]]]
-    var pipes : VkPipeline[pipe_infos |> length()]
+    var pipes : array<VkPipeline>
+    pipes |> resize(pipe_infos |> length())
     verify(VkResult VK_SUCCESS == device |> vkCreateGraphicsPipelines(
         VK_NULL_HANDLE,
         uint(pipe_infos |> length()), pipes_infos[0] |> safe_addr(),
@@ -627,6 +628,7 @@ def with_graphics_pipeline(device, phys_dev, surface, window, layout,
     b |> invoke(pipes[0])
     for pipe in pipes
         device |> vkDestroyPipeline(pipe, null)
+    delete pipes
 
 
 def with_graphics(width, height, title; b : block<(
