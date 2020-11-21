@@ -44,11 +44,9 @@ def safe_addr_val(var x : auto(T)&) : T-& ? #
 
 
 def read_data(fname)
-    var data : string
     let fpath = "{get_das_root()}/modules/dasVulkan/example/{fname}"
     fpath |> fopen("rb") <| $(f)
-        data <- f |> fread()
-    return <- data
+        return [[ tuple<string;uint64> f |> read(), (f |> fstat()).size ]]
 
 
 def with_physical_devices(inst; b : block<(d:array<VkPhysicalDevice>)>)
