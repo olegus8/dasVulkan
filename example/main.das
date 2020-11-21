@@ -15,6 +15,11 @@ let
     ]]
 
 
+struct Vertex
+    position : float2
+    color : float3
+
+
 //TODO: move to math?
 def clamp(t, a, b : uint)
     return min(max(t, a), b)
@@ -495,11 +500,6 @@ def with_pipeline_layout(device; b : block<(layout:VkPipelineLayout)>)
         create_info |> safe_addr(), null, layout |> safe_addr()))
     b |> invoke(layout)
     device |> vkDestroyPipelineLayout(layout, null)
-
-
-struct Vertex
-    position : float2
-    color : float3
 
 
 def with_graphics_pipeline(device, vert_shmod, frag_shmod;
