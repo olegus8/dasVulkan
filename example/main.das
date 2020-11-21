@@ -322,7 +322,7 @@ def with_swap_chain(device, phys_dev, surface, window, surf_fmt, present_mode;
         minImageCount = img_count,
         imageFormat = surf_fmt.format,
         imageColorSpace = surf_fmt.colorSpace,
-        imageExtent = [[VkExtent2D width=extent[0], height=extent[1]]],
+        imageExtent = extent,
         imageArrayLayers = 1u, // 2 for stereoscopic
         imageUsage = uint(
             VkImageUsageFlagBits VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT),
@@ -342,21 +342,20 @@ def with_swap_chain(device, phys_dev, surface, window, surf_fmt, present_mode;
 
 
 def get_swap_extent(device, surface, window)
-    let caps <- device |> get_capabilities(surface)
+    var caps <- device |> get_capabilities(surface)
 
     if caps.currentExtent.width != UINT_MAX
-        return uint2(
-            caps.currentExtent.width,
-            caps.currentExtent.height)
+        return <- caps.currentExtent
     else
         let fb_size = window |> get_framebuffer_size()
-        return uint2(
-            clamp(fb_size[0],
+        return [[VkExtent2D
+            width = clamp(fb_size[0],
                 caps.minImageExtent.width,
                 caps.maxImageExtent.width),
-            clamp(fb_size[1],
+            height = clamp(fb_size[1],
                 caps.minImageExtent.height,
-                caps.maxImageExtent.height))
+                caps.maxImageExtent.height)
+        ]]
 
 
 def get_framebuffer_size(window)
@@ -550,7 +549,7 @@ def with_graphics_pipeline(
     let extent <- phys_dev |> get_swap_extent(surface, window)
     let viewport <- [[VkViewport
         x = 0.0f, y = 0.0f, minDepth = 0.0f, maxDepth = 1.0f,
-        width = float(extent[0]), height = float(extent[1])
+        width = float(extent.width), height = float(extent.height)
     ]]
     let scissor <- [[VkRect2D
         extent = [[VkExtent2D width=extent[0], height=extent[1]]]
