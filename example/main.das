@@ -479,7 +479,7 @@ def with_shader_module(device, name; b : block<(m:VkShaderModule)>)
         code_ptr = reinterpret<uint?>(code)
     let create_info <- [[VkShaderModuleCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO,
-        codeSize = uint64(shader_data |> length()),
+        codeSize = uint64(code |> length()),
         pCode = code_ptr
     ]]
     var shmod : VkShaderModule
