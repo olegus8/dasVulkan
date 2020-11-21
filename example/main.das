@@ -520,7 +520,8 @@ def with_graphics(width, height, title; b : block<(
     device |> with_swap_chain_images(swap_chain) <| $(sc_imgs) {
     device |> with_swap_chain_image_views(sc_imgs, surf_fmt) <| $(sc_views) {
     device |> with_render_pass(surf_fmt) <| $(render_pass) {
-    device |> with_pipeline_layout() <| $(layout)
+    device |> with_pipeline_layout() <| $(layout) {
+    device |> with_graphics_pipeline() <| $(pipeline)
     {
         b |> invoke(window, phys_dev);
     }}}}}}}}}}}}}}
