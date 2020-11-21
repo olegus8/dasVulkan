@@ -43,12 +43,6 @@ def safe_addr_val(var x : auto(T)&) : T-& ? #
         return reinterpret<T-&?#>(addr(x))
 
 
-def read_data(fname)
-    let fpath = "{get_das_root()}/modules/dasVulkan/example/{fname}"
-    fpath |> fopen("rb") <| $(f)
-        return [[ tuple<string;uint64> f |> read(), (f |> fstat()).size ]]
-
-
 def with_physical_devices(inst; b : block<(d:array<VkPhysicalDevice>)>)
     var devices : array<VkPhysicalDevice>
     var count : uint
@@ -471,14 +465,19 @@ def with_render_pass(device, surf_fmt; b : block<(rp:VkRenderPass)>)
 
 
 def with_shader_module(device, name; b : block<(m:VkShaderModule)>)
-    let code <- read_data("{name}.spv")
-    print("shader {name} code size is {code |> length()}\n")
+    let code_fpath = "{get_das_root()}/modules/dasVulkan/example/{name}.spv"
+    var code : string
+    var code_size : uint64
+    fpath |> fopen("rb") <| $(f)
+        code <- f |> read()
+        code_size = (f |> fstat()).size
     var code_ptr : uint?
     unsafe
         code_ptr = reinterpret<uint?>(code)
+
     let create_info <- [[VkShaderModuleCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO,
-        codeSize = uint64(code |> length()),
+        codeSize = code_size,
         pCode = code_ptr
     ]]
     var shmod : VkShaderModule
