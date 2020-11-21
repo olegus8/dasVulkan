@@ -1,9 +1,10 @@
 options log, log_infer_passes
 
-require vulkan
-require strings
-require math
 require daslib/safe_addr
+require fio
+require math
+require strings
+require vulkan
 
 
 let
@@ -44,7 +45,7 @@ def safe_addr_val(var x : auto(T)&) : T-& ? #
 
 def read_data(fname)
     var data : string
-    let fpath = "{get_das_root}/modules/dasVulkan/examples/{fname}"
+    let fpath = "{get_das_root()}/modules/dasVulkan/examples/{fname}"
     fpath |> fopen("rb") <| $(f)
         data <- f |> fread()
     return <- data
