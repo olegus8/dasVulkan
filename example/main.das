@@ -30,13 +30,13 @@ def to_string(bytes : void?)
         return reinterpret<string>(bytes)
 
 
-//TODO: this is for constant objects
+//TODO: need this for heap
 def safe_addr_plain(x : auto(T)) : T ? #
     unsafe
         return reinterpret<T?#>(addr(x))
 
 
-//TODO: this is for example for heap
+//TODO: need this for heap
 def safe_addr_val(var x : auto(T)&) : T-& ? #
     unsafe
         return reinterpret<T-&?#>(addr(x))
@@ -137,12 +137,12 @@ def with_device(instance, phys_dev, surface; b : block<(device:VkDevice)>)
             sType = VkStructureType VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO,
             pQueueCreateInfos = safe_addr_plain(queue_infos[0]),
             queueCreateInfoCount = uint(queue_infos |> length()),
-            pEnabledFeatures = safe_addr_plain(features),
+            pEnabledFeatures = safe_addr(features),
             enabledExtensionCount = uint(REQUIRED_EXTENSIONS |> length()),
-            ppEnabledExtensionNames = safe_addr_plain(REQUIRED_EXTENSIONS[0])
+            ppEnabledExtensionNames = safe_addr(REQUIRED_EXTENSIONS[0])
         ]]
         verify(VkResult VK_SUCCESS == vkCreateDevice(
-            phys_dev, safe_addr_plain(create_info), null, safe_addr(device)))
+            phys_dev, safe_addr(create_info), null, safe_addr(device)))
         b |> invoke(device)
         device |> vkDeviceWaitIdle()
         device |> vkDestroyDevice(null)
