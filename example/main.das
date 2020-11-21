@@ -506,15 +506,15 @@ def with_graphics_pipeline(device, vert_shmod, frag_shmod;
     b : block<(p:VkPipeline)>
 )
     let shader_stages <- [[auto[]
-        [[VkPipelineShaderStageCreateInfo module_ = vert_shmod, pName = "main"
+        [[VkPipelineShaderStageCreateInfo module_ = vert_shmod, pName = "main",
             sType = (VkStructureType
                 VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO),
-            stage = VkShaderStageFlagBits VK_SHADER_STAGE_VERTEX_BIT,
+            stage = VkShaderStageFlagBits VK_SHADER_STAGE_VERTEX_BIT
         ]],
-        [[VkPipelineShaderStageCreateInfo module_ = frag_shmod, pName = "main"
+        [[VkPipelineShaderStageCreateInfo module_ = frag_shmod, pName = "main",
             sType = (VkStructureType
                 VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO),
-            stage = VkShaderStageFlagBits VK_SHADER_STAGE_FRAGMENT_BIT,
+            stage = VkShaderStageFlagBits VK_SHADER_STAGE_FRAGMENT_BIT
         ]]
     ]]
     let vtx_bindings <- [[auto[] [[VkVertexInputBindingDescription
