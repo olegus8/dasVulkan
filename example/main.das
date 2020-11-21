@@ -501,28 +501,24 @@ def with_pipeline_layout(device; b : block<(layout:VkPipelineLayout)>)
     device |> vkDestroyPipelineLayout(layout, null)
 
 
-def with_pipeline_creation_context(
-    device, phys_dev, surface, window, vert_shmod, frag_shmod;
-    b : block<(
-        stages,
-        vtx_input,
-        input_assembly,
-        viewport,
-        rasterizer,
-        multisampling,
-        blending
-    )>
+def make_pipeline_stages_info(vert_shmod, frag_shmod)
+    return <- [[auto[]
+        [[VkPipelineShaderStageCreateInfo module_ = vert_shmod, pName = "main",
+            sType = (VkStructureType
+                VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO),
+            stage = VkShaderStageFlagBits VK_SHADER_STAGE_VERTEX_BIT
+        ]];
+        [[VkPipelineShaderStageCreateInfo module_ = frag_shmod, pName = "main",
+            sType = (VkStructureType
+                VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO),
+            stage = VkShaderStageFlagBits VK_SHADER_STAGE_FRAGMENT_BIT
+        ]]
+    ]]
+
+
+def with_pipeline_vertex_input_info(
+    b : block<(i:VkPipelineVertexInputStateCreateInfo)>
 )
-
-
-def with_graphics_pipeline(device, phys_dev, surface, window, layout,
-    render_pass, vert_shmod, frag_shmod;
-    b : block<(p:VkPipeline)>
-)
-    ////////////////////
-    // vertex format
-    ////////////////////
-
     let vtx_bindings <- [[auto[] [[VkVertexInputBindingDescription
         binding = 0u,
         stride = uint(typeinfo(sizeof type<Vertex>)),
@@ -538,19 +534,50 @@ def with_graphics_pipeline(device, phys_dev, surface, window, layout,
             offset = uint(typeinfo(offsetof<color> type<Vertex>))
         ]]
     ]]
-    let vtx_input <- [[VkPipelineVertexInputStateCreateInfo
+    b |> invoke ([[VkPipelineVertexInputStateCreateInfo
         sType = (VkStructureType
             VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO),
         vertexBindingDescriptionCount = uint(vtx_bindings |> length()),
         pVertexBindingDescriptions = vtx_bindings[0] |> safe_addr(),
         vertexAttributeDescriptionCount = uint(vtx_attrs |> length()),
         pVertexAttributeDescriptions = vtx_attrs[0] |> safe_addr()
-    ]]
-    let input_assembly <- [[VkPipelineInputAssemblyStateCreateInfo
+    ]])
+
+
+def make_pipeline_input_assembly()
+    return <- [[VkPipelineInputAssemblyStateCreateInfo
         sType = (VkStructureType 
             VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO),
         topology = VkPrimitiveTopology VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST
     ]]
+
+
+def with_pipeline_creation_context(
+    device, phys_dev, surface, window, vert_shmod, frag_shmod;
+    b : block<(
+        stages,
+        vtx_input,
+        input_assembly,
+        viewport,
+        rasterizer,
+        multisampling,
+        blending
+    )>
+    let stages <- make_pipeline_stages_info(vert_shmod, frag_shmod)
+    let input_assembly <- make_pipeline_input_assembly()
+    with_pipeline_vertex_input_info() |> $(vtx_input) {
+    }
+)
+
+
+def with_graphics_pipeline(device, phys_dev, surface, window, layout,
+    render_pass, vert_shmod, frag_shmod;
+    b : block<(p:VkPipeline)>
+)
+    ////////////////////
+    // vertex format
+    ////////////////////
+
 
     ///////////////
     // viewport
@@ -574,18 +601,6 @@ def with_graphics_pipeline(device, phys_dev, surface, window, layout,
     // rest of the stuff
     ///////////////////////
 
-    let stages <- [[auto[]
-        [[VkPipelineShaderStageCreateInfo module_ = vert_shmod, pName = "main",
-            sType = (VkStructureType
-                VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO),
-            stage = VkShaderStageFlagBits VK_SHADER_STAGE_VERTEX_BIT
-        ]];
-        [[VkPipelineShaderStageCreateInfo module_ = frag_shmod, pName = "main",
-            sType = (VkStructureType
-                VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO),
-            stage = VkShaderStageFlagBits VK_SHADER_STAGE_FRAGMENT_BIT
-        ]]
-    ]]
     let rasterizer <- [[VkPipelineRasterizationStateCreateInfo
         sType = (VkStructureType
             VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO),
