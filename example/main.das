@@ -693,13 +693,16 @@ def with_graphics(width, height, title; b : block<(
     device |> with_swap_chain_images(swap_chain) <| $(sc_imgs) {
     device |> with_swap_chain_image_views(sc_imgs, surf_fmt) <| $(sc_views) {
     device |> with_render_pass(surf_fmt) <| $(render_pass) {
+    device |> with_swap_chain_framebuffers(
+        render_pass, surface, window
+    ) <| $(sc_fbufs) {
     device |> with_pipeline_layout() <| $(layout) {
     device |> with_graphics_pipeline(layout, render_pass,
         phys_dev, surface, window, vert_shmod, frag_shmod
     ) <| $(pipeline)
     {
         b |> invoke(window, phys_dev);
-    }}}}}}}}}}}}}}}
+    }}}}}}}}}}}}}}}}
 
 
 [export]
