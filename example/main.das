@@ -501,7 +501,7 @@ def with_pipeline_layout(device; b : block<(layout:VkPipelineLayout)>)
     device |> vkDestroyPipelineLayout(layout, null)
 
 
-def make_pipeline_stages_info(vert_shmod, frag_shmod)
+def make_pipeline_stages(vert_shmod, frag_shmod)
     return <- [[auto[]
         [[VkPipelineShaderStageCreateInfo module_ = vert_shmod, pName = "main",
             sType = (VkStructureType
@@ -516,7 +516,7 @@ def make_pipeline_stages_info(vert_shmod, frag_shmod)
     ]]
 
 
-def with_pipeline_vertex_input_info(
+def with_pipeline_vertex_input(
     b : block<(i:VkPipelineVertexInputStateCreateInfo)>
 )
     let vtx_bindings <- [[auto[] [[VkVertexInputBindingDescription
@@ -552,7 +552,7 @@ def make_pipeline_input_assembly()
     ]]
 
 
-def with_pipeline_viewport_info(surface, window;
+def with_pipeline_viewport(surface, window;
     b : block<(i:VkPipelineViewportStateCreateInfo)>
 )
     let extent <- phys_dev |> get_swap_extent(surface, window)
@@ -590,6 +590,22 @@ def make_pipeline_multisampling()
     ]]
 
 
+def with_pipeline_blending(b : block<(b:VkPipelineColorBlendStateCreateInfo)>)
+    let blending_atts <- [[auto[] [[VkPipelineColorBlendAttachmentState
+        colorWriteMask =
+            uint(VkColorComponentFlagBits VK_COLOR_COMPONENT_R_BIT) |
+            uint(VkColorComponentFlagBits VK_COLOR_COMPONENT_G_BIT) |
+            uint(VkColorComponentFlagBits VK_COLOR_COMPONENT_B_BIT) |
+            uint(VkColorComponentFlagBits VK_COLOR_COMPONENT_A_BIT)
+    ]]]]
+    b |> invoke([[VkPipelineColorBlendStateCreateInfo
+        sType = (VkStructureType
+            VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO),
+        attachmentCount = uint(blending_atts |> length()),
+        pAttachments = blending_atts |> safe_addr()
+    ]])
+
+
 def with_pipeline_creation_context(
     device, phys_dev, surface, window, vert_shmod, frag_shmod;
     b : block<(
@@ -599,15 +615,21 @@ def with_pipeline_creation_context(
         viewport : VkPipelineViewportStateCreateInfo,
         rasterizer : VkPipelineRasterizationStateCreateInfo,
         multisampling : VkPipelineMultisampleStateCreateInfo,
-        blending
+        blending : VkPipelineColorBlendStateCreateInfo
     )>
-    let stages <- make_pipeline_stages_info(vert_shmod, frag_shmod)
-    let input_assembly <- make_pipeline_input_assembly()
-    let rasterizer <- make_pipeline_rasterizer()
-    let multisampling <- make_pipeline_multisampling()
-    with_pipeline_vertex_input_info() |> $(vtx_input) {
-    surface |> with_pipeline_viewport_info(window) |> $(viewport) {
-    }}
+    with_pipeline_vertex_input() |> $(vtx_input) {
+    with_pipeline_blending() |> $(blending) {
+    surface |> with_pipeline_viewport(window) |> $(viewport) {
+        b |> invoke(
+            make_pipeline_stages(vert_shmod, frag_shmod),
+            vtx_input,
+            make_pipeline_input_assembly(),
+            viewport,
+            make_pipeline_rasterizer(),
+            make_pipeline_multisampling(),
+            blending
+        )
+    }}}
 )
 
 
@@ -620,19 +642,6 @@ def with_graphics_pipeline(device, phys_dev, surface, window, layout,
     // rest of the stuff
     ///////////////////////
 
-    let blending_atts <- [[auto[] [[VkPipelineColorBlendAttachmentState
-        colorWriteMask =
-            uint(VkColorComponentFlagBits VK_COLOR_COMPONENT_R_BIT) |
-            uint(VkColorComponentFlagBits VK_COLOR_COMPONENT_G_BIT) |
-            uint(VkColorComponentFlagBits VK_COLOR_COMPONENT_B_BIT) |
-            uint(VkColorComponentFlagBits VK_COLOR_COMPONENT_A_BIT)
-    ]]]]
-    let blending <- [[VkPipelineColorBlendStateCreateInfo
-        sType = (VkStructureType
-            VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO),
-        attachmentCount = uint(blending_atts |> length()),
-        pAttachments = blending_atts |> safe_addr()
-    ]]
 
 
 def with_graphics_pipeline(
