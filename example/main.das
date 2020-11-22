@@ -759,7 +759,7 @@ def with_memory_type(phys_dev, type_filter, needed_props; b : block<(t:uint)>)
 def with_buf_mem(device, phys_dev, buffer, mem_props;
     b : block<(m:VkDeviceMemory)>
 )
-    let mem_reqs : VkMemoryRequirements
+    var mem_reqs : VkMemoryRequirements
     device |> vkGetBufferMemoryRequirements(buffer, mem_reqs |> safe_addr())
     phys_dev |> with_memory_type(mem_reqs.memoryTypeBits, mem_props
     ) <| $(mem_type)
