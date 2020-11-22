@@ -611,7 +611,7 @@ def with_pipeline_blending(b : block<(b:VkPipelineColorBlendStateCreateInfo)>)
 
 
 def with_pipeline_creation_context(
-    device, phys_dev, surface, window, vert_shmod, frag_shmod;
+    phys_dev, surface, window, vert_shmod, frag_shmod;
     b : block<(
         stages : array<VkPipelineShaderStageCreateInfo>;
         vtx_input : VkPipelineVertexInputStateCreateInfo;
@@ -638,13 +638,12 @@ def with_pipeline_creation_context(
     }}}}
 
 
-def with_graphics_pipeline(
-    device, phys_dev, surface, window, vert_shmod, frag_shmod,
-    layout, render_pass;
+def with_graphics_pipeline(device, layout, render_pass,
+    phys_dev, surface, window, vert_shmod, frag_shmod;
     b : block<(p:VkPipeline)>
 )
     with_pipeline_creation_context(
-        device, phys_dev, surface, window, vert_shmod, frag_shmod
+        phys_dev, surface, window, vert_shmod, frag_shmod
     ) <| $(stages, vtx_input, input_assembly, viewport, rasterizer,
         multisampling, blending
     )
@@ -695,8 +694,8 @@ def with_graphics(width, height, title; b : block<(
     device |> with_swap_chain_image_views(sc_imgs, surf_fmt) <| $(sc_views) {
     device |> with_render_pass(surf_fmt) <| $(render_pass) {
     device |> with_pipeline_layout() <| $(layout) {
-    device |> with_graphics_pipeline(phys_dev, surface, window,
-        vert_shmod, frag_shmod, layout, render_pass
+    device |> with_graphics_pipeline(layout, render_pass,
+        phys_dev, surface, window, vert_shmod, frag_shmod
     ) <| $(pipeline)
     {
         b |> invoke(window, phys_dev);
