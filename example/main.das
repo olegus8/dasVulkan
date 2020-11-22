@@ -633,17 +633,6 @@ def with_pipeline_creation_context(
 )
 
 
-def with_graphics_pipeline(device, phys_dev, surface, window, layout,
-    render_pass, vert_shmod, frag_shmod;
-    b : block<(p:VkPipeline)>
-)
-
-    ///////////////////////
-    // rest of the stuff
-    ///////////////////////
-
-
-
 def with_graphics_pipeline(
     device, phys_dev, surface, window, vert_shmod, frag_shmod,
     layout, render_pass;
