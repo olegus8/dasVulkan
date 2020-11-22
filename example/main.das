@@ -725,7 +725,7 @@ def with_buffer(device, buf_size, usage; b : block<(b:VkBuffer)>)
         sharingMode = VkSharingMode VK_SHARING_MODE_EXCLUSIVE
     ]]
     var buf : VkBuffer
-    verify(VkResult == VK_SUCCESS device |> vkCreateBuffer(
+    verify(VkResult VK_SUCCESS == device |> vkCreateBuffer(
         create_info |> safe_addr(), null, buf |> safe_addr()))
     b |> invoke(buf)
     device |> vkDestroyBuffer(buf, null)
