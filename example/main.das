@@ -651,7 +651,7 @@ def with_graphics_pipeline(device, layout, render_pass,
             sType = (VkStructureType
                 VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO),
             stageCount = uint(stages |> length()),
-            pStages = stages[0] |> safe_addr_val(),
+            pStages = stages[0] |> safe_addr_plain(),
             pVertexInputState = vtx_input |> safe_addr(),
             pInputAssemblyState = input_assembly |> safe_addr(),
             pViewportState = viewport |> safe_addr(),
