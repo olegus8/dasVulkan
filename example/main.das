@@ -756,7 +756,7 @@ def with_memory_type(phys_dev, type_filter, needed_props; b : block<(t:uint)>)
             mem_type_ptr = actual_props.memoryTypes + type_i
         if mem_type_ptr.propertyFlags == needed_props
             b |> invoke(type_i)
-            break
+            return
 
 
 def with_buf_mem(device, phys_dev, buffer, mem_props;
