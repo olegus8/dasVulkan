@@ -686,7 +686,11 @@ def with_swap_chain_framebuffers(
         let create_info <- [[VkFramebufferCreateInfo
             sType = VkStructureType VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO,
             renderPass = render_pass,
-            attachmentCount = uint(atts |> length()),
+
+            //TODO: make it work. says "can only dereference simple type"
+            attachmentCount = 1u, 
+            //attachmentCount = uint(atts |> length()),
+
             pAttachments = atts[0] |> safe_addr(),
             width = extent.width,
             height = extent.height,
