@@ -732,13 +732,16 @@ def with_vertex_buffer(device; vertices:array<auto(VT)>;
     b : block<(b:VkBuffer)>
 )
     let buf_size = typeinfo(sizeof type<VT>) * vertices |> length()
-    with_buffer(buf_size, 
-        uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_TRANSFER_SRC_BIT),
+    let staging_usage = uint(
+        VkBufferUsageFlagBits VK_BUFFER_USAGE_TRANSFER_SRC_BIT)
+    let staging_mem_props = (
         uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT) | 
-        uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_COHERENT_BIT)
-    ) <| $(staging)
-        //TODO: implement this
-        b |> invoke([[VkBuffer]])
+        uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_COHERENT_BIT))
+    device |> with_buffer(buf_size, staging_usage) <| $(staging_buf)
+        device |> with_buf_mem(staging_buf, staging_mem_props
+        ) <| $(staging_mem)
+            //TODO: implement this
+            b |> invoke([[VkBuffer]])
 
 
 def with_graphics(width, height, title; b : block<(
