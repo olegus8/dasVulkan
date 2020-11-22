@@ -674,6 +674,32 @@ def with_graphics_pipeline(device, layout, render_pass,
         delete pipes
 
 
+def with_swap_chain_framebuffers(
+    device, phys_dev, surface, window, views, render_pass;
+    b : block<(fbs:array<VkFramebuffer>)>
+)
+    let extent <- phys_dev |> get_swap_extent(surface, window)
+    var fbufs : array<VkFramebuffer>
+    fbufs.resize(views |> length())
+    for fbuf, view in fbufs, views
+        let atts <- [[auto[] view]]
+        let create_info <- [[VkFramebufferCreateInfo
+            sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO,
+            renderPass = renderPass,
+            attachmentCount = uint(atts |> length()),
+            pAttachments = atts[0] |> safe_addr(),
+            width = extent.width,
+            height = extent.height,
+            layers = 1u
+        ]]
+        verify(VkResult VK_SUCCESS == device |> vkCreateFramebuffer(
+            create_info |> safe_addr(), null, fbuf |> safe_addr()))
+    b |> invoke(fbufs)
+    for fbuf in fbufs
+        device |> vkDestroyFramebuffer(fbuf, null)
+    delete fbufs
+
+
 def with_graphics(width, height, title; b : block<(
     window : GLFWwindow_DasHandle;
     phys_dev : VkPhysicalDevice
@@ -694,7 +720,7 @@ def with_graphics(width, height, title; b : block<(
     device |> with_swap_chain_image_views(sc_imgs, surf_fmt) <| $(sc_views) {
     device |> with_render_pass(surf_fmt) <| $(render_pass) {
     device |> with_swap_chain_framebuffers(
-        render_pass, surface, window
+        phys_dev, surface, window, sc_views, render_pass
     ) <| $(sc_fbufs) {
     device |> with_pipeline_layout() <| $(layout) {
     device |> with_graphics_pipeline(layout, render_pass,
