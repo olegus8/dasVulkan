@@ -684,8 +684,8 @@ def with_swap_chain_framebuffers(
     for fbuf, view in fbufs, views
         let atts <- [[auto[] view]]
         let create_info <- [[VkFramebufferCreateInfo
-            sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO,
-            renderPass = renderPass,
+            sType = VkStructureType VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO,
+            renderPass = render_pass,
             attachmentCount = uint(atts |> length()),
             pAttachments = atts[0] |> safe_addr(),
             width = extent.width,
