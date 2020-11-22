@@ -720,7 +720,7 @@ def with_command_pool(device, phys_dev, surface; b : block<(p:VkCommandPool)>)
 def with_buffer(device, buf_size, usage; b : block<(b:VkBuffer)>)
     let create_info <- [[VkBufferCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO,
-        size = buf_size,
+        size = uint64(buf_size),
         usage = usage,
         sharingMode = VkSharingMode VK_SHARING_MODE_EXCLUSIVE
     ]]
