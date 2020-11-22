@@ -643,11 +643,9 @@ def with_graphics_pipeline(
     layout, render_pass;
     b : block<(p:VkPipeline)>
 )
-    pass
-/*
     with_pipeline_creation_context(
         device, phys_dev, surface, window, vert_shmod, frag_shmod
-    ) |> $(stages, vtx_input, input_assembly, viewport, rasterizer,
+    ) |< $(stages, vtx_input, input_assembly, viewport, rasterizer,
         multisampling, blending
     )
         let pipe_infos <- [[auto[] [[VkGraphicsPipelineCreateInfo
@@ -675,7 +673,6 @@ def with_graphics_pipeline(
         for pipe in pipes
             device |> vkDestroyPipeline(pipe, null)
         delete pipes
-*/
 
 
 def with_graphics(width, height, title; b : block<(
