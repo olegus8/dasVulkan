@@ -645,7 +645,7 @@ def with_graphics_pipeline(
 )
     with_pipeline_creation_context(
         device, phys_dev, surface, window, vert_shmod, frag_shmod
-    ) |< $(stages, vtx_input, input_assembly, viewport, rasterizer,
+    ) <| $(stages, vtx_input, input_assembly, viewport, rasterizer,
         multisampling, blending
     )
         let pipe_infos <- [[auto[] [[VkGraphicsPipelineCreateInfo
