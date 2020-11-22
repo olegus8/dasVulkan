@@ -748,17 +748,13 @@ def with_memory_type(phys_dev, type_filter, needed_flags; b : block<(t:uint)>)
     var actual_props : VkPhysicalDeviceMemoryProperties
     phys_dev |> vkGetPhysicalDeviceMemoryProperties(
         actual_props |> safe_addr())
-    print("looking for suitable memory type. filter={type_filter} needed_flags={needed_flags}\n")
     for type_i in range(actual_props.memoryTypeCount)
-        print("type_i={type_i}\n")
         if ((1u << uint(type_i)) & type_filter) == 0u
             continue
         let actual_flags = actual_props.memoryTypes[type_i].propertyFlags
-        print("actual_flags={actual_flags}\n")
-        if actual_flags == needed_flags
+        if (actual_flags & needed_flags) == needed_flags
             b |> invoke(uint(type_i))
             return
-    print("can't find suitable memory type\n")
 
 
 def with_buf_mem(device, phys_dev, buffer, mem_props;
