@@ -843,7 +843,7 @@ def main
     with_graphics(800, 600, "dasVulkanExample") <| $(device, phys_dev, window)
         var props <- phys_dev |> get_properties()
         print("Using {props.deviceName |> to_string()}\n")
-        device |> with_baked_vertex_buffer(vertices) <| $(vbuf)
+        device |> with_baked_vertex_buffer(phys_dev, vertices) <| $(vbuf)
             while window |> glfwWindowShouldClose() == 0
                 glfwPollEvents()
 
