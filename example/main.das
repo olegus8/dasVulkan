@@ -634,7 +634,7 @@ def with_pipeline_creation_context(
             make_pipeline_rasterizer(),
             make_pipeline_multisampling(),
             blending
-        )
+        );
     }}}}
 
 
