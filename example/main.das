@@ -752,7 +752,7 @@ def with_memory_type(phys_dev, type_filter, needed_props; b : block<(t:uint)>)
         if ((1u << uint(type_i)) & type_filter) == 0u
             continue
         if actual_props.memoryTypes[type_i].propertyFlags == needed_props
-            b |> invoke(type_i)
+            b |> invoke(uint(type_i))
             return
 
 
