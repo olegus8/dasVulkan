@@ -588,7 +588,7 @@ def with_pipeline_creation_context(
         vtx_input : VkPipelineVertexInputStateCreateInfo,
         input_assembly : VkPipelineInputAssemblyStateCreateInfo,
         viewport : VkPipelineViewportStateCreateInfo,
-        rasterizer,
+        rasterizer : VkPipelineRasterizationStateCreateInfo,
         multisampling,
         blending
     )>
