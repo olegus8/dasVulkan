@@ -717,13 +717,28 @@ def with_command_pool(device, phys_dev, surface; b : block<(p:VkCommandPool)>)
         device |> vkDestroyCommandPool(pool, null)
 
 
+def with_buffer(buf_size, usage, mem_props;
+    b : block<(b:VkBuffer)>
+)
+    let create_info <- [[VkBufferCreateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO,
+        size = buf_size,
+        usage = usage,
+        sharingMode = VkSharingMode VK_SHARING_MODE_EXCLUSIVE
+    ]]
+
+
 def with_vertex_buffer(device; vertices:array<auto(VT)>;
     b : block<(b:VkBuffer)>
 )
-    let buf_size = uint(typeinfo(sizeof type<VT>) * vertices |> length())
-    with_buffer(
-    //TODO: implement this
-    b |> invoke([[VkBuffer]])
+    let buf_size = typeinfo(sizeof type<VT>) * vertices |> length()
+    with_buffer(buf_size, 
+        uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_TRANSFER_SRC_BIT),
+        uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT) | 
+        uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_COHERENT_BIT)
+    ) <| $(staging)
+        //TODO: implement this
+        b |> invoke([[VkBuffer]])
 
 
 def with_graphics(width, height, title; b : block<(
