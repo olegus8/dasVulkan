@@ -598,7 +598,7 @@ def with_pipeline_creation_context(
         input_assembly : VkPipelineInputAssemblyStateCreateInfo,
         viewport : VkPipelineViewportStateCreateInfo,
         rasterizer : VkPipelineRasterizationStateCreateInfo,
-        multisampling,
+        multisampling : VkPipelineMultisampleStateCreateInfo,
         blending
     )>
     let stages <- make_pipeline_stages_info(vert_shmod, frag_shmod)
