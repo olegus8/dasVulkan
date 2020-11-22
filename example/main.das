@@ -504,7 +504,7 @@ def with_pipeline_layout(device; b : block<(layout:VkPipelineLayout)>)
 def with_pipeline_stages(vert_shmod, frag_shmod;
     b : block<(s:array<VkPipelineShaderStageCreateInfo>)>
 )
-    var stages = [{auto[]
+    var stages <- [{auto[]
         [[VkPipelineShaderStageCreateInfo module_ = vert_shmod, pName = "main",
             sType = (VkStructureType
                 VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO),
