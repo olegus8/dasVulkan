@@ -770,20 +770,28 @@ def with_buf_mem(device, phys_dev, buffer, mem_props;
             b |> invoke(mem)
 
 
-def with_baked_vertex_buffer(device; vertices:array<auto(VT)>;
+def with_mem_backed_buf(device, phys_dev, buf_size, usage, mem_props;
+    b : block<(b:VkBuffer; m:VkDeviceMemory)>
+)
+    device |> with_buffer(buf_size, usage) <| $(buf)
+        device |> with_buf_mem(buf, mem_props) <| $(mem)
+            verify(VkResult VK_SUCCESS ==
+                device |> vkBindBufferMemory(buf, mem, 0u))
+            b |> invoke(buf, mem)
+
+
+def with_baked_vertex_buffer(device, phys_dev; vertices:array<auto(VT)>;
     b : block<(b:VkBuffer)>
 )
     let buf_size = typeinfo(sizeof type<VT>) * vertices |> length()
-    let staging_usage = uint(
-        VkBufferUsageFlagBits VK_BUFFER_USAGE_TRANSFER_SRC_BIT)
-    let staging_mem_props = (
+
+    device |> with_mem_backed_buf(phys_dev, buf_size,
+        uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_TRANSFER_SRC_BIT),
         uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT) | 
-        uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_COHERENT_BIT))
-    device |> with_buffer(buf_size, staging_usage) <| $(staging_buf)
-        device |> with_buf_mem(staging_buf, staging_mem_props
-        ) <| $(staging_mem)
-            //TODO: implement this
-            b |> invoke([[VkBuffer]])
+        uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_COHERENT_BIT)
+    ) <| $(staging_buf, staging_mem)
+        //TODO: implement this
+        b |> invoke([[VkBuffer]])
 
 
 def with_graphics(width, height, title; b : block<(
