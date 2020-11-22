@@ -718,8 +718,9 @@ def with_command_pool(device, phys_dev, surface; b : block<(p:VkCommandPool)>)
 
 
 def with_graphics(width, height, title; b : block<(
-    window : GLFWwindow_DasHandle;
-    phys_dev : VkPhysicalDevice
+    device : VkDevice;
+    phys_dev : VkPhysicalDevice;
+    window : GLFWwindow_DasHandle
 )>)
     with_instance() <| $(instance) {
     with_window(width, height, title) <| $(window) {
@@ -745,7 +746,7 @@ def with_graphics(width, height, title; b : block<(
         phys_dev, surface, window, vert_shmod, frag_shmod
     ) <| $(pipeline)
     {
-        b |> invoke(window, phys_dev);
+        b |> invoke(device, phys_dev, window);
     }}}}}}}}}}}}}}}}}
 
 
@@ -762,11 +763,12 @@ def main
         [[Vertex position=float2(-0.5f,  0.5f), color=(0.0f, 0.0f, 1.0f)]]
     ]]
 
-    with_graphics(800, 600, "dasVulkanExample") <| $(window, phys_dev)
+    with_graphics(800, 600, "dasVulkanExample") <| $(device, phys_dev, window)
         var props <- phys_dev |> get_properties()
         print("Using {props.deviceName |> to_string()}\n")
-        while window |> glfwWindowShouldClose() == 0
-            glfwPollEvents()
+        device |> with_vertex_buffer(vertices) <| $(vbuf)
+            while window |> glfwWindowShouldClose() == 0
+                glfwPollEvents()
 
     glfwTerminate()
     print("Finished\n")
