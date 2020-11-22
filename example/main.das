@@ -717,6 +717,9 @@ def with_command_pool(device, phys_dev, surface; b : block<(p:VkCommandPool)>)
         device |> vkDestroyCommandPool(pool, null)
 
 
+def with_vertex_buffer(vertices; b : block<(b:VkBuffer)>)
+
+
 def with_graphics(width, height, title; b : block<(
     device : VkDevice;
     phys_dev : VkPhysicalDevice;
