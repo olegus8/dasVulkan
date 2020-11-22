@@ -704,6 +704,19 @@ def with_swap_chain_framebuffers(
     delete fbufs
 
 
+def with_command_pool(device, phys_dev, surface; b : block<(p:VkCommandPool)>)
+    phys_dev |> with_graphics_queue_family(surface) <| $(qfam)
+        let create_info <- [[VkCommandPoolCreateInfo
+            sType = VkStructureType VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO,
+            queueFamilyIndex = qfam
+        ]]
+        var pool : VkCommandPool
+        verify(VkResult VK_SUCCESS == device |> vkCreateCommandPool(
+            create_info |> safe_addr(), null, pool |> safe_addr()))
+        b |> invoke(pool)
+        device |> vkDestroyCommandPool(pool, null)
+
+
 def with_graphics(width, height, title; b : block<(
     window : GLFWwindow_DasHandle;
     phys_dev : VkPhysicalDevice
@@ -719,6 +732,7 @@ def with_graphics(width, height, title; b : block<(
     device |> with_shader_module("frag") <| $(frag_shmod) {
     device |> with_render_pass(surf_fmt) <| $(render_pass) {
     device |> with_pipeline_layout() <| $(layout) {
+    device |> with_command_pool(phys_dev, surface) <| $(cmd_pool) {
     device |> with_swap_chain(
         phys_dev, surface, window, surf_fmt, present_mode
     ) <| $(swap_chain) {
@@ -732,7 +746,7 @@ def with_graphics(width, height, title; b : block<(
     ) <| $(pipeline)
     {
         b |> invoke(window, phys_dev);
-    }}}}}}}}}}}}}}}}
+    }}}}}}}}}}}}}}}}}
 
 
 [export]
