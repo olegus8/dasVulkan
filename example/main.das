@@ -621,6 +621,7 @@ def with_pipeline_creation_context(
         multisampling : VkPipelineMultisampleStateCreateInfo,
         blending : VkPipelineColorBlendStateCreateInfo
     )>
+)
     with_pipeline_stages(vert_shmod, frag_shmod) |> $(stages) {
     with_pipeline_vertex_input() |> $(vtx_input) {
     with_pipeline_blending() |> $(blending) {
@@ -635,7 +636,6 @@ def with_pipeline_creation_context(
             blending
         )
     }}}}
-)
 
 
 def with_graphics_pipeline(
