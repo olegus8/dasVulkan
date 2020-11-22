@@ -744,6 +744,21 @@ def with_memory(device, size, mem_type; b : block<(m:VkDeviceMemory)>)
     device |> vkFreeMemory(mem, null)
 
 
+def with_memory_type(phys_dev, type_filter, needed_props; b : block<(t:uint)>)
+    var actual_props : VkPhysicalDeviceMemoryProperties
+    phys_dev |> vkGetPhysicalDeviceMemoryProperties(
+        actual_props |> safe_addr())
+    for type_i in range(actual_props.memoryTypeCount)
+        if ((1u << uint(type_i)) & type_filter) == 0u
+            continue
+        var mem_type_ptr : VkMemoryType const?
+        unsafe
+            mem_type_ptr = actual_props.memoryTypes + type_i
+        if mem_type_ptr.propertyFlags == needed_props
+            b |> invoke(type_i)
+            break
+
+
 def with_buf_mem(device, phys_dev, buffer, mem_props;
     b : block<(m:VkDeviceMemory)>
 )
