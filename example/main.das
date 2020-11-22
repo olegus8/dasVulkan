@@ -718,6 +718,8 @@ def with_command_pool(device, phys_dev, surface; b : block<(p:VkCommandPool)>)
 
 
 def with_vertex_buffer(vertices; b : block<(b:VkBuffer)>)
+    //TODO: implement this
+    b |> invoke([[VkBuffer]])
 
 
 def with_graphics(width, height, title; b : block<(
@@ -761,9 +763,9 @@ def main
     glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE)
 
     let vertices <- [[auto[]
-        [[Vertex position=float2( 0.0f, -0.5f), color=(1.0f, 0.0f, 0.0f)]];
-        [[Vertex position=float2( 0.5f,  0.5f), color=(0.0f, 1.0f, 0.0f)]];
-        [[Vertex position=float2(-0.5f,  0.5f), color=(0.0f, 0.0f, 1.0f)]]
+        [[Vertex position=float2( 0.0f, -0.5f), color=float3(1f, 0f, 0f)]];
+        [[Vertex position=float2( 0.5f,  0.5f), color=float3(0f, 1f, 0f)]];
+        [[Vertex position=float2(-0.5f,  0.5f), color=float3(0f, 0f, 1f)]]
     ]]
 
     with_graphics(800, 600, "dasVulkanExample") <| $(device, phys_dev, window)
