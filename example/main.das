@@ -622,12 +622,10 @@ def with_pipeline_creation_context(
         blending : VkPipelineColorBlendStateCreateInfo
     )>
 )
-    pass
-/*
-    with_pipeline_stages(vert_shmod, frag_shmod) |> $(stages) {
-    with_pipeline_vertex_input() |> $(vtx_input) {
-    with_pipeline_blending() |> $(blending) {
-    surface |> with_pipeline_viewport(window) |> $(viewport) {
+    with_pipeline_stages(vert_shmod, frag_shmod) <| $(stages) {
+    with_pipeline_vertex_input() <| $(vtx_input) {
+    with_pipeline_blending() <| $(blending) {
+    surface |> with_pipeline_viewport(window) <| $(viewport) {
         b |> invoke(
             stages,
             vtx_input,
@@ -638,7 +636,6 @@ def with_pipeline_creation_context(
             blending
         );
     }}}}
-*/
 
 
 def with_graphics_pipeline(
