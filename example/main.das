@@ -556,7 +556,7 @@ def make_pipeline_input_assembly()
     ]]
 
 
-def with_pipeline_viewport(surface, window;
+def with_pipeline_viewport(phys_dev, surface, window;
     b : block<(i:VkPipelineViewportStateCreateInfo)>
 )
     let extent <- phys_dev |> get_swap_extent(surface, window)
@@ -625,7 +625,7 @@ def with_pipeline_creation_context(
     with_pipeline_stages(vert_shmod, frag_shmod) <| $(stages) {
     with_pipeline_vertex_input() <| $(vtx_input) {
     with_pipeline_blending() <| $(blending) {
-    surface |> with_pipeline_viewport(window) <| $(viewport) {
+    phys_dev |> with_pipeline_viewport(surface, window) <| $(viewport) {
         b |> invoke(
             stages,
             vtx_input,
