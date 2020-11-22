@@ -500,7 +500,7 @@ def with_pipeline_layout(device; b : block<(layout:VkPipelineLayout)>)
     b |> invoke(layout)
     device |> vkDestroyPipelineLayout(layout, null)
 
-
+/*
 def with_pipeline_stages(vert_shmod, frag_shmod;
     b : block<(s:array<VkPipelineShaderStageCreateInfo>)>
 )
@@ -638,11 +638,14 @@ def with_pipeline_creation_context(
     }}}}
 
 
+*/
 def with_graphics_pipeline(
     device, phys_dev, surface, window, vert_shmod, frag_shmod,
     layout, render_pass;
     b : block<(p:VkPipeline)>
 )
+    pass
+/*
     with_pipeline_creation_context(
         device, phys_dev, surface, window, vert_shmod, frag_shmod
     ) |> $(stages, vtx_input, input_assembly, viewport, rasterizer,
@@ -673,6 +676,7 @@ def with_graphics_pipeline(
         for pipe in pipes
             device |> vkDestroyPipeline(pipe, null)
         delete pipes
+*/
 
 
 def with_graphics(width, height, title; b : block<(
@@ -696,7 +700,7 @@ def with_graphics(width, height, title; b : block<(
     device |> with_render_pass(surf_fmt) <| $(render_pass) {
     device |> with_pipeline_layout() <| $(layout) {
     device |> with_graphics_pipeline(phys_dev, surface, window,
-        vert_shmod, frag_shmod, layout, render_pass,
+        vert_shmod, frag_shmod, layout, render_pass
     ) <| $(pipeline)
     {
         b |> invoke(window, phys_dev);
