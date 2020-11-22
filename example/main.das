@@ -717,7 +717,11 @@ def with_command_pool(device, phys_dev, surface; b : block<(p:VkCommandPool)>)
         device |> vkDestroyCommandPool(pool, null)
 
 
-def with_vertex_buffer(vertices; b : block<(b:VkBuffer)>)
+def with_vertex_buffer(device; vertices:array<auto(VT)>;
+    b : block<(b:VkBuffer)>
+)
+    let buf_size = uint(typeinfo(sizeof type<VT>) * vertices |> length())
+    with_buffer(
     //TODO: implement this
     b |> invoke([[VkBuffer]])
 
