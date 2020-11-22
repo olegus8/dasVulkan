@@ -581,6 +581,15 @@ def make_pipeline_rasterizer()
     ]]
 
 
+def make_pipeline_multisampling()
+    return <- [[VkPipelineMultisampleStateCreateInfo
+        sType = (VkStructureType
+            VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO),
+        rasterizationSamples = VkSampleCountFlagBits VK_SAMPLE_COUNT_1_BIT,
+        minSampleShading = 1.0f
+    ]]
+
+
 def with_pipeline_creation_context(
     device, phys_dev, surface, window, vert_shmod, frag_shmod;
     b : block<(
@@ -595,6 +604,7 @@ def with_pipeline_creation_context(
     let stages <- make_pipeline_stages_info(vert_shmod, frag_shmod)
     let input_assembly <- make_pipeline_input_assembly()
     let rasterizer <- make_pipeline_rasterizer()
+    let multisampling <- make_pipeline_multisampling()
     with_pipeline_vertex_input_info() |> $(vtx_input) {
     surface |> with_pipeline_viewport_info(window) |> $(viewport) {
     }}
@@ -610,12 +620,6 @@ def with_graphics_pipeline(device, phys_dev, surface, window, layout,
     // rest of the stuff
     ///////////////////////
 
-    let multisampling <- [[VkPipelineMultisampleStateCreateInfo
-        sType = (VkStructureType
-            VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO),
-        rasterizationSamples = VkSampleCountFlagBits VK_SAMPLE_COUNT_1_BIT,
-        minSampleShading = 1.0f
-    ]]
     let blending_atts <- [[auto[] [[VkPipelineColorBlendAttachmentState
         colorWriteMask =
             uint(VkColorComponentFlagBits VK_COLOR_COMPONENT_R_BIT) |
