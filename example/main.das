@@ -717,16 +717,16 @@ def with_graphics(width, height, title; b : block<(
     phys_dev |> with_best_present_mode(surface) <| $(present_mode) {
     device |> with_shader_module("vert") <| $(vert_shmod) {
     device |> with_shader_module("frag") <| $(frag_shmod) {
+    device |> with_render_pass(surf_fmt) <| $(render_pass) {
+    device |> with_pipeline_layout() <| $(layout) {
     device |> with_swap_chain(
         phys_dev, surface, window, surf_fmt, present_mode
     ) <| $(swap_chain) {
     device |> with_swap_chain_images(swap_chain) <| $(sc_imgs) {
     device |> with_swap_chain_image_views(sc_imgs, surf_fmt) <| $(sc_views) {
-    device |> with_render_pass(surf_fmt) <| $(render_pass) {
     device |> with_swap_chain_framebuffers(
         phys_dev, surface, window, sc_views, render_pass
     ) <| $(sc_fbufs) {
-    device |> with_pipeline_layout() <| $(layout) {
     device |> with_graphics_pipeline(layout, render_pass,
         phys_dev, surface, window, vert_shmod, frag_shmod
     ) <| $(pipeline)
