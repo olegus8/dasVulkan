@@ -751,10 +751,7 @@ def with_memory_type(phys_dev, type_filter, needed_props; b : block<(t:uint)>)
     for type_i in range(actual_props.memoryTypeCount)
         if ((1u << uint(type_i)) & type_filter) == 0u
             continue
-        var mem_type_ptr : VkMemoryType const?
-        unsafe
-            mem_type_ptr = actual_props.memoryTypes + type_i
-        if mem_type_ptr.propertyFlags == needed_props
+        if actual_props.memoryTypes[type_i].propertyFlags == needed_props
             b |> invoke(type_i)
             return
 
