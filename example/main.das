@@ -573,10 +573,10 @@ def with_pipeline_viewport_info(surface, window;
 def with_pipeline_creation_context(
     device, phys_dev, surface, window, vert_shmod, frag_shmod;
     b : block<(
-        stages,
-        vtx_input,
-        input_assembly,
-        viewport,
+        stages : VkPipelineShaderStageCreateInfo[],
+        vtx_input : VkPipelineVertexInputStateCreateInfo,
+        input_assembly : VkPipelineInputAssemblyStateCreateInfo,
+        viewport : VkPipelineViewportStateCreateInfo,
         rasterizer,
         multisampling,
         blending
