@@ -650,6 +650,8 @@ def with_graphics_pipeline(device, layout, render_pass,
         let pipe_infos <- [[auto[] [[VkGraphicsPipelineCreateInfo
             sType = (VkStructureType
                 VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO),
+            layout = layout,
+            renderPass = render_pass,
             stageCount = uint(stages |> length()),
             pStages = stages[0] |> safe_addr_plain(),
             pVertexInputState = vtx_input |> safe_addr(),
@@ -658,8 +660,6 @@ def with_graphics_pipeline(device, layout, render_pass,
             pRasterizationState = rasterizer |> safe_addr(),
             pMultisampleState = multisampling |> safe_addr(),
             pColorBlendState = blending |> safe_addr(),
-            layout = layout,
-            renderPass = render_pass,
             basePipelineIndex = -1
         ]]]]
         var pipes : array<VkPipeline>
