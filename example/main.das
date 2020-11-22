@@ -500,7 +500,7 @@ def with_pipeline_layout(device; b : block<(layout:VkPipelineLayout)>)
     b |> invoke(layout)
     device |> vkDestroyPipelineLayout(layout, null)
 
-/*
+
 def with_pipeline_stages(vert_shmod, frag_shmod;
     b : block<(s:array<VkPipelineShaderStageCreateInfo>)>
 )
@@ -622,6 +622,8 @@ def with_pipeline_creation_context(
         blending : VkPipelineColorBlendStateCreateInfo
     )>
 )
+    pass
+/*
     with_pipeline_stages(vert_shmod, frag_shmod) |> $(stages) {
     with_pipeline_vertex_input() |> $(vtx_input) {
     with_pipeline_blending() |> $(blending) {
@@ -636,9 +638,9 @@ def with_pipeline_creation_context(
             blending
         );
     }}}}
-
-
 */
+
+
 def with_graphics_pipeline(
     device, phys_dev, surface, window, vert_shmod, frag_shmod,
     layout, render_pass;
