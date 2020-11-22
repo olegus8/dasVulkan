@@ -552,6 +552,24 @@ def make_pipeline_input_assembly()
     ]]
 
 
+def with_pipeline_viewport_info(surface, window;
+    b : block<(i:VkPipelineViewportStateCreateInfo)>
+)
+    let extent <- phys_dev |> get_swap_extent(surface, window)
+    let viewports <- [[auto[] [[VkViewport minDepth = 0.0f, maxDepth = 1.0f,
+        width = float(extent.width), height = float(extent.height)
+    ]]]]
+    let scissors <- [[auto[] [[VkRect2D extent = extent]]]]
+    b |> invoke([[VkPipelineViewportStateCreateInfo
+        sType = (VkStructureType
+            VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO),
+        viewportCount = uint(viewports |> length()),
+        pViewports = viewports |> safe_addr(),
+        scissorCount = uint(scissors |> length()),
+        pScissors = scissors |> safe_addr()
+    ]])
+
+
 def with_pipeline_creation_context(
     device, phys_dev, surface, window, vert_shmod, frag_shmod;
     b : block<(
@@ -566,7 +584,8 @@ def with_pipeline_creation_context(
     let stages <- make_pipeline_stages_info(vert_shmod, frag_shmod)
     let input_assembly <- make_pipeline_input_assembly()
     with_pipeline_vertex_input_info() |> $(vtx_input) {
-    }
+    surface |> with_pipeline_viewport_info(window) |> $(viewport) {
+    }}
 )
 
 
@@ -574,28 +593,6 @@ def with_graphics_pipeline(device, phys_dev, surface, window, layout,
     render_pass, vert_shmod, frag_shmod;
     b : block<(p:VkPipeline)>
 )
-    ////////////////////
-    // vertex format
-    ////////////////////
-
-
-    ///////////////
-    // viewport
-    ///////////////
-
-    let extent <- phys_dev |> get_swap_extent(surface, window)
-    let viewports <- [[auto[] [[VkViewport minDepth = 0.0f, maxDepth = 1.0f,
-        width = float(extent.width), height = float(extent.height)
-    ]]]]
-    let scissors <- [[auto[] [[VkRect2D extent = extent]]]]
-    let viewport_info <- [[VkPipelineViewportStateCreateInfo
-        sType = (VkStructureType
-            VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO),
-        viewportCount = uint(viewports |> length()),
-        pViewports = viewports |> safe_addr(),
-        scissorCount = uint(scissors |> length()),
-        pScissors = scissors |> safe_addr()
-    ]]
 
     ///////////////////////
     // rest of the stuff
