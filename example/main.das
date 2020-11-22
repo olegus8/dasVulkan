@@ -680,7 +680,7 @@ def with_swap_chain_framebuffers(
 )
     let extent <- phys_dev |> get_swap_extent(surface, window)
     var fbufs : array<VkFramebuffer>
-    fbufs.resize(views |> length())
+    fbufs |> resize(views |> length())
     for fbuf, view in fbufs, views
         let atts <- [[auto[] view]]
         let create_info <- [[VkFramebufferCreateInfo
