@@ -570,6 +570,17 @@ def with_pipeline_viewport_info(surface, window;
     ]])
 
 
+def make_pipeline_rasterizer()
+    return <- [[VkPipelineRasterizationStateCreateInfo
+        sType = (VkStructureType
+            VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO),
+        polygonMode = VkPolygonMode VK_POLYGON_MODE_FILL,
+        lineWidth = 1.0f,
+        cullMode = uint(VkCullModeFlagBits VK_CULL_MODE_BACK_BIT),
+        frontFace = VkFrontFace VK_FRONT_FACE_CLOCKWISE
+    ]]
+
+
 def with_pipeline_creation_context(
     device, phys_dev, surface, window, vert_shmod, frag_shmod;
     b : block<(
@@ -583,6 +594,7 @@ def with_pipeline_creation_context(
     )>
     let stages <- make_pipeline_stages_info(vert_shmod, frag_shmod)
     let input_assembly <- make_pipeline_input_assembly()
+    let rasterizer <- make_pipeline_rasterizer()
     with_pipeline_vertex_input_info() |> $(vtx_input) {
     surface |> with_pipeline_viewport_info(window) |> $(viewport) {
     }}
@@ -598,14 +610,6 @@ def with_graphics_pipeline(device, phys_dev, surface, window, layout,
     // rest of the stuff
     ///////////////////////
 
-    let rasterizer <- [[VkPipelineRasterizationStateCreateInfo
-        sType = (VkStructureType
-            VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO),
-        polygonMode = VkPolygonMode VK_POLYGON_MODE_FILL,
-        lineWidth = 1.0f,
-        cullMode = uint(VkCullModeFlagBits VK_CULL_MODE_BACK_BIT),
-        frontFace = VkFrontFace VK_FRONT_FACE_CLOCKWISE
-    ]]
     let multisampling <- [[VkPipelineMultisampleStateCreateInfo
         sType = (VkStructureType
             VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO),
