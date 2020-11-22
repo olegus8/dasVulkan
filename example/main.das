@@ -717,9 +717,7 @@ def with_command_pool(device, phys_dev, surface; b : block<(p:VkCommandPool)>)
         device |> vkDestroyCommandPool(pool, null)
 
 
-def with_buffer(buf_size, usage, mem_props;
-    b : block<(b:VkBuffer)>
-)
+def with_buffer(device, buf_size, usage; b : block<(b:VkBuffer)>)
     let create_info <- [[VkBufferCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO,
         size = buf_size,
@@ -733,7 +731,31 @@ def with_buffer(buf_size, usage, mem_props;
     device |> vkDestroyBuffer(buf, null)
 
 
-def with_vertex_buffer(device; vertices:array<auto(VT)>;
+def with_memory(device, size, mem_type; b : block<(m:VkDeviceMemory)>)
+    let alloc_info <- [[VkMemoryAllocateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO,
+        allocationSize = size,
+        memoryTypeIndex = mem_type
+    ]]
+    var mem : VkDeviceMemory
+    verify(VkResult VK_SUCCESS == device |> vkAllocateMemory(
+        alloc_info |> safe_addr(), null, mem |> safe_addr()))
+    b |> invoke(mem)
+    device |> vkFreeMemory(mem, null)
+
+
+def with_buf_mem(device, phys_dev, buffer, mem_props;
+    b : block<(m:VkDeviceMemory)>
+)
+    let mem_reqs : VkMemoryRequirements
+    device |> vkGetBufferMemoryRequirements(buffer, mem_reqs |> safe_addr())
+    phys_dev |> with_memory_type(mem_reqs.memoryTypeBits, mem_props
+    ) <| $(mem_type)
+        device |> with_memory(mem_reqs.size, mem_type) <| $(mem)
+            b |> invoke(mem)
+
+
+def with_baked_vertex_buffer(device; vertices:array<auto(VT)>;
     b : block<(b:VkBuffer)>
 )
     let buf_size = typeinfo(sizeof type<VT>) * vertices |> length()
@@ -798,7 +820,7 @@ def main
     with_graphics(800, 600, "dasVulkanExample") <| $(device, phys_dev, window)
         var props <- phys_dev |> get_properties()
         print("Using {props.deviceName |> to_string()}\n")
-        device |> with_vertex_buffer(vertices) <| $(vbuf)
+        device |> with_baked_vertex_buffer(vertices) <| $(vbuf)
             while window |> glfwWindowShouldClose() == 0
                 glfwPollEvents()
 
