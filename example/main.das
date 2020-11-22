@@ -501,8 +501,10 @@ def with_pipeline_layout(device; b : block<(layout:VkPipelineLayout)>)
     device |> vkDestroyPipelineLayout(layout, null)
 
 
-def make_pipeline_stages(vert_shmod, frag_shmod)
-    return <- [[auto[]
+def with_pipeline_stages(vert_shmod, frag_shmod;
+    b : block<(s:array<VkPipelineShaderStageCreateInfo>)>
+)
+    var stages = [{auto[]
         [[VkPipelineShaderStageCreateInfo module_ = vert_shmod, pName = "main",
             sType = (VkStructureType
                 VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO),
@@ -513,7 +515,9 @@ def make_pipeline_stages(vert_shmod, frag_shmod)
                 VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO),
             stage = VkShaderStageFlagBits VK_SHADER_STAGE_FRAGMENT_BIT
         ]]
-    ]]
+    }]
+    b |> invoke(stages)
+    delete stages
 
 
 def with_pipeline_vertex_input(
@@ -609,7 +613,7 @@ def with_pipeline_blending(b : block<(b:VkPipelineColorBlendStateCreateInfo)>)
 def with_pipeline_creation_context(
     device, phys_dev, surface, window, vert_shmod, frag_shmod;
     b : block<(
-        stages : VkPipelineShaderStageCreateInfo[],
+        stages : array<VkPipelineShaderStageCreateInfo>,
         vtx_input : VkPipelineVertexInputStateCreateInfo,
         input_assembly : VkPipelineInputAssemblyStateCreateInfo,
         viewport : VkPipelineViewportStateCreateInfo,
@@ -617,11 +621,12 @@ def with_pipeline_creation_context(
         multisampling : VkPipelineMultisampleStateCreateInfo,
         blending : VkPipelineColorBlendStateCreateInfo
     )>
+    with_pipeline_stages(vert_shmod, frag_shmod) |> $(stages) {
     with_pipeline_vertex_input() |> $(vtx_input) {
     with_pipeline_blending() |> $(blending) {
     surface |> with_pipeline_viewport(window) |> $(viewport) {
         b |> invoke(
-            make_pipeline_stages(vert_shmod, frag_shmod),
+            stages,
             vtx_input,
             make_pipeline_input_assembly(),
             viewport,
@@ -629,7 +634,7 @@ def with_pipeline_creation_context(
             make_pipeline_multisampling(),
             blending
         )
-    }}}
+    }}}}
 )
 
 
