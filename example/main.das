@@ -834,11 +834,11 @@ def main
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API)
     glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE)
 
-    let vertices <- {[auto[]
+    let vertices <- [{auto[]
         [[Vertex position=float2( 0.0f, -0.5f), color=float3(1f, 0f, 0f)]];
         [[Vertex position=float2( 0.5f,  0.5f), color=float3(0f, 1f, 0f)]];
         [[Vertex position=float2(-0.5f,  0.5f), color=float3(0f, 0f, 1f)]]
-    ]}
+    }]
 
     with_graphics(800, 600, "dasVulkanExample") <| $(device, phys_dev, window)
         var props <- phys_dev |> get_properties()
