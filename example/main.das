@@ -610,7 +610,7 @@ def with_pipeline_blending(b : block<(b:VkPipelineColorBlendStateCreateInfo)>)
     ]])
 
 
-def with_pipeline_creation_context(
+def with_pipeline_creation_subobjects(
     phys_dev, surface, window, vert_shmod, frag_shmod;
     b : block<(
         stages : array<VkPipelineShaderStageCreateInfo>;
@@ -642,7 +642,7 @@ def with_graphics_pipeline(device, layout, render_pass,
     phys_dev, surface, window, vert_shmod, frag_shmod;
     b : block<(p:VkPipeline)>
 )
-    with_pipeline_creation_context(
+    with_pipeline_creation_subobjects(
         phys_dev, surface, window, vert_shmod, frag_shmod
     ) <| $(stages, vtx_input, input_assembly, viewport, rasterizer,
         multisampling, blending
