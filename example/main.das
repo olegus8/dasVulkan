@@ -756,6 +756,12 @@ def main
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API)
     glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE)
 
+    let vertices <- [[auto[]
+        [[Vertex position=float2( 0.0f, -0.5f), color=(1.0f, 0.0f, 0.0f)]];
+        [[Vertex position=float2( 0.5f,  0.5f), color=(0.0f, 1.0f, 0.0f)]];
+        [[Vertex position=float2(-0.5f,  0.5f), color=(0.0f, 0.0f, 1.0f)]]
+    ]]
+
     with_graphics(800, 600, "dasVulkanExample") <| $(window, phys_dev)
         var props <- phys_dev |> get_properties()
         print("Using {props.deviceName |> to_string()}\n")
