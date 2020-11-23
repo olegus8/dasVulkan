@@ -1004,8 +1004,10 @@ def wait(device; fence : VkFence)
         1u, fence |> safe_addr(), uint(VK_TRUE), UINT64_MAX))
 
 
-def draw_frame(device, current_frame, frame_fences)
+def draw_frame(device, swap_chain, current_frame, frame_fences)
     device |> wait_for_fence(frame_fences[current_frame])
+    var img_i = device |> acquire_next_image(
+        swap_chain, img_avail_sems[current_frame])
 
 
 [export]
