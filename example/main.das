@@ -1061,13 +1061,13 @@ def wait(device; fence : VkFence)
         1u, fence |> safe_addr(), uint(VK_TRUE), UINT64_MAX()))
 
 
-def acquire_next_image(device, swap_chain, sem_to_signal, fence_to_signal;
-    b : block<(i:uint)>)
+def with_next_image(device, swap_chain, sem_to_signal, fence_to_signal;
+    b : block<(i:uint)>
 )
     var img_index : uint
     var result = device |> vkAcquireNextImageKHR(
         swap_chain, UINT64_MAX(), sem_to_signal, fence_to_signal,
-        img_index |> safe_addr()))
+        img_index |> safe_addr())
     if result == VkResult VK_SUCCESS
         b |> invoke(img_index)
     assert(result == VkResult VK_ERROR_OUT_OF_DATE_KHR ||
