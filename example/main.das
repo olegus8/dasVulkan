@@ -795,8 +795,31 @@ def with_mapped_vk_mem(device, mem, offset, size;
     device |> vkUnmapMemory(mem)
 
 
+def with_primary_cmd_bufs(device, cmd_pool, count;
+    b : block<(c:array<VkCommandBuffer>#)>
+)
+    let alloc_info <- [[VkCommandBufferAllocateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO,
+        level = VkCommandBufferLevel VK_COMMAND_BUFFER_LEVEL_PRIMARY,
+        commandPool = cmd_pool,
+        allocInfo.commandBufferCount = uint(count)
+    ]]
+    var bufs : array<VkCommandBuffer>
+    bufs.resize(count)
+    verify(VkResult VK_SUCCESS == device |> vkAllocateCommandBuffers(
+        alloc_info |> safe_addr(), bufs[0] |> safe_addr()))
+    b |> invoke(bufs)
+    device |> vkFreeCommandBuffers(
+        cmd_pool, uint(count), bufs[0] |> safe_addr())
+    delete bufs
+
+
 def copy_buf(device, cmd_pool, queue, src_buf, dst_buf, buf_size)
-    pass
+    device |> with_primary_cmd_bufs(cmd_pool, 1) <| $(cmd_bufs)
+        cmd_bufs[0] |> record() <| $(cmd_buf)
+            let params <- [[auto[] [[VkBufferCopy size = buf_size]]]]
+            cmd_buf |> vkCmdCopyBuffer(src_buf, dst_buf,
+                uint(params |> length()), params[0] |> safe_addr())
 
 
 def with_baked_vertex_buffer(device, phys_dev, cmd_pool, queue;
