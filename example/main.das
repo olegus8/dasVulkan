@@ -783,7 +783,7 @@ def with_mem_backed_buf(device, phys_dev, buf_size, usage, mem_props;
             b |> invoke(buf, mem)
 
 
-def with_mapped_vk_mem(device, mem, offset, size;
+def with_mapped_vk_mem(device, cmd_pool, queue, mem, offset, size;
     b : block<(var a:array<auto(T)>#)>
 )
     var mem_ptr : void?
@@ -819,7 +819,7 @@ def with_baked_vertex_buffer(device, phys_dev, cmd_pool, queue;
             ) <| $(var mapped_vertices : array<VT>#)
                 for dst, src in mapped_vertices, vertices
                     dst = src
-            device |> copy_buf(staging_buf, vbuf, buf_size)
+            device |> copy_buf(cmd_pool, queue, staging_buf, vbuf, buf_size)
 
         b |> invoke(vbuf)
 
