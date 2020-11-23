@@ -962,7 +962,8 @@ def with_graphics(width, height, title; b : block<(
     sc_fbufs : array<VkFramebuffer>;
     pipeline : VkPipeline;
     cmd_pool : VkCommandPool;
-    queue : VkQueue
+    queue : VkQueue;
+    frame_fences : array<VkFence>
 )>)
     with_instance() <| $(instance) {
     with_window(width, height, title) <| $(window) {
@@ -994,8 +995,17 @@ def with_graphics(width, height, title; b : block<(
     ) <| $(pipeline)
     {
         b |> invoke(device, phys_dev, window, surface, render_pass, sc_fbufs,
-            pipeline, cmd_pool, queue);
+            pipeline, cmd_pool, queue, frame_fences);
     }}}}}}}}}}}}}}}}}}}}}
+
+
+def wait(device; fence : VkFence)
+    verify(VkResult VK_SUCCESS == device |> vkWaitForFences(
+        1u, fence |> safe_addr(), uint(VK_TRUE), UINT64_MAX))
+
+
+def draw_frame(device, current_frame, frame_fences)
+    device |> wait_for_fence(frame_fences[current_frame])
 
 
 [export]
@@ -1012,15 +1022,18 @@ def main
     }]
 
     with_graphics(800, 600, "dasVulkanExample") <| $(device, phys_dev,
-        window, surface, render_pass, sc_fbufs, pipeline, cmd_pool, queue
+        window, surface, render_pass, sc_fbufs, pipeline, cmd_pool, queue,
+        frame_fences
     )
         var props <- phys_dev |> get_properties()
         print("Using {props.deviceName |> to_string()}\n")
         device |> with_draw_commands(phys_dev, window, surface, render_pass,
             sc_fbufs, pipeline, cmd_pool, queue, vertices
         ) <| $(sc_draw_cmds)
+            var current_frame = 0
             while window |> glfwWindowShouldClose() == 0
                 glfwPollEvents()
+                device |> draw_frame(current_frame, frame_fences)
 
     glfwTerminate()
     print("Finished\n")
