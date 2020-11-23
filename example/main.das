@@ -1065,13 +1065,19 @@ def with_next_image(device, swap_chain, sem_to_signal, fence_to_signal;
     b : block<(i:uint)>
 )
     var img_index : uint
-    var result = device |> vkAcquireNextImageKHR(
+
+    //TODO: handle result properly
+    verify(VkResult VK_SUCCESS == device |> vkAcquireNextImageKHR(
         swap_chain, UINT64_MAX(), sem_to_signal, fence_to_signal,
-        img_index |> safe_addr())
+        img_index |> safe_addr()))
+    b |> invoke(img_index)
+    /*
     if result == VkResult VK_SUCCESS
         b |> invoke(img_index)
-    assert(result == VkResult VK_ERROR_OUT_OF_DATE_KHR ||
-        result == VkResult VK_SUBOPTIMAL_KHR)
+    else
+        assert(result == VkResult VK_ERROR_OUT_OF_DATE_KHR ||
+            result == VkResult VK_SUBOPTIMAL_KHR)
+    */
 
 
 def draw_frame(device, swap_chain, frame, frame_fences, img_avail_sems)
