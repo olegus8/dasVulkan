@@ -848,7 +848,7 @@ def with_graphics(width, height, title; b : block<(
         phys_dev, surface, window, vert_shmod, frag_shmod
     ) <| $(pipeline)
     {
-        b |> invoke(device, phys_dev, window);
+        b |> invoke(device, phys_dev, window, cmd_pool);
     }}}}}}}}}}}}}}}}}
 
 
@@ -865,10 +865,14 @@ def main
         [[Vertex position=float2(-0.5f,  0.5f), color=float3(0f, 0f, 1f)]]
     }]
 
-    with_graphics(800, 600, "dasVulkanExample") <| $(device, phys_dev, window)
+    with_graphics(800, 600, "dasVulkanExample") <| $(
+        device, phys_dev, window, cmd_pool
+    )
         var props <- phys_dev |> get_properties()
         print("Using {props.deviceName |> to_string()}\n")
-        device |> with_baked_vertex_buffer(phys_dev, vertices) <| $(vbuf)
+        device |> with_baked_vertex_buffer(
+            phys_dev, cmd_pool, vertices
+        ) <| $(vbuf)
             while window |> glfwWindowShouldClose() == 0
                 glfwPollEvents()
 
