@@ -864,16 +864,24 @@ def copy_buf_sync(device, cmd_pool, queue, src_buf, dst_buf, buf_size)
 
 
 def with_draw_commands(
-    vertices, device, phys_dev, render_pass, fbufs, pipeline, cmd_pool, queue;
+    device, phys_dev, render_pass, fbufs, pipeline, cmd_pool, queue, vertices;
     b : block<(cmds:array<VkCommandBuffer>)>
 )
     device |> with_baked_vertex_buffer(phys_dev, cmd_pool, queue, vertices
     ) <| $(vbuf)
+        let vbufs <- [[auto[] vbuf]]
+        let offsets <- uint64[1]
         device |> with_cmd_bufs(cmd_pool, fbufs |> length())
         ) <| $(cmd_bufs)
             for cmd_buf, fbuf in cmd_bufs, fbufs
                 cmd_buf |> record() <| $(cmd_buf)
-                    pass
+                    cmd_buf |> vkCmdBindPipeline(
+                        VkPipelineBindPoint VK_PIPELINE_BIND_POINT_GRAPHICS,
+                        pipeline)
+                    cmd_buf |> vkCmdBindVertexBuffers(0u,
+                        uint(vbufs |> length()),
+                        vbufs[0] |> safe_addr(),
+                        offsets[0] |> safe_addr())
 
 
 def with_baked_vertex_buffer(device, phys_dev, cmd_pool, queue;
@@ -959,8 +967,8 @@ def main
     )
         var props <- phys_dev |> get_properties()
         print("Using {props.deviceName |> to_string()}\n")
-        vertices |> with_draw_commands(device, phys_dev, render_pass, sc_fbufs,
-            pipeline, cmd_pool, queue
+        device |> with_draw_commands(phys_dev, render_pass, sc_fbufs,
+            pipeline, cmd_pool, queue, vertices
         ) <| $(sc_draw_cmds)
             while window |> glfwWindowShouldClose() == 0
                 glfwPollEvents()
