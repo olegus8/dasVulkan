@@ -951,21 +951,25 @@ def with_fences(device, count, flags; b : block<(fences:array<VkFence>)>)
     delete fences
 
 
-def with_swap_chain_independent_state(width, height, title; b : block<(
-    instance : VkInstance;
-    window : GLFWwindow_DasHandle;
-    surface : VkSurfaceKHR;
-    phys_dev : VkPhysicalDevice;
-    device : VkDevice;
-    queue : VkQueue;
-    surf_fmt : VkSurfaceFormatKHR;
-    present_mode : VkPresentModeKHR;
-    vert_shmod : VkShaderModule;
-    frag_shmod : VkShaderModule;
-    render_pass : VkRenderPass;
-    pipeline_layout : VkPipelineLayout;
+struct SwapChainDependentState
+    instance : VkInstance
+    window : GLFWwindow_DasHandle
+    surface : VkSurfaceKHR
+    phys_dev : VkPhysicalDevice
+    device : VkDevice
+    queue : VkQueue
+    surf_fmt : VkSurfaceFormatKHR
+    present_mode : VkPresentModeKHR
+    vert_shmod : VkShaderModule
+    frag_shmod : VkShaderModule
+    render_pass : VkRenderPass
+    pipeline_layout : VkPipelineLayout
     cmd_pool : VkCommandPool
-)>)
+
+
+def with_swap_chain_independent_state(width, height, title;
+    b : block<(s:SwapChainDependentState)>
+)
     with_instance()                                 <| $(instance) {
     with_window(width, height, title)               <| $(window) {
     window |> with_surface(instance)                <| $(surface) {
@@ -979,21 +983,21 @@ def with_swap_chain_independent_state(width, height, title; b : block<(
     device |> with_pipeline_layout()                <| $(pipeline_layout) {
     device |> with_command_pool(phys_dev, surface)  <| $(cmd_pool)
     {
-        b |> invoke(
-            instance,
-            window,
-            surface,
-            phys_dev,
-            device,
-            queue,
-            surf_fmt,
-            present_mode,
-            vert_shmod,
-            frag_shmod,
-            render_pass,
-            pipeline_layout,
-            cmd_pool
-        );
+        b |> invoke(SwapChainDependentState[[
+            instance=instance,
+            window=window,
+            surface=surface,
+            phys_dev=phys_dev,
+            device=device,
+            queue=queue,
+            surf_fmt=surf_fmt,
+            present_mode=present_mode,
+            vert_shmod=vert_shmod,
+            frag_shmod=frag_shmod,
+            render_pass=render_pass,
+            pipeline_layout=pipeline_layout,
+            cmd_pool=cmd_pool
+        ]]);
     }}}}}}}}}}}}
 
 
