@@ -1061,20 +1061,29 @@ def wait(device; fence : VkFence)
         1u, fence |> safe_addr(), uint(VK_TRUE), UINT64_MAX()))
 
 
-def acquire_next_image(device, swap_chain, sem_to_signal, fence_to_signal)
+def acquire_next_image(device, swap_chain, sem_to_signal, fence_to_signal;
+    b : block<(i:uint)>)
+)
     var img_index : uint
-    verify(VkResult VK_SUCCESS == device |> vkAcquireNextImageKHR(
+    var result = device |> vkAcquireNextImageKHR(
         swap_chain, UINT64_MAX(), sem_to_signal, fence_to_signal,
         img_index |> safe_addr()))
-    return img_index
+    if result == VkResult VK_SUCCESS
+        b |> invoke(img_index)
+    assert(result == VkResult VK_ERROR_OUT_OF_DATE_KHR ||
+        result == VkResult VK_SUBOPTIMAL_KHR)
 
 
 def draw_frame(device, swap_chain, frame, frame_fences, img_avail_sems)
     print("current frame: {frame}\n")
     device |> wait(frame_fences[frame])
-    var img_i = device |> acquire_next_image(
-        swap_chain, img_avail_sems[frame], [[VkFence]])
-    return true
+p
+    var img_acquired = false
+    device |> with_next_image(swap_chain, img_avail_sems[frame], [[VkFence]]
+    ) <| $(img_i)
+        img_acquired = true
+
+    return img_acquired
 
 
 [export]
