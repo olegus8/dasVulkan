@@ -1069,11 +1069,11 @@ def acquire_next_image(device, swap_chain, sem_to_signal, fence_to_signal)
     return img_index
 
 
-def draw_frame(device, swap_chain, current_frame, frame_fences, img_avail_sems)
-    print("current frame: {current_frame}\n")
-    device |> wait(frame_fences[current_frame])
+def draw_frame(device, swap_chain, frame, frame_fences, img_avail_sems)
+    print("current frame: {frame}\n")
+    device |> wait(frame_fences[frame])
     var img_i = device |> acquire_next_image(
-        swap_chain, img_avail_sems[current_frame], [[VkFence]])
+        swap_chain, img_avail_sems[frame], [[VkFence]])
     return true
 
 
@@ -1145,18 +1145,18 @@ def main
                         render_pass, sc_fbufs, pipeline, cmd_pool, queue,
                         vbuf, vertices |> length()
                     ) <| $(sc_draw_cmds)
-                        var current_frame = 0
+                        var frame = 0
                         while keep_running
                             keep_running = (
                                 window |> glfwWindowShouldClose() == 0)
                             glfwPollEvents()
                             var swap_chain_good = device |> draw_frame(
-                                swap_chain, current_frame, frame_fences,
+                                swap_chain, frame, frame_fences,
                                 img_avail_sems
                             )
                             if ! swap_chain_good
                                 break
-                            current_frame += 1
+                            frame = (frame + 1) % MAX_FRAMES_IN_FLIGHT
 
     glfwTerminate()
     print("Finished\n")
