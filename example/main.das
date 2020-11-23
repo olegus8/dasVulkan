@@ -828,18 +828,15 @@ def record(cmd_buf, phys_dev, surface, window, render_pass, fbuf;
 )
     let extent <- phys_dev |> get_swap_extent(surface, window)
     cmd_buf |> record() <| $(cmd_buf)
+        let clear_values <- [[auto[] [[VkClearValue]]]]
         let rp_info <- [[VkRenderPassBeginInfo
             sType = VkStructureType VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO,
             renderPass = render_pass,
             framebuffer = fbuf,
-            renderArea.offset = {0, 0};
-            renderArea.extent = swapChainExtent;
-
-         // Clear values for VK_ATTACHMENT_LOAD_OP_CLEAR
-         // ("Drawing" -> "Command buffers")
-         VkClearValue clearColor = {0.0f, 0.0f, 0.0f, 1.0f};
-         renderPassInfo.clearValueCount = 1;
-         renderPassInfo.pClearValues = &clearColor;
+            renderArea.extent = extent,
+            clearValueCount = uint(clear_values |> length()),
+            pClearValues = clear_values |> safe_addr()
+        ]]
 
 
 def submit(queue : VkQueue; cmd_bufs : array<VkCommandBuffer>)
