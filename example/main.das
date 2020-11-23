@@ -1051,6 +1051,12 @@ def with_swap_chain_dependent_state(
     }}}}}}}}
 
 
+def get_framebuffer_size(window)
+    var w, h : int
+    window |> glfwGetFramebufferSize(w |> safe_addr(), h |> safe_addr())
+    return int2(w,h)
+
+
 def wait(device; fence : VkFence)
     verify(VkResult VK_SUCCESS == device |> vkWaitForFences(
         1u, fence |> safe_addr(), uint(VK_TRUE), UINT64_MAX))
