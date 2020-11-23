@@ -1077,7 +1077,6 @@ def acquire_next_image(device, swap_chain, sem_to_signal, fence_to_signal;
 def draw_frame(device, swap_chain, frame, frame_fences, img_avail_sems)
     print("current frame: {frame}\n")
     device |> wait(frame_fences[frame])
-p
     var img_acquired = false
     device |> with_next_image(swap_chain, img_avail_sems[frame], [[VkFence]]
     ) <| $(img_i)
