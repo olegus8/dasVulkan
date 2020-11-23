@@ -1086,12 +1086,8 @@ def with_next_image(device, swap_chain, sem_to_signal, fence_to_signal;
     */
 
 
-def submit_draw(
-    queue : VkQueue;
-    cmd_bufs : array<VkCommandBuffer>;
-    sem_to_wait : VkSemaphore;
-    sem_to_signal : VkSemaphore;
-    fence_to_signal : VkFence
+def submit_draw(device, queue, cmd_bufs,
+    sem_to_wait, sem_to_signal, fence_to_signal
 )
     let stage_to_wait = uint(VkPipelineStageFlagBits
         VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT)
@@ -1101,7 +1097,7 @@ def submit_draw(
         pWaitSemaphores = sem_to_wait |> safe_addr(),
         pWaitDstStageMask = stage_to_wait |> safe_addr(),
         signalSemaphoreCount = 1u,
-        pSignalSemaphores = sem_to_signal,
+        pSignalSemaphores = sem_to_signal |> safe_addr(),
         commandBufferCount = uint(cmd_bufs |> length()),
         pCommandBuffers = cmd_bufs[0] |> safe_addr_plain()
     ]]]]
