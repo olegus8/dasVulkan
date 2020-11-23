@@ -1056,7 +1056,8 @@ def wait(device; fence : VkFence)
         1u, fence |> safe_addr(), uint(VK_TRUE), UINT64_MAX))
 
 
-def draw_frame(device)
+def draw_frame(device, current_frame)
+    device |> wait(frame_fences[current_frame])
     return true
 
 
@@ -1134,9 +1135,11 @@ def main
                                 window |> glfwWindowShouldClose() == 0)
                             glfwPollEvents()
                             var swap_chain_good = device |> draw_frame(
+                                current_frame, frame_fences
                             )
                             if ! swap_chain_good
                                 break
+                            current_frame += 1
 
     glfwTerminate()
     print("Finished\n")
