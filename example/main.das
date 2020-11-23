@@ -778,6 +778,18 @@ def with_mem_backed_buf(device, phys_dev, buf_size, usage, mem_props;
             b |> invoke(buf, mem)
 
 
+def with_mapped_vk_mem(device, mem, offset, size;
+    b : block<(var a:array<auto(T)>#)>
+)
+    var mem_ptr : void?
+    verify(VkResult VK_SUCCESS == device |> vkMapMemory(
+        mem, uint64(offset), uint64(size), mem_ptr |> safe_addr()))
+    unsafe
+        mem_ptr |> map_to_array(size) <| $(var mapped : array<T>#)
+            b |> invoke(mapped)
+    device |> vkUnmapMemory(mem)
+
+
 def with_baked_vertex_buffer(device, phys_dev; vertices:array<auto(VT)>;
     b : block<(b:VkBuffer)>
 )
@@ -788,6 +800,10 @@ def with_baked_vertex_buffer(device, phys_dev; vertices:array<auto(VT)>;
         uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT) | 
         uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_COHERENT_BIT)
     ) <| $(staging_buf, staging_mem)
+        device |> with_mapped_vk_mem(staging_mem, 0, buf_size
+        ) <| $(array<VT># mapped_vertices)
+            for src, dst in vertices, mapped_vertices
+                dst = src
         //TODO: implement this
         b |> invoke([[VkBuffer]])
 
