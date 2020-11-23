@@ -965,9 +965,6 @@ def with_swap_chain_independent_state(width, height, title; b : block<(
     render_pass : VkRenderPass;
     pipeline_layout : VkPipelineLayout;
     cmd_pool : VkCommandPool;
-    img_avail_sems : array<VkSemaphore>;
-    render_done_sems : array<VkSemaphore>;
-    frame_fences : array<VkFence>
 )>)
     with_instance()                                 <| $(instance) {
     with_window(width, height, title)               <| $(window) {
@@ -980,12 +977,7 @@ def with_swap_chain_independent_state(width, height, title; b : block<(
     device |> with_shader_module("frag")            <| $(frag_shmod) {
     device |> with_render_pass(surf_fmt)            <| $(render_pass) {
     device |> with_pipeline_layout()                <| $(pipeline_layout) {
-    device |> with_command_pool(phys_dev, surface)  <| $(cmd_pool) {
-    device |> with_semaphores(MAX_FRAMES_IN_FLIGHT) <| $(img_avail_sems) {
-    device |> with_semaphores(MAX_FRAMES_IN_FLIGHT) <| $(render_done_sems) {
-    device |> with_fences(MAX_FRAMES_IN_FLIGHT,
-        uint(VkFenceCreateFlagBits
-            VK_FENCE_CREATE_SIGNALED_BIT))          <| $(frame_fences)
+    device |> with_command_pool(phys_dev, surface)  <| $(cmd_pool)
     {
         b |> invoke(
             instance,
@@ -1000,12 +992,9 @@ def with_swap_chain_independent_state(width, height, title; b : block<(
             frag_shmod,
             render_pass,
             pipeline_layout,
-            cmd_pool,
-            img_avail_sems,
-            render_done_sems,
-            frame_fences
+            cmd_pool
         );
-    }}}}}}}}}}}}}}}
+    }}}}}}}}}}}}
 
 
 def with_swap_chain_dependent_state(
@@ -1022,15 +1011,15 @@ def with_swap_chain_dependent_state(
     render_pass,
     pipeline_layout,
     cmd_pool,
-    img_avail_sems,
-    render_done_sems,
-    frame_fences;
     b : block<(
         swap_chain : VkSwapchainKHR;
         sc_imgs : array<VkImage>;
         sc_views : array<VkImageViews>;
         sc_fbufs : array<VkFramebuffer>;
-        pipeline : VkPipeline
+        pipeline : VkPipeline;
+        img_avail_sems : array<VkSemaphore>;
+        render_done_sems : array<VkSemaphore>;
+        frame_fences : array<VkFence>
 )>)
     device |> with_swap_chain(phys_dev, surface,
         window, surf_fmt, present_mode)             <| $(swap_chain) {
@@ -1042,7 +1031,12 @@ def with_swap_chain_dependent_state(
         render_pass)                                <| $(sc_fbufs) {
     device |> with_graphics_pipeline(layout,
         render_pass, phys_dev, surface, window,
-        vert_shmod, frag_shmod)                     <| $(pipeline)
+        vert_shmod, frag_shmod)                     <| $(pipeline) {
+    device |> with_semaphores(MAX_FRAMES_IN_FLIGHT) <| $(img_avail_sems) {
+    device |> with_semaphores(MAX_FRAMES_IN_FLIGHT) <| $(render_done_sems) {
+    device |> with_fences(MAX_FRAMES_IN_FLIGHT,
+        uint(VkFenceCreateFlagBits
+            VK_FENCE_CREATE_SIGNALED_BIT))          <| $(frame_fences)
     {
         b |> invoke(
             swap_chain,
@@ -1051,7 +1045,7 @@ def with_swap_chain_dependent_state(
             sc_fbufs,
             pipeline
         );
-    }}}}}
+    }}}}}}}}
 
 
 def wait(device; fence : VkFence)
@@ -1090,9 +1084,6 @@ def main
         render_pass,
         pipeline_layout,
         cmd_pool,
-        img_avail_sems,
-        render_done_sems,
-        frame_fences
     )
         var props <- phys_dev |> get_properties()
         print("Using {props.deviceName |> to_string()}\n")
@@ -1113,15 +1104,15 @@ def main
                 render_pass,
                 pipeline_layout,
                 cmd_pool,
-                img_avail_sems,
-                render_done_sems,
-                frame_fences
             ) <| $(
                 swap_chain,
                 sc_imgs,
                 sc_views,
                 sc_fbufs,
-                pipeline
+                pipeline,
+                img_avail_sems,
+                render_done_sems,
+                frame_fences
             )
                 device |> with_draw_commands(phys_dev, window, surface,
                     render_pass, sc_fbufs, pipeline, cmd_pool, queue,
