@@ -1053,10 +1053,6 @@ def wait(device; fence : VkFence)
         1u, fence |> safe_addr(), uint(VK_TRUE), UINT64_MAX))
 
 
-def draw_frame(device, swap_chain, current_frame, frame_fences)
-    device |> wait_for_fence(frame_fences[current_frame])
-
-
 [export]
 def main
     print("\nStarted\n")
@@ -1083,7 +1079,7 @@ def main
         frag_shmod,
         render_pass,
         pipeline_layout,
-        cmd_pool,
+        cmd_pool
     )
         var props <- phys_dev |> get_properties()
         print("Using {props.deviceName |> to_string()}\n")
@@ -1121,7 +1117,6 @@ def main
                     var current_frame = 0
                     while window |> glfwWindowShouldClose() == 0
                         glfwPollEvents()
-                        device |> draw_frame(current_frame, frame_fences)
 
     glfwTerminate()
     print("Finished\n")
