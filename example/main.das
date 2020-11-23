@@ -783,7 +783,7 @@ def with_mapped_vk_mem(device, mem, offset, size;
 )
     var mem_ptr : void?
     verify(VkResult VK_SUCCESS == device |> vkMapMemory(
-        mem, uint64(offset), uint64(size), mem_ptr |> safe_addr()))
+        mem, uint64(offset), uint64(size), 0u, mem_ptr |> safe_addr()))
     unsafe
         mem_ptr |> map_to_array(size) <| $(var mapped : array<T>#)
             b |> invoke(mapped)
