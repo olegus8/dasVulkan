@@ -1,4 +1,4 @@
-options log, log_infer_passes
+//options log, log_infer_passes
 
 require daslib/safe_addr
 require fio
