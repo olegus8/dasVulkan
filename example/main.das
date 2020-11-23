@@ -1056,9 +1056,14 @@ def with_swap_chain_dependent_state(
     }}}}}}}}
 
 
-def wait(device; fence : VkFence)
+def wait_fence(device; fence : VkFence)
     verify(VkResult VK_SUCCESS == device |> vkWaitForFences(
         1u, fence |> safe_addr(), uint(VK_TRUE), UINT64_MAX()))
+
+
+def reset_fence(device; fence : VkFence)
+    verify(VkResult VK_SUCCESS ==
+        device |> vkResetFences(1u, fence |> safe_addr())
 
 
 def with_next_image(device, swap_chain, sem_to_signal, fence_to_signal;
@@ -1098,11 +1103,11 @@ def submit_draw(queue, cmd_bufs, sem_to_wait, sem_to_signal, fence_to_signal)
         fence_to_signal))
 
 
-def draw_frame(device, swap_chain, frame, imgs_used_by_frames,
+def draw_frame(device, queue, cmd_bufs, swap_chain, frame, imgs_used_by_frames,
     frame_fences, img_avail_sems
 )
     print("current frame: {frame}\n")
-    device |> wait(frame_fences[frame])
+    device |> wait_fence(frame_fences[frame])
     var img_acquired = false
     device |> with_next_image(swap_chain, img_avail_sems[frame], [[VkFence]]
     ) <| $(img_i)
@@ -1110,10 +1115,11 @@ def draw_frame(device, swap_chain, frame, imgs_used_by_frames,
 
         img_frame = imgs_used_by_frames[img_i]
         if img_frame != -1
-            device |> wait(frame_fences[img_frame])
+            device |> wait_fence(frame_fences[img_frame])
         imgs_used_by_frames[img_i] = frame
 
-        device |> submit_draw(
+        device |> reset_fence(frame_fences[frame])
+        device |> submit_draw(queue, cmd_bufs, 
 
     return img_acquired
 
@@ -1195,11 +1201,11 @@ def main
                             keep_running = (
                                 window |> glfwWindowShouldClose() == 0)
                             glfwPollEvents()
-                            var swap_chain_good = device |> draw_frame(
-                                swap_chain, frame, imgs_used_by_frames,
+                            var is_swap_chain_good = device |> draw_frame(
+                                queue, swap_chain, frame, imgs_used_by_frames,
                                 frame_fences, img_avail_sems
                             )
-                            if ! swap_chain_good
+                            if ! is_swap_chain_good
                                 break
                             frame = (frame + 1) % MAX_FRAMES_IN_FLIGHT
                         delete imgs_used_by_frames
