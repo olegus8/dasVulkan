@@ -826,7 +826,7 @@ def record(cmd_buf; b : block<(c:VkCommandBuffer)>)
 def submit(queue : VkQueue; cmd_bufs : array<VkCommandBuffer>)
     let infos <- [[auto[] [[VkSubmitInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_SUBMIT_INFO,
-        commandBufferCount = uint(cmd_bufs |> length())
+        commandBufferCount = uint(cmd_bufs |> length()),
         pCommandBuffers = cmd_bufs[0] |> safe_addr_plain()
     ]]]]
     verify(VkResult VK_SUCCESS == queue |> vkQueueSubmit(
@@ -836,7 +836,7 @@ def submit(queue : VkQueue; cmd_bufs : array<VkCommandBuffer>)
 def copy_buf_sync(device, cmd_pool, queue, src_buf, dst_buf, buf_size)
     device |> with_primary_cmd_bufs(cmd_pool, 1) <| $(cmd_bufs)
         cmd_bufs[0] |> record() <| $(cmd_buf)
-            let params <- [[auto[] [[VkBufferCopy size = buf_size]]]]
+            let params <- [[auto[] [[VkBufferCopy size = uint64(buf_size)]]]]
             cmd_buf |> vkCmdCopyBuffer(src_buf, dst_buf,
                 uint(params |> length()), params[0] |> safe_addr())
         queue |> submit(cmd_bufs)
