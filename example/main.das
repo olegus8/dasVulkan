@@ -1119,9 +1119,10 @@ def present(device, queue, swap_chain, img_i, sem_to_wait; b : block<()>)
     //      "internal integration error"
     verify(VkResult VK_SUCCESS ==
         queue |> vkQueuePresentKHR(info |> safe_addr()))
+    b |> invoke()
     /*
     if result == VkResult VK_SUCCESS
-        b |> invoke(img_index)
+        b |> invoke()
     else
         assert(result == VkResult VK_ERROR_OUT_OF_DATE_KHR ||
             result == VkResult VK_SUBOPTIMAL_KHR)
