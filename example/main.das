@@ -884,6 +884,11 @@ def with_draw_commands(device, phys_dev, window, surface, render_pass,
                         uint(vbufs |> length()),
                         vbufs[0] |> safe_addr(),
                         offsets[0] |> safe_addr())
+                    cmd_buf |> vkCmdDraw(uint(vertices |> length()),
+                        1u, // instance count
+                        0u, // first vertex
+                        0u  // first instance
+                    )
 
 
 def with_baked_vertex_buffer(device, phys_dev, cmd_pool, queue;
