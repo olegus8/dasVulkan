@@ -810,7 +810,7 @@ def with_baked_vertex_buffer(device, phys_dev; vertices:array<auto(VT)>;
             ) <| $(var mapped_vertices : array<VT>#)
                 for dst, src in mapped_vertices, vertices
                     dst = src
-            copy_buf(staging_buf, vbuf, buf_size)
+            device |> copy_buf(staging_buf, vbuf, buf_size)
 
         b |> invoke(vbuf)
 
