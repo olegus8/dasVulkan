@@ -1029,9 +1029,9 @@ def with_swap_chain_dependent_state(
     device |> with_swap_chain_framebuffers(
         phys_dev, surface, window, sc_views,
         render_pass)                                <| $(sc_fbufs) {
-    device |> with_graphics_pipeline(layout,
-        render_pass, phys_dev, surface, window,
-        vert_shmod, frag_shmod)                     <| $(pipeline) {
+    device |> with_graphics_pipeline(
+        pipeline_layout, render_pass, phys_dev,
+        surface, window, vert_shmod, frag_shmod)    <| $(pipeline) {
     device |> with_semaphores(MAX_FRAMES_IN_FLIGHT) <| $(img_avail_sems) {
     device |> with_semaphores(MAX_FRAMES_IN_FLIGHT) <| $(render_done_sems) {
     device |> with_fences(MAX_FRAMES_IN_FLIGHT,
