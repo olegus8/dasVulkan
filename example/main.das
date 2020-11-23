@@ -1043,7 +1043,10 @@ def with_swap_chain_dependent_state(
             sc_imgs,
             sc_views,
             sc_fbufs,
-            pipeline
+            pipeline,
+            img_avail_sems,
+            render_done_sems,
+            frame_fences
         );
     }}}}}}}}
 
