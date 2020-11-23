@@ -783,7 +783,7 @@ def with_mem_backed_buf(device, phys_dev, buf_size, usage, mem_props;
             b |> invoke(buf, mem)
 
 
-def with_mapped_vk_mem(device, cmd_pool, queue, mem, offset, size;
+def with_mapped_vk_mem(device, mem, offset, size;
     b : block<(var a:array<auto(T)>#)>
 )
     var mem_ptr : void?
@@ -795,7 +795,7 @@ def with_mapped_vk_mem(device, cmd_pool, queue, mem, offset, size;
     device |> vkUnmapMemory(mem)
 
 
-def copy_buf(device, src_buf, dst_buf, buf_size)
+def copy_buf(device, cmd_pool, queue, src_buf, dst_buf, buf_size)
     pass
 
 
