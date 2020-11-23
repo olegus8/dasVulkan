@@ -881,7 +881,11 @@ def with_draw_commands(device, phys_dev, window, surface, render_pass,
                         VkPipelineBindPoint VK_PIPELINE_BIND_POINT_GRAPHICS,
                         pipeline)
                     cmd_buf |> vkCmdBindVertexBuffers(0u,
-                        uint(vbufs |> length()),
+                        //TODO: make it work. says "can only dereference
+                        //      simple type"
+                        1u,
+                        //uint(vbufs |> length()),
+
                         vbufs[0] |> safe_addr(),
                         offsets[0] |> safe_addr())
                     cmd_buf |> vkCmdDraw(uint(vertices |> length()),
