@@ -1,4 +1,4 @@
-//options log, log_infer_passes
+options log, log_infer_passes
 
 require daslib/safe_addr
 require fio
@@ -823,7 +823,7 @@ def record(cmd_buf; b : block<(c:VkCommandBuffer)>)
     cmd_buf |> vkEndCommandBuffer()
 
 
-def submit(queue : VkQueue; cmd_bufs : array<VkCommandBuffers>)
+def submit(queue : VkQueue; cmd_bufs : array<VkCommandBuffer>)
     verify(VkResult VK_SUCCESS == queue |> vkQueueSubmit(
         uint(cmd_bufs |> length()), cmd_bufs[0] |> safe_addr(), [[VkFence]]))
 
