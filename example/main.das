@@ -894,6 +894,8 @@ def with_draw_commands(device, phys_dev, window, surface, render_pass,
                         0u  // first instance
                     )
 
+            b |> invoke(cmd_bufs)
+
 
 def with_baked_vertex_buffer(device, phys_dev, cmd_pool, queue;
     vertices:array<auto(VT)>; b : block<(b:VkBuffer)>
