@@ -823,7 +823,7 @@ def record_commands(cmd_buf; b : block<(c:VkCommandBuffer#)>)
     cmd_buf |> vkEndCommandBuffer()
 
 
-def copy_buf(device, cmd_pool, queue, src_buf, dst_buf, buf_size)
+def copy_buf_sync(device, cmd_pool, queue, src_buf, dst_buf, buf_size)
     device |> with_primary_cmd_bufs(cmd_pool, 1) <| $(cmd_bufs)
         cmd_bufs[0] |> record_commands() <| $(cmd_buf)
             let params <- [[auto[] [[VkBufferCopy size = buf_size]]]]
@@ -851,7 +851,8 @@ def with_baked_vertex_buffer(device, phys_dev, cmd_pool, queue;
             ) <| $(var mapped_vertices : array<VT>#)
                 for dst, src in mapped_vertices, vertices
                     dst = src
-            device |> copy_buf(cmd_pool, queue, staging_buf, vbuf, buf_size)
+            device |> copy_buf_sync(
+                cmd_pool, queue, staging_buf, vbuf, buf_size)
 
         b |> invoke(vbuf)
 
