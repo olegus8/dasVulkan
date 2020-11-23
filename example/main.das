@@ -814,9 +814,18 @@ def with_primary_cmd_bufs(device, cmd_pool, count;
     delete bufs
 
 
+def record_commands(cmd_buf; b : block<(c:VkCommandBuffer#)>)
+    let begin_info <- [[VkCommandBufferBeginInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO]]
+    verify(VkResult VK_SUCCESS ==
+        cmd_buf |> vkBeginCommandBuffer(begin_info |> safe_addr()))
+    b |> invoke(cmd_buf)
+    cmd_buf |> vkEndCommandBuffer()
+
+
 def copy_buf(device, cmd_pool, queue, src_buf, dst_buf, buf_size)
     device |> with_primary_cmd_bufs(cmd_pool, 1) <| $(cmd_bufs)
-        cmd_bufs[0] |> record() <| $(cmd_buf)
+        cmd_bufs[0] |> record_commands() <| $(cmd_buf)
             let params <- [[auto[] [[VkBufferCopy size = buf_size]]]]
             cmd_buf |> vkCmdCopyBuffer(src_buf, dst_buf,
                 uint(params |> length()), params[0] |> safe_addr())
