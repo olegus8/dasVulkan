@@ -848,7 +848,7 @@ def record_render_pass(cmd_buf, phys_dev, window, surface, render_pass, fbuf;
         cmd_buf |> vkCmdEndRenderPass()
 
 
-def submit(queue : VkQueue; cmd_bufs : array<VkCommandBuffer>)
+def submit(queue, cmd_bufs)
     let infos <- [[auto[] [[VkSubmitInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_SUBMIT_INFO,
         commandBufferCount = uint(cmd_bufs |> length()),
@@ -1080,6 +1080,21 @@ def with_next_image(device, swap_chain, sem_to_signal, fence_to_signal;
     */
 
 
+def submit_draw(queue, cmd_bufs, sem_to_wait)
+    let stage_to_wait = uint(VkPipelineStageFlagBits
+        VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT)
+    let infos <- [[auto[] [[VkSubmitInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_SUBMIT_INFO,
+        submitInfo.waitSemaphoreCount = 1u,
+        submitInfo.pWaitSemaphores = sem_to_wait |> safe_addr(),
+        submitInfo.pWaitDstStageMask = stage_to_wait |> safe_addr()<
+        commandBufferCount = uint(cmd_bufs |> length()),
+        pCommandBuffers = cmd_bufs[0] |> safe_addr_plain()
+    ]]]]
+    verify(VkResult VK_SUCCESS == queue |> vkQueueSubmit(
+        uint(infos |> length()), infos[0] |> safe_addr(), [[VkFence]]))
+
+
 def draw_frame(device, swap_chain, frame, imgs_used_by_frames,
     frame_fences, img_avail_sems
 )
@@ -1089,10 +1104,13 @@ def draw_frame(device, swap_chain, frame, imgs_used_by_frames,
     device |> with_next_image(swap_chain, img_avail_sems[frame], [[VkFence]]
     ) <| $(img_i)
         img_acquired = true
+
         img_frame = imgs_used_by_frames[img_i]
         if img_frame != -1
             device |> wait(frame_fences[img_frame])
         imgs_used_by_frames[img_i] = frame
+
+        device |> submit_draw(
 
     return img_acquired
 
