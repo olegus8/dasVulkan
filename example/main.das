@@ -886,7 +886,7 @@ def with_draw_commands(device, phys_dev, window, surface, render_pass,
 
                     vbufs[0] |> safe_addr(),
                     offsets[0] |> safe_addr())
-                cmd_buf |> vkCmdDraw(uint(vertices_count)),
+                cmd_buf |> vkCmdDraw(uint(vertices_count),
                     1u, // instance count
                     0u, // first vertex
                     0u  // first instance
