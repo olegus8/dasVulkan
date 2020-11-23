@@ -983,7 +983,7 @@ def with_swapchain_independent_state(width, height, title;
     device |> with_pipeline_layout()                <| $(pipeline_layout) {
     device |> with_command_pool(phys_dev, surface)  <| $(cmd_pool)
     {
-        b |> invoke(SwapchainIndependentState[[
+        b |> invoke([[SwapchainIndependentState
             instance=instance,
             window=window,
             surface=surface,
