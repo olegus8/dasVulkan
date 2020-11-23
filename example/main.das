@@ -843,14 +843,17 @@ def copy_buf_sync(device, cmd_pool, queue, src_buf, dst_buf, buf_size)
         queue |> vkQueueWaitIdle()
 
 
-def with_draw_commands(device, phys_dev, fbufs, cmd_pool, queue, vertices;
+def with_draw_commands(
+    device, phys_dev, render_pass, fbufs, cmd_pool, queue, vertices;
     b : block<(cmds:array<VkCommandBuffer>)>
 )
     device |> with_baked_vertex_buffer(phys_dev, cmd_pool, queue, vertices
     ) <| $(vbuf)
         device |> with_primary_cmd_bufs(cmd_pool, fbufs |> length())
         ) <| $(cmd_bufs)
-            pass
+            for cmd_buf, fbuf in cmd_bufs, fbufs
+                cmd_buf |> record() <| $(cmd_buf)
+                    pass
 
 
 def with_baked_vertex_buffer(device, phys_dev, cmd_pool, queue;
@@ -883,6 +886,8 @@ def with_graphics(width, height, title; b : block<(
     device : VkDevice;
     phys_dev : VkPhysicalDevice;
     window : GLFWwindow_DasHandle;
+    render_pass : VkRenderPass;
+    sc_fbufs : array<VkFramebuffer>;
     cmd_pool : VkCommandPool;
     queue : VkQueue
 )>)
@@ -910,7 +915,8 @@ def with_graphics(width, height, title; b : block<(
         phys_dev, surface, window, vert_shmod, frag_shmod
     ) <| $(pipeline)
     {
-        b |> invoke(device, phys_dev, window, sc_fbufs, cmd_pool, queue);
+        b |> invoke(
+            device, phys_dev, window, render_pass, sc_fbufs, cmd_pool, queue);
     }}}}}}}}}}}}}}}}}
 
 
@@ -928,12 +934,12 @@ def main
     }]
 
     with_graphics(800, 600, "dasVulkanExample") <| $(
-        device, phys_dev, window, sc_fbufs, cmd_pool, queue
+        device, phys_dev, window, render_pass, sc_fbufs, cmd_pool, queue
     )
         var props <- phys_dev |> get_properties()
         print("Using {props.deviceName |> to_string()}\n")
         device |> with_draw_commands(
-            phys_dev, sc_fbufs, cmd_pool, queue, vertices
+            phys_dev, render_pass, sc_fbufs, cmd_pool, queue, vertices
         ) <| $(sc_draw_cmds)
             while window |> glfwWindowShouldClose() == 0
                 glfwPollEvents()
