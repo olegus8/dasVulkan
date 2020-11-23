@@ -864,7 +864,7 @@ def copy_buf_sync(device, cmd_pool, queue, src_buf, dst_buf, buf_size)
 
 
 def with_draw_commands(
-    device, phys_dev, render_pass, fbufs, pipeline, cmd_pool, queue, vertices;
+    vertices, device, phys_dev, render_pass, fbufs, pipeline, cmd_pool, queue;
     b : block<(cmds:array<VkCommandBuffer>)>
 )
     device |> with_baked_vertex_buffer(phys_dev, cmd_pool, queue, vertices
@@ -959,8 +959,8 @@ def main
     )
         var props <- phys_dev |> get_properties()
         print("Using {props.deviceName |> to_string()}\n")
-        device |> with_draw_commands(phys_dev, render_pass, sc_fbufs,
-            pipeline, cmd_pool, queue, vertices
+        vertices |> with_draw_commands(device, phys_dev, render_pass, sc_fbufs,
+            pipeline, cmd_pool, queue
         ) <| $(sc_draw_cmds)
             while window |> glfwWindowShouldClose() == 0
                 glfwPollEvents()
