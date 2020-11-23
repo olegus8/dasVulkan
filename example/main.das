@@ -1086,7 +1086,7 @@ def with_next_image(device, swap_chain, sem_to_signal, fence_to_signal;
     */
 
 
-def submit_draw(device, queue, cmd_bufs,
+def submit_draw(device, queue; cmd_buf : VkCommandBuffer;
     sem_to_wait, sem_to_signal, fence_to_signal
 )
     let stage_to_wait = uint(VkPipelineStageFlagBits
@@ -1098,8 +1098,8 @@ def submit_draw(device, queue, cmd_bufs,
         pWaitDstStageMask = stage_to_wait |> safe_addr(),
         signalSemaphoreCount = 1u,
         pSignalSemaphores = sem_to_signal |> safe_addr(),
-        commandBufferCount = uint(cmd_bufs |> length()),
-        pCommandBuffers = cmd_bufs[0] |> safe_addr_plain()
+        commandBufferCount = 1u,
+        pCommandBuffers = cmd_buf |> safe_addr_plain()
     ]]]]
     verify(VkResult VK_SUCCESS == queue |> vkQueueSubmit(
         uint(infos |> length()), infos[0] |> safe_addr(),
@@ -1146,7 +1146,7 @@ def draw_frame(device, queue, cmd_bufs, swap_chain, frame,
         imgs_used_by_frames[img_i] = frame
 
         device |> reset_fence(frame_fences[frame])
-        device |> submit_draw(queue, cmd_bufs, img_avail_sems[frame],
+        device |> submit_draw(queue, cmd_bufs[img_i], img_avail_sems[frame],
             render_done_sems[frame], frame_fences[frame])
 
         device |> present(queue, swap_chain, img_i, render_done_sems[frame]
