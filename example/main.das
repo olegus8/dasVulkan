@@ -1101,14 +1101,14 @@ def main
                 pipeline_layout,
                 cmd_pool
             ) <| $(
-                swap_chain,
-                sc_imgs,
-                sc_views,
-                sc_fbufs,
-                pipeline,
-                img_avail_sems,
-                render_done_sems,
-                frame_fences
+                swap_chain : VkSwapchainKHR;
+                sc_imgs : array<VkImage>;
+                sc_views : array<VkImageViews>;
+                sc_fbufs : array<VkFramebuffer>;
+                pipeline : VkPipeline;
+                img_avail_sems : array<VkSemaphore>;
+                render_done_sems : array<VkSemaphore>;
+                frame_fences : array<VkFence>
             )
                 device |> with_draw_commands(phys_dev, window, surface,
                     render_pass, sc_fbufs, pipeline, cmd_pool, queue,
