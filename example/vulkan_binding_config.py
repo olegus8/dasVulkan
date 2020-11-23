@@ -54,6 +54,7 @@ class Config(ConfigBase):
     def configure_function(self, func):
         # whitelist
         if func.name in [
+            'vkAcquireNextImageKHR',
             'vkCreateSwapchainKHR',
             'vkDestroySurfaceKHR',
             'vkDestroySwapchainKHR',
