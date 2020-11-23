@@ -955,28 +955,17 @@ def with_fences(device, count, flags; b : block<(fences:array<VkFence>)>)
 
 def with_swap_chain_independent_state(width, height, title; b : block<(
     instance,
-    window,
-    surface,
-    phys_dev,
+    window : GLFWwindow_DasHandle;
+    surface : VkSurfaceKHR;
+    phys_dev : VkPhysicalDevice;
     device : VkDevice;
     queue : VkQueue;
     surf_fmt : VkSurfaceFormatKHR;
     present_mode : VkPresentModeKHR;
-    vert_shmod,
-    frag_shmod,
-    render_pass,
-    pipeline_layout,
-    cmd_pool,
-    img_avail_sems,
-    render_done_sems,
-    frame_fences
-
-    phys_dev : VkPhysicalDevice;
-    window : GLFWwindow_DasHandle;
-    surface : VkSurfaceKHR;
     vert_shmod : VkShaderModule;
     frag_shmod : VkShaderModule;
     render_pass : VkRenderPass;
+    pipeline_layout,
     cmd_pool : VkCommandPool;
     img_avail_sems : array<VkSemaphore>;
     render_done_sems : array<VkSemaphore>;
