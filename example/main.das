@@ -1028,16 +1028,11 @@ def with_swap_chain_dependent_state(
     render_done_sems,
     frame_fences;
     b : block<(
-        device : VkDevice;
-        phys_dev : VkPhysicalDevice;
-        window : GLFWwindow_DasHandle;
-        surface : VkSurfaceKHR;
-        render_pass : VkRenderPass;
+        swap_chain : VkSwapchainKHR;
+        sc_imgs : array<VkImage>;
+        sc_views : array<VkImageViews>;
         sc_fbufs : array<VkFramebuffer>;
-        pipeline : VkPipeline;
-        cmd_pool : VkCommandPool;
-        queue : VkQueue;
-        frame_fences : array<VkFence>
+        pipeline : VkPipeline
 )>)
     device |> with_swap_chain(phys_dev, surface,
         window, surf_fmt, present_mode)             <| $(swap_chain) {
