@@ -1089,37 +1089,49 @@ def main
         device |> with_baked_vertex_buffer(
             phys_dev, cmd_pool, queue, vertices
         ) <| $(vbuf)
-            with_swap_chain_dependent_state(
-                instance,
-                window,
-                surface,
-                phys_dev,
-                device,
-                queue,
-                surf_fmt,
-                present_mode,
-                vert_shmod,
-                frag_shmod,
-                render_pass,
-                pipeline_layout,
-                cmd_pool
-            ) <| $(
-                swap_chain : VkSwapchainKHR;
-                sc_imgs : array<VkImage>;
-                sc_views : array<VkImageView>;
-                sc_fbufs : array<VkFramebuffer>;
-                pipeline : VkPipeline;
-                img_avail_sems : array<VkSemaphore>;
-                render_done_sems : array<VkSemaphore>;
-                frame_fences : array<VkFence>
-            )
-                device |> with_draw_commands(phys_dev, window, surface,
-                    render_pass, sc_fbufs, pipeline, cmd_pool, queue,
-                    vbuf, vertices |> length()
-                ) <| $(sc_draw_cmds)
-                    var current_frame = 0
-                    while window |> glfwWindowShouldClose() == 0
-                        glfwPollEvents()
+            var keep_running = true
+            while keep_running // swapchain re-creation loop
+                // waiting while window is minimized
+                while int2(0,0) == window |> get_framebuffer_size()
+                    glfwWaitEvents()
+
+                with_swap_chain_dependent_state(
+                    instance,
+                    window,
+                    surface,
+                    phys_dev,
+                    device,
+                    queue,
+                    surf_fmt,
+                    present_mode,
+                    vert_shmod,
+                    frag_shmod,
+                    render_pass,
+                    pipeline_layout,
+                    cmd_pool
+                ) <| $(
+                    swap_chain : VkSwapchainKHR;
+                    sc_imgs : array<VkImage>;
+                    sc_views : array<VkImageView>;
+                    sc_fbufs : array<VkFramebuffer>;
+                    pipeline : VkPipeline;
+                    img_avail_sems : array<VkSemaphore>;
+                    render_done_sems : array<VkSemaphore>;
+                    frame_fences : array<VkFence>
+                )
+                    device |> with_draw_commands(phys_dev, window, surface,
+                        render_pass, sc_fbufs, pipeline, cmd_pool, queue,
+                        vbuf, vertices |> length()
+                    ) <| $(sc_draw_cmds)
+                        var current_frame = 0
+                        while keep_running
+                            keep_running = (
+                                window |> glfwWindowShouldClose() == 0)
+                            glfwPollEvents()
+                            var swap_chain_good = draw_frame(
+                            )
+                            if ! swap_chain_good
+                                break
 
     glfwTerminate()
     print("Finished\n")
