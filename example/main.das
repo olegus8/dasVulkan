@@ -951,7 +951,7 @@ def with_fences(device, count, flags; b : block<(fences:array<VkFence>)>)
     delete fences
 
 
-struct SwapChainDependentState
+struct SwapChainIndependentState
     instance : VkInstance
     window : GLFWwindow_DasHandle
     surface : VkSurfaceKHR
@@ -968,7 +968,7 @@ struct SwapChainDependentState
 
 
 def with_swap_chain_independent_state(width, height, title;
-    b : block<(s:SwapChainDependentState)>
+    b : block<(s:SwapChainIndependentState)>
 )
     with_instance()                                 <| $(instance) {
     with_window(width, height, title)               <| $(window) {
@@ -983,7 +983,7 @@ def with_swap_chain_independent_state(width, height, title;
     device |> with_pipeline_layout()                <| $(pipeline_layout) {
     device |> with_command_pool(phys_dev, surface)  <| $(cmd_pool)
     {
-        b |> invoke(SwapChainDependentState[[
+        b |> invoke(SwapChainIndependentState[[
             instance=instance,
             window=window,
             surface=surface,
@@ -1001,20 +1001,7 @@ def with_swap_chain_independent_state(width, height, title;
     }}}}}}}}}}}}
 
 
-def with_swap_chain_dependent_state(
-    instance,
-    window,
-    surface,
-    phys_dev,
-    device,
-    queue,
-    surf_fmt,
-    present_mode,
-    vert_shmod,
-    frag_shmod,
-    render_pass,
-    pipeline_layout,
-    cmd_pool;
+def with_swap_chain_dependent_state(s : SwapChainIndependentState;
     b : block<(
         swap_chain : VkSwapchainKHR;
         sc_imgs : array<VkImage>;
@@ -1025,22 +1012,24 @@ def with_swap_chain_dependent_state(
         render_done_sems : array<VkSemaphore>;
         frame_fences : array<VkFence>
 )>)
-    device |> with_swap_chain(phys_dev, surface,
-        window, surf_fmt, present_mode)             <| $(swap_chain) {
-    device |> with_swap_chain_images(swap_chain)    <| $(sc_imgs) {
-    device |> with_swap_chain_image_views(
-        sc_imgs, surf_fmt)                          <| $(sc_views) {
-    device |> with_swap_chain_framebuffers(
-        phys_dev, surface, window, sc_views,
-        render_pass)                                <| $(sc_fbufs) {
-    device |> with_graphics_pipeline(
-        pipeline_layout, render_pass, phys_dev,
-        surface, window, vert_shmod, frag_shmod)    <| $(pipeline) {
-    device |> with_semaphores(MAX_FRAMES_IN_FLIGHT) <| $(img_avail_sems) {
-    device |> with_semaphores(MAX_FRAMES_IN_FLIGHT) <| $(render_done_sems) {
-    device |> with_fences(MAX_FRAMES_IN_FLIGHT,
+    s.device |> with_swap_chain(s.phys_dev, s.surface,
+        s.window, s.surf_fmt, s.present_mode)           <| $(swap_chain) {
+    s.device |> with_swap_chain_images(
+        swap_chain)                                     <| $(sc_imgs) {
+    s.device |> with_swap_chain_image_views(
+        sc_imgs, s.surf_fmt)                            <| $(sc_views) {
+    s.device |> with_swap_chain_framebuffers(
+        s.phys_dev, s.surface, s.window, sc_views,
+        s.render_pass)                                  <| $(sc_fbufs) {
+    s.device |> with_graphics_pipeline(
+        s.pipeline_layout, s.render_pass, s.phys_dev,
+        s.surface, s.window, s.vert_shmod,
+        s.frag_shmod)                                   <| $(pipeline) {
+    s.device |> with_semaphores(MAX_FRAMES_IN_FLIGHT)   <| $(img_avail_sems) {
+    s.device |> with_semaphores(MAX_FRAMES_IN_FLIGHT)   <| $(render_done_sems){
+    s.device |> with_fences(MAX_FRAMES_IN_FLIGHT,
         uint(VkFenceCreateFlagBits
-            VK_FENCE_CREATE_SIGNALED_BIT))          <| $(frame_fences)
+            VK_FENCE_CREATE_SIGNALED_BIT))              <| $(frame_fences)
     {
         b |> invoke(
             swap_chain,
