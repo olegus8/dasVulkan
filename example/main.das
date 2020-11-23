@@ -989,7 +989,6 @@ def with_graphics(width, height, title; b : block<(
     device |> with_swap_chain_framebuffers(
         phys_dev, surface, window, sc_views, render_pass
     ) <| $(sc_fbufs) {
-    sc_imgs |> with_image_busy_fence_refs() <| $(img_busy_fence_refs) {
     device |> with_graphics_pipeline(layout, render_pass,
         phys_dev, surface, window, vert_shmod, frag_shmod
     ) <| $(pipeline)
