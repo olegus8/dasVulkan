@@ -135,7 +135,9 @@ def with_graphics_queue_family(device, surface; b : block<(index:uint)>)
             return
 
 
-def with_device(instance, phys_dev, surface; b : block<(device:VkDevice)>)
+def with_device(instance, phys_dev, surface;
+    b : block<(device:VkDevice; queue:VkQueue)>
+)
     phys_dev |> with_queue_create_infos(surface) <| $(queue_infos)
         let features : VkPhysicalDeviceFeatures
         var device : VkDevice
@@ -149,7 +151,10 @@ def with_device(instance, phys_dev, surface; b : block<(device:VkDevice)>)
         ]]
         verify(VkResult VK_SUCCESS == vkCreateDevice(
             phys_dev, safe_addr(create_info), null, safe_addr(device)))
-        b |> invoke(device)
+        var queue : VkQueue
+        phys_dev |> with_graphics_queue_family(surface) <| $(qfam)
+            device |> vkGetDeviceQueue(qfam, 0u, queue |> safe_addr())
+        b |> invoke(device, queue)
         device |> vkDeviceWaitIdle()
         device |> vkDestroyDevice(null)
 
@@ -794,8 +799,8 @@ def copy_buf(device, src_buf, dst_buf, buf_size)
     pass
 
 
-def with_baked_vertex_buffer(device, phys_dev; vertices:array<auto(VT)>;
-    b : block<(b:VkBuffer)>
+def with_baked_vertex_buffer(device, phys_dev, cmd_pool, queue;
+    vertices:array<auto(VT)>; b : block<(b:VkBuffer)>
 )
     let buf_size = typeinfo(sizeof type<VT>) * vertices |> length()
 
@@ -822,13 +827,15 @@ def with_baked_vertex_buffer(device, phys_dev; vertices:array<auto(VT)>;
 def with_graphics(width, height, title; b : block<(
     device : VkDevice;
     phys_dev : VkPhysicalDevice;
-    window : GLFWwindow_DasHandle
+    window : GLFWwindow_DasHandle;
+    cmd_pool : VkCommandPool;
+    queue : VkQueue
 )>)
     with_instance() <| $(instance) {
     with_window(width, height, title) <| $(window) {
     window |> with_surface(instance) <| $(surface) {
     instance |> with_best_physical_device(surface) <| $(phys_dev) {
-    instance |> with_device(phys_dev, surface) <| $(device) {
+    instance |> with_device(phys_dev, surface) <| $(device, queue) {
     phys_dev |> with_best_format(surface) <| $(surf_fmt) {
     phys_dev |> with_best_present_mode(surface) <| $(present_mode) {
     device |> with_shader_module("vert") <| $(vert_shmod) {
@@ -848,7 +855,7 @@ def with_graphics(width, height, title; b : block<(
         phys_dev, surface, window, vert_shmod, frag_shmod
     ) <| $(pipeline)
     {
-        b |> invoke(device, phys_dev, window, cmd_pool);
+        b |> invoke(device, phys_dev, window, cmd_pool, queue);
     }}}}}}}}}}}}}}}}}
 
 
@@ -866,12 +873,12 @@ def main
     }]
 
     with_graphics(800, 600, "dasVulkanExample") <| $(
-        device, phys_dev, window, cmd_pool
+        device, phys_dev, window, cmd_pool, queue
     )
         var props <- phys_dev |> get_properties()
         print("Using {props.deviceName |> to_string()}\n")
         device |> with_baked_vertex_buffer(
-            phys_dev, cmd_pool, vertices
+            phys_dev, cmd_pool, queue, vertices
         ) <| $(vbuf)
             while window |> glfwWindowShouldClose() == 0
                 glfwPollEvents()
