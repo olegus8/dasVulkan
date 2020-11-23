@@ -871,7 +871,7 @@ def with_draw_commands(device, phys_dev, window, surface, render_pass,
     ) <| $(vbuf)
         let vbufs <- [[auto[] vbuf]]
         let offsets : uint64[1]
-        device |> with_cmd_bufs(cmd_pool, fbufs |> length())) <| $(cmd_bufs)
+        device |> with_cmd_bufs(cmd_pool, fbufs |> length()) <| $(cmd_bufs)
             for cmd_buf, fbuf in cmd_bufs, fbufs
                 cmd_buf |> record_render_pass(
                     phys_dev, window, surface, render_pass, fbuf
