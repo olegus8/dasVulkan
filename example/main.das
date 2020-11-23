@@ -1062,6 +1062,10 @@ def wait(device; fence : VkFence)
         1u, fence |> safe_addr(), uint(VK_TRUE), UINT64_MAX))
 
 
+def draw_frame(device)
+    pass
+
+
 [export]
 def main
     print("\nStarted\n")
@@ -1134,7 +1138,7 @@ def main
                             keep_running = (
                                 window |> glfwWindowShouldClose() == 0)
                             glfwPollEvents()
-                            var swap_chain_good = draw_frame(
+                            var swap_chain_good = device |> draw_frame(
                             )
                             if ! swap_chain_good
                                 break
