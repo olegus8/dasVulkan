@@ -1133,7 +1133,6 @@ def draw_frame(device, queue, cmd_bufs, swap_chain, frame,
     frame_fences, img_avail_sems, render_done_sems;
     var imgs_used_by_frames
 )
-    print("current frame: {frame}\n")
     device |> wait_fence(frame_fences[frame])
     var img_acquired = false
     var presented = false
