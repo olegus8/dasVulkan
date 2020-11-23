@@ -1063,40 +1063,14 @@ def main
     }]
 
     with_swap_chain_independent_state(800, 600, "dasVulkanExample") <| $(
-        instance,
-        window,
-        surface,
-        phys_dev,
-        device,
-        queue,
-        surf_fmt,
-        present_mode,
-        vert_shmod,
-        frag_shmod,
-        render_pass,
-        pipeline_layout,
-        cmd_pool
+        scis : SwapChainIndependentState
     )
         var props <- phys_dev |> get_properties()
         print("Using {props.deviceName |> to_string()}\n")
-        device |> with_baked_vertex_buffer(
-            phys_dev, cmd_pool, queue, vertices
+        scis.device |> with_baked_vertex_buffer(
+            scis.phys_dev, scis.cmd_pool, scis.queue, vertices
         ) <| $(vbuf)
-            with_swap_chain_dependent_state(
-                instance,
-                window,
-                surface,
-                phys_dev,
-                device,
-                queue,
-                surf_fmt,
-                present_mode,
-                vert_shmod,
-                frag_shmod,
-                render_pass,
-                pipeline_layout,
-                cmd_pool
-            ) <| $(
+            scis |> with_swap_chain_dependent_state() <| $(
                 swap_chain : VkSwapchainKHR;
                 sc_imgs : array<VkImage>;
                 sc_views : array<VkImageView>;
@@ -1106,12 +1080,12 @@ def main
                 render_done_sems : array<VkSemaphore>;
                 frame_fences : array<VkFence>
             )
-                device |> with_draw_commands(phys_dev, window, surface,
-                    render_pass, sc_fbufs, pipeline, cmd_pool, queue,
-                    vbuf, vertices |> length()
+                scis.device |> with_draw_commands(scis.phys_dev, scis.window,
+                    scis.surface, scis.render_pass, sc_fbufs, pipeline,
+                    cmd_pool, queue, vbuf, vertices |> length()
                 ) <| $(sc_draw_cmds)
                     var current_frame = 0
-                    while window |> glfwWindowShouldClose() == 0
+                    while scis.window |> glfwWindowShouldClose() == 0
                         glfwPollEvents()
 
     glfwTerminate()
