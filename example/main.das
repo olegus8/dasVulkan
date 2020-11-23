@@ -953,7 +953,7 @@ def with_fences(device, count, flags; b : block<(fences:array<VkFence>)>)
     delete fences
 
 
-def with_persistent_state(width, height, title; b : block<(
+def with_swap_chain_independent_state(width, height, title; b : block<(
     device : VkDevice;
     phys_dev : VkPhysicalDevice;
     window : GLFWwindow_DasHandle;
@@ -990,7 +990,7 @@ def with_persistent_state(width, height, title; b : block<(
     }}}}}}}}}}}}}}}}}}}}}
 
 
-def with_volatile_state(width, height, title; b : block<(
+def with_swap_chain_dependent_state(width, height, title; b : block<(
     device : VkDevice;
     phys_dev : VkPhysicalDevice;
     window : GLFWwindow_DasHandle;
