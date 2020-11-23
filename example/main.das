@@ -310,7 +310,7 @@ def with_surface(window, instance; b : block<(s:VkSurfaceKHR)>)
     instance |> vkDestroySurfaceKHR(surface, null)
 
 
-def with_swapchain(device, phys_dev, surface, window, surf_fmt, present_mode;
+def with_swap_chain(device, phys_dev, surface, window, surf_fmt, present_mode;
     b : block<(sc:VkSwapchainKHR)>
 )
     let caps <- phys_dev |> get_capabilities(surface)
@@ -339,11 +339,11 @@ def with_swapchain(device, phys_dev, surface, window, surf_fmt, present_mode;
         clipped = uint(VK_TRUE)
     ]]
 
-    var swapchain : VkSwapchainKHR
+    var swap_chain : VkSwapchainKHR
     verify(VkResult VK_SUCCESS == device |> vkCreateSwapchainKHR(
-        safe_addr(create_info), null, safe_addr(swapchain)))
-    b |> invoke(swapchain)
-    device |> vkDestroySwapchainKHR(swapchain, null)
+        safe_addr(create_info), null, safe_addr(swap_chain)))
+    b |> invoke(swap_chain)
+    device |> vkDestroySwapchainKHR(swap_chain, null)
 
 
 def get_swap_extent(device, surface, window)
@@ -377,19 +377,19 @@ def get_capabilities(device, surface)
     return <- caps
 
 
-def with_swapchain_images(device, swapchain; b : block<(d:array<VkImage>)>)
+def with_swap_chain_images(device, swap_chain; b : block<(d:array<VkImage>)>)
     var images : array<VkImage>
     var count : uint
     verify(VkResult VK_SUCCESS == device |> vkGetSwapchainImagesKHR(
-        swapchain, safe_addr(count), null))
+        swap_chain, safe_addr(count), null))
     images |> resize(int(count))
     verify(VkResult VK_SUCCESS == device |> vkGetSwapchainImagesKHR(
-        swapchain, safe_addr(count), safe_addr_val(images[0])))
+        swap_chain, safe_addr(count), safe_addr_val(images[0])))
     b |> invoke(images)
     delete images
 
 
-def with_swapchain_image_views(device, images, surf_fmt;
+def with_swap_chain_image_views(device, images, surf_fmt;
     b : block<(d:array<VkImageView>)>
 )
     var views : array<VkImageView>
@@ -679,7 +679,7 @@ def with_graphics_pipeline(device, layout, render_pass,
         delete pipes
 
 
-def with_swapchain_framebuffers(
+def with_swap_chain_framebuffers(
     device, phys_dev, surface, window, views, render_pass;
     b : block<(fbs:array<VkFramebuffer>)>
 )
@@ -951,25 +951,21 @@ def with_fences(device, count, flags; b : block<(fences:array<VkFence>)>)
     delete fences
 
 
-struct SwapchainIndependentState
-    instance : VkInstance
-    window : GLFWwindow_DasHandle
-    surface : VkSurfaceKHR
-    phys_dev : VkPhysicalDevice
-    device : VkDevice
-    queue : VkQueue
-    surf_fmt : VkSurfaceFormatKHR
-    present_mode : VkPresentModeKHR
-    vert_shmod : VkShaderModule
-    frag_shmod : VkShaderModule
-    render_pass : VkRenderPass
-    pipeline_layout : VkPipelineLayout
+def with_swap_chain_independent_state(width, height, title; b : block<(
+    instance : VkInstance;
+    window : GLFWwindow_DasHandle;
+    surface : VkSurfaceKHR;
+    phys_dev : VkPhysicalDevice;
+    device : VkDevice;
+    queue : VkQueue;
+    surf_fmt : VkSurfaceFormatKHR;
+    present_mode : VkPresentModeKHR;
+    vert_shmod : VkShaderModule;
+    frag_shmod : VkShaderModule;
+    render_pass : VkRenderPass;
+    pipeline_layout : VkPipelineLayout;
     cmd_pool : VkCommandPool
-
-
-def with_swapchain_independent_state(width, height, title;
-    b : block<(s:SwapchainIndependentState)>
-)
+)>)
     with_instance()                                 <| $(instance) {
     with_window(width, height, title)               <| $(window) {
     window |> with_surface(instance)                <| $(surface) {
@@ -983,27 +979,40 @@ def with_swapchain_independent_state(width, height, title;
     device |> with_pipeline_layout()                <| $(pipeline_layout) {
     device |> with_command_pool(phys_dev, surface)  <| $(cmd_pool)
     {
-        b |> invoke([[SwapchainIndependentState
-            instance=instance,
-            window=window,
-            surface=surface,
-            phys_dev=phys_dev,
-            device=device,
-            queue=queue,
-            surf_fmt=surf_fmt,
-            present_mode=present_mode,
-            vert_shmod=vert_shmod,
-            frag_shmod=frag_shmod,
-            render_pass=render_pass,
-            pipeline_layout=pipeline_layout,
-            cmd_pool=cmd_pool
-        ]]);
+        b |> invoke(
+            instance,
+            window,
+            surface,
+            phys_dev,
+            device,
+            queue,
+            surf_fmt,
+            present_mode,
+            vert_shmod,
+            frag_shmod,
+            render_pass,
+            pipeline_layout,
+            cmd_pool
+        );
     }}}}}}}}}}}}
 
 
-def with_swapchain_dependent_state(s : SwapchainIndependentState;
+def with_swap_chain_dependent_state(
+    instance,
+    window,
+    surface,
+    phys_dev,
+    device,
+    queue,
+    surf_fmt,
+    present_mode,
+    vert_shmod,
+    frag_shmod,
+    render_pass,
+    pipeline_layout,
+    cmd_pool;
     b : block<(
-        swapchain : VkSwapchainKHR;
+        swap_chain : VkSwapchainKHR;
         sc_imgs : array<VkImage>;
         sc_views : array<VkImageView>;
         sc_fbufs : array<VkFramebuffer>;
@@ -1012,27 +1021,25 @@ def with_swapchain_dependent_state(s : SwapchainIndependentState;
         render_done_sems : array<VkSemaphore>;
         frame_fences : array<VkFence>
 )>)
-    s.device |> with_swapchain(s.phys_dev, s.surface,
-        s.window, s.surf_fmt, s.present_mode)           <| $(swapchain) {
-    s.device |> with_swapchain_images(
-        swapchain)                                     <| $(sc_imgs) {
-    s.device |> with_swapchain_image_views(
-        sc_imgs, s.surf_fmt)                            <| $(sc_views) {
-    s.device |> with_swapchain_framebuffers(
-        s.phys_dev, s.surface, s.window, sc_views,
-        s.render_pass)                                  <| $(sc_fbufs) {
-    s.device |> with_graphics_pipeline(
-        s.pipeline_layout, s.render_pass, s.phys_dev,
-        s.surface, s.window, s.vert_shmod,
-        s.frag_shmod)                                   <| $(pipeline) {
-    s.device |> with_semaphores(MAX_FRAMES_IN_FLIGHT)   <| $(img_avail_sems) {
-    s.device |> with_semaphores(MAX_FRAMES_IN_FLIGHT)   <| $(render_done_sems){
-    s.device |> with_fences(MAX_FRAMES_IN_FLIGHT,
+    device |> with_swap_chain(phys_dev, surface,
+        window, surf_fmt, present_mode)             <| $(swap_chain) {
+    device |> with_swap_chain_images(swap_chain)    <| $(sc_imgs) {
+    device |> with_swap_chain_image_views(
+        sc_imgs, surf_fmt)                          <| $(sc_views) {
+    device |> with_swap_chain_framebuffers(
+        phys_dev, surface, window, sc_views,
+        render_pass)                                <| $(sc_fbufs) {
+    device |> with_graphics_pipeline(
+        pipeline_layout, render_pass, phys_dev,
+        surface, window, vert_shmod, frag_shmod)    <| $(pipeline) {
+    device |> with_semaphores(MAX_FRAMES_IN_FLIGHT) <| $(img_avail_sems) {
+    device |> with_semaphores(MAX_FRAMES_IN_FLIGHT) <| $(render_done_sems) {
+    device |> with_fences(MAX_FRAMES_IN_FLIGHT,
         uint(VkFenceCreateFlagBits
-            VK_FENCE_CREATE_SIGNALED_BIT))              <| $(frame_fences)
+            VK_FENCE_CREATE_SIGNALED_BIT))          <| $(frame_fences)
     {
         b |> invoke(
-            swapchain,
+            swap_chain,
             sc_imgs,
             sc_views,
             sc_fbufs,
@@ -1062,16 +1069,42 @@ def main
         [[Vertex position=float2(-0.5f,  0.5f), color=float3(0f, 0f, 1f)]]
     }]
 
-    with_swapchain_independent_state(800, 600, "dasVulkanExample") <| $(
-        scis : SwapchainIndependentState
+    with_swap_chain_independent_state(800, 600, "dasVulkanExample") <| $(
+        instance,
+        window,
+        surface,
+        phys_dev,
+        device,
+        queue,
+        surf_fmt,
+        present_mode,
+        vert_shmod,
+        frag_shmod,
+        render_pass,
+        pipeline_layout,
+        cmd_pool
     )
-        var props <- scis.phys_dev |> get_properties()
+        var props <- phys_dev |> get_properties()
         print("Using {props.deviceName |> to_string()}\n")
-        scis.device |> with_baked_vertex_buffer(
-            scis.phys_dev, scis.cmd_pool, scis.queue, vertices
+        device |> with_baked_vertex_buffer(
+            phys_dev, cmd_pool, queue, vertices
         ) <| $(vbuf)
-            scis |> with_swapchain_dependent_state() <| $(
-                swapchain : VkSwapchainKHR;
+            with_swap_chain_dependent_state(
+                instance,
+                window,
+                surface,
+                phys_dev,
+                device,
+                queue,
+                surf_fmt,
+                present_mode,
+                vert_shmod,
+                frag_shmod,
+                render_pass,
+                pipeline_layout,
+                cmd_pool
+            ) <| $(
+                swap_chain : VkSwapchainKHR;
                 sc_imgs : array<VkImage>;
                 sc_views : array<VkImageView>;
                 sc_fbufs : array<VkFramebuffer>;
@@ -1080,12 +1113,12 @@ def main
                 render_done_sems : array<VkSemaphore>;
                 frame_fences : array<VkFence>
             )
-                scis.device |> with_draw_commands(scis.phys_dev, scis.window,
-                    scis.surface, scis.render_pass, sc_fbufs, pipeline,
-                    scis.cmd_pool, scis.queue, vbuf, vertices |> length()
+                device |> with_draw_commands(phys_dev, window, surface,
+                    render_pass, sc_fbufs, pipeline, cmd_pool, queue,
+                    vbuf, vertices |> length()
                 ) <| $(sc_draw_cmds)
                     var current_frame = 0
-                    while scis.window |> glfwWindowShouldClose() == 0
+                    while window |> glfwWindowShouldClose() == 0
                         glfwPollEvents()
 
     glfwTerminate()
