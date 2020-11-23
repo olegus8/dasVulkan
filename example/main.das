@@ -47,6 +47,11 @@ def safe_addr_val(var x : auto(T)&) : T-& ? #
     unsafe
         return reinterpret<T-&?#>(addr(x))
 
+//TODO: add it to builtin constants
+def UINT64_MAX()
+    unsafe
+        return reinterpret<uint64>(uint2(UINT_MAX,UINT_MAX))
+
 
 def with_physical_devices(inst; b : block<(d:array<VkPhysicalDevice>)>)
     var devices : array<VkPhysicalDevice>
@@ -1056,7 +1061,7 @@ def wait(device; fence : VkFence)
         1u, fence |> safe_addr(), uint(VK_TRUE), UINT64_MAX))
 
 
-def draw_frame(device, current_frame)
+def draw_frame(device, current_frame, frame_fences)
     device |> wait(frame_fences[current_frame])
     return true
 
@@ -1075,19 +1080,19 @@ def main
     }]
 
     with_swap_chain_independent_state(800, 600, "dasVulkanExample") <| $(
-        instance,
-        window,
-        surface,
-        phys_dev,
-        device,
-        queue,
-        surf_fmt,
-        present_mode,
-        vert_shmod,
-        frag_shmod,
-        render_pass,
-        pipeline_layout,
-        cmd_pool
+        instance : VkInstance;
+        window : GLFWwindow_DasHandle;
+        surface : VkSurfaceKHR;
+        phys_dev : VkPhysicalDevice;
+        device : VkDevice;
+        queue : VkQueue;
+        surf_fmt : VkSurfaceFormatKHR;
+        present_mode : VkPresentModeKHR;
+        vert_shmod : VkShaderModule;
+        frag_shmod : VkShaderModule;
+        render_pass : VkRenderPass;
+        pipeline_layout : VkPipelineLayout;
+        cmd_pool : VkCommandPool
     )
         var props <- phys_dev |> get_properties()
         print("Using {props.deviceName |> to_string()}\n")
