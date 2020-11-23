@@ -1104,7 +1104,7 @@ def submit_draw(queue, cmd_bufs, sem_to_wait, sem_to_signal, fence_to_signal)
 
 
 def draw_frame(device, queue, cmd_bufs, swap_chain, frame, imgs_used_by_frames,
-    frame_fences, img_avail_sems
+    frame_fences, img_avail_sems, render_done_sems
 )
     print("current frame: {frame}\n")
     device |> wait_fence(frame_fences[frame])
@@ -1119,7 +1119,8 @@ def draw_frame(device, queue, cmd_bufs, swap_chain, frame, imgs_used_by_frames,
         imgs_used_by_frames[img_i] = frame
 
         device |> reset_fence(frame_fences[frame])
-        device |> submit_draw(queue, cmd_bufs, 
+        device |> submit_draw(queue, cmd_bufs, img_avail_sems[frame],
+            render_done_sems[frame], frame_fences[frame])
 
     return img_acquired
 
@@ -1203,7 +1204,7 @@ def main
                             glfwPollEvents()
                             var is_swap_chain_good = device |> draw_frame(
                                 queue, swap_chain, frame, imgs_used_by_frames,
-                                frame_fences, img_avail_sems
+                                frame_fences, img_avail_sems, render_done_sems
                             )
                             if ! is_swap_chain_good
                                 break
