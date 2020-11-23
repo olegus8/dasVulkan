@@ -1080,7 +1080,7 @@ def with_next_image(device, swap_chain, sem_to_signal, fence_to_signal;
     */
 
 
-def submit_draw(queue, cmd_bufs, sem_to_wait, sem_to_signal)
+def submit_draw(queue, cmd_bufs, sem_to_wait, sem_to_signal, fence_to_signal)
     let stage_to_wait = uint(VkPipelineStageFlagBits
         VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT)
     let infos <- [[auto[] [[VkSubmitInfo
@@ -1094,7 +1094,8 @@ def submit_draw(queue, cmd_bufs, sem_to_wait, sem_to_signal)
         pCommandBuffers = cmd_bufs[0] |> safe_addr_plain()
     ]]]]
     verify(VkResult VK_SUCCESS == queue |> vkQueueSubmit(
-        uint(infos |> length()), infos[0] |> safe_addr(), [[VkFence]]))
+        uint(infos |> length()), infos[0] |> safe_addr(),
+        fence_to_signal))
 
 
 def draw_frame(device, swap_chain, frame, imgs_used_by_frames,
