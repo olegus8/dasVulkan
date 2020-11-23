@@ -869,11 +869,10 @@ def with_baked_vertex_buffer(device, phys_dev, cmd_pool, queue;
         b |> invoke(vbuf)
 
 
-def with_draw_commands(device, phys_dev, cmd_pool, queue, vertices;
+def with_draw_commands(device, phys_dev, framebufs, cmd_pool, queue, vertices;
     b : block<(cmds:array<VkCommandBuffer>)>
 )
-    device |> with_baked_vertex_buffer(
-        phys_dev, cmd_pool, queue, vertices
+    device |> with_baked_vertex_buffer(phys_dev, cmd_pool, queue, vertices
     ) <| $(vbuf)
 
 
@@ -908,7 +907,7 @@ def with_graphics(width, height, title; b : block<(
         phys_dev, surface, window, vert_shmod, frag_shmod
     ) <| $(pipeline)
     {
-        b |> invoke(device, phys_dev, window, cmd_pool, queue);
+        b |> invoke(device, phys_dev, window, sc_fbufs, cmd_pool, queue);
     }}}}}}}}}}}}}}}}}
 
 
@@ -926,12 +925,12 @@ def main
     }]
 
     with_graphics(800, 600, "dasVulkanExample") <| $(
-        device, phys_dev, window, cmd_pool, queue
+        device, phys_dev, window, sc_fbufs, cmd_pool, queue
     )
         var props <- phys_dev |> get_properties()
         print("Using {props.deviceName |> to_string()}\n")
         device |> with_draw_commands(
-            phys_dev, cmd_pool, queue, vertices
+            phys_dev, sc_fbufs, cmd_pool, queue, vertices
         ) <| $(draw_cmds)
             while window |> glfwWindowShouldClose() == 0
                 glfwPollEvents()
