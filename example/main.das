@@ -946,6 +946,8 @@ def with_graphics(width, height, title; b : block<(
     device |> with_render_pass(surf_fmt) <| $(render_pass) {
     device |> with_pipeline_layout() <| $(layout) {
     device |> with_command_pool(phys_dev, surface) <| $(cmd_pool) {
+    device |> with_semaphores(MAX_FRAMES_IN_FLIGHT) <| $(sem_img_avail) {
+    device |> with_semaphores(MAX_FRAMES_IN_FLIGHT) <| $(sem_render_done) {
     device |> with_swap_chain(
         phys_dev, surface, window, surf_fmt, present_mode
     ) <| $(swap_chain) {
@@ -960,7 +962,7 @@ def with_graphics(width, height, title; b : block<(
     {
         b |> invoke(device, phys_dev, window, surface, render_pass, sc_fbufs,
             pipeline, cmd_pool, queue);
-    }}}}}}}}}}}}}}}}}
+    }}}}}}}}}}}}}}}}}}}
 
 
 [export]
