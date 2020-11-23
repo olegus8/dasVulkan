@@ -833,7 +833,7 @@ def record_render_pass(cmd_buf, phys_dev, window, surface, render_pass, fbuf;
             sType = VkStructureType VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO,
             renderPass = render_pass,
             framebuffer = fbuf,
-            renderArea.extent = extent,
+            renderArea = [[VkRect2D extent = extent]],
             clearValueCount = uint(clear_values |> length()),
             pClearValues = clear_values |> safe_addr()
         ]]
