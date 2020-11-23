@@ -1098,6 +1098,7 @@ def main
                 // waiting while window is minimized
                 while uint2(0,0) == window |> get_framebuffer_size()
                     glfwWaitEvents()
+                device |> vkDeviceWaitIdle()
 
                 with_swap_chain_dependent_state(
                     instance,
