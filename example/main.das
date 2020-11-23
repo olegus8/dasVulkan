@@ -802,7 +802,7 @@ def with_primary_cmd_bufs(device, cmd_pool, count;
         sType = VkStructureType VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO,
         level = VkCommandBufferLevel VK_COMMAND_BUFFER_LEVEL_PRIMARY,
         commandPool = cmd_pool,
-        allocInfo.commandBufferCount = uint(count)
+        commandBufferCount = uint(count)
     ]]
     var bufs : array<VkCommandBuffer>
     bufs.resize(count)
