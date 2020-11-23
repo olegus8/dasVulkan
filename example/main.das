@@ -814,13 +814,32 @@ def with_primary_cmd_bufs(device, cmd_pool, count;
     delete bufs
 
 
-def record(cmd_buf; b : block<(c:VkCommandBuffer)>)
+def record(cmd_buf : VkCommandBuffer; b : block<(c:VkCommandBuffer)>)
     let begin_info <- [[VkCommandBufferBeginInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO]]
     verify(VkResult VK_SUCCESS ==
         cmd_buf |> vkBeginCommandBuffer(begin_info |> safe_addr()))
     b |> invoke(cmd_buf)
     cmd_buf |> vkEndCommandBuffer()
+
+
+def record(cmd_buf, phys_dev, surface, window, render_pass, fbuf;
+    b : block<(c:VkCommandBuffer)>
+)
+    let extent <- phys_dev |> get_swap_extent(surface, window)
+    cmd_buf |> record() <| $(cmd_buf)
+        let rp_info <- [[VkRenderPassBeginInfo
+            sType = VkStructureType VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO,
+            renderPass = render_pass,
+            framebuffer = fbuf,
+            renderArea.offset = {0, 0};
+            renderArea.extent = swapChainExtent;
+
+         // Clear values for VK_ATTACHMENT_LOAD_OP_CLEAR
+         // ("Drawing" -> "Command buffers")
+         VkClearValue clearColor = {0.0f, 0.0f, 0.0f, 1.0f};
+         renderPassInfo.clearValueCount = 1;
+         renderPassInfo.pClearValues = &clearColor;
 
 
 def submit(queue : VkQueue; cmd_bufs : array<VkCommandBuffer>)
@@ -853,6 +872,7 @@ def with_draw_commands(
         ) <| $(cmd_bufs)
             for cmd_buf, fbuf in cmd_bufs, fbufs
                 cmd_buf |> record() <| $(cmd_buf)
+                    let rp_info <- 
                     pass
 
 
