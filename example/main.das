@@ -1082,7 +1082,7 @@ def main
             )
                 scis.device |> with_draw_commands(scis.phys_dev, scis.window,
                     scis.surface, scis.render_pass, sc_fbufs, pipeline,
-                    cmd_pool, queue, vbuf, vertices |> length()
+                    scis.cmd_pool, scis.queue, vbuf, vertices |> length()
                 ) <| $(sc_draw_cmds)
                     var current_frame = 0
                     while scis.window |> glfwWindowShouldClose() == 0
