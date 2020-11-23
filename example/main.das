@@ -805,7 +805,7 @@ def with_primary_cmd_bufs(device, cmd_pool, count;
         commandBufferCount = uint(count)
     ]]
     var bufs : array<VkCommandBuffer>
-    bufs.resize(count)
+    bufs |> resize(count)
     verify(VkResult VK_SUCCESS == device |> vkAllocateCommandBuffers(
         alloc_info |> safe_addr(), bufs[0] |> safe_addr()))
     b |> invoke(bufs)
