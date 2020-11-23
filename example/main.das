@@ -1058,11 +1058,22 @@ def with_swap_chain_dependent_state(
 
 def wait(device; fence : VkFence)
     verify(VkResult VK_SUCCESS == device |> vkWaitForFences(
-        1u, fence |> safe_addr(), uint(VK_TRUE), UINT64_MAX))
+        1u, fence |> safe_addr(), uint(VK_TRUE), UINT64_MAX()))
 
 
-def draw_frame(device, current_frame, frame_fences)
+def acquire_next_image(device, swap_chain, sem_to_signal, fence_to_signal)
+    var img_index : uint
+    verify(VkResult VK_SUCCESS == device |> vkAcquireNextImageKHR(
+        swap_chain, UINT64_MAX(), sem_to_signal, fence_to_signal,
+        img_index |> safe_addr()))
+    return img_index
+
+
+def draw_frame(device, swap_chain, current_frame, frame_fences, img_avail_sems)
+    print("current frame: {current_frame}\n")
     device |> wait(frame_fences[current_frame])
+    var img_i = device |> acquire_next_image(
+        swap_chain, img_avail_sems[current_frame], [[VkFence]])
     return true
 
 
@@ -1140,7 +1151,8 @@ def main
                                 window |> glfwWindowShouldClose() == 0)
                             glfwPollEvents()
                             var swap_chain_good = device |> draw_frame(
-                                current_frame, frame_fences
+                                swap_chain, current_frame, frame_fences,
+                                img_avail_sems
                             )
                             if ! swap_chain_good
                                 break
