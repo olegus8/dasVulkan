@@ -1051,12 +1051,6 @@ def with_swap_chain_dependent_state(
     }}}}}}}}
 
 
-def get_framebuffer_size(window)
-    var w, h : int
-    window |> glfwGetFramebufferSize(w |> safe_addr(), h |> safe_addr())
-    return int2(w,h)
-
-
 def wait(device; fence : VkFence)
     verify(VkResult VK_SUCCESS == device |> vkWaitForFences(
         1u, fence |> safe_addr(), uint(VK_TRUE), UINT64_MAX))
@@ -1102,7 +1096,7 @@ def main
             var keep_running = true
             while keep_running // swapchain re-creation loop
                 // waiting while window is minimized
-                while int2(0,0) == window |> get_framebuffer_size()
+                while uint2(0,0) == window |> get_framebuffer_size()
                     glfwWaitEvents()
 
                 with_swap_chain_dependent_state(
