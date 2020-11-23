@@ -839,6 +839,8 @@ def record(cmd_buf, phys_dev, surface, window, render_pass, fbuf;
         ]]
         cmd_buf |> vkCmdBeginRenderPass(
             info |> safe_addr(), VkSubpassContents VK_SUBPASS_CONTENTS_INLINE)
+        b |> invoke(cmd_buf)
+        cmd_buf |> vkCmdEndRenderPass()
 
 
 def submit(queue : VkQueue; cmd_bufs : array<VkCommandBuffer>)
@@ -871,7 +873,6 @@ def with_draw_commands(
         ) <| $(cmd_bufs)
             for cmd_buf, fbuf in cmd_bufs, fbufs
                 cmd_buf |> record() <| $(cmd_buf)
-                    let rp_info <- 
                     pass
 
 
