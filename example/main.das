@@ -819,7 +819,7 @@ def record(cmd_buf : VkCommandBuffer; b : block<(c:VkCommandBuffer)>)
         sType = VkStructureType VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO]]
     verify(VkResult VK_SUCCESS ==
         cmd_buf |> vkBeginCommandBuffer(begin_info |> safe_addr()))
-    b |> invoke(cmd_buf)
+    b |> invoke()
     cmd_buf |> vkEndCommandBuffer()
 
 
@@ -827,7 +827,7 @@ def record_render_pass(cmd_buf, phys_dev, window, surface, render_pass, fbuf;
     b : block<(c:VkCommandBuffer)>
 )
     let extent <- phys_dev |> get_swap_extent(surface, window)
-    cmd_buf |> record() <| $(cmd_buf)
+    cmd_buf |> record() <| $()
         let clear_values <- [[auto[] [[VkClearValue]]]]
         let info <- [[VkRenderPassBeginInfo
             sType = VkStructureType VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO,
@@ -839,7 +839,7 @@ def record_render_pass(cmd_buf, phys_dev, window, surface, render_pass, fbuf;
         ]]
         cmd_buf |> vkCmdBeginRenderPass(
             info |> safe_addr(), VkSubpassContents VK_SUBPASS_CONTENTS_INLINE)
-        b |> invoke(cmd_buf)
+        b |> invoke()
         cmd_buf |> vkCmdEndRenderPass()
 
 
@@ -855,7 +855,8 @@ def submit(queue : VkQueue; cmd_bufs : array<VkCommandBuffer>)
 
 def copy_buf_sync(device, cmd_pool, queue, src_buf, dst_buf, buf_size)
     device |> with_cmd_bufs(cmd_pool, 1) <| $(cmd_bufs)
-        cmd_bufs[0] |> record() <| $(cmd_buf)
+        let cmd_buf = cmd_bufs[0]
+        cmd_buf |> record() <| $()
             let params <- [[auto[] [[VkBufferCopy size = uint64(buf_size)]]]]
             cmd_buf |> vkCmdCopyBuffer(src_buf, dst_buf,
                 uint(params |> length()), params[0] |> safe_addr())
@@ -875,7 +876,7 @@ def with_draw_commands(device, phys_dev, window, surface, render_pass,
             for cmd_buf, fbuf in cmd_bufs, fbufs
                 cmd_buf |> record_render_pass(
                     phys_dev, window, surface, render_pass, fbuf
-                ) <| $(cmd_buf)
+                ) <| $()
                     cmd_buf |> vkCmdBindPipeline(
                         VkPipelineBindPoint VK_PIPELINE_BIND_POINT_GRAPHICS,
                         pipeline)
