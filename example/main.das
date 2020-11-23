@@ -807,10 +807,10 @@ def with_primary_cmd_bufs(device, cmd_pool, count;
     var bufs : array<VkCommandBuffer>
     bufs |> resize(count)
     verify(VkResult VK_SUCCESS == device |> vkAllocateCommandBuffers(
-        alloc_info |> safe_addr(), bufs[0] |> safe_addr()))
+        alloc_info |> safe_addr(), bufs[0] |> safe_addr_val()))
     b |> invoke(bufs)
     device |> vkFreeCommandBuffers(
-        cmd_pool, uint(count), bufs[0] |> safe_addr())
+        cmd_pool, uint(count), bufs[0] |> safe_addr_val())
     delete bufs
 
 
