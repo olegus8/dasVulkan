@@ -795,7 +795,7 @@ def with_mapped_vk_mem(device, mem, offset, size;
     device |> vkUnmapMemory(mem)
 
 
-def with_primary_cmd_bufs(device, cmd_pool, count;
+def with_cmd_bufs(device, cmd_pool, count;
     b : block<(c:array<VkCommandBuffer>)>
 )
     let alloc_info <- [[VkCommandBufferAllocateInfo
@@ -829,7 +829,7 @@ def record(cmd_buf, phys_dev, surface, window, render_pass, fbuf;
     let extent <- phys_dev |> get_swap_extent(surface, window)
     cmd_buf |> record() <| $(cmd_buf)
         let clear_values <- [[auto[] [[VkClearValue]]]]
-        let rp_info <- [[VkRenderPassBeginInfo
+        let info <- [[VkRenderPassBeginInfo
             sType = VkStructureType VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO,
             renderPass = render_pass,
             framebuffer = fbuf,
@@ -837,6 +837,11 @@ def record(cmd_buf, phys_dev, surface, window, render_pass, fbuf;
             clearValueCount = uint(clear_values |> length()),
             pClearValues = clear_values |> safe_addr()
         ]]
+        cmd_buf |> vkCmdBeginRenderPass(info |> safe_addr(),
+            // Whether commands are provided directly to primary buffer,
+            // or referenced from secondary buffers.
+            // ("Drawing" -> "Command buffers")
+            VK_SUBPASS_CONTENTS_INLINE);
 
 
 def submit(queue : VkQueue; cmd_bufs : array<VkCommandBuffer>)
@@ -850,7 +855,7 @@ def submit(queue : VkQueue; cmd_bufs : array<VkCommandBuffer>)
 
 
 def copy_buf_sync(device, cmd_pool, queue, src_buf, dst_buf, buf_size)
-    device |> with_primary_cmd_bufs(cmd_pool, 1) <| $(cmd_bufs)
+    device |> with_cmd_bufs(cmd_pool, 1) <| $(cmd_bufs)
         cmd_bufs[0] |> record() <| $(cmd_buf)
             let params <- [[auto[] [[VkBufferCopy size = uint64(buf_size)]]]]
             cmd_buf |> vkCmdCopyBuffer(src_buf, dst_buf,
@@ -865,7 +870,7 @@ def with_draw_commands(
 )
     device |> with_baked_vertex_buffer(phys_dev, cmd_pool, queue, vertices
     ) <| $(vbuf)
-        device |> with_primary_cmd_bufs(cmd_pool, fbufs |> length())
+        device |> with_cmd_bufs(cmd_pool, fbufs |> length())
         ) <| $(cmd_bufs)
             for cmd_buf, fbuf in cmd_bufs, fbufs
                 cmd_buf |> record() <| $(cmd_buf)
