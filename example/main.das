@@ -954,7 +954,7 @@ def with_fences(device, count, flags; b : block<(fences:array<VkFence>)>)
 
 
 def with_swap_chain_independent_state(width, height, title; b : block<(
-    instance,
+    instance : VkInstance;
     window : GLFWwindow_DasHandle;
     surface : VkSurfaceKHR;
     phys_dev : VkPhysicalDevice;
@@ -965,7 +965,7 @@ def with_swap_chain_independent_state(width, height, title; b : block<(
     vert_shmod : VkShaderModule;
     frag_shmod : VkShaderModule;
     render_pass : VkRenderPass;
-    pipeline_layout,
+    pipeline_layout : VkPipelineLayout;
     cmd_pool : VkCommandPool;
     img_avail_sems : array<VkSemaphore>;
     render_done_sems : array<VkSemaphore>;
@@ -987,8 +987,8 @@ def with_swap_chain_independent_state(width, height, title; b : block<(
     device |> with_semaphores(MAX_FRAMES_IN_FLIGHT) <| $(render_done_sems) {
     device |> with_fences(MAX_FRAMES_IN_FLIGHT,
         uint(VkFenceCreateFlagBits
-            VK_FENCE_CREATE_SIGNALED_BIT)
-    )                                               <| $(frame_fences) {
+            VK_FENCE_CREATE_SIGNALED_BIT))          <| $(frame_fences)
+    {
         b |> invoke(
             instance,
             window,
@@ -1010,9 +1010,23 @@ def with_swap_chain_independent_state(width, height, title; b : block<(
     }}}}}}}}}}}}}}}
 
 
-def with_swap_chain_dependent_state(device, phys_dev, window, surface,
-    surf_fmt, present_mode, vert_shmod, frag_shmod, render_pass, cmd_pool,
-    queue, img_avail_sems, render_done_sems, frame_fences;
+def with_swap_chain_dependent_state(
+    instance,
+    window,
+    surface,
+    phys_dev,
+    device,
+    queue,
+    surf_fmt,
+    present_mode,
+    vert_shmod,
+    frag_shmod,
+    render_pass,
+    pipeline_layout,
+    cmd_pool,
+    img_avail_sems,
+    render_done_sems,
+    frame_fences;
     b : block<(
         device : VkDevice;
         phys_dev : VkPhysicalDevice;
@@ -1025,20 +1039,25 @@ def with_swap_chain_dependent_state(device, phys_dev, window, surface,
         queue : VkQueue;
         frame_fences : array<VkFence>
 )>)
-    device |> with_swap_chain(
-        phys_dev, surface, window, surf_fmt, present_mode
-    ) <| $(swap_chain) {
-    device |> with_swap_chain_images(swap_chain) <| $(sc_imgs) {
-    device |> with_swap_chain_image_views(sc_imgs, surf_fmt) <| $(sc_views) {
+    device |> with_swap_chain(phys_dev, surface,
+        window, surf_fmt, present_mode)             <| $(swap_chain) {
+    device |> with_swap_chain_images(swap_chain)    <| $(sc_imgs) {
+    device |> with_swap_chain_image_views(
+        sc_imgs, surf_fmt)                          <| $(sc_views) {
     device |> with_swap_chain_framebuffers(
-        phys_dev, surface, window, sc_views, render_pass
-    ) <| $(sc_fbufs) {
-    device |> with_graphics_pipeline(layout, render_pass,
-        phys_dev, surface, window, vert_shmod, frag_shmod
-    ) <| $(pipeline)
+        phys_dev, surface, window, sc_views,
+        render_pass)                                <| $(sc_fbufs) {
+    device |> with_graphics_pipeline(layout,
+        render_pass, phys_dev, surface, window,
+        vert_shmod, frag_shmod)                     <| $(pipeline)
     {
-        b |> invoke(device, phys_dev, window, surface, render_pass, sc_fbufs,
-            pipeline, cmd_pool, queue, frame_fences);
+        b |> invoke(
+            swap_chain,
+            sc_imgs,
+            sc_views,
+            sc_fbufs,
+            pipeline
+        );
     }}}}}
 
 
