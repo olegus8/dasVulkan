@@ -1160,17 +1160,20 @@ def main
                         vbuf, vertices |> length()
                     ) <| $(sc_draw_cmds)
                         var frame = 0
+                        var imgs_used_by_frames : array<int>
+                        imgs_used_by_frames.resize(sc_fbufs |> length(), -1)
                         while keep_running
                             keep_running = (
                                 window |> glfwWindowShouldClose() == 0)
                             glfwPollEvents()
                             var swap_chain_good = device |> draw_frame(
-                                swap_chain, frame, frame_fences,
-                                img_avail_sems
+                                swap_chain, frame, imgs_used_by_frames,
+                                frame_fences, img_avail_sems
                             )
                             if ! swap_chain_good
                                 break
                             frame = (frame + 1) % MAX_FRAMES_IN_FLIGHT
+                        delete imgs_used_by_frames
 
     glfwTerminate()
     print("Finished\n")
