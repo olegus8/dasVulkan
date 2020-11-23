@@ -1086,7 +1086,13 @@ def with_next_image(device, swap_chain, sem_to_signal, fence_to_signal;
     */
 
 
-def submit_draw(queue, cmd_bufs, sem_to_wait, sem_to_signal, fence_to_signal)
+def submit_draw(
+    queue : VkQueue;
+    cmd_bufs : array<VkCommandBuffer>;
+    sem_to_wait : VkSemaphore;
+    sem_to_signal : VkSemaphore;
+    fence_to_signal : VkFence
+)
     let stage_to_wait = uint(VkPipelineStageFlagBits
         VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT)
     let infos <- [[auto[] [[VkSubmitInfo
@@ -1233,7 +1239,7 @@ def main
                             var is_swap_chain_good = device |> draw_frame(
                                 queue, sc_draw_cmds, swap_chain, frame,
                                 frame_fences, img_avail_sems, render_done_sems,
-                                var imgs_used_by_frames
+                                imgs_used_by_frames
                             )
                             if ! is_swap_chain_good
                                 break
