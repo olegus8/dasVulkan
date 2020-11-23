@@ -1010,7 +1010,7 @@ def with_swap_chain_dependent_state(
     frag_shmod,
     render_pass,
     pipeline_layout,
-    cmd_pool,
+    cmd_pool;
     b : block<(
         swap_chain : VkSwapchainKHR;
         sc_imgs : array<VkImage>;
