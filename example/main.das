@@ -1243,6 +1243,7 @@ def main
                                 break
                             frame = (frame + 1) % MAX_FRAMES_IN_FLIGHT
                         delete imgs_used_by_frames
+                        device |> vkDeviceWaitIdle()
 
     glfwTerminate()
     print("Finished\n")
