@@ -1,4 +1,4 @@
-options log, log_infer_passes
+//options log, log_infer_passes
 
 require daslib/safe_addr
 require fio
@@ -824,8 +824,13 @@ def record(cmd_buf; b : block<(c:VkCommandBuffer)>)
 
 
 def submit(queue : VkQueue; cmd_bufs : array<VkCommandBuffer>)
+    let infos <- [[auto[] [[VkSubmitInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_SUBMIT_INFO,
+        commandBufferCount = uint(cmd_bufs |> length())
+        pCommandBuffers = cmd_bufs[0] |> safe_addr_plain()
+    ]]]]
     verify(VkResult VK_SUCCESS == queue |> vkQueueSubmit(
-        uint(cmd_bufs |> length()), cmd_bufs[0] |> safe_addr(), [[VkFence]]))
+        uint(infos |> length()), infos[0] |> safe_addr(), [[VkFence]]))
 
 
 def copy_buf_sync(device, cmd_pool, queue, src_buf, dst_buf, buf_size)
