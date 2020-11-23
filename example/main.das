@@ -796,16 +796,23 @@ def with_baked_vertex_buffer(device, phys_dev; vertices:array<auto(VT)>;
     let buf_size = typeinfo(sizeof type<VT>) * vertices |> length()
 
     device |> with_mem_backed_buf(phys_dev, buf_size,
-        uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_TRANSFER_SRC_BIT),
-        uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT) | 
-        uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_COHERENT_BIT)
-    ) <| $(staging_buf, staging_mem)
-        device |> with_mapped_vk_mem(staging_mem, 0, buf_size
-        ) <| $(var mapped_vertices : array<VT>#)
-            for dst, src in mapped_vertices, vertices
-                dst = src
-        //TODO: implement this
-        b |> invoke([[VkBuffer]])
+        uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_TRANSFER_DST_BIT) |
+        uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_VERTEX_BUFFER_BIT),
+        uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT)
+    ) <| $(vbuf, vbuf_mem)
+
+        device |> with_mem_backed_buf(phys_dev, buf_size,
+            uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_TRANSFER_SRC_BIT),
+            uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT)|
+            uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_COHERENT_BIT)
+        ) <| $(staging_buf, staging_mem)
+            device |> with_mapped_vk_mem(staging_mem, 0, buf_size
+            ) <| $(var mapped_vertices : array<VT>#)
+                for dst, src in mapped_vertices, vertices
+                    dst = src
+            copy_buf(staging_buf, vbuf, buf_size)
+
+        b |> invoke(vbuf)
 
 
 def with_graphics(width, height, title; b : block<(
