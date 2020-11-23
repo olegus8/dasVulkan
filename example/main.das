@@ -1057,7 +1057,7 @@ def wait(device; fence : VkFence)
 
 
 def draw_frame(device)
-    pass
+    return true
 
 
 [export]
