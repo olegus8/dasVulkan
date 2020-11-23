@@ -837,11 +837,8 @@ def record(cmd_buf, phys_dev, surface, window, render_pass, fbuf;
             clearValueCount = uint(clear_values |> length()),
             pClearValues = clear_values |> safe_addr()
         ]]
-        cmd_buf |> vkCmdBeginRenderPass(info |> safe_addr(),
-            // Whether commands are provided directly to primary buffer,
-            // or referenced from secondary buffers.
-            // ("Drawing" -> "Command buffers")
-            VK_SUBPASS_CONTENTS_INLINE);
+        cmd_buf |> vkCmdBeginRenderPass(
+            info |> safe_addr(), VkSubpassContents VK_SUBPASS_CONTENTS_INLINE)
 
 
 def submit(queue : VkQueue; cmd_bufs : array<VkCommandBuffer>)
