@@ -1137,7 +1137,7 @@ def draw_frame(device, queue, cmd_bufs, swap_chain, frame, imgs_used_by_frames,
     ) <| $(img_i)
         img_acquired = true
 
-        img_frame = imgs_used_by_frames[img_i]
+        var img_frame = imgs_used_by_frames[img_i]
         if img_frame != -1
             device |> wait_fence(frame_fences[img_frame])
         imgs_used_by_frames[img_i] = frame
