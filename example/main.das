@@ -1203,8 +1203,9 @@ def main
                                 window |> glfwWindowShouldClose() == 0)
                             glfwPollEvents()
                             var is_swap_chain_good = device |> draw_frame(
-                                queue, swap_chain, frame, imgs_used_by_frames,
-                                frame_fences, img_avail_sems, render_done_sems
+                                queue, sc_draw_cmds, swap_chain, frame,
+                                imgs_used_by_frames, frame_fences,
+                                img_avail_sems, render_done_sems
                             )
                             if ! is_swap_chain_good
                                 break
