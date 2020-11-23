@@ -63,6 +63,7 @@ class Config(ConfigBase):
             'vkGetPhysicalDeviceSurfacePresentModesKHR',
             'vkGetPhysicalDeviceSurfaceSupportKHR',
             'vkGetSwapchainImagesKHR',
+            'vkQueuePresentKHR',
         ]:
             return
 

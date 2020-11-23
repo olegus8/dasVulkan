@@ -1071,7 +1071,8 @@ def with_next_image(device, swap_chain, sem_to_signal, fence_to_signal;
 )
     var img_index : uint
 
-    //TODO: handle result properly
+    //TODO: handle result properly. currently crashes on
+    //      "internal integration error"
     verify(VkResult VK_SUCCESS == device |> vkAcquireNextImageKHR(
         swap_chain, UINT64_MAX(), sem_to_signal, fence_to_signal,
         img_index |> safe_addr()))
@@ -1103,12 +1104,35 @@ def submit_draw(queue, cmd_bufs, sem_to_wait, sem_to_signal, fence_to_signal)
         fence_to_signal))
 
 
+def present(device, queue, swap_chain, img_i, sem_to_wait; b : block<()>)
+    let info <- [[VkPresentInfoKHR
+        sType = VkStructureType VK_STRUCTURE_TYPE_PRESENT_INFO_KHR,
+        waitSemaphoreCount = 1u,
+        pWaitSemaphores = sem_to_wait |> safe_addr(),
+        swapchainCount = 1u,
+        pSwapchains = swap_chain |> safe_addr(),
+        pImageIndices = img_i |> safe_addr()
+    ]]
+    //TODO: handle result properly. currently crashes on
+    //      "internal integration error"
+    verify(VkResult VK_SUCCESS ==
+        queue |> vkQueuePresentKHR(info |> safe_addr()))
+    /*
+    if result == VkResult VK_SUCCESS
+        b |> invoke(img_index)
+    else
+        assert(result == VkResult VK_ERROR_OUT_OF_DATE_KHR ||
+            result == VkResult VK_SUBOPTIMAL_KHR)
+    */
+
+
 def draw_frame(device, queue, cmd_bufs, swap_chain, frame, imgs_used_by_frames,
     frame_fences, img_avail_sems, render_done_sems
 )
     print("current frame: {frame}\n")
     device |> wait_fence(frame_fences[frame])
     var img_acquired = false
+    var presented = false
     device |> with_next_image(swap_chain, img_avail_sems[frame], [[VkFence]]
     ) <| $(img_i)
         img_acquired = true
@@ -1122,7 +1146,10 @@ def draw_frame(device, queue, cmd_bufs, swap_chain, frame, imgs_used_by_frames,
         device |> submit_draw(queue, cmd_bufs, img_avail_sems[frame],
             render_done_sems[frame], frame_fences[frame])
 
-    return img_acquired
+        device |> present() <| $()
+            presented = true
+
+    return img_acquired && presented
 
 
 [export]
