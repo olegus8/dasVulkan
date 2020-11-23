@@ -823,7 +823,7 @@ def record(cmd_buf : VkCommandBuffer; b : block<(c:VkCommandBuffer)>)
     cmd_buf |> vkEndCommandBuffer()
 
 
-def record_render_pass(cmd_buf, phys_dev, surface, window, render_pass, fbuf;
+def record_render_pass(cmd_buf, phys_dev, window, surface, render_pass, fbuf;
     b : block<(c:VkCommandBuffer)>
 )
     let extent <- phys_dev |> get_swap_extent(surface, window)
@@ -874,7 +874,8 @@ def with_draw_commands(device, phys_dev, window, surface, render_pass,
         device |> with_cmd_bufs(cmd_pool, fbufs |> length())
         ) <| $(cmd_bufs)
             for cmd_buf, fbuf in cmd_bufs, fbufs
-                cmd_buf |> record_render_pass(phys_dev, surface
+                cmd_buf |> record_render_pass(
+                    phys_dev, window, surface, render_pass, fbuf
                 ) <| $(cmd_buf)
                     cmd_buf |> vkCmdBindPipeline(
                         VkPipelineBindPoint VK_PIPELINE_BIND_POINT_GRAPHICS,
