@@ -964,7 +964,7 @@ def with_swap_chain_independent_state(width, height, title; b : block<(
     frag_shmod : VkShaderModule;
     render_pass : VkRenderPass;
     pipeline_layout : VkPipelineLayout;
-    cmd_pool : VkCommandPool;
+    cmd_pool : VkCommandPool
 )>)
     with_instance()                                 <| $(instance) {
     with_window(width, height, title)               <| $(window) {
@@ -1099,7 +1099,7 @@ def main
                 frag_shmod,
                 render_pass,
                 pipeline_layout,
-                cmd_pool,
+                cmd_pool
             ) <| $(
                 swap_chain,
                 sc_imgs,
