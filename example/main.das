@@ -843,6 +843,16 @@ def copy_buf_sync(device, cmd_pool, queue, src_buf, dst_buf, buf_size)
         queue |> vkQueueWaitIdle()
 
 
+def with_draw_commands(device, phys_dev, fbufs, cmd_pool, queue, vertices;
+    b : block<(cmds:array<VkCommandBuffer>)>
+)
+    device |> with_baked_vertex_buffer(phys_dev, cmd_pool, queue, vertices
+    ) <| $(vbuf)
+        device |> with_primary_cmd_bufs(cmd_pool, fbufs |> length())
+        ) <| $(cmd_bufs)
+            pass
+
+
 def with_baked_vertex_buffer(device, phys_dev, cmd_pool, queue;
     vertices:array<auto(VT)>; b : block<(b:VkBuffer)>
 )
@@ -867,13 +877,6 @@ def with_baked_vertex_buffer(device, phys_dev, cmd_pool, queue;
                 cmd_pool, queue, staging_buf, vbuf, buf_size)
 
         b |> invoke(vbuf)
-
-
-def with_draw_commands(device, phys_dev, framebufs, cmd_pool, queue, vertices;
-    b : block<(cmds:array<VkCommandBuffer>)>
-)
-    device |> with_baked_vertex_buffer(phys_dev, cmd_pool, queue, vertices
-    ) <| $(vbuf)
 
 
 def with_graphics(width, height, title; b : block<(
@@ -931,7 +934,7 @@ def main
         print("Using {props.deviceName |> to_string()}\n")
         device |> with_draw_commands(
             phys_dev, sc_fbufs, cmd_pool, queue, vertices
-        ) <| $(draw_cmds)
+        ) <| $(sc_draw_cmds)
             while window |> glfwWindowShouldClose() == 0
                 glfwPollEvents()
 
