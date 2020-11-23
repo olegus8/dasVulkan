@@ -937,6 +937,22 @@ def with_semaphores(device, count; b : block<(sems:array<VkSemaphore>)>)
     delete sems
 
 
+def with_fences(device, count, flags; b : block<(fences:array<VkFence>)>)
+    var fences : array<VkFence>
+    fences |> resize(count)
+    let info <- [[VkFenceCreateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_FENCE_CREATE_INFO,
+        flags = flags
+    ]]
+    for fence in fences
+        verify(VkResult VK_SUCCESS == device |> vkCreateFence(
+            info |> safe_addr(), null, fence |> safe_addr_val()))
+    b |> invoke(fences)
+    for fence in fences
+        device |> vkDestroyFence(fence, null)
+    delete fences
+
+
 def with_graphics(width, height, title; b : block<(
     device : VkDevice;
     phys_dev : VkPhysicalDevice;
@@ -962,6 +978,9 @@ def with_graphics(width, height, title; b : block<(
     device |> with_command_pool(phys_dev, surface) <| $(cmd_pool) {
     device |> with_semaphores(MAX_FRAMES_IN_FLIGHT) <| $(img_avail_sems) {
     device |> with_semaphores(MAX_FRAMES_IN_FLIGHT) <| $(render_done_sems) {
+    device |> with_fences(MAX_FRAMES_IN_FLIGHT,
+        uint(VkFenceCreateFlagBits VK_FENCE_CREATE_SIGNALED_BIT)
+    ) <| $(in_flight_fences) {
     device |> with_swap_chain(
         phys_dev, surface, window, surf_fmt, present_mode
     ) <| $(swap_chain) {
@@ -976,7 +995,7 @@ def with_graphics(width, height, title; b : block<(
     {
         b |> invoke(device, phys_dev, window, surface, render_pass, sc_fbufs,
             pipeline, cmd_pool, queue);
-    }}}}}}}}}}}}}}}}}}}
+    }}}}}}}}}}}}}}}}}}}}
 
 
 [export]
