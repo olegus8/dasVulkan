@@ -925,7 +925,7 @@ def with_baked_vertex_buffer(device, phys_dev, cmd_pool, queue;
 
 def with_semaphores(device, count; b : block<(sems:array<VkSemaphore>)>)
     var sems : array<VkSemaphore>
-    sems.resize(count)
+    sems |> resize(count)
     let info <- [[VkSemaphoreCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO]]
     for sem in sems
