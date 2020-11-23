@@ -980,7 +980,7 @@ def with_graphics(width, height, title; b : block<(
     device |> with_semaphores(MAX_FRAMES_IN_FLIGHT) <| $(render_done_sems) {
     device |> with_fences(MAX_FRAMES_IN_FLIGHT,
         uint(VkFenceCreateFlagBits VK_FENCE_CREATE_SIGNALED_BIT)
-    ) <| $(in_flight_fences) {
+    ) <| $(frame_fences) {
     device |> with_swap_chain(
         phys_dev, surface, window, surf_fmt, present_mode
     ) <| $(swap_chain) {
