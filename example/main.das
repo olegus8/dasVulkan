@@ -953,16 +953,18 @@ def with_fences(device, count, flags; b : block<(fences:array<VkFence>)>)
     delete fences
 
 
-def with_graphics(width, height, title; b : block<(
+def with_persistent_state(width, height, title; b : block<(
     device : VkDevice;
     phys_dev : VkPhysicalDevice;
     window : GLFWwindow_DasHandle;
     surface : VkSurfaceKHR;
+    surf_fmt : VkSurfaceFormatKHR;
+    present_mode : VkPresentModeKHR;
     render_pass : VkRenderPass;
-    sc_fbufs : array<VkFramebuffer>;
-    pipeline : VkPipeline;
     cmd_pool : VkCommandPool;
     queue : VkQueue;
+    img_avail_sems : array<VkSemaphore>;
+    render_done_sems : array<VkSemaphore>;
     frame_fences : array<VkFence>
 )>)
     with_instance() <| $(instance) {
@@ -982,6 +984,24 @@ def with_graphics(width, height, title; b : block<(
     device |> with_fences(MAX_FRAMES_IN_FLIGHT,
         uint(VkFenceCreateFlagBits VK_FENCE_CREATE_SIGNALED_BIT)
     ) <| $(frame_fences) {
+        b |> invoke(device, phys_dev, window, surface, surf_fmt, present_mode,
+            render_pass, sc_fbufs,
+            pipeline, cmd_pool, queue, frame_fences);
+    }}}}}}}}}}}}}}}}}}}}}
+
+
+def with_volatile_state(width, height, title; b : block<(
+    device : VkDevice;
+    phys_dev : VkPhysicalDevice;
+    window : GLFWwindow_DasHandle;
+    surface : VkSurfaceKHR;
+    render_pass : VkRenderPass;
+    sc_fbufs : array<VkFramebuffer>;
+    pipeline : VkPipeline;
+    cmd_pool : VkCommandPool;
+    queue : VkQueue;
+    frame_fences : array<VkFence>
+)>)
     device |> with_swap_chain(
         phys_dev, surface, window, surf_fmt, present_mode
     ) <| $(swap_chain) {
@@ -1006,8 +1026,6 @@ def wait(device; fence : VkFence)
 
 def draw_frame(device, swap_chain, current_frame, frame_fences)
     device |> wait_for_fence(frame_fences[current_frame])
-    var img_i = device |> acquire_next_image(
-        swap_chain, img_avail_sems[current_frame])
 
 
 [export]
