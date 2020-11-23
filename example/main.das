@@ -1065,7 +1065,7 @@ def main
     with_swapchain_independent_state(800, 600, "dasVulkanExample") <| $(
         scis : SwapchainIndependentState
     )
-        var props <- phys_dev |> get_properties()
+        var props <- scis.phys_dev |> get_properties()
         print("Using {props.deviceName |> to_string()}\n")
         scis.device |> with_baked_vertex_buffer(
             scis.phys_dev, scis.cmd_pool, scis.queue, vertices
