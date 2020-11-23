@@ -814,7 +814,7 @@ def with_cmd_bufs(device, cmd_pool, count;
     delete bufs
 
 
-def record(cmd_buf : VkCommandBuffer; b : block<(c:VkCommandBuffer)>)
+def record(cmd_buf : VkCommandBuffer; b : block)
     let begin_info <- [[VkCommandBufferBeginInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO]]
     verify(VkResult VK_SUCCESS ==
@@ -824,7 +824,7 @@ def record(cmd_buf : VkCommandBuffer; b : block<(c:VkCommandBuffer)>)
 
 
 def record_render_pass(cmd_buf, phys_dev, window, surface, render_pass, fbuf;
-    b : block<(c:VkCommandBuffer)>
+    b : block
 )
     let extent <- phys_dev |> get_swap_extent(surface, window)
     cmd_buf |> record() <| $()
