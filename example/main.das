@@ -790,6 +790,10 @@ def with_mapped_vk_mem(device, mem, offset, size;
     device |> vkUnmapMemory(mem)
 
 
+def copy_buf(device, src_buf, dst_buf, buf_size)
+    pass
+
+
 def with_baked_vertex_buffer(device, phys_dev; vertices:array<auto(VT)>;
     b : block<(b:VkBuffer)>
 )
