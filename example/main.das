@@ -1080,13 +1080,19 @@ def with_next_image(device, swap_chain, sem_to_signal, fence_to_signal;
     */
 
 
-def draw_frame(device, swap_chain, frame, frame_fences, img_avail_sems)
+def draw_frame(device, swap_chain, frame, imgs_used_by_frames,
+    frame_fences, img_avail_sems
+)
     print("current frame: {frame}\n")
     device |> wait(frame_fences[frame])
     var img_acquired = false
     device |> with_next_image(swap_chain, img_avail_sems[frame], [[VkFence]]
     ) <| $(img_i)
         img_acquired = true
+        img_frame = imgs_used_by_frames[img_i]
+        if img_frame != -1
+            device |> wait(frame_fences[img_frame])
+        imgs_used_by_frames[img_i] = frame
 
     return img_acquired
 
@@ -1161,7 +1167,9 @@ def main
                     ) <| $(sc_draw_cmds)
                         var frame = 0
                         var imgs_used_by_frames : array<int>
-                        imgs_used_by_frames.resize(sc_fbufs |> length(), -1)
+                        imgs_used_by_frames |> resize(sc_fbufs |> length())
+                        for img_frame in imgs_used_by_frames
+                            img_frame = -1
                         while keep_running
                             keep_running = (
                                 window |> glfwWindowShouldClose() == 0)
