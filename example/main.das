@@ -923,6 +923,20 @@ def with_baked_vertex_buffer(device, phys_dev, cmd_pool, queue;
         b |> invoke(vbuf)
 
 
+def with_semaphores(device, count; b : block<(sems:array<VkSemaphore>)>)
+    var sems : array<VkSemaphore>
+    sems.resize(count)
+    let info <- [[VkSemaphoreCreateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO]]
+    for sem in sems
+        verify(VkResult VK_SUCCESS == device |> vkCreateSemaphore(
+            info |> safe_addr(), null, sem |> safe_addr_val()))
+    b |> invoke(sems)
+    for sem in sems
+        device |> vkDestroySemaphore(sem, null)
+    delete sems
+
+
 def with_graphics(width, height, title; b : block<(
     device : VkDevice;
     phys_dev : VkPhysicalDevice;
@@ -946,8 +960,8 @@ def with_graphics(width, height, title; b : block<(
     device |> with_render_pass(surf_fmt) <| $(render_pass) {
     device |> with_pipeline_layout() <| $(layout) {
     device |> with_command_pool(phys_dev, surface) <| $(cmd_pool) {
-    device |> with_semaphores(MAX_FRAMES_IN_FLIGHT) <| $(sem_img_avail) {
-    device |> with_semaphores(MAX_FRAMES_IN_FLIGHT) <| $(sem_render_done) {
+    device |> with_semaphores(MAX_FRAMES_IN_FLIGHT) <| $(img_avail_sems) {
+    device |> with_semaphores(MAX_FRAMES_IN_FLIGHT) <| $(render_done_sems) {
     device |> with_swap_chain(
         phys_dev, surface, window, surf_fmt, present_mode
     ) <| $(swap_chain) {
