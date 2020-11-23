@@ -802,7 +802,7 @@ def with_baked_vertex_buffer(device, phys_dev; vertices:array<auto(VT)>;
     ) <| $(staging_buf, staging_mem)
         device |> with_mapped_vk_mem(staging_mem, 0, buf_size
         ) <| $(var mapped_vertices : array<VT>#)
-            for src, dst in vertices, mapped_vertices
+            for dst, src in mapped_vertices, vertices
                 dst = src
         //TODO: implement this
         b |> invoke([[VkBuffer]])
