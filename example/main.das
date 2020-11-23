@@ -960,6 +960,8 @@ def with_swap_chain_independent_state(width, height, title; b : block<(
     surface : VkSurfaceKHR;
     surf_fmt : VkSurfaceFormatKHR;
     present_mode : VkPresentModeKHR;
+    vert_shmod : VkShaderModule;
+    frag_shmod : VkShaderModule;
     render_pass : VkRenderPass;
     cmd_pool : VkCommandPool;
     queue : VkQueue;
@@ -987,20 +989,23 @@ def with_swap_chain_independent_state(width, height, title; b : block<(
         b |> invoke(device, phys_dev, window, surface, surf_fmt, present_mode,
             render_pass, sc_fbufs,
             pipeline, cmd_pool, queue, frame_fences);
-    }}}}}}}}}}}}}}}}}}}}}
+    }}}}}}}}}}}}}}}
 
 
-def with_swap_chain_dependent_state(width, height, title; b : block<(
-    device : VkDevice;
-    phys_dev : VkPhysicalDevice;
-    window : GLFWwindow_DasHandle;
-    surface : VkSurfaceKHR;
-    render_pass : VkRenderPass;
-    sc_fbufs : array<VkFramebuffer>;
-    pipeline : VkPipeline;
-    cmd_pool : VkCommandPool;
-    queue : VkQueue;
-    frame_fences : array<VkFence>
+def with_swap_chain_dependent_state(device, phys_dev, window, surface,
+    surf_fmt, present_mode, vert_shmod, frag_shmod, render_pass, cmd_pool,
+    queue, img_avail_sems, render_done_sems, frame_fences;
+    b : block<(
+        device : VkDevice;
+        phys_dev : VkPhysicalDevice;
+        window : GLFWwindow_DasHandle;
+        surface : VkSurfaceKHR;
+        render_pass : VkRenderPass;
+        sc_fbufs : array<VkFramebuffer>;
+        pipeline : VkPipeline;
+        cmd_pool : VkCommandPool;
+        queue : VkQueue;
+        frame_fences : array<VkFence>
 )>)
     device |> with_swap_chain(
         phys_dev, surface, window, surf_fmt, present_mode
@@ -1016,7 +1021,7 @@ def with_swap_chain_dependent_state(width, height, title; b : block<(
     {
         b |> invoke(device, phys_dev, window, surface, render_pass, sc_fbufs,
             pipeline, cmd_pool, queue, frame_fences);
-    }}}}}}}}}}}}}}}}}}}}}
+    }}}}}
 
 
 def wait(device; fence : VkFence)
