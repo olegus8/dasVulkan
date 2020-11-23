@@ -865,36 +865,34 @@ def copy_buf_sync(device, cmd_pool, queue, src_buf, dst_buf, buf_size)
 
 
 def with_draw_commands(device, phys_dev, window, surface, render_pass,
-    fbufs, pipeline, cmd_pool, queue, vertices;
+    fbufs, pipeline, cmd_pool, queue, vbuf, vertices_count;
     b : block<(cmds:array<VkCommandBuffer>)>
 )
-    device |> with_baked_vertex_buffer(phys_dev, cmd_pool, queue, vertices
-    ) <| $(vbuf)
-        let vbufs <- [[auto[] vbuf]]
-        let offsets : uint64[1]
-        device |> with_cmd_bufs(cmd_pool, fbufs |> length()) <| $(cmd_bufs)
-            for cmd_buf, fbuf in cmd_bufs, fbufs
-                cmd_buf |> record_render_pass(
-                    phys_dev, window, surface, render_pass, fbuf
-                ) <| $()
-                    cmd_buf |> vkCmdBindPipeline(
-                        VkPipelineBindPoint VK_PIPELINE_BIND_POINT_GRAPHICS,
-                        pipeline)
-                    cmd_buf |> vkCmdBindVertexBuffers(0u, // first binding idx
-                        //TODO: make it work. says "can only dereference
-                        //      simple type"
-                        1u,
-                        //uint(vbufs |> length()),
+    let vbufs <- [[auto[] vbuf]]
+    let offsets : uint64[1]
+    device |> with_cmd_bufs(cmd_pool, fbufs |> length()) <| $(cmd_bufs)
+        for cmd_buf, fbuf in cmd_bufs, fbufs
+            cmd_buf |> record_render_pass(
+                phys_dev, window, surface, render_pass, fbuf
+            ) <| $()
+                cmd_buf |> vkCmdBindPipeline(
+                    VkPipelineBindPoint VK_PIPELINE_BIND_POINT_GRAPHICS,
+                    pipeline)
+                cmd_buf |> vkCmdBindVertexBuffers(0u, // first binding idx
+                    //TODO: make it work. says "can only dereference
+                    //      simple type"
+                    1u,
+                    //uint(vbufs |> length()),
 
-                        vbufs[0] |> safe_addr(),
-                        offsets[0] |> safe_addr())
-                    cmd_buf |> vkCmdDraw(uint(vertices |> length()),
-                        1u, // instance count
-                        0u, // first vertex
-                        0u  // first instance
-                    )
+                    vbufs[0] |> safe_addr(),
+                    offsets[0] |> safe_addr())
+                cmd_buf |> vkCmdDraw(uint(vertices_count)),
+                    1u, // instance count
+                    0u, // first vertex
+                    0u  // first instance
+                )
 
-            b |> invoke(cmd_bufs)
+        b |> invoke(cmd_bufs)
 
 
 def with_baked_vertex_buffer(device, phys_dev, cmd_pool, queue;
@@ -1078,19 +1076,61 @@ def main
         [[Vertex position=float2(-0.5f,  0.5f), color=float3(0f, 0f, 1f)]]
     }]
 
-    with_graphics(800, 600, "dasVulkanExample") <| $(device, phys_dev,
-        window, surface, render_pass, sc_fbufs, pipeline, cmd_pool, queue,
+    with_swap_chain_independent_state(800, 600, "dasVulkanExample") <| $(
+        instance,
+        window,
+        surface,
+        phys_dev,
+        device,
+        queue,
+        surf_fmt,
+        present_mode,
+        vert_shmod,
+        frag_shmod,
+        render_pass,
+        pipeline_layout,
+        cmd_pool,
+        img_avail_sems,
+        render_done_sems,
         frame_fences
     )
         var props <- phys_dev |> get_properties()
         print("Using {props.deviceName |> to_string()}\n")
-        device |> with_draw_commands(phys_dev, window, surface, render_pass,
-            sc_fbufs, pipeline, cmd_pool, queue, vertices
-        ) <| $(sc_draw_cmds)
-            var current_frame = 0
-            while window |> glfwWindowShouldClose() == 0
-                glfwPollEvents()
-                device |> draw_frame(current_frame, frame_fences)
+        device |> with_baked_vertex_buffer(
+            phys_dev, cmd_pool, queue, vertices
+        ) <| $(vbuf)
+            with_swap_chain_dependent_state(
+                instance,
+                window,
+                surface,
+                phys_dev,
+                device,
+                queue,
+                surf_fmt,
+                present_mode,
+                vert_shmod,
+                frag_shmod,
+                render_pass,
+                pipeline_layout,
+                cmd_pool,
+                img_avail_sems,
+                render_done_sems,
+                frame_fences
+            ) <| $(
+                swap_chain,
+                sc_imgs,
+                sc_views,
+                sc_fbufs,
+                pipeline
+            )
+                device |> with_draw_commands(phys_dev, window, surface,
+                    render_pass, sc_fbufs, pipeline, cmd_pool, queue,
+                    vbuf, vertices |> length()
+                ) <| $(sc_draw_cmds)
+                    var current_frame = 0
+                    while window |> glfwWindowShouldClose() == 0
+                        glfwPollEvents()
+                        device |> draw_frame(current_frame, frame_fences)
 
     glfwTerminate()
     print("Finished\n")
