@@ -823,7 +823,7 @@ def record(cmd_buf : VkCommandBuffer; b : block<(c:VkCommandBuffer)>)
     cmd_buf |> vkEndCommandBuffer()
 
 
-def record(cmd_buf, phys_dev, surface, window, render_pass, fbuf;
+def record_render_pass(cmd_buf, phys_dev, surface, window, render_pass, fbuf;
     b : block<(c:VkCommandBuffer)>
 )
     let extent <- phys_dev |> get_swap_extent(surface, window)
@@ -863,8 +863,8 @@ def copy_buf_sync(device, cmd_pool, queue, src_buf, dst_buf, buf_size)
         queue |> vkQueueWaitIdle()
 
 
-def with_draw_commands(
-    device, phys_dev, render_pass, fbufs, pipeline, cmd_pool, queue, vertices;
+def with_draw_commands(device, phys_dev, window, surface, render_pass,
+    fbufs, pipeline, cmd_pool, queue, vertices;
     b : block<(cmds:array<VkCommandBuffer>)>
 )
     device |> with_baked_vertex_buffer(phys_dev, cmd_pool, queue, vertices
@@ -874,7 +874,8 @@ def with_draw_commands(
         device |> with_cmd_bufs(cmd_pool, fbufs |> length())
         ) <| $(cmd_bufs)
             for cmd_buf, fbuf in cmd_bufs, fbufs
-                cmd_buf |> record() <| $(cmd_buf)
+                cmd_buf |> record_render_pass(phys_dev, surface
+                ) <| $(cmd_buf)
                     cmd_buf |> vkCmdBindPipeline(
                         VkPipelineBindPoint VK_PIPELINE_BIND_POINT_GRAPHICS,
                         pipeline)
@@ -914,6 +915,7 @@ def with_graphics(width, height, title; b : block<(
     device : VkDevice;
     phys_dev : VkPhysicalDevice;
     window : GLFWwindow_DasHandle;
+    surface : VkSurfaceKHR;
     render_pass : VkRenderPass;
     sc_fbufs : array<VkFramebuffer>;
     pipeline : VkPipeline;
@@ -944,7 +946,7 @@ def with_graphics(width, height, title; b : block<(
         phys_dev, surface, window, vert_shmod, frag_shmod
     ) <| $(pipeline)
     {
-        b |> invoke(device, phys_dev, window, render_pass, sc_fbufs,
+        b |> invoke(device, phys_dev, window, surface, render_pass, sc_fbufs,
             pipeline, cmd_pool, queue);
     }}}}}}}}}}}}}}}}}
 
@@ -963,12 +965,12 @@ def main
     }]
 
     with_graphics(800, 600, "dasVulkanExample") <| $(device, phys_dev,
-        window, render_pass, sc_fbufs, pipeline, cmd_pool, queue
+        window, surface, render_pass, sc_fbufs, pipeline, cmd_pool, queue
     )
         var props <- phys_dev |> get_properties()
         print("Using {props.deviceName |> to_string()}\n")
-        device |> with_draw_commands(phys_dev, render_pass, sc_fbufs,
-            pipeline, cmd_pool, queue, vertices
+        device |> with_draw_commands(phys_dev, window, surface, render_pass,
+            sc_fbufs, pipeline, cmd_pool, queue, vertices
         ) <| $(sc_draw_cmds)
             while window |> glfwWindowShouldClose() == 0
                 glfwPollEvents()
