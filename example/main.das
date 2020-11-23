@@ -1063,7 +1063,7 @@ def wait_fence(device; fence : VkFence)
 
 def reset_fence(device; fence : VkFence)
     verify(VkResult VK_SUCCESS ==
-        device |> vkResetFences(1u, fence |> safe_addr())
+        device |> vkResetFences(1u, fence |> safe_addr()))
 
 
 def with_next_image(device, swap_chain, sem_to_signal, fence_to_signal;

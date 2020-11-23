@@ -13374,6 +13374,8 @@ public:
             SideEffects::worstDefault, "vkGetSwapchainImagesKHR");
         addExtern<DAS_BIND_FUN(vkAcquireNextImageKHR)>(*this, lib, "vkAcquireNextImageKHR",
             SideEffects::worstDefault, "vkAcquireNextImageKHR");
+        addExtern<DAS_BIND_FUN(vkQueuePresentKHR)>(*this, lib, "vkQueuePresentKHR",
+            SideEffects::worstDefault, "vkQueuePresentKHR");
         addExtern<DAS_BIND_FUN(glfwInit)>(*this, lib, "glfwInit",
             SideEffects::worstDefault, "glfwInit");
         addExtern<DAS_BIND_FUN(glfwTerminate)>(*this, lib, "glfwTerminate",
