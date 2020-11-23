@@ -880,7 +880,7 @@ def with_draw_commands(device, phys_dev, window, surface, render_pass,
                     cmd_buf |> vkCmdBindPipeline(
                         VkPipelineBindPoint VK_PIPELINE_BIND_POINT_GRAPHICS,
                         pipeline)
-                    cmd_buf |> vkCmdBindVertexBuffers(0u, // first binding
+                    cmd_buf |> vkCmdBindVertexBuffers(0u, // first binding idx
                         //TODO: make it work. says "can only dereference
                         //      simple type"
                         1u,
