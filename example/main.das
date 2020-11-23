@@ -1149,7 +1149,8 @@ def draw_frame(device, queue, cmd_bufs, swap_chain, frame,
         device |> submit_draw(queue, cmd_bufs, img_avail_sems[frame],
             render_done_sems[frame], frame_fences[frame])
 
-        device |> present() <| $()
+        device |> present(queue, swap_chain, img_i, render_done_sems[frame]
+        ) <| $()
             presented = true
 
     return img_acquired && presented
