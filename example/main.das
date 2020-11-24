@@ -1185,7 +1185,7 @@ def main
         pipeline_layout : VkPipelineLayout;
         cmd_pool : VkCommandPool
     )
-        var props <- phys_dev |> get_properties()
+        let props <- phys_dev |> get_properties()
         print("Using {props.deviceName |> to_string()}\n")
         device |> with_baked_vertex_buffer(
             phys_dev, cmd_pool, queue, vertices
@@ -1221,12 +1221,13 @@ def main
                     render_done_sems : array<VkSemaphore>;
                     frame_fences : array<VkFence>
                 )
+                    print("{sc_imgs |> length()} images in swap chain\n")
                     device |> with_draw_commands(phys_dev, window, surface,
                         render_pass, sc_fbufs, pipeline, cmd_pool, queue,
                         vbuf, vertices |> length()
                     ) <| $(sc_draw_cmds)
                         var frame = 0
-                        var imgs_used_by_frames = [{for x in sc_fbufs ; -1 }]
+                        var imgs_used_by_frames <- [{for x in sc_imgs ; -1 }]
                         while keep_running
                             keep_running = (
                                 window |> glfwWindowShouldClose() == 0)
