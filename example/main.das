@@ -661,17 +661,17 @@ def with_graphics_pipeline(device, layout, render_pass,
         let pipe_infos <- [[auto[] [[VkGraphicsPipelineCreateInfo
             sType = (VkStructureType
                 VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO),
-            layout = layout,
-            renderPass = render_pass,
-            stageCount = uint(stages |> length()),
-            pStages = stages[0] |> safe_addr_plain(),
-            pVertexInputState = vtx_input |> safe_addr(),
+            layout              = layout,
+            renderPass          = render_pass,
+            stageCount          = uint(stages |> length()),
+            pStages             = stages[0] |> safe_addr_plain(),
+            pVertexInputState   = vtx_input |> safe_addr(),
             pInputAssemblyState = input_assembly |> safe_addr(),
-            pViewportState = viewport |> safe_addr(),
+            pViewportState      = viewport |> safe_addr(),
             pRasterizationState = rasterizer |> safe_addr(),
-            pMultisampleState = multisampling |> safe_addr(),
-            pColorBlendState = blending |> safe_addr(),
-            basePipelineIndex = -1
+            pMultisampleState   = multisampling |> safe_addr(),
+            pColorBlendState    = blending |> safe_addr(),
+            basePipelineIndex   = -1
         ]]]]
         var pipes : array<VkPipeline>
         pipes |> resize(pipe_infos |> length())
@@ -837,11 +837,11 @@ def record_render_pass(cmd_buf, phys_dev, window, surface, render_pass, fbuf;
         let clear_values <- [[auto[] [[VkClearValue]]]]
         let info <- [[VkRenderPassBeginInfo
             sType = VkStructureType VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO,
-            renderPass = render_pass,
-            framebuffer = fbuf,
-            renderArea = [[VkRect2D extent = extent]],
+            renderPass      = render_pass,
+            framebuffer     = fbuf,
+            renderArea      = [[VkRect2D extent = extent]],
             clearValueCount = uint(clear_values |> length()),
-            pClearValues = clear_values |> safe_addr()
+            pClearValues    = clear_values |> safe_addr()
         ]]
         cmd_buf |> vkCmdBeginRenderPass(
             info |> safe_addr(), VkSubpassContents VK_SUBPASS_CONTENTS_INLINE)
@@ -1094,13 +1094,13 @@ def submit_draw(device, queue; cmd_buf : VkCommandBuffer;
         VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT)
     let infos <- [[auto[] [[VkSubmitInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_SUBMIT_INFO,
-        waitSemaphoreCount = 1u,
-        pWaitSemaphores = sem_to_wait |> safe_addr(),
-        pWaitDstStageMask = stage_to_wait |> safe_addr(),
-        signalSemaphoreCount = 1u,
-        pSignalSemaphores = sem_to_signal |> safe_addr(),
-        commandBufferCount = 1u,
-        pCommandBuffers = cmd_buf |> safe_addr_plain()
+        waitSemaphoreCount      = 1u,
+        pWaitSemaphores         = sem_to_wait |> safe_addr(),
+        pWaitDstStageMask       = stage_to_wait |> safe_addr(),
+        signalSemaphoreCount    = 1u,
+        pSignalSemaphores       = sem_to_signal |> safe_addr(),
+        commandBufferCount      = 1u,
+        pCommandBuffers         = cmd_buf |> safe_addr_plain()
     ]]]]
     verify(VkResult VK_SUCCESS == queue |> vkQueueSubmit(
         uint(infos |> length()), infos[0] |> safe_addr(),
@@ -1110,11 +1110,11 @@ def submit_draw(device, queue; cmd_buf : VkCommandBuffer;
 def present(device, queue, swap_chain, img_i, sem_to_wait; b : block<()>)
     let info <- [[VkPresentInfoKHR
         sType = VkStructureType VK_STRUCTURE_TYPE_PRESENT_INFO_KHR,
-        waitSemaphoreCount = 1u,
-        pWaitSemaphores = sem_to_wait |> safe_addr(),
-        swapchainCount = 1u,
-        pSwapchains = swap_chain |> safe_addr(),
-        pImageIndices = img_i |> safe_addr()
+        waitSemaphoreCount  = 1u,
+        pWaitSemaphores     = sem_to_wait |> safe_addr(),
+        swapchainCount      = 1u,
+        pSwapchains         = swap_chain |> safe_addr(),
+        pImageIndices       = img_i |> safe_addr()
     ]]
     //TODO: handle result properly. currently crashes on
     //      "internal integration error"
