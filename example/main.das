@@ -1226,15 +1226,12 @@ def main
                         vbuf, vertices |> length()
                     ) <| $(sc_draw_cmds)
                         var frame = 0
-                        var imgs_used_by_frames : array<int>
-                        imgs_used_by_frames |> resize(sc_fbufs |> length())
-                        for img_frame in imgs_used_by_frames
-                            img_frame = -1
+                        var imgs_used_by_frames = [{for x in sc_fbufs ; -1 }]
                         while keep_running
                             keep_running = (
                                 window |> glfwWindowShouldClose() == 0)
                             glfwPollEvents()
-                            var is_swap_chain_good = device |> draw_frame(
+                            let is_swap_chain_good = device |> draw_frame(
                                 queue, sc_draw_cmds, swap_chain, frame,
                                 frame_fences, img_avail_sems, render_done_sems,
                                 imgs_used_by_frames
