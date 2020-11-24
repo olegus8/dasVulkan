@@ -47,6 +47,7 @@ def safe_addr_val(var x : auto(T)&) : T-& ? #
     unsafe
         return reinterpret<T-&?#>(addr(x))
 
+
 //TODO: add it to builtin constants
 def UINT64_MAX()
     unsafe
