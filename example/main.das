@@ -958,19 +958,19 @@ def with_fences(device, count, flags; b : block<(fences:array<VkFence>)>)
 
 
 def with_swap_chain_independent_state(width, height, title; b : block<(
-    instance : VkInstance;
-    window : GLFWwindow_DasHandle;
-    surface : VkSurfaceKHR;
-    phys_dev : VkPhysicalDevice;
-    device : VkDevice;
-    queue : VkQueue;
-    surf_fmt : VkSurfaceFormatKHR;
-    present_mode : VkPresentModeKHR;
-    vert_shmod : VkShaderModule;
-    frag_shmod : VkShaderModule;
-    render_pass : VkRenderPass;
+    instance        : VkInstance;
+    window          : GLFWwindow_DasHandle;
+    surface         : VkSurfaceKHR;
+    phys_dev        : VkPhysicalDevice;
+    device          : VkDevice;
+    queue           : VkQueue;
+    surf_fmt        : VkSurfaceFormatKHR;
+    present_mode    : VkPresentModeKHR;
+    vert_shmod      : VkShaderModule;
+    frag_shmod      : VkShaderModule;
+    render_pass     : VkRenderPass;
     pipeline_layout : VkPipelineLayout;
-    cmd_pool : VkCommandPool
+    cmd_pool        : VkCommandPool
 )>)
     with_instance()                                 <| $(instance)          {
     with_window(width, height, title)               <| $(window)            {
@@ -1018,14 +1018,14 @@ def with_swap_chain_dependent_state(
     pipeline_layout,
     cmd_pool;
     b : block<(
-        swap_chain : VkSwapchainKHR;
-        sc_imgs : array<VkImage>;
-        sc_views : array<VkImageView>;
-        sc_fbufs : array<VkFramebuffer>;
-        pipeline : VkPipeline;
-        img_avail_sems : array<VkSemaphore>;
-        render_done_sems : array<VkSemaphore>;
-        frame_fences : array<VkFence>
+        swap_chain          : VkSwapchainKHR;
+        sc_imgs             : array<VkImage>;
+        sc_views            : array<VkImageView>;
+        sc_fbufs            : array<VkFramebuffer>;
+        pipeline            : VkPipeline;
+        img_avail_sems      : array<VkSemaphore>;
+        render_done_sems    : array<VkSemaphore>;
+        frame_fences        : array<VkFence>
 )>)
     device |> with_swap_chain(phys_dev, surface,
         window, surf_fmt, present_mode)             <| $(swap_chain)        {
