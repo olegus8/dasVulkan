@@ -1171,19 +1171,19 @@ def main
     }]
 
     with_swap_chain_independent_state(800, 600, "dasVulkanExample") <| $(
-        instance : VkInstance;
-        window : GLFWwindow_DasHandle;
-        surface : VkSurfaceKHR;
-        phys_dev : VkPhysicalDevice;
-        device : VkDevice;
-        queue : VkQueue;
-        surf_fmt : VkSurfaceFormatKHR;
-        present_mode : VkPresentModeKHR;
-        vert_shmod : VkShaderModule;
-        frag_shmod : VkShaderModule;
-        render_pass : VkRenderPass;
+        instance        : VkInstance;
+        window          : GLFWwindow_DasHandle;
+        surface         : VkSurfaceKHR;
+        phys_dev        : VkPhysicalDevice;
+        device          : VkDevice;
+        queue           : VkQueue;
+        surf_fmt        : VkSurfaceFormatKHR;
+        present_mode    : VkPresentModeKHR;
+        vert_shmod      : VkShaderModule;
+        frag_shmod      : VkShaderModule;
+        render_pass     : VkRenderPass;
         pipeline_layout : VkPipelineLayout;
-        cmd_pool : VkCommandPool
+        cmd_pool        : VkCommandPool
     )
         let props <- phys_dev |> get_properties()
         print("Using {props.deviceName |> to_string()}\n")
@@ -1212,14 +1212,14 @@ def main
                     pipeline_layout,
                     cmd_pool
                 ) <| $(
-                    swap_chain : VkSwapchainKHR;
-                    sc_imgs : array<VkImage>;
-                    sc_views : array<VkImageView>;
-                    sc_fbufs : array<VkFramebuffer>;
-                    pipeline : VkPipeline;
-                    img_avail_sems : array<VkSemaphore>;
-                    render_done_sems : array<VkSemaphore>;
-                    frame_fences : array<VkFence>
+                    swap_chain          : VkSwapchainKHR;
+                    sc_imgs             : array<VkImage>;
+                    sc_views            : array<VkImageView>;
+                    sc_fbufs            : array<VkFramebuffer>;
+                    pipeline            : VkPipeline;
+                    img_avail_sems      : array<VkSemaphore>;
+                    render_done_sems    : array<VkSemaphore>;
+                    frame_fences        : array<VkFence>
                 )
                     print("{sc_fbufs |> length()} images in swap chain\n")
                     device |> with_draw_commands(phys_dev, window, surface,
