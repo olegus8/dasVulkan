@@ -44,7 +44,7 @@ IF(NOT DAS_VULKAN_INCLUDED)
             glfw
         )
         ADD_DEPENDENCIES(libDasModuleVulkan libDaScript)
-        TARGET_INCLUDE_DIRECTORIES(libDasVulkan PUBLIC
+        TARGET_INCLUDE_DIRECTORIES(libDasModuleVulkan PUBLIC
             ${Vulkan_INCLUDE_DIR}
         )
         SETUP_CPP11(libDasModuleVulkan)
