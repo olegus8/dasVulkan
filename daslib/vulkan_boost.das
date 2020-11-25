@@ -4,15 +4,18 @@ options no_aot = true
 module vulkan_boost
 
 require vulkan
+require daslib/safe_addr
 
 
 //TODO: need this for heap
+[private]
 def safe_addr_plain(x : auto(T)) : T ? #
     unsafe
         return reinterpret<T?#>(addr(x))
 
 
 //TODO: need this for heap
+[private]
 def safe_addr_val(var x : auto(T)&) : T-& ? #
     unsafe
         return reinterpret<T-&?#>(addr(x))
