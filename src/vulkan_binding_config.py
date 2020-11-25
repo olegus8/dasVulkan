@@ -11,10 +11,6 @@ class Config(ConfigBase):
     def c_headers_to_extract_macro_consts_from(self):
         return ['GLFW/glfw3.h', 'vulkan/vulkan_core.h']
 
-    @property
-    def save_ast(self):
-        return True
-
     def configure_macro_const(self, macro_const):
         if '"' in macro_const.value:
             macro_const.ignore()
