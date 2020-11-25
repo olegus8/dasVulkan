@@ -78,7 +78,7 @@ IF(NOT DAS_VULKAN_INCLUDED)
         ADD_EXECUTABLE(dasVulkanExample ${DAS_VULKAN_EXAMPLE_SRC})
         TARGET_LINK_LIBRARIES(dasVulkanExample
             libDaScript
-            libDasVulkan
+            libDasModuleVulkan
         )
         SETUP_CPP11(dasVulkanExample)
     ENDIF()
