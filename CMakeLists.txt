@@ -70,18 +70,9 @@ IF(NOT DAS_VULKAN_INCLUDED)
 
         DAS_VULKAN_COMPILE_SHADER(${DAS_VULKAN_DIR}/example/vert.glsl vert)
         DAS_VULKAN_COMPILE_SHADER(${DAS_VULKAN_DIR}/example/frag.glsl frag)
-
-        SET(DAS_VULKAN_EXAMPLE_SRC
-            ${DAS_VULKAN_DIR}/example/main.cpp
+        ADD_CUSTOM_TARGET(dasVulkanExample ALL DEPENDS
             ${DAS_VULKAN_DIR}/example/vert.spv
             ${DAS_VULKAN_DIR}/example/frag.spv
         )
-
-        ADD_EXECUTABLE(dasVulkanExample ${DAS_VULKAN_EXAMPLE_SRC})
-        TARGET_LINK_LIBRARIES(dasVulkanExample
-            libDaScript
-            libDasModuleVulkan
-        )
-        SETUP_CPP11(dasVulkanExample)
     ENDIF()
 ENDIF()
