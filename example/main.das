@@ -55,9 +55,8 @@ def with_physical_devices(inst; b : block<(d:array<VkPhysicalDevice>)>)
     verify(VkResult VK_SUCCESS == inst |> vkEnumeratePhysicalDevices(
         safe_addr(count), null))
     devices |> resize(int(count))
-    devices |> lock() <| $(tdevices)
-        verify(VkResult VK_SUCCESS == inst |> vkEnumeratePhysicalDevices(
-            safe_addr(count), safe_addr(tdevices[0])))
+    verify(VkResult VK_SUCCESS == inst |> vkEnumeratePhysicalDevices(
+        safe_addr(count), safe_addr_val(devices[0])))
     b |> invoke(devices)
     delete devices
 
