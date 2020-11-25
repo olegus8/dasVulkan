@@ -74,5 +74,6 @@ IF(NOT DAS_VULKAN_INCLUDED)
             ${DAS_VULKAN_DIR}/example/vert.spv
             ${DAS_VULKAN_DIR}/example/frag.spv
         )
+        ADD_DEPENDENCIES(dasVulkanExample daScript)
     ENDIF()
 ENDIF()
