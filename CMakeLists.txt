@@ -38,18 +38,20 @@ IF(NOT DAS_VULKAN_INCLUDED)
             ${DAS_VULKAN_DIR}/src/module_generated.inc
         )
 
-        ADD_LIBRARY(libDasModule_dasVulkan ${DAS_VULKAN_MODULE_SRC})
-        TARGET_LINK_LIBRARIES(libDasModule_dasVulkan
+        LIST(APPEND DAS_MODULES_LIBS libDasModuleVulkan)
+
+        ADD_LIBRARY(libDasModuleVulkan ${DAS_VULKAN_MODULE_SRC})
+        TARGET_LINK_LIBRARIES(libDasModuleVulkan
             ${Vulkan_LIBRARY}
             glfw
         )
-        ADD_DEPENDENCIES(libDasModule_dasVulkan libDaScript)
-        TARGET_INCLUDE_DIRECTORIES(libDasModule_dasVulkan PUBLIC
+        ADD_DEPENDENCIES(libDasModuleVulkan libDaScript)
+        TARGET_INCLUDE_DIRECTORIES(libDasModuleVulkan PUBLIC
             ${Vulkan_INCLUDE_DIR}
         )
-        SETUP_CPP11(libDasModule_dasVulkan)
+        SETUP_CPP11(libDasModuleVulkan)
         
-        GET_TARGET_PROPERTY(DAS_VULKAN_INCLUDE_DIRS libDasModule_dasVulkan INCLUDE_DIRECTORIES)
+        GET_TARGET_PROPERTY(DAS_VULKAN_INCLUDE_DIRS libDasModuleVulkan INCLUDE_DIRECTORIES)
 
         SET(DAS_VULKAN_HEADERS_TO_BIND
             ${DAS_VULKAN_DIR}/src/headers_to_bind.h
@@ -78,7 +80,7 @@ IF(NOT DAS_VULKAN_INCLUDED)
         ADD_EXECUTABLE(dasVulkanExample ${DAS_VULKAN_EXAMPLE_SRC})
         TARGET_LINK_LIBRARIES(dasVulkanExample
             libDaScript
-            libDasModule_dasVulkan
+            libDasModuleVulkan
         )
         SETUP_CPP11(dasVulkanExample)
     ENDIF()
