@@ -1,4 +1,5 @@
 options indenting = 4
+options no_aot = true
 
 module vulkan_boost
 
