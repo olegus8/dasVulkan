@@ -21,8 +21,10 @@ struct Vertex
 
 
 //TODO: move to math?
+/*
 def clamp(t, a, b : uint)
     return min(max(t, a), b)
+*/
 
 
 //TODO: move to stdlib?
