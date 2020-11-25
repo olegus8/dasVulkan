@@ -38,7 +38,11 @@ IF(NOT DAS_VULKAN_INCLUDED)
             ${DAS_VULKAN_DIR}/src/module_generated.inc
         )
 
-        LIST(APPEND DAS_MODULES_LIBS libDasModuleVulkan)
+        REGISTER_MODULE(dasVulkan
+            libDasModuleVulkan
+            vulkan
+            vulkan_boost
+        )
 
         ADD_LIBRARY(libDasModuleVulkan ${DAS_VULKAN_MODULE_SRC})
         TARGET_LINK_LIBRARIES(libDasModuleVulkan
