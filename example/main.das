@@ -20,13 +20,6 @@ struct Vertex
     color : float3
 
 
-//TODO: move to math?
-/*
-def clamp(t, a, b : uint)
-    return min(max(t, a), b)
-*/
-
-
 //TODO: move to stdlib?
 def to_string(bytes : int8[])
     unsafe
