@@ -32,11 +32,45 @@ IF(NOT DAS_VULKAN_INCLUDED)
     ELSE()
         SET(DAS_VULKAN_DIR ${CMAKE_SOURCE_DIR}/modules/dasVulkan)
 
+        SET(DAS_VULKAN_MODULE_SRC
+            ${DAS_VULKAN_DIR}/src/vulkan_headers_to_bind.h
+            ${DAS_VULKAN_DIR}/src/vulkan_module.cpp
+            ${DAS_VULKAN_DIR}/src/vulkan_module_generated.inc
+        )
+
+        ADD_LIBRARY(libDasModuleVulkan ${DAS_VULKAN_EXAMPLE_SRC})
+        TARGET_LINK_LIBRARIES(libDasModuleVulkan
+            ${Vulkan_LIBRARY}
+            glfw
+        )
+        ADD_DEPENDENCIES(libDasModuleVulkan libDaScript)
+        TARGET_INCLUDE_DIRECTORIES(libDasVulkan PUBLIC
+            ${Vulkan_INCLUDE_DIR}
+        )
+        SETUP_CPP11(libDasModuleVulkan)
+        
+        GET_TARGET_PROPERTY(DAS_VULKAN_INCLUDE_DIRS libDasModuleVulkan INCLUDE_DIRECTORIES)
+
+        SET(DAS_VULKAN_HEADERS_TO_BIND
+            ${DAS_VULKAN_DIR}/src/vulkan_headers_to_bind.h
+        )
+
+        IF(DAS_BINDER_INCLUDED)
+            DAS_BINDER(
+                ${DAS_VULKAN_DIR}/src/vulkan_headers_to_bind.h
+                ${DAS_VULKAN_DIR}/src/vulkan_module_generated.inc
+                ${DAS_VULKAN_DIR}/src/vulkan_binding_config.py
+                ${DAS_VULKAN_INCLUDE_DIRS}
+            )
+        ELSE()
+            MESSAGE(STATUS "dasBinder not found. Using pre-generated Vulkan bindings.")
+        ENDIF()
+
+        DAS_VULKAN_COMPILE_SHADER(${DAS_VULKAN_DIR}/example/vert.glsl vert)
+        DAS_VULKAN_COMPILE_SHADER(${DAS_VULKAN_DIR}/example/frag.glsl frag)
+
         SET(DAS_VULKAN_EXAMPLE_SRC
             ${DAS_VULKAN_DIR}/example/main.cpp
-            ${DAS_VULKAN_DIR}/example/vulkan_headers_to_bind.h
-            ${DAS_VULKAN_DIR}/example/vulkan_module.cpp
-            ${DAS_VULKAN_DIR}/example/vulkan_module_generated.inc
             ${DAS_VULKAN_DIR}/example/vert.spv
             ${DAS_VULKAN_DIR}/example/frag.spv
         )
@@ -44,32 +78,8 @@ IF(NOT DAS_VULKAN_INCLUDED)
         ADD_EXECUTABLE(dasVulkanExample ${DAS_VULKAN_EXAMPLE_SRC})
         TARGET_LINK_LIBRARIES(dasVulkanExample
             libDaScript
-            ${Vulkan_LIBRARY}
-            glfw
-        )
-        TARGET_INCLUDE_DIRECTORIES(dasVulkanExample PUBLIC
-            ${Vulkan_INCLUDE_DIR}
+            libDasVulkan
         )
         SETUP_CPP11(dasVulkanExample)
-        
-        GET_TARGET_PROPERTY(DAS_VULKAN_EXAMPLE_INCLUDE_DIRS dasVulkanExample INCLUDE_DIRECTORIES)
-
-        DAS_VULKAN_COMPILE_SHADER(${DAS_VULKAN_DIR}/example/vert.glsl vert)
-        DAS_VULKAN_COMPILE_SHADER(${DAS_VULKAN_DIR}/example/frag.glsl frag)
-
-        SET(DAS_VULKAN_HEADERS_TO_BIND
-            ${DAS_VULKAN_DIR}/example/vulkan_headers_to_bind.h
-        )
-
-        IF(DAS_BINDER_INCLUDED)
-            DAS_BINDER(
-                ${DAS_VULKAN_DIR}/example/vulkan_headers_to_bind.h
-                ${DAS_VULKAN_DIR}/example/vulkan_module_generated.inc
-                ${DAS_VULKAN_DIR}/example/vulkan_binding_config.py
-                ${DAS_VULKAN_EXAMPLE_INCLUDE_DIRS}
-            )
-        ELSE()
-            MESSAGE(STATUS "dasBinder not found. Using pre-generated Vulkan bindings.")
-        ENDIF()
     ENDIF()
 ENDIF()
