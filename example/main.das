@@ -43,12 +43,6 @@ def safe_addr_val(var x : auto(T)&) : T-& ? #
         return reinterpret<T-&?#>(addr(x))
 
 
-//TODO: add it to builtin constants
-def UINT64_MAX()
-    unsafe
-        return reinterpret<uint64>(uint2(UINT_MAX,UINT_MAX))
-
-
 def with_physical_devices(inst; b : block<(d:array<VkPhysicalDevice>)>)
     var devices : array<VkPhysicalDevice>
     var count : uint
@@ -1054,7 +1048,7 @@ def with_swap_chain_dependent_state(
 
 def wait_fence(device; fence : VkFence)
     verify(VkResult VK_SUCCESS == device |> vkWaitForFences(
-        1u, fence |> safe_addr(), uint(VK_TRUE), UINT64_MAX()))
+        1u, fence |> safe_addr(), uint(VK_TRUE), ULONG_MAX))
 
 
 def reset_fence(device; fence : VkFence)
@@ -1070,7 +1064,7 @@ def with_next_image(device, swap_chain, sem_to_signal, fence_to_signal;
     //TODO: handle result properly. currently crashes on
     //      "internal integration error"
     verify(VkResult VK_SUCCESS == device |> vkAcquireNextImageKHR(
-        swap_chain, UINT64_MAX(), sem_to_signal, fence_to_signal,
+        swap_chain, ULONG_MAX, sem_to_signal, fence_to_signal,
         img_index |> safe_addr()))
     b |> invoke(img_index)
     /*
