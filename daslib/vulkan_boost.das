@@ -21,7 +21,6 @@ def safe_addr_val(var x : auto(T)&) : T-& ? #
         return reinterpret<T-&?#>(addr(x))
 
 
-[export]
 def with_physical_devices(inst; b : block<(d:array<VkPhysicalDevice>)>)
     var devices : array<VkPhysicalDevice>
     var count : uint
