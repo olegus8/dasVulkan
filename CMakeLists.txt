@@ -38,7 +38,7 @@ IF(NOT DAS_VULKAN_INCLUDED)
             ${DAS_VULKAN_DIR}/src/vulkan_module_generated.inc
         )
 
-        ADD_LIBRARY(libDasModuleVulkan ${DAS_VULKAN_EXAMPLE_SRC})
+        ADD_LIBRARY(libDasModuleVulkan ${DAS_VULKAN_MODULE_SRC})
         TARGET_LINK_LIBRARIES(libDasModuleVulkan
             ${Vulkan_LIBRARY}
             glfw
