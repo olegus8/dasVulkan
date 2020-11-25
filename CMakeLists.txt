@@ -33,9 +33,9 @@ IF(NOT DAS_VULKAN_INCLUDED)
         SET(DAS_VULKAN_DIR ${CMAKE_SOURCE_DIR}/modules/dasVulkan)
 
         SET(DAS_VULKAN_MODULE_SRC
-            ${DAS_VULKAN_DIR}/src/vulkan_headers_to_bind.h
-            ${DAS_VULKAN_DIR}/src/vulkan_module.cpp
-            ${DAS_VULKAN_DIR}/src/vulkan_module_generated.inc
+            ${DAS_VULKAN_DIR}/src/headers_to_bind.h
+            ${DAS_VULKAN_DIR}/src/module.cpp
+            ${DAS_VULKAN_DIR}/src/module_generated.inc
         )
 
         ADD_LIBRARY(libDasModuleVulkan ${DAS_VULKAN_MODULE_SRC})
@@ -52,14 +52,14 @@ IF(NOT DAS_VULKAN_INCLUDED)
         GET_TARGET_PROPERTY(DAS_VULKAN_INCLUDE_DIRS libDasModuleVulkan INCLUDE_DIRECTORIES)
 
         SET(DAS_VULKAN_HEADERS_TO_BIND
-            ${DAS_VULKAN_DIR}/src/vulkan_headers_to_bind.h
+            ${DAS_VULKAN_DIR}/src/headers_to_bind.h
         )
 
         IF(DAS_BINDER_INCLUDED)
             DAS_BINDER(
-                ${DAS_VULKAN_DIR}/src/vulkan_headers_to_bind.h
-                ${DAS_VULKAN_DIR}/src/vulkan_module_generated.inc
-                ${DAS_VULKAN_DIR}/src/vulkan_binding_config.py
+                ${DAS_VULKAN_DIR}/src/headers_to_bind.h
+                ${DAS_VULKAN_DIR}/src/module_generated.inc
+                ${DAS_VULKAN_DIR}/src/binding_config.py
                 ${DAS_VULKAN_INCLUDE_DIRS}
             )
         ELSE()
