@@ -159,27 +159,6 @@ def with_best_present_mode(device, surface; b : block<(mode:VkPresentModeKHR)>)
                     return
 
 
-def with_ext_props(device;
-    b : block<(props:table<uint;VkExtensionProperties>)>
-)
-    var props : array<VkExtensionProperties>
-    var count : uint
-    verify(VkResult VK_SUCCESS ==
-        device |> vkEnumerateDeviceExtensionProperties(
-            to_string(null), safe_addr(count), null))
-    props |> resize(int(count))
-    verify(VkResult VK_SUCCESS ==
-        device |> vkEnumerateDeviceExtensionProperties(
-            to_string(null), safe_addr(count), safe_addr_val(props[0])))
-
-    var props_table : table<uint; VkExtensionProperties>
-    for prop in props
-        let name <- prop.extensionName |> to_string()
-        props_table[hash(name)] <- prop
-    b |> invoke(props_table)
-    delete props
-
-
 def with_window(width, height, title; b : block<(w:GLFWwindow_DasHandle)>)
     var window = glfwCreateWindow(width, height, title,
         [[GLFWmonitor_DasHandle]], [[GLFWwindow_DasHandle]])

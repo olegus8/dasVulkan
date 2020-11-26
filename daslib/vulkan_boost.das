@@ -38,12 +38,6 @@ def with_best_physical_device(
         b |> invoke(best_device)
 
 
-def get_properties(device : VkPhysicalDevice)
-    var props : VkPhysicalDeviceProperties
-    device |> vkGetPhysicalDeviceProperties(safe_addr(props))
-    return <- props
-
-
 [private]
 def get_suitability_score(device : VkPhysicalDevice; surface : VkSurfaceKHR)
     var score = 1
@@ -107,3 +101,31 @@ def with_graphics_queue_family(
 
             b |> invoke(uint(index))
             return
+
+
+def get_properties(device : VkPhysicalDevice)
+    var props : VkPhysicalDeviceProperties
+    device |> vkGetPhysicalDeviceProperties(safe_addr(props))
+    return <- props
+
+
+def with_ext_props(
+    device : VkPhysicalDevice;
+    b : block<(props:table<uint;VkExtensionProperties>)>
+)
+    var props : array<VkExtensionProperties>
+    var count : uint
+    verify(VkResult VK_SUCCESS ==
+        device |> vkEnumerateDeviceExtensionProperties(
+            to_string(null), safe_addr(count), null))
+    props |> resize(int(count))
+    verify(VkResult VK_SUCCESS ==
+        device |> vkEnumerateDeviceExtensionProperties(
+            to_string(null), safe_addr(count), safe_addr_val(props[0])))
+
+    var props_table : table<uint; VkExtensionProperties>
+    for prop in props
+        let name <- prop.extensionName |> to_string()
+        props_table[hash(name)] <- prop
+    b |> invoke(props_table)
+    delete props
