@@ -92,7 +92,7 @@ def with_physical_devices(
 
 
 def with_best_physical_device(inst : VkInstance#; surface : VkSurfaceKHR#;
-    b : block<(d:VkPhysicalDevice)>
+    b : block<(d:VkPhysicalDevice#)>
 )
     var best_score : int = 0
     var best_device : VkPhysicalDevice
