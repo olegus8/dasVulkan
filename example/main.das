@@ -2,7 +2,6 @@
 
 require daslib/safe_addr
 require daslib/vulkan_boost
-require fio
 require math
 require strings
 require vulkan
@@ -15,28 +14,6 @@ let
 struct Vertex
     position : float2
     color : float3
-
-
-def with_shader_module(device, name; b : block<(m:VkShaderModule)>)
-    let code_fpath = "{get_das_root()}/modules/dasVulkan/example/{name}.spv"
-    var code : string
-    var code_size : uint64
-    code_fpath |> fopen("rb") <| $(f)
-        code <- f |> fread()
-        code_size = (f |> fstat()).size
-    var code_ptr : uint?
-    unsafe
-        code_ptr = reinterpret<uint?>(code)
-    let create_info <- [[VkShaderModuleCreateInfo
-        sType = VkStructureType VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO,
-        codeSize = code_size,
-        pCode = code_ptr
-    ]]
-    var shmod : VkShaderModule
-    verify(VkResult VK_SUCCESS == device |> vkCreateShaderModule(
-        create_info |> safe_addr(), null, shmod |> safe_addr()))
-    b |> invoke(shmod)
-    device |> vkDestroyShaderModule(shmod, null)
 
 
 def with_pipeline_vertex_input(
@@ -385,7 +362,7 @@ def with_swap_chain_independent_state(width, height, title; b : block<(
     instance |> with_device(phys_dev, surface)      <| $(device, queue)     {
     phys_dev |> with_best_format(surface)           <| $(surf_fmt)          {
     phys_dev |> with_best_present_mode(surface)     <| $(present_mode)      {
-    device |> with_shader_modules([[
+    device |> with_shader_modules([[auto[]
         "{get_das_root()}/modules/dasVulkan/example/vert.spv";
         "{get_das_root()}/modules/dasVulkan/example/frag.spv"
     ]]) <| $(shmods) {
