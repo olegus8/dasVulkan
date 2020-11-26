@@ -1,11 +1,11 @@
 //options log, log_infer_passes
 
 require daslib/safe_addr
+require daslib/vulkan_boost
 require fio
 require math
 require strings
 require vulkan
-require modules/dasVulkan/daslib/vulkan_boost
 
 
 let
