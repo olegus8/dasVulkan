@@ -426,3 +426,41 @@ def with_swap_chain_images(device : VkDevice#; swap_chain : VkSwapchainKHR#;
             swap_chain, safe_addr(count), addr(timages[0])))
         b |> invoke(timages)
     delete images
+
+
+def with_swap_chain_image_views(
+    device : VkDevice#;
+    images : array<VkImage>#;
+    surf_fmt : VkSurfaceFormatKHR#;
+    b : block<(d:array<VkImageView>#)>
+)
+    var views : array<VkImageView>
+    views |> resize(images |> length())
+    for image, view in images, views
+        let no_swizzle = VkComponentSwizzle VK_COMPONENT_SWIZZLE_IDENTITY
+        let create_info <- [[VkImageViewCreateInfo
+            sType = VkStructureType VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO,
+            image = image,
+            viewType = VkImageViewType VK_IMAGE_VIEW_TYPE_2D,
+            format = surf_fmt.format,
+            components = [[VkComponentMapping
+                r = no_swizzle,
+                g = no_swizzle,
+                b = no_swizzle,
+                a = no_swizzle]],
+            subresourceRange = [[VkImageSubresourceRange
+                aspectMask = uint(
+                    VkImageAspectFlagBits VK_IMAGE_ASPECT_COLOR_BIT),
+                baseMipLevel = 0u,
+                levelCount = 1u,
+                baseArrayLayer = 0u,
+                layerCount = 1u]]
+        ]]
+        verify(VkResult VK_SUCCESS == device |> vkCreateImageView(
+            safe_addr(create_info), null, safe_addr(view)))
+
+    b |> invoke(views)
+
+    for view in views
+        device |> vkDestroyImageView(view, null)
+    delete views

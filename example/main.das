@@ -17,41 +17,6 @@ struct Vertex
     color : float3
 
 
-def with_swap_chain_image_views(device, images, surf_fmt;
-    b : block<(d:array<VkImageView>)>
-)
-    var views : array<VkImageView>
-    views |> resize(images |> length())
-    for image, view in images, views
-        let no_swizzle = VkComponentSwizzle VK_COMPONENT_SWIZZLE_IDENTITY
-        let create_info <- [[VkImageViewCreateInfo
-            sType = VkStructureType VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO,
-            image = image,
-            viewType = VkImageViewType VK_IMAGE_VIEW_TYPE_2D,
-            format = surf_fmt.format,
-            components = [[VkComponentMapping
-                r = no_swizzle,
-                g = no_swizzle,
-                b = no_swizzle,
-                a = no_swizzle]],
-            subresourceRange = [[VkImageSubresourceRange
-                aspectMask = uint(
-                    VkImageAspectFlagBits VK_IMAGE_ASPECT_COLOR_BIT),
-                baseMipLevel = 0u,
-                levelCount = 1u,
-                baseArrayLayer = 0u,
-                layerCount = 1u]]
-        ]]
-        verify(VkResult VK_SUCCESS == device |> vkCreateImageView(
-            safe_addr(create_info), null, safe_addr(view)))
-
-    b |> invoke(views)
-
-    for view in views
-        device |> vkDestroyImageView(view, null)
-    delete views
-
-
 def with_render_pass(device, surf_fmt; b : block<(rp:VkRenderPass)>)
     let atts <- [[auto[] [[VkAttachmentDescription
         format = surf_fmt.format,
@@ -580,13 +545,13 @@ def with_fences(device, count, flags; b : block<(fences:array<VkFence>)>)
 
 
 def with_swap_chain_independent_state(width, height, title; b : block<(
-    instance        : VkInstance;
-    window          : GLFWwindow_DasHandle;
-    surface         : VkSurfaceKHR;
-    phys_dev        : VkPhysicalDevice;
-    device          : VkDevice;
+    instance        : VkInstance#;
+    window          : GLFWwindow_DasHandle#;
+    surface         : VkSurfaceKHR#;
+    phys_dev        : VkPhysicalDevice#;
+    device          : VkDevice#;
     queue           : VkQueue;
-    surf_fmt        : VkSurfaceFormatKHR implicit;
+    surf_fmt        : VkSurfaceFormatKHR#;
     present_mode    : VkPresentModeKHR;
     vert_shmod      : VkShaderModule;
     frag_shmod      : VkShaderModule;
@@ -799,7 +764,7 @@ def main
         phys_dev        : VkPhysicalDevice;
         device          : VkDevice;
         queue           : VkQueue;
-        surf_fmt        : VkSurfaceFormatKHR;
+        surf_fmt        : VkSurfaceFormatKHR#;
         present_mode    : VkPresentModeKHR;
         vert_shmod      : VkShaderModule;
         frag_shmod      : VkShaderModule;
