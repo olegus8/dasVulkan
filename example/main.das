@@ -98,7 +98,7 @@ def with_pipeline_creation_subobjects(
             multisampling,
             blending
         );
-    }}}}}}
+    }}}}}}}
 
 
 def with_graphics_pipeline(device, layout, render_pass,
