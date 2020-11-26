@@ -68,40 +68,6 @@ def with_graphics_pipeline(device, layout, render_pass,
     }}}}
 
 
-def with_memory_type(phys_dev, type_filter, needed_flags; b : block<(t:uint)>)
-    var actual_props : VkPhysicalDeviceMemoryProperties
-    phys_dev |> vkGetPhysicalDeviceMemoryProperties(
-        actual_props |> safe_addr())
-    for type_i in range(actual_props.memoryTypeCount)
-        if ((1u << uint(type_i)) & type_filter) == 0u
-            continue
-        let actual_flags = actual_props.memoryTypes[type_i].propertyFlags
-        if (actual_flags & needed_flags) == needed_flags
-            b |> invoke(uint(type_i))
-            return
-
-
-def with_buf_mem(device, phys_dev, buffer, mem_props;
-    b : block<(m:VkDeviceMemory)>
-)
-    var mem_reqs : VkMemoryRequirements
-    device |> vkGetBufferMemoryRequirements(buffer, mem_reqs |> safe_addr())
-    phys_dev |> with_memory_type(mem_reqs.memoryTypeBits, mem_props
-    ) <| $(mem_type)
-        device |> with_memory(mem_reqs.size, mem_type) <| $(mem)
-            b |> invoke(mem)
-
-
-def with_mem_backed_buf(device, phys_dev, buf_size, usage, mem_props;
-    b : block<(b:VkBuffer; m:VkDeviceMemory)>
-)
-    device |> with_buffer(uint64(buf_size), usage) <| $(buf)
-        device |> with_buf_mem(phys_dev, buf, mem_props) <| $(mem)
-            verify(VkResult VK_SUCCESS ==
-                device |> vkBindBufferMemory(buf, mem, uint64(0)))
-            b |> invoke(buf, mem)
-
-
 def with_mapped_vk_mem(device, mem, offset, size;
     b : block<(var a:array<auto(T)>#)>
 )
@@ -219,7 +185,7 @@ def with_baked_vertex_buffer(device, phys_dev, cmd_pool, queue;
 )
     let buf_size = typeinfo(sizeof type<VT>) * vertices |> length()
 
-    device |> with_mem_backed_buf(phys_dev, buf_size,
+    device |> with_mem_backed_buf(phys_dev, uint64(buf_size),
         uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_TRANSFER_DST_BIT) |
         uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_VERTEX_BUFFER_BIT),
         uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT)

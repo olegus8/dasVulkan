@@ -763,3 +763,51 @@ def with_memory(
         alloc_info |> safe_addr(), null, mem |> safe_addr()))
     b |> invoke(mem)
     device |> vkFreeMemory(mem, null)
+
+
+def with_memory_type(
+    phys_dev : VkPhysicalDevice#;
+    type_filter : uint;
+    needed_flags : uint;
+    b : block<(t:uint)>
+)
+    var actual_props : VkPhysicalDeviceMemoryProperties
+    phys_dev |> vkGetPhysicalDeviceMemoryProperties(
+        actual_props |> safe_addr())
+    for type_i in range(actual_props.memoryTypeCount)
+        if ((1u << uint(type_i)) & type_filter) == 0u
+            continue
+        let actual_flags = actual_props.memoryTypes[type_i].propertyFlags
+        if (actual_flags & needed_flags) == needed_flags
+            b |> invoke(uint(type_i))
+            return
+
+
+def with_buf_mem(
+    device : VkDevice#;
+    phys_dev : VkPhysicalDevice#;
+    buffer : VkBuffer#;
+    mem_props : uint;
+    b : block<(m:VkDeviceMemory#)>
+)
+    var mem_reqs : VkMemoryRequirements
+    device |> vkGetBufferMemoryRequirements(buffer, mem_reqs |> safe_addr())
+    phys_dev |> with_memory_type(mem_reqs.memoryTypeBits, mem_props
+    ) <| $(mem_type)
+        device |> with_memory(mem_reqs.size, mem_type) <| $(mem)
+            b |> invoke(mem)
+
+
+def with_mem_backed_buf(
+    device : VkDevice#;
+    phys_dev : VkPhysicalDevice#;
+    buf_size : uint64;
+    usage : uint;
+    mem_props : uint;
+    b : block<(b:VkBuffer#; m:VkDeviceMemory#)>
+)
+    device |> with_buffer(buf_size, usage) <| $(buf)
+        device |> with_buf_mem(phys_dev, buf, mem_props) <| $(mem)
+            verify(VkResult VK_SUCCESS ==
+                device |> vkBindBufferMemory(buf, mem, uint64(0)))
+            b |> invoke(buf, mem)
