@@ -37,6 +37,21 @@ let
         "VK_KHR_swapchain" //TODO: use VK_KHR_SWAPCHAIN_EXTENSION_NAME
     ]]
 
+    att_blending_disabled <- [[VkPipelineColorBlendAttachmentState
+        colorWriteMask =
+            uint(VkColorComponentFlagBits VK_COLOR_COMPONENT_R_BIT) |
+            uint(VkColorComponentFlagBits VK_COLOR_COMPONENT_G_BIT) |
+            uint(VkColorComponentFlagBits VK_COLOR_COMPONENT_B_BIT) |
+            uint(VkColorComponentFlagBits VK_COLOR_COMPONENT_A_BIT)
+    ]]
+
+    pipeline_blending_disabled <- [[VkPipelineColorBlendStateCreateInfo
+        sType = (VkStructureType
+            VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO),
+        attachmentCount = 1u,
+        pAttachments = safe_addr(att_blending_disabled)
+    ]]
+
 
 def with_physical_devices(
     inst : VkInstance#; b : block<(d:array<VkPhysicalDevice>#)>
@@ -554,26 +569,6 @@ def with_pipeline_shader_stages(
     stages |> lock() <| $(tstages)
         b |> invoke(tstages)
     delete stages
-
-
-def with_pipeline_blending_disabled(
-    //TODO: make it pass temporary. compilation fails currently if i do
-    b : block<(b:VkPipelineColorBlendStateCreateInfo)>
-)
-    let blending_atts <- [[auto[] [[VkPipelineColorBlendAttachmentState
-        colorWriteMask =
-            uint(VkColorComponentFlagBits VK_COLOR_COMPONENT_R_BIT) |
-            uint(VkColorComponentFlagBits VK_COLOR_COMPONENT_G_BIT) |
-            uint(VkColorComponentFlagBits VK_COLOR_COMPONENT_B_BIT) |
-            uint(VkColorComponentFlagBits VK_COLOR_COMPONENT_A_BIT)
-    ]]]]
-    let info <- [[VkPipelineColorBlendStateCreateInfo
-        sType = (VkStructureType
-            VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO),
-        attachmentCount = uint(blending_atts |> length()),
-        pAttachments = blending_atts |> safe_addr()
-    ]]
-    b |> invoke(info)
 
 
 def with_pipeline_multisampling_disabled(
