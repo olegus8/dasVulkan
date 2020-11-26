@@ -228,11 +228,8 @@ def with_formats(device : VkPhysicalDevice#; surface : VkSurfaceKHR#;
     delete formats
 
 
-def get_format_srgb8(
-    device : VkPhysicalDevice#;
-    surface : VkSurfaceKHR#;
-    b : block<(format:VkSurfaceFormatKHR)>
-)
+def get_format_srgb8(device : VkPhysicalDevice#; surface : VkSurfaceKHR#;
+) : VkSurfaceFormatKHR
     return <- device |> get_best_format(surface,
         VkFormat VK_FORMAT_B8G8R8A8_SRGB,
         VkColorSpaceKHR VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)
