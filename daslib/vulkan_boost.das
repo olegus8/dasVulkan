@@ -674,3 +674,35 @@ def with_graphics_pipeline_simple(
         [[VkPipelineCache]], 1u, safe_addr(pipe_info), null, safe_addr(pipe)))
     b |> invoke(pipe)
     device |> vkDestroyPipeline(pipe, null)
+
+
+def with_shader_modules(device, names;
+    b : block<(m:array<VkShaderModule>#)>
+)
+    var shmods : array<VkShaderModule>
+    shmods |> resize(names |> length())
+    shmods |> lock() <| $(tshmods)
+        for name in names
+            let code_fpath = "{get_das_root()}/modules/dasVulkan/example/{name}.spv"
+            var code : string
+            var code_size : uint64
+            code_fpath |> fopen("rb") <| $(f)
+                code <- f |> fread()
+                code_size = (f |> fstat()).size
+            var code_ptr : uint?
+            unsafe
+                code_ptr = reinterpret<uint?>(code)
+            let create_info <- [[VkShaderModuleCreateInfo
+                sType = (VkStructureType
+                    VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO),
+                codeSize = code_size,
+                pCode = code_ptr
+            ]]
+            var shmod : VkShaderModule
+            verify(VkResult VK_SUCCESS == device |> vkCreateShaderModule(
+                create_info |> safe_addr(), null, shmod |> safe_addr()))
+        b |> invoke(tshmods)
+
+    for shmod in shmods
+        device |> vkDestroyShaderModule(shmod, null)
+    delete shmods
