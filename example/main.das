@@ -82,7 +82,7 @@ def with_graphics_pipeline(device, layout, render_pass,
     phys_dev |> with_pipeline_viewport_full_window(surface, window
     ) <| $(viewport) {
     device |> with_graphics_pipeline_simple(
-        device, layout, render_pass, stages, vtx_input, input_assembly,
+        layout, render_pass, stages, vtx_input, input_assembly,
         viewport, rasterizer, multisampling, blending
     ) <| $(pipeline)
     {

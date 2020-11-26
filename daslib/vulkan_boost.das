@@ -639,7 +639,7 @@ def with_pipeline_input_assembly_tri_list(
 
 def with_graphics_pipeline_simple(
     device          : VkDevice#;
-    layout          : VkPipelineLayoutCreateInfo#;
+    layout          : VkPipelineLayout#;
     render_pass     : VkRenderPass#;
     stages          : array<VkPipelineShaderStageCreateInfo>#;
     vtx_input       : VkPipelineVertexInputStateCreateInfo;
