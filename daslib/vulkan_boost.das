@@ -175,7 +175,7 @@ def with_graphics_queue_family(
             found_index = index
             break
 
-    if found_index != -1:
+    if found_index != -1
         b |> invoke(uint(found_index))
 
 
