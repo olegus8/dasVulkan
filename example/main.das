@@ -185,13 +185,13 @@ def with_baked_vertex_buffer(device, phys_dev, cmd_pool, queue;
 )
     let buf_size = typeinfo(sizeof type<VT>) * vertices |> length()
 
-    device |> with_mem_backed_buf(phys_dev, uint64(buf_size), uint64(0),
+    device |> with_mem_backed_buf(phys_dev, uint64(buf_size),
         uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_TRANSFER_DST_BIT) |
         uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_VERTEX_BUFFER_BIT),
         uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT)
     ) <| $(vbuf, vbuf_mem)
 
-        device |> with_mem_backed_buf(phys_dev, uint64(buf_size), uint64(0),
+        device |> with_mem_backed_buf(phys_dev, uint64(buf_size),
             uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_TRANSFER_SRC_BIT),
             uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT)|
             uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_COHERENT_BIT)
