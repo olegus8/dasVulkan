@@ -586,3 +586,18 @@ def with_pipeline_multisampling_disabled(
         minSampleShading = 1.0f
     ]]
     b |> invoke(info)
+
+
+def with_pipeline_basic_rasterizer(
+    //TODO: make it pass temporary. compilation fails currently if i do
+    b : block<(b:VkPipelineRasterizationStateCreateInfo)>
+)
+    let info <- [[VkPipelineRasterizationStateCreateInfo
+        sType = (VkStructureType
+            VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO),
+        polygonMode = VkPolygonMode VK_POLYGON_MODE_FILL,
+        lineWidth = 1.0f,
+        cullMode = uint(VkCullModeFlagBits VK_CULL_MODE_BACK_BIT),
+        frontFace = VkFrontFace VK_FRONT_FACE_CLOCKWISE
+    ]]
+    b |> invoke(info)

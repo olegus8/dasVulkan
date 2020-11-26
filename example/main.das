@@ -93,17 +93,6 @@ def with_pipeline_viewport(phys_dev, surface, window;
     ]])
 
 
-def make_pipeline_rasterizer()
-    return <- [[VkPipelineRasterizationStateCreateInfo
-        sType = (VkStructureType
-            VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO),
-        polygonMode = VkPolygonMode VK_POLYGON_MODE_FILL,
-        lineWidth = 1.0f,
-        cullMode = uint(VkCullModeFlagBits VK_CULL_MODE_BACK_BIT),
-        frontFace = VkFrontFace VK_FRONT_FACE_CLOCKWISE
-    ]]
-
-
 def with_pipeline_creation_subobjects(
     phys_dev, surface, window, vert_shmod, frag_shmod;
     b : block<(
