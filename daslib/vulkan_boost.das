@@ -52,6 +52,13 @@ let
         pAttachments = safe_addr(att_blending_disabled)
     ]]
 
+    pipeline_multisampling_disabled <- [[VkPipelineMultisampleStateCreateInfo
+        sType = (VkStructureType
+            VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO),
+        rasterizationSamples = VkSampleCountFlagBits VK_SAMPLE_COUNT_1_BIT,
+        minSampleShading = 1.0f
+    ]]
+
 
 def with_physical_devices(
     inst : VkInstance#; b : block<(d:array<VkPhysicalDevice>#)>
@@ -569,19 +576,6 @@ def with_pipeline_shader_stages(
     stages |> lock() <| $(tstages)
         b |> invoke(tstages)
     delete stages
-
-
-def with_pipeline_multisampling_disabled(
-    //TODO: make it pass temporary. compilation fails currently if i do
-    b : block<(b:VkPipelineMultisampleStateCreateInfo)>
-)
-    let info <- [[VkPipelineMultisampleStateCreateInfo
-        sType = (VkStructureType
-            VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO),
-        rasterizationSamples = VkSampleCountFlagBits VK_SAMPLE_COUNT_1_BIT,
-        minSampleShading = 1.0f
-    ]]
-    b |> invoke(info)
 
 
 def with_pipeline_rasterizer_simple(

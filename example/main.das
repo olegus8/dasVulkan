@@ -49,7 +49,6 @@ def with_graphics_pipeline(device, layout, render_pass,
     b : block<(p:VkPipeline)>
 )
     with_pipeline_vertex_input()                <| $(vtx_input)         {
-    with_pipeline_multisampling_disabled()      <| $(multisampling)     {
     with_pipeline_rasterizer_simple()           <| $(rasterizer)        {
     with_pipeline_input_assembly_tri_list()     <| $(input_assembly)    {
     phys_dev |> with_pipeline_viewport_full_window(
@@ -61,7 +60,9 @@ def with_graphics_pipeline(device, layout, render_pass,
     ) <| $(stages) {
     device |> with_graphics_pipeline_simple(
         layout, render_pass, stages, vtx_input, input_assembly,
-        viewport, rasterizer, multisampling, pipeline_blending_disabled
+        viewport, rasterizer,
+        pipeline_multisampling_disabled,
+        pipeline_blending_disabled
     ) <| $(pipeline)
     {
         b |> invoke(pipeline);
