@@ -744,7 +744,9 @@ def create_buffer(
         usage = usage,
         sharingMode = VkSharingMode VK_SHARING_MODE_EXCLUSIVE
     ]]
-    var buf <- [[Buffer device = reinterpret<VkDevice>(device)]]
+    var buf : Buffer
+    unsafe
+        buf.device = reinterpret<VkDevice>(device)
     verify(VkResult VK_SUCCESS == device |> vkCreateBuffer(
         safe_addr(create_info), null, safe_addr(buf.buffer)))
     return <- Buffer
