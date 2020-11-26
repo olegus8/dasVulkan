@@ -38,8 +38,14 @@ def with_best_physical_device(
         b |> invoke(best_device)
 
 
+def get_properties(device : VkPhysicalDevice)
+    var props : VkPhysicalDeviceProperties
+    device |> vkGetPhysicalDeviceProperties(safe_addr(props))
+    return <- props
+
+
 [private]
-def get_suitability_score(device : VkPhysicalDevice, surface : VkSurfaceKHR)
+def get_suitability_score(device : VkPhysicalDevice; surface : VkSurfaceKHR)
     var score = 1
 
     var has_graphics = false

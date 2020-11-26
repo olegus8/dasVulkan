@@ -180,12 +180,6 @@ def with_ext_props(device;
     delete props
 
 
-def get_properties(device)
-    var props : VkPhysicalDeviceProperties
-    device |> vkGetPhysicalDeviceProperties(safe_addr(props))
-    return <- props
-
-
 def with_window(width, height, title; b : block<(w:GLFWwindow_DasHandle)>)
     var window = glfwCreateWindow(width, height, title,
         [[GLFWmonitor_DasHandle]], [[GLFWwindow_DasHandle]])
