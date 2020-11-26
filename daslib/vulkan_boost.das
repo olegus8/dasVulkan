@@ -765,13 +765,13 @@ def with_command_pool(
 
 def with_buffer(
     device : VkDevice#;
-    buf_size : auto;
+    buf_size : uint64;
     usage : uint;
     b : block<(b:VkBuffer#)>
 )
     let create_info <- [[VkBufferCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO,
-        size = uint64(buf_size),
+        size = buf_size,
         usage = usage,
         sharingMode = VkSharingMode VK_SHARING_MODE_EXCLUSIVE
     ]]
@@ -780,3 +780,21 @@ def with_buffer(
         create_info |> safe_addr(), null, buf |> safe_addr()))
     b |> invoke(buf)
     device |> vkDestroyBuffer(buf, null)
+
+
+def with_memory(
+    device : VkDevice#;
+    size : uint64;
+    mem_type_index : uint;
+    b : block<(m:VkDeviceMemory)>
+)
+    let alloc_info <- [[VkMemoryAllocateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO,
+        allocationSize = size,
+        memoryTypeIndex = mem_type
+    ]]
+    var mem : VkDeviceMemory
+    verify(VkResult VK_SUCCESS == device |> vkAllocateMemory(
+        alloc_info |> safe_addr(), null, mem |> safe_addr()))
+    b |> invoke(mem)
+    device |> vkFreeMemory(mem, null)

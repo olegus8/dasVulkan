@@ -68,19 +68,6 @@ def with_graphics_pipeline(device, layout, render_pass,
     }}}}}}}}
 
 
-def with_memory(device, size, mem_type; b : block<(m:VkDeviceMemory)>)
-    let alloc_info <- [[VkMemoryAllocateInfo
-        sType = VkStructureType VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO,
-        allocationSize = size,
-        memoryTypeIndex = mem_type
-    ]]
-    var mem : VkDeviceMemory
-    verify(VkResult VK_SUCCESS == device |> vkAllocateMemory(
-        alloc_info |> safe_addr(), null, mem |> safe_addr()))
-    b |> invoke(mem)
-    device |> vkFreeMemory(mem, null)
-
-
 def with_memory_type(phys_dev, type_filter, needed_flags; b : block<(t:uint)>)
     var actual_props : VkPhysicalDeviceMemoryProperties
     phys_dev |> vkGetPhysicalDeviceMemoryProperties(
