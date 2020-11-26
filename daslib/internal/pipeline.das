@@ -4,6 +4,7 @@ options no_aot = true
 require daslib/safe_addr
 
 require vulkan
+require internal/device
 
 let
     ATT_BLENDING_DISABLED <- [[VkPipelineColorBlendAttachmentState
