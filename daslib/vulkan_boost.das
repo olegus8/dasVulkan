@@ -682,7 +682,7 @@ def with_shader_modules(device: VkDevice#; code_fpaths : auto;
     var shmods : array<VkShaderModule>
     shmods |> resize(code_fpaths |> length())
     shmods |> lock() <| $(tshmods)
-        for code_fpath in code_fpaths
+        for code_fpath, tshmod in code_fpaths, tshmods
             var code : string
             var code_size : uint64
             code_fpath |> fopen("rb") <| $(f)
@@ -697,9 +697,8 @@ def with_shader_modules(device: VkDevice#; code_fpaths : auto;
                 codeSize = code_size,
                 pCode = code_ptr
             ]]
-            var shmod : VkShaderModule
             verify(VkResult VK_SUCCESS == device |> vkCreateShaderModule(
-                create_info |> safe_addr(), null, shmod |> safe_addr()))
+                create_info |> safe_addr(), null, addr(tshmod))
         b |> invoke(tshmods)
 
     for shmod in shmods
