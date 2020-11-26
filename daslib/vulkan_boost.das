@@ -325,7 +325,7 @@ def with_device(
         var device : VkDevice
         let create_info = [[VkDeviceCreateInfo
             sType = VkStructureType VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO,
-            pQueueCreateInfos = safe_addr(pqueue_info),
+            pQueueCreateInfos = safe_addr(queue_info),
             queueCreateInfoCount = 1u,
             pEnabledFeatures = safe_addr(features),
             enabledExtensionCount = uint(REQUIRED_EXTENSIONS |> length()),
@@ -357,6 +357,8 @@ def with_queue_create_info(
         queueCount = 1u,
         pQueuePriorities = safe_addr(priority)
     ]]
+
+    //TODO: should info be a temporary type here?
     b |> invoke(info)
 
 
