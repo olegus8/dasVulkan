@@ -676,13 +676,13 @@ def with_graphics_pipeline_simple(
     device |> vkDestroyPipeline(pipe, null)
 
 
-def with_shader_modules(device: VkDevice#; names : auto;
+def with_shader_modules(device: VkDevice#; code_fpaths : auto;
     b : block<(m:array<VkShaderModule>#)>
 )
     var shmods : array<VkShaderModule>
-    shmods |> resize(names |> length())
+    shmods |> resize(code_fpaths |> length())
     shmods |> lock() <| $(tshmods)
-        for name in names
+        for code_fpath in code_fpaths
             var code : string
             var code_size : uint64
             code_fpath |> fopen("rb") <| $(f)
