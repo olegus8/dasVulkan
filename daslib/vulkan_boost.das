@@ -676,14 +676,13 @@ def with_graphics_pipeline_simple(
     device |> vkDestroyPipeline(pipe, null)
 
 
-def with_shader_modules(device, names;
+def with_shader_modules(device: VkDevice#; names : auto;
     b : block<(m:array<VkShaderModule>#)>
 )
     var shmods : array<VkShaderModule>
     shmods |> resize(names |> length())
     shmods |> lock() <| $(tshmods)
         for name in names
-            let code_fpath = "{get_das_root()}/modules/dasVulkan/example/{name}.spv"
             var code : string
             var code_size : uint64
             code_fpath |> fopen("rb") <| $(f)

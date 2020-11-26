@@ -385,8 +385,10 @@ def with_swap_chain_independent_state(width, height, title; b : block<(
     instance |> with_device(phys_dev, surface)      <| $(device, queue)     {
     phys_dev |> with_best_format(surface)           <| $(surf_fmt)          {
     phys_dev |> with_best_present_mode(surface)     <| $(present_mode)      {
-    device |> with_shader_module("vert")            <| $(vert_shmod)        {
-    device |> with_shader_module("frag")            <| $(frag_shmod)        {
+    device |> with_shader_modules([[
+        "{get_das_root()}/modules/dasVulkan/example/vert.spv",
+        "{get_das_root()}/modules/dasVulkan/example/frag.spv"
+    ]]) <| $(shmods) {
     device |> with_render_pass_simple(surf_fmt)     <| $(render_pass)       {
     device |> with_pipeline_layout_simple()         <| $(pipeline_layout)   {
     device |> with_command_pool(phys_dev, surface)  <| $(cmd_pool)
@@ -400,13 +402,13 @@ def with_swap_chain_independent_state(width, height, title; b : block<(
             queue,
             surf_fmt,
             present_mode,
-            vert_shmod,
-            frag_shmod,
+            shmods[0],
+            shmods[1],
             render_pass,
             pipeline_layout,
             cmd_pool
         );
-    }}}}}}}}}}}}
+    }}}}}}}}}}}
 
 
 def with_swap_chain_dependent_state(
