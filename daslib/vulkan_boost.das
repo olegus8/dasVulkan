@@ -182,7 +182,7 @@ def with_formats(device : VkPhysicalDevice; surface : VkSurfaceKHR;
 
 
 def with_best_format(device : VkPhysicalDevice; surface : VkSurfaceKHR;
-    b : block<(format:VkSurfaceFormatKHR)>
+    b : block<(format:VkSurfaceFormatKHR#)>
 )
     device |> with_formats(surface) <| $(formats)
         // picking ideal format if available
@@ -200,7 +200,7 @@ def with_best_format(device : VkPhysicalDevice; surface : VkSurfaceKHR;
 
 
 def with_present_modes(device : VkPhysicalDevice; surface : VkSurfaceKHR;
-    b : block<(formats:array<VkPresentModeKHR>)>
+    b : block<(formats:array<VkPresentModeKHR>#)>
 )
     var modes : array<VkPresentModeKHR>
     var count : uint
@@ -208,15 +208,16 @@ def with_present_modes(device : VkPhysicalDevice; surface : VkSurfaceKHR;
         device |> vkGetPhysicalDeviceSurfacePresentModesKHR(
             surface, safe_addr(count), null))
     modes |> resize(int(count))
-    verify(VkResult VK_SUCCESS ==
-        device |> vkGetPhysicalDeviceSurfacePresentModesKHR(
-            surface, safe_addr(count), safe_addr_val(modes[0])))
-    b |> invoke(modes)
+    modes |> lock() <| $(tmodes)
+        verify(VkResult VK_SUCCESS ==
+            device |> vkGetPhysicalDeviceSurfacePresentModesKHR(
+                surface, safe_addr(count), addr(tmodes[0])))
+        b |> invoke(tmodes)
     delete modes
 
 
 def with_best_present_mode(device : VkPhysicalDevice; surface : VkSurfaceKHR;
-    b : block<(mode:VkPresentModeKHR)>
+    b : block<(mode:VkPresentModeKHR#)>
 )
     device |> with_present_modes(surface) <| $(modes)
         for preferred in [[auto[]

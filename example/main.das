@@ -753,7 +753,7 @@ def with_swap_chain_independent_state(width, height, title; b : block<(
     phys_dev        : VkPhysicalDevice;
     device          : VkDevice;
     queue           : VkQueue;
-    surf_fmt        : VkSurfaceFormatKHR;
+    surf_fmt        : VkSurfaceFormatKHR implicit;
     present_mode    : VkPresentModeKHR;
     vert_shmod      : VkShaderModule;
     frag_shmod      : VkShaderModule;
