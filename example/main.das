@@ -65,7 +65,7 @@ def with_graphics_pipeline(device, layout, render_pass,
     ) <| $(pipeline)
     {
         b |> invoke(pipeline);
-    }}}}}
+    }}}}
 
 
 def with_memory_type(phys_dev, type_filter, needed_flags; b : block<(t:uint)>)
