@@ -53,18 +53,6 @@ def with_swap_chain(device, phys_dev, surface, window, surf_fmt, present_mode;
     device |> vkDestroySwapchainKHR(swap_chain, null)
 
 
-def with_swap_chain_images(device, swap_chain; b : block<(d:array<VkImage>)>)
-    var images : array<VkImage>
-    var count : uint
-    verify(VkResult VK_SUCCESS == device |> vkGetSwapchainImagesKHR(
-        swap_chain, safe_addr(count), null))
-    images |> resize(int(count))
-    verify(VkResult VK_SUCCESS == device |> vkGetSwapchainImagesKHR(
-        swap_chain, safe_addr(count), safe_addr_val(images[0])))
-    b |> invoke(images)
-    delete images
-
-
 def with_swap_chain_image_views(device, images, surf_fmt;
     b : block<(d:array<VkImageView>)>
 )

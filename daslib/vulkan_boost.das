@@ -369,3 +369,18 @@ def get_capabilities(device : VkPhysicalDevice#; surface : VkSurfaceKHR#)
         device |> vkGetPhysicalDeviceSurfaceCapabilitiesKHR(
             surface, safe_addr(caps)))
     return <- caps
+
+
+def with_swap_chain_images(device : VkDevice#; swap_chain : VkSwapchainKHR#;
+    b : block<(d:array<VkImage>#)>
+)
+    var images : array<VkImage>
+    var count : uint
+    verify(VkResult VK_SUCCESS == device |> vkGetSwapchainImagesKHR(
+        swap_chain, safe_addr(count), null))
+    images |> resize(int(count))
+    images |> lock() <| $(timages)
+        verify(VkResult VK_SUCCESS == device |> vkGetSwapchainImagesKHR(
+            swap_chain, safe_addr(count), addr(timages[0])))
+        b |> invoke(timages)
+    delete images
