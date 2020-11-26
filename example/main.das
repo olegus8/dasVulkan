@@ -510,7 +510,7 @@ def with_swap_chain_independent_state(width, height, title; b : block<(
     device |> with_shader_module("vert")            <| $(vert_shmod)        {
     device |> with_shader_module("frag")            <| $(frag_shmod)        {
     device |> with_basic_render_pass(surf_fmt)      <| $(render_pass)       {
-    device |> with_pipeline_layout()                <| $(pipeline_layout)   {
+    device |> with_basic_pipeline_layout()          <| $(pipeline_layout)   {
     device |> with_command_pool(phys_dev, surface)  <| $(cmd_pool)
     {
         b |> invoke(
