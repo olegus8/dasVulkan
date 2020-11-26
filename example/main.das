@@ -75,24 +75,6 @@ def make_pipeline_input_assembly()
     ]]
 
 
-def with_pipeline_viewport(phys_dev, surface, window;
-    b : block<(i:VkPipelineViewportStateCreateInfo)>
-)
-    let extent <- phys_dev |> get_swap_extent(surface, window)
-    let viewports <- [[auto[] [[VkViewport minDepth = 0.0f, maxDepth = 1.0f,
-        width = float(extent.width), height = float(extent.height)
-    ]]]]
-    let scissors <- [[auto[] [[VkRect2D extent = extent]]]]
-    b |> invoke([[VkPipelineViewportStateCreateInfo
-        sType = (VkStructureType
-            VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO),
-        viewportCount = uint(viewports |> length()),
-        pViewports = viewports |> safe_addr(),
-        scissorCount = uint(scissors |> length()),
-        pScissors = scissors |> safe_addr()
-    ]])
-
-
 def with_pipeline_creation_subobjects(
     phys_dev, surface, window, vert_shmod, frag_shmod;
     b : block<(
@@ -111,7 +93,7 @@ def with_pipeline_creation_subobjects(
     with_pipeline_vertex_input() <| $(vtx_input) {
     with_pipeline_blending_disabled() <| $(blending) {
     with_pipeline_multisampling_disabled() <| $(multisampling) {
-    with_pipeline_basic_rasterizer() <| $(rasterizer) {
+    with_pipeline_rasterizer_basic() <| $(rasterizer) {
     phys_dev |> with_pipeline_viewport(surface, window) <| $(viewport) {
         b |> invoke(
             stages,

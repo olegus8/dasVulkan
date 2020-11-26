@@ -588,7 +588,7 @@ def with_pipeline_multisampling_disabled(
     b |> invoke(info)
 
 
-def with_pipeline_basic_rasterizer(
+def with_pipeline_rasterizer_basic(
     //TODO: make it pass temporary. compilation fails currently if i do
     b : block<(b:VkPipelineRasterizationStateCreateInfo)>
 )
@@ -601,3 +601,25 @@ def with_pipeline_basic_rasterizer(
         frontFace = VkFrontFace VK_FRONT_FACE_CLOCKWISE
     ]]
     b |> invoke(info)
+
+
+def with_pipeline_viewport_full_window(
+    phys_dev : VkPhysicalDevice#;
+    surface : VkSurfaceKHR;
+    window : GLFWwindow_DasHandle#;
+    //TODO: make it pass temporary. compilation fails currently if i do
+    b : block<(i:VkPipelineViewportStateCreateInfo)>
+)
+    let extent <- phys_dev |> get_swap_extent(surface, window)
+    let viewports <- [[auto[] [[VkViewport minDepth = 0.0f, maxDepth = 1.0f,
+        width = float(extent.width), height = float(extent.height)
+    ]]]]
+    let scissors <- [[auto[] [[VkRect2D extent = extent]]]]
+    b |> invoke([[VkPipelineViewportStateCreateInfo
+        sType = (VkStructureType
+            VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO),
+        viewportCount = uint(viewports |> length()),
+        pViewports = viewports |> safe_addr(),
+        scissorCount = uint(scissors |> length()),
+        pScissors = scissors |> safe_addr()
+    ]])
