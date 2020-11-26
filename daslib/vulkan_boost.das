@@ -10,6 +10,7 @@ require vulkan
 
 require private/buffer public
 require private/core public
+require private/device public
 
 
 let
