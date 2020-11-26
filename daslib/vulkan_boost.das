@@ -152,11 +152,19 @@ def with_queue_families(device : VkPhysicalDevice#;
     delete families
 
 
-def with_graphics_queue_family(
+def has_graphics_queue_family(
+    device : VkPhysicalDevice#;
+    surface : VkSurfaceKHR#
+) : bool
+    return device |> get_graphics_queue_family(surface) != UINT_MAX
+
+
+def get_graphics_queue_family(
     device : VkPhysicalDevice#;
     surface : VkSurfaceKHR#;
     b : block<(index:uint)>
 )
+    var found_index : uint = UINT_MAX
     device |> with_queue_families() <| $(families)
         for family, index in families, range(INT_MAX)
             var can_present : uint
@@ -170,8 +178,9 @@ def with_graphics_queue_family(
             if (family.queueFlags & graphics_bit) == 0u
                 continue
 
-            b |> invoke(uint(index))
+            found_index = uint(index)
             return
+    return found_index
 
 
 def get_properties(device : VkPhysicalDevice#)
@@ -315,64 +324,44 @@ def with_device(
     surface : VkSurfaceKHR;
     b : block<(device:VkDevice#; queue:VkQueue#)>
 )
-    phys_dev |> with_queue_create_infos(surface) <| $(queue_infos)
-        var pqueue_infos : VkDeviceQueueCreateInfo const ?
-        unsafe
-            pqueue_infos = reinterpret<VkDeviceQueueCreateInfo const ?>(addr(queue_infos[0]))
+    phys_dev |> with_queue_create_info(surface) <| $(queue_info)
         let features : VkPhysicalDeviceFeatures
         var device : VkDevice
         let create_info = [[VkDeviceCreateInfo
             sType = VkStructureType VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO,
             pQueueCreateInfos = pqueue_infos,
-            queueCreateInfoCount = uint(queue_infos |> length()),
-            pEnabledFeatures = safe_addr(features),
+            queueCreateInfoCount = 1u,
+            pEnabledFeatures = addr(queue_info),
             enabledExtensionCount = uint(REQUIRED_EXTENSIONS |> length()),
             ppEnabledExtensionNames = safe_addr(REQUIRED_EXTENSIONS[0])
         ]]
         verify(VkResult VK_SUCCESS == vkCreateDevice(
             phys_dev, safe_addr(create_info), null, safe_addr(device)))
         var queue : VkQueue
-        phys_dev |> with_graphics_queue_family(surface) <| $(qfam)
-            device |> vkGetDeviceQueue(qfam, 0u, queue |> safe_addr())
+        let qfam = phys_dev |> get_graphics_queue_family(surface)
+        device |> vkGetDeviceQueue(qfam, 0u, queue |> safe_addr())
         b |> invoke(device, queue)
         device |> vkDeviceWaitIdle()
         device |> vkDestroyDevice(null)
 
 
 [private]
-def with_queue_create_infos(
+def with_queue_create_info(
     device : VkPhysicalDevice#;
     surface : VkSurfaceKHR#;
-    b : block<(infos:array<VkDeviceQueueCreateInfo>#)>
+    b : block<(VkDeviceQueueCreateInfo#)>
 )
-    var families : array<uint>
-    var priorities : array<float>
-    device |> with_graphics_queue_family(surface) <| $(qfam)
-        families |> push(qfam)
-        priorities |> push(1.0f)
+    let family = device |> get_graphics_queue_family(surface)
+    let priority = 1.0f
 
-    var infos : array<VkDeviceQueueCreateInfo>
-    infos |> reserve(families |> length())
-    priorities |> lock() <| $(tpriorities)
-        var ppriorities : float const ?
-        unsafe
-            ppriorities = reinterpret<float const ?>(addr(tpriorities[0]))
-        for family in families
-            infos |> emplace([[
-                VkDeviceQueueCreateInfo
-                    sType = (VkStructureType
-                        VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO),
-                    queueFamilyIndex = family,
-                    queueCount = uint(priorities |> length()),
-                    pQueuePriorities = ppriorities
-            ]])
-
-    infos |> lock() <| $(tinfos)
-        b |> invoke(tinfos)
-
-    delete families
-    delete priorities
-    delete infos
+    let info <- [[VkDeviceQueueCreateInfo
+        sType = (VkStructureType
+            VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO),
+        queueFamilyIndex = family,
+        queueCount = 1u,
+        pQueuePriorities = safe_addr(priority)
+    ]]
+    b |> invoke(info)
 
 
 def get_swap_extent(
