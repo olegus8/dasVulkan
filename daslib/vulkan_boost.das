@@ -791,7 +791,7 @@ def with_memory(
     let alloc_info <- [[VkMemoryAllocateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO,
         allocationSize = size,
-        memoryTypeIndex = mem_type
+        memoryTypeIndex = mem_type_index
     ]]
     var mem : VkDeviceMemory
     verify(VkResult VK_SUCCESS == device |> vkAllocateMemory(
