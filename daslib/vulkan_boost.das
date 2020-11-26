@@ -97,8 +97,7 @@ def get_suitability_score(device : VkPhysicalDevice#; surface : VkSurfaceKHR#)
     return score
 
 
-def with_queue_families(
-    device : VkPhysicalDevice#;
+def with_queue_families(device : VkPhysicalDevice#;
     b : block<(families: array<VkQueueFamilyProperties>#)>
 )
     var families : array<VkQueueFamilyProperties>
