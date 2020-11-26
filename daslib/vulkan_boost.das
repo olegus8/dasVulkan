@@ -3,8 +3,9 @@ options no_aot = true
 
 module vulkan_boost
 
-require vulkan
 require daslib/safe_addr
+require math
+require vulkan
 
 
 //TODO: move to stdlib?
