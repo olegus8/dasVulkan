@@ -219,7 +219,7 @@ def with_present_modes(device : VkPhysicalDevice#; surface : VkSurfaceKHR#;
     delete modes
 
 
-def with_best_present_mode(device : VkPhysicalDevice; surface : VkSurfaceKHR;
+def with_best_present_mode(device : VkPhysicalDevice#; surface : VkSurfaceKHR#;
     b : block<(mode:VkPresentModeKHR#)>
 )
     device |> with_present_modes(surface) <| $(modes)
