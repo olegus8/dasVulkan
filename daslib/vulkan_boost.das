@@ -111,10 +111,7 @@ def with_best_physical_device(inst : VkInstance#; surface : VkSurfaceKHR#;
 def get_suitability_score(device : VkPhysicalDevice#; surface : VkSurfaceKHR#)
     var score = 1
 
-    var has_graphics = false
-    device |> with_graphics_queue_family(surface) <| $(graphics_i)
-        has_graphics = true
-    if ! has_graphics
+    if ! device |> has_graphics_queue_family(surface)
         score = 0
     
     var props <- device |> get_properties()
