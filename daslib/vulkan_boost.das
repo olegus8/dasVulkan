@@ -165,7 +165,7 @@ def with_ext_props(device : VkPhysicalDevice;
 
 
 def with_formats(device : VkPhysicalDevice; surface : VkSurfaceKHR;
-    b : block<(formats:array<VkSurfaceFormatKHR>)>
+    b : block<(formats:array<VkSurfaceFormatKHR>#)>
 )
     var formats : array<VkSurfaceFormatKHR>
     var count : uint
@@ -173,10 +173,11 @@ def with_formats(device : VkPhysicalDevice; surface : VkSurfaceKHR;
         device |> vkGetPhysicalDeviceSurfaceFormatsKHR(
             surface, safe_addr(count), null))
     formats |> resize(int(count))
-    verify(VkResult VK_SUCCESS ==
-        device |> vkGetPhysicalDeviceSurfaceFormatsKHR(
-            surface, safe_addr(count), safe_addr_val(formats[0])))
-    b |> invoke(formats)
+    formats |> lock() <| $(tformats)
+        verify(VkResult VK_SUCCESS ==
+            device |> vkGetPhysicalDeviceSurfaceFormatsKHR(
+                surface, safe_addr(count), addr(tformats[0])))
+        b |> invoke(tformats)
     delete formats
 
 
