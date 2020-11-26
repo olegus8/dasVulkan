@@ -647,7 +647,7 @@ def with_graphics_pipeline_simple(
     viewport        : VkPipelineViewportStateCreateInfo;
     rasterizer      : VkPipelineRasterizationStateCreateInfo;
     multisampling   : VkPipelineMultisampleStateCreateInfo;
-    blending        : VkPipelineColorBlendStateCreateInfo implicit
+    blending        : VkPipelineColorBlendStateCreateInfo implicit;
     b : block<(p:VkPipeline#)>
 )
     var pstages : VkPipelineShaderStageCreateInfo const ?
