@@ -122,7 +122,7 @@ def with_pipeline_creation_subobjects(
         viewport : VkPipelineViewportStateCreateInfo;
         rasterizer : VkPipelineRasterizationStateCreateInfo;
         multisampling : VkPipelineMultisampleStateCreateInfo;
-        blending : VkPipelineColorBlendStateCreateInfo#
+        blending : VkPipelineColorBlendStateCreateInfo implicit
     )>
 )
     with_pipeline_shader_stages(

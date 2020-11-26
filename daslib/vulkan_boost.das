@@ -556,7 +556,8 @@ def with_pipeline_shader_stages(
 
 
 def with_pipeline_blending_disabled(
-    b : block<(b:VkPipelineColorBlendStateCreateInfo#)>
+    //TODO: make it pass temporary. compilation fails currently if i do
+    b : block<(b:VkPipelineColorBlendStateCreateInfo)>
 )
     let blending_atts <- [[auto[] [[VkPipelineColorBlendAttachmentState
         colorWriteMask =
@@ -565,7 +566,7 @@ def with_pipeline_blending_disabled(
             uint(VkColorComponentFlagBits VK_COLOR_COMPONENT_B_BIT) |
             uint(VkColorComponentFlagBits VK_COLOR_COMPONENT_A_BIT)
     ]]]]
-    var info <- [[VkPipelineColorBlendStateCreateInfo
+    let info <- [[VkPipelineColorBlendStateCreateInfo
         sType = (VkStructureType
             VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO),
         attachmentCount = uint(blending_atts |> length()),
