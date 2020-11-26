@@ -18,6 +18,18 @@ def to_string(bytes : void?)
         return reinterpret<string>(bytes)
 
 
+//TODO: need this for heap
+def safe_addr_plain(x : auto(T)) : T ? #
+    unsafe
+        return reinterpret<T?#>(addr(x))
+
+
+//TODO: need this for heap
+def safe_addr_val(var x : auto(T)&) : T-& ? #
+    unsafe
+        return reinterpret<T-&?#>(addr(x))
+
+
 let
     REQUIRED_EXTENSIONS = [[auto[]
         "VK_KHR_swapchain" //TODO: use VK_KHR_SWAPCHAIN_EXTENSION_NAME
