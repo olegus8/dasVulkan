@@ -531,3 +531,24 @@ def with_basic_pipeline_layout(device : VkDevice#;
         create_info |> safe_addr(), null, layout |> safe_addr()))
     b |> invoke(layout)
     device |> vkDestroyPipelineLayout(layout, null)
+
+
+def with_pipeline_shader_stages(
+    vert : VkShaderModule#; vert_main : string;
+    frag : VkShaderModule#; frag_main : string;
+    b : block<(s:array<VkPipelineShaderStageCreateInfo>#)>
+)
+    var stages <- [{auto[]
+        [[VkPipelineShaderStageCreateInfo module_ = vert, pName = vert_main,
+            sType = (VkStructureType
+                VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO),
+            stage = VkShaderStageFlagBits VK_SHADER_STAGE_VERTEX_BIT
+        ]];
+        [[VkPipelineShaderStageCreateInfo module_ = frag, pName = frag_main,
+            sType = (VkStructureType
+                VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO),
+            stage = VkShaderStageFlagBits VK_SHADER_STAGE_FRAGMENT_BIT
+        ]]
+    }]
+    b |> invoke(stages)
+    delete stages
