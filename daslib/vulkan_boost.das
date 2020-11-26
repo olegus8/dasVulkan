@@ -59,6 +59,15 @@ let
         minSampleShading = 1.0f
     ]]
 
+    pipeline_rasterizer_simple <- [[VkPipelineRasterizationStateCreateInfo
+        sType = (VkStructureType
+            VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO),
+        polygonMode = VkPolygonMode VK_POLYGON_MODE_FILL,
+        lineWidth = 1.0f,
+        cullMode = uint(VkCullModeFlagBits VK_CULL_MODE_BACK_BIT),
+        frontFace = VkFrontFace VK_FRONT_FACE_CLOCKWISE
+    ]]
+
 
 def with_physical_devices(
     inst : VkInstance#; b : block<(d:array<VkPhysicalDevice>#)>
@@ -576,21 +585,6 @@ def with_pipeline_shader_stages(
     stages |> lock() <| $(tstages)
         b |> invoke(tstages)
     delete stages
-
-
-def with_pipeline_rasterizer_simple(
-    //TODO: make it pass temporary. compilation fails currently if i do
-    b : block<(b:VkPipelineRasterizationStateCreateInfo)>
-)
-    let info <- [[VkPipelineRasterizationStateCreateInfo
-        sType = (VkStructureType
-            VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO),
-        polygonMode = VkPolygonMode VK_POLYGON_MODE_FILL,
-        lineWidth = 1.0f,
-        cullMode = uint(VkCullModeFlagBits VK_CULL_MODE_BACK_BIT),
-        frontFace = VkFrontFace VK_FRONT_FACE_CLOCKWISE
-    ]]
-    b |> invoke(info)
 
 
 def with_pipeline_viewport_full_window(
