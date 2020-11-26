@@ -230,3 +230,30 @@ def with_best_present_mode(device : VkPhysicalDevice#; surface : VkSurfaceKHR#;
                 if mode == preferred
                     b |> invoke(mode)
                     return
+
+
+def with_window(width : int; height : int; title : string;
+    b : block<(w:GLFWwindow_DasHandle#)>
+)
+    var window = glfwCreateWindow(width, height, title,
+        [[GLFWmonitor_DasHandle]], [[GLFWwindow_DasHandle]])
+    b |> invoke(window)
+    window |> glfwDestroyWindow()
+
+
+def with_instance(b : block<(inst:VkInstance#)>)
+    var inst_info <- [[VkInstanceCreateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO
+    ]]
+
+    let exts = glfwGetRequiredInstanceExtensions(
+        safe_addr_val(inst_info.enabledExtensionCount))
+
+    unsafe
+        reinterpret<string const?>(inst_info.ppEnabledExtensionNames) = exts
+
+    var instance : VkInstance
+    verify(VkResult VK_SUCCESS == vkCreateInstance(
+        safe_addr(inst_info), null, safe_addr(instance)))
+    b |> invoke(instance)
+    instance |> vkDestroyInstance(null)
