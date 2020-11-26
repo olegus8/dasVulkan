@@ -121,6 +121,7 @@ def with_pipeline_creation_subobjects(
     ) <| $(stages) {
     with_pipeline_vertex_input() <| $(vtx_input) {
     with_pipeline_blending_disabled() <| $(blending) {
+    with_pipeline_multisampling_disabled() <| $(multisampling) {
     phys_dev |> with_pipeline_viewport(surface, window) <| $(viewport) {
         b |> invoke(
             stages,
@@ -128,7 +129,7 @@ def with_pipeline_creation_subobjects(
             make_pipeline_input_assembly(),
             viewport,
             make_pipeline_rasterizer(),
-            make_pipeline_multisampling(),
+            multisampling,
             blending
         );
     }}}}
