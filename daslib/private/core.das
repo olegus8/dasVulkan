@@ -64,3 +64,8 @@ def with_surface(window : GLFWwindow_DasHandle#; instance : VkInstance#;
     b |> invoke(surface)
     instance |> vkDestroySurfaceKHR(surface, null)
 
+
+def get_framebuffer_size(window : GLFWwindow_DasHandle#)
+    var width, height : int
+    window |> glfwGetFramebufferSize(safe_addr(width), safe_addr(height))
+    return uint2(uint(width), uint(height))
