@@ -94,7 +94,8 @@ def with_pipeline_creation_subobjects(
     with_pipeline_blending_disabled() <| $(blending) {
     with_pipeline_multisampling_disabled() <| $(multisampling) {
     with_pipeline_rasterizer_basic() <| $(rasterizer) {
-    phys_dev |> with_pipeline_viewport(surface, window) <| $(viewport) {
+    phys_dev |> with_pipeline_viewport_full_window(surface, window
+    ) <| $(viewport) {
         b |> invoke(
             stages,
             vtx_input,
