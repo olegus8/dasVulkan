@@ -98,7 +98,7 @@ def get_suitability_score(device : VkPhysicalDevice#; surface : VkSurfaceKHR#)
 
 
 def with_queue_families(
-    device : VkPhysicalDevice;
+    device : VkPhysicalDevice#;
     b : block<(families: array<VkQueueFamilyProperties>#)>
 )
     var families : array<VkQueueFamilyProperties>
@@ -114,7 +114,9 @@ def with_queue_families(
 
 
 def with_graphics_queue_family(
-    device : VkPhysicalDevice; surface : VkSurfaceKHR; b : block<(index:uint)>
+    device : VkPhysicalDevice#;
+    surface : VkSurfaceKHR#;
+    b : block<(index:uint)>
 )
     device |> with_queue_families() <| $(families)
         for family, index in families, range(INT_MAX)
@@ -133,13 +135,13 @@ def with_graphics_queue_family(
             return
 
 
-def get_properties(device : VkPhysicalDevice)
+def get_properties(device : VkPhysicalDevice#)
     var props : VkPhysicalDeviceProperties
     device |> vkGetPhysicalDeviceProperties(safe_addr(props))
     return <- props
 
 
-def with_ext_props(device : VkPhysicalDevice;
+def with_ext_props(device : VkPhysicalDevice#;
     b : block<(props:table<uint;VkExtensionProperties>)>
 )
     var props : array<VkExtensionProperties>
