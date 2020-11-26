@@ -576,7 +576,8 @@ def with_pipeline_blending_disabled(
 
 
 def with_pipeline_multisampling_disabled(
-    b : block<(b:VkPipelineMultisampleStateCreateInfo#)>
+    //TODO: make it pass temporary. compilation fails currently if i do
+    b : block<(b:VkPipelineMultisampleStateCreateInfo)>
 )
     let info <- [[VkPipelineMultisampleStateCreateInfo
         sType = (VkStructureType
