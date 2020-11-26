@@ -167,7 +167,7 @@ def with_ext_props(device : VkPhysicalDevice#;
     delete props
 
 
-def with_formats(device : VkPhysicalDevice; surface : VkSurfaceKHR;
+def with_formats(device : VkPhysicalDevice#; surface : VkSurfaceKHR#;
     b : block<(formats:array<VkSurfaceFormatKHR>#)>
 )
     var formats : array<VkSurfaceFormatKHR>
@@ -184,7 +184,7 @@ def with_formats(device : VkPhysicalDevice; surface : VkSurfaceKHR;
     delete formats
 
 
-def with_best_format(device : VkPhysicalDevice; surface : VkSurfaceKHR;
+def with_best_format(device : VkPhysicalDevice#; surface : VkSurfaceKHR#;
     b : block<(format:VkSurfaceFormatKHR#)>
 )
     device |> with_formats(surface) <| $(formats)
@@ -202,7 +202,7 @@ def with_best_format(device : VkPhysicalDevice; surface : VkSurfaceKHR;
             return
 
 
-def with_present_modes(device : VkPhysicalDevice; surface : VkSurfaceKHR;
+def with_present_modes(device : VkPhysicalDevice#; surface : VkSurfaceKHR#;
     b : block<(formats:array<VkPresentModeKHR>#)>
 )
     var modes : array<VkPresentModeKHR>
