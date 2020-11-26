@@ -698,7 +698,7 @@ def with_shader_modules(device: VkDevice#; code_fpaths : auto;
                 pCode = code_ptr
             ]]
             verify(VkResult VK_SUCCESS == device |> vkCreateShaderModule(
-                create_info |> safe_addr(), null, addr(tshmod))
+                create_info |> safe_addr(), null, addr(tshmod)))
         b |> invoke(tshmods)
 
     for shmod in shmods
