@@ -168,13 +168,17 @@ def with_graphics_pipeline(device, layout, render_pass,
     ) <| $(stages, vtx_input, input_assembly, viewport, rasterizer,
         multisampling, blending
     )
+        var pstages : VkPipelineShaderStageCreateInfo const ?
+        unsafe
+            pstages = reinterpret<VkPipelineShaderStageCreateInfo const ?>(
+                addr(stages[0]))
         let pipe_infos <- [[auto[] [[VkGraphicsPipelineCreateInfo
             sType = (VkStructureType
                 VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO),
             layout              = layout,
             renderPass          = render_pass,
             stageCount          = uint(stages |> length()),
-            pStages             = stages[0] |> safe_addr_plain(),
+            pStages             = pstages,
             pVertexInputState   = vtx_input |> safe_addr(),
             pInputAssemblyState = input_assembly |> safe_addr(),
             pViewportState      = viewport |> safe_addr(),
