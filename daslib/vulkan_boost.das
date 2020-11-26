@@ -802,6 +802,7 @@ def with_mem_backed_buf(
     device : VkDevice#;
     phys_dev : VkPhysicalDevice#;
     buf_size : uint64;
+    offset : uint64;
     usage : uint;
     mem_props : uint;
     b : block<(b:VkBuffer#; m:VkDeviceMemory#)>
@@ -809,5 +810,5 @@ def with_mem_backed_buf(
     device |> with_buffer(buf_size, usage) <| $(buf)
         device |> with_buf_mem(phys_dev, buf, mem_props) <| $(mem)
             verify(VkResult VK_SUCCESS ==
-                device |> vkBindBufferMemory(buf, mem, uint64(0)))
+                device |> vkBindBufferMemory(buf, mem, offset))
             b |> invoke(buf, mem)
