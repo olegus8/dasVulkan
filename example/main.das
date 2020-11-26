@@ -280,16 +280,17 @@ def with_swap_chain_framebuffers(
     var fbufs : array<VkFramebuffer>
     fbufs |> resize(views |> length())
     for fbuf, view in fbufs, views
-        let atts <- [[auto[] view]]
+        var pview : VkImageView const ?
+        unsafe
+            pview = reinterpret<VkImageView const ?>(addr(view))
         let create_info <- [[VkFramebufferCreateInfo
             sType = VkStructureType VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO,
             renderPass = render_pass,
 
             //TODO: make it work. says "can only dereference simple type"
             attachmentCount = 1u, 
-            //attachmentCount = uint(atts |> length()),
 
-            pAttachments = atts[0] |> safe_addr(),
+            pAttachments = pview,
             width = extent.width,
             height = extent.height,
             layers = 1u
