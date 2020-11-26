@@ -349,7 +349,7 @@ def with_device(
 def with_queue_create_info(
     device : VkPhysicalDevice#;
     surface : VkSurfaceKHR#;
-    b : block<(VkDeviceQueueCreateInfo#)>
+    b : block<(i:VkDeviceQueueCreateInfo#)>
 )
     let family = device |> get_graphics_queue_family(surface)
     let priority = 1.0f
