@@ -229,8 +229,10 @@ def with_formats(device : VkPhysicalDevice#; surface : VkSurfaceKHR#;
 
 
 def with_best_format(device : VkPhysicalDevice#; surface : VkSurfaceKHR#;
-    b : block<(format:VkSurfaceFormatKHR#)>
+    b : block<(format:VkSurfaceFormatKHR)>
 )
+    var best_format : VkSurfaceFormatKHR
+    var found = false
     device |> with_formats(surface) <| $(formats)
         // picking ideal format if available
         for format in formats
@@ -238,12 +240,16 @@ def with_best_format(device : VkPhysicalDevice#; surface : VkSurfaceKHR#;
             &&  format.colorSpace == (VkColorSpaceKHR
                     VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)
             )
-                b |> invoke(format)
+                best_format = format
+                found = true
                 return
         // if no ideal found, picking anything
         for format in formats
-            b |> invoke(format)
+            best_format = format
+            found = true
             return
+    if found
+        b |> invoke(best_format)
 
 
 def with_present_modes(device : VkPhysicalDevice#; surface : VkSurfaceKHR#;
