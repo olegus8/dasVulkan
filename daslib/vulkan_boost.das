@@ -68,6 +68,13 @@ let
         frontFace = VkFrontFace VK_FRONT_FACE_CLOCKWISE
     ]]
 
+    pipeline_input_assembly_tri_list <- [[
+        VkPipelineInputAssemblyStateCreateInfo
+        sType = (VkStructureType 
+            VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO),
+        topology = VkPrimitiveTopology VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST
+    ]]
+
 
 def with_physical_devices(
     inst : VkInstance#; b : block<(d:array<VkPhysicalDevice>#)>
@@ -607,18 +614,6 @@ def with_pipeline_viewport_full_window(
         scissorCount = uint(scissors |> length()),
         pScissors = scissors |> safe_addr()
     ]])
-
-
-def with_pipeline_input_assembly_tri_list(
-    //TODO: make it pass temporary. compilation fails currently if i do
-    b : block<(i:VkPipelineInputAssemblyStateCreateInfo)>
-)
-    let info <- [[VkPipelineInputAssemblyStateCreateInfo
-        sType = (VkStructureType 
-            VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO),
-        topology = VkPrimitiveTopology VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST
-    ]]
-    b |> invoke(info)
 
 
 def with_graphics_pipeline_simple(

@@ -48,17 +48,17 @@ def with_graphics_pipeline(device, layout, render_pass,
     phys_dev, surface, window, vert_shmod, frag_shmod;
     b : block<(p:VkPipeline)>
 )
-    with_pipeline_vertex_input()                <| $(vtx_input)         {
-    with_pipeline_input_assembly_tri_list()     <| $(input_assembly)    {
-    phys_dev |> with_pipeline_viewport_full_window(
-        surface, window
+    with_pipeline_vertex_input() <| $(vtx_input) {
+    phys_dev |> with_pipeline_viewport_full_window(surface, window
     ) <| $(viewport) {
     with_pipeline_shader_stages(
         vert_shmod, "main",
         frag_shmod, "main"
     ) <| $(stages) {
     device |> with_graphics_pipeline_simple(
-        layout, render_pass, stages, vtx_input, input_assembly, viewport,
+        layout, render_pass, stages, vtx_input,
+        pipeline_input_assembly_tri_list,
+        viewport,
         pipeline_rasterizer_simple,
         pipeline_multisampling_disabled,
         pipeline_blending_disabled
