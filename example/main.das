@@ -132,7 +132,7 @@ def with_pipeline_blending(b : block<(b:VkPipelineColorBlendStateCreateInfo)>)
 def with_pipeline_creation_subobjects(
     phys_dev, surface, window, vert_shmod, frag_shmod;
     b : block<(
-        stages : array<VkPipelineShaderStageCreateInfo>;
+        stages : array<VkPipelineShaderStageCreateInfo>#;
         vtx_input : VkPipelineVertexInputStateCreateInfo;
         input_assembly : VkPipelineInputAssemblyStateCreateInfo;
         viewport : VkPipelineViewportStateCreateInfo;
