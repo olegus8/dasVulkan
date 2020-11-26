@@ -77,7 +77,7 @@ let
 
 
 def with_physical_devices(
-    inst : VkInstance#; b : block<(d:array<VkPhysicalDevice>#)>
+    inst : VkInstance#; b : block<(d:array<VkPhysicalDevice>)>
 )
     var devices : array<VkPhysicalDevice>
     var count : uint
@@ -87,24 +87,24 @@ def with_physical_devices(
     devices |> lock() <| $(tdevices)
         verify(VkResult VK_SUCCESS == inst |> vkEnumeratePhysicalDevices(
             safe_addr(count), addr(tdevices[0])))
-        b |> invoke(tdevices)
+    b |> invoke(devices)
     delete devices
 
 
 def with_best_physical_device(inst : VkInstance#; surface : VkSurfaceKHR#;
-    b : block<(d:VkPhysicalDevice#)>
+    b : block<(d:VkPhysicalDevice)>
 )
+    var best_score : int = 0
+    var best_device : VkPhysicalDevice
     inst |> with_physical_devices() <| $(devices)
-        var best_score : int = 0
-        var best_device : VkPhysicalDevice
         for device in devices
             var score = device |> get_suitability_score(surface)
             if score > best_score
                 best_score = score
                 best_device = device
-        if best_score == 0
-            panic("No suitable physical device found.")
-        b |> invoke(best_device)
+    if best_score == 0
+        panic("No suitable physical device found.")
+    b |> invoke(best_device)
 
 
 [private]
