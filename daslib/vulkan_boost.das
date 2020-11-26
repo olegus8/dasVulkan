@@ -736,7 +736,7 @@ struct Buffer
 def create_buffer(
     device : VkDevice#;
     buf_size : uint64;
-    usage : uint;
+    usage : uint
 ) : Buffer
     let create_info <- [[VkBufferCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO,
