@@ -386,7 +386,7 @@ def with_swap_chain_independent_state(width, height, title; b : block<(
     phys_dev |> with_best_format(surface)           <| $(surf_fmt)          {
     phys_dev |> with_best_present_mode(surface)     <| $(present_mode)      {
     device |> with_shader_modules([[
-        "{get_das_root()}/modules/dasVulkan/example/vert.spv",
+        "{get_das_root()}/modules/dasVulkan/example/vert.spv";
         "{get_das_root()}/modules/dasVulkan/example/frag.spv"
     ]]) <| $(shmods) {
     device |> with_render_pass_simple(surf_fmt)     <| $(render_pass)       {
