@@ -49,7 +49,8 @@ def with_graphics_pipeline(device, layout, render_pass,
     b : block<(p:VkPipeline)>
 )
     with_pipeline_shader_stages(
-        vert_shmod, "main", frag_shmod, "main"
+        vert_shmod, "main",
+        frag_shmod, "main"
     ) <| $(stages) {
     with_pipeline_vertex_input() <| $(vtx_input) {
     with_pipeline_blending_disabled() <| $(blending) {
