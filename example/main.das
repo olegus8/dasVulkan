@@ -190,7 +190,7 @@ def with_mem_backed_buf(
 )
     device |> with_buffer(buf_size, usage) <| $(buf)
         device |> with_buffer_memory_type(phys_dev, buf, mem_props
-        ) <| $(mtype, msize)
+        ) <| $(mem_type, mem_size)
             device |> with_memory(mem_size, mem_type) <| $(mem)
                 verify(VkResult VK_SUCCESS ==
                     device |> vkBindBufferMemory(buf, mem, 0u))
