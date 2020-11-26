@@ -550,5 +550,6 @@ def with_pipeline_shader_stages(
             stage = VkShaderStageFlagBits VK_SHADER_STAGE_FRAGMENT_BIT
         ]]
     }]
-    b |> invoke(stages)
+    stages |> lock() <| $(tstages)
+        b |> invoke(tstages)
     delete stages
