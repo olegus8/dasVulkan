@@ -94,17 +94,18 @@ def with_physical_devices(
 def with_best_physical_device(inst : VkInstance#; surface : VkSurfaceKHR#;
     b : block<(d:VkPhysicalDevice#)>
 )
+    var best_score : int = 0
+    var best_device : VkPhysicalDevice
     inst |> with_physical_devices() <| $(devices)
-        var best_score : int = 0
-        var best_device : VkPhysicalDevice
         for device in devices
             var score = device |> get_suitability_score(surface)
             if score > best_score
                 best_score = score
-                best_device = device
+                unsafe
+                    best_device = reinterpret<VkPhysicalDevice>(device)
         if best_score == 0
             panic("No suitable physical device found.")
-        b |> invoke(best_device)
+    b |> invoke(best_device)
 
 
 [private]
