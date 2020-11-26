@@ -67,14 +67,6 @@ def with_pipeline_vertex_input(
     ]])
 
 
-def make_pipeline_input_assembly()
-    return <- [[VkPipelineInputAssemblyStateCreateInfo
-        sType = (VkStructureType 
-            VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO),
-        topology = VkPrimitiveTopology VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST
-    ]]
-
-
 def with_pipeline_creation_subobjects(
     phys_dev, surface, window, vert_shmod, frag_shmod;
     b : block<(
@@ -94,12 +86,13 @@ def with_pipeline_creation_subobjects(
     with_pipeline_blending_disabled() <| $(blending) {
     with_pipeline_multisampling_disabled() <| $(multisampling) {
     with_pipeline_rasterizer_basic() <| $(rasterizer) {
+    with_pipeline_input_assembly_tri_list() <| $(input_assembly) {
     phys_dev |> with_pipeline_viewport_full_window(surface, window
     ) <| $(viewport) {
         b |> invoke(
             stages,
             vtx_input,
-            make_pipeline_input_assembly(),
+            input_assembly,
             viewport,
             rasterizer,
             multisampling,
