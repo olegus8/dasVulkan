@@ -77,7 +77,7 @@ let
 
 
 def with_physical_devices(
-    inst : VkInstance#; b : block<(d:array<VkPhysicalDevice>)>
+    inst : VkInstance#; b : block<(d:array<VkPhysicalDevice>#)>
 )
     var devices : array<VkPhysicalDevice>
     var count : uint
@@ -87,7 +87,7 @@ def with_physical_devices(
     devices |> lock() <| $(tdevices)
         verify(VkResult VK_SUCCESS == inst |> vkEnumeratePhysicalDevices(
             safe_addr(count), addr(tdevices[0])))
-    b |> invoke(devices)
+        b |> invoke(tdevices)
     delete devices
 
 
