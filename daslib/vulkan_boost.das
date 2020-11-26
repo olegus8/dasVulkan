@@ -80,4 +80,4 @@ def with_buffer_memory_type(
     device |> vkGetBufferMemoryRequirements(buffer, mem_reqs |> safe_addr())
     phys_dev |> with_memory_type(mem_reqs.memoryTypeBits, mem_props
     ) <| $(mem_type)
-        b |> invoke(mem_type)
+        b |> invoke(mem_type, mreqs.size)
