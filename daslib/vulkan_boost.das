@@ -4,7 +4,6 @@ options no_aot = true
 module vulkan_boost
 
 require daslib/safe_addr
-require fio
 require math
 require vulkan
 
