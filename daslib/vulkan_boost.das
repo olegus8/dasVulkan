@@ -161,9 +161,8 @@ def has_graphics_queue_family(
 
 def get_graphics_queue_family(
     device : VkPhysicalDevice#;
-    surface : VkSurfaceKHR#;
-    b : block<(index:uint)>
-)
+    surface : VkSurfaceKHR#
+) : uint
     var found_index : uint = UINT_MAX
     device |> with_queue_families() <| $(families)
         for family, index in families, range(INT_MAX)
@@ -718,16 +717,16 @@ def with_command_pool(
     surface : VkSurfaceKHR#;
     b : block<(p:VkCommandPool#)>
 )
-    phys_dev |> with_graphics_queue_family(surface) <| $(qfam)
-        let create_info <- [[VkCommandPoolCreateInfo
-            sType = VkStructureType VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO,
-            queueFamilyIndex = qfam
-        ]]
-        var pool : VkCommandPool
-        verify(VkResult VK_SUCCESS == device |> vkCreateCommandPool(
-            safe_addr(create_info), null, safe_addr(pool)))
-        b |> invoke(pool)
-        device |> vkDestroyCommandPool(pool, null)
+    let qfam = phys_dev |> get_graphics_queue_family(surface)
+    let create_info <- [[VkCommandPoolCreateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO,
+        queueFamilyIndex = qfam
+    ]]
+    var pool : VkCommandPool
+    verify(VkResult VK_SUCCESS == device |> vkCreateCommandPool(
+        safe_addr(create_info), null, safe_addr(pool)))
+    b |> invoke(pool)
+    device |> vkDestroyCommandPool(pool, null)
 
 
 def with_buffer(
