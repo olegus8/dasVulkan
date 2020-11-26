@@ -37,7 +37,7 @@ let
         "VK_KHR_swapchain" //TODO: use VK_KHR_SWAPCHAIN_EXTENSION_NAME
     ]]
 
-    att_blending_disabled <- [[VkPipelineColorBlendAttachmentState
+    ATT_BLENDING_DISABLED <- [[VkPipelineColorBlendAttachmentState
         colorWriteMask =
             uint(VkColorComponentFlagBits VK_COLOR_COMPONENT_R_BIT) |
             uint(VkColorComponentFlagBits VK_COLOR_COMPONENT_G_BIT) |
@@ -45,21 +45,21 @@ let
             uint(VkColorComponentFlagBits VK_COLOR_COMPONENT_A_BIT)
     ]]
 
-    pipeline_blending_disabled <- [[VkPipelineColorBlendStateCreateInfo
+    PIPELINE_BLENDING_DISABLED <- [[VkPipelineColorBlendStateCreateInfo
         sType = (VkStructureType
             VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO),
         attachmentCount = 1u,
-        pAttachments = safe_addr(att_blending_disabled)
+        pAttachments = safe_addr(ATT_BLENDING_DISABLED)
     ]]
 
-    pipeline_multisampling_disabled <- [[VkPipelineMultisampleStateCreateInfo
+    PIPELINE_MULTISAMPLING_DISABLED <- [[VkPipelineMultisampleStateCreateInfo
         sType = (VkStructureType
             VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO),
         rasterizationSamples = VkSampleCountFlagBits VK_SAMPLE_COUNT_1_BIT,
         minSampleShading = 1.0f
     ]]
 
-    pipeline_rasterizer_simple <- [[VkPipelineRasterizationStateCreateInfo
+    PIPELINE_RASTERIZER_SIMPLE <- [[VkPipelineRasterizationStateCreateInfo
         sType = (VkStructureType
             VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO),
         polygonMode = VkPolygonMode VK_POLYGON_MODE_FILL,
@@ -68,7 +68,7 @@ let
         frontFace = VkFrontFace VK_FRONT_FACE_CLOCKWISE
     ]]
 
-    pipeline_input_assembly_tri_list <- [[
+    PIPELINE_INPUT_ASSEMBLY_TRI_LIST <- [[
         VkPipelineInputAssemblyStateCreateInfo
         sType = (VkStructureType 
             VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO),

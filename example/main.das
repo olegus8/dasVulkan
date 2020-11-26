@@ -57,11 +57,11 @@ def with_graphics_pipeline(device, layout, render_pass,
     ) <| $(stages) {
     device |> with_graphics_pipeline_simple(
         layout, render_pass, stages, vtx_input,
-        pipeline_input_assembly_tri_list,
+        PIPELINE_INPUT_ASSEMBLY_TRI_LIST,
         viewport,
-        pipeline_rasterizer_simple,
-        pipeline_multisampling_disabled,
-        pipeline_blending_disabled
+        PIPELINE_RASTERIZER_SIMPLE,
+        PIPELINE_MULTISAMPLING_DISABLED,
+        PIPELINE_BLENDING_DISABLED
     ) <| $(pipeline)
     {
         b |> invoke(pipeline);
