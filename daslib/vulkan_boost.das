@@ -257,3 +257,13 @@ def with_instance(b : block<(inst:VkInstance#)>)
         safe_addr(inst_info), null, safe_addr(instance)))
     b |> invoke(instance)
     instance |> vkDestroyInstance(null)
+
+
+def with_surface(window : GLFWwindow_DasHandle#; instance : VkInstance#;
+    b : block<(s:VkSurfaceKHR#)>
+)
+    var surface : VkSurfaceKHR
+    verify(VkResult VK_SUCCESS == instance |> glfwCreateWindowSurface(
+        window, null, safe_addr(surface)))
+    b |> invoke(surface)
+    instance |> vkDestroySurfaceKHR(surface, null)

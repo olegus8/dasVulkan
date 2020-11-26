@@ -72,14 +72,6 @@ def with_queue_create_infos(device, surface;
     delete infos
 
 
-def with_surface(window, instance; b : block<(s:VkSurfaceKHR)>)
-    var surface : VkSurfaceKHR
-    verify(VkResult VK_SUCCESS == instance |> glfwCreateWindowSurface(
-        window, null, safe_addr(surface)))
-    b |> invoke(surface)
-    instance |> vkDestroySurfaceKHR(surface, null)
-
-
 def with_swap_chain(device, phys_dev, surface, window, surf_fmt, present_mode;
     b : block<(sc:VkSwapchainKHR)>
 )
