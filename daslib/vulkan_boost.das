@@ -459,7 +459,8 @@ def with_swap_chain_image_views(
         verify(VkResult VK_SUCCESS == device |> vkCreateImageView(
             safe_addr(create_info), null, safe_addr(view)))
 
-    b |> invoke(views)
+    views |> lock() <| $(tviews)
+        b |> invoke(tviews)
 
     for view in views
         device |> vkDestroyImageView(view, null)
