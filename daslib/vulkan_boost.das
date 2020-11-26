@@ -81,33 +81,3 @@ def with_buffer_memory_type(
     phys_dev |> with_memory_type(mem_reqs.memoryTypeBits, mem_props
     ) <| $(mem_type)
         b |> invoke(mem_type)
-
-
-def with_buf_mem(
-    device : VkDevice#;
-    phys_dev : VkPhysicalDevice#;
-    buffer : VkBuffer#;
-    mem_props : uint;
-    b : block<(m:VkDeviceMemory#)>
-)
-    var mem_reqs : VkMemoryRequirements
-    device |> vkGetBufferMemoryRequirements(buffer, mem_reqs |> safe_addr())
-    phys_dev |> with_memory_type(mem_reqs.memoryTypeBits, mem_props
-    ) <| $(mem_type)
-        device |> with_memory(mem_reqs.size, mem_type) <| $(mem)
-            b |> invoke(mem)
-
-
-def with_mem_backed_buf(
-    device : VkDevice#;
-    phys_dev : VkPhysicalDevice#;
-    buf_size : uint64;
-    usage : uint;
-    mem_props : uint;
-    b : block<(b:VkBuffer#; m:VkDeviceMemory#)>
-)
-    device |> with_buffer(buf_size, usage) <| $(buf)
-        device |> with_buf_mem(phys_dev, buf, mem_props) <| $(mem)
-            verify(VkResult VK_SUCCESS ==
-                device |> vkBindBufferMemory(buf, mem, 0u))
-            b |> invoke(buf, mem)
