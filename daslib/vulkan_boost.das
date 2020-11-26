@@ -674,4 +674,3 @@ def with_graphics_pipeline_simple(
         [[VkPipelineCache]], 1u, safe_addr(pipe_info), null, safe_addr(pipe)))
     b |> invoke(pipe)
     device |> vkDestroyPipeline(pipe, null)
-    delete pipes
