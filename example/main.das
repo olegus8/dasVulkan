@@ -608,7 +608,7 @@ def with_swap_chain_dependent_state(
     b : block<(
         swap_chain          : VkSwapchainKHR;
         sc_imgs             : array<VkImage>#;
-        sc_views            : array<VkImageView>;
+        sc_views            : array<VkImageView>#;
         sc_fbufs            : array<VkFramebuffer>;
         pipeline            : VkPipeline;
         img_avail_sems      : array<VkSemaphore>;
@@ -802,7 +802,7 @@ def main
                 ) <| $(
                     swap_chain          : VkSwapchainKHR;
                     sc_imgs             : array<VkImage>#;
-                    sc_views            : array<VkImageView>;
+                    sc_views            : array<VkImageView>#;
                     sc_fbufs            : array<VkFramebuffer>;
                     pipeline            : VkPipeline;
                     img_avail_sems      : array<VkSemaphore>;
