@@ -148,9 +148,10 @@ def with_ext_props(device : VkPhysicalDevice;
         device |> vkEnumerateDeviceExtensionProperties(
             to_string(null), safe_addr(count), null))
     props |> resize(int(count))
-    verify(VkResult VK_SUCCESS ==
-        device |> vkEnumerateDeviceExtensionProperties(
-            to_string(null), safe_addr(count), safe_addr_val(props[0])))
+    props |> lock() <| $(tprops)
+        verify(VkResult VK_SUCCESS ==
+            device |> vkEnumerateDeviceExtensionProperties(
+                to_string(null), safe_addr(count), addr(tprops[0])))
 
     var props_table : table<uint; VkExtensionProperties>
     for prop in props
