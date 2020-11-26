@@ -95,66 +95,6 @@ def with_queue_create_infos(device, surface;
     delete infos
 
 
-def with_formats(device, surface;
-    b : block<(formats:array<VkSurfaceFormatKHR>)>
-)
-    var formats : array<VkSurfaceFormatKHR>
-    var count : uint
-    verify(VkResult VK_SUCCESS ==
-        device |> vkGetPhysicalDeviceSurfaceFormatsKHR(
-            surface, safe_addr(count), null))
-    formats |> resize(int(count))
-    verify(VkResult VK_SUCCESS ==
-        device |> vkGetPhysicalDeviceSurfaceFormatsKHR(
-            surface, safe_addr(count), safe_addr_val(formats[0])))
-    b |> invoke(formats)
-    delete formats
-
-
-def with_best_format(device, surface; b : block<(format:VkSurfaceFormatKHR)>)
-    device |> with_formats(surface) <| $(formats)
-        // picking ideal format if available
-        for format in formats
-            if (format.format == VkFormat VK_FORMAT_B8G8R8A8_SRGB
-            &&  format.colorSpace == (VkColorSpaceKHR
-                    VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)
-            )
-                b |> invoke(format)
-                return
-        // if no ideal found, picking anything
-        for format in formats
-            b |> invoke(format)
-            return
-
-
-def with_present_modes(device, surface;
-    b : block<(formats:array<VkPresentModeKHR>)>
-)
-    var modes : array<VkPresentModeKHR>
-    var count : uint
-    verify(VkResult VK_SUCCESS ==
-        device |> vkGetPhysicalDeviceSurfacePresentModesKHR(
-            surface, safe_addr(count), null))
-    modes |> resize(int(count))
-    verify(VkResult VK_SUCCESS ==
-        device |> vkGetPhysicalDeviceSurfacePresentModesKHR(
-            surface, safe_addr(count), safe_addr_val(modes[0])))
-    b |> invoke(modes)
-    delete modes
-
-
-def with_best_present_mode(device, surface; b : block<(mode:VkPresentModeKHR)>)
-    device |> with_present_modes(surface) <| $(modes)
-        for preferred in [[auto[]
-            VkPresentModeKHR VK_PRESENT_MODE_MAILBOX_KHR;
-            VkPresentModeKHR VK_PRESENT_MODE_FIFO_KHR
-        ]]
-            for mode in modes
-                if mode == preferred
-                    b |> invoke(mode)
-                    return
-
-
 def with_window(width, height, title; b : block<(w:GLFWwindow_DasHandle)>)
     var window = glfwCreateWindow(width, height, title,
         [[GLFWmonitor_DasHandle]], [[GLFWwindow_DasHandle]])
