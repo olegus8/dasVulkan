@@ -37,7 +37,7 @@ let
 
 
 def with_physical_devices(
-    inst : VkInstance; b : block<(d:array<VkPhysicalDevice>)>
+    inst : VkInstance; b : block<(d:array<VkPhysicalDevice>#)>
 )
     var devices : array<VkPhysicalDevice>
     var count : uint
@@ -47,12 +47,12 @@ def with_physical_devices(
     devices |> lock() <| $(tdevices)
         verify(VkResult VK_SUCCESS == inst |> vkEnumeratePhysicalDevices(
             safe_addr(count), addr(tdevices[0])))
-    b |> invoke(devices)
+        b |> invoke(tdevices)
     delete devices
 
 
 def with_best_physical_device(
-    inst : VkInstance; surface : VkSurfaceKHR; b : block<(d:VkPhysicalDevice)>
+    inst : VkInstance; surface : VkSurfaceKHR; b : block<(d:VkPhysicalDevice#)>
 )
     inst |> with_physical_devices() <| $(devices)
         var best_score : int = 0
@@ -99,7 +99,7 @@ def get_suitability_score(device : VkPhysicalDevice; surface : VkSurfaceKHR)
 
 def with_queue_families(
     device : VkPhysicalDevice;
-    b : block<(families: array<VkQueueFamilyProperties>)>
+    b : block<(families: array<VkQueueFamilyProperties>#)>
 )
     var families : array<VkQueueFamilyProperties>
     var count : uint
@@ -109,7 +109,7 @@ def with_queue_families(
     families |> lock() <| $(tfamilies)
         device |> vkGetPhysicalDeviceQueueFamilyProperties(
             safe_addr(count), addr(tfamilies[0]))
-    b |> invoke(families)
+        b |> invoke(tfamilies)
     delete families
 
 
