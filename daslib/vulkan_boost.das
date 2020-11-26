@@ -467,7 +467,7 @@ def with_swap_chain_image_views(
     delete views
 
 
-def with_basic_render_pass(
+def with_render_pass_simple(
     device : VkDevice#;
     surf_fmt : VkSurfaceFormatKHR#;
     b : block<(rp:VkRenderPass#)>
@@ -520,7 +520,7 @@ def with_basic_render_pass(
     device |> vkDestroyRenderPass(rpass, null)
 
 
-def with_basic_pipeline_layout(device : VkDevice#;
+def with_pipeline_layout_simple(device : VkDevice#;
     b : block<(layout:VkPipelineLayout#)>
 )
     let create_info <- [[ VkPipelineLayoutCreateInfo
@@ -588,7 +588,7 @@ def with_pipeline_multisampling_disabled(
     b |> invoke(info)
 
 
-def with_pipeline_rasterizer_basic(
+def with_pipeline_rasterizer_simple(
     //TODO: make it pass temporary. compilation fails currently if i do
     b : block<(b:VkPipelineRasterizationStateCreateInfo)>
 )
@@ -635,3 +635,43 @@ def with_pipeline_input_assembly_tri_list(
         topology = VkPrimitiveTopology VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST
     ]]
     b |> invoke(info)
+
+
+def with_graphics_pipeline(device, layout, render_pass,
+    phys_dev, surface, window, vert_shmod, frag_shmod;
+    b : block<(p:VkPipeline)>
+)
+    with_pipeline_creation_subobjects(
+        phys_dev, surface, window, vert_shmod, frag_shmod
+    ) <| $(stages, vtx_input, input_assembly, viewport, rasterizer,
+        multisampling, blending
+    )
+        var pstages : VkPipelineShaderStageCreateInfo const ?
+        unsafe
+            pstages = reinterpret<VkPipelineShaderStageCreateInfo const ?>(
+                addr(stages[0]))
+        let pipe_infos <- [[auto[] [[VkGraphicsPipelineCreateInfo
+            sType = (VkStructureType
+                VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO),
+            layout              = layout,
+            renderPass          = render_pass,
+            stageCount          = uint(stages |> length()),
+            pStages             = pstages,
+            pVertexInputState   = vtx_input |> safe_addr(),
+            pInputAssemblyState = input_assembly |> safe_addr(),
+            pViewportState      = viewport |> safe_addr(),
+            pRasterizationState = rasterizer |> safe_addr(),
+            pMultisampleState   = multisampling |> safe_addr(),
+            pColorBlendState    = blending |> safe_addr(),
+            basePipelineIndex   = -1
+        ]]]]
+        var pipes : array<VkPipeline>
+        pipes |> resize(pipe_infos |> length())
+        verify(VkResult VK_SUCCESS == device |> vkCreateGraphicsPipelines(
+            [[VkPipelineCache]],
+            uint(pipe_infos |> length()), pipe_infos[0] |> safe_addr(),
+            null, pipes[0] |> safe_addr_val()))
+        b |> invoke(pipes[0])
+        for pipe in pipes
+            device |> vkDestroyPipeline(pipe, null)
+        delete pipes

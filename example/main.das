@@ -85,7 +85,7 @@ def with_pipeline_creation_subobjects(
     with_pipeline_vertex_input() <| $(vtx_input) {
     with_pipeline_blending_disabled() <| $(blending) {
     with_pipeline_multisampling_disabled() <| $(multisampling) {
-    with_pipeline_rasterizer_basic() <| $(rasterizer) {
+    with_pipeline_rasterizer_simple() <| $(rasterizer) {
     with_pipeline_input_assembly_tri_list() <| $(input_assembly) {
     phys_dev |> with_pipeline_viewport_full_window(surface, window
     ) <| $(viewport) {
@@ -438,8 +438,8 @@ def with_swap_chain_independent_state(width, height, title; b : block<(
     phys_dev |> with_best_present_mode(surface)     <| $(present_mode)      {
     device |> with_shader_module("vert")            <| $(vert_shmod)        {
     device |> with_shader_module("frag")            <| $(frag_shmod)        {
-    device |> with_basic_render_pass(surf_fmt)      <| $(render_pass)       {
-    device |> with_basic_pipeline_layout()          <| $(pipeline_layout)   {
+    device |> with_render_pass_simple(surf_fmt)     <| $(render_pass)       {
+    device |> with_pipeline_layout_simple()         <| $(pipeline_layout)   {
     device |> with_command_pool(phys_dev, surface)  <| $(cmd_pool)
     {
         b |> invoke(
