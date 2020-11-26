@@ -728,23 +728,42 @@ def with_command_pool(
     device |> vkDestroyCommandPool(pool, null)
 
 
-def with_buffer(
+struct Buffer
+    device : VkDevice
+    buffer : VkBuffer
+
+
+def create_buffer(
     device : VkDevice#;
     buf_size : uint64;
     usage : uint;
-    b : block<(b:VkBuffer#)>
-)
+) : Buffer
     let create_info <- [[VkBufferCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO,
         size = buf_size,
         usage = usage,
         sharingMode = VkSharingMode VK_SHARING_MODE_EXCLUSIVE
     ]]
-    var buf : VkBuffer
+    var buf : [[Buffer device = reinterpret<VkDevice>(device)]]
     verify(VkResult VK_SUCCESS == device |> vkCreateBuffer(
-        create_info |> safe_addr(), null, buf |> safe_addr()))
-    b |> invoke(buf)
-    device |> vkDestroyBuffer(buf, null)
+        safe_addr(create_info), null, safe_addr(buf.buffer)))
+    return <- Buffer
+
+
+def finalize(buf : Buffer)
+    buf.device |> vkDestroyBuffer(buf.buffer, null)
+    memzero(buf)
+
+
+def with_buffer(
+    device : VkDevice#;
+    buf_size : uint64;
+    usage : uint;
+    b : block<(b:VkBuffer#)>
+)
+    var buf <- create_buffer(device, buf_size, usage)
+    b |> invoke(buf.buffer)
+    delete buf
 
 
 def with_memory(
