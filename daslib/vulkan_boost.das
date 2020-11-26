@@ -325,9 +325,9 @@ def with_device(
         var device : VkDevice
         let create_info = [[VkDeviceCreateInfo
             sType = VkStructureType VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO,
-            pQueueCreateInfos = pqueue_infos,
+            pQueueCreateInfos = addr(queue_info),
             queueCreateInfoCount = 1u,
-            pEnabledFeatures = addr(queue_info),
+            pEnabledFeatures = safe_addr(features),
             enabledExtensionCount = uint(REQUIRED_EXTENSIONS |> length()),
             ppEnabledExtensionNames = safe_addr(REQUIRED_EXTENSIONS[0])
         ]]
