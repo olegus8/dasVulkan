@@ -156,6 +156,10 @@ def with_ext_props(device : VkPhysicalDevice;
     for prop in props
         let name <- prop.extensionName |> to_string()
         props_table[hash(name)] <- prop
+    props_table |> lock() <| $(tprops_table)
+        pass
+        //TODO: make it work
+        //b |> invoke(tprops_table)
     b |> invoke(props_table)
     delete props
 
