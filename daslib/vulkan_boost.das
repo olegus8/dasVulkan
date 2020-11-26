@@ -749,10 +749,10 @@ def create_buffer(
         buf.device = reinterpret<VkDevice>(device)
     verify(VkResult VK_SUCCESS == device |> vkCreateBuffer(
         safe_addr(create_info), null, safe_addr(buf.buffer)))
-    return <- Buffer
+    return <- buf
 
 
-def finalize(buf : Buffer)
+def finalize(var buf : Buffer)
     buf.device |> vkDestroyBuffer(buf.buffer, null)
     memzero(buf)
 
