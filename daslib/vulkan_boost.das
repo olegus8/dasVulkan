@@ -565,10 +565,9 @@ def with_pipeline_blending_disabled(
             uint(VkColorComponentFlagBits VK_COLOR_COMPONENT_B_BIT) |
             uint(VkColorComponentFlagBits VK_COLOR_COMPONENT_A_BIT)
     ]]]]
-    let info <- [[VkPipelineColorBlendStateCreateInfo
+    b |> invoke([[VkPipelineColorBlendStateCreateInfo
         sType = (VkStructureType
             VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO),
         attachmentCount = uint(blending_atts |> length()),
         pAttachments = blending_atts |> safe_addr()
-    ]]
-    b |> invoke(info)
+    ]])
