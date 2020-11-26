@@ -69,6 +69,20 @@ def with_memory_type(
             return
 
 
+def with_buffer_memory_type(
+    device : VkDevice#;
+    phys_dev : VkPhysicalDevice#;
+    buffer : VkBuffer#;
+    mem_props : uint;
+    b : block<(t:uint)>
+)
+    var mem_reqs : VkMemoryRequirements
+    device |> vkGetBufferMemoryRequirements(buffer, mem_reqs |> safe_addr())
+    phys_dev |> with_memory_type(mem_reqs.memoryTypeBits, mem_props
+    ) <| $(mem_type)
+        b |> invoke(mem_type)
+
+
 def with_buf_mem(
     device : VkDevice#;
     phys_dev : VkPhysicalDevice#;
