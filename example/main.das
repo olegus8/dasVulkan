@@ -315,7 +315,7 @@ def with_swap_chain_independent_state(width, height, title; b : block<(
             pipeline_layout,
             cmd_pool
         );
-    }}}}}}}}}}}
+    }}}}}}}}}}
 
 
 def with_swap_chain_dependent_state(
