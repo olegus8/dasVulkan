@@ -711,7 +711,7 @@ def with_swap_chain_framebuffers(
     device : VkDevice#;
     phys_dev : VkPhysicalDevice#;
     surface : VkSurfaceKHR#;
-    window : GLFWwindow_DasHandle#
+    window : GLFWwindow_DasHandle#;
     views : array<VkImageView>#;
     render_pass : VkRenderPass#;
     b : block<(fbs:array<VkFramebuffer>#)>
