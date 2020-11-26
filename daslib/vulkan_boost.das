@@ -585,7 +585,8 @@ def with_pipeline_viewport_full_window(
     phys_dev : VkPhysicalDevice#;
     surface : VkSurfaceKHR;
     window : GLFWwindow_DasHandle#;
-    b : block<(i:VkPipelineViewportStateCreateInfo#)>
+    //TODO: make it pass temporary. compilation fails currently if i do
+    b : block<(i:VkPipelineViewportStateCreateInfo)>
 )
     let extent <- phys_dev |> get_swap_extent(surface, window)
     let viewports <- [[auto[] [[VkViewport minDepth = 0.0f, maxDepth = 1.0f,
