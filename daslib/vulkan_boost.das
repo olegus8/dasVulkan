@@ -786,7 +786,7 @@ def with_memory(
     device : VkDevice#;
     size : uint64;
     mem_type_index : uint;
-    b : block<(m:VkDeviceMemory)>
+    b : block<(m:VkDeviceMemory#)>
 )
     let alloc_info <- [[VkMemoryAllocateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO,
