@@ -573,3 +573,15 @@ def with_pipeline_blending_disabled(
         pAttachments = blending_atts |> safe_addr()
     ]]
     b |> invoke(info)
+
+
+def with_pipeline_multisampling_disabled(
+    b : block<(b:VkPipelineMultisampleStateCreateInfo#)>
+)
+    let info <- [[VkPipelineMultisampleStateCreateInfo
+        sType = (VkStructureType
+            VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO),
+        rasterizationSamples = VkSampleCountFlagBits VK_SAMPLE_COUNT_1_BIT,
+        minSampleShading = 1.0f
+    ]]
+    b |> invoke(info)

@@ -104,15 +104,6 @@ def make_pipeline_rasterizer()
     ]]
 
 
-def make_pipeline_multisampling()
-    return <- [[VkPipelineMultisampleStateCreateInfo
-        sType = (VkStructureType
-            VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO),
-        rasterizationSamples = VkSampleCountFlagBits VK_SAMPLE_COUNT_1_BIT,
-        minSampleShading = 1.0f
-    ]]
-
-
 def with_pipeline_creation_subobjects(
     phys_dev, surface, window, vert_shmod, frag_shmod;
     b : block<(
