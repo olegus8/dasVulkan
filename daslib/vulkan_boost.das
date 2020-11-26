@@ -170,7 +170,7 @@ def with_best_format(device : VkPhysicalDevice; surface : VkSurfaceKHR;
             return
 
 
-def with_present_modes(device, surface;
+def with_present_modes(device : VkPhysicalDevice; surface : VkSurfaceKHR;
     b : block<(formats:array<VkPresentModeKHR>)>
 )
     var modes : array<VkPresentModeKHR>
@@ -186,7 +186,9 @@ def with_present_modes(device, surface;
     delete modes
 
 
-def with_best_present_mode(device, surface; b : block<(mode:VkPresentModeKHR)>)
+def with_best_present_mode(device : VkPhysicalDevice; surface : VkSurfaceKRH;
+    b : block<(mode:VkPresentModeKHR)>
+)
     device |> with_present_modes(surface) <| $(modes)
         for preferred in [[auto[]
             VkPresentModeKHR VK_PRESENT_MODE_MAILBOX_KHR;
