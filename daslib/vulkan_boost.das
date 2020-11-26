@@ -637,41 +637,41 @@ def with_pipeline_input_assembly_tri_list(
     b |> invoke(info)
 
 
-def with_graphics_pipeline(device, layout, render_pass,
-    phys_dev, surface, window, vert_shmod, frag_shmod;
-    b : block<(p:VkPipeline)>
+def with_graphics_pipeline_simple(
+    device          : VkDevice#;
+    layout          : VkPipelineLayoutCreateInfo#;
+    render_pass     : VkRenderPass#;
+    stages          : array<VkPipelineShaderStageCreateInfo>#;
+    vtx_input       : VkPipelineVertexInputStateCreateInfo;
+    input_assembly  : VkPipelineInputAssemblyStateCreateInfo;
+    viewport        : VkPipelineViewportStateCreateInfo;
+    rasterizer      : VkPipelineRasterizationStateCreateInfo;
+    multisampling   : VkPipelineMultisampleStateCreateInfo;
+    blending        : VkPipelineColorBlendStateCreateInfo implicit
+    b : block<(p:VkPipeline#)>
 )
-    with_pipeline_creation_subobjects(
-        phys_dev, surface, window, vert_shmod, frag_shmod
-    ) <| $(stages, vtx_input, input_assembly, viewport, rasterizer,
-        multisampling, blending
-    )
-        var pstages : VkPipelineShaderStageCreateInfo const ?
-        unsafe
-            pstages = reinterpret<VkPipelineShaderStageCreateInfo const ?>(
-                addr(stages[0]))
-        let pipe_infos <- [[auto[] [[VkGraphicsPipelineCreateInfo
-            sType = (VkStructureType
-                VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO),
-            layout              = layout,
-            renderPass          = render_pass,
-            stageCount          = uint(stages |> length()),
-            pStages             = pstages,
-            pVertexInputState   = vtx_input |> safe_addr(),
-            pInputAssemblyState = input_assembly |> safe_addr(),
-            pViewportState      = viewport |> safe_addr(),
-            pRasterizationState = rasterizer |> safe_addr(),
-            pMultisampleState   = multisampling |> safe_addr(),
-            pColorBlendState    = blending |> safe_addr(),
-            basePipelineIndex   = -1
-        ]]]]
-        var pipes : array<VkPipeline>
-        pipes |> resize(pipe_infos |> length())
-        verify(VkResult VK_SUCCESS == device |> vkCreateGraphicsPipelines(
-            [[VkPipelineCache]],
-            uint(pipe_infos |> length()), pipe_infos[0] |> safe_addr(),
-            null, pipes[0] |> safe_addr_val()))
-        b |> invoke(pipes[0])
-        for pipe in pipes
-            device |> vkDestroyPipeline(pipe, null)
-        delete pipes
+    var pstages : VkPipelineShaderStageCreateInfo const ?
+    unsafe
+        pstages = reinterpret<VkPipelineShaderStageCreateInfo const ?>(
+            addr(stages[0]))
+    let pipe_info <- [[VkGraphicsPipelineCreateInfo
+        sType = (VkStructureType
+            VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO),
+        layout              = layout,
+        renderPass          = render_pass,
+        stageCount          = uint(stages |> length()),
+        pStages             = pstages,
+        pVertexInputState   = vtx_input |> safe_addr(),
+        pInputAssemblyState = input_assembly |> safe_addr(),
+        pViewportState      = viewport |> safe_addr(),
+        pRasterizationState = rasterizer |> safe_addr(),
+        pMultisampleState   = multisampling |> safe_addr(),
+        pColorBlendState    = blending |> safe_addr(),
+        basePipelineIndex   = -1
+    ]]
+    var pipe : VkPipeline
+    verify(VkResult VK_SUCCESS == device |> vkCreateGraphicsPipelines(
+        [[VkPipelineCache]], 1u, safe_addr(pipe_info), null, addr(pipe)))
+    b |> invoke(pipe)
+    device |> vkDestroyPipeline(pipe, null)
+    delete pipes
