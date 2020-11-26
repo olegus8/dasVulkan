@@ -295,7 +295,7 @@ def with_swap_chain_independent_state(width, height, title; b : block<(
         "{get_das_root()}/modules/dasVulkan/example/vert.spv";
         "{get_das_root()}/modules/dasVulkan/example/frag.spv"
     ]]) <| $(shmods) {
-    let surf_fmt <- phys_dev |> get_format_srgb8(surface)
+    let surf_fmt <- phys_dev |> get_format_srgb8(surface);
     device |> with_render_pass_simple(surf_fmt)     <| $(render_pass)       {
     device |> with_pipeline_layout_simple()         <| $(pipeline_layout)   {
     device |> with_command_pool(phys_dev, surface)  <| $(cmd_pool)
