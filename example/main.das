@@ -39,25 +39,6 @@ def with_shader_module(device, name; b : block<(m:VkShaderModule)>)
     device |> vkDestroyShaderModule(shmod, null)
 
 
-def with_pipeline_stages(vert_shmod, frag_shmod;
-    b : block<(s:array<VkPipelineShaderStageCreateInfo>)>
-)
-    var stages <- [{auto[]
-        [[VkPipelineShaderStageCreateInfo module_ = vert_shmod, pName = "main",
-            sType = (VkStructureType
-                VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO),
-            stage = VkShaderStageFlagBits VK_SHADER_STAGE_VERTEX_BIT
-        ]];
-        [[VkPipelineShaderStageCreateInfo module_ = frag_shmod, pName = "main",
-            sType = (VkStructureType
-                VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO),
-            stage = VkShaderStageFlagBits VK_SHADER_STAGE_FRAGMENT_BIT
-        ]]
-    }]
-    b |> invoke(stages)
-    delete stages
-
-
 def with_pipeline_vertex_input(
     b : block<(i:VkPipelineVertexInputStateCreateInfo)>
 )
@@ -160,7 +141,7 @@ def with_pipeline_creation_subobjects(
         blending : VkPipelineColorBlendStateCreateInfo
     )>
 )
-    with_pipeline_stages(vert_shmod, frag_shmod) <| $(stages) {
+    with_pipeline_stages(vert_shmod, "main", frag_shmod, "main") <| $(stages) {
     with_pipeline_vertex_input() <| $(vtx_input) {
     with_pipeline_blending() <| $(blending) {
     phys_dev |> with_pipeline_viewport(surface, window) <| $(viewport) {
