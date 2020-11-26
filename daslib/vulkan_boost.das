@@ -74,10 +74,10 @@ def with_buffer_memory_type(
     phys_dev : VkPhysicalDevice#;
     buffer : VkBuffer#;
     mem_props : uint;
-    b : block<(mem_type:uint, mem_size:uint64)>
+    b : block<(mem_type:uint; mem_size:uint64)>
 )
     var mem_reqs : VkMemoryRequirements
     device |> vkGetBufferMemoryRequirements(buffer, mem_reqs |> safe_addr())
     phys_dev |> with_memory_type(mem_reqs.memoryTypeBits, mem_props
     ) <| $(mem_type)
-        b |> invoke(mem_type, mreqs.size)
+        b |> invoke(mem_type, mem_reqs.size)
