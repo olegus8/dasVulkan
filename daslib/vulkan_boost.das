@@ -77,7 +77,7 @@ let
 
 
 def with_physical_devices(
-    inst : VkInstance#; b : block<(d:array<VkPhysicalDevice>)>
+    inst : VkInstance#; b : block<(d:array<VkPhysicalDevice>#)>
 )
     var devices : array<VkPhysicalDevice>
     var count : uint
@@ -87,16 +87,16 @@ def with_physical_devices(
     devices |> lock() <| $(tdevices)
         verify(VkResult VK_SUCCESS == inst |> vkEnumeratePhysicalDevices(
             safe_addr(count), addr(tdevices[0])))
-    b |> invoke(devices)
+        b |> invoke(tdevices)
     delete devices
 
 
 def with_best_physical_device(inst : VkInstance#; surface : VkSurfaceKHR#;
     b : block<(d:VkPhysicalDevice#)>
 )
-    var best_score : int = 0
-    var best_device : VkPhysicalDevice
     inst |> with_physical_devices() <| $(devices)
+        var best_score : int = 0
+        var best_device : VkPhysicalDevice
         for device in devices
             var score = device |> get_suitability_score(surface)
             if score > best_score
@@ -104,7 +104,7 @@ def with_best_physical_device(inst : VkInstance#; surface : VkSurfaceKHR#;
                 best_device = device
         if best_score == 0
             panic("No suitable physical device found.")
-    b |> invoke(best_device)
+        b |> invoke(best_device)
 
 
 [private]
@@ -157,7 +157,6 @@ def with_graphics_queue_family(
     surface : VkSurfaceKHR#;
     b : block<(index:uint)>
 )
-    var found_index : int = -1
     device |> with_queue_families() <| $(families)
         for family, index in families, range(INT_MAX)
             var can_present : uint
@@ -171,11 +170,8 @@ def with_graphics_queue_family(
             if (family.queueFlags & graphics_bit) == 0u
                 continue
 
-            found_index = index
-            break
-
-    if found_index != -1
-        b |> invoke(uint(found_index))
+            b |> invoke(uint(index))
+            return
 
 
 def get_properties(device : VkPhysicalDevice#)
@@ -211,7 +207,7 @@ def with_ext_props(device : VkPhysicalDevice#;
 
 
 def with_formats(device : VkPhysicalDevice#; surface : VkSurfaceKHR#;
-    b : block<(formats:array<VkSurfaceFormatKHR>)>
+    b : block<(formats:array<VkSurfaceFormatKHR>#)>
 )
     var formats : array<VkSurfaceFormatKHR>
     var count : uint
@@ -223,24 +219,13 @@ def with_formats(device : VkPhysicalDevice#; surface : VkSurfaceKHR#;
         verify(VkResult VK_SUCCESS ==
             device |> vkGetPhysicalDeviceSurfaceFormatsKHR(
                 surface, safe_addr(count), addr(tformats[0])))
-    b |> invoke(formats)
+        b |> invoke(tformats)
     delete formats
 
 
-def get_format_srgb8(device : VkPhysicalDevice#; surface : VkSurfaceKHR#
-) : VkSurfaceFormatKHR
-    return <- device |> get_best_format(surface,
-        VkFormat VK_FORMAT_B8G8R8A8_SRGB,
-        VkColorSpaceKHR VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)
-
-
-def get_best_format(
-    device : VkPhysicalDevice#;
-    surface : VkSurfaceKHR#;
-    preferred_format : VkFormat;
-    preferred_color_space : VkColorSpaceKHR
-) : VkSurfaceFormatKHR
-    var best_format : VkSurfaceFormatKHR
+def with_best_format(device : VkPhysicalDevice#; surface : VkSurfaceKHR#;
+    b : block<(format:VkSurfaceFormatKHR#)>
+)
     device |> with_formats(surface) <| $(formats)
         // picking ideal format if available
         for format in formats
@@ -248,14 +233,12 @@ def get_best_format(
             &&  format.colorSpace == (VkColorSpaceKHR
                     VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)
             )
-                best_format = format
+                b |> invoke(format)
                 return
         // if no ideal found, picking anything
         for format in formats
-            best_format = format
+            b |> invoke(format)
             return
-        panic("No surface formats.")
-    return <- best_format
 
 
 def with_present_modes(device : VkPhysicalDevice#; surface : VkSurfaceKHR#;
@@ -432,7 +415,7 @@ def with_swap_chain(
     phys_dev : VkPhysicalDevice#;
     surface : VkSurfaceKHR#;
     window : GLFWwindow_DasHandle#;
-    surf_fmt : VkSurfaceFormatKHR;
+    surf_fmt : VkSurfaceFormatKHR#;
     present_mode : VkPresentModeKHR#;
     b : block<(sc:VkSwapchainKHR#)>
 )
@@ -487,7 +470,7 @@ def with_swap_chain_images(device : VkDevice#; swap_chain : VkSwapchainKHR#;
 def with_swap_chain_image_views(
     device : VkDevice#;
     images : array<VkImage>#;
-    surf_fmt : VkSurfaceFormatKHR;
+    surf_fmt : VkSurfaceFormatKHR#;
     b : block<(d:array<VkImageView>#)>
 )
     var views : array<VkImageView>
@@ -525,7 +508,7 @@ def with_swap_chain_image_views(
 
 def with_render_pass_simple(
     device : VkDevice#;
-    surf_fmt : VkSurfaceFormatKHR;
+    surf_fmt : VkSurfaceFormatKHR#;
     b : block<(rp:VkRenderPass#)>
 )
     let atts <- [[auto[] [[VkAttachmentDescription

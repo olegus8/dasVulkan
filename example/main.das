@@ -277,7 +277,7 @@ def with_swap_chain_independent_state(width, height, title; b : block<(
     phys_dev        : VkPhysicalDevice#;
     device          : VkDevice#;
     queue           : VkQueue;
-    surf_fmt        : VkSurfaceFormatKHR;
+    surf_fmt        : VkSurfaceFormatKHR#;
     present_mode    : VkPresentModeKHR;
     vert_shmod      : VkShaderModule;
     frag_shmod      : VkShaderModule;
@@ -290,12 +290,12 @@ def with_swap_chain_independent_state(width, height, title; b : block<(
     window |> with_surface(instance)                <| $(surface)           {
     instance |> with_best_physical_device(surface)  <| $(phys_dev)          {
     instance |> with_device(phys_dev, surface)      <| $(device, queue)     {
+    phys_dev |> with_best_format(surface)           <| $(surf_fmt)          {
     phys_dev |> with_best_present_mode(surface)     <| $(present_mode)      {
     device |> with_shader_modules([[auto[]
         "{get_das_root()}/modules/dasVulkan/example/vert.spv";
         "{get_das_root()}/modules/dasVulkan/example/frag.spv"
     ]]) <| $(shmods) {
-    let surf_fmt <- phys_dev |> get_format_srgb8(surface);
     device |> with_render_pass_simple(surf_fmt)     <| $(render_pass)       {
     device |> with_pipeline_layout_simple()         <| $(pipeline_layout)   {
     device |> with_command_pool(phys_dev, surface)  <| $(cmd_pool)
@@ -315,7 +315,7 @@ def with_swap_chain_independent_state(width, height, title; b : block<(
             pipeline_layout,
             cmd_pool
         );
-    }}}}}}}}}}
+    }}}}}}}}}}}
 
 
 def with_swap_chain_dependent_state(
@@ -492,7 +492,7 @@ def main
         phys_dev        : VkPhysicalDevice;
         device          : VkDevice;
         queue           : VkQueue;
-        surf_fmt        : VkSurfaceFormatKHR;
+        surf_fmt        : VkSurfaceFormatKHR#;
         present_mode    : VkPresentModeKHR;
         vert_shmod      : VkShaderModule;
         frag_shmod      : VkShaderModule;
