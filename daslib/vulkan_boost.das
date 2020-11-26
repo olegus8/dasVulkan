@@ -74,7 +74,7 @@ def with_buffer_memory_type(
     phys_dev : VkPhysicalDevice#;
     buffer : VkBuffer#;
     mem_props : uint;
-    b : block<(t:uint)>
+    b : block<(mem_type:uint, mem_size:uint64)>
 )
     var mem_reqs : VkMemoryRequirements
     device |> vkGetBufferMemoryRequirements(buffer, mem_reqs |> safe_addr())
