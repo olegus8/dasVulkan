@@ -53,37 +53,6 @@ def with_swap_chain(device, phys_dev, surface, window, surf_fmt, present_mode;
     device |> vkDestroySwapchainKHR(swap_chain, null)
 
 
-def get_swap_extent(device, surface, window)
-    var caps <- device |> get_capabilities(surface)
-
-    if caps.currentExtent.width != UINT_MAX
-        return <- caps.currentExtent
-    else
-        let fb_size = window |> get_framebuffer_size()
-        return [[VkExtent2D
-            width = clamp(fb_size[0],
-                caps.minImageExtent.width,
-                caps.maxImageExtent.width),
-            height = clamp(fb_size[1],
-                caps.minImageExtent.height,
-                caps.maxImageExtent.height)
-        ]]
-
-
-def get_framebuffer_size(window)
-    var width, height : int
-    window |> glfwGetFramebufferSize(safe_addr(width), safe_addr(height))
-    return uint2(uint(width), uint(height))
-
-
-def get_capabilities(device, surface)
-    var caps : VkSurfaceCapabilitiesKHR
-    verify(VkResult VK_SUCCESS ==
-        device |> vkGetPhysicalDeviceSurfaceCapabilitiesKHR(
-            surface, safe_addr(caps)))
-    return <- caps
-
-
 def with_swap_chain_images(device, swap_chain; b : block<(d:array<VkImage>)>)
     var images : array<VkImage>
     var count : uint
