@@ -158,6 +158,7 @@ def with_graphics_queue_family(
     surface : VkSurfaceKHR#;
     b : block<(index:uint)>
 )
+    var found_index : int = -1
     device |> with_queue_families() <| $(families)
         for family, index in families, range(INT_MAX)
             var can_present : uint
@@ -171,8 +172,11 @@ def with_graphics_queue_family(
             if (family.queueFlags & graphics_bit) == 0u
                 continue
 
-            b |> invoke(uint(index))
-            return
+            found_index = index
+            break
+
+    if found_index != -1:
+        b |> invoke(uint(found_index))
 
 
 def get_properties(device : VkPhysicalDevice#)
