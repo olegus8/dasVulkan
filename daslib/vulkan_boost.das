@@ -276,11 +276,14 @@ def with_device(
     b : block<(device:VkDevice#; queue:VkQueue#)>
 )
     phys_dev |> with_queue_create_infos(surface) <| $(queue_infos)
+        var pqueue_infos : VkDeviceQueueCreateInfo const ?
+        unsafe
+            pqueue_infos = reinterpret<VkDeviceQueueCreateInfo const ?>(addr(queue_infos[0]))
         let features : VkPhysicalDeviceFeatures
         var device : VkDevice
         let create_info = [[VkDeviceCreateInfo
             sType = VkStructureType VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO,
-            pQueueCreateInfos = safe_addr_plain(queue_infos[0]),
+            pQueueCreateInfos = pqueue_infos,
             queueCreateInfoCount = uint(queue_infos |> length()),
             pEnabledFeatures = safe_addr(features),
             enabledExtensionCount = uint(REQUIRED_EXTENSIONS |> length()),
@@ -303,27 +306,29 @@ def with_queue_create_infos(
     b : block<(infos:array<VkDeviceQueueCreateInfo>#)>
 )
     var families : array<uint>
+    var priorities : array<float>
     device |> with_graphics_queue_family(surface) <| $(qfam)
         families |> push(qfam)
-
-    var priorities : array<float>
-    priorities |> reserve(families |> length())
-    for family in families
         priorities |> push(1.0f)
 
     var infos : array<VkDeviceQueueCreateInfo>
     infos |> reserve(families |> length())
-    for family in families
-        infos |> emplace([[
-            VkDeviceQueueCreateInfo
-                sType = (VkStructureType
-                    VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO),
-                queueFamilyIndex = family,
-                queueCount = uint(priorities |> length()),
-                pQueuePriorities = safe_addr_plain(priorities[0])
-        ]])
+    priorities |> lock() <| $(tpriorities)
+        var ppriorities : float const ?
+        unsafe
+            ppriorities = reinterpret<float const ?>(addr(tpriorities[0]))
+        for family in families
+            infos |> emplace([[
+                VkDeviceQueueCreateInfo
+                    sType = (VkStructureType
+                        VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO),
+                    queueFamilyIndex = family,
+                    queueCount = uint(priorities |> length()),
+                    pQueuePriorities = ppriorities
+            ]])
 
-    b |> invoke(infos)
+    infos |> lock() <| $(tinfos)
+        b |> invoke(tinfos)
 
     delete families
     delete priorities
