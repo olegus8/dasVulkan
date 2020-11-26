@@ -68,20 +68,6 @@ def with_graphics_pipeline(device, layout, render_pass,
     }}}}}}}}
 
 
-def with_buffer(device, buf_size, usage; b : block<(b:VkBuffer)>)
-    let create_info <- [[VkBufferCreateInfo
-        sType = VkStructureType VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO,
-        size = uint64(buf_size),
-        usage = usage,
-        sharingMode = VkSharingMode VK_SHARING_MODE_EXCLUSIVE
-    ]]
-    var buf : VkBuffer
-    verify(VkResult VK_SUCCESS == device |> vkCreateBuffer(
-        create_info |> safe_addr(), null, buf |> safe_addr()))
-    b |> invoke(buf)
-    device |> vkDestroyBuffer(buf, null)
-
-
 def with_memory(device, size, mem_type; b : block<(m:VkDeviceMemory)>)
     let alloc_info <- [[VkMemoryAllocateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO,

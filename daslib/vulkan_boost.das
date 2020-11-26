@@ -761,3 +761,22 @@ def with_command_pool(
             safe_addr(create_info), null, safe_addr(pool)))
         b |> invoke(pool)
         device |> vkDestroyCommandPool(pool, null)
+
+
+def with_buffer(
+    device : VkDevice#;
+    buf_size : auto;
+    usage : uint;
+    b : block<(b:VkBuffer#)>
+)
+    let create_info <- [[VkBufferCreateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO,
+        size = uint64(buf_size),
+        usage = usage,
+        sharingMode = VkSharingMode VK_SHARING_MODE_EXCLUSIVE
+    ]]
+    var buf : VkBuffer
+    verify(VkResult VK_SUCCESS == device |> vkCreateBuffer(
+        create_info |> safe_addr(), null, buf |> safe_addr()))
+    b |> invoke(buf)
+    device |> vkDestroyBuffer(buf, null)
