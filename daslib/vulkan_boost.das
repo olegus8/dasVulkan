@@ -8,10 +8,10 @@ require fio
 require math
 require vulkan
 
-require private/buffer      public
-require private/core        public
-require private/device      public
-require private/swap_chain  public
+require internal/buffer      public
+require internal/core        public
+require internal/device      public
+require internal/swap_chain  public
 
 
 let

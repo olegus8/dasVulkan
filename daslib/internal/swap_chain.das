@@ -1,3 +1,11 @@
+options indenting = 4
+options no_aot = true
+
+require math
+
+require daslib/safe_addr
+require vulkan
+require internal/device
 
 
 def with_swap_chain(
