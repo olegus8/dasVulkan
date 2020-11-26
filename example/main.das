@@ -48,17 +48,18 @@ def with_graphics_pipeline(device, layout, render_pass,
     phys_dev, surface, window, vert_shmod, frag_shmod;
     b : block<(p:VkPipeline)>
 )
+    with_pipeline_vertex_input()                <| $(vtx_input) {
+    with_pipeline_blending_disabled()           <| $(blending) {
+    with_pipeline_multisampling_disabled()      <| $(multisampling) {
+    with_pipeline_rasterizer_simple()           <| $(rasterizer) {
+    with_pipeline_input_assembly_tri_list()     <| $(input_assembly) {
+    phys_dev |> with_pipeline_viewport_full_window(
+        surface, window
+    ) <| $(viewport) {
     with_pipeline_shader_stages(
         vert_shmod, "main",
         frag_shmod, "main"
     ) <| $(stages) {
-    with_pipeline_vertex_input() <| $(vtx_input) {
-    with_pipeline_blending_disabled() <| $(blending) {
-    with_pipeline_multisampling_disabled() <| $(multisampling) {
-    with_pipeline_rasterizer_simple() <| $(rasterizer) {
-    with_pipeline_input_assembly_tri_list() <| $(input_assembly) {
-    phys_dev |> with_pipeline_viewport_full_window(surface, window
-    ) <| $(viewport) {
     device |> with_graphics_pipeline_simple(
         layout, render_pass, stages, vtx_input, input_assembly,
         viewport, rasterizer, multisampling, blending
