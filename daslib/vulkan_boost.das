@@ -101,8 +101,7 @@ def with_best_physical_device(inst : VkInstance#; surface : VkSurfaceKHR#;
             var score = device |> get_suitability_score(surface)
             if score > best_score
                 best_score = score
-                unsafe
-                    best_device = reinterpret<VkPhysicalDevice>(device)
+                best_device = device
         if best_score == 0
             panic("No suitable physical device found.")
     b |> invoke(best_device)
@@ -488,7 +487,7 @@ def with_swap_chain_images(device : VkDevice#; swap_chain : VkSwapchainKHR#;
 def with_swap_chain_image_views(
     device : VkDevice#;
     images : array<VkImage>#;
-    surf_fmt : VkSurfaceFormatKHR#;
+    surf_fmt : VkSurfaceFormatKHR;
     b : block<(d:array<VkImageView>#)>
 )
     var views : array<VkImageView>
@@ -526,7 +525,7 @@ def with_swap_chain_image_views(
 
 def with_render_pass_simple(
     device : VkDevice#;
-    surf_fmt : VkSurfaceFormatKHR#;
+    surf_fmt : VkSurfaceFormatKHR;
     b : block<(rp:VkRenderPass#)>
 )
     let atts <- [[auto[] [[VkAttachmentDescription
