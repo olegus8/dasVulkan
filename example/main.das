@@ -11,10 +11,6 @@ require vulkan
 let
     MAX_FRAMES_IN_FLIGHT = 2
 
-    REQUIRED_EXTENSIONS = [[auto[]
-        "VK_KHR_swapchain" //TODO: use VK_KHR_SWAPCHAIN_EXTENSION_NAME
-    ]]
-
 
 struct Vertex
     position : float2

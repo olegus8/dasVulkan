@@ -7,6 +7,12 @@ require vulkan
 require daslib/safe_addr
 
 
+let
+    REQUIRED_EXTENSIONS = [[auto[]
+        "VK_KHR_swapchain" //TODO: use VK_KHR_SWAPCHAIN_EXTENSION_NAME
+    ]]
+
+
 def with_physical_devices(
     inst : VkInstance; b : block<(d:array<VkPhysicalDevice>)>
 )
