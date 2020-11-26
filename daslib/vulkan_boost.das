@@ -135,7 +135,7 @@ def get_suitability_score(device : VkPhysicalDevice#; surface : VkSurfaceKHR#)
 
 
 def with_queue_families(device : VkPhysicalDevice#;
-    b : block<(families: array<VkQueueFamilyProperties>)>
+    b : block<(families: array<VkQueueFamilyProperties>#)>
 )
     var families : array<VkQueueFamilyProperties>
     var count : uint
@@ -145,7 +145,7 @@ def with_queue_families(device : VkPhysicalDevice#;
     families |> lock() <| $(tfamilies)
         device |> vkGetPhysicalDeviceQueueFamilyProperties(
             safe_addr(count), addr(tfamilies[0]))
-    b |> invoke(families)
+        b |> invoke(tfamilies)
     delete families
 
 
