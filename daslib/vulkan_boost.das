@@ -520,8 +520,7 @@ def with_basic_render_pass(
     device |> vkDestroyRenderPass(rpass, null)
 
 
-def with_basic_pipeline_layout(
-    device : VkDevice#;
+def with_basic_pipeline_layout(device : VkDevice#;
     b : block<(layout:VkPipelineLayout#)>
 )
     let create_info <- [[ VkPipelineLayoutCreateInfo
