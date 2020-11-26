@@ -17,42 +17,6 @@ struct Vertex
     color : float3
 
 
-def with_swap_chain(device, phys_dev, surface, window, surf_fmt, present_mode;
-    b : block<(sc:VkSwapchainKHR)>
-)
-    let caps <- phys_dev |> get_capabilities(surface)
-    let extent <- phys_dev |> get_swap_extent(surface, window)
-
-    // we want at least one spare image for multi-buffering
-    var img_count : uint = caps.minImageCount + 1u
-    if caps.maxImageCount > 0u
-        img_count = min(img_count, caps.maxImageCount)
-
-    let create_info = [[VkSwapchainCreateInfoKHR
-        sType = VkStructureType VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR,
-        surface = surface,
-        minImageCount = img_count,
-        imageFormat = surf_fmt.format,
-        imageColorSpace = surf_fmt.colorSpace,
-        imageExtent = extent,
-        imageArrayLayers = 1u, // 2 for stereoscopic
-        imageUsage = uint(
-            VkImageUsageFlagBits VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT),
-        imageSharingMode = VkSharingMode VK_SHARING_MODE_EXCLUSIVE,
-        preTransform = caps.currentTransform,
-        compositeAlpha = (
-            VkCompositeAlphaFlagBitsKHR VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR),
-        presentMode = present_mode,
-        clipped = uint(VK_TRUE)
-    ]]
-
-    var swap_chain : VkSwapchainKHR
-    verify(VkResult VK_SUCCESS == device |> vkCreateSwapchainKHR(
-        safe_addr(create_info), null, safe_addr(swap_chain)))
-    b |> invoke(swap_chain)
-    device |> vkDestroySwapchainKHR(swap_chain, null)
-
-
 def with_swap_chain_image_views(device, images, surf_fmt;
     b : block<(d:array<VkImageView>)>
 )
@@ -677,7 +641,7 @@ def with_swap_chain_dependent_state(
     cmd_pool;
     b : block<(
         swap_chain          : VkSwapchainKHR;
-        sc_imgs             : array<VkImage>;
+        sc_imgs             : array<VkImage>#;
         sc_views            : array<VkImageView>;
         sc_fbufs            : array<VkFramebuffer>;
         pipeline            : VkPipeline;
@@ -871,7 +835,7 @@ def main
                     cmd_pool
                 ) <| $(
                     swap_chain          : VkSwapchainKHR;
-                    sc_imgs             : array<VkImage>;
+                    sc_imgs             : array<VkImage>#;
                     sc_views            : array<VkImageView>;
                     sc_fbufs            : array<VkFramebuffer>;
                     pipeline            : VkPipeline;
