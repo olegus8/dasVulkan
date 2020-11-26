@@ -743,3 +743,21 @@ def with_swap_chain_framebuffers(
     for fbuf in fbufs
         device |> vkDestroyFramebuffer(fbuf, null)
     delete fbufs
+
+
+def with_command_pool(
+    device : VkDevice#;
+    phys_dev : VkPhysicalDevice#;
+    surface : VkSurfaceKHR#;
+    b : block<(p:VkCommandPool#)>
+)
+    phys_dev |> with_graphics_queue_family(surface) <| $(qfam)
+        let create_info <- [[VkCommandPoolCreateInfo
+            sType = VkStructureType VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO,
+            queueFamilyIndex = qfam
+        ]]
+        var pool : VkCommandPool
+        verify(VkResult VK_SUCCESS == device |> vkCreateCommandPool(
+            safe_addr(create_info), null, safe_addr(pool)))
+        b |> invoke(pool)
+        device |> vkDestroyCommandPool(pool, null)

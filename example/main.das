@@ -68,19 +68,6 @@ def with_graphics_pipeline(device, layout, render_pass,
     }}}}}}}}
 
 
-def with_command_pool(device, phys_dev, surface; b : block<(p:VkCommandPool)>)
-    phys_dev |> with_graphics_queue_family(surface) <| $(qfam)
-        let create_info <- [[VkCommandPoolCreateInfo
-            sType = VkStructureType VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO,
-            queueFamilyIndex = qfam
-        ]]
-        var pool : VkCommandPool
-        verify(VkResult VK_SUCCESS == device |> vkCreateCommandPool(
-            create_info |> safe_addr(), null, pool |> safe_addr()))
-        b |> invoke(pool)
-        device |> vkDestroyCommandPool(pool, null)
-
-
 def with_buffer(device, buf_size, usage; b : block<(b:VkBuffer)>)
     let create_info <- [[VkBufferCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO,
