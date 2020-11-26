@@ -7,6 +7,17 @@ require vulkan
 require daslib/safe_addr
 
 
+//TODO: move to stdlib?
+def to_string(bytes : int8[])
+    unsafe
+        return reinterpret<string>(addr(bytes[0]))
+
+
+def to_string(bytes : void?)
+    unsafe
+        return reinterpret<string>(bytes)
+
+
 let
     REQUIRED_EXTENSIONS = [[auto[]
         "VK_KHR_swapchain" //TODO: use VK_KHR_SWAPCHAIN_EXTENSION_NAME
@@ -83,8 +94,9 @@ def with_queue_families(
     device |> vkGetPhysicalDeviceQueueFamilyProperties(
         safe_addr(count), null)
     families |> resize(int(count))
-    device |> vkGetPhysicalDeviceQueueFamilyProperties(
-        safe_addr(count), safe_addr_val(families[0]))
+    families |> lock() <| $(tfamilies)
+        device |> vkGetPhysicalDeviceQueueFamilyProperties(
+            safe_addr(count), addr(tfamilies[0]))
     b |> invoke(families)
     delete families
 

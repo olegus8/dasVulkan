@@ -17,17 +17,6 @@ struct Vertex
     color : float3
 
 
-//TODO: move to stdlib?
-def to_string(bytes : int8[])
-    unsafe
-        return reinterpret<string>(addr(bytes[0]))
-
-
-def to_string(bytes : void?)
-    unsafe
-        return reinterpret<string>(bytes)
-
-
 //TODO: need this for heap
 def safe_addr_plain(x : auto(T)) : T ? #
     unsafe
