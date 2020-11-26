@@ -325,7 +325,7 @@ def with_device(
         var device : VkDevice
         let create_info = [[VkDeviceCreateInfo
             sType = VkStructureType VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO,
-            pQueueCreateInfos = addr(queue_info),
+            pQueueCreateInfos = safe_addr(queue_info),
             queueCreateInfoCount = 1u,
             pEnabledFeatures = safe_addr(features),
             enabledExtensionCount = uint(REQUIRED_EXTENSIONS |> length()),
@@ -345,7 +345,7 @@ def with_device(
 def with_queue_create_info(
     device : VkPhysicalDevice#;
     surface : VkSurfaceKHR#;
-    b : block<(i:VkDeviceQueueCreateInfo#)>
+    b : block<(i:VkDeviceQueueCreateInfo)>
 )
     let family = device |> get_graphics_queue_family(surface)
     let priority = 1.0f
