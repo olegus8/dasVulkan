@@ -68,37 +68,6 @@ def with_graphics_pipeline(device, layout, render_pass,
     }}}}}}}}
 
 
-def with_swap_chain_framebuffers(
-    device, phys_dev, surface, window, views, render_pass;
-    b : block<(fbs:array<VkFramebuffer>)>
-)
-    let extent <- phys_dev |> get_swap_extent(surface, window)
-    var fbufs : array<VkFramebuffer>
-    fbufs |> resize(views |> length())
-    for fbuf, view in fbufs, views
-        var pview : VkImageView const ?
-        unsafe
-            pview = reinterpret<VkImageView const ?>(addr(view))
-        let create_info <- [[VkFramebufferCreateInfo
-            sType = VkStructureType VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO,
-            renderPass = render_pass,
-
-            //TODO: make it work. says "can only dereference simple type"
-            attachmentCount = 1u, 
-
-            pAttachments = pview,
-            width = extent.width,
-            height = extent.height,
-            layers = 1u
-        ]]
-        verify(VkResult VK_SUCCESS == device |> vkCreateFramebuffer(
-            create_info |> safe_addr(), null, fbuf |> safe_addr()))
-    b |> invoke(fbufs)
-    for fbuf in fbufs
-        device |> vkDestroyFramebuffer(fbuf, null)
-    delete fbufs
-
-
 def with_command_pool(device, phys_dev, surface; b : block<(p:VkCommandPool)>)
     phys_dev |> with_graphics_queue_family(surface) <| $(qfam)
         let create_info <- [[VkCommandPoolCreateInfo
