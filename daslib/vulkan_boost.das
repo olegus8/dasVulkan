@@ -15,44 +15,6 @@ require internal/swap_chain  public
 require internal/pipeline    public
 
 
-def with_swap_chain_framebuffers(
-    device      : VkDevice#;
-    phys_dev    : VkPhysicalDevice#;
-    surface     : VkSurfaceKHR#;
-    window      : GLFWwindow_DasHandle#;
-    views       : array<VkImageView>#;
-    render_pass : VkRenderPass#;
-    b : block<(fbs:array<VkFramebuffer>#)>
-)
-    let extent <- phys_dev |> get_swap_extent(surface, window)
-    var fbufs : array<VkFramebuffer>
-    fbufs |> resize(views |> length())
-    fbufs |> lock() <| $(tfbufs)
-        for tfbuf, view in tfbufs, views
-            var pview : VkImageView const ?
-            unsafe
-                pview = reinterpret<VkImageView const ?>(addr(view))
-            let create_info <- [[VkFramebufferCreateInfo
-                sType = (VkStructureType
-                    VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO),
-                renderPass = render_pass,
-
-                //TODO: make it work. says "can only dereference simple type"
-                attachmentCount = 1u, 
-
-                pAttachments = pview,
-                width = extent.width,
-                height = extent.height,
-                layers = 1u
-            ]]
-            verify(VkResult VK_SUCCESS == device |> vkCreateFramebuffer(
-                safe_addr(create_info), null, addr(tfbuf)))
-        b |> invoke(tfbufs)
-    for fbuf in fbufs
-        device |> vkDestroyFramebuffer(fbuf, null)
-    delete fbufs
-
-
 def with_command_pool(
     device : VkDevice#;
     phys_dev : VkPhysicalDevice#;
