@@ -193,7 +193,7 @@ def with_mem_backed_buf(
         ) <| $(mem_type, mem_size)
             device |> with_memory(mem_size, mem_type) <| $(mem)
                 verify(VkResult VK_SUCCESS ==
-                    device |> vkBindBufferMemory(buf, mem, 0u))
+                    device |> vkBindBufferMemory(buf, mem, uint64(0)))
                 b |> invoke(buf, mem)
 
 
