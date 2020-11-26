@@ -267,3 +267,64 @@ def with_surface(window : GLFWwindow_DasHandle#; instance : VkInstance#;
         window, null, safe_addr(surface)))
     b |> invoke(surface)
     instance |> vkDestroySurfaceKHR(surface, null)
+
+
+def with_device(
+    instance : VkInstance#;
+    phys_dev : VkPhysicalDevice#;
+    surface : VkSurfaceKHR;
+    b : block<(device:VkDevice#; queue:VkQueue#)>
+)
+    phys_dev |> with_queue_create_infos(surface) <| $(queue_infos)
+        let features : VkPhysicalDeviceFeatures
+        var device : VkDevice
+        let create_info = [[VkDeviceCreateInfo
+            sType = VkStructureType VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO,
+            pQueueCreateInfos = safe_addr_plain(queue_infos[0]),
+            queueCreateInfoCount = uint(queue_infos |> length()),
+            pEnabledFeatures = safe_addr(features),
+            enabledExtensionCount = uint(REQUIRED_EXTENSIONS |> length()),
+            ppEnabledExtensionNames = safe_addr(REQUIRED_EXTENSIONS[0])
+        ]]
+        verify(VkResult VK_SUCCESS == vkCreateDevice(
+            phys_dev, safe_addr(create_info), null, safe_addr(device)))
+        var queue : VkQueue
+        phys_dev |> with_graphics_queue_family(surface) <| $(qfam)
+            device |> vkGetDeviceQueue(qfam, 0u, queue |> safe_addr())
+        b |> invoke(device, queue)
+        device |> vkDeviceWaitIdle()
+        device |> vkDestroyDevice(null)
+
+
+[private]
+def with_queue_create_infos(
+    device : VkPhysicalDevice#;
+    surface : VkSurfaceKHR#;
+    b : block<(infos:array<VkDeviceQueueCreateInfo>#)>
+)
+    var families : array<uint>
+    device |> with_graphics_queue_family(surface) <| $(qfam)
+        families |> push(qfam)
+
+    var priorities : array<float>
+    priorities |> reserve(families |> length())
+    for family in families
+        priorities |> push(1.0f)
+
+    var infos : array<VkDeviceQueueCreateInfo>
+    infos |> reserve(families |> length())
+    for family in families
+        infos |> emplace([[
+            VkDeviceQueueCreateInfo
+                sType = (VkStructureType
+                    VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO),
+                queueFamilyIndex = family,
+                queueCount = uint(priorities |> length()),
+                pQueuePriorities = safe_addr_plain(priorities[0])
+        ]])
+
+    b |> invoke(infos)
+
+    delete families
+    delete priorities
+    delete infos
