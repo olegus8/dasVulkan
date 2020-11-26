@@ -141,7 +141,7 @@ def with_pipeline_creation_subobjects(
         blending : VkPipelineColorBlendStateCreateInfo
     )>
 )
-    with_pipeline_shaderstages(
+    with_pipeline_shader_stages(
         vert_shmod, "main", frag_shmod, "main"
     ) <| $(stages) {
     with_pipeline_vertex_input() <| $(vtx_input) {
