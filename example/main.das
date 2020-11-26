@@ -113,22 +113,6 @@ def make_pipeline_multisampling()
     ]]
 
 
-def with_pipeline_blending(b : block<(b:VkPipelineColorBlendStateCreateInfo)>)
-    let blending_atts <- [[auto[] [[VkPipelineColorBlendAttachmentState
-        colorWriteMask =
-            uint(VkColorComponentFlagBits VK_COLOR_COMPONENT_R_BIT) |
-            uint(VkColorComponentFlagBits VK_COLOR_COMPONENT_G_BIT) |
-            uint(VkColorComponentFlagBits VK_COLOR_COMPONENT_B_BIT) |
-            uint(VkColorComponentFlagBits VK_COLOR_COMPONENT_A_BIT)
-    ]]]]
-    b |> invoke([[VkPipelineColorBlendStateCreateInfo
-        sType = (VkStructureType
-            VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO),
-        attachmentCount = uint(blending_atts |> length()),
-        pAttachments = blending_atts |> safe_addr()
-    ]])
-
-
 def with_pipeline_creation_subobjects(
     phys_dev, surface, window, vert_shmod, frag_shmod;
     b : block<(
@@ -145,7 +129,7 @@ def with_pipeline_creation_subobjects(
         vert_shmod, "main", frag_shmod, "main"
     ) <| $(stages) {
     with_pipeline_vertex_input() <| $(vtx_input) {
-    with_pipeline_blending() <| $(blending) {
+    with_pipeline_blending_disabled() <| $(blending) {
     phys_dev |> with_pipeline_viewport(surface, window) <| $(viewport) {
         b |> invoke(
             stages,
