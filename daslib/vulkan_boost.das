@@ -37,7 +37,7 @@ let
 
 
 def with_physical_devices(
-    inst : VkInstance; b : block<(d:array<VkPhysicalDevice>#)>
+    inst : VkInstance#; b : block<(d:array<VkPhysicalDevice>#)>
 )
     var devices : array<VkPhysicalDevice>
     var count : uint
@@ -51,8 +51,8 @@ def with_physical_devices(
     delete devices
 
 
-def with_best_physical_device(
-    inst : VkInstance; surface : VkSurfaceKHR; b : block<(d:VkPhysicalDevice#)>
+def with_best_physical_device(inst : VkInstance#; surface : VkSurfaceKHR#;
+    b : block<(d:VkPhysicalDevice#)>
 )
     inst |> with_physical_devices() <| $(devices)
         var best_score : int = 0
@@ -68,7 +68,7 @@ def with_best_physical_device(
 
 
 [private]
-def get_suitability_score(device : VkPhysicalDevice; surface : VkSurfaceKHR)
+def get_suitability_score(device : VkPhysicalDevice#; surface : VkSurfaceKHR#)
     var score = 1
 
     var has_graphics = false
