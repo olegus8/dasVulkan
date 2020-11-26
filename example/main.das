@@ -188,10 +188,10 @@ def with_mem_backed_buf(
     mem_props : uint;
     b : block<(b:VkBuffer#; m:VkDeviceMemory#)>
 )
-    device |> with_buffer(buf_size, usage)                         <| $(buf) {
-    device |> with_buffer_memory_type(phys_dev, buffer, mem_props) <| $(mtype){
-    device |> with_memory(mem_reqs.size, mtype)                    <| $(mem) {
-    device |> with_buf_mem(phys_dev, buf, mem_props)               <| $(mem) {
+    device |> with_buffer(buf_size, usage)                      <| $(buf)   {
+    device |> with_buffer_memory_type(phys_dev, buf, mem_props) <| $(mtype) {
+    device |> with_memory(mem_reqs.size, mtype)                 <| $(mem)   {
+    device |> with_buf_mem(phys_dev, buf, mem_props)            <| $(mem)   {
         verify(VkResult VK_SUCCESS ==
             device |> vkBindBufferMemory(buf, mem, 0u));
         b |> invoke(buf, mem);
