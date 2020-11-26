@@ -433,7 +433,7 @@ def with_swap_chain(
     phys_dev : VkPhysicalDevice#;
     surface : VkSurfaceKHR#;
     window : GLFWwindow_DasHandle#;
-    surf_fmt : VkSurfaceFormatKHR#;
+    surf_fmt : VkSurfaceFormatKHR;
     present_mode : VkPresentModeKHR#;
     b : block<(sc:VkSwapchainKHR#)>
 )
