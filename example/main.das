@@ -512,7 +512,7 @@ def main
                                 window |> glfwWindowShouldClose() == 0)
                             glfwPollEvents()
                             let is_swapchain_good = device |> draw_frame(
-                                queue, sc_draw_cmds, swapchain, frame,
+                                queue, sc_draw_cmds, sc.swapchain, frame,
                                 frame_fences, img_avail_sems, render_done_sems,
                                 imgs_used_by_frames
                             )
