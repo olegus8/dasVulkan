@@ -29,9 +29,9 @@ def with_swapchain(
         window, surf_fmt, present_mode)             <| $(swapchain)         {
     device |> with_swapchain_images(swapchain)      <| $(images)            {
     device |> with_swapchain_image_views(
-        sc_imgs, surf_fmt)                          <| $(views)             {
+        images, surf_fmt)                           <| $(views)             {
     device |> with_swapchain_framebuffers(
-        phys_dev, surface, window, sc_views,
+        phys_dev, surface, window, views,
         render_pass)                                <| $(framebuffers)
     {
         let sc <- [[Swapchain
