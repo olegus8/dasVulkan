@@ -44,6 +44,7 @@ def with_swapchain(
     }}}}
 
 
+[private]
 def with_swapchain(
     device          : VkDevice#;
     phys_dev        : VkPhysicalDevice#;
@@ -86,6 +87,7 @@ def with_swapchain(
     device |> vkDestroySwapchainKHR(swapchain, null)
 
 
+[private]
 def with_swapchain_images(device : VkDevice#; swapchain : VkSwapchainKHR#;
     b : block<(d:array<VkImage>#)>
 )
@@ -101,6 +103,7 @@ def with_swapchain_images(device : VkDevice#; swapchain : VkSwapchainKHR#;
     delete images
 
 
+[private]
 def with_swapchain_image_views(
     device : VkDevice#;
     images : array<VkImage>#;
@@ -140,6 +143,7 @@ def with_swapchain_image_views(
     delete views
 
 
+[private]
 def with_swapchain_framebuffers(
     device      : VkDevice#;
     phys_dev    : VkPhysicalDevice#;
