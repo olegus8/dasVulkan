@@ -30,7 +30,7 @@ def create_framebuffer(
 
     var patts : VkImageView?
     unsafe
-        patts = addr(attachments[0])
+        patts = reinterpret<VkImageView const?>(addr(attachments[0]))
 
     let create_info <- [[VkFramebufferCreateInfo
         sType = (VkStructureType
