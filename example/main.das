@@ -308,7 +308,7 @@ def with_swapchain_dependent_state(
     pipeline_layout,
     cmd_pool;
     b : block<(
-        swapchain           : Swapchain implicit;
+        swapchain           : SwapchainEx implicit;
         pipeline            : VkPipeline;
         img_avail_sems      : array<VkSemaphore>;
         render_done_sems    : array<VkSemaphore>;
