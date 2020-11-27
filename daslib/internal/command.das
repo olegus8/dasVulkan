@@ -18,7 +18,7 @@ struct CommandPool
 def create_command_pool(
     device : VkDevice#;
     queue_family : uint;
-    flags : uint
+    flags : uint = 0u
 ) : CommandPool
     let create_info <- [[VkCommandPoolCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO,
