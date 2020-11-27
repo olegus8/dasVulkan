@@ -492,7 +492,7 @@ def main
                     pipeline_layout,
                     cmd_pool
                 ) <| $(
-                    sc                  : Swapchain implicit;
+                    sc                  : SwapchainEx implicit;
                     pipeline            : VkPipeline;
                     img_avail_sems      : array<VkSemaphore>;
                     render_done_sems    : array<VkSemaphore>;
