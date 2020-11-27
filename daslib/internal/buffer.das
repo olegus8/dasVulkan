@@ -39,7 +39,7 @@ def create_buffer(
             pQueueFamilyIndices = pindices
         ]]
         verify(VkResult VK_SUCCESS == device |> vkCreateBuffer(
-            safe_addr(create_info), null, safe_addr(buf.buffer)))
+            safe_addr(info), null, safe_addr(buf.buffer)))
     return <- buf
 
 
