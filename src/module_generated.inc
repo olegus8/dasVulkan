@@ -2722,7 +2722,7 @@ struct VkExtent2DAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkExtent2D>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -2746,7 +2746,7 @@ struct VkExtent3DAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkExtent3D>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -2769,7 +2769,7 @@ struct VkOffset2DAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkOffset2D>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -2793,7 +2793,7 @@ struct VkOffset3DAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkOffset3D>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -2816,7 +2816,7 @@ struct VkRect2DAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkRect2D>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -2839,7 +2839,7 @@ struct VkBaseInStructureAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkBaseInStructure>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -2862,7 +2862,7 @@ struct VkBaseOutStructureAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkBaseOutStructure>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -2892,7 +2892,7 @@ struct VkBufferMemoryBarrierAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkBufferMemoryBarrier>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -2916,7 +2916,7 @@ struct VkDispatchIndirectCommandAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDispatchIndirectCommand>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -2942,7 +2942,7 @@ struct VkDrawIndexedIndirectCommandAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDrawIndexedIndirectCommand>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -2967,7 +2967,7 @@ struct VkDrawIndirectCommandAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDrawIndirectCommand>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -2993,7 +2993,7 @@ struct VkImageSubresourceRangeAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkImageSubresourceRange>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -3024,7 +3024,7 @@ struct VkImageMemoryBarrierAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkImageMemoryBarrier>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -3049,7 +3049,7 @@ struct VkMemoryBarrierAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkMemoryBarrier>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -3071,7 +3071,7 @@ struct VkAllocationCallbacksAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkAllocationCallbacks>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -3099,7 +3099,7 @@ struct VkApplicationInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkApplicationInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -3123,7 +3123,7 @@ struct VkFormatPropertiesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkFormatProperties>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -3149,7 +3149,7 @@ struct VkImageFormatPropertiesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkImageFormatProperties>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -3178,7 +3178,7 @@ struct VkInstanceCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkInstanceCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -3201,7 +3201,7 @@ struct VkMemoryHeapAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkMemoryHeap>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -3224,7 +3224,7 @@ struct VkMemoryTypeAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkMemoryType>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -3300,7 +3300,7 @@ struct VkPhysicalDeviceFeaturesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceFeatures>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -3427,7 +3427,7 @@ struct VkPhysicalDeviceLimitsAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceLimits>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -3452,7 +3452,7 @@ struct VkPhysicalDeviceMemoryPropertiesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceMemoryProperties>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -3478,7 +3478,7 @@ struct VkPhysicalDeviceSparsePropertiesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceSparseProperties>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -3508,7 +3508,7 @@ struct VkPhysicalDevicePropertiesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceProperties>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -3533,7 +3533,7 @@ struct VkQueueFamilyPropertiesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkQueueFamilyProperties>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -3560,7 +3560,7 @@ struct VkDeviceQueueCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDeviceQueueCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -3591,7 +3591,7 @@ struct VkDeviceCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDeviceCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -3614,7 +3614,7 @@ struct VkExtensionPropertiesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkExtensionProperties>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -3639,7 +3639,7 @@ struct VkLayerPropertiesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkLayerProperties>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -3669,7 +3669,7 @@ struct VkSubmitInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkSubmitInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -3695,7 +3695,7 @@ struct VkMappedMemoryRangeAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkMappedMemoryRange>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -3720,7 +3720,7 @@ struct VkMemoryAllocateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkMemoryAllocateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -3744,7 +3744,7 @@ struct VkMemoryRequirementsAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkMemoryRequirements>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -3770,7 +3770,7 @@ struct VkSparseMemoryBindAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkSparseMemoryBind>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -3794,7 +3794,7 @@ struct VkSparseBufferMemoryBindInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkSparseBufferMemoryBindInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -3818,7 +3818,7 @@ struct VkSparseImageOpaqueMemoryBindInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkSparseImageOpaqueMemoryBindInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -3842,7 +3842,7 @@ struct VkImageSubresourceAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkImageSubresource>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -3869,7 +3869,7 @@ struct VkSparseImageMemoryBindAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkSparseImageMemoryBind>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -3893,7 +3893,7 @@ struct VkSparseImageMemoryBindInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkSparseImageMemoryBindInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -3926,7 +3926,7 @@ struct VkBindSparseInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkBindSparseInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -3950,7 +3950,7 @@ struct VkSparseImageFormatPropertiesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkSparseImageFormatProperties>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -3976,7 +3976,7 @@ struct VkSparseImageMemoryRequirementsAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkSparseImageMemoryRequirements>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -4000,7 +4000,7 @@ struct VkFenceCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkFenceCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -4024,7 +4024,7 @@ struct VkSemaphoreCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkSemaphoreCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -4048,7 +4048,7 @@ struct VkEventCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkEventCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -4075,7 +4075,7 @@ struct VkQueryPoolCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkQueryPoolCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -4104,7 +4104,7 @@ struct VkBufferCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkBufferCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -4132,7 +4132,7 @@ struct VkBufferViewCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkBufferViewCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -4168,7 +4168,7 @@ struct VkImageCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkImageCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -4194,7 +4194,7 @@ struct VkSubresourceLayoutAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkSubresourceLayout>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -4219,7 +4219,7 @@ struct VkComponentMappingAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkComponentMapping>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -4248,7 +4248,7 @@ struct VkImageViewCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkImageViewCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -4274,7 +4274,7 @@ struct VkShaderModuleCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkShaderModuleCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -4300,7 +4300,7 @@ struct VkPipelineCacheCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPipelineCacheCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -4324,7 +4324,7 @@ struct VkSpecializationMapEntryAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkSpecializationMapEntry>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -4349,7 +4349,7 @@ struct VkSpecializationInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkSpecializationInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -4377,7 +4377,7 @@ struct VkPipelineShaderStageCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPipelineShaderStageCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -4405,7 +4405,7 @@ struct VkComputePipelineCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkComputePipelineCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -4429,7 +4429,7 @@ struct VkVertexInputBindingDescriptionAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkVertexInputBindingDescription>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -4454,7 +4454,7 @@ struct VkVertexInputAttributeDescriptionAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkVertexInputAttributeDescription>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -4482,7 +4482,7 @@ struct VkPipelineVertexInputStateCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPipelineVertexInputStateCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -4508,7 +4508,7 @@ struct VkPipelineInputAssemblyStateCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPipelineInputAssemblyStateCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -4533,7 +4533,7 @@ struct VkPipelineTessellationStateCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPipelineTessellationStateCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -4560,7 +4560,7 @@ struct VkViewportAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkViewport>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -4588,7 +4588,7 @@ struct VkPipelineViewportStateCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPipelineViewportStateCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -4622,7 +4622,7 @@ struct VkPipelineRasterizationStateCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPipelineRasterizationStateCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -4652,7 +4652,7 @@ struct VkPipelineMultisampleStateCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPipelineMultisampleStateCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -4680,7 +4680,7 @@ struct VkStencilOpStateAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkStencilOpState>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -4713,7 +4713,7 @@ struct VkPipelineDepthStencilStateCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPipelineDepthStencilStateCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -4742,7 +4742,7 @@ struct VkPipelineColorBlendAttachmentStateAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPipelineColorBlendAttachmentState>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -4771,7 +4771,7 @@ struct VkPipelineColorBlendStateCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPipelineColorBlendStateCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -4797,7 +4797,7 @@ struct VkPipelineDynamicStateCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPipelineDynamicStateCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -4837,7 +4837,7 @@ struct VkGraphicsPipelineCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkGraphicsPipelineCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -4861,7 +4861,7 @@ struct VkPushConstantRangeAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPushConstantRange>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -4889,7 +4889,7 @@ struct VkPipelineLayoutCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPipelineLayoutCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -4928,7 +4928,7 @@ struct VkSamplerCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkSamplerCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -4958,7 +4958,7 @@ struct VkCopyDescriptorSetAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkCopyDescriptorSet>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -4982,7 +4982,7 @@ struct VkDescriptorBufferInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDescriptorBufferInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -5006,7 +5006,7 @@ struct VkDescriptorImageInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDescriptorImageInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -5029,7 +5029,7 @@ struct VkDescriptorPoolSizeAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDescriptorPoolSize>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -5056,7 +5056,7 @@ struct VkDescriptorPoolCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDescriptorPoolCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -5082,7 +5082,7 @@ struct VkDescriptorSetAllocateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDescriptorSetAllocateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -5108,7 +5108,7 @@ struct VkDescriptorSetLayoutBindingAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDescriptorSetLayoutBinding>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -5134,7 +5134,7 @@ struct VkDescriptorSetLayoutCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDescriptorSetLayoutCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -5165,7 +5165,7 @@ struct VkWriteDescriptorSetAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkWriteDescriptorSet>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -5195,7 +5195,7 @@ struct VkAttachmentDescriptionAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkAttachmentDescription>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -5218,7 +5218,7 @@ struct VkAttachmentReferenceAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkAttachmentReference>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -5248,7 +5248,7 @@ struct VkFramebufferCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkFramebufferCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -5279,7 +5279,7 @@ struct VkSubpassDescriptionAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkSubpassDescription>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -5307,7 +5307,7 @@ struct VkSubpassDependencyAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkSubpassDependency>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -5337,7 +5337,7 @@ struct VkRenderPassCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkRenderPassCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -5362,7 +5362,7 @@ struct VkCommandPoolCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkCommandPoolCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -5388,7 +5388,7 @@ struct VkCommandBufferAllocateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkCommandBufferAllocateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -5417,7 +5417,7 @@ struct VkCommandBufferInheritanceInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkCommandBufferInheritanceInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -5442,7 +5442,7 @@ struct VkCommandBufferBeginInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkCommandBufferBeginInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -5466,7 +5466,7 @@ struct VkBufferCopyAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkBufferCopy>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -5491,7 +5491,7 @@ struct VkImageSubresourceLayersAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkImageSubresourceLayers>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -5518,7 +5518,7 @@ struct VkBufferImageCopyAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkBufferImageCopy>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -5542,7 +5542,7 @@ struct VkClearColorValueAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkClearColorValue>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -5565,7 +5565,7 @@ struct VkClearDepthStencilValueAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkClearDepthStencilValue>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -5588,7 +5588,7 @@ struct VkClearValueAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkClearValue>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -5612,7 +5612,7 @@ struct VkClearAttachmentAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkClearAttachment>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -5636,7 +5636,7 @@ struct VkClearRectAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkClearRect>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -5661,7 +5661,7 @@ struct VkImageBlitAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkImageBlit>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -5687,7 +5687,7 @@ struct VkImageCopyAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkImageCopy>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -5713,7 +5713,7 @@ struct VkImageResolveAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkImageResolve>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -5741,7 +5741,7 @@ struct VkRenderPassBeginInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkRenderPassBeginInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -5768,7 +5768,7 @@ struct VkPhysicalDeviceSubgroupPropertiesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceSubgroupProperties>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -5794,7 +5794,7 @@ struct VkBindBufferMemoryInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkBindBufferMemoryInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -5820,7 +5820,7 @@ struct VkBindImageMemoryInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkBindImageMemoryInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -5847,7 +5847,7 @@ struct VkPhysicalDevice16BitStorageFeaturesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDevice16BitStorageFeatures>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -5872,7 +5872,7 @@ struct VkMemoryDedicatedRequirementsAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkMemoryDedicatedRequirements>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -5897,7 +5897,7 @@ struct VkMemoryDedicatedAllocateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkMemoryDedicatedAllocateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -5922,7 +5922,7 @@ struct VkMemoryAllocateFlagsInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkMemoryAllocateFlagsInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -5948,7 +5948,7 @@ struct VkDeviceGroupRenderPassBeginInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDeviceGroupRenderPassBeginInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -5972,7 +5972,7 @@ struct VkDeviceGroupCommandBufferBeginInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDeviceGroupCommandBufferBeginInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -6001,7 +6001,7 @@ struct VkDeviceGroupSubmitInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDeviceGroupSubmitInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -6026,7 +6026,7 @@ struct VkDeviceGroupBindSparseInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDeviceGroupBindSparseInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -6051,7 +6051,7 @@ struct VkBindBufferMemoryDeviceGroupInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkBindBufferMemoryDeviceGroupInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -6078,7 +6078,7 @@ struct VkBindImageMemoryDeviceGroupInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkBindImageMemoryDeviceGroupInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -6104,7 +6104,7 @@ struct VkPhysicalDeviceGroupPropertiesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceGroupProperties>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -6129,7 +6129,7 @@ struct VkDeviceGroupDeviceCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDeviceGroupDeviceCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -6153,7 +6153,7 @@ struct VkBufferMemoryRequirementsInfo2Annotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkBufferMemoryRequirementsInfo2>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -6177,7 +6177,7 @@ struct VkImageMemoryRequirementsInfo2Annotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkImageMemoryRequirementsInfo2>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -6201,7 +6201,7 @@ struct VkImageSparseMemoryRequirementsInfo2Annotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkImageSparseMemoryRequirementsInfo2>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -6225,7 +6225,7 @@ struct VkMemoryRequirements2Annotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkMemoryRequirements2>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -6249,7 +6249,7 @@ struct VkSparseImageMemoryRequirements2Annotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkSparseImageMemoryRequirements2>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -6273,7 +6273,7 @@ struct VkPhysicalDeviceFeatures2Annotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceFeatures2>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -6297,7 +6297,7 @@ struct VkPhysicalDeviceProperties2Annotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceProperties2>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -6321,7 +6321,7 @@ struct VkFormatProperties2Annotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkFormatProperties2>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -6345,7 +6345,7 @@ struct VkImageFormatProperties2Annotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkImageFormatProperties2>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -6373,7 +6373,7 @@ struct VkPhysicalDeviceImageFormatInfo2Annotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceImageFormatInfo2>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -6397,7 +6397,7 @@ struct VkQueueFamilyProperties2Annotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkQueueFamilyProperties2>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -6421,7 +6421,7 @@ struct VkPhysicalDeviceMemoryProperties2Annotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceMemoryProperties2>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -6445,7 +6445,7 @@ struct VkSparseImageFormatProperties2Annotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkSparseImageFormatProperties2>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -6473,7 +6473,7 @@ struct VkPhysicalDeviceSparseImageFormatInfo2Annotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceSparseImageFormatInfo2>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -6497,7 +6497,7 @@ struct VkPhysicalDevicePointClippingPropertiesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDevicePointClippingProperties>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -6521,7 +6521,7 @@ struct VkInputAttachmentAspectReferenceAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkInputAttachmentAspectReference>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -6546,7 +6546,7 @@ struct VkRenderPassInputAttachmentAspectCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkRenderPassInputAttachmentAspectCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -6570,7 +6570,7 @@ struct VkImageViewUsageCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkImageViewUsageCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -6594,7 +6594,7 @@ struct VkPipelineTessellationDomainOriginStateCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPipelineTessellationDomainOriginStateCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -6623,7 +6623,7 @@ struct VkRenderPassMultiviewCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkRenderPassMultiviewCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -6649,7 +6649,7 @@ struct VkPhysicalDeviceMultiviewFeaturesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceMultiviewFeatures>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -6674,7 +6674,7 @@ struct VkPhysicalDeviceMultiviewPropertiesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceMultiviewProperties>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -6699,7 +6699,7 @@ struct VkPhysicalDeviceVariablePointersFeaturesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceVariablePointersFeatures>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -6723,7 +6723,7 @@ struct VkPhysicalDeviceProtectedMemoryFeaturesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceProtectedMemoryFeatures>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -6747,7 +6747,7 @@ struct VkPhysicalDeviceProtectedMemoryPropertiesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceProtectedMemoryProperties>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -6773,7 +6773,7 @@ struct VkDeviceQueueInfo2Annotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDeviceQueueInfo2>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -6797,7 +6797,7 @@ struct VkProtectedSubmitInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkProtectedSubmitInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -6828,7 +6828,7 @@ struct VkSamplerYcbcrConversionCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkSamplerYcbcrConversionCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -6852,7 +6852,7 @@ struct VkSamplerYcbcrConversionInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkSamplerYcbcrConversionInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -6876,7 +6876,7 @@ struct VkBindImagePlaneMemoryInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkBindImagePlaneMemoryInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -6900,7 +6900,7 @@ struct VkImagePlaneMemoryRequirementsInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkImagePlaneMemoryRequirementsInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -6924,7 +6924,7 @@ struct VkPhysicalDeviceSamplerYcbcrConversionFeaturesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceSamplerYcbcrConversionFeatures>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -6948,7 +6948,7 @@ struct VkSamplerYcbcrConversionImageFormatPropertiesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkSamplerYcbcrConversionImageFormatProperties>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -6975,7 +6975,7 @@ struct VkDescriptorUpdateTemplateEntryAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDescriptorUpdateTemplateEntry>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -7006,7 +7006,7 @@ struct VkDescriptorUpdateTemplateCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDescriptorUpdateTemplateCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -7030,7 +7030,7 @@ struct VkExternalMemoryPropertiesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkExternalMemoryProperties>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -7054,7 +7054,7 @@ struct VkPhysicalDeviceExternalImageFormatInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceExternalImageFormatInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -7078,7 +7078,7 @@ struct VkExternalImageFormatPropertiesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkExternalImageFormatProperties>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -7104,7 +7104,7 @@ struct VkPhysicalDeviceExternalBufferInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceExternalBufferInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -7128,7 +7128,7 @@ struct VkExternalBufferPropertiesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkExternalBufferProperties>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -7156,7 +7156,7 @@ struct VkPhysicalDeviceIDPropertiesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceIDProperties>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -7180,7 +7180,7 @@ struct VkExternalMemoryImageCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkExternalMemoryImageCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -7204,7 +7204,7 @@ struct VkExternalMemoryBufferCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkExternalMemoryBufferCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -7228,7 +7228,7 @@ struct VkExportMemoryAllocateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkExportMemoryAllocateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -7252,7 +7252,7 @@ struct VkPhysicalDeviceExternalFenceInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceExternalFenceInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -7278,7 +7278,7 @@ struct VkExternalFencePropertiesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkExternalFenceProperties>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -7302,7 +7302,7 @@ struct VkExportFenceCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkExportFenceCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -7326,7 +7326,7 @@ struct VkExportSemaphoreCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkExportSemaphoreCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -7350,7 +7350,7 @@ struct VkPhysicalDeviceExternalSemaphoreInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceExternalSemaphoreInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -7376,7 +7376,7 @@ struct VkExternalSemaphorePropertiesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkExternalSemaphoreProperties>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -7401,7 +7401,7 @@ struct VkPhysicalDeviceMaintenance3PropertiesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceMaintenance3Properties>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -7425,7 +7425,7 @@ struct VkDescriptorSetLayoutSupportAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDescriptorSetLayoutSupport>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -7449,7 +7449,7 @@ struct VkPhysicalDeviceShaderDrawParametersFeaturesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceShaderDrawParametersFeatures>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -7484,7 +7484,7 @@ struct VkPhysicalDeviceVulkan11FeaturesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceVulkan11Features>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -7522,7 +7522,7 @@ struct VkPhysicalDeviceVulkan11PropertiesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceVulkan11Properties>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -7592,7 +7592,7 @@ struct VkPhysicalDeviceVulkan12FeaturesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceVulkan12Features>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -7617,7 +7617,7 @@ struct VkConformanceVersionAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkConformanceVersion>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -7692,7 +7692,7 @@ struct VkPhysicalDeviceVulkan12PropertiesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceVulkan12Properties>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -7717,7 +7717,7 @@ struct VkImageFormatListCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkImageFormatListCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -7749,7 +7749,7 @@ struct VkAttachmentDescription2Annotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkAttachmentDescription2>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -7775,7 +7775,7 @@ struct VkAttachmentReference2Annotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkAttachmentReference2>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -7809,7 +7809,7 @@ struct VkSubpassDescription2Annotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkSubpassDescription2>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -7840,7 +7840,7 @@ struct VkSubpassDependency2Annotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkSubpassDependency2>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -7872,7 +7872,7 @@ struct VkRenderPassCreateInfo2Annotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkRenderPassCreateInfo2>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -7896,7 +7896,7 @@ struct VkSubpassBeginInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkSubpassBeginInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -7919,7 +7919,7 @@ struct VkSubpassEndInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkSubpassEndInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -7945,7 +7945,7 @@ struct VkPhysicalDevice8BitStorageFeaturesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDevice8BitStorageFeatures>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -7972,7 +7972,7 @@ struct VkPhysicalDeviceDriverPropertiesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceDriverProperties>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -7997,7 +7997,7 @@ struct VkPhysicalDeviceShaderAtomicInt64FeaturesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceShaderAtomicInt64Features>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -8022,7 +8022,7 @@ struct VkPhysicalDeviceShaderFloat16Int8FeaturesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceShaderFloat16Int8Features>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -8062,7 +8062,7 @@ struct VkPhysicalDeviceFloatControlsPropertiesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceFloatControlsProperties>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -8087,7 +8087,7 @@ struct VkDescriptorSetLayoutBindingFlagsCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDescriptorSetLayoutBindingFlagsCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -8130,7 +8130,7 @@ struct VkPhysicalDeviceDescriptorIndexingFeaturesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceDescriptorIndexingFeatures>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -8176,7 +8176,7 @@ struct VkPhysicalDeviceDescriptorIndexingPropertiesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceDescriptorIndexingProperties>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -8201,7 +8201,7 @@ struct VkDescriptorSetVariableDescriptorCountAllocateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDescriptorSetVariableDescriptorCountAllocateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -8225,7 +8225,7 @@ struct VkDescriptorSetVariableDescriptorCountLayoutSupportAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDescriptorSetVariableDescriptorCountLayoutSupport>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -8251,7 +8251,7 @@ struct VkSubpassDescriptionDepthStencilResolveAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkSubpassDescriptionDepthStencilResolve>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -8278,7 +8278,7 @@ struct VkPhysicalDeviceDepthStencilResolvePropertiesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceDepthStencilResolveProperties>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -8302,7 +8302,7 @@ struct VkPhysicalDeviceScalarBlockLayoutFeaturesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceScalarBlockLayoutFeatures>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -8326,7 +8326,7 @@ struct VkImageStencilUsageCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkImageStencilUsageCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -8350,7 +8350,7 @@ struct VkSamplerReductionModeCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkSamplerReductionModeCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -8375,7 +8375,7 @@ struct VkPhysicalDeviceSamplerFilterMinmaxPropertiesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceSamplerFilterMinmaxProperties>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -8401,7 +8401,7 @@ struct VkPhysicalDeviceVulkanMemoryModelFeaturesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceVulkanMemoryModelFeatures>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -8425,7 +8425,7 @@ struct VkPhysicalDeviceImagelessFramebufferFeaturesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceImagelessFramebufferFeatures>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -8455,7 +8455,7 @@ struct VkFramebufferAttachmentImageInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkFramebufferAttachmentImageInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -8480,7 +8480,7 @@ struct VkFramebufferAttachmentsCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkFramebufferAttachmentsCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -8505,7 +8505,7 @@ struct VkRenderPassAttachmentBeginInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkRenderPassAttachmentBeginInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -8529,7 +8529,7 @@ struct VkPhysicalDeviceUniformBufferStandardLayoutFeaturesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceUniformBufferStandardLayoutFeatures>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -8553,7 +8553,7 @@ struct VkPhysicalDeviceShaderSubgroupExtendedTypesFeaturesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceShaderSubgroupExtendedTypesFeatures>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -8577,7 +8577,7 @@ struct VkPhysicalDeviceSeparateDepthStencilLayoutsFeaturesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceSeparateDepthStencilLayoutsFeatures>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -8601,7 +8601,7 @@ struct VkAttachmentReferenceStencilLayoutAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkAttachmentReferenceStencilLayout>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -8626,7 +8626,7 @@ struct VkAttachmentDescriptionStencilLayoutAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkAttachmentDescriptionStencilLayout>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -8650,7 +8650,7 @@ struct VkPhysicalDeviceHostQueryResetFeaturesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceHostQueryResetFeatures>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -8674,7 +8674,7 @@ struct VkPhysicalDeviceTimelineSemaphoreFeaturesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceTimelineSemaphoreFeatures>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -8698,7 +8698,7 @@ struct VkPhysicalDeviceTimelineSemaphorePropertiesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceTimelineSemaphoreProperties>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -8723,7 +8723,7 @@ struct VkSemaphoreTypeCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkSemaphoreTypeCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -8750,7 +8750,7 @@ struct VkTimelineSemaphoreSubmitInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkTimelineSemaphoreSubmitInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -8777,7 +8777,7 @@ struct VkSemaphoreWaitInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkSemaphoreWaitInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -8802,7 +8802,7 @@ struct VkSemaphoreSignalInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkSemaphoreSignalInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -8828,7 +8828,7 @@ struct VkPhysicalDeviceBufferDeviceAddressFeaturesAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceBufferDeviceAddressFeatures>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -8852,7 +8852,7 @@ struct VkBufferDeviceAddressInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkBufferDeviceAddressInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -8876,7 +8876,7 @@ struct VkBufferOpaqueCaptureAddressCreateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkBufferOpaqueCaptureAddressCreateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -8900,7 +8900,7 @@ struct VkMemoryOpaqueCaptureAddressAllocateInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkMemoryOpaqueCaptureAddressAllocateInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -8924,7 +8924,7 @@ struct VkDeviceMemoryOpaqueCaptureAddressInfoAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDeviceMemoryOpaqueCaptureAddressInfo>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -8955,7 +8955,7 @@ struct VkSurfaceCapabilitiesKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkSurfaceCapabilitiesKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -8978,7 +8978,7 @@ struct VkSurfaceFormatKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkSurfaceFormatKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -9017,7 +9017,7 @@ struct VkSwapchainCreateInfoKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkSwapchainCreateInfoKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -9046,7 +9046,7 @@ struct VkPresentInfoKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPresentInfoKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -9070,7 +9070,7 @@ struct VkImageSwapchainCreateInfoKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkImageSwapchainCreateInfoKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -9095,7 +9095,7 @@ struct VkBindImageMemorySwapchainInfoKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkBindImageMemorySwapchainInfoKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -9123,7 +9123,7 @@ struct VkAcquireNextImageInfoKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkAcquireNextImageInfoKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -9148,7 +9148,7 @@ struct VkDeviceGroupPresentCapabilitiesKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDeviceGroupPresentCapabilitiesKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -9174,7 +9174,7 @@ struct VkDeviceGroupPresentInfoKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDeviceGroupPresentInfoKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -9198,7 +9198,7 @@ struct VkDeviceGroupSwapchainCreateInfoKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDeviceGroupSwapchainCreateInfoKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -9221,7 +9221,7 @@ struct VkDisplayModeParametersKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDisplayModeParametersKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -9246,7 +9246,7 @@ struct VkDisplayModeCreateInfoKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDisplayModeCreateInfoKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -9269,7 +9269,7 @@ struct VkDisplayModePropertiesKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDisplayModePropertiesKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -9299,7 +9299,7 @@ struct VkDisplayPlaneCapabilitiesKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDisplayPlaneCapabilitiesKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -9322,7 +9322,7 @@ struct VkDisplayPlanePropertiesKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDisplayPlanePropertiesKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -9350,7 +9350,7 @@ struct VkDisplayPropertiesKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDisplayPropertiesKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -9381,7 +9381,7 @@ struct VkDisplaySurfaceCreateInfoKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDisplaySurfaceCreateInfoKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -9407,7 +9407,7 @@ struct VkDisplayPresentInfoKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDisplayPresentInfoKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -9432,7 +9432,7 @@ struct VkImportMemoryFdInfoKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkImportMemoryFdInfoKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -9456,7 +9456,7 @@ struct VkMemoryFdPropertiesKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkMemoryFdPropertiesKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -9481,7 +9481,7 @@ struct VkMemoryGetFdInfoKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkMemoryGetFdInfoKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -9508,7 +9508,7 @@ struct VkImportSemaphoreFdInfoKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkImportSemaphoreFdInfoKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -9533,7 +9533,7 @@ struct VkSemaphoreGetFdInfoKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkSemaphoreGetFdInfoKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -9557,7 +9557,7 @@ struct VkPhysicalDevicePushDescriptorPropertiesKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDevicePushDescriptorPropertiesKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -9581,7 +9581,7 @@ struct VkRectLayerKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkRectLayerKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -9604,7 +9604,7 @@ struct VkPresentRegionKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPresentRegionKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -9629,7 +9629,7 @@ struct VkPresentRegionsKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPresentRegionsKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -9653,7 +9653,7 @@ struct VkSharedPresentSurfaceCapabilitiesKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkSharedPresentSurfaceCapabilitiesKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -9680,7 +9680,7 @@ struct VkImportFenceFdInfoKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkImportFenceFdInfoKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -9705,7 +9705,7 @@ struct VkFenceGetFdInfoKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkFenceGetFdInfoKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -9730,7 +9730,7 @@ struct VkPhysicalDevicePerformanceQueryFeaturesKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDevicePerformanceQueryFeaturesKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -9754,7 +9754,7 @@ struct VkPhysicalDevicePerformanceQueryPropertiesKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDevicePerformanceQueryPropertiesKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -9781,7 +9781,7 @@ struct VkPerformanceCounterKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPerformanceCounterKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -9808,7 +9808,7 @@ struct VkPerformanceCounterDescriptionKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPerformanceCounterDescriptionKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -9834,7 +9834,7 @@ struct VkQueryPoolPerformanceCreateInfoKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkQueryPoolPerformanceCreateInfoKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -9861,7 +9861,7 @@ struct VkPerformanceCounterResultKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPerformanceCounterResultKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -9886,7 +9886,7 @@ struct VkAcquireProfilingLockInfoKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkAcquireProfilingLockInfoKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -9910,7 +9910,7 @@ struct VkPerformanceQuerySubmitInfoKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPerformanceQuerySubmitInfoKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -9934,7 +9934,7 @@ struct VkPhysicalDeviceSurfaceInfo2KHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceSurfaceInfo2KHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -9958,7 +9958,7 @@ struct VkSurfaceCapabilities2KHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkSurfaceCapabilities2KHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -9982,7 +9982,7 @@ struct VkSurfaceFormat2KHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkSurfaceFormat2KHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -10006,7 +10006,7 @@ struct VkDisplayProperties2KHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDisplayProperties2KHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -10030,7 +10030,7 @@ struct VkDisplayPlaneProperties2KHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDisplayPlaneProperties2KHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -10054,7 +10054,7 @@ struct VkDisplayModeProperties2KHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDisplayModeProperties2KHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -10079,7 +10079,7 @@ struct VkDisplayPlaneInfo2KHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDisplayPlaneInfo2KHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -10103,7 +10103,7 @@ struct VkDisplayPlaneCapabilities2KHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDisplayPlaneCapabilities2KHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -10128,7 +10128,7 @@ struct VkPhysicalDeviceShaderClockFeaturesKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceShaderClockFeaturesKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -10152,7 +10152,7 @@ struct VkSurfaceProtectedCapabilitiesKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkSurfaceProtectedCapabilitiesKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -10176,7 +10176,7 @@ struct VkPhysicalDevicePipelineExecutablePropertiesFeaturesKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDevicePipelineExecutablePropertiesFeaturesKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -10200,7 +10200,7 @@ struct VkPipelineInfoKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPipelineInfoKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -10227,7 +10227,7 @@ struct VkPipelineExecutablePropertiesKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPipelineExecutablePropertiesKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -10252,7 +10252,7 @@ struct VkPipelineExecutableInfoKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPipelineExecutableInfoKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -10277,7 +10277,7 @@ struct VkPipelineExecutableStatisticValueKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPipelineExecutableStatisticValueKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -10304,7 +10304,7 @@ struct VkPipelineExecutableStatisticKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPipelineExecutableStatisticKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -10332,7 +10332,7 @@ struct VkPipelineExecutableInternalRepresentationKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPipelineExecutableInternalRepresentationKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -10357,7 +10357,7 @@ struct VkDebugReportCallbackCreateInfoEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDebugReportCallbackCreateInfoEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -10381,7 +10381,7 @@ struct VkPipelineRasterizationStateRasterizationOrderAMDAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPipelineRasterizationStateRasterizationOrderAMD>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -10407,7 +10407,7 @@ struct VkDebugMarkerObjectNameInfoEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDebugMarkerObjectNameInfoEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -10435,7 +10435,7 @@ struct VkDebugMarkerObjectTagInfoEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDebugMarkerObjectTagInfoEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -10460,7 +10460,7 @@ struct VkDebugMarkerMarkerInfoEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDebugMarkerMarkerInfoEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -10484,7 +10484,7 @@ struct VkDedicatedAllocationImageCreateInfoNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDedicatedAllocationImageCreateInfoNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -10508,7 +10508,7 @@ struct VkDedicatedAllocationBufferCreateInfoNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDedicatedAllocationBufferCreateInfoNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -10533,7 +10533,7 @@ struct VkDedicatedAllocationMemoryAllocateInfoNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDedicatedAllocationMemoryAllocateInfoNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -10558,7 +10558,7 @@ struct VkPhysicalDeviceTransformFeedbackFeaturesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceTransformFeedbackFeaturesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -10591,7 +10591,7 @@ struct VkPhysicalDeviceTransformFeedbackPropertiesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceTransformFeedbackPropertiesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -10616,7 +10616,7 @@ struct VkPipelineRasterizationStateStreamCreateInfoEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPipelineRasterizationStateStreamCreateInfoEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -10642,7 +10642,7 @@ struct VkImageViewHandleInfoNVXAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkImageViewHandleInfoNVX>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -10667,7 +10667,7 @@ struct VkImageViewAddressPropertiesNVXAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkImageViewAddressPropertiesNVX>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -10691,7 +10691,7 @@ struct VkTextureLODGatherFormatPropertiesAMDAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkTextureLODGatherFormatPropertiesAMD>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -10717,7 +10717,7 @@ struct VkShaderResourceUsageAMDAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkShaderResourceUsageAMD>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -10745,7 +10745,7 @@ struct VkShaderStatisticsInfoAMDAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkShaderStatisticsInfoAMD>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -10769,7 +10769,7 @@ struct VkPhysicalDeviceCornerSampledImageFeaturesNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceCornerSampledImageFeaturesNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -10794,7 +10794,7 @@ struct VkExternalImageFormatPropertiesNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkExternalImageFormatPropertiesNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -10818,7 +10818,7 @@ struct VkExternalMemoryImageCreateInfoNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkExternalMemoryImageCreateInfoNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -10842,7 +10842,7 @@ struct VkExportMemoryAllocateInfoNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkExportMemoryAllocateInfoNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -10867,7 +10867,7 @@ struct VkValidationFlagsEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkValidationFlagsEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -10891,7 +10891,7 @@ struct VkPhysicalDeviceTextureCompressionASTCHDRFeaturesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceTextureCompressionASTCHDRFeaturesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -10915,7 +10915,7 @@ struct VkImageViewASTCDecodeModeEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkImageViewASTCDecodeModeEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -10939,7 +10939,7 @@ struct VkPhysicalDeviceASTCDecodeFeaturesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceASTCDecodeFeaturesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -10965,7 +10965,7 @@ struct VkConditionalRenderingBeginInfoEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkConditionalRenderingBeginInfoEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -10990,7 +10990,7 @@ struct VkPhysicalDeviceConditionalRenderingFeaturesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceConditionalRenderingFeaturesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -11014,7 +11014,7 @@ struct VkCommandBufferInheritanceConditionalRenderingInfoEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkCommandBufferInheritanceConditionalRenderingInfoEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -11037,7 +11037,7 @@ struct VkViewportWScalingNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkViewportWScalingNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -11063,7 +11063,7 @@ struct VkPipelineViewportWScalingStateCreateInfoNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPipelineViewportWScalingStateCreateInfoNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -11097,7 +11097,7 @@ struct VkSurfaceCapabilities2EXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkSurfaceCapabilities2EXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -11121,7 +11121,7 @@ struct VkDisplayPowerInfoEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDisplayPowerInfoEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -11145,7 +11145,7 @@ struct VkDeviceEventInfoEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDeviceEventInfoEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -11169,7 +11169,7 @@ struct VkDisplayEventInfoEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDisplayEventInfoEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -11193,7 +11193,7 @@ struct VkSwapchainCounterCreateInfoEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkSwapchainCounterCreateInfoEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -11215,7 +11215,7 @@ struct VkRefreshCycleDurationGOOGLEAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkRefreshCycleDurationGOOGLE>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -11241,7 +11241,7 @@ struct VkPastPresentationTimingGOOGLEAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPastPresentationTimingGOOGLE>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -11264,7 +11264,7 @@ struct VkPresentTimeGOOGLEAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPresentTimeGOOGLE>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -11289,7 +11289,7 @@ struct VkPresentTimesInfoGOOGLEAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPresentTimesInfoGOOGLE>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -11313,7 +11313,7 @@ struct VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVXAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -11338,7 +11338,7 @@ struct VkViewportSwizzleNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkViewportSwizzleNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -11364,7 +11364,7 @@ struct VkPipelineViewportSwizzleStateCreateInfoNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPipelineViewportSwizzleStateCreateInfoNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -11388,7 +11388,7 @@ struct VkPhysicalDeviceDiscardRectanglePropertiesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceDiscardRectanglePropertiesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -11415,7 +11415,7 @@ struct VkPipelineDiscardRectangleStateCreateInfoEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPipelineDiscardRectangleStateCreateInfoEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -11447,7 +11447,7 @@ struct VkPhysicalDeviceConservativeRasterizationPropertiesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceConservativeRasterizationPropertiesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -11473,7 +11473,7 @@ struct VkPipelineRasterizationConservativeStateCreateInfoEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPipelineRasterizationConservativeStateCreateInfoEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -11497,7 +11497,7 @@ struct VkPhysicalDeviceDepthClipEnableFeaturesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceDepthClipEnableFeaturesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -11522,7 +11522,7 @@ struct VkPipelineRasterizationDepthClipStateCreateInfoEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPipelineRasterizationDepthClipStateCreateInfoEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -11545,7 +11545,7 @@ struct VkXYColorEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkXYColorEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -11576,7 +11576,7 @@ struct VkHdrMetadataEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkHdrMetadataEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -11601,7 +11601,7 @@ struct VkDebugUtilsLabelEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDebugUtilsLabelEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -11627,7 +11627,7 @@ struct VkDebugUtilsObjectNameInfoEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDebugUtilsObjectNameInfoEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -11660,7 +11660,7 @@ struct VkDebugUtilsMessengerCallbackDataEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDebugUtilsMessengerCallbackDataEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -11687,7 +11687,7 @@ struct VkDebugUtilsMessengerCreateInfoEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDebugUtilsMessengerCreateInfoEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -11715,7 +11715,7 @@ struct VkDebugUtilsObjectTagInfoEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDebugUtilsObjectTagInfoEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -11740,7 +11740,7 @@ struct VkPhysicalDeviceInlineUniformBlockFeaturesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceInlineUniformBlockFeaturesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -11768,7 +11768,7 @@ struct VkPhysicalDeviceInlineUniformBlockPropertiesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceInlineUniformBlockPropertiesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -11793,7 +11793,7 @@ struct VkWriteDescriptorSetInlineUniformBlockEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkWriteDescriptorSetInlineUniformBlockEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -11817,7 +11817,7 @@ struct VkDescriptorPoolInlineUniformBlockCreateInfoEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDescriptorPoolInlineUniformBlockCreateInfoEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -11840,7 +11840,7 @@ struct VkSampleLocationEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkSampleLocationEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -11867,7 +11867,7 @@ struct VkSampleLocationsInfoEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkSampleLocationsInfoEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -11890,7 +11890,7 @@ struct VkAttachmentSampleLocationsEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkAttachmentSampleLocationsEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -11913,7 +11913,7 @@ struct VkSubpassSampleLocationsEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkSubpassSampleLocationsEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -11940,7 +11940,7 @@ struct VkRenderPassSampleLocationsBeginInfoEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkRenderPassSampleLocationsBeginInfoEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -11965,7 +11965,7 @@ struct VkPipelineSampleLocationsStateCreateInfoEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPipelineSampleLocationsStateCreateInfoEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -11993,7 +11993,7 @@ struct VkPhysicalDeviceSampleLocationsPropertiesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceSampleLocationsPropertiesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -12017,7 +12017,7 @@ struct VkMultisamplePropertiesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkMultisamplePropertiesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -12041,7 +12041,7 @@ struct VkPhysicalDeviceBlendOperationAdvancedFeaturesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -12070,7 +12070,7 @@ struct VkPhysicalDeviceBlendOperationAdvancedPropertiesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -12096,7 +12096,7 @@ struct VkPipelineColorBlendAdvancedStateCreateInfoEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPipelineColorBlendAdvancedStateCreateInfoEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -12122,7 +12122,7 @@ struct VkPipelineCoverageToColorStateCreateInfoNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPipelineCoverageToColorStateCreateInfoNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -12150,7 +12150,7 @@ struct VkPipelineCoverageModulationStateCreateInfoNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPipelineCoverageModulationStateCreateInfoNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -12175,7 +12175,7 @@ struct VkPhysicalDeviceShaderSMBuiltinsPropertiesNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceShaderSMBuiltinsPropertiesNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -12199,7 +12199,7 @@ struct VkPhysicalDeviceShaderSMBuiltinsFeaturesNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceShaderSMBuiltinsFeaturesNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -12223,7 +12223,7 @@ struct VkDrmFormatModifierPropertiesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDrmFormatModifierPropertiesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -12248,7 +12248,7 @@ struct VkDrmFormatModifierPropertiesListEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDrmFormatModifierPropertiesListEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -12275,7 +12275,7 @@ struct VkPhysicalDeviceImageDrmFormatModifierInfoEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceImageDrmFormatModifierInfoEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -12300,7 +12300,7 @@ struct VkImageDrmFormatModifierListCreateInfoEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkImageDrmFormatModifierListCreateInfoEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -12326,7 +12326,7 @@ struct VkImageDrmFormatModifierExplicitCreateInfoEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkImageDrmFormatModifierExplicitCreateInfoEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -12350,7 +12350,7 @@ struct VkImageDrmFormatModifierPropertiesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkImageDrmFormatModifierPropertiesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -12376,7 +12376,7 @@ struct VkValidationCacheCreateInfoEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkValidationCacheCreateInfoEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -12400,7 +12400,7 @@ struct VkShaderModuleValidationCacheCreateInfoEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkShaderModuleValidationCacheCreateInfoEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -12423,7 +12423,7 @@ struct VkShadingRatePaletteNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkShadingRatePaletteNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -12449,7 +12449,7 @@ struct VkPipelineViewportShadingRateImageStateCreateInfoNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPipelineViewportShadingRateImageStateCreateInfoNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -12474,7 +12474,7 @@ struct VkPhysicalDeviceShadingRateImageFeaturesNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceShadingRateImageFeaturesNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -12500,7 +12500,7 @@ struct VkPhysicalDeviceShadingRateImagePropertiesNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceShadingRateImagePropertiesNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -12524,7 +12524,7 @@ struct VkCoarseSampleLocationNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkCoarseSampleLocationNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -12549,7 +12549,7 @@ struct VkCoarseSampleOrderCustomNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkCoarseSampleOrderCustomNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -12575,7 +12575,7 @@ struct VkPipelineViewportCoarseSampleOrderStateCreateInfoNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPipelineViewportCoarseSampleOrderStateCreateInfoNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -12603,7 +12603,7 @@ struct VkRayTracingShaderGroupCreateInfoNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkRayTracingShaderGroupCreateInfoNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -12635,7 +12635,7 @@ struct VkRayTracingPipelineCreateInfoNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkRayTracingPipelineCreateInfoNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -12669,7 +12669,7 @@ struct VkGeometryTrianglesNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkGeometryTrianglesNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -12696,7 +12696,7 @@ struct VkGeometryAABBNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkGeometryAABBNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -12719,7 +12719,7 @@ struct VkGeometryDataNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkGeometryDataNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -12745,7 +12745,7 @@ struct VkGeometryNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkGeometryNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -12773,7 +12773,7 @@ struct VkAccelerationStructureInfoNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkAccelerationStructureInfoNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -12798,7 +12798,7 @@ struct VkAccelerationStructureCreateInfoNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkAccelerationStructureCreateInfoNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -12826,7 +12826,7 @@ struct VkBindAccelerationStructureMemoryInfoKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkBindAccelerationStructureMemoryInfoKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -12851,7 +12851,7 @@ struct VkWriteDescriptorSetAccelerationStructureKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkWriteDescriptorSetAccelerationStructureKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -12876,7 +12876,7 @@ struct VkAccelerationStructureMemoryRequirementsInfoNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkAccelerationStructureMemoryRequirementsInfoNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -12907,7 +12907,7 @@ struct VkPhysicalDeviceRayTracingPropertiesNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceRayTracingPropertiesNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -12929,7 +12929,7 @@ struct VkTransformMatrixKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkTransformMatrixKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -12956,7 +12956,7 @@ struct VkAabbPositionsKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkAabbPositionsKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -12991,7 +12991,7 @@ struct VkAccelerationStructureInstanceKHRAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkAccelerationStructureInstanceKHR>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -13015,7 +13015,7 @@ struct VkPhysicalDeviceRepresentativeFragmentTestFeaturesNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceRepresentativeFragmentTestFeaturesNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -13039,7 +13039,7 @@ struct VkPipelineRepresentativeFragmentTestStateCreateInfoNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPipelineRepresentativeFragmentTestStateCreateInfoNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -13063,7 +13063,7 @@ struct VkPhysicalDeviceImageViewImageFormatInfoEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceImageViewImageFormatInfoEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -13088,7 +13088,7 @@ struct VkFilterCubicImageViewImageFormatPropertiesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkFilterCubicImageViewImageFormatPropertiesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -13112,7 +13112,7 @@ struct VkDeviceQueueGlobalPriorityCreateInfoEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDeviceQueueGlobalPriorityCreateInfoEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -13137,7 +13137,7 @@ struct VkImportMemoryHostPointerInfoEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkImportMemoryHostPointerInfoEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -13161,7 +13161,7 @@ struct VkMemoryHostPointerPropertiesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkMemoryHostPointerPropertiesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -13185,7 +13185,7 @@ struct VkPhysicalDeviceExternalMemoryHostPropertiesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceExternalMemoryHostPropertiesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -13209,7 +13209,7 @@ struct VkPipelineCompilerControlCreateInfoAMDAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPipelineCompilerControlCreateInfoAMD>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -13233,7 +13233,7 @@ struct VkCalibratedTimestampInfoEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkCalibratedTimestampInfoEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -13270,7 +13270,7 @@ struct VkPhysicalDeviceShaderCorePropertiesAMDAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceShaderCorePropertiesAMD>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -13294,7 +13294,7 @@ struct VkDeviceMemoryOverallocationCreateInfoAMDAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDeviceMemoryOverallocationCreateInfoAMD>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -13318,7 +13318,7 @@ struct VkPhysicalDeviceVertexAttributeDivisorPropertiesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -13341,7 +13341,7 @@ struct VkVertexInputBindingDivisorDescriptionEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkVertexInputBindingDivisorDescriptionEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -13366,7 +13366,7 @@ struct VkPipelineVertexInputDivisorStateCreateInfoEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPipelineVertexInputDivisorStateCreateInfoEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -13391,7 +13391,7 @@ struct VkPhysicalDeviceVertexAttributeDivisorFeaturesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceVertexAttributeDivisorFeaturesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -13414,7 +13414,7 @@ struct VkPipelineCreationFeedbackEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPipelineCreationFeedbackEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -13440,7 +13440,7 @@ struct VkPipelineCreationFeedbackCreateInfoEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPipelineCreationFeedbackCreateInfoEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -13465,7 +13465,7 @@ struct VkPhysicalDeviceComputeShaderDerivativesFeaturesNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceComputeShaderDerivativesFeaturesNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -13490,7 +13490,7 @@ struct VkPhysicalDeviceMeshShaderFeaturesNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceMeshShaderFeaturesNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -13526,7 +13526,7 @@ struct VkPhysicalDeviceMeshShaderPropertiesNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceMeshShaderPropertiesNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -13549,7 +13549,7 @@ struct VkDrawMeshTasksIndirectCommandNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDrawMeshTasksIndirectCommandNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -13573,7 +13573,7 @@ struct VkPhysicalDeviceFragmentShaderBarycentricFeaturesNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceFragmentShaderBarycentricFeaturesNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -13597,7 +13597,7 @@ struct VkPhysicalDeviceShaderImageFootprintFeaturesNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceShaderImageFootprintFeaturesNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -13622,7 +13622,7 @@ struct VkPipelineViewportExclusiveScissorStateCreateInfoNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPipelineViewportExclusiveScissorStateCreateInfoNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -13646,7 +13646,7 @@ struct VkPhysicalDeviceExclusiveScissorFeaturesNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceExclusiveScissorFeaturesNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -13670,7 +13670,7 @@ struct VkQueueFamilyCheckpointPropertiesNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkQueueFamilyCheckpointPropertiesNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -13695,7 +13695,7 @@ struct VkCheckpointDataNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkCheckpointDataNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -13719,7 +13719,7 @@ struct VkPhysicalDeviceShaderIntegerFunctions2FeaturesINTELAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceShaderIntegerFunctions2FeaturesINTEL>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -13745,7 +13745,7 @@ struct VkPerformanceValueDataINTELAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPerformanceValueDataINTEL>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -13768,7 +13768,7 @@ struct VkPerformanceValueINTELAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPerformanceValueINTEL>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -13792,7 +13792,7 @@ struct VkInitializePerformanceApiInfoINTELAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkInitializePerformanceApiInfoINTEL>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -13816,7 +13816,7 @@ struct VkQueryPoolPerformanceQueryCreateInfoINTELAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkQueryPoolPerformanceQueryCreateInfoINTEL>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -13840,7 +13840,7 @@ struct VkPerformanceMarkerInfoINTELAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPerformanceMarkerInfoINTEL>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -13864,7 +13864,7 @@ struct VkPerformanceStreamMarkerInfoINTELAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPerformanceStreamMarkerInfoINTEL>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -13890,7 +13890,7 @@ struct VkPerformanceOverrideInfoINTELAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPerformanceOverrideInfoINTEL>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -13914,7 +13914,7 @@ struct VkPerformanceConfigurationAcquireInfoINTELAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPerformanceConfigurationAcquireInfoINTEL>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -13941,7 +13941,7 @@ struct VkPhysicalDevicePCIBusInfoPropertiesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDevicePCIBusInfoPropertiesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -13965,7 +13965,7 @@ struct VkDisplayNativeHdrSurfaceCapabilitiesAMDAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDisplayNativeHdrSurfaceCapabilitiesAMD>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -13989,7 +13989,7 @@ struct VkSwapchainDisplayNativeHdrCreateInfoAMDAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkSwapchainDisplayNativeHdrCreateInfoAMD>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -14015,7 +14015,7 @@ struct VkPhysicalDeviceFragmentDensityMapFeaturesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceFragmentDensityMapFeaturesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -14041,7 +14041,7 @@ struct VkPhysicalDeviceFragmentDensityMapPropertiesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceFragmentDensityMapPropertiesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -14065,7 +14065,7 @@ struct VkRenderPassFragmentDensityMapCreateInfoEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkRenderPassFragmentDensityMapCreateInfoEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -14090,7 +14090,7 @@ struct VkPhysicalDeviceSubgroupSizeControlFeaturesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceSubgroupSizeControlFeaturesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -14117,7 +14117,7 @@ struct VkPhysicalDeviceSubgroupSizeControlPropertiesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceSubgroupSizeControlPropertiesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -14141,7 +14141,7 @@ struct VkPipelineShaderStageRequiredSubgroupSizeCreateInfoEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPipelineShaderStageRequiredSubgroupSizeCreateInfoEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -14166,7 +14166,7 @@ struct VkPhysicalDeviceShaderCoreProperties2AMDAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceShaderCoreProperties2AMD>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -14190,7 +14190,7 @@ struct VkPhysicalDeviceCoherentMemoryFeaturesAMDAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceCoherentMemoryFeaturesAMD>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -14215,7 +14215,7 @@ struct VkPhysicalDeviceMemoryBudgetPropertiesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceMemoryBudgetPropertiesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -14239,7 +14239,7 @@ struct VkPhysicalDeviceMemoryPriorityFeaturesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceMemoryPriorityFeaturesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -14263,7 +14263,7 @@ struct VkMemoryPriorityAllocateInfoEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkMemoryPriorityAllocateInfoEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -14287,7 +14287,7 @@ struct VkPhysicalDeviceDedicatedAllocationImageAliasingFeaturesNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -14313,7 +14313,7 @@ struct VkPhysicalDeviceBufferDeviceAddressFeaturesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceBufferDeviceAddressFeaturesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -14337,7 +14337,7 @@ struct VkBufferDeviceAddressCreateInfoEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkBufferDeviceAddressCreateInfoEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -14365,7 +14365,7 @@ struct VkPhysicalDeviceToolPropertiesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceToolPropertiesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -14392,7 +14392,7 @@ struct VkValidationFeaturesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkValidationFeaturesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -14423,7 +14423,7 @@ struct VkCooperativeMatrixPropertiesNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkCooperativeMatrixPropertiesNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -14448,7 +14448,7 @@ struct VkPhysicalDeviceCooperativeMatrixFeaturesNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceCooperativeMatrixFeaturesNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -14472,7 +14472,7 @@ struct VkPhysicalDeviceCooperativeMatrixPropertiesNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceCooperativeMatrixPropertiesNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -14496,7 +14496,7 @@ struct VkPhysicalDeviceCoverageReductionModeFeaturesNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceCoverageReductionModeFeaturesNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -14521,7 +14521,7 @@ struct VkPipelineCoverageReductionStateCreateInfoNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPipelineCoverageReductionStateCreateInfoNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -14548,7 +14548,7 @@ struct VkFramebufferMixedSamplesCombinationNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkFramebufferMixedSamplesCombinationNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -14574,7 +14574,7 @@ struct VkPhysicalDeviceFragmentShaderInterlockFeaturesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceFragmentShaderInterlockFeaturesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -14598,7 +14598,7 @@ struct VkPhysicalDeviceYcbcrImageArraysFeaturesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceYcbcrImageArraysFeaturesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -14622,7 +14622,7 @@ struct VkHeadlessSurfaceCreateInfoEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkHeadlessSurfaceCreateInfoEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -14651,7 +14651,7 @@ struct VkPhysicalDeviceLineRasterizationFeaturesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceLineRasterizationFeaturesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -14675,7 +14675,7 @@ struct VkPhysicalDeviceLineRasterizationPropertiesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceLineRasterizationPropertiesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -14702,7 +14702,7 @@ struct VkPipelineRasterizationLineStateCreateInfoEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPipelineRasterizationLineStateCreateInfoEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -14737,7 +14737,7 @@ struct VkPhysicalDeviceShaderAtomicFloatFeaturesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceShaderAtomicFloatFeaturesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -14761,7 +14761,7 @@ struct VkPhysicalDeviceIndexTypeUint8FeaturesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceIndexTypeUint8FeaturesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -14785,7 +14785,7 @@ struct VkPhysicalDeviceExtendedDynamicStateFeaturesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceExtendedDynamicStateFeaturesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -14809,7 +14809,7 @@ struct VkPhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -14841,7 +14841,7 @@ struct VkPhysicalDeviceDeviceGeneratedCommandsPropertiesNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceDeviceGeneratedCommandsPropertiesNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -14865,7 +14865,7 @@ struct VkPhysicalDeviceDeviceGeneratedCommandsFeaturesNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceDeviceGeneratedCommandsFeaturesNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -14892,7 +14892,7 @@ struct VkGraphicsShaderGroupCreateInfoNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkGraphicsShaderGroupCreateInfoNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -14919,7 +14919,7 @@ struct VkGraphicsPipelineShaderGroupsCreateInfoNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkGraphicsPipelineShaderGroupsCreateInfoNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -14941,7 +14941,7 @@ struct VkBindShaderGroupIndirectCommandNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkBindShaderGroupIndirectCommandNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -14965,7 +14965,7 @@ struct VkBindIndexBufferIndirectCommandNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkBindIndexBufferIndirectCommandNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -14989,7 +14989,7 @@ struct VkBindVertexBufferIndirectCommandNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkBindVertexBufferIndirectCommandNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -15011,7 +15011,7 @@ struct VkSetStateFlagsIndirectCommandNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkSetStateFlagsIndirectCommandNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -15034,7 +15034,7 @@ struct VkIndirectCommandsStreamNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkIndirectCommandsStreamNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -15070,7 +15070,7 @@ struct VkIndirectCommandsLayoutTokenNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkIndirectCommandsLayoutTokenNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -15099,7 +15099,7 @@ struct VkIndirectCommandsLayoutCreateInfoNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkIndirectCommandsLayoutCreateInfoNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -15135,7 +15135,7 @@ struct VkGeneratedCommandsInfoNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkGeneratedCommandsInfoNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -15162,7 +15162,7 @@ struct VkGeneratedCommandsMemoryRequirementsInfoNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkGeneratedCommandsMemoryRequirementsInfoNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -15186,7 +15186,7 @@ struct VkPhysicalDeviceTexelBufferAlignmentFeaturesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceTexelBufferAlignmentFeaturesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -15213,7 +15213,7 @@ struct VkPhysicalDeviceTexelBufferAlignmentPropertiesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceTexelBufferAlignmentPropertiesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -15237,7 +15237,7 @@ struct VkRenderPassTransformBeginInfoQCOMAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkRenderPassTransformBeginInfoQCOM>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -15262,7 +15262,7 @@ struct VkCommandBufferInheritanceRenderPassTransformInfoQCOMAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkCommandBufferInheritanceRenderPassTransformInfoQCOM>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -15288,7 +15288,7 @@ struct VkPhysicalDeviceRobustness2FeaturesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceRobustness2FeaturesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -15313,7 +15313,7 @@ struct VkPhysicalDeviceRobustness2PropertiesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceRobustness2PropertiesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -15338,7 +15338,7 @@ struct VkSamplerCustomBorderColorCreateInfoEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkSamplerCustomBorderColorCreateInfoEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -15362,7 +15362,7 @@ struct VkPhysicalDeviceCustomBorderColorPropertiesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceCustomBorderColorPropertiesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -15387,7 +15387,7 @@ struct VkPhysicalDeviceCustomBorderColorFeaturesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceCustomBorderColorFeaturesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -15411,7 +15411,7 @@ struct VkPhysicalDevicePrivateDataFeaturesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDevicePrivateDataFeaturesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -15435,7 +15435,7 @@ struct VkDevicePrivateDataCreateInfoEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDevicePrivateDataCreateInfoEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -15459,7 +15459,7 @@ struct VkPrivateDataSlotCreateInfoEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPrivateDataSlotCreateInfoEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -15483,7 +15483,7 @@ struct VkPhysicalDevicePipelineCreationCacheControlFeaturesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDevicePipelineCreationCacheControlFeaturesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -15507,7 +15507,7 @@ struct VkPhysicalDeviceDiagnosticsConfigFeaturesNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceDiagnosticsConfigFeaturesNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -15531,7 +15531,7 @@ struct VkDeviceDiagnosticsConfigCreateInfoNVAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkDeviceDiagnosticsConfigCreateInfoNV>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -15555,7 +15555,7 @@ struct VkPhysicalDeviceFragmentDensityMap2FeaturesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceFragmentDensityMap2FeaturesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -15582,7 +15582,7 @@ struct VkPhysicalDeviceFragmentDensityMap2PropertiesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceFragmentDensityMap2PropertiesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -15606,7 +15606,7 @@ struct VkPhysicalDeviceImageRobustnessFeaturesEXTAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<VkPhysicalDeviceImageRobustnessFeaturesEXT>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -15633,7 +15633,7 @@ struct GLFWvidmodeAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<GLFWvidmode>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -15658,7 +15658,7 @@ struct GLFWgammarampAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<GLFWgammaramp>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -15682,7 +15682,7 @@ struct GLFWimageAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<GLFWimage>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
@@ -15705,7 +15705,7 @@ struct GLFWgamepadstateAnnotation
     virtual bool canMove() const override { return true; }
     virtual bool canClone() const override { return true; }
     virtual SimNode * simulateCopy ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return context.code->makeNode<SimNode_Set<GLFWgamepadstate>>(at, l, r);
+        return context.code->makeNode<SimNode_CopyRefValue>(at, l, r, getSizeOf());
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return simulateCopy(context, at, l, r);
