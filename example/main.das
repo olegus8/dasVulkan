@@ -84,20 +84,9 @@ def with_mapped_vk_mem(device, mem, offset, size;
 def with_cmd_bufs(device, cmd_pool, count;
     b : block<(c:array<VkCommandBuffer>)>
 )
-    let alloc_info <- [[VkCommandBufferAllocateInfo
-        sType = VkStructureType VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO,
-        level = VkCommandBufferLevel VK_COMMAND_BUFFER_LEVEL_PRIMARY,
-        commandPool = cmd_pool,
-        commandBufferCount = uint(count)
-    ]]
-    var bufs : array<VkCommandBuffer>
-    bufs |> resize(count)
-    verify(VkResult VK_SUCCESS == device |> vkAllocateCommandBuffers(
-        alloc_info |> safe_addr(), bufs[0] |> safe_addr_val()))
-    b |> invoke(bufs)
-    device |> vkFreeCommandBuffers(
-        cmd_pool, uint(count), bufs[0] |> safe_addr_val())
-    delete bufs
+    var bufs <- device |> create_command_buffers(cmd_pool, count)
+    defer() <| { delete bufs }
+    b |> invoke(bufs.buffers)
 
 
 def record(cmd_buf : VkCommandBuffer; b : block)

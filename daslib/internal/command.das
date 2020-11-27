@@ -42,8 +42,8 @@ def finalize(var pool : CommandPool)
 //
 
 struct CommandBuffers
-    pool : VkCommandPool
     device : VkDevice
+    pool : VkCommandPool
     buffers : array<VkCommandBuffer>
 
 
