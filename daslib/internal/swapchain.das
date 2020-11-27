@@ -10,11 +10,11 @@ require device
 require image
 
 
-struct Swapchain
+struct SwapchainEx
     swapchain       : VkSwapchainKHR
     images          : array<VkImage>
     views           : array<ImageView>
-    framebuffers    : array<VkFramebuffer>
+    framebuffers    : array<Framebuffer>
 
 
 def with_swapchain(
@@ -25,7 +25,7 @@ def with_swapchain(
     surf_fmt        : VkSurfaceFormatKHR implicit;
     present_mode    : VkPresentModeKHR implicit;
     render_pass     : VkRenderPass implicit;
-    b : block<(sc:Swapchain#)>
+    b : block<(sc:SwapchainEx#)>
 )
     device |> with_swapchain(
         phys_dev, surface, window, surf_fmt, present_mode
@@ -34,17 +34,17 @@ def with_swapchain(
         defer() <| ${ delete images; }
         var views <- device |> create_swapchain_image_views(images, surf_fmt)
         defer() <| ${ delete views; }
-        device |> with_swapchain_framebuffers(
-            phys_dev, surface, window, views, render_pass
-        ) <| $(framebuffers)
-            let sc <- [[Swapchain
-                swapchain = swapchain,
-                images <- images,
-                views <- views,
-                framebuffers = framebuffers
-            ]]
-            defer() <| ${ delete sc; }
-            b |> invoke(sc)
+        var framebuffers <- device |> create_swapchain_framebuffers(
+            phys_dev, surface, window, views, render_pass)
+        defer() <| ${ delete framebuffers; }
+        let sc <- [[Swapchain
+            swapchain = swapchain,
+            images <- images,
+            views <- views,
+            framebuffers <- framebuffers
+        ]]
+        defer() <| ${ delete sc; }
+        b |> invoke(sc)
 
 
 [private]
