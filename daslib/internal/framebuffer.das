@@ -54,7 +54,7 @@ def create_framebuffer(
 ) : Framebuffer
     var atts <- [{auto[] attachment}]
     defer() <| ${ delete atts; }
-    return <- device |> create_framebuffer([render_pass=render_pass,
+    return <- create_framebuffer([device=device, render_pass=render_pass,
         attachments=atts, width=width, height=height, layers=layers,
         flags=flags])
 
@@ -62,4 +62,3 @@ def create_framebuffer(
 def finalize(var fbuf : Framebuffer)
     fbuf.device |> vkDestroyFramebuffer(fbuf.framebuffer, null)
     memzero(fbuf)
-
