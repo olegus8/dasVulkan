@@ -36,11 +36,10 @@ def create_image_view(
     device : VkDevice implicit;
     image : VkImage implicit;
     format : VkFormat;
-    view_type : VkImageViewType = VK_IMAGE_VIEW_TYPE_2D;
-    flags : uint = 0u;
-    components : VkComponentMapping implicit = COMPONENT_MAPPING_IDENTITY;
-    subresource_range : VkImageSubresourceRange implicit = 
-        IMAGE_SUBRESOURCE_RANGE_SINGLE_COLOR
+    view_type : VkImageViewType;
+    subresource_range : VkImageSubresourceRange implicit;
+    components : VkComponentMapping implicit;
+    flags : uint = 0u
 ) : ImageView
     let info <- [[VkImageViewCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO,

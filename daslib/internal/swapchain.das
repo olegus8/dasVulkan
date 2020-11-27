@@ -6,7 +6,8 @@ require math
 require daslib/safe_addr
 require daslib/defer
 require vulkan
-require internal/device
+require device
+require image
 
 
 struct Swapchain
@@ -31,17 +32,18 @@ def with_swapchain(
     ) <| $(swapchain)
         var images <- device |> get_swapchain_images(swapchain)
         defer() <| ${ delete images; }
-        var views <- device |> with_swapchain_image_views(images, surf_fmt) <| $(views)
-            device |> with_swapchain_framebuffers(
-                phys_dev, surface, window, views, render_pass
-            ) <| $(framebuffers)
-                let sc <- [[Swapchain
-                    swapchain = swapchain,
-                    images <- images,
-                    views = views,
-                    framebuffers = framebuffers
-                ]]
-                b |> invoke(sc)
+        var views <- device |> create_swapchain_image_views(images, surf_fmt)
+        defer() <| ${ delete views; }
+        device |> with_swapchain_framebuffers(
+            phys_dev, surface, window, views, render_pass
+        ) <| $(framebuffers)
+            let sc <- [[Swapchain
+                swapchain = swapchain,
+                images <- images,
+                views = views,
+                framebuffers = framebuffers
+            ]]
+            b |> invoke(sc)
 
 
 [private]
@@ -104,15 +106,19 @@ def get_swapchain_images(
 
 
 [private]
-def with_swapchain_image_views(
+def create_swapchain_image_views(
     device : VkDevice implicit;
     images : array<VkImage> implicit;
     surf_fmt : VkSurfaceFormatKHR implicit;
-    b : block<(d:array<VkImageView>#)>
+    b : block<(d:array<ImageView>#)>
 )
-    var views : array<VkImageView>
+    var views : array<ImageView>
     views |> resize(images |> length())
     for image, view in images, views
+        view <- device |> create_image_view(
+            device, image, surf_fmt.format, VK_IMAGE_VIEW_TYPE_2D,
+            IMAGE_SUBRESOURCE_RANGE_SINGLE_COLOR,
+            COMPONENT_MAPPING_IDENTITY
         let no_swizzle = VkComponentSwizzle VK_COMPONENT_SWIZZLE_IDENTITY
         let create_info <- [[VkImageViewCreateInfo
             sType = VkStructureType VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO,
