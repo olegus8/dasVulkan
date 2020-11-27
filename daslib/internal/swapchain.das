@@ -31,7 +31,7 @@ def with_swapchain(
     ) <| $(swapchain)
         var images <- device |> get_swapchain_images(swapchain)
         defer() <| ${ delete images; }
-        device |> with_swapchain_image_views(images, surf_fmt) <| $(views)
+        var views <- device |> with_swapchain_image_views(images, surf_fmt) <| $(views)
             device |> with_swapchain_framebuffers(
                 phys_dev, surface, window, views, render_pass
             ) <| $(framebuffers)
