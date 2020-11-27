@@ -32,14 +32,3 @@ def create_buffer(
 def finalize(var buf : Buffer)
     buf.device |> vkDestroyBuffer(buf.buffer, null)
     memzero(buf)
-
-
-def with_buffer(
-    device : VkDevice#;
-    buf_size : uint64;
-    usage : uint;
-    b : block<(b:VkBuffer#)>
-)
-    var buf <- create_buffer(device, buf_size, usage)
-    b |> invoke(buf.buffer)
-    delete buf

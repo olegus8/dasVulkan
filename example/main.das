@@ -189,15 +189,17 @@ def with_mem_backed_buf(
     mem_props : uint;
     b : block<(b:VkBuffer#; m:VkDeviceMemory#)>
 )
-    device |> with_buffer(buf_size, usage) <| $(buf)
-        device |> with_buffer_memory_type(phys_dev, buf, mem_props
-        ) <| $(mem_type, mem_size)
-            var mem <- device |> allocate_memory(mem_size, mem_type)
-            defer() <|
-                delete mem
-            verify(VkResult VK_SUCCESS ==
-                device |> vkBindBufferMemory(buf, mem.memory, uint64(0)))
-            b |> invoke(buf, mem.memory)
+    var buf <- device |> create_buffer(buf_size, usage)
+    defer() <|
+        delete buf
+    device |> with_buffer_memory_type(phys_dev, buf.buffer, mem_props
+    ) <| $(mem_type, mem_size)
+        var mem <- device |> allocate_memory(mem_size, mem_type)
+        defer() <|
+            delete mem
+        verify(VkResult VK_SUCCESS ==
+            device |> vkBindBufferMemory(buf.buffer, mem.memory, uint64(0)))
+        b |> invoke(buf.buffer, mem.memory)
 
 
 def with_baked_vertex_buffer(device, phys_dev, cmd_pool, queue;

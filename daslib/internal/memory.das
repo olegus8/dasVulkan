@@ -34,17 +34,6 @@ def finalize(var mem : Memory)
     memzero(mem)
 
 
-def with_memory(
-    device : VkDevice#;
-    size : uint64;
-    mem_type_index : uint;
-    b : block<(m:VkDeviceMemory#)>
-)
-    var mem <- allocate_memory(device, size, mem_type_index)
-    b |> invoke(mem.memory)
-    delete mem
-
-
 def with_memory_type(
     phys_dev : VkPhysicalDevice#;
     type_filter : uint;
