@@ -26,20 +26,31 @@ def create_framebuffer(
     var fbuf : Framebuffer
     unsafe
         fbuf.device = reinterpret<VkDevice>(device)
-    attachments |> lock() <| $(tatts)
-        let create_info <- [[VkFramebufferCreateInfo
-            sType = (VkStructureType
-                VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO),
-            renderPass = render_pass,
-            attachmentCount = uint(tatts |> length()),
-            pAttachments = safe_addr(tatts[0]),
-            width = width,
-            height = height,
-            layers = layers,
-            flags = flags
-        ]]
-        verify(VkResult VK_SUCCESS == device |> vkCreateFramebuffer(
-            safe_addr(info), null, safe_addr(fbuf.framebuffer)))
+    assert(attachments |> length() > 0)
+
+    var patts : VkImageView?
+    unsafe
+        patts = addr(attachments[0])
+
+    let create_info <- [[VkFramebufferCreateInfo
+        sType = (VkStructureType
+            VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO),
+        renderPass = render_pass,
+        attachmentCount = uint(tatts |> length()),
+        width = width,
+        height = height,
+        layers = layers,
+        flags = flags,
+
+        //TODO: does not work with array lock and safe_addr saying this:
+        //  can't initialize field pAttachments;
+        //  expecting vulkan::VkImageView const? const&,
+        //  passing vulkan::VkImageView const# =const? const#
+        //pAttachments = safe_addr(tatts[0]),
+        pAttachments = patts
+    ]]
+    verify(VkResult VK_SUCCESS == device |> vkCreateFramebuffer(
+        safe_addr(info), null, safe_addr(fbuf.framebuffer)))
     return <- fbuf
 
 
