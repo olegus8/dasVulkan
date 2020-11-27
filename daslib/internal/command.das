@@ -14,8 +14,8 @@ struct CommandPool
 
 def create_command_pool(
     device : VkDevice#;
-    flags : uint;
-    queue_family : uint
+    queue_family : uint;
+    flags : uint
 ) : CommandPool
     let create_info <- [[VkCommandPoolCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO,
@@ -32,7 +32,7 @@ def finalize(var pool : CommandPool)
     pool.device |> vkDestroyCommandPool(pool.pool, null)
     memzero(pool)
 
-
+/*
 def with_command_pool(
     device : VkDevice#;
     phys_dev : VkPhysicalDevice#;
@@ -49,4 +49,4 @@ def with_command_pool(
         safe_addr(create_info), null, safe_addr(pool)))
     b |> invoke(pool)
     device |> vkDestroyCommandPool(pool, null)
-
+*/

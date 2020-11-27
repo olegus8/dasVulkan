@@ -286,8 +286,10 @@ def with_swap_chain_independent_state(width, height, title; b : block<(
     ]]) <| $(shmods) {
     device |> with_render_pass_simple(surf_fmt)     <| $(render_pass)       {
     device |> with_pipeline_layout_simple()         <| $(pipeline_layout)   {
-    device |> with_command_pool(phys_dev, surface)  <| $(cmd_pool)
-    {
+        var cmd_pool <- device |> create_command_pool(
+            phys_dev |> get_graphics_queue_family(surface), 0u);
+        defer() <|
+            delete cmd_pool;
         b |> invoke(
             instance,
             window,
@@ -301,7 +303,7 @@ def with_swap_chain_independent_state(width, height, title; b : block<(
             shmods[1],
             render_pass,
             pipeline_layout,
-            cmd_pool
+            cmd_pool.pool
         );
     }}}}}}}}}}}
 
