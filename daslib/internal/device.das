@@ -241,46 +241,49 @@ def with_device(
     surface : VkSurfaceKHR;
     b : block<(device:VkDevice#; queue:VkQueue#)>
 )
-    phys_dev |> with_queue_create_info(surface) <| $(queue_info)
-        let features : VkPhysicalDeviceFeatures
-        var device : VkDevice
-        let create_info = [[VkDeviceCreateInfo
-            sType = VkStructureType VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO,
-            pQueueCreateInfos = safe_addr(queue_info),
-            queueCreateInfoCount = 1u,
-            pEnabledFeatures = safe_addr(features),
-            enabledExtensionCount = uint(REQUIRED_EXTENSIONS |> length()),
-            ppEnabledExtensionNames = safe_addr(REQUIRED_EXTENSIONS[0])
-        ]]
-        verify(VkResult VK_SUCCESS == vkCreateDevice(
-            phys_dev, safe_addr(create_info), null, safe_addr(device)))
-        var queue : VkQueue
-        let qfam = phys_dev |> get_graphics_queue_family(surface)
-        device |> vkGetDeviceQueue(qfam, 0u, queue |> safe_addr())
-        b |> invoke(device, queue)
-        device |> vkDeviceWaitIdle()
-        device |> vkDestroyDevice(null)
+    var queue_info <- phys_dev |> queue_create_info(surface)
+    let features : VkPhysicalDeviceFeatures
+    var device : VkDevice
+    let create_info = [[VkDeviceCreateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO,
+        pQueueCreateInfos = safe_addr(queue_info.info),
+        queueCreateInfoCount = 1u,
+        pEnabledFeatures = safe_addr(features),
+        enabledExtensionCount = uint(REQUIRED_EXTENSIONS |> length()),
+        ppEnabledExtensionNames = safe_addr(REQUIRED_EXTENSIONS[0])
+    ]]
+    verify(VkResult VK_SUCCESS == vkCreateDevice(
+        phys_dev, safe_addr(create_info), null, safe_addr(device)))
+    var queue : VkQueue
+    let qfam = phys_dev |> get_graphics_queue_family(surface)
+    device |> vkGetDeviceQueue(qfam, 0u, queue |> safe_addr())
+    b |> invoke(device, queue)
+    device |> vkDeviceWaitIdle()
+    device |> vkDestroyDevice(null)
 
 
 [private]
-def with_queue_create_info(
+struct DeviceQueueCreateInfo
+    priority : float
+    info : VkDeviceQueueCreateInfo
+
+
+[private]
+def queue_create_info(
     device : VkPhysicalDevice#;
     surface : VkSurfaceKHR#;
-    b : block<(i:VkDeviceQueueCreateInfo)>
 )
-    let family = device |> get_graphics_queue_family(surface)
-    let priority = 1.0f
-
-    let info <- [[VkDeviceQueueCreateInfo
-        sType = (VkStructureType
-            VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO),
-        queueFamilyIndex = family,
-        queueCount = 1u,
-        pQueuePriorities = safe_addr(priority)
+    var info : [[DeviceQueueCreateInfo
+        priority = 1.0f,
+        info = [[VkDeviceQueueCreateInfo
+            sType = (VkStructureType
+                VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO),
+            queueFamilyIndex = device |> get_graphics_queue_family(surface),
+            queueCount = 1u
+        ]]
     ]]
-
-    //TODO: should info be a temporary type here?
-    b |> invoke(info)
+    info.info.pQueuePriorities = safe_addr(info.priority)
+    return <- info
 
 
 def get_swap_extent(
