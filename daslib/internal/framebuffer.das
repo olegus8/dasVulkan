@@ -28,7 +28,7 @@ def create_framebuffer(
         fbuf.device = reinterpret<VkDevice>(device)
     assert(attachments |> length() > 0)
 
-    var patts : VkImageView?
+    var patts : VkImageView const ?
     unsafe
         patts = reinterpret<VkImageView const?>(addr(attachments[0]))
 
@@ -36,7 +36,7 @@ def create_framebuffer(
         sType = (VkStructureType
             VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO),
         renderPass = render_pass,
-        attachmentCount = uint(tatts |> length()),
+        attachmentCount = uint(attachments |> length()),
         width = width,
         height = height,
         layers = layers,
