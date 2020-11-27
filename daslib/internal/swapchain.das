@@ -123,39 +123,18 @@ def create_swapchain_image_views(
 
 
 [private]
-def with_swapchain_framebuffers(
+def create_swapchain_framebuffers(
     device      : VkDevice implicit;
     phys_dev    : VkPhysicalDevice implicit;
     surface     : VkSurfaceKHR implicit;
     window      : GLFWwindow_DasHandle implicit;
     views       : array<ImageView> implicit;
     render_pass : VkRenderPass implicit;
-    b : block<(fbs:array<VkFramebuffer>#)>
-)
+) : array<Framebuffer>
     let extent <- phys_dev |> get_swap_extent(surface, window)
-    var fbufs : array<VkFramebuffer>
+    var fbufs : array<Framebuffer>
     fbufs |> resize(views |> length())
-    fbufs |> lock() <| $(tfbufs)
-        for tfbuf, view in tfbufs, views
-            var pview : VkImageView const ?
-            unsafe
-                pview = reinterpret<VkImageView const ?>(addr(view.view))
-            let create_info <- [[VkFramebufferCreateInfo
-                sType = (VkStructureType
-                    VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO),
-                renderPass = render_pass,
-
-                //TODO: make it work. says "can only dereference simple type"
-                attachmentCount = 1u, 
-
-                pAttachments = pview,
-                width = extent.width,
-                height = extent.height,
-                layers = 1u
-            ]]
-            verify(VkResult VK_SUCCESS == device |> vkCreateFramebuffer(
-                safe_addr(create_info), null, addr(tfbuf)))
-        b |> invoke(tfbufs)
-    for fbuf in fbufs
-        device |> vkDestroyFramebuffer(fbuf, null)
-    delete fbufs
+    for fbuf, view in fbufs, views
+        fbuf <- device |> create_framebuffer(render_pass, view.view,
+            width=extent.width, height=extent.height, layers=1u)
+    return <- fbufs
