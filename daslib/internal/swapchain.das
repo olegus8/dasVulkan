@@ -32,12 +32,9 @@ def with_swapchain_ex(
         phys_dev, surface, window, surf_fmt, present_mode
     ) <| $(swapchain)
         var images <- device |> get_swapchain_images(swapchain)
-        defer() <| ${ delete images; }
         var views <- device |> create_swapchain_image_views(images, surf_fmt)
-        defer() <| ${ delete views; }
         var framebuffers <- device |> create_swapchain_framebuffers(
             phys_dev, surface, window, views, render_pass)
-        defer() <| ${ delete framebuffers; }
         var sc <- [[SwapchainEx
             swapchain = swapchain,
             images <- images,
@@ -46,6 +43,13 @@ def with_swapchain_ex(
         ]]
         defer() <| ${ delete sc; }
         b |> invoke(sc)
+
+
+def finalize(var sc : SwapchainEx)
+    delete sc.framebuffers
+    delete sc.views
+    delete sc.images
+    memzero(sc)
 
 
 [private]
