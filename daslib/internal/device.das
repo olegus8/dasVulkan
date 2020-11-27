@@ -188,10 +188,7 @@ def get_best_format(
                 unsafe
                     best_format <- reinterpret<VkSurfaceFormatKHR&>(format)
                 */
-                //TODO: Without reinterpret it says "type can't be cloned from"
-                unsafe
-                    best_format := reinterpret<VkSurfaceFormatKHR const&>(
-                        format)
+                best_format := format
                 return
         // if no ideal found, picking anything
         for format in formats
