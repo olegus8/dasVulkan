@@ -16,5 +16,6 @@ def create_buffer_exclusive(
     flags : uint = 0u
 ) : Buffer
     return <- create_buffer([device=device, size=size, usage=usage,
-        flags=flags, queue_family_indices=QUEUE_FAMILY_INDICES_EMPTY,
-        sharing_mode=VkSharingMode VK_SHARING_MODE_EXCLUSIVE])
+        sharing_mode=VkSharingMode VK_SHARING_MODE_EXCLUSIVE,
+        queue_family_indices=QUEUE_FAMILY_INDICES_EMPTY,
+        flags=flags])
