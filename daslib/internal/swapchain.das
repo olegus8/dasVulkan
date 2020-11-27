@@ -16,13 +16,13 @@ struct Swapchain
 
 
 def with_swapchain(
-    device          : VkDevice#;
-    phys_dev        : VkPhysicalDevice#;
-    surface         : VkSurfaceKHR#;
-    window          : GLFWwindow_DasHandle#;
+    device          : VkDevice implicit
+    phys_dev        : VkPhysicalDevice implicit
+    surface         : VkSurfaceKHR implicit
+    window          : GLFWwindow_DasHandle implicit
     surf_fmt        : VkSurfaceFormatKHR implicit;
-    present_mode    : VkPresentModeKHR#;
-    render_pass     : VkRenderPass#;
+    present_mode    : VkPresentModeKHR implicit;
+    render_pass     : VkRenderPass implicit;
     b : block<(sc:Swapchain#)>
 )
     device |> with_swapchain(
@@ -44,12 +44,12 @@ def with_swapchain(
 
 [private]
 def with_swapchain(
-    device          : VkDevice#;
-    phys_dev        : VkPhysicalDevice#;
-    surface         : VkSurfaceKHR#;
-    window          : GLFWwindow_DasHandle#;
+    device          : VkDevice implicit;
+    phys_dev        : VkPhysicalDevice implicit;
+    surface         : VkSurfaceKHR implicit;
+    window          : GLFWwindow_DasHandle implicit;
     surf_fmt        : VkSurfaceFormatKHR implicit;
-    present_mode    : VkPresentModeKHR#;
+    present_mode    : VkPresentModeKHR implicit;
     b : block<(sc:VkSwapchainKHR#)>
 )
     let caps <- phys_dev |> get_capabilities(surface)
@@ -86,7 +86,9 @@ def with_swapchain(
 
 
 [private]
-def get_swapchain_images(device : VkDevice#; swapchain : VkSwapchainKHR#
+def get_swapchain_images(
+    device : VkDevice implicit;
+    swapchain : VkSwapchainKHR implicit
 ) : array<VkImage>
     var images : array<VkImage>
     var count : uint
@@ -101,8 +103,8 @@ def get_swapchain_images(device : VkDevice#; swapchain : VkSwapchainKHR#
 
 [private]
 def with_swapchain_image_views(
-    device : VkDevice#;
-    images : array<VkImage>#;
+    device : VkDevice implicit;
+    images : array<VkImage> implicit;
     surf_fmt : VkSurfaceFormatKHR implicit;
     b : block<(d:array<VkImageView>#)>
 )
@@ -141,12 +143,12 @@ def with_swapchain_image_views(
 
 [private]
 def with_swapchain_framebuffers(
-    device      : VkDevice#;
-    phys_dev    : VkPhysicalDevice#;
-    surface     : VkSurfaceKHR#;
-    window      : GLFWwindow_DasHandle#;
-    views       : array<VkImageView>#;
-    render_pass : VkRenderPass#;
+    device      : VkDevice implicit;
+    phys_dev    : VkPhysicalDevice implicit;
+    surface     : VkSurfaceKHR implicit;
+    window      : GLFWwindow_DasHandle implicit;
+    views       : array<VkImageView> implicit;
+    render_pass : VkRenderPass implicit;
     b : block<(fbs:array<VkFramebuffer>#)>
 )
     let extent <- phys_dev |> get_swap_extent(surface, window)
