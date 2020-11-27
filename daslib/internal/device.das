@@ -241,12 +241,19 @@ def with_device(
     surface : VkSurfaceKHR;
     b : block<(device:VkDevice#; queue:VkQueue#)>
 )
-    var queue_info <- phys_dev |> queue_create_info(surface)
+    let queue_priority = 1.0f
+    let queue_info <- [[VkDeviceQueueCreateInfo
+        sType = (VkStructureType
+            VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO),
+        queueFamilyIndex = phys_dev |> get_graphics_queue_family(surface),
+        queueCount = 1u,
+        pQueuePriorities = safe_addr(queue_priority)
+    ]]
     let features : VkPhysicalDeviceFeatures
     var device : VkDevice
     let create_info = [[VkDeviceCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO,
-        pQueueCreateInfos = safe_addr(queue_info.info),
+        pQueueCreateInfos = safe_addr(queue_info),
         queueCreateInfoCount = 1u,
         pEnabledFeatures = safe_addr(features),
         enabledExtensionCount = uint(REQUIRED_EXTENSIONS |> length()),
@@ -260,28 +267,6 @@ def with_device(
     b |> invoke(device, queue)
     device |> vkDeviceWaitIdle()
     device |> vkDestroyDevice(null)
-
-
-[private]
-struct DeviceQueueCreateInfo
-    priority : float
-    info : VkDeviceQueueCreateInfo
-
-
-[private]
-def queue_create_info(device : VkPhysicalDevice#; surface : VkSurfaceKHR#)
-    var info <- [[DeviceQueueCreateInfo priority = 1.0f]]
-    info.info <- [[VkDeviceQueueCreateInfo
-        sType = (VkStructureType
-            VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO),
-        queueFamilyIndex = device |> get_graphics_queue_family(surface),
-        queueCount = 1u
-    ]]
-    //TODO: without reinterpret it says "can't write to a constant value"
-    unsafe
-        reinterpret<float const?>(info.info.pQueuePriorities) = (
-            addr(info.priority))
-    return <- info
 
 
 def get_swap_extent(
