@@ -47,7 +47,10 @@ def with_best_physical_device(inst : VkInstance#; surface : VkSurfaceKHR#;
 def get_suitability_score(device : VkPhysicalDevice#; surface : VkSurfaceKHR#)
     var score = 1
 
-    if ! device |> has_graphics_queue_family(surface)
+    var has_graphics = false
+    device |> with_graphics_queue_family(surface) <| $(qfam)
+        has_graphics = true
+    if ! has_graphics
         score = 0
     
     var props <- device |> get_properties()
@@ -85,18 +88,22 @@ def with_queue_families(device : VkPhysicalDevice#;
     delete families
 
 
-def has_graphics_queue_family(
-    device : VkPhysicalDevice#;
-    surface : VkSurfaceKHR#
-) : bool
-    return device |> get_graphics_queue_family(surface) != UINT_MAX
-
-
 def get_graphics_queue_family(
     device : VkPhysicalDevice#;
     surface : VkSurfaceKHR#
 ) : uint
     var found_index : uint = UINT_MAX
+    device |> with_graphics_queue_family(surface) <| $(qfam)
+        found_index = qfam
+    assert(found_index != UINT_MAX)
+    return found_index
+
+
+def with_graphics_queue_family(
+    device : VkPhysicalDevice#;
+    surface : VkSurfaceKHR#;
+    b : block<(qfam:uint)>
+)
     device |> with_queue_families() <| $(families)
         for family, index in families, range(INT_MAX)
             var can_present : uint
@@ -110,9 +117,8 @@ def get_graphics_queue_family(
             if (family.queueFlags & graphics_bit) == 0u
                 continue
 
-            found_index = uint(index)
+            b |> invoke(uint(index))
             return
-    return found_index
 
 
 def get_properties(device : VkPhysicalDevice#)
