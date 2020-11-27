@@ -175,7 +175,7 @@ def with_mem_backed_buf(
     mem_props : uint;
     b : block<(b:VkBuffer#; m:VkDeviceMemory#)>
 )
-    var buf <- device |> create_buffer(buf_size, usage)
+    var buf <- device |> create_buffer_exclusive(buf_size, usage)
     defer() <|
         delete buf
     device |> with_buffer_memory_type(phys_dev, buf.buffer, mem_props
