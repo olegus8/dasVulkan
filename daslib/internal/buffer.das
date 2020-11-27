@@ -6,19 +6,19 @@ require vulkan
 
 
 struct Buffer
-    buffer : VkBuffer
+    buffer  : VkBuffer
     _device : VkDevice
-    _creation_result : VkResult
+    _result : VkResult
 
 
 def create_buffer(
-    device : VkDevice implicit;
-    size : uint64;
-    usage : uint;
-    sharing_mode : VkSharingMode;
-    queue_family_indices : array<uint> implicit;
-    flags : uint = 0u;
-    require_success : bool = true
+    device                  : VkDevice implicit;
+    size                    : uint64;
+    usage                   : uint;
+    sharing_mode            : VkSharingMode;
+    queue_family_indices    : array<uint> implicit;
+    flags                   : uint = 0u;
+    require_success         : bool = true
 ) : Buffer
     var buf : Buffer
     unsafe
@@ -40,7 +40,7 @@ def create_buffer(
             queueFamilyIndexCount = uint(queue_family_indices |> length()),
             pQueueFamilyIndices = pindices
         ]]
-        buf._creation_result = device |> vkCreateBuffer(
+        buf._result = device |> vkCreateBuffer(
             safe_addr(info), null, safe_addr(buf.buffer))
         assert(!require_success || buf._creation_result == VkResult VK_SUCCESS)
     return <- buf
