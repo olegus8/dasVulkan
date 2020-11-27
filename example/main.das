@@ -244,7 +244,7 @@ def with_fences(device, count, flags; b : block<(fences:array<VkFence>)>)
     delete fences
 
 
-def with_swap_chain_independent_state(width, height, title; b : block<(
+def with_swapchain_independent_state(width, height, title; b : block<(
     instance        : VkInstance#;
     window          : GLFWwindow_DasHandle#;
     surface         : VkSurfaceKHR#;
@@ -293,7 +293,7 @@ def with_swap_chain_independent_state(width, height, title; b : block<(
     }}}}}}}}
 
 
-def with_swap_chain_dependent_state(
+def with_swapchain_dependent_state(
     instance,
     window,
     surface,
@@ -308,7 +308,7 @@ def with_swap_chain_dependent_state(
     pipeline_layout,
     cmd_pool;
     b : block<(
-        swap_chain          : VkSwapchainKHR;
+        swapchain          : VkSwapchainKHR;
         sc_imgs             : array<VkImage>#;
         sc_views            : array<VkImageView>#;
         sc_fbufs            : array<VkFramebuffer>#;
@@ -317,12 +317,12 @@ def with_swap_chain_dependent_state(
         render_done_sems    : array<VkSemaphore>;
         frame_fences        : array<VkFence>
 )>)
-    device |> with_swap_chain(phys_dev, surface,
-        window, surf_fmt, present_mode)             <| $(swap_chain)        {
-    device |> with_swap_chain_images(swap_chain)    <| $(sc_imgs)           {
-    device |> with_swap_chain_image_views(
+    device |> with_swapchain(phys_dev, surface,
+        window, surf_fmt, present_mode)             <| $(swapchain)        {
+    device |> with_swapchain_images(swapchain)    <| $(sc_imgs)           {
+    device |> with_swapchain_image_views(
         sc_imgs, surf_fmt)                          <| $(sc_views)          {
-    device |> with_swap_chain_framebuffers(
+    device |> with_swapchain_framebuffers(
         phys_dev, surface, window, sc_views,
         render_pass)                                <| $(sc_fbufs)          {
     device |> with_graphics_pipeline(
@@ -335,7 +335,7 @@ def with_swap_chain_dependent_state(
             VK_FENCE_CREATE_SIGNALED_BIT))          <| $(frame_fences)
     {
         b |> invoke(
-            swap_chain,
+            swapchain,
             sc_imgs,
             sc_views,
             sc_fbufs,
@@ -357,7 +357,7 @@ def reset_fence(device; fence : VkFence)
         device |> vkResetFences(1u, fence |> safe_addr()))
 
 
-def with_next_image(device, swap_chain, sem_to_signal, fence_to_signal;
+def with_next_image(device, swapchain, sem_to_signal, fence_to_signal;
     b : block<(i:uint)>
 )
     var img_index : uint
@@ -365,7 +365,7 @@ def with_next_image(device, swap_chain, sem_to_signal, fence_to_signal;
     //TODO: handle result properly. currently crashes on
     //      "internal integration error"
     verify(VkResult VK_SUCCESS == device |> vkAcquireNextImageKHR(
-        swap_chain, ULONG_MAX, sem_to_signal, fence_to_signal,
+        swapchain, ULONG_MAX, sem_to_signal, fence_to_signal,
         img_index |> safe_addr()))
     b |> invoke(img_index)
     /*
@@ -397,13 +397,13 @@ def submit_draw(device, queue; cmd_buf : VkCommandBuffer;
         fence_to_signal))
 
 
-def present(device, queue, swap_chain, img_i, sem_to_wait; b : block<()>)
+def present(device, queue, swapchain, img_i, sem_to_wait; b : block<()>)
     let info <- [[VkPresentInfoKHR
         sType = VkStructureType VK_STRUCTURE_TYPE_PRESENT_INFO_KHR,
         waitSemaphoreCount  = 1u,
         pWaitSemaphores     = sem_to_wait |> safe_addr(),
         swapchainCount      = 1u,
-        pSwapchains         = swap_chain |> safe_addr(),
+        pSwapchains         = swapchain |> safe_addr(),
         pImageIndices       = img_i |> safe_addr()
     ]]
     //TODO: handle result properly. currently crashes on
@@ -420,14 +420,14 @@ def present(device, queue, swap_chain, img_i, sem_to_wait; b : block<()>)
     */
 
 
-def draw_frame(device, queue, cmd_bufs, swap_chain, frame,
+def draw_frame(device, queue, cmd_bufs, swapchain, frame,
     frame_fences, img_avail_sems, render_done_sems;
     var imgs_used_by_frames
 )
     device |> wait_fence(frame_fences[frame])
     var img_acquired = false
     var presented = false
-    device |> with_next_image(swap_chain, img_avail_sems[frame], [[VkFence]]
+    device |> with_next_image(swapchain, img_avail_sems[frame], [[VkFence]]
     ) <| $(img_i)
         img_acquired = true
 
@@ -440,7 +440,7 @@ def draw_frame(device, queue, cmd_bufs, swap_chain, frame,
         device |> submit_draw(queue, cmd_bufs[img_i], img_avail_sems[frame],
             render_done_sems[frame], frame_fences[frame])
 
-        device |> present(queue, swap_chain, img_i, render_done_sems[frame]
+        device |> present(queue, swapchain, img_i, render_done_sems[frame]
         ) <| $()
             presented = true
 
@@ -460,7 +460,7 @@ def main
         [[Vertex position=float2(-0.5f,  0.5f), color=float3(0f, 0f, 1f)]]
     }]
 
-    with_swap_chain_independent_state(800, 600, "dasVulkanExample") <| $(
+    with_swapchain_independent_state(800, 600, "dasVulkanExample") <| $(
         instance        : VkInstance;
         window          : GLFWwindow_DasHandle;
         surface         : VkSurfaceKHR;
@@ -487,7 +487,7 @@ def main
                     glfwWaitEvents()
                 device |> vkDeviceWaitIdle()
 
-                with_swap_chain_dependent_state(
+                with_swapchain_dependent_state(
                     instance,
                     window,
                     surface,
@@ -502,7 +502,7 @@ def main
                     pipeline_layout,
                     cmd_pool
                 ) <| $(
-                    swap_chain          : VkSwapchainKHR;
+                    swapchain          : VkSwapchainKHR;
                     sc_imgs             : array<VkImage>#;
                     sc_views            : array<VkImageView>#;
                     sc_fbufs            : array<VkFramebuffer>#;
@@ -522,12 +522,12 @@ def main
                             keep_running = (
                                 window |> glfwWindowShouldClose() == 0)
                             glfwPollEvents()
-                            let is_swap_chain_good = device |> draw_frame(
-                                queue, sc_draw_cmds, swap_chain, frame,
+                            let is_swapchain_good = device |> draw_frame(
+                                queue, sc_draw_cmds, swapchain, frame,
                                 frame_fences, img_avail_sems, render_done_sems,
                                 imgs_used_by_frames
                             )
-                            if ! is_swap_chain_good
+                            if ! is_swapchain_good
                                 break
                             frame = (frame + 1) % MAX_FRAMES_IN_FLIGHT
                         delete imgs_used_by_frames

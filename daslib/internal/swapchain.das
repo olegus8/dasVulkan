@@ -8,13 +8,41 @@ require vulkan
 require internal/device
 
 
-def with_swap_chain(
-    device : VkDevice#;
-    phys_dev : VkPhysicalDevice#;
-    surface : VkSurfaceKHR#;
-    window : GLFWwindow_DasHandle#;
-    surf_fmt : VkSurfaceFormatKHR implicit;
-    present_mode : VkPresentModeKHR#;
+struct Swapchain
+    swapchain      : VkSwapchainKHR
+    images          : array<VkImage>
+    views           : array<VlImageView>
+    framebuffers    : array<VkFramebuffer>
+
+
+def with_swapchain(
+    device          : VkDevice#;
+    phys_dev        : VkPhysicalDevice#;
+    surface         : VkSurfaceKHR#;
+    window          : GLFWwindow_DasHandle#;
+    surf_fmt        : VkSurfaceFormatKHR implicit;
+    present_mode    : VkPresentModeKHR#;
+    render_pass     : VkRenderPass#
+    b : block<(sc:Swapchain#)>
+)
+    device |> with_swapchain(phys_dev, surface,
+        window, surf_fmt, present_mode)             <| $(swapchain)        {
+    device |> with_swapchain_images(swapchain)    <| $(sc_imgs)           {
+    device |> with_swapchain_image_views(
+        sc_imgs, surf_fmt)                          <| $(sc_views)          {
+    device |> with_swapchain_framebuffers(
+        phys_dev, surface, window, sc_views,
+        render_pass)                                <| $(sc_fbufs)          {
+    }}}}
+
+
+def with_swapchain(
+    device          : VkDevice#;
+    phys_dev        : VkPhysicalDevice#;
+    surface         : VkSurfaceKHR#;
+    window          : GLFWwindow_DasHandle#;
+    surf_fmt        : VkSurfaceFormatKHR implicit;
+    present_mode    : VkPresentModeKHR#;
     b : block<(sc:VkSwapchainKHR#)>
 )
     let caps <- phys_dev |> get_capabilities(surface)
@@ -43,29 +71,29 @@ def with_swap_chain(
         clipped = uint(VK_TRUE)
     ]]
 
-    var swap_chain : VkSwapchainKHR
+    var swapchain : VkSwapchainKHR
     verify(VkResult VK_SUCCESS == device |> vkCreateSwapchainKHR(
-        safe_addr(create_info), null, safe_addr(swap_chain)))
-    b |> invoke(swap_chain)
-    device |> vkDestroySwapchainKHR(swap_chain, null)
+        safe_addr(create_info), null, safe_addr(swapchain)))
+    b |> invoke(swapchain)
+    device |> vkDestroySwapchainKHR(swapchain, null)
 
 
-def with_swap_chain_images(device : VkDevice#; swap_chain : VkSwapchainKHR#;
+def with_swapchain_images(device : VkDevice#; swapchain : VkSwapchainKHR#;
     b : block<(d:array<VkImage>#)>
 )
     var images : array<VkImage>
     var count : uint
     verify(VkResult VK_SUCCESS == device |> vkGetSwapchainImagesKHR(
-        swap_chain, safe_addr(count), null))
+        swapchain, safe_addr(count), null))
     images |> resize(int(count))
     images |> lock() <| $(timages)
         verify(VkResult VK_SUCCESS == device |> vkGetSwapchainImagesKHR(
-            swap_chain, safe_addr(count), addr(timages[0])))
+            swapchain, safe_addr(count), addr(timages[0])))
         b |> invoke(timages)
     delete images
 
 
-def with_swap_chain_image_views(
+def with_swapchain_image_views(
     device : VkDevice#;
     images : array<VkImage>#;
     surf_fmt : VkSurfaceFormatKHR implicit;
@@ -104,7 +132,7 @@ def with_swap_chain_image_views(
     delete views
 
 
-def with_swap_chain_framebuffers(
+def with_swapchain_framebuffers(
     device      : VkDevice#;
     phys_dev    : VkPhysicalDevice#;
     surface     : VkSurfaceKHR#;
