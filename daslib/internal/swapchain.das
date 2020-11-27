@@ -38,7 +38,7 @@ def with_swapchain_ex(
         var framebuffers <- device |> create_swapchain_framebuffers(
             phys_dev, surface, window, views, render_pass)
         defer() <| ${ delete framebuffers; }
-        let sc <- [[SwapchainEx
+        var sc <- [[SwapchainEx
             swapchain = swapchain,
             images <- images,
             views <- views,
