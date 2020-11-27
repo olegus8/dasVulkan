@@ -49,9 +49,9 @@ class Config(ConfigBase):
 
     def configure_function(self, func):
         #TODO: capturing returned value into variable crashes when
-        #   side effects are set to not none.
+        #   side effects are set to worstDefault
         #   Remove this line after fixed.
-        func.set_side_effects('none')
+        func.set_side_effects('modifyExternal')
 
         # whitelist
         if func.name in [
