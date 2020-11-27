@@ -170,7 +170,11 @@ def with_formats(device : VkPhysicalDevice#; surface : VkSurfaceKHR#;
     delete formats
 
 
-def with_best_format(device : VkPhysicalDevice#; surface : VkSurfaceKHR#;
+def with_best_format(
+    device : VkPhysicalDevice#;
+    surface : VkSurfaceKHR#;
+    preferred_format : VkFormat;
+    preferred_color_space : VkColorSpaceKHR;
     b : block<(format:VkSurfaceFormatKHR#)>
 )
     device |> with_formats(surface) <| $(formats)
@@ -186,6 +190,18 @@ def with_best_format(device : VkPhysicalDevice#; surface : VkSurfaceKHR#;
         for format in formats
             b |> invoke(format)
             return
+
+
+def with_format_srgb_bgra8(
+    device : VkPhysicalDevice#;
+    surface : VkSurfaceKHR#;
+    b : block<(format:VkSurfaceFormatKHR#)>
+)
+    device |> with_best_format(surface,
+        VkFormat VK_FORMAT_B8G8R8A8_SRGB,
+        VkColorSpaceKHR VK_COLOR_SPACE_SRGB_NONLINEAR_KHR
+    ) <| $(format)
+        b |> invoke(format)
 
 
 def with_present_modes(device : VkPhysicalDevice#; surface : VkSurfaceKHR#;
