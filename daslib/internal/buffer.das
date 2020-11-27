@@ -7,8 +7,8 @@ require vulkan
 
 struct Buffer
     buffer  : VkBuffer
+    result  : VkResult
     _device : VkDevice
-    _result : VkResult
 
 
 def create_buffer(
@@ -40,9 +40,9 @@ def create_buffer(
             queueFamilyIndexCount = uint(queue_family_indices |> length()),
             pQueueFamilyIndices = pindices
         ]]
-        buf._result = device |> vkCreateBuffer(
+        buf.result = device |> vkCreateBuffer(
             safe_addr(info), null, safe_addr(buf.buffer))
-        assert(!require_success || buf._result == VkResult VK_SUCCESS)
+        assert(!require_success || buf.result == VkResult VK_SUCCESS)
     return <- buf
 
 

@@ -7,9 +7,9 @@ require vulkan
 
 
 struct Memory
-    memory : VkDeviceMemory
+    memory  : VkDeviceMemory
+    result  : VkResult
     _device : VkDevice
-    _result : VkResult
 
 
 def allocate_memory(
@@ -26,9 +26,9 @@ def allocate_memory(
     var mem : Memory
     unsafe
         mem._device = reinterpret<VkDevice>(device)
-    mem._result = device |> vkAllocateMemory(
+    mem.result = device |> vkAllocateMemory(
         safe_addr(alloc_info), null, safe_addr(mem.memory))
-    assert(!require_success || mem._result == VkResult VK_SUCCESS)
+    assert(!require_success || mem.result == VkResult VK_SUCCESS)
     return <- mem
 
 
