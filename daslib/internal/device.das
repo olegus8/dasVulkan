@@ -270,16 +270,17 @@ struct DeviceQueueCreateInfo
 
 [private]
 def queue_create_info(device : VkPhysicalDevice#; surface : VkSurfaceKHR#)
-    var info : [[DeviceQueueCreateInfo
-        priority = 1.0f,
-        info = [[VkDeviceQueueCreateInfo
-            sType = (VkStructureType
-                VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO),
-            queueFamilyIndex = device |> get_graphics_queue_family(surface),
-            queueCount = 1u
-        ]]
+    var info <- [[DeviceQueueCreateInfo priority = 1.0f]]
+    info.info <- [[VkDeviceQueueCreateInfo
+        sType = (VkStructureType
+            VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO),
+        queueFamilyIndex = device |> get_graphics_queue_family(surface),
+        queueCount = 1u
     ]]
-    info.info.pQueuePriorities = safe_addr(info.priority)
+    //TODO: without reinterpret it says "can't write to a constant value"
+    unsafe
+        reinterpret<float const?>(info.info.pQueuePriorities) = (
+            addr(info.priority))
     return <- info
 
 
