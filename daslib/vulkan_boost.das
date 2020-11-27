@@ -3,6 +3,8 @@ options no_aot = true
 
 module vulkan_boost
 
+require vulkan
+
 require internal/buffer      public
 require internal/command     public
 require internal/core        public
