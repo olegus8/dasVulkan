@@ -118,35 +118,8 @@ def create_swapchain_image_views(
         view <- device |> create_image_view(
             device, image, surf_fmt.format, VK_IMAGE_VIEW_TYPE_2D,
             IMAGE_SUBRESOURCE_RANGE_SINGLE_COLOR,
-            COMPONENT_MAPPING_IDENTITY
-        let no_swizzle = VkComponentSwizzle VK_COMPONENT_SWIZZLE_IDENTITY
-        let create_info <- [[VkImageViewCreateInfo
-            sType = VkStructureType VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO,
-            image = image,
-            viewType = VkImageViewType VK_IMAGE_VIEW_TYPE_2D,
-            format = surf_fmt.format,
-            components = [[VkComponentMapping
-                r = no_swizzle,
-                g = no_swizzle,
-                b = no_swizzle,
-                a = no_swizzle]],
-            subresourceRange = [[VkImageSubresourceRange
-                aspectMask = uint(
-                    VkImageAspectFlagBits VK_IMAGE_ASPECT_COLOR_BIT),
-                baseMipLevel = 0u,
-                levelCount = 1u,
-                baseArrayLayer = 0u,
-                layerCount = 1u]]
-        ]]
-        verify(VkResult VK_SUCCESS == device |> vkCreateImageView(
-            safe_addr(create_info), null, safe_addr(view)))
-
-    views |> lock() <| $(tviews)
-        b |> invoke(tviews)
-
-    for view in views
-        device |> vkDestroyImageView(view, null)
-    delete views
+            COMPONENT_MAPPING_IDENTITY)
+    return <- views
 
 
 [private]
@@ -155,7 +128,7 @@ def with_swapchain_framebuffers(
     phys_dev    : VkPhysicalDevice implicit;
     surface     : VkSurfaceKHR implicit;
     window      : GLFWwindow_DasHandle implicit;
-    views       : array<VkImageView> implicit;
+    views       : array<ImageView> implicit;
     render_pass : VkRenderPass implicit;
     b : block<(fbs:array<VkFramebuffer>#)>
 )
@@ -166,7 +139,7 @@ def with_swapchain_framebuffers(
         for tfbuf, view in tfbufs, views
             var pview : VkImageView const ?
             unsafe
-                pview = reinterpret<VkImageView const ?>(addr(view))
+                pview = reinterpret<VkImageView const ?>(addr(view.view))
             let create_info <- [[VkFramebufferCreateInfo
                 sType = (VkStructureType
                     VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO),
