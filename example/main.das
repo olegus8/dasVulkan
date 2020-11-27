@@ -85,7 +85,8 @@ def with_cmd_bufs(device, cmd_pool, count;
     b : block<(c:array<VkCommandBuffer>)>
 )
     var bufs <- device |> create_command_buffers(cmd_pool, count)
-    defer() <| { delete bufs }
+    defer() <|
+        delete bufs;
     b |> invoke(bufs.buffers)
 
 

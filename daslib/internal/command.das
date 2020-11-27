@@ -41,10 +41,23 @@ def finalize(var pool : CommandPool)
 // Command buffer
 //
 
+//TODO: this does not work saying:
+//  too many custom  finalize functions exist for
+//  finalize ( bufs : command::CommandBuffers -const ) : void
+//  candidates are:
+//      command::finalize ( bufs : command::CommandBuffers -const ) : void
+//      command::finalize ( pool : command::CommandPool -const ) : void
+/*
 struct CommandBuffers
     device : VkDevice
     pool : VkCommandPool
     buffers : array<VkCommandBuffer>
+*/
+
+struct CommandBuffers
+    buffers : array<VkCommandBuffer>
+    device : VkDevice
+    pool : VkCommandPool
 
 
 def create_command_buffers(
