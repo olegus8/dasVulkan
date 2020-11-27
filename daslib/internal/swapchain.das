@@ -109,8 +109,7 @@ def get_swapchain_images(
 def create_swapchain_image_views(
     device : VkDevice implicit;
     images : array<VkImage> implicit;
-    surf_fmt : VkSurfaceFormatKHR implicit;
-    b : block<(d:array<ImageView>#)>
+    surf_fmt : VkSurfaceFormatKHR implicit
 )
     var views : array<ImageView>
     views |> resize(images |> length())
