@@ -62,8 +62,9 @@ def create_framebuffer(
     layers : uint;
     flags : uint = 0u
 ) : Framebuffer
-    var atts <- [{auto[] attachment}]
+    var atts : array<VkImageView>
     defer() <| ${ delete atts; }
+    atts |> push(attachment)
     return <- create_framebuffer([device=device, render_pass=render_pass,
         attachments=atts, width=width, height=height, layers=layers,
         flags=flags])
