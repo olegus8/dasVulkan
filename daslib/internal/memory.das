@@ -34,7 +34,7 @@ def finalize(var mem : Memory)
     memzero(mem)
 
 
-def with_memory_type(
+def find_memory_type(
     phys_dev : VkPhysicalDevice#;
     type_filter : uint;
     needed_flags : uint;
@@ -52,7 +52,7 @@ def with_memory_type(
             return
 
 
-def with_buffer_memory_type(
+def find_buffer_memory_type(
     device : VkDevice#;
     phys_dev : VkPhysicalDevice#;
     buffer : VkBuffer#;
@@ -61,7 +61,7 @@ def with_buffer_memory_type(
 )
     var mem_reqs : VkMemoryRequirements
     device |> vkGetBufferMemoryRequirements(buffer, mem_reqs |> safe_addr())
-    phys_dev |> with_memory_type(mem_reqs.memoryTypeBits, mem_props
+    phys_dev |> find_memory_type(mem_reqs.memoryTypeBits, mem_props
     ) <| $(mem_type)
         b |> invoke(mem_type, mem_reqs.size)
 
