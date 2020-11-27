@@ -180,7 +180,7 @@ def with_mem_backed_buf(
         delete buf
     device |> find_buffer_memory_type(phys_dev, buf.buffer, mem_props
     ) <| $(mem_type, mem_size)
-        var mem <- device |> allocate_memory([
+        var mem <- allocate_memory([device=device,
             allocation_size=mem_size, mem_type_index=mem_type])
         defer() <|
             delete mem
