@@ -220,9 +220,9 @@ def with_present_modes(device : VkPhysicalDevice#; surface : VkSurfaceKHR#;
     delete modes
 
 
-def with_best_present_mode(device : VkPhysicalDevice#; surface : VkSurfaceKHR#;
-    b : block<(mode:VkPresentModeKHR#)>
-)
+def get_best_present_mode(device : VkPhysicalDevice#; surface : VkSurfaceKHR#;
+) : VkPresentModeKHR
+    var found_mode : VkPresentModeKHR
     device |> with_present_modes(surface) <| $(modes)
         for preferred in [[auto[]
             VkPresentModeKHR VK_PRESENT_MODE_MAILBOX_KHR;
@@ -230,8 +230,11 @@ def with_best_present_mode(device : VkPhysicalDevice#; surface : VkSurfaceKHR#;
         ]]
             for mode in modes
                 if mode == preferred
-                    b |> invoke(mode)
+                    found_mode = mode
                     return
+        panic("Should not be here since FIFO mode is required "
+            "to be supported by Vulkan spec")
+    return found_mode
 
 
 def with_device(
