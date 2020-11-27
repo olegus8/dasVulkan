@@ -13,7 +13,7 @@ require image
 struct Swapchain
     swapchain       : VkSwapchainKHR
     images          : array<VkImage>
-    views           : array<VkImageView>
+    views           : array<ImageView>
     framebuffers    : array<VkFramebuffer>
 
 
