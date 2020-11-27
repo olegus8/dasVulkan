@@ -8,14 +8,13 @@ require memory
 
 
 def find_memory_type(
-    phys_dev : VkPhysicalDevice#;
-    type_filter : uint;
-    needed_flags : uint;
+    phys_dev        : VkPhysicalDevice implicit;
+    type_filter     : uint;
+    needed_flags    : uint;
     b : block<(t:uint)>
 )
     var actual_props : VkPhysicalDeviceMemoryProperties
-    phys_dev |> vkGetPhysicalDeviceMemoryProperties(
-        actual_props |> safe_addr())
+    phys_dev |> vkGetPhysicalDeviceMemoryProperties(safe_addr(actual_props))
     for type_i in range(actual_props.memoryTypeCount)
         if ((1u << uint(type_i)) & type_filter) == 0u
             continue
@@ -26,16 +25,16 @@ def find_memory_type(
 
 
 def find_buffer_memory_type(
-    device : VkDevice#;
-    phys_dev : VkPhysicalDevice#;
-    buffer : VkBuffer#;
-    mem_props : uint;
+    device      : VkDevice implicit
+    phys_dev    : VkPhysicalDevice implicit
+    buffer      : Buffer implicit;
+    mem_props   : uint;
     b : block<(mem_type:uint; mem_size:uint64)>
 )
-    var mem_reqs : VkMemoryRequirements
-    device |> vkGetBufferMemoryRequirements(buffer, mem_reqs |> safe_addr())
-    phys_dev |> find_memory_type(mem_reqs.memoryTypeBits, mem_props
-    ) <| $(mem_type)
+    var reqs : VkMemoryRequirements
+    device |> vkGetBufferMemoryRequirements(
+        buffer.buffer, safe_addr(reqs))
+    phys_dev |> find_memory_type(reqs.memoryTypeBits, mem_props) <| $(mem_type)
         b |> invoke(mem_type, mem_reqs.size)
 
 
