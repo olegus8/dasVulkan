@@ -52,7 +52,7 @@ def create_framebuffer(
     layers : uint;
     flags : uint = 0u
 ) : Framebuffer
-    var atts <- [{attachment}]
+    var atts <- [{auto[] attachment}]
     defer() <| ${ delete atts; }
     return <- device |> create_framebuffer([render_pass=render_pass,
         attachments=atts, width=width, height=height, layers=layers,
