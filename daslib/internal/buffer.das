@@ -32,7 +32,7 @@ def create_buffer(
         let info <- [[VkBufferCreateInfo
             sType = VkStructureType VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO,
             flags = flags,
-            size = buf_size,
+            size = size,
             usage = usage,
             sharingMode = sharing_mode,
             queueFamilyIndexCount = uint(queue_family_indices |> length()),
