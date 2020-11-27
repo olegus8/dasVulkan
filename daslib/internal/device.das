@@ -220,7 +220,7 @@ def with_present_modes(device : VkPhysicalDevice#; surface : VkSurfaceKHR#;
     delete modes
 
 
-def get_best_present_mode(device : VkPhysicalDevice#; surface : VkSurfaceKHR#;
+def get_best_present_mode(device : VkPhysicalDevice#; surface : VkSurfaceKHR#
 ) : VkPresentModeKHR
     var found_mode : VkPresentModeKHR
     device |> with_present_modes(surface) <| $(modes)
@@ -232,7 +232,7 @@ def get_best_present_mode(device : VkPhysicalDevice#; surface : VkSurfaceKHR#;
                 if mode == preferred
                     found_mode = mode
                     return
-        panic("Should not be here since FIFO mode is required "
+        panic("Should not be here since FIFO mode is required " +
             "to be supported by Vulkan spec")
     return found_mode
 
