@@ -327,8 +327,6 @@ def with_swapchain_dependent_state(
     {
         b |> invoke(
             swapchain,
-            sc_imgs,
-            sc_views,
             pipeline,
             img_avail_sems,
             render_done_sems,
