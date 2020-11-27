@@ -9,12 +9,14 @@ require vulkan
 struct Memory
     memory : VkDeviceMemory
     _device : VkDevice
+    _result : VkResult
 
 
 def allocate_memory(
     device          : VkDevice implicit;
     allocation_size : uint64;
-    mem_type_index  : uint
+    mem_type_index  : uint;
+    require_success : bool = true
 ) : Memory
     let alloc_info <- [[VkMemoryAllocateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO,
@@ -24,8 +26,15 @@ def allocate_memory(
     var mem : Memory
     unsafe
         mem._device = reinterpret<VkDevice>(device)
+
+    //TODO: uncomment next lines after Boris fixes crash
     verify(VkResult VK_SUCCESS == device |> vkAllocateMemory(
         safe_addr(alloc_info), null, safe_addr(mem.memory)))
+    /*
+    mem._result = device |> vkAllocateMemory(
+        safe_addr(alloc_info), null, safe_addr(mem.memory))
+    assert(!require_success || mem._result == VkResult VK_SUCCESS)
+    */
     return <- mem
 
 
