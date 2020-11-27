@@ -47,6 +47,9 @@ def finalize(var pool : CommandPool)
 //  candidates are:
 //      command::finalize ( bufs : command::CommandBuffers -const ) : void
 //      command::finalize ( pool : command::CommandPool -const ) : void
+//
+//  It works if I change order so that "device" and "pool" are not in the
+//  same order as they appear in CommandPool
 /*
 struct CommandBuffers
     device : VkDevice
