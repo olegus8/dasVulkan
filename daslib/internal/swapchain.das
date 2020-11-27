@@ -17,7 +17,7 @@ struct SwapchainEx
     framebuffers    : array<Framebuffer>
 
 
-def with_swapchain(
+def with_swapchain_ex(
     device          : VkDevice implicit;
     phys_dev        : VkPhysicalDevice implicit;
     surface         : VkSurfaceKHR implicit;
@@ -129,7 +129,7 @@ def create_swapchain_framebuffers(
     surface     : VkSurfaceKHR implicit;
     window      : GLFWwindow_DasHandle implicit;
     views       : array<ImageView> implicit;
-    render_pass : VkRenderPass implicit;
+    render_pass : VkRenderPass implicit
 ) : array<Framebuffer>
     let extent <- phys_dev |> get_swap_extent(surface, window)
     var fbufs : array<Framebuffer>
