@@ -308,43 +308,33 @@ def with_swapchain_dependent_state(
     pipeline_layout,
     cmd_pool;
     b : block<(
-        swapchain           : VkSwapchainKHR;
-        sc_imgs             : array<VkImage>#;
-        sc_views            : array<VkImageView>#;
-        sc_fbufs            : array<VkFramebuffer>#;
+        swapchain           : Swapchain implicit;
         pipeline            : VkPipeline;
         img_avail_sems      : array<VkSemaphore>;
         render_done_sems    : array<VkSemaphore>;
         frame_fences        : array<VkFence>
 )>)
-    device |> with_swapchain(phys_dev, surface,
-        window, surf_fmt, present_mode)             <| $(swapchain)        {
-    device |> with_swapchain_images(swapchain)    <| $(sc_imgs)           {
-    device |> with_swapchain_image_views(
-        sc_imgs, surf_fmt)                          <| $(sc_views)          {
-    device |> with_swapchain_framebuffers(
-        phys_dev, surface, window, sc_views,
-        render_pass)                                <| $(sc_fbufs)          {
-    device |> with_graphics_pipeline(
-        pipeline_layout, render_pass, phys_dev,
-        surface, window, vert_shmod, frag_shmod)    <| $(pipeline)          {
-    device |> with_semaphores(MAX_FRAMES_IN_FLIGHT) <| $(img_avail_sems)    {
-    device |> with_semaphores(MAX_FRAMES_IN_FLIGHT) <| $(render_done_sems)  {
+    device |> with_semaphores(MAX_FRAMES_IN_FLIGHT)  <| $(img_avail_sems)    {
+    device |> with_semaphores(MAX_FRAMES_IN_FLIGHT)  <| $(render_done_sems)  {
     device |> with_fences(MAX_FRAMES_IN_FLIGHT,
         uint(VkFenceCreateFlagBits
-            VK_FENCE_CREATE_SIGNALED_BIT))          <| $(frame_fences)
+            VK_FENCE_CREATE_SIGNALED_BIT))           <| $(frame_fences)      {
+    device |> with_swapchain(phys_dev, surface,
+        window, surf_fmt, present_mode, render_pass) <| $(swapchain)         {
+    device |> with_graphics_pipeline(
+        pipeline_layout, render_pass, phys_dev,
+        surface, window, vert_shmod, frag_shmod)     <| $(pipeline)
     {
         b |> invoke(
             swapchain,
             sc_imgs,
             sc_views,
-            sc_fbufs,
             pipeline,
             img_avail_sems,
             render_done_sems,
             frame_fences
         );
-    }}}}}}}}
+    }}}}}
 
 
 def wait_fence(device; fence : VkFence)
@@ -502,22 +492,21 @@ def main
                     pipeline_layout,
                     cmd_pool
                 ) <| $(
-                    swapchain           : VkSwapchainKHR;
-                    sc_imgs             : array<VkImage>#;
-                    sc_views            : array<VkImageView>#;
-                    sc_fbufs            : array<VkFramebuffer>#;
+                    sc                  : Swapchain implicit;
                     pipeline            : VkPipeline;
                     img_avail_sems      : array<VkSemaphore>;
                     render_done_sems    : array<VkSemaphore>;
                     frame_fences        : array<VkFence>
                 )
-                    print("{sc_fbufs |> length()} images in swap chain\n")
+                    print("{sc.framebuffers |> length()} " +
+                        "images in swap chain\n")
                     device |> with_draw_commands(phys_dev, window, surface,
-                        render_pass, sc_fbufs, pipeline, cmd_pool, queue,
-                        vbuf, vertices |> length()
+                        render_pass, sc.framebuffers, pipeline, cmd_pool,
+                        queue, vbuf, vertices |> length()
                     ) <| $(sc_draw_cmds)
                         var frame = 0
-                        var imgs_used_by_frames <- [{for x in sc_fbufs ; -1 }]
+                        var imgs_used_by_frames <- [{
+                            for x in sc.framebuffers ; -1 }]
                         while keep_running
                             keep_running = (
                                 window |> glfwWindowShouldClose() == 0)
