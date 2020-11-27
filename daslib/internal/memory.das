@@ -6,22 +6,43 @@ require daslib/safe_addr
 require vulkan
 
 
-def with_memory(
+struct Memory
+    device : VkDevice
+    memory : VkDeviceMemory
+
+
+def allocate_memory(
     device : VkDevice#;
     size : uint64;
     mem_type_index : uint;
-    b : block<(m:VkDeviceMemory#)>
 )
     let alloc_info <- [[VkMemoryAllocateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO,
         allocationSize = size,
         memoryTypeIndex = mem_type_index
     ]]
-    var mem : VkDeviceMemory
+    var mem : Memory
+    unsafe
+        mem.device = reinterpret<VkDevice>(device)
     verify(VkResult VK_SUCCESS == device |> vkAllocateMemory(
-        alloc_info |> safe_addr(), null, mem |> safe_addr()))
+        safe_addr(alloc_info), null, safe_addr(mem.memory)))
+    return <- mem
+
+
+def finalize(var mem : Memory)
+    mem.device |> vkFreeMemory(mem.memory, null)
+    memzero(mem)
+
+
+def with_memory(
+    device : VkDevice#;
+    size : uint64;
+    mem_type_index : uint;
+    b : block<(m:VkDeviceMemory#)>
+)
+    var mem <- allocate_memory(devuce, size, mem_type_index)
     b |> invoke(mem)
-    device |> vkFreeMemory(mem, null)
+    delete mem
 
 
 def with_memory_type(
