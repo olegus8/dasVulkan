@@ -2720,6 +2720,7 @@ struct VkExtent2DAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkExtent3D, VkExtent3D);
@@ -2737,6 +2738,7 @@ struct VkExtent3DAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkOffset2D, VkOffset2D);
@@ -2753,6 +2755,7 @@ struct VkOffset2DAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkOffset3D, VkOffset3D);
@@ -2770,6 +2773,7 @@ struct VkOffset3DAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkRect2D, VkRect2D);
@@ -2786,6 +2790,7 @@ struct VkRect2DAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkBaseInStructure, VkBaseInStructure);
@@ -2802,6 +2807,7 @@ struct VkBaseInStructureAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkBaseOutStructure, VkBaseOutStructure);
@@ -2818,6 +2824,7 @@ struct VkBaseOutStructureAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkBufferMemoryBarrier, VkBufferMemoryBarrier);
@@ -2841,6 +2848,7 @@ struct VkBufferMemoryBarrierAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDispatchIndirectCommand, VkDispatchIndirectCommand);
@@ -2858,6 +2866,7 @@ struct VkDispatchIndirectCommandAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDrawIndexedIndirectCommand, VkDrawIndexedIndirectCommand);
@@ -2877,6 +2886,7 @@ struct VkDrawIndexedIndirectCommandAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDrawIndirectCommand, VkDrawIndirectCommand);
@@ -2895,6 +2905,7 @@ struct VkDrawIndirectCommandAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkImageSubresourceRange, VkImageSubresourceRange);
@@ -2914,6 +2925,7 @@ struct VkImageSubresourceRangeAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkImageMemoryBarrier, VkImageMemoryBarrier);
@@ -2938,6 +2950,7 @@ struct VkImageMemoryBarrierAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkMemoryBarrier, VkMemoryBarrier);
@@ -2956,6 +2969,7 @@ struct VkMemoryBarrierAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkAllocationCallbacks, VkAllocationCallbacks);
@@ -2971,6 +2985,7 @@ struct VkAllocationCallbacksAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkApplicationInfo, VkApplicationInfo);
@@ -2992,6 +3007,7 @@ struct VkApplicationInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkFormatProperties, VkFormatProperties);
@@ -3009,6 +3025,7 @@ struct VkFormatPropertiesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkImageFormatProperties, VkImageFormatProperties);
@@ -3028,6 +3045,7 @@ struct VkImageFormatPropertiesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkInstanceCreateInfo, VkInstanceCreateInfo);
@@ -3050,6 +3068,7 @@ struct VkInstanceCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkMemoryHeap, VkMemoryHeap);
@@ -3066,6 +3085,7 @@ struct VkMemoryHeapAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkMemoryType, VkMemoryType);
@@ -3082,6 +3102,7 @@ struct VkMemoryTypeAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceFeatures, VkPhysicalDeviceFeatures);
@@ -3151,6 +3172,7 @@ struct VkPhysicalDeviceFeaturesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceLimits, VkPhysicalDeviceLimits);
@@ -3271,6 +3293,7 @@ struct VkPhysicalDeviceLimitsAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceMemoryProperties, VkPhysicalDeviceMemoryProperties);
@@ -3289,6 +3312,7 @@ struct VkPhysicalDeviceMemoryPropertiesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceSparseProperties, VkPhysicalDeviceSparseProperties);
@@ -3308,6 +3332,7 @@ struct VkPhysicalDeviceSparsePropertiesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceProperties, VkPhysicalDeviceProperties);
@@ -3331,6 +3356,7 @@ struct VkPhysicalDevicePropertiesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkQueueFamilyProperties, VkQueueFamilyProperties);
@@ -3349,6 +3375,7 @@ struct VkQueueFamilyPropertiesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDeviceQueueCreateInfo, VkDeviceQueueCreateInfo);
@@ -3369,6 +3396,7 @@ struct VkDeviceQueueCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDeviceCreateInfo, VkDeviceCreateInfo);
@@ -3393,6 +3421,7 @@ struct VkDeviceCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkExtensionProperties, VkExtensionProperties);
@@ -3409,6 +3438,7 @@ struct VkExtensionPropertiesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkLayerProperties, VkLayerProperties);
@@ -3427,6 +3457,7 @@ struct VkLayerPropertiesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkSubmitInfo, VkSubmitInfo);
@@ -3450,6 +3481,7 @@ struct VkSubmitInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkMappedMemoryRange, VkMappedMemoryRange);
@@ -3469,6 +3501,7 @@ struct VkMappedMemoryRangeAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkMemoryAllocateInfo, VkMemoryAllocateInfo);
@@ -3487,6 +3520,7 @@ struct VkMemoryAllocateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkMemoryRequirements, VkMemoryRequirements);
@@ -3504,6 +3538,7 @@ struct VkMemoryRequirementsAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkSparseMemoryBind, VkSparseMemoryBind);
@@ -3523,6 +3558,7 @@ struct VkSparseMemoryBindAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkSparseBufferMemoryBindInfo, VkSparseBufferMemoryBindInfo);
@@ -3540,6 +3576,7 @@ struct VkSparseBufferMemoryBindInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkSparseImageOpaqueMemoryBindInfo, VkSparseImageOpaqueMemoryBindInfo);
@@ -3557,6 +3594,7 @@ struct VkSparseImageOpaqueMemoryBindInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkImageSubresource, VkImageSubresource);
@@ -3574,6 +3612,7 @@ struct VkImageSubresourceAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkSparseImageMemoryBind, VkSparseImageMemoryBind);
@@ -3594,6 +3633,7 @@ struct VkSparseImageMemoryBindAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkSparseImageMemoryBindInfo, VkSparseImageMemoryBindInfo);
@@ -3611,6 +3651,7 @@ struct VkSparseImageMemoryBindInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkBindSparseInfo, VkBindSparseInfo);
@@ -3637,6 +3678,7 @@ struct VkBindSparseInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkSparseImageFormatProperties, VkSparseImageFormatProperties);
@@ -3654,6 +3696,7 @@ struct VkSparseImageFormatPropertiesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkSparseImageMemoryRequirements, VkSparseImageMemoryRequirements);
@@ -3673,6 +3716,7 @@ struct VkSparseImageMemoryRequirementsAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkFenceCreateInfo, VkFenceCreateInfo);
@@ -3690,6 +3734,7 @@ struct VkFenceCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkSemaphoreCreateInfo, VkSemaphoreCreateInfo);
@@ -3707,6 +3752,7 @@ struct VkSemaphoreCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkEventCreateInfo, VkEventCreateInfo);
@@ -3724,6 +3770,7 @@ struct VkEventCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkQueryPoolCreateInfo, VkQueryPoolCreateInfo);
@@ -3744,6 +3791,7 @@ struct VkQueryPoolCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkBufferCreateInfo, VkBufferCreateInfo);
@@ -3766,6 +3814,7 @@ struct VkBufferCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkBufferViewCreateInfo, VkBufferViewCreateInfo);
@@ -3787,6 +3836,7 @@ struct VkBufferViewCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkImageCreateInfo, VkImageCreateInfo);
@@ -3816,6 +3866,7 @@ struct VkImageCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkSubresourceLayout, VkSubresourceLayout);
@@ -3835,6 +3886,7 @@ struct VkSubresourceLayoutAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkComponentMapping, VkComponentMapping);
@@ -3853,6 +3905,7 @@ struct VkComponentMappingAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkImageViewCreateInfo, VkImageViewCreateInfo);
@@ -3875,6 +3928,7 @@ struct VkImageViewCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkShaderModuleCreateInfo, VkShaderModuleCreateInfo);
@@ -3894,6 +3948,7 @@ struct VkShaderModuleCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPipelineCacheCreateInfo, VkPipelineCacheCreateInfo);
@@ -3913,6 +3968,7 @@ struct VkPipelineCacheCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkSpecializationMapEntry, VkSpecializationMapEntry);
@@ -3930,6 +3986,7 @@ struct VkSpecializationMapEntryAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkSpecializationInfo, VkSpecializationInfo);
@@ -3948,6 +4005,7 @@ struct VkSpecializationInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPipelineShaderStageCreateInfo, VkPipelineShaderStageCreateInfo);
@@ -3969,6 +4027,7 @@ struct VkPipelineShaderStageCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkComputePipelineCreateInfo, VkComputePipelineCreateInfo);
@@ -3990,6 +4049,7 @@ struct VkComputePipelineCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkVertexInputBindingDescription, VkVertexInputBindingDescription);
@@ -4007,6 +4067,7 @@ struct VkVertexInputBindingDescriptionAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkVertexInputAttributeDescription, VkVertexInputAttributeDescription);
@@ -4025,6 +4086,7 @@ struct VkVertexInputAttributeDescriptionAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPipelineVertexInputStateCreateInfo, VkPipelineVertexInputStateCreateInfo);
@@ -4046,6 +4108,7 @@ struct VkPipelineVertexInputStateCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPipelineInputAssemblyStateCreateInfo, VkPipelineInputAssemblyStateCreateInfo);
@@ -4065,6 +4128,7 @@ struct VkPipelineInputAssemblyStateCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPipelineTessellationStateCreateInfo, VkPipelineTessellationStateCreateInfo);
@@ -4083,6 +4147,7 @@ struct VkPipelineTessellationStateCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkViewport, VkViewport);
@@ -4103,6 +4168,7 @@ struct VkViewportAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPipelineViewportStateCreateInfo, VkPipelineViewportStateCreateInfo);
@@ -4124,6 +4190,7 @@ struct VkPipelineViewportStateCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPipelineRasterizationStateCreateInfo, VkPipelineRasterizationStateCreateInfo);
@@ -4151,6 +4218,7 @@ struct VkPipelineRasterizationStateCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPipelineMultisampleStateCreateInfo, VkPipelineMultisampleStateCreateInfo);
@@ -4174,6 +4242,7 @@ struct VkPipelineMultisampleStateCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkStencilOpState, VkStencilOpState);
@@ -4195,6 +4264,7 @@ struct VkStencilOpStateAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPipelineDepthStencilStateCreateInfo, VkPipelineDepthStencilStateCreateInfo);
@@ -4221,6 +4291,7 @@ struct VkPipelineDepthStencilStateCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPipelineColorBlendAttachmentState, VkPipelineColorBlendAttachmentState);
@@ -4243,6 +4314,7 @@ struct VkPipelineColorBlendAttachmentStateAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPipelineColorBlendStateCreateInfo, VkPipelineColorBlendStateCreateInfo);
@@ -4265,6 +4337,7 @@ struct VkPipelineColorBlendStateCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPipelineDynamicStateCreateInfo, VkPipelineDynamicStateCreateInfo);
@@ -4284,6 +4357,7 @@ struct VkPipelineDynamicStateCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkGraphicsPipelineCreateInfo, VkGraphicsPipelineCreateInfo);
@@ -4317,6 +4391,7 @@ struct VkGraphicsPipelineCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPushConstantRange, VkPushConstantRange);
@@ -4334,6 +4409,7 @@ struct VkPushConstantRangeAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPipelineLayoutCreateInfo, VkPipelineLayoutCreateInfo);
@@ -4355,6 +4431,7 @@ struct VkPipelineLayoutCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkSamplerCreateInfo, VkSamplerCreateInfo);
@@ -4387,6 +4464,7 @@ struct VkSamplerCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkCopyDescriptorSet, VkCopyDescriptorSet);
@@ -4410,6 +4488,7 @@ struct VkCopyDescriptorSetAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDescriptorBufferInfo, VkDescriptorBufferInfo);
@@ -4427,6 +4506,7 @@ struct VkDescriptorBufferInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDescriptorImageInfo, VkDescriptorImageInfo);
@@ -4444,6 +4524,7 @@ struct VkDescriptorImageInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDescriptorPoolSize, VkDescriptorPoolSize);
@@ -4460,6 +4541,7 @@ struct VkDescriptorPoolSizeAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDescriptorPoolCreateInfo, VkDescriptorPoolCreateInfo);
@@ -4480,6 +4562,7 @@ struct VkDescriptorPoolCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDescriptorSetAllocateInfo, VkDescriptorSetAllocateInfo);
@@ -4499,6 +4582,7 @@ struct VkDescriptorSetAllocateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDescriptorSetLayoutBinding, VkDescriptorSetLayoutBinding);
@@ -4518,6 +4602,7 @@ struct VkDescriptorSetLayoutBindingAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDescriptorSetLayoutCreateInfo, VkDescriptorSetLayoutCreateInfo);
@@ -4537,6 +4622,7 @@ struct VkDescriptorSetLayoutCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkWriteDescriptorSet, VkWriteDescriptorSet);
@@ -4561,6 +4647,7 @@ struct VkWriteDescriptorSetAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkAttachmentDescription, VkAttachmentDescription);
@@ -4584,6 +4671,7 @@ struct VkAttachmentDescriptionAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkAttachmentReference, VkAttachmentReference);
@@ -4600,6 +4688,7 @@ struct VkAttachmentReferenceAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkFramebufferCreateInfo, VkFramebufferCreateInfo);
@@ -4623,6 +4712,7 @@ struct VkFramebufferCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkSubpassDescription, VkSubpassDescription);
@@ -4647,6 +4737,7 @@ struct VkSubpassDescriptionAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkSubpassDependency, VkSubpassDependency);
@@ -4668,6 +4759,7 @@ struct VkSubpassDependencyAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkRenderPassCreateInfo, VkRenderPassCreateInfo);
@@ -4691,6 +4783,7 @@ struct VkRenderPassCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkCommandPoolCreateInfo, VkCommandPoolCreateInfo);
@@ -4709,6 +4802,7 @@ struct VkCommandPoolCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkCommandBufferAllocateInfo, VkCommandBufferAllocateInfo);
@@ -4728,6 +4822,7 @@ struct VkCommandBufferAllocateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkCommandBufferInheritanceInfo, VkCommandBufferInheritanceInfo);
@@ -4750,6 +4845,7 @@ struct VkCommandBufferInheritanceInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkCommandBufferBeginInfo, VkCommandBufferBeginInfo);
@@ -4768,6 +4864,7 @@ struct VkCommandBufferBeginInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkBufferCopy, VkBufferCopy);
@@ -4785,6 +4882,7 @@ struct VkBufferCopyAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkImageSubresourceLayers, VkImageSubresourceLayers);
@@ -4803,6 +4901,7 @@ struct VkImageSubresourceLayersAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkBufferImageCopy, VkBufferImageCopy);
@@ -4823,6 +4922,7 @@ struct VkBufferImageCopyAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkClearColorValue, VkClearColorValue);
@@ -4840,6 +4940,7 @@ struct VkClearColorValueAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkClearDepthStencilValue, VkClearDepthStencilValue);
@@ -4856,6 +4957,7 @@ struct VkClearDepthStencilValueAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkClearValue, VkClearValue);
@@ -4872,6 +4974,7 @@ struct VkClearValueAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkClearAttachment, VkClearAttachment);
@@ -4889,6 +4992,7 @@ struct VkClearAttachmentAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkClearRect, VkClearRect);
@@ -4906,6 +5010,7 @@ struct VkClearRectAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkImageBlit, VkImageBlit);
@@ -4924,6 +5029,7 @@ struct VkImageBlitAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkImageCopy, VkImageCopy);
@@ -4943,6 +5049,7 @@ struct VkImageCopyAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkImageResolve, VkImageResolve);
@@ -4962,6 +5069,7 @@ struct VkImageResolveAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkRenderPassBeginInfo, VkRenderPassBeginInfo);
@@ -4983,6 +5091,7 @@ struct VkRenderPassBeginInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceSubgroupProperties, VkPhysicalDeviceSubgroupProperties);
@@ -5003,6 +5112,7 @@ struct VkPhysicalDeviceSubgroupPropertiesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkBindBufferMemoryInfo, VkBindBufferMemoryInfo);
@@ -5022,6 +5132,7 @@ struct VkBindBufferMemoryInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkBindImageMemoryInfo, VkBindImageMemoryInfo);
@@ -5041,6 +5152,7 @@ struct VkBindImageMemoryInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDevice16BitStorageFeatures, VkPhysicalDevice16BitStorageFeatures);
@@ -5061,6 +5173,7 @@ struct VkPhysicalDevice16BitStorageFeaturesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkMemoryDedicatedRequirements, VkMemoryDedicatedRequirements);
@@ -5079,6 +5192,7 @@ struct VkMemoryDedicatedRequirementsAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkMemoryDedicatedAllocateInfo, VkMemoryDedicatedAllocateInfo);
@@ -5097,6 +5211,7 @@ struct VkMemoryDedicatedAllocateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkMemoryAllocateFlagsInfo, VkMemoryAllocateFlagsInfo);
@@ -5115,6 +5230,7 @@ struct VkMemoryAllocateFlagsInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDeviceGroupRenderPassBeginInfo, VkDeviceGroupRenderPassBeginInfo);
@@ -5134,6 +5250,7 @@ struct VkDeviceGroupRenderPassBeginInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDeviceGroupCommandBufferBeginInfo, VkDeviceGroupCommandBufferBeginInfo);
@@ -5151,6 +5268,7 @@ struct VkDeviceGroupCommandBufferBeginInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDeviceGroupSubmitInfo, VkDeviceGroupSubmitInfo);
@@ -5173,6 +5291,7 @@ struct VkDeviceGroupSubmitInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDeviceGroupBindSparseInfo, VkDeviceGroupBindSparseInfo);
@@ -5191,6 +5310,7 @@ struct VkDeviceGroupBindSparseInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkBindBufferMemoryDeviceGroupInfo, VkBindBufferMemoryDeviceGroupInfo);
@@ -5209,6 +5329,7 @@ struct VkBindBufferMemoryDeviceGroupInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkBindImageMemoryDeviceGroupInfo, VkBindImageMemoryDeviceGroupInfo);
@@ -5229,6 +5350,7 @@ struct VkBindImageMemoryDeviceGroupInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceGroupProperties, VkPhysicalDeviceGroupProperties);
@@ -5248,6 +5370,7 @@ struct VkPhysicalDeviceGroupPropertiesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDeviceGroupDeviceCreateInfo, VkDeviceGroupDeviceCreateInfo);
@@ -5266,6 +5389,7 @@ struct VkDeviceGroupDeviceCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkBufferMemoryRequirementsInfo2, VkBufferMemoryRequirementsInfo2);
@@ -5283,6 +5407,7 @@ struct VkBufferMemoryRequirementsInfo2Annotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkImageMemoryRequirementsInfo2, VkImageMemoryRequirementsInfo2);
@@ -5300,6 +5425,7 @@ struct VkImageMemoryRequirementsInfo2Annotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkImageSparseMemoryRequirementsInfo2, VkImageSparseMemoryRequirementsInfo2);
@@ -5317,6 +5443,7 @@ struct VkImageSparseMemoryRequirementsInfo2Annotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkMemoryRequirements2, VkMemoryRequirements2);
@@ -5334,6 +5461,7 @@ struct VkMemoryRequirements2Annotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkSparseImageMemoryRequirements2, VkSparseImageMemoryRequirements2);
@@ -5351,6 +5479,7 @@ struct VkSparseImageMemoryRequirements2Annotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceFeatures2, VkPhysicalDeviceFeatures2);
@@ -5368,6 +5497,7 @@ struct VkPhysicalDeviceFeatures2Annotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceProperties2, VkPhysicalDeviceProperties2);
@@ -5385,6 +5515,7 @@ struct VkPhysicalDeviceProperties2Annotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkFormatProperties2, VkFormatProperties2);
@@ -5402,6 +5533,7 @@ struct VkFormatProperties2Annotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkImageFormatProperties2, VkImageFormatProperties2);
@@ -5419,6 +5551,7 @@ struct VkImageFormatProperties2Annotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceImageFormatInfo2, VkPhysicalDeviceImageFormatInfo2);
@@ -5440,6 +5573,7 @@ struct VkPhysicalDeviceImageFormatInfo2Annotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkQueueFamilyProperties2, VkQueueFamilyProperties2);
@@ -5457,6 +5591,7 @@ struct VkQueueFamilyProperties2Annotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceMemoryProperties2, VkPhysicalDeviceMemoryProperties2);
@@ -5474,6 +5609,7 @@ struct VkPhysicalDeviceMemoryProperties2Annotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkSparseImageFormatProperties2, VkSparseImageFormatProperties2);
@@ -5491,6 +5627,7 @@ struct VkSparseImageFormatProperties2Annotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceSparseImageFormatInfo2, VkPhysicalDeviceSparseImageFormatInfo2);
@@ -5512,6 +5649,7 @@ struct VkPhysicalDeviceSparseImageFormatInfo2Annotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDevicePointClippingProperties, VkPhysicalDevicePointClippingProperties);
@@ -5529,6 +5667,7 @@ struct VkPhysicalDevicePointClippingPropertiesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkInputAttachmentAspectReference, VkInputAttachmentAspectReference);
@@ -5546,6 +5685,7 @@ struct VkInputAttachmentAspectReferenceAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkRenderPassInputAttachmentAspectCreateInfo, VkRenderPassInputAttachmentAspectCreateInfo);
@@ -5564,6 +5704,7 @@ struct VkRenderPassInputAttachmentAspectCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkImageViewUsageCreateInfo, VkImageViewUsageCreateInfo);
@@ -5581,6 +5722,7 @@ struct VkImageViewUsageCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPipelineTessellationDomainOriginStateCreateInfo, VkPipelineTessellationDomainOriginStateCreateInfo);
@@ -5598,6 +5740,7 @@ struct VkPipelineTessellationDomainOriginStateCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkRenderPassMultiviewCreateInfo, VkRenderPassMultiviewCreateInfo);
@@ -5620,6 +5763,7 @@ struct VkRenderPassMultiviewCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceMultiviewFeatures, VkPhysicalDeviceMultiviewFeatures);
@@ -5639,6 +5783,7 @@ struct VkPhysicalDeviceMultiviewFeaturesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceMultiviewProperties, VkPhysicalDeviceMultiviewProperties);
@@ -5657,6 +5802,7 @@ struct VkPhysicalDeviceMultiviewPropertiesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceVariablePointersFeatures, VkPhysicalDeviceVariablePointersFeatures);
@@ -5675,6 +5821,7 @@ struct VkPhysicalDeviceVariablePointersFeaturesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceProtectedMemoryFeatures, VkPhysicalDeviceProtectedMemoryFeatures);
@@ -5692,6 +5839,7 @@ struct VkPhysicalDeviceProtectedMemoryFeaturesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceProtectedMemoryProperties, VkPhysicalDeviceProtectedMemoryProperties);
@@ -5709,6 +5857,7 @@ struct VkPhysicalDeviceProtectedMemoryPropertiesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDeviceQueueInfo2, VkDeviceQueueInfo2);
@@ -5728,6 +5877,7 @@ struct VkDeviceQueueInfo2Annotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkProtectedSubmitInfo, VkProtectedSubmitInfo);
@@ -5745,6 +5895,7 @@ struct VkProtectedSubmitInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkSamplerYcbcrConversionCreateInfo, VkSamplerYcbcrConversionCreateInfo);
@@ -5769,6 +5920,7 @@ struct VkSamplerYcbcrConversionCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkSamplerYcbcrConversionInfo, VkSamplerYcbcrConversionInfo);
@@ -5786,6 +5938,7 @@ struct VkSamplerYcbcrConversionInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkBindImagePlaneMemoryInfo, VkBindImagePlaneMemoryInfo);
@@ -5803,6 +5956,7 @@ struct VkBindImagePlaneMemoryInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkImagePlaneMemoryRequirementsInfo, VkImagePlaneMemoryRequirementsInfo);
@@ -5820,6 +5974,7 @@ struct VkImagePlaneMemoryRequirementsInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceSamplerYcbcrConversionFeatures, VkPhysicalDeviceSamplerYcbcrConversionFeatures);
@@ -5837,6 +5992,7 @@ struct VkPhysicalDeviceSamplerYcbcrConversionFeaturesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkSamplerYcbcrConversionImageFormatProperties, VkSamplerYcbcrConversionImageFormatProperties);
@@ -5854,6 +6010,7 @@ struct VkSamplerYcbcrConversionImageFormatPropertiesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDescriptorUpdateTemplateEntry, VkDescriptorUpdateTemplateEntry);
@@ -5874,6 +6031,7 @@ struct VkDescriptorUpdateTemplateEntryAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDescriptorUpdateTemplateCreateInfo, VkDescriptorUpdateTemplateCreateInfo);
@@ -5898,6 +6056,7 @@ struct VkDescriptorUpdateTemplateCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkExternalMemoryProperties, VkExternalMemoryProperties);
@@ -5915,6 +6074,7 @@ struct VkExternalMemoryPropertiesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceExternalImageFormatInfo, VkPhysicalDeviceExternalImageFormatInfo);
@@ -5932,6 +6092,7 @@ struct VkPhysicalDeviceExternalImageFormatInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkExternalImageFormatProperties, VkExternalImageFormatProperties);
@@ -5949,6 +6110,7 @@ struct VkExternalImageFormatPropertiesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceExternalBufferInfo, VkPhysicalDeviceExternalBufferInfo);
@@ -5968,6 +6130,7 @@ struct VkPhysicalDeviceExternalBufferInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkExternalBufferProperties, VkExternalBufferProperties);
@@ -5985,6 +6148,7 @@ struct VkExternalBufferPropertiesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceIDProperties, VkPhysicalDeviceIDProperties);
@@ -6006,6 +6170,7 @@ struct VkPhysicalDeviceIDPropertiesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkExternalMemoryImageCreateInfo, VkExternalMemoryImageCreateInfo);
@@ -6023,6 +6188,7 @@ struct VkExternalMemoryImageCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkExternalMemoryBufferCreateInfo, VkExternalMemoryBufferCreateInfo);
@@ -6040,6 +6206,7 @@ struct VkExternalMemoryBufferCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkExportMemoryAllocateInfo, VkExportMemoryAllocateInfo);
@@ -6057,6 +6224,7 @@ struct VkExportMemoryAllocateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceExternalFenceInfo, VkPhysicalDeviceExternalFenceInfo);
@@ -6074,6 +6242,7 @@ struct VkPhysicalDeviceExternalFenceInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkExternalFenceProperties, VkExternalFenceProperties);
@@ -6093,6 +6262,7 @@ struct VkExternalFencePropertiesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkExportFenceCreateInfo, VkExportFenceCreateInfo);
@@ -6110,6 +6280,7 @@ struct VkExportFenceCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkExportSemaphoreCreateInfo, VkExportSemaphoreCreateInfo);
@@ -6127,6 +6298,7 @@ struct VkExportSemaphoreCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceExternalSemaphoreInfo, VkPhysicalDeviceExternalSemaphoreInfo);
@@ -6144,6 +6316,7 @@ struct VkPhysicalDeviceExternalSemaphoreInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkExternalSemaphoreProperties, VkExternalSemaphoreProperties);
@@ -6163,6 +6336,7 @@ struct VkExternalSemaphorePropertiesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceMaintenance3Properties, VkPhysicalDeviceMaintenance3Properties);
@@ -6181,6 +6355,7 @@ struct VkPhysicalDeviceMaintenance3PropertiesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDescriptorSetLayoutSupport, VkDescriptorSetLayoutSupport);
@@ -6198,6 +6373,7 @@ struct VkDescriptorSetLayoutSupportAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceShaderDrawParametersFeatures, VkPhysicalDeviceShaderDrawParametersFeatures);
@@ -6215,6 +6391,7 @@ struct VkPhysicalDeviceShaderDrawParametersFeaturesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceVulkan11Features, VkPhysicalDeviceVulkan11Features);
@@ -6243,6 +6420,7 @@ struct VkPhysicalDeviceVulkan11FeaturesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceVulkan11Properties, VkPhysicalDeviceVulkan11Properties);
@@ -6274,6 +6452,7 @@ struct VkPhysicalDeviceVulkan11PropertiesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceVulkan12Features, VkPhysicalDeviceVulkan12Features);
@@ -6337,6 +6516,7 @@ struct VkPhysicalDeviceVulkan12FeaturesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkConformanceVersion, VkConformanceVersion);
@@ -6355,6 +6535,7 @@ struct VkConformanceVersionAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceVulkan12Properties, VkPhysicalDeviceVulkan12Properties);
@@ -6423,6 +6604,7 @@ struct VkPhysicalDeviceVulkan12PropertiesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkImageFormatListCreateInfo, VkImageFormatListCreateInfo);
@@ -6441,6 +6623,7 @@ struct VkImageFormatListCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkAttachmentDescription2, VkAttachmentDescription2);
@@ -6466,6 +6649,7 @@ struct VkAttachmentDescription2Annotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkAttachmentReference2, VkAttachmentReference2);
@@ -6485,6 +6669,7 @@ struct VkAttachmentReference2Annotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkSubpassDescription2, VkSubpassDescription2);
@@ -6512,6 +6697,7 @@ struct VkSubpassDescription2Annotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkSubpassDependency2, VkSubpassDependency2);
@@ -6536,6 +6722,7 @@ struct VkSubpassDependency2Annotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkRenderPassCreateInfo2, VkRenderPassCreateInfo2);
@@ -6561,6 +6748,7 @@ struct VkRenderPassCreateInfo2Annotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkSubpassBeginInfo, VkSubpassBeginInfo);
@@ -6578,6 +6766,7 @@ struct VkSubpassBeginInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkSubpassEndInfo, VkSubpassEndInfo);
@@ -6594,6 +6783,7 @@ struct VkSubpassEndInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDevice8BitStorageFeatures, VkPhysicalDevice8BitStorageFeatures);
@@ -6613,6 +6803,7 @@ struct VkPhysicalDevice8BitStorageFeaturesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceDriverProperties, VkPhysicalDeviceDriverProperties);
@@ -6633,6 +6824,7 @@ struct VkPhysicalDeviceDriverPropertiesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceShaderAtomicInt64Features, VkPhysicalDeviceShaderAtomicInt64Features);
@@ -6651,6 +6843,7 @@ struct VkPhysicalDeviceShaderAtomicInt64FeaturesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceShaderFloat16Int8Features, VkPhysicalDeviceShaderFloat16Int8Features);
@@ -6669,6 +6862,7 @@ struct VkPhysicalDeviceShaderFloat16Int8FeaturesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceFloatControlsProperties, VkPhysicalDeviceFloatControlsProperties);
@@ -6702,6 +6896,7 @@ struct VkPhysicalDeviceFloatControlsPropertiesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDescriptorSetLayoutBindingFlagsCreateInfo, VkDescriptorSetLayoutBindingFlagsCreateInfo);
@@ -6720,6 +6915,7 @@ struct VkDescriptorSetLayoutBindingFlagsCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceDescriptorIndexingFeatures, VkPhysicalDeviceDescriptorIndexingFeatures);
@@ -6756,6 +6952,7 @@ struct VkPhysicalDeviceDescriptorIndexingFeaturesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceDescriptorIndexingProperties, VkPhysicalDeviceDescriptorIndexingProperties);
@@ -6795,6 +6992,7 @@ struct VkPhysicalDeviceDescriptorIndexingPropertiesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDescriptorSetVariableDescriptorCountAllocateInfo, VkDescriptorSetVariableDescriptorCountAllocateInfo);
@@ -6813,6 +7011,7 @@ struct VkDescriptorSetVariableDescriptorCountAllocateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDescriptorSetVariableDescriptorCountLayoutSupport, VkDescriptorSetVariableDescriptorCountLayoutSupport);
@@ -6830,6 +7029,7 @@ struct VkDescriptorSetVariableDescriptorCountLayoutSupportAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkSubpassDescriptionDepthStencilResolve, VkSubpassDescriptionDepthStencilResolve);
@@ -6849,6 +7049,7 @@ struct VkSubpassDescriptionDepthStencilResolveAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceDepthStencilResolveProperties, VkPhysicalDeviceDepthStencilResolveProperties);
@@ -6869,6 +7070,7 @@ struct VkPhysicalDeviceDepthStencilResolvePropertiesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceScalarBlockLayoutFeatures, VkPhysicalDeviceScalarBlockLayoutFeatures);
@@ -6886,6 +7088,7 @@ struct VkPhysicalDeviceScalarBlockLayoutFeaturesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkImageStencilUsageCreateInfo, VkImageStencilUsageCreateInfo);
@@ -6903,6 +7106,7 @@ struct VkImageStencilUsageCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkSamplerReductionModeCreateInfo, VkSamplerReductionModeCreateInfo);
@@ -6920,6 +7124,7 @@ struct VkSamplerReductionModeCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceSamplerFilterMinmaxProperties, VkPhysicalDeviceSamplerFilterMinmaxProperties);
@@ -6938,6 +7143,7 @@ struct VkPhysicalDeviceSamplerFilterMinmaxPropertiesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceVulkanMemoryModelFeatures, VkPhysicalDeviceVulkanMemoryModelFeatures);
@@ -6957,6 +7163,7 @@ struct VkPhysicalDeviceVulkanMemoryModelFeaturesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceImagelessFramebufferFeatures, VkPhysicalDeviceImagelessFramebufferFeatures);
@@ -6974,6 +7181,7 @@ struct VkPhysicalDeviceImagelessFramebufferFeaturesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkFramebufferAttachmentImageInfo, VkFramebufferAttachmentImageInfo);
@@ -6997,6 +7205,7 @@ struct VkFramebufferAttachmentImageInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkFramebufferAttachmentsCreateInfo, VkFramebufferAttachmentsCreateInfo);
@@ -7015,6 +7224,7 @@ struct VkFramebufferAttachmentsCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkRenderPassAttachmentBeginInfo, VkRenderPassAttachmentBeginInfo);
@@ -7033,6 +7243,7 @@ struct VkRenderPassAttachmentBeginInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceUniformBufferStandardLayoutFeatures, VkPhysicalDeviceUniformBufferStandardLayoutFeatures);
@@ -7050,6 +7261,7 @@ struct VkPhysicalDeviceUniformBufferStandardLayoutFeaturesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceShaderSubgroupExtendedTypesFeatures, VkPhysicalDeviceShaderSubgroupExtendedTypesFeatures);
@@ -7067,6 +7279,7 @@ struct VkPhysicalDeviceShaderSubgroupExtendedTypesFeaturesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceSeparateDepthStencilLayoutsFeatures, VkPhysicalDeviceSeparateDepthStencilLayoutsFeatures);
@@ -7084,6 +7297,7 @@ struct VkPhysicalDeviceSeparateDepthStencilLayoutsFeaturesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkAttachmentReferenceStencilLayout, VkAttachmentReferenceStencilLayout);
@@ -7101,6 +7315,7 @@ struct VkAttachmentReferenceStencilLayoutAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkAttachmentDescriptionStencilLayout, VkAttachmentDescriptionStencilLayout);
@@ -7119,6 +7334,7 @@ struct VkAttachmentDescriptionStencilLayoutAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceHostQueryResetFeatures, VkPhysicalDeviceHostQueryResetFeatures);
@@ -7136,6 +7352,7 @@ struct VkPhysicalDeviceHostQueryResetFeaturesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceTimelineSemaphoreFeatures, VkPhysicalDeviceTimelineSemaphoreFeatures);
@@ -7153,6 +7370,7 @@ struct VkPhysicalDeviceTimelineSemaphoreFeaturesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceTimelineSemaphoreProperties, VkPhysicalDeviceTimelineSemaphoreProperties);
@@ -7170,6 +7388,7 @@ struct VkPhysicalDeviceTimelineSemaphorePropertiesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkSemaphoreTypeCreateInfo, VkSemaphoreTypeCreateInfo);
@@ -7188,6 +7407,7 @@ struct VkSemaphoreTypeCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkTimelineSemaphoreSubmitInfo, VkTimelineSemaphoreSubmitInfo);
@@ -7208,6 +7428,7 @@ struct VkTimelineSemaphoreSubmitInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkSemaphoreWaitInfo, VkSemaphoreWaitInfo);
@@ -7228,6 +7449,7 @@ struct VkSemaphoreWaitInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkSemaphoreSignalInfo, VkSemaphoreSignalInfo);
@@ -7246,6 +7468,7 @@ struct VkSemaphoreSignalInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceBufferDeviceAddressFeatures, VkPhysicalDeviceBufferDeviceAddressFeatures);
@@ -7265,6 +7488,7 @@ struct VkPhysicalDeviceBufferDeviceAddressFeaturesAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkBufferDeviceAddressInfo, VkBufferDeviceAddressInfo);
@@ -7282,6 +7506,7 @@ struct VkBufferDeviceAddressInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkBufferOpaqueCaptureAddressCreateInfo, VkBufferOpaqueCaptureAddressCreateInfo);
@@ -7299,6 +7524,7 @@ struct VkBufferOpaqueCaptureAddressCreateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkMemoryOpaqueCaptureAddressAllocateInfo, VkMemoryOpaqueCaptureAddressAllocateInfo);
@@ -7316,6 +7542,7 @@ struct VkMemoryOpaqueCaptureAddressAllocateInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDeviceMemoryOpaqueCaptureAddressInfo, VkDeviceMemoryOpaqueCaptureAddressInfo);
@@ -7333,6 +7560,7 @@ struct VkDeviceMemoryOpaqueCaptureAddressInfoAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkSurfaceCapabilitiesKHR, VkSurfaceCapabilitiesKHR);
@@ -7357,6 +7585,7 @@ struct VkSurfaceCapabilitiesKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkSurfaceFormatKHR, VkSurfaceFormatKHR);
@@ -7373,6 +7602,7 @@ struct VkSurfaceFormatKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkSwapchainCreateInfoKHR, VkSwapchainCreateInfoKHR);
@@ -7405,6 +7635,7 @@ struct VkSwapchainCreateInfoKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPresentInfoKHR, VkPresentInfoKHR);
@@ -7427,6 +7658,7 @@ struct VkPresentInfoKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkImageSwapchainCreateInfoKHR, VkImageSwapchainCreateInfoKHR);
@@ -7444,6 +7676,7 @@ struct VkImageSwapchainCreateInfoKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkBindImageMemorySwapchainInfoKHR, VkBindImageMemorySwapchainInfoKHR);
@@ -7462,6 +7695,7 @@ struct VkBindImageMemorySwapchainInfoKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkAcquireNextImageInfoKHR, VkAcquireNextImageInfoKHR);
@@ -7483,6 +7717,7 @@ struct VkAcquireNextImageInfoKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDeviceGroupPresentCapabilitiesKHR, VkDeviceGroupPresentCapabilitiesKHR);
@@ -7501,6 +7736,7 @@ struct VkDeviceGroupPresentCapabilitiesKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDeviceGroupPresentInfoKHR, VkDeviceGroupPresentInfoKHR);
@@ -7520,6 +7756,7 @@ struct VkDeviceGroupPresentInfoKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDeviceGroupSwapchainCreateInfoKHR, VkDeviceGroupSwapchainCreateInfoKHR);
@@ -7537,6 +7774,7 @@ struct VkDeviceGroupSwapchainCreateInfoKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDisplayModeParametersKHR, VkDisplayModeParametersKHR);
@@ -7553,6 +7791,7 @@ struct VkDisplayModeParametersKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDisplayModeCreateInfoKHR, VkDisplayModeCreateInfoKHR);
@@ -7571,6 +7810,7 @@ struct VkDisplayModeCreateInfoKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDisplayModePropertiesKHR, VkDisplayModePropertiesKHR);
@@ -7587,6 +7827,7 @@ struct VkDisplayModePropertiesKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDisplayPlaneCapabilitiesKHR, VkDisplayPlaneCapabilitiesKHR);
@@ -7610,6 +7851,7 @@ struct VkDisplayPlaneCapabilitiesKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDisplayPlanePropertiesKHR, VkDisplayPlanePropertiesKHR);
@@ -7626,6 +7868,7 @@ struct VkDisplayPlanePropertiesKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDisplayPropertiesKHR, VkDisplayPropertiesKHR);
@@ -7647,6 +7890,7 @@ struct VkDisplayPropertiesKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDisplaySurfaceCreateInfoKHR, VkDisplaySurfaceCreateInfoKHR);
@@ -7671,6 +7915,7 @@ struct VkDisplaySurfaceCreateInfoKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDisplayPresentInfoKHR, VkDisplayPresentInfoKHR);
@@ -7690,6 +7935,7 @@ struct VkDisplayPresentInfoKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkImportMemoryFdInfoKHR, VkImportMemoryFdInfoKHR);
@@ -7708,6 +7954,7 @@ struct VkImportMemoryFdInfoKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkMemoryFdPropertiesKHR, VkMemoryFdPropertiesKHR);
@@ -7725,6 +7972,7 @@ struct VkMemoryFdPropertiesKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkMemoryGetFdInfoKHR, VkMemoryGetFdInfoKHR);
@@ -7743,6 +7991,7 @@ struct VkMemoryGetFdInfoKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkImportSemaphoreFdInfoKHR, VkImportSemaphoreFdInfoKHR);
@@ -7763,6 +8012,7 @@ struct VkImportSemaphoreFdInfoKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkSemaphoreGetFdInfoKHR, VkSemaphoreGetFdInfoKHR);
@@ -7781,6 +8031,7 @@ struct VkSemaphoreGetFdInfoKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDevicePushDescriptorPropertiesKHR, VkPhysicalDevicePushDescriptorPropertiesKHR);
@@ -7798,6 +8049,7 @@ struct VkPhysicalDevicePushDescriptorPropertiesKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkRectLayerKHR, VkRectLayerKHR);
@@ -7815,6 +8067,7 @@ struct VkRectLayerKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPresentRegionKHR, VkPresentRegionKHR);
@@ -7831,6 +8084,7 @@ struct VkPresentRegionKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPresentRegionsKHR, VkPresentRegionsKHR);
@@ -7849,6 +8103,7 @@ struct VkPresentRegionsKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkSharedPresentSurfaceCapabilitiesKHR, VkSharedPresentSurfaceCapabilitiesKHR);
@@ -7866,6 +8121,7 @@ struct VkSharedPresentSurfaceCapabilitiesKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkImportFenceFdInfoKHR, VkImportFenceFdInfoKHR);
@@ -7886,6 +8142,7 @@ struct VkImportFenceFdInfoKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkFenceGetFdInfoKHR, VkFenceGetFdInfoKHR);
@@ -7904,6 +8161,7 @@ struct VkFenceGetFdInfoKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDevicePerformanceQueryFeaturesKHR, VkPhysicalDevicePerformanceQueryFeaturesKHR);
@@ -7922,6 +8180,7 @@ struct VkPhysicalDevicePerformanceQueryFeaturesKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDevicePerformanceQueryPropertiesKHR, VkPhysicalDevicePerformanceQueryPropertiesKHR);
@@ -7939,6 +8198,7 @@ struct VkPhysicalDevicePerformanceQueryPropertiesKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPerformanceCounterKHR, VkPerformanceCounterKHR);
@@ -7959,6 +8219,7 @@ struct VkPerformanceCounterKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPerformanceCounterDescriptionKHR, VkPerformanceCounterDescriptionKHR);
@@ -7979,6 +8240,7 @@ struct VkPerformanceCounterDescriptionKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkQueryPoolPerformanceCreateInfoKHR, VkQueryPoolPerformanceCreateInfoKHR);
@@ -7998,6 +8260,7 @@ struct VkQueryPoolPerformanceCreateInfoKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPerformanceCounterResultKHR, VkPerformanceCounterResultKHR);
@@ -8018,6 +8281,7 @@ struct VkPerformanceCounterResultKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkAcquireProfilingLockInfoKHR, VkAcquireProfilingLockInfoKHR);
@@ -8036,6 +8300,7 @@ struct VkAcquireProfilingLockInfoKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPerformanceQuerySubmitInfoKHR, VkPerformanceQuerySubmitInfoKHR);
@@ -8053,6 +8318,7 @@ struct VkPerformanceQuerySubmitInfoKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceSurfaceInfo2KHR, VkPhysicalDeviceSurfaceInfo2KHR);
@@ -8070,6 +8336,7 @@ struct VkPhysicalDeviceSurfaceInfo2KHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkSurfaceCapabilities2KHR, VkSurfaceCapabilities2KHR);
@@ -8087,6 +8354,7 @@ struct VkSurfaceCapabilities2KHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkSurfaceFormat2KHR, VkSurfaceFormat2KHR);
@@ -8104,6 +8372,7 @@ struct VkSurfaceFormat2KHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDisplayProperties2KHR, VkDisplayProperties2KHR);
@@ -8121,6 +8390,7 @@ struct VkDisplayProperties2KHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDisplayPlaneProperties2KHR, VkDisplayPlaneProperties2KHR);
@@ -8138,6 +8408,7 @@ struct VkDisplayPlaneProperties2KHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDisplayModeProperties2KHR, VkDisplayModeProperties2KHR);
@@ -8155,6 +8426,7 @@ struct VkDisplayModeProperties2KHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDisplayPlaneInfo2KHR, VkDisplayPlaneInfo2KHR);
@@ -8173,6 +8445,7 @@ struct VkDisplayPlaneInfo2KHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDisplayPlaneCapabilities2KHR, VkDisplayPlaneCapabilities2KHR);
@@ -8190,6 +8463,7 @@ struct VkDisplayPlaneCapabilities2KHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceShaderClockFeaturesKHR, VkPhysicalDeviceShaderClockFeaturesKHR);
@@ -8208,6 +8482,7 @@ struct VkPhysicalDeviceShaderClockFeaturesKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkSurfaceProtectedCapabilitiesKHR, VkSurfaceProtectedCapabilitiesKHR);
@@ -8225,6 +8500,7 @@ struct VkSurfaceProtectedCapabilitiesKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDevicePipelineExecutablePropertiesFeaturesKHR, VkPhysicalDevicePipelineExecutablePropertiesFeaturesKHR);
@@ -8242,6 +8518,7 @@ struct VkPhysicalDevicePipelineExecutablePropertiesFeaturesKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPipelineInfoKHR, VkPipelineInfoKHR);
@@ -8259,6 +8536,7 @@ struct VkPipelineInfoKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPipelineExecutablePropertiesKHR, VkPipelineExecutablePropertiesKHR);
@@ -8279,6 +8557,7 @@ struct VkPipelineExecutablePropertiesKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPipelineExecutableInfoKHR, VkPipelineExecutableInfoKHR);
@@ -8297,6 +8576,7 @@ struct VkPipelineExecutableInfoKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPipelineExecutableStatisticValueKHR, VkPipelineExecutableStatisticValueKHR);
@@ -8315,6 +8595,7 @@ struct VkPipelineExecutableStatisticValueKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPipelineExecutableStatisticKHR, VkPipelineExecutableStatisticKHR);
@@ -8335,6 +8616,7 @@ struct VkPipelineExecutableStatisticKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPipelineExecutableInternalRepresentationKHR, VkPipelineExecutableInternalRepresentationKHR);
@@ -8356,6 +8638,7 @@ struct VkPipelineExecutableInternalRepresentationKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDebugReportCallbackCreateInfoEXT, VkDebugReportCallbackCreateInfoEXT);
@@ -8374,6 +8657,7 @@ struct VkDebugReportCallbackCreateInfoEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPipelineRasterizationStateRasterizationOrderAMD, VkPipelineRasterizationStateRasterizationOrderAMD);
@@ -8391,6 +8675,7 @@ struct VkPipelineRasterizationStateRasterizationOrderAMDAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDebugMarkerObjectNameInfoEXT, VkDebugMarkerObjectNameInfoEXT);
@@ -8410,6 +8695,7 @@ struct VkDebugMarkerObjectNameInfoEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDebugMarkerObjectTagInfoEXT, VkDebugMarkerObjectTagInfoEXT);
@@ -8431,6 +8717,7 @@ struct VkDebugMarkerObjectTagInfoEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDebugMarkerMarkerInfoEXT, VkDebugMarkerMarkerInfoEXT);
@@ -8449,6 +8736,7 @@ struct VkDebugMarkerMarkerInfoEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDedicatedAllocationImageCreateInfoNV, VkDedicatedAllocationImageCreateInfoNV);
@@ -8466,6 +8754,7 @@ struct VkDedicatedAllocationImageCreateInfoNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDedicatedAllocationBufferCreateInfoNV, VkDedicatedAllocationBufferCreateInfoNV);
@@ -8483,6 +8772,7 @@ struct VkDedicatedAllocationBufferCreateInfoNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDedicatedAllocationMemoryAllocateInfoNV, VkDedicatedAllocationMemoryAllocateInfoNV);
@@ -8501,6 +8791,7 @@ struct VkDedicatedAllocationMemoryAllocateInfoNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceTransformFeedbackFeaturesEXT, VkPhysicalDeviceTransformFeedbackFeaturesEXT);
@@ -8519,6 +8810,7 @@ struct VkPhysicalDeviceTransformFeedbackFeaturesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceTransformFeedbackPropertiesEXT, VkPhysicalDeviceTransformFeedbackPropertiesEXT);
@@ -8545,6 +8837,7 @@ struct VkPhysicalDeviceTransformFeedbackPropertiesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPipelineRasterizationStateStreamCreateInfoEXT, VkPipelineRasterizationStateStreamCreateInfoEXT);
@@ -8563,6 +8856,7 @@ struct VkPipelineRasterizationStateStreamCreateInfoEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkImageViewHandleInfoNVX, VkImageViewHandleInfoNVX);
@@ -8582,6 +8876,7 @@ struct VkImageViewHandleInfoNVXAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkImageViewAddressPropertiesNVX, VkImageViewAddressPropertiesNVX);
@@ -8600,6 +8895,7 @@ struct VkImageViewAddressPropertiesNVXAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkTextureLODGatherFormatPropertiesAMD, VkTextureLODGatherFormatPropertiesAMD);
@@ -8617,6 +8913,7 @@ struct VkTextureLODGatherFormatPropertiesAMDAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkShaderResourceUsageAMD, VkShaderResourceUsageAMD);
@@ -8636,6 +8933,7 @@ struct VkShaderResourceUsageAMDAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkShaderStatisticsInfoAMD, VkShaderStatisticsInfoAMD);
@@ -8657,6 +8955,7 @@ struct VkShaderStatisticsInfoAMDAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceCornerSampledImageFeaturesNV, VkPhysicalDeviceCornerSampledImageFeaturesNV);
@@ -8674,6 +8973,7 @@ struct VkPhysicalDeviceCornerSampledImageFeaturesNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkExternalImageFormatPropertiesNV, VkExternalImageFormatPropertiesNV);
@@ -8692,6 +8992,7 @@ struct VkExternalImageFormatPropertiesNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkExternalMemoryImageCreateInfoNV, VkExternalMemoryImageCreateInfoNV);
@@ -8709,6 +9010,7 @@ struct VkExternalMemoryImageCreateInfoNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkExportMemoryAllocateInfoNV, VkExportMemoryAllocateInfoNV);
@@ -8726,6 +9028,7 @@ struct VkExportMemoryAllocateInfoNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkValidationFlagsEXT, VkValidationFlagsEXT);
@@ -8744,6 +9047,7 @@ struct VkValidationFlagsEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceTextureCompressionASTCHDRFeaturesEXT, VkPhysicalDeviceTextureCompressionASTCHDRFeaturesEXT);
@@ -8761,6 +9065,7 @@ struct VkPhysicalDeviceTextureCompressionASTCHDRFeaturesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkImageViewASTCDecodeModeEXT, VkImageViewASTCDecodeModeEXT);
@@ -8778,6 +9083,7 @@ struct VkImageViewASTCDecodeModeEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceASTCDecodeFeaturesEXT, VkPhysicalDeviceASTCDecodeFeaturesEXT);
@@ -8795,6 +9101,7 @@ struct VkPhysicalDeviceASTCDecodeFeaturesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkConditionalRenderingBeginInfoEXT, VkConditionalRenderingBeginInfoEXT);
@@ -8814,6 +9121,7 @@ struct VkConditionalRenderingBeginInfoEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceConditionalRenderingFeaturesEXT, VkPhysicalDeviceConditionalRenderingFeaturesEXT);
@@ -8832,6 +9140,7 @@ struct VkPhysicalDeviceConditionalRenderingFeaturesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkCommandBufferInheritanceConditionalRenderingInfoEXT, VkCommandBufferInheritanceConditionalRenderingInfoEXT);
@@ -8849,6 +9158,7 @@ struct VkCommandBufferInheritanceConditionalRenderingInfoEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkViewportWScalingNV, VkViewportWScalingNV);
@@ -8865,6 +9175,7 @@ struct VkViewportWScalingNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPipelineViewportWScalingStateCreateInfoNV, VkPipelineViewportWScalingStateCreateInfoNV);
@@ -8884,6 +9195,7 @@ struct VkPipelineViewportWScalingStateCreateInfoNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkSurfaceCapabilities2EXT, VkSurfaceCapabilities2EXT);
@@ -8911,6 +9223,7 @@ struct VkSurfaceCapabilities2EXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDisplayPowerInfoEXT, VkDisplayPowerInfoEXT);
@@ -8928,6 +9241,7 @@ struct VkDisplayPowerInfoEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDeviceEventInfoEXT, VkDeviceEventInfoEXT);
@@ -8945,6 +9259,7 @@ struct VkDeviceEventInfoEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDisplayEventInfoEXT, VkDisplayEventInfoEXT);
@@ -8962,6 +9277,7 @@ struct VkDisplayEventInfoEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkSwapchainCounterCreateInfoEXT, VkSwapchainCounterCreateInfoEXT);
@@ -8979,6 +9295,7 @@ struct VkSwapchainCounterCreateInfoEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkRefreshCycleDurationGOOGLE, VkRefreshCycleDurationGOOGLE);
@@ -8994,6 +9311,7 @@ struct VkRefreshCycleDurationGOOGLEAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPastPresentationTimingGOOGLE, VkPastPresentationTimingGOOGLE);
@@ -9013,6 +9331,7 @@ struct VkPastPresentationTimingGOOGLEAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPresentTimeGOOGLE, VkPresentTimeGOOGLE);
@@ -9029,6 +9348,7 @@ struct VkPresentTimeGOOGLEAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPresentTimesInfoGOOGLE, VkPresentTimesInfoGOOGLE);
@@ -9047,6 +9367,7 @@ struct VkPresentTimesInfoGOOGLEAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX, VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX);
@@ -9064,6 +9385,7 @@ struct VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVXAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkViewportSwizzleNV, VkViewportSwizzleNV);
@@ -9082,6 +9404,7 @@ struct VkViewportSwizzleNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPipelineViewportSwizzleStateCreateInfoNV, VkPipelineViewportSwizzleStateCreateInfoNV);
@@ -9101,6 +9424,7 @@ struct VkPipelineViewportSwizzleStateCreateInfoNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceDiscardRectanglePropertiesEXT, VkPhysicalDeviceDiscardRectanglePropertiesEXT);
@@ -9118,6 +9442,7 @@ struct VkPhysicalDeviceDiscardRectanglePropertiesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPipelineDiscardRectangleStateCreateInfoEXT, VkPipelineDiscardRectangleStateCreateInfoEXT);
@@ -9138,6 +9463,7 @@ struct VkPipelineDiscardRectangleStateCreateInfoEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceConservativeRasterizationPropertiesEXT, VkPhysicalDeviceConservativeRasterizationPropertiesEXT);
@@ -9163,6 +9489,7 @@ struct VkPhysicalDeviceConservativeRasterizationPropertiesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPipelineRasterizationConservativeStateCreateInfoEXT, VkPipelineRasterizationConservativeStateCreateInfoEXT);
@@ -9182,6 +9509,7 @@ struct VkPipelineRasterizationConservativeStateCreateInfoEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceDepthClipEnableFeaturesEXT, VkPhysicalDeviceDepthClipEnableFeaturesEXT);
@@ -9199,6 +9527,7 @@ struct VkPhysicalDeviceDepthClipEnableFeaturesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPipelineRasterizationDepthClipStateCreateInfoEXT, VkPipelineRasterizationDepthClipStateCreateInfoEXT);
@@ -9217,6 +9546,7 @@ struct VkPipelineRasterizationDepthClipStateCreateInfoEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkXYColorEXT, VkXYColorEXT);
@@ -9233,6 +9563,7 @@ struct VkXYColorEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkHdrMetadataEXT, VkHdrMetadataEXT);
@@ -9257,6 +9588,7 @@ struct VkHdrMetadataEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDebugUtilsLabelEXT, VkDebugUtilsLabelEXT);
@@ -9275,6 +9607,7 @@ struct VkDebugUtilsLabelEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDebugUtilsObjectNameInfoEXT, VkDebugUtilsObjectNameInfoEXT);
@@ -9294,6 +9627,7 @@ struct VkDebugUtilsObjectNameInfoEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDebugUtilsMessengerCallbackDataEXT, VkDebugUtilsMessengerCallbackDataEXT);
@@ -9320,6 +9654,7 @@ struct VkDebugUtilsMessengerCallbackDataEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDebugUtilsMessengerCreateInfoEXT, VkDebugUtilsMessengerCreateInfoEXT);
@@ -9340,6 +9675,7 @@ struct VkDebugUtilsMessengerCreateInfoEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDebugUtilsObjectTagInfoEXT, VkDebugUtilsObjectTagInfoEXT);
@@ -9361,6 +9697,7 @@ struct VkDebugUtilsObjectTagInfoEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceInlineUniformBlockFeaturesEXT, VkPhysicalDeviceInlineUniformBlockFeaturesEXT);
@@ -9379,6 +9716,7 @@ struct VkPhysicalDeviceInlineUniformBlockFeaturesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceInlineUniformBlockPropertiesEXT, VkPhysicalDeviceInlineUniformBlockPropertiesEXT);
@@ -9400,6 +9738,7 @@ struct VkPhysicalDeviceInlineUniformBlockPropertiesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkWriteDescriptorSetInlineUniformBlockEXT, VkWriteDescriptorSetInlineUniformBlockEXT);
@@ -9418,6 +9757,7 @@ struct VkWriteDescriptorSetInlineUniformBlockEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDescriptorPoolInlineUniformBlockCreateInfoEXT, VkDescriptorPoolInlineUniformBlockCreateInfoEXT);
@@ -9435,6 +9775,7 @@ struct VkDescriptorPoolInlineUniformBlockCreateInfoEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkSampleLocationEXT, VkSampleLocationEXT);
@@ -9451,6 +9792,7 @@ struct VkSampleLocationEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkSampleLocationsInfoEXT, VkSampleLocationsInfoEXT);
@@ -9471,6 +9813,7 @@ struct VkSampleLocationsInfoEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkAttachmentSampleLocationsEXT, VkAttachmentSampleLocationsEXT);
@@ -9487,6 +9830,7 @@ struct VkAttachmentSampleLocationsEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkSubpassSampleLocationsEXT, VkSubpassSampleLocationsEXT);
@@ -9503,6 +9847,7 @@ struct VkSubpassSampleLocationsEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkRenderPassSampleLocationsBeginInfoEXT, VkRenderPassSampleLocationsBeginInfoEXT);
@@ -9523,6 +9868,7 @@ struct VkRenderPassSampleLocationsBeginInfoEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPipelineSampleLocationsStateCreateInfoEXT, VkPipelineSampleLocationsStateCreateInfoEXT);
@@ -9541,6 +9887,7 @@ struct VkPipelineSampleLocationsStateCreateInfoEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceSampleLocationsPropertiesEXT, VkPhysicalDeviceSampleLocationsPropertiesEXT);
@@ -9562,6 +9909,7 @@ struct VkPhysicalDeviceSampleLocationsPropertiesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkMultisamplePropertiesEXT, VkMultisamplePropertiesEXT);
@@ -9579,6 +9927,7 @@ struct VkMultisamplePropertiesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT, VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT);
@@ -9596,6 +9945,7 @@ struct VkPhysicalDeviceBlendOperationAdvancedFeaturesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT);
@@ -9618,6 +9968,7 @@ struct VkPhysicalDeviceBlendOperationAdvancedPropertiesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPipelineColorBlendAdvancedStateCreateInfoEXT, VkPipelineColorBlendAdvancedStateCreateInfoEXT);
@@ -9637,6 +9988,7 @@ struct VkPipelineColorBlendAdvancedStateCreateInfoEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPipelineCoverageToColorStateCreateInfoNV, VkPipelineCoverageToColorStateCreateInfoNV);
@@ -9656,6 +10008,7 @@ struct VkPipelineCoverageToColorStateCreateInfoNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPipelineCoverageModulationStateCreateInfoNV, VkPipelineCoverageModulationStateCreateInfoNV);
@@ -9677,6 +10030,7 @@ struct VkPipelineCoverageModulationStateCreateInfoNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceShaderSMBuiltinsPropertiesNV, VkPhysicalDeviceShaderSMBuiltinsPropertiesNV);
@@ -9695,6 +10049,7 @@ struct VkPhysicalDeviceShaderSMBuiltinsPropertiesNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceShaderSMBuiltinsFeaturesNV, VkPhysicalDeviceShaderSMBuiltinsFeaturesNV);
@@ -9712,6 +10067,7 @@ struct VkPhysicalDeviceShaderSMBuiltinsFeaturesNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDrmFormatModifierPropertiesEXT, VkDrmFormatModifierPropertiesEXT);
@@ -9729,6 +10085,7 @@ struct VkDrmFormatModifierPropertiesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDrmFormatModifierPropertiesListEXT, VkDrmFormatModifierPropertiesListEXT);
@@ -9747,6 +10104,7 @@ struct VkDrmFormatModifierPropertiesListEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceImageDrmFormatModifierInfoEXT, VkPhysicalDeviceImageDrmFormatModifierInfoEXT);
@@ -9767,6 +10125,7 @@ struct VkPhysicalDeviceImageDrmFormatModifierInfoEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkImageDrmFormatModifierListCreateInfoEXT, VkImageDrmFormatModifierListCreateInfoEXT);
@@ -9785,6 +10144,7 @@ struct VkImageDrmFormatModifierListCreateInfoEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkImageDrmFormatModifierExplicitCreateInfoEXT, VkImageDrmFormatModifierExplicitCreateInfoEXT);
@@ -9804,6 +10164,7 @@ struct VkImageDrmFormatModifierExplicitCreateInfoEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkImageDrmFormatModifierPropertiesEXT, VkImageDrmFormatModifierPropertiesEXT);
@@ -9821,6 +10182,7 @@ struct VkImageDrmFormatModifierPropertiesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkValidationCacheCreateInfoEXT, VkValidationCacheCreateInfoEXT);
@@ -9840,6 +10202,7 @@ struct VkValidationCacheCreateInfoEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkShaderModuleValidationCacheCreateInfoEXT, VkShaderModuleValidationCacheCreateInfoEXT);
@@ -9857,6 +10220,7 @@ struct VkShaderModuleValidationCacheCreateInfoEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkShadingRatePaletteNV, VkShadingRatePaletteNV);
@@ -9873,6 +10237,7 @@ struct VkShadingRatePaletteNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPipelineViewportShadingRateImageStateCreateInfoNV, VkPipelineViewportShadingRateImageStateCreateInfoNV);
@@ -9892,6 +10257,7 @@ struct VkPipelineViewportShadingRateImageStateCreateInfoNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceShadingRateImageFeaturesNV, VkPhysicalDeviceShadingRateImageFeaturesNV);
@@ -9910,6 +10276,7 @@ struct VkPhysicalDeviceShadingRateImageFeaturesNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceShadingRateImagePropertiesNV, VkPhysicalDeviceShadingRateImagePropertiesNV);
@@ -9929,6 +10296,7 @@ struct VkPhysicalDeviceShadingRateImagePropertiesNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkCoarseSampleLocationNV, VkCoarseSampleLocationNV);
@@ -9946,6 +10314,7 @@ struct VkCoarseSampleLocationNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkCoarseSampleOrderCustomNV, VkCoarseSampleOrderCustomNV);
@@ -9964,6 +10333,7 @@ struct VkCoarseSampleOrderCustomNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPipelineViewportCoarseSampleOrderStateCreateInfoNV, VkPipelineViewportCoarseSampleOrderStateCreateInfoNV);
@@ -9983,6 +10353,7 @@ struct VkPipelineViewportCoarseSampleOrderStateCreateInfoNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkRayTracingShaderGroupCreateInfoNV, VkRayTracingShaderGroupCreateInfoNV);
@@ -10004,6 +10375,7 @@ struct VkRayTracingShaderGroupCreateInfoNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkRayTracingPipelineCreateInfoNV, VkRayTracingPipelineCreateInfoNV);
@@ -10029,6 +10401,7 @@ struct VkRayTracingPipelineCreateInfoNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkGeometryTrianglesNV, VkGeometryTrianglesNV);
@@ -10056,6 +10429,7 @@ struct VkGeometryTrianglesNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkGeometryAABBNV, VkGeometryAABBNV);
@@ -10076,6 +10450,7 @@ struct VkGeometryAABBNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkGeometryDataNV, VkGeometryDataNV);
@@ -10092,6 +10467,7 @@ struct VkGeometryDataNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkGeometryNV, VkGeometryNV);
@@ -10111,6 +10487,7 @@ struct VkGeometryNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkAccelerationStructureInfoNV, VkAccelerationStructureInfoNV);
@@ -10132,6 +10509,7 @@ struct VkAccelerationStructureInfoNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkAccelerationStructureCreateInfoNV, VkAccelerationStructureCreateInfoNV);
@@ -10150,6 +10528,7 @@ struct VkAccelerationStructureCreateInfoNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkBindAccelerationStructureMemoryInfoKHR, VkBindAccelerationStructureMemoryInfoKHR);
@@ -10171,6 +10550,7 @@ struct VkBindAccelerationStructureMemoryInfoKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkWriteDescriptorSetAccelerationStructureKHR, VkWriteDescriptorSetAccelerationStructureKHR);
@@ -10189,6 +10569,7 @@ struct VkWriteDescriptorSetAccelerationStructureKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkAccelerationStructureMemoryRequirementsInfoNV, VkAccelerationStructureMemoryRequirementsInfoNV);
@@ -10207,6 +10588,7 @@ struct VkAccelerationStructureMemoryRequirementsInfoNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceRayTracingPropertiesNV, VkPhysicalDeviceRayTracingPropertiesNV);
@@ -10231,6 +10613,7 @@ struct VkPhysicalDeviceRayTracingPropertiesNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkTransformMatrixKHR, VkTransformMatrixKHR);
@@ -10246,6 +10629,7 @@ struct VkTransformMatrixKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkAabbPositionsKHR, VkAabbPositionsKHR);
@@ -10266,6 +10650,7 @@ struct VkAabbPositionsKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkAccelerationStructureInstanceKHR, VkAccelerationStructureInstanceKHR);
@@ -10294,6 +10679,7 @@ struct VkAccelerationStructureInstanceKHRAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceRepresentativeFragmentTestFeaturesNV, VkPhysicalDeviceRepresentativeFragmentTestFeaturesNV);
@@ -10311,6 +10697,7 @@ struct VkPhysicalDeviceRepresentativeFragmentTestFeaturesNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPipelineRepresentativeFragmentTestStateCreateInfoNV, VkPipelineRepresentativeFragmentTestStateCreateInfoNV);
@@ -10328,6 +10715,7 @@ struct VkPipelineRepresentativeFragmentTestStateCreateInfoNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceImageViewImageFormatInfoEXT, VkPhysicalDeviceImageViewImageFormatInfoEXT);
@@ -10345,6 +10733,7 @@ struct VkPhysicalDeviceImageViewImageFormatInfoEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkFilterCubicImageViewImageFormatPropertiesEXT, VkFilterCubicImageViewImageFormatPropertiesEXT);
@@ -10363,6 +10752,7 @@ struct VkFilterCubicImageViewImageFormatPropertiesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDeviceQueueGlobalPriorityCreateInfoEXT, VkDeviceQueueGlobalPriorityCreateInfoEXT);
@@ -10380,6 +10770,7 @@ struct VkDeviceQueueGlobalPriorityCreateInfoEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkImportMemoryHostPointerInfoEXT, VkImportMemoryHostPointerInfoEXT);
@@ -10398,6 +10789,7 @@ struct VkImportMemoryHostPointerInfoEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkMemoryHostPointerPropertiesEXT, VkMemoryHostPointerPropertiesEXT);
@@ -10415,6 +10807,7 @@ struct VkMemoryHostPointerPropertiesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceExternalMemoryHostPropertiesEXT, VkPhysicalDeviceExternalMemoryHostPropertiesEXT);
@@ -10432,6 +10825,7 @@ struct VkPhysicalDeviceExternalMemoryHostPropertiesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPipelineCompilerControlCreateInfoAMD, VkPipelineCompilerControlCreateInfoAMD);
@@ -10449,6 +10843,7 @@ struct VkPipelineCompilerControlCreateInfoAMDAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkCalibratedTimestampInfoEXT, VkCalibratedTimestampInfoEXT);
@@ -10466,6 +10861,7 @@ struct VkCalibratedTimestampInfoEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceShaderCorePropertiesAMD, VkPhysicalDeviceShaderCorePropertiesAMD);
@@ -10496,6 +10892,7 @@ struct VkPhysicalDeviceShaderCorePropertiesAMDAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDeviceMemoryOverallocationCreateInfoAMD, VkDeviceMemoryOverallocationCreateInfoAMD);
@@ -10513,6 +10910,7 @@ struct VkDeviceMemoryOverallocationCreateInfoAMDAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT, VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT);
@@ -10530,6 +10928,7 @@ struct VkPhysicalDeviceVertexAttributeDivisorPropertiesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkVertexInputBindingDivisorDescriptionEXT, VkVertexInputBindingDivisorDescriptionEXT);
@@ -10546,6 +10945,7 @@ struct VkVertexInputBindingDivisorDescriptionEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPipelineVertexInputDivisorStateCreateInfoEXT, VkPipelineVertexInputDivisorStateCreateInfoEXT);
@@ -10564,6 +10964,7 @@ struct VkPipelineVertexInputDivisorStateCreateInfoEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceVertexAttributeDivisorFeaturesEXT, VkPhysicalDeviceVertexAttributeDivisorFeaturesEXT);
@@ -10582,6 +10983,7 @@ struct VkPhysicalDeviceVertexAttributeDivisorFeaturesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPipelineCreationFeedbackEXT, VkPipelineCreationFeedbackEXT);
@@ -10598,6 +11000,7 @@ struct VkPipelineCreationFeedbackEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPipelineCreationFeedbackCreateInfoEXT, VkPipelineCreationFeedbackCreateInfoEXT);
@@ -10617,6 +11020,7 @@ struct VkPipelineCreationFeedbackCreateInfoEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceComputeShaderDerivativesFeaturesNV, VkPhysicalDeviceComputeShaderDerivativesFeaturesNV);
@@ -10635,6 +11039,7 @@ struct VkPhysicalDeviceComputeShaderDerivativesFeaturesNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceMeshShaderFeaturesNV, VkPhysicalDeviceMeshShaderFeaturesNV);
@@ -10653,6 +11058,7 @@ struct VkPhysicalDeviceMeshShaderFeaturesNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceMeshShaderPropertiesNV, VkPhysicalDeviceMeshShaderPropertiesNV);
@@ -10682,6 +11088,7 @@ struct VkPhysicalDeviceMeshShaderPropertiesNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDrawMeshTasksIndirectCommandNV, VkDrawMeshTasksIndirectCommandNV);
@@ -10698,6 +11105,7 @@ struct VkDrawMeshTasksIndirectCommandNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceFragmentShaderBarycentricFeaturesNV, VkPhysicalDeviceFragmentShaderBarycentricFeaturesNV);
@@ -10715,6 +11123,7 @@ struct VkPhysicalDeviceFragmentShaderBarycentricFeaturesNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceShaderImageFootprintFeaturesNV, VkPhysicalDeviceShaderImageFootprintFeaturesNV);
@@ -10732,6 +11141,7 @@ struct VkPhysicalDeviceShaderImageFootprintFeaturesNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPipelineViewportExclusiveScissorStateCreateInfoNV, VkPipelineViewportExclusiveScissorStateCreateInfoNV);
@@ -10750,6 +11160,7 @@ struct VkPipelineViewportExclusiveScissorStateCreateInfoNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceExclusiveScissorFeaturesNV, VkPhysicalDeviceExclusiveScissorFeaturesNV);
@@ -10767,6 +11178,7 @@ struct VkPhysicalDeviceExclusiveScissorFeaturesNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkQueueFamilyCheckpointPropertiesNV, VkQueueFamilyCheckpointPropertiesNV);
@@ -10784,6 +11196,7 @@ struct VkQueueFamilyCheckpointPropertiesNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkCheckpointDataNV, VkCheckpointDataNV);
@@ -10802,6 +11215,7 @@ struct VkCheckpointDataNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceShaderIntegerFunctions2FeaturesINTEL, VkPhysicalDeviceShaderIntegerFunctions2FeaturesINTEL);
@@ -10819,6 +11233,7 @@ struct VkPhysicalDeviceShaderIntegerFunctions2FeaturesINTELAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPerformanceValueDataINTEL, VkPerformanceValueDataINTEL);
@@ -10838,6 +11253,7 @@ struct VkPerformanceValueDataINTELAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPerformanceValueINTEL, VkPerformanceValueINTEL);
@@ -10854,6 +11270,7 @@ struct VkPerformanceValueINTELAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkInitializePerformanceApiInfoINTEL, VkInitializePerformanceApiInfoINTEL);
@@ -10871,6 +11288,7 @@ struct VkInitializePerformanceApiInfoINTELAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkQueryPoolPerformanceQueryCreateInfoINTEL, VkQueryPoolPerformanceQueryCreateInfoINTEL);
@@ -10888,6 +11306,7 @@ struct VkQueryPoolPerformanceQueryCreateInfoINTELAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPerformanceMarkerInfoINTEL, VkPerformanceMarkerInfoINTEL);
@@ -10905,6 +11324,7 @@ struct VkPerformanceMarkerInfoINTELAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPerformanceStreamMarkerInfoINTEL, VkPerformanceStreamMarkerInfoINTEL);
@@ -10922,6 +11342,7 @@ struct VkPerformanceStreamMarkerInfoINTELAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPerformanceOverrideInfoINTEL, VkPerformanceOverrideInfoINTEL);
@@ -10941,6 +11362,7 @@ struct VkPerformanceOverrideInfoINTELAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPerformanceConfigurationAcquireInfoINTEL, VkPerformanceConfigurationAcquireInfoINTEL);
@@ -10958,6 +11380,7 @@ struct VkPerformanceConfigurationAcquireInfoINTELAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDevicePCIBusInfoPropertiesEXT, VkPhysicalDevicePCIBusInfoPropertiesEXT);
@@ -10978,6 +11401,7 @@ struct VkPhysicalDevicePCIBusInfoPropertiesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDisplayNativeHdrSurfaceCapabilitiesAMD, VkDisplayNativeHdrSurfaceCapabilitiesAMD);
@@ -10995,6 +11419,7 @@ struct VkDisplayNativeHdrSurfaceCapabilitiesAMDAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkSwapchainDisplayNativeHdrCreateInfoAMD, VkSwapchainDisplayNativeHdrCreateInfoAMD);
@@ -11012,6 +11437,7 @@ struct VkSwapchainDisplayNativeHdrCreateInfoAMDAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceFragmentDensityMapFeaturesEXT, VkPhysicalDeviceFragmentDensityMapFeaturesEXT);
@@ -11031,6 +11457,7 @@ struct VkPhysicalDeviceFragmentDensityMapFeaturesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceFragmentDensityMapPropertiesEXT, VkPhysicalDeviceFragmentDensityMapPropertiesEXT);
@@ -11050,6 +11477,7 @@ struct VkPhysicalDeviceFragmentDensityMapPropertiesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkRenderPassFragmentDensityMapCreateInfoEXT, VkRenderPassFragmentDensityMapCreateInfoEXT);
@@ -11067,6 +11495,7 @@ struct VkRenderPassFragmentDensityMapCreateInfoEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceSubgroupSizeControlFeaturesEXT, VkPhysicalDeviceSubgroupSizeControlFeaturesEXT);
@@ -11085,6 +11514,7 @@ struct VkPhysicalDeviceSubgroupSizeControlFeaturesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceSubgroupSizeControlPropertiesEXT, VkPhysicalDeviceSubgroupSizeControlPropertiesEXT);
@@ -11105,6 +11535,7 @@ struct VkPhysicalDeviceSubgroupSizeControlPropertiesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPipelineShaderStageRequiredSubgroupSizeCreateInfoEXT, VkPipelineShaderStageRequiredSubgroupSizeCreateInfoEXT);
@@ -11122,6 +11553,7 @@ struct VkPipelineShaderStageRequiredSubgroupSizeCreateInfoEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceShaderCoreProperties2AMD, VkPhysicalDeviceShaderCoreProperties2AMD);
@@ -11140,6 +11572,7 @@ struct VkPhysicalDeviceShaderCoreProperties2AMDAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceCoherentMemoryFeaturesAMD, VkPhysicalDeviceCoherentMemoryFeaturesAMD);
@@ -11157,6 +11590,7 @@ struct VkPhysicalDeviceCoherentMemoryFeaturesAMDAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceMemoryBudgetPropertiesEXT, VkPhysicalDeviceMemoryBudgetPropertiesEXT);
@@ -11175,6 +11609,7 @@ struct VkPhysicalDeviceMemoryBudgetPropertiesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceMemoryPriorityFeaturesEXT, VkPhysicalDeviceMemoryPriorityFeaturesEXT);
@@ -11192,6 +11627,7 @@ struct VkPhysicalDeviceMemoryPriorityFeaturesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkMemoryPriorityAllocateInfoEXT, VkMemoryPriorityAllocateInfoEXT);
@@ -11209,6 +11645,7 @@ struct VkMemoryPriorityAllocateInfoEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV, VkPhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV);
@@ -11226,6 +11663,7 @@ struct VkPhysicalDeviceDedicatedAllocationImageAliasingFeaturesNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceBufferDeviceAddressFeaturesEXT, VkPhysicalDeviceBufferDeviceAddressFeaturesEXT);
@@ -11245,6 +11683,7 @@ struct VkPhysicalDeviceBufferDeviceAddressFeaturesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkBufferDeviceAddressCreateInfoEXT, VkBufferDeviceAddressCreateInfoEXT);
@@ -11262,6 +11701,7 @@ struct VkBufferDeviceAddressCreateInfoEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceToolPropertiesEXT, VkPhysicalDeviceToolPropertiesEXT);
@@ -11283,6 +11723,7 @@ struct VkPhysicalDeviceToolPropertiesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkValidationFeaturesEXT, VkValidationFeaturesEXT);
@@ -11303,6 +11744,7 @@ struct VkValidationFeaturesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkCooperativeMatrixPropertiesNV, VkCooperativeMatrixPropertiesNV);
@@ -11327,6 +11769,7 @@ struct VkCooperativeMatrixPropertiesNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceCooperativeMatrixFeaturesNV, VkPhysicalDeviceCooperativeMatrixFeaturesNV);
@@ -11345,6 +11788,7 @@ struct VkPhysicalDeviceCooperativeMatrixFeaturesNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceCooperativeMatrixPropertiesNV, VkPhysicalDeviceCooperativeMatrixPropertiesNV);
@@ -11362,6 +11806,7 @@ struct VkPhysicalDeviceCooperativeMatrixPropertiesNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceCoverageReductionModeFeaturesNV, VkPhysicalDeviceCoverageReductionModeFeaturesNV);
@@ -11379,6 +11824,7 @@ struct VkPhysicalDeviceCoverageReductionModeFeaturesNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPipelineCoverageReductionStateCreateInfoNV, VkPipelineCoverageReductionStateCreateInfoNV);
@@ -11397,6 +11843,7 @@ struct VkPipelineCoverageReductionStateCreateInfoNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkFramebufferMixedSamplesCombinationNV, VkFramebufferMixedSamplesCombinationNV);
@@ -11417,6 +11864,7 @@ struct VkFramebufferMixedSamplesCombinationNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceFragmentShaderInterlockFeaturesEXT, VkPhysicalDeviceFragmentShaderInterlockFeaturesEXT);
@@ -11436,6 +11884,7 @@ struct VkPhysicalDeviceFragmentShaderInterlockFeaturesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceYcbcrImageArraysFeaturesEXT, VkPhysicalDeviceYcbcrImageArraysFeaturesEXT);
@@ -11453,6 +11902,7 @@ struct VkPhysicalDeviceYcbcrImageArraysFeaturesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkHeadlessSurfaceCreateInfoEXT, VkHeadlessSurfaceCreateInfoEXT);
@@ -11470,6 +11920,7 @@ struct VkHeadlessSurfaceCreateInfoEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceLineRasterizationFeaturesEXT, VkPhysicalDeviceLineRasterizationFeaturesEXT);
@@ -11492,6 +11943,7 @@ struct VkPhysicalDeviceLineRasterizationFeaturesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceLineRasterizationPropertiesEXT, VkPhysicalDeviceLineRasterizationPropertiesEXT);
@@ -11509,6 +11961,7 @@ struct VkPhysicalDeviceLineRasterizationPropertiesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPipelineRasterizationLineStateCreateInfoEXT, VkPipelineRasterizationLineStateCreateInfoEXT);
@@ -11529,6 +11982,7 @@ struct VkPipelineRasterizationLineStateCreateInfoEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceShaderAtomicFloatFeaturesEXT, VkPhysicalDeviceShaderAtomicFloatFeaturesEXT);
@@ -11557,6 +12011,7 @@ struct VkPhysicalDeviceShaderAtomicFloatFeaturesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceIndexTypeUint8FeaturesEXT, VkPhysicalDeviceIndexTypeUint8FeaturesEXT);
@@ -11574,6 +12029,7 @@ struct VkPhysicalDeviceIndexTypeUint8FeaturesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceExtendedDynamicStateFeaturesEXT, VkPhysicalDeviceExtendedDynamicStateFeaturesEXT);
@@ -11591,6 +12047,7 @@ struct VkPhysicalDeviceExtendedDynamicStateFeaturesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXT, VkPhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXT);
@@ -11608,6 +12065,7 @@ struct VkPhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceDeviceGeneratedCommandsPropertiesNV, VkPhysicalDeviceDeviceGeneratedCommandsPropertiesNV);
@@ -11633,6 +12091,7 @@ struct VkPhysicalDeviceDeviceGeneratedCommandsPropertiesNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceDeviceGeneratedCommandsFeaturesNV, VkPhysicalDeviceDeviceGeneratedCommandsFeaturesNV);
@@ -11650,6 +12109,7 @@ struct VkPhysicalDeviceDeviceGeneratedCommandsFeaturesNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkGraphicsShaderGroupCreateInfoNV, VkGraphicsShaderGroupCreateInfoNV);
@@ -11670,6 +12130,7 @@ struct VkGraphicsShaderGroupCreateInfoNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkGraphicsPipelineShaderGroupsCreateInfoNV, VkGraphicsPipelineShaderGroupsCreateInfoNV);
@@ -11690,6 +12151,7 @@ struct VkGraphicsPipelineShaderGroupsCreateInfoNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkBindShaderGroupIndirectCommandNV, VkBindShaderGroupIndirectCommandNV);
@@ -11705,6 +12167,7 @@ struct VkBindShaderGroupIndirectCommandNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkBindIndexBufferIndirectCommandNV, VkBindIndexBufferIndirectCommandNV);
@@ -11722,6 +12185,7 @@ struct VkBindIndexBufferIndirectCommandNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkBindVertexBufferIndirectCommandNV, VkBindVertexBufferIndirectCommandNV);
@@ -11739,6 +12203,7 @@ struct VkBindVertexBufferIndirectCommandNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkSetStateFlagsIndirectCommandNV, VkSetStateFlagsIndirectCommandNV);
@@ -11754,6 +12219,7 @@ struct VkSetStateFlagsIndirectCommandNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkIndirectCommandsStreamNV, VkIndirectCommandsStreamNV);
@@ -11770,6 +12236,7 @@ struct VkIndirectCommandsStreamNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkIndirectCommandsLayoutTokenNV, VkIndirectCommandsLayoutTokenNV);
@@ -11799,6 +12266,7 @@ struct VkIndirectCommandsLayoutTokenNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkIndirectCommandsLayoutCreateInfoNV, VkIndirectCommandsLayoutCreateInfoNV);
@@ -11821,6 +12289,7 @@ struct VkIndirectCommandsLayoutCreateInfoNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkGeneratedCommandsInfoNV, VkGeneratedCommandsInfoNV);
@@ -11850,6 +12319,7 @@ struct VkGeneratedCommandsInfoNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkGeneratedCommandsMemoryRequirementsInfoNV, VkGeneratedCommandsMemoryRequirementsInfoNV);
@@ -11870,6 +12340,7 @@ struct VkGeneratedCommandsMemoryRequirementsInfoNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceTexelBufferAlignmentFeaturesEXT, VkPhysicalDeviceTexelBufferAlignmentFeaturesEXT);
@@ -11887,6 +12358,7 @@ struct VkPhysicalDeviceTexelBufferAlignmentFeaturesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceTexelBufferAlignmentPropertiesEXT, VkPhysicalDeviceTexelBufferAlignmentPropertiesEXT);
@@ -11907,6 +12379,7 @@ struct VkPhysicalDeviceTexelBufferAlignmentPropertiesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkRenderPassTransformBeginInfoQCOM, VkRenderPassTransformBeginInfoQCOM);
@@ -11924,6 +12397,7 @@ struct VkRenderPassTransformBeginInfoQCOMAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkCommandBufferInheritanceRenderPassTransformInfoQCOM, VkCommandBufferInheritanceRenderPassTransformInfoQCOM);
@@ -11942,6 +12416,7 @@ struct VkCommandBufferInheritanceRenderPassTransformInfoQCOMAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceRobustness2FeaturesEXT, VkPhysicalDeviceRobustness2FeaturesEXT);
@@ -11961,6 +12436,7 @@ struct VkPhysicalDeviceRobustness2FeaturesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceRobustness2PropertiesEXT, VkPhysicalDeviceRobustness2PropertiesEXT);
@@ -11979,6 +12455,7 @@ struct VkPhysicalDeviceRobustness2PropertiesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkSamplerCustomBorderColorCreateInfoEXT, VkSamplerCustomBorderColorCreateInfoEXT);
@@ -11997,6 +12474,7 @@ struct VkSamplerCustomBorderColorCreateInfoEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceCustomBorderColorPropertiesEXT, VkPhysicalDeviceCustomBorderColorPropertiesEXT);
@@ -12014,6 +12492,7 @@ struct VkPhysicalDeviceCustomBorderColorPropertiesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceCustomBorderColorFeaturesEXT, VkPhysicalDeviceCustomBorderColorFeaturesEXT);
@@ -12032,6 +12511,7 @@ struct VkPhysicalDeviceCustomBorderColorFeaturesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDevicePrivateDataFeaturesEXT, VkPhysicalDevicePrivateDataFeaturesEXT);
@@ -12049,6 +12529,7 @@ struct VkPhysicalDevicePrivateDataFeaturesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDevicePrivateDataCreateInfoEXT, VkDevicePrivateDataCreateInfoEXT);
@@ -12066,6 +12547,7 @@ struct VkDevicePrivateDataCreateInfoEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPrivateDataSlotCreateInfoEXT, VkPrivateDataSlotCreateInfoEXT);
@@ -12083,6 +12565,7 @@ struct VkPrivateDataSlotCreateInfoEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDevicePipelineCreationCacheControlFeaturesEXT, VkPhysicalDevicePipelineCreationCacheControlFeaturesEXT);
@@ -12100,6 +12583,7 @@ struct VkPhysicalDevicePipelineCreationCacheControlFeaturesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceDiagnosticsConfigFeaturesNV, VkPhysicalDeviceDiagnosticsConfigFeaturesNV);
@@ -12117,6 +12601,7 @@ struct VkPhysicalDeviceDiagnosticsConfigFeaturesNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkDeviceDiagnosticsConfigCreateInfoNV, VkDeviceDiagnosticsConfigCreateInfoNV);
@@ -12134,6 +12619,7 @@ struct VkDeviceDiagnosticsConfigCreateInfoNVAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceFragmentDensityMap2FeaturesEXT, VkPhysicalDeviceFragmentDensityMap2FeaturesEXT);
@@ -12151,6 +12637,7 @@ struct VkPhysicalDeviceFragmentDensityMap2FeaturesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceFragmentDensityMap2PropertiesEXT, VkPhysicalDeviceFragmentDensityMap2PropertiesEXT);
@@ -12171,6 +12658,7 @@ struct VkPhysicalDeviceFragmentDensityMap2PropertiesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(VkPhysicalDeviceImageRobustnessFeaturesEXT, VkPhysicalDeviceImageRobustnessFeaturesEXT);
@@ -12188,6 +12676,7 @@ struct VkPhysicalDeviceImageRobustnessFeaturesEXTAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(GLFWvidmode, GLFWvidmode);
@@ -12208,6 +12697,7 @@ struct GLFWvidmodeAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(GLFWgammaramp, GLFWgammaramp);
@@ -12226,6 +12716,7 @@ struct GLFWgammarampAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(GLFWimage, GLFWimage);
@@ -12243,6 +12734,7 @@ struct GLFWimageAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 MAKE_TYPE_FACTORY(GLFWgamepadstate, GLFWgamepadstate);
@@ -12259,6 +12751,7 @@ struct GLFWgamepadstateAnnotation
     virtual bool isLocal() const override { return true; }
     virtual bool canCopy() const override { return true; }
     virtual bool canMove() const override { return true; }
+    virtual bool canClone() const override { return true; }
 };
 
 class Module_vulkan : public Module {
