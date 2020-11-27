@@ -31,7 +31,7 @@ def create_framebuffer(
         fbuf.device = reinterpret<VkDevice>(device)
         patts = reinterpret<VkImageView const?>(addr(attachments[0]))
 
-    let create_info <- [[VkFramebufferCreateInfo
+    let info <- [[VkFramebufferCreateInfo
         sType = (VkStructureType
             VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO),
         renderPass = render_pass,
