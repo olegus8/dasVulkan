@@ -50,13 +50,13 @@ struct CommandBuffers
 def create_command_buffers(
     device : VkDevice#;
     pool : VkCommandPool#;
-    count : uint
+    count : int
 ) : CommandBuffers
     let alloc_info <- [[VkCommandBufferAllocateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO,
         level = VkCommandBufferLevel VK_COMMAND_BUFFER_LEVEL_PRIMARY,
         commandPool = cmd_pool,
-        commandBufferCount = count
+        commandBufferCount = uint(count)
     ]]
     var bufs : CommandBuffers
     unsafe
