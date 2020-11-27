@@ -178,7 +178,7 @@ def with_mem_backed_buf(
     var buf <- device |> create_buffer_exclusive(buf_size, usage)
     defer() <|
         delete buf
-    device |> find_buffer_memory_type(phys_dev, buffer, mem_props
+    device |> find_buffer_memory_type(phys_dev, buf, mem_props
     ) <| $(mem_type, mem_size)
         var mem <- allocate_memory([device=device,
             allocation_size=mem_size, mem_type_index=mem_type])
