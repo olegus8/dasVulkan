@@ -2,6 +2,7 @@
 
 require daslib/safe_addr
 require daslib/vulkan_boost
+require daslib/defer
 require math
 require strings
 require vulkan
@@ -191,10 +192,12 @@ def with_mem_backed_buf(
     device |> with_buffer(buf_size, usage) <| $(buf)
         device |> with_buffer_memory_type(phys_dev, buf, mem_props
         ) <| $(mem_type, mem_size)
-            device |> with_memory(mem_size, mem_type) <| $(mem)
-                verify(VkResult VK_SUCCESS ==
-                    device |> vkBindBufferMemory(buf, mem, uint64(0)))
-                b |> invoke(buf, mem)
+            var mem <- device |> allocate_memory(mem_size, mem_type)
+            defer() <|
+                delete mem
+            verify(VkResult VK_SUCCESS ==
+                device |> vkBindBufferMemory(buf, mem.memory, uint64(0)))
+            b |> invoke(buf, mem.memory)
 
 
 def with_baked_vertex_buffer(device, phys_dev, cmd_pool, queue;
