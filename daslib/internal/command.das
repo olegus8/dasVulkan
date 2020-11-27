@@ -7,6 +7,32 @@ require vulkan
 require device
 
 
+struct CommandPool
+    device : VkDevice
+    pool : VkCommandPool
+
+
+def create_command_pool(
+    device : VkDevice#;
+    flags : uint;
+    queue_family : uint
+) : CommandPool
+    let create_info <- [[VkCommandPoolCreateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO,
+        queueFamilyIndex = queue_family
+        flags = flags
+    ]]
+    var pool : CommandPool
+    verify(VkResult VK_SUCCESS == device |> vkCreateCommandPool(
+        safe_addr(create_info), null, safe_addr(pool.pool)))
+    return <- pool
+
+
+def finalize(var pool : CommandPool)
+    pool.device |> vkDestroyCommandPool(pool.pool, null)
+    memzero(pool)
+
+
 def with_command_pool(
     device : VkDevice#;
     phys_dev : VkPhysicalDevice#;
