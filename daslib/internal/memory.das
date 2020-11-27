@@ -14,8 +14,8 @@ struct Memory
 def allocate_memory(
     device : VkDevice#;
     size : uint64;
-    mem_type_index : uint;
-)
+    mem_type_index : uint
+) : Memory
     let alloc_info <- [[VkMemoryAllocateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO,
         allocationSize = size,
