@@ -40,8 +40,8 @@ def with_memory(
     mem_type_index : uint;
     b : block<(m:VkDeviceMemory#)>
 )
-    var mem <- allocate_memory(devuce, size, mem_type_index)
-    b |> invoke(mem)
+    var mem <- allocate_memory(device, size, mem_type_index)
+    b |> invoke(mem.memory)
     delete mem
 
 
