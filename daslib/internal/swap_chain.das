@@ -13,7 +13,7 @@ def with_swap_chain(
     phys_dev : VkPhysicalDevice#;
     surface : VkSurfaceKHR#;
     window : GLFWwindow_DasHandle#;
-    surf_fmt : VkSurfaceFormatKHR#;
+    surf_fmt : VkSurfaceFormatKHR implicit;
     present_mode : VkPresentModeKHR#;
     b : block<(sc:VkSwapchainKHR#)>
 )
@@ -68,7 +68,7 @@ def with_swap_chain_images(device : VkDevice#; swap_chain : VkSwapchainKHR#;
 def with_swap_chain_image_views(
     device : VkDevice#;
     images : array<VkImage>#;
-    surf_fmt : VkSurfaceFormatKHR#;
+    surf_fmt : VkSurfaceFormatKHR implicit;
     b : block<(d:array<VkImageView>#)>
 )
     var views : array<VkImageView>
