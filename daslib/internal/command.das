@@ -66,11 +66,12 @@ struct CommandBuffers
 def create_command_buffers(
     device : VkDevice#;
     pool : VkCommandPool#;
-    count : int
+    count : int;
+    level : VkCommandBufferLevel
 ) : CommandBuffers
     let alloc_info <- [[VkCommandBufferAllocateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO,
-        level = VkCommandBufferLevel VK_COMMAND_BUFFER_LEVEL_PRIMARY,
+        level = level,
         commandPool = pool,
         commandBufferCount = uint(count)
     ]]
@@ -83,6 +84,15 @@ def create_command_buffers(
         verify(VkResult VK_SUCCESS == device |> vkAllocateCommandBuffers(
             safe_addr(alloc_info), addr(tbufs[0])))
     return <- bufs
+
+
+def create_command_buffers_primary(
+    device : VkDevice#;
+    pool : VkCommandPool#;
+    count : int
+) : CommandBuffers
+    return <- device |> create_command_buffers(pool, count,
+        VkCommandBufferLevel VK_COMMAND_BUFFER_LEVEL_PRIMARY)
 
 
 def finalize(var bufs : CommandBuffers)

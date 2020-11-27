@@ -139,7 +139,7 @@ def with_draw_commands(device, phys_dev, window, surface, render_pass,
 )
     let vbufs <- [[auto[] vbuf]]
     let offsets : uint64[1]
-    var cmd_bufs <- device |> create_command_buffers(
+    var cmd_bufs <- device |> create_primary_command_buffers_primary(
         cmd_pool, fbufs |> length())
     defer() <|
         delete cmd_bufs;
