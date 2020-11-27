@@ -26,7 +26,7 @@ def with_swapchain_ex(
     surf_fmt        : VkSurfaceFormatKHR implicit;
     present_mode    : VkPresentModeKHR implicit;
     render_pass     : VkRenderPass implicit;
-    b : block<(sc:SwapchainEx#)>
+    b : block<(sc:SwapchainEx implicit)>
 )
     device |> with_swapchain(
         phys_dev, surface, window, surf_fmt, present_mode
