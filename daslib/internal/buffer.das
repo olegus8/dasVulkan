@@ -10,13 +10,15 @@ struct Buffer
     buffer : VkBuffer
 
 
-def create_buffer(
+def create_buffer_exclusive(
     device : VkDevice#;
     buf_size : uint64;
-    usage : uint
+    usage : uint;
+    flags : uint = 0u
 ) : Buffer
     let create_info <- [[VkBufferCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO,
+        flags = flags,
         size = buf_size,
         usage = usage,
         sharingMode = VkSharingMode VK_SHARING_MODE_EXCLUSIVE
