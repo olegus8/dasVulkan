@@ -52,6 +52,13 @@ def finalize(var sc : SwapchainEx)
     memzero(sc)
 
 
+//////////////////
+//
+// private
+//
+//////////////////
+
+
 [private]
 def with_swapchain(
     device          : VkDevice implicit;
