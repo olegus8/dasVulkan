@@ -7,7 +7,7 @@ require vulkan
 
 def with_render_pass_simple(
     device : VkDevice#;
-    surf_fmt : VkSurfaceFormatKHR#;
+    surf_fmt : VkSurfaceFormatKHR implicit;
     b : block<(rp:VkRenderPass#)>
 )
     let atts <- [[auto[] [[VkAttachmentDescription
