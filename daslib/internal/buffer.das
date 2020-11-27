@@ -42,7 +42,7 @@ def create_buffer(
         ]]
         buf._result = device |> vkCreateBuffer(
             safe_addr(info), null, safe_addr(buf.buffer))
-        assert(!require_success || buf._creation_result == VkResult VK_SUCCESS)
+        assert(!require_success || buf._result == VkResult VK_SUCCESS)
     return <- buf
 
 
