@@ -81,15 +81,6 @@ def with_mapped_vk_mem(device, mem, offset, size;
     device |> vkUnmapMemory(mem)
 
 
-def with_cmd_bufs(device, cmd_pool, count;
-    b : block<(c:array<VkCommandBuffer>)>
-)
-    var bufs <- device |> create_command_buffers(cmd_pool, count)
-    defer() <|
-        delete bufs;
-    b |> invoke(bufs.buffers)
-
-
 def record(cmd_buf : VkCommandBuffer; b : block)
     let begin_info <- [[VkCommandBufferBeginInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO]]
@@ -148,29 +139,32 @@ def with_draw_commands(device, phys_dev, window, surface, render_pass,
 )
     let vbufs <- [[auto[] vbuf]]
     let offsets : uint64[1]
-    device |> with_cmd_bufs(cmd_pool, fbufs |> length()) <| $(cmd_bufs)
-        for cmd_buf, fbuf in cmd_bufs, fbufs
-            cmd_buf |> record_render_pass(
-                phys_dev, window, surface, render_pass, fbuf
-            ) <| $()
-                cmd_buf |> vkCmdBindPipeline(
-                    VkPipelineBindPoint VK_PIPELINE_BIND_POINT_GRAPHICS,
-                    pipeline)
-                cmd_buf |> vkCmdBindVertexBuffers(0u, // first binding idx
-                    //TODO: make it work. says "can only dereference
-                    //      simple type"
-                    1u,
-                    //uint(vbufs |> length()),
+    var cmd_bufs <- device |> create_command_buffers(
+        cmd_pool, fbufs |> length())
+    defer() <|
+        delete cmd_bufs;
+    for cmd_buf, fbuf in cmd_bufs.buffers, fbufs
+        cmd_buf |> record_render_pass(
+            phys_dev, window, surface, render_pass, fbuf
+        ) <| $()
+            cmd_buf |> vkCmdBindPipeline(
+                VkPipelineBindPoint VK_PIPELINE_BIND_POINT_GRAPHICS,
+                pipeline)
+            cmd_buf |> vkCmdBindVertexBuffers(0u, // first binding idx
+                //TODO: make it work. says "can only dereference
+                //      simple type"
+                1u,
+                //uint(vbufs |> length()),
 
-                    vbufs[0] |> safe_addr(),
-                    offsets[0] |> safe_addr())
-                cmd_buf |> vkCmdDraw(uint(vertices_count),
-                    1u, // instance count
-                    0u, // first vertex
-                    0u  // first instance
-                )
+                vbufs[0] |> safe_addr(),
+                offsets[0] |> safe_addr())
+            cmd_buf |> vkCmdDraw(uint(vertices_count),
+                1u, // instance count
+                0u, // first vertex
+                0u  // first instance
+            )
 
-        b |> invoke(cmd_bufs)
+    b |> invoke(cmd_bufs.buffers)
 
 
 def with_mem_backed_buf(
