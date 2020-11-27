@@ -4,6 +4,7 @@ options no_aot = true
 require math
 
 require daslib/safe_addr
+require daslib/defer
 require vulkan
 require internal/device
 
@@ -29,7 +30,7 @@ def with_swapchain(
         phys_dev, surface, window, surf_fmt, present_mode
     ) <| $(swapchain)
         var images <- device |> get_swapchain_images(swapchain)
-        defer() <| { delete images; }
+        defer() <| ${ delete images; }
         device |> with_swapchain_image_views(images, surf_fmt) <| $(views)
             device |> with_swapchain_framebuffers(
                 phys_dev, surface, window, views, render_pass
