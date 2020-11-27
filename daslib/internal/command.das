@@ -51,7 +51,7 @@ def create_command_buffers(
     device : VkDevice#;
     pool : VkCommandPool#;
     count : uint
-) : array<CommandBuffer>
+) : CommandBuffers
     let alloc_info <- [[VkCommandBufferAllocateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO,
         level = VkCommandBufferLevel VK_COMMAND_BUFFER_LEVEL_PRIMARY,
