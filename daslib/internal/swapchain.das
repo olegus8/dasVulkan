@@ -40,9 +40,10 @@ def with_swapchain(
             let sc <- [[Swapchain
                 swapchain = swapchain,
                 images <- images,
-                views = views,
+                views <- views,
                 framebuffers = framebuffers
             ]]
+            defer() <| ${ delete sc; }
             b |> invoke(sc)
 
 
