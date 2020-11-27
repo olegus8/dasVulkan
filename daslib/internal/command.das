@@ -55,7 +55,7 @@ def create_command_buffers(
     let alloc_info <- [[VkCommandBufferAllocateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO,
         level = VkCommandBufferLevel VK_COMMAND_BUFFER_LEVEL_PRIMARY,
-        commandPool = cmd_pool,
+        commandPool = pool,
         commandBufferCount = uint(count)
     ]]
     var bufs : CommandBuffers
