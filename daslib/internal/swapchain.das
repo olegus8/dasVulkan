@@ -114,8 +114,7 @@ def create_swapchain_image_views(
     var views : array<ImageView>
     views |> resize(images |> length())
     for image, view in images, views
-        view <- device |> create_image_view(
-            device, image, surf_fmt.format,
+        view <- device |> create_image_view(image, surf_fmt.format,
             VkImageViewType VK_IMAGE_VIEW_TYPE_2D,
             IMAGE_SUBRESOURCE_RANGE_SINGLE_COLOR,
             COMPONENT_MAPPING_IDENTITY)
