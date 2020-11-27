@@ -319,7 +319,7 @@ def with_swapchain_dependent_state(
     device |> with_fences(MAX_FRAMES_IN_FLIGHT,
         uint(VkFenceCreateFlagBits
             VK_FENCE_CREATE_SIGNALED_BIT))           <| $(frame_fences)      {
-    device |> with_swapchain(phys_dev, surface,
+    device |> with_swapchain_ex(phys_dev, surface,
         window, surf_fmt, present_mode, render_pass) <| $(swapchain)         {
     device |> with_graphics_pipeline(
         pipeline_layout, render_pass, phys_dev,
