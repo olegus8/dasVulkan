@@ -41,6 +41,37 @@ def finalize(var pool : CommandPool)
 // Command buffer
 //
 
-struct CommandBuffer
+struct CommandBuffers
     pool : VkCommandPool
-    buffer : VkCommandBuffer
+    device : VkDevice
+    buffers : array<VkCommandBuffer>
+
+
+def create_command_buffers(
+    device : VkDevice#;
+    pool : VkCommandPool#;
+    count : uint
+) : array<CommandBuffer>
+    let alloc_info <- [[VkCommandBufferAllocateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO,
+        level = VkCommandBufferLevel VK_COMMAND_BUFFER_LEVEL_PRIMARY,
+        commandPool = cmd_pool,
+        commandBufferCount = count
+    ]]
+    var bufs : CommandBuffers
+    unsafe
+        bufs.device = reinterpret<VkDevice>(device)
+        bufs.pool = reinterpret<VkCommandPool>(pool)
+    bufs.buffers |> resize(count)
+    bufs.buffers |> lock() <| $(tbufs)
+        verify(VkResult VK_SUCCESS == device |> vkAllocateCommandBuffers(
+            safe_addr(alloc_info), addr(tbufs[0])))
+    return <- bufs
+
+
+def finalize(var bufs : CommandBuffers)
+    bufs.buffers |> lock() <| $(tbufs)
+        bufs.device |> vkFreeCommandBuffers(
+            bufs.pool, uint(bufs.buffers |> length()), addr(tbufs[0]))
+    delete bufs.buffers
+    memzero(bufs)
