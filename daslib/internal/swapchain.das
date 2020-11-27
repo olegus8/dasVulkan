@@ -26,13 +26,20 @@ def with_swapchain(
     b : block<(sc:Swapchain#)>
 )
     device |> with_swapchain(phys_dev, surface,
-        window, surf_fmt, present_mode)             <| $(swapchain)        {
-    device |> with_swapchain_images(swapchain)    <| $(sc_imgs)           {
+        window, surf_fmt, present_mode)             <| $(swapchain)         {
+    device |> with_swapchain_images(swapchain)      <| $(images)            {
     device |> with_swapchain_image_views(
-        sc_imgs, surf_fmt)                          <| $(sc_views)          {
+        sc_imgs, surf_fmt)                          <| $(views)             {
     device |> with_swapchain_framebuffers(
         phys_dev, surface, window, sc_views,
-        render_pass)                                <| $(sc_fbufs)          {
+        render_pass)                                <| $(framebuffers)
+    {
+        let sc <- [[Swapchain
+            swapchain = swapchain,
+            images = images,
+            views = views,
+            framebuffers = framebuffers]]
+        b |> invoke(sc);
     }}}}
 
 
