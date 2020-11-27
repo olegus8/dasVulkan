@@ -23,13 +23,12 @@ def create_framebuffer(
     layers : uint;
     flags : uint = 0u
 ) : Framebuffer
-    var fbuf : Framebuffer
-    unsafe
-        fbuf.device = reinterpret<VkDevice>(device)
-    assert(attachments |> length() > 0)
 
+    assert(attachments |> length() > 0)
+    var fbuf : Framebuffer
     var patts : VkImageView const ?
     unsafe
+        fbuf.device = reinterpret<VkDevice>(device)
         patts = reinterpret<VkImageView const?>(addr(attachments[0]))
 
     let create_info <- [[VkFramebufferCreateInfo
