@@ -288,8 +288,7 @@ def with_swap_chain_independent_state(width, height, title; b : block<(
     device |> with_pipeline_layout_simple()         <| $(pipeline_layout)   {
         var cmd_pool <- device |> create_command_pool(
             phys_dev |> get_graphics_queue_family(surface), 0u);
-        defer() <|
-            delete cmd_pool;
+        defer() <| { delete cmd_pool; };
         b |> invoke(
             instance,
             window,
@@ -305,7 +304,7 @@ def with_swap_chain_independent_state(width, height, title; b : block<(
             pipeline_layout,
             cmd_pool.pool
         );
-    }}}}}}}}}}}
+    }}}}}}}}}}
 
 
 def with_swap_chain_dependent_state(

@@ -23,6 +23,8 @@ def create_command_pool(
         flags = flags
     ]]
     var pool : CommandPool
+    unsafe
+        pool.device = reinterpret<VkDevice>(device)
     verify(VkResult VK_SUCCESS == device |> vkCreateCommandPool(
         safe_addr(create_info), null, safe_addr(pool.pool)))
     return <- pool
