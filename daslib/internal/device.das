@@ -184,9 +184,14 @@ def get_best_format(
             &&  format.colorSpace == (VkColorSpaceKHR
                     VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)
             )
-                //TODO: Make it work with clone. It says "can't clone"
+                /*
                 unsafe
                     best_format <- reinterpret<VkSurfaceFormatKHR&>(format)
+                */
+                //TODO: Without reinterpret it says "can't clone"
+                unsafe
+                    best_format := reinterpret<VkSurfaceFormatKHR const&>(
+                        format)
                 return
         // if no ideal found, picking anything
         for format in formats
