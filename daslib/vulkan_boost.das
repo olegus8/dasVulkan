@@ -12,4 +12,4 @@ require internal/device      public
 require internal/memory      public
 require internal/pipeline    public
 require internal/render_pass public
-require internal/swap_chain  public
+require internal/swapchain   public
