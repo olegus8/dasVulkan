@@ -308,7 +308,7 @@ def with_swapchain_dependent_state(
     pipeline_layout,
     cmd_pool;
     b : block<(
-        swapchain          : VkSwapchainKHR;
+        swapchain           : VkSwapchainKHR;
         sc_imgs             : array<VkImage>#;
         sc_views            : array<VkImageView>#;
         sc_fbufs            : array<VkFramebuffer>#;
@@ -502,7 +502,7 @@ def main
                     pipeline_layout,
                     cmd_pool
                 ) <| $(
-                    swapchain          : VkSwapchainKHR;
+                    swapchain           : VkSwapchainKHR;
                     sc_imgs             : array<VkImage>#;
                     sc_views            : array<VkImageView>#;
                     sc_fbufs            : array<VkFramebuffer>#;

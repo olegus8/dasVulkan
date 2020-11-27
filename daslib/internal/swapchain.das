@@ -9,7 +9,7 @@ require internal/device
 
 
 struct Swapchain
-    swapchain      : VkSwapchainKHR
+    swapchain       : VkSwapchainKHR
     images          : array<VkImage>
     views           : array<VlImageView>
     framebuffers    : array<VkFramebuffer>
