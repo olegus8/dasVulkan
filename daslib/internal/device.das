@@ -271,7 +271,7 @@ struct DeviceQueueCreateInfo
 [private]
 def queue_create_info(
     device : VkPhysicalDevice#;
-    surface : VkSurfaceKHR#;
+    surface : VkSurfaceKHR#
 )
     var info : [[DeviceQueueCreateInfo
         priority = 1.0f,
