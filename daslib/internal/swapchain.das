@@ -25,23 +25,21 @@ def with_swapchain(
     render_pass     : VkRenderPass#;
     b : block<(sc:Swapchain#)>
 )
-    device |> with_swapchain(phys_dev, surface,
-        window, surf_fmt, present_mode)             <| $(swapchain)         {
-    device |> with_swapchain_images(swapchain)      <| $(images)            {
-    device |> with_swapchain_image_views(
-        images, surf_fmt)                           <| $(views)             {
-    device |> with_swapchain_framebuffers(
-        phys_dev, surface, window, views,
-        render_pass)                                <| $(framebuffers)
-    {
-        let sc <- [[Swapchain
-            swapchain = swapchain,
-            images = images,
-            views = views,
-            framebuffers = framebuffers
-        ]];
-        b |> invoke(sc);
-    }}}}
+    device |> with_swapchain(
+        phys_dev, surface, window, surf_fmt, present_mode
+    ) <| $(swapchain)
+        var images <- get_swapchain_images(swapchain)
+        device |> with_swapchain_image_views(images, surf_fmt) <| $(views)
+            device |> with_swapchain_framebuffers(
+                phys_dev, surface, window, views, render_pass
+            ) <| $(framebuffers)
+                let sc <- [[Swapchain
+                    swapchain = swapchain,
+                    images <- images,
+                    views = views,
+                    framebuffers = framebuffers
+                ]]
+                b |> invoke(sc)
 
 
 [private]
@@ -88,9 +86,8 @@ def with_swapchain(
 
 
 [private]
-def with_swapchain_images(device : VkDevice#; swapchain : VkSwapchainKHR#;
-    b : block<(d:array<VkImage>#)>
-)
+def get_swapchain_images(device : VkDevice#; swapchain : VkSwapchainKHR#
+) : array<VkImage>
     var images : array<VkImage>
     var count : uint
     verify(VkResult VK_SUCCESS == device |> vkGetSwapchainImagesKHR(
@@ -99,8 +96,7 @@ def with_swapchain_images(device : VkDevice#; swapchain : VkSwapchainKHR#;
     images |> lock() <| $(timages)
         verify(VkResult VK_SUCCESS == device |> vkGetSwapchainImagesKHR(
             swapchain, safe_addr(count), addr(timages[0])))
-        b |> invoke(timages)
-    delete images
+    return <- images
 
 
 [private]
