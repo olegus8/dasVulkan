@@ -22,7 +22,7 @@ def with_swapchain(
     window          : GLFWwindow_DasHandle#;
     surf_fmt        : VkSurfaceFormatKHR implicit;
     present_mode    : VkPresentModeKHR#;
-    render_pass     : VkRenderPass#
+    render_pass     : VkRenderPass#;
     b : block<(sc:Swapchain#)>
 )
     device |> with_swapchain(phys_dev, surface,
