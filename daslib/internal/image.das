@@ -54,6 +54,7 @@ def create_image_view(
         view.device = reinterpret<VkDevice>(device)
     verify(VkResult VK_SUCCESS == device |> vkCreateImageView(
         safe_addr(info), null, safe_addr(view.view)))
+    return <- view
 
 
 def finalize(var view : ImageView)
