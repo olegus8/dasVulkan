@@ -32,9 +32,6 @@ def find_buffer_memory_type(
     b : block<(mem_type:uint; mem_size:uint64)>
 )
     var reqs : VkMemoryRequirements
-    device |> vkGetBufferMemoryRequirements(
-        buffer.buffer, safe_addr(reqs))
+    device |> vkGetBufferMemoryRequirements(buffer.buffer, safe_addr(reqs))
     phys_dev |> find_memory_type(reqs.memoryTypeBits, mem_props) <| $(mem_type)
-        b |> invoke(mem_type, mem_reqs.size)
-
-
+        b |> invoke(mem_type, reqs.size)
