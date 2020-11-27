@@ -11,10 +11,10 @@ require internal/device
 
 let
     COMPONENT_MAPPING_IDENTITY <- [[VkComponentMapping
-        r <- [[VkComponentSwizzle VK_COMPONENT_SWIZZLE_IDENTITY]],
-        g <- [[VkComponentSwizzle VK_COMPONENT_SWIZZLE_IDENTITY]],
-        b <- [[VkComponentSwizzle VK_COMPONENT_SWIZZLE_IDENTITY]],
-        a <- [[VkComponentSwizzle VK_COMPONENT_SWIZZLE_IDENTITY]]
+        r = VkComponentSwizzle VK_COMPONENT_SWIZZLE_IDENTITY,
+        g = VkComponentSwizzle VK_COMPONENT_SWIZZLE_IDENTITY,
+        b = VkComponentSwizzle VK_COMPONENT_SWIZZLE_IDENTITY,
+        a = VkComponentSwizzle VK_COMPONENT_SWIZZLE_IDENTITY
     ]]
 
     IMAGE_SUBRESOURCE_RANGE_SINGLE_COLOR <- [[VkImageSubresourceRange
