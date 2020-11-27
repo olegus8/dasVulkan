@@ -11,7 +11,7 @@ require internal/device
 struct Swapchain
     swapchain       : VkSwapchainKHR
     images          : array<VkImage>
-    views           : array<VlImageView>
+    views           : array<VkImageView>
     framebuffers    : array<VkFramebuffer>
 
 
@@ -38,7 +38,8 @@ def with_swapchain(
             swapchain = swapchain,
             images = images,
             views = views,
-            framebuffers = framebuffers]]
+            framebuffers = framebuffers
+        ]];
         b |> invoke(sc);
     }}}}
 
