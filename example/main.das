@@ -130,14 +130,16 @@ def submit(queue, cmd_bufs)
 
 
 def copy_buf_sync(device, cmd_pool, queue, src_buf, dst_buf, buf_size)
-    device |> with_cmd_bufs(cmd_pool, 1) <| $(cmd_bufs)
-        let cmd_buf = cmd_bufs[0]
-        cmd_buf |> record() <| $()
-            let params <- [[auto[] [[VkBufferCopy size = uint64(buf_size)]]]]
-            cmd_buf |> vkCmdCopyBuffer(src_buf, dst_buf,
-                uint(params |> length()), params[0] |> safe_addr())
-        queue |> submit(cmd_bufs)
-        queue |> vkQueueWaitIdle()
+    var cmd_bufs <- device |> create_command_buffers(cmd_pool, 1)
+    defer() <|
+        delete cmd_bufs;
+    let cmd_buf = cmd_bufs.buffers[0]
+    cmd_buf |> record() <| $()
+        let params <- [[auto[] [[VkBufferCopy size = uint64(buf_size)]]]]
+        cmd_buf |> vkCmdCopyBuffer(src_buf, dst_buf,
+            uint(params |> length()), params[0] |> safe_addr())
+    queue |> submit(cmd_bufs)
+    queue |> vkQueueWaitIdle()
 
 
 def with_draw_commands(device, phys_dev, window, surface, render_pass,
