@@ -6,8 +6,8 @@ require vulkan
 
 
 struct Buffer
-    device : VkDevice
     buffer : VkBuffer
+    _device : VkDevice
 
 
 def create_buffer(
@@ -20,7 +20,7 @@ def create_buffer(
 ) : Buffer
     var buf : Buffer
     unsafe
-        buf.device = reinterpret<VkDevice>(device)
+        buf._device = reinterpret<VkDevice>(device)
     queue_family_indices |> lock() <| $(tindices)
         var pindices : uint const?
         if tindices |> length() > 0
@@ -44,5 +44,5 @@ def create_buffer(
 
 
 def finalize(var buf : Buffer)
-    buf.device |> vkDestroyBuffer(buf.buffer, null)
+    buf._device |> vkDestroyBuffer(buf.buffer, null)
     memzero(buf)
