@@ -186,13 +186,13 @@ def get_best_format(
             )
                 //TODO: Make it work with clone. It says "can't clone"
                 unsafe
-                    best_format = reinterpret<VkSurfaceFormatKHR&>(format)
+                    best_format <- reinterpret<VkSurfaceFormatKHR&>(format)
                 return
         // if no ideal found, picking anything
         for format in formats
             //TODO: Make it work with clone. It says "can't clone"
             unsafe
-                best_format = reinterpret<VkSurfaceFormatKHR&>(format)
+                best_format <- reinterpret<VkSurfaceFormatKHR&>(format)
             return
         panic("No surface formats found")
     return <- best_format
