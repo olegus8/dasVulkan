@@ -8,6 +8,7 @@ require daslib/defer
 require vulkan
 require device
 require image
+require framebuffer
 
 
 struct SwapchainEx
