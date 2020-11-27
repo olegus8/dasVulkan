@@ -54,8 +54,9 @@ def create_framebuffer(
 ) : Framebuffer
     var atts <- [{attachment}]
     defer() <| ${ delete atts; }
-    return <- device |> create_framebuffer(render_pass, atts,
-        width=width, height=height, layers=layers, flags=flags)
+    return <- device |> create_framebuffer([render_pass=render_pass,
+        attachments=atts, width=width, height=height, layers=layers,
+        flags=flags])
 
 
 def finalize(var fbuf : Framebuffer)

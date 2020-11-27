@@ -135,6 +135,7 @@ def create_swapchain_framebuffers(
     var fbufs : array<Framebuffer>
     fbufs |> resize(views |> length())
     for fbuf, view in fbufs, views
-        fbuf <- device |> create_framebuffer(render_pass, view.view,
-            width=extent.width, height=extent.height, layers=1u)
+        fbuf <- device |> create_framebuffer([
+            render_pass=render_pass, view=view.view,
+            width=extent.width, height=extent.height, layers=1u])
     return <- fbufs
