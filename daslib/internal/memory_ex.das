@@ -25,8 +25,8 @@ def find_memory_type(
 
 
 def find_buffer_memory_type(
-    device      : VkDevice implicit
-    phys_dev    : VkPhysicalDevice implicit
+    device      : VkDevice implicit;
+    phys_dev    : VkPhysicalDevice implicit;
     buffer      : Buffer implicit;
     mem_props   : uint;
     b : block<(mem_type:uint; mem_size:uint64)>
