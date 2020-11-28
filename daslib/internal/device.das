@@ -60,7 +60,7 @@ def get_physical_device_properties(physical_device : PhysicalDevice
 
 def enumerate_device_extension_properties(
     physical_device : PhysicalDevice;
-    layer_name : string;
+    layer_name : string = [[string]];
     var result : VkResult ? = [[VkResult?]]
 ) : array<ExtensionProperties>
 

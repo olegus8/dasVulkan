@@ -54,11 +54,12 @@ def get_suitability_score(device : PhysicalDevice; surface : VkSurfaceKHR#)
     )
         score += 1000
 
-    vk_device |> with_ext_props() <| $(exts)
-        for required_ext in DEFAULT_REQUIRED_EXTENSIONS
-            if ! key_exists(exts, hash(required_ext))
-                score = 0
-                break
+    var exts <- device |> enumerate_device_extension_properties()
+    defer() <| ${ delete exts; }
+    for required_ext in DEFAULT_REQUIRED_EXTENSIONS
+        if ! any([[for e in exts; hash(e) == hash(required_ext)]])
+            score = 0
+            break
     vk_device |> with_formats(surface) <| $(formats)
         if formats |> length() == 0
             score = 0
@@ -116,7 +117,7 @@ def with_graphics_queue_family(
             return
 
 
-def with_ext_props(device : VkPhysicalDevice#;
+def with_ext_props(device : kPhysicalDevice#;
     b : block<(props:table<uint;VkExtensionProperties>)>
 )
     var props : array<VkExtensionProperties>
