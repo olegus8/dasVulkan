@@ -2,6 +2,7 @@ options indenting = 4
 options no_aot = true
 
 require daslib/safe_addr
+require daslib/defer
 require core
 require vulkan
 require math
@@ -19,12 +20,12 @@ def enumerate_physical_devices_ex(instance : VkInstance): array<PhysicalDevice>
     return <- split(devices)
 
 
-def with_best_physical_device(inst : VkInstance#; surface : VkSurfaceKHR#;
+def with_best_physical_device(inst : VkInstance; surface : VkSurfaceKHR#;
     b : block<(d:VkPhysicalDevice#)>
 )
     var best_score : int = 0
     var best_device : VkPhysicalDevice
-    var devices <- instance |> enumerate_physical_devices_ex()
+    var devices <- inst |> enumerate_physical_devices_ex()
     defer() <| ${ delete devices; }
     for device in devices
         var score = device.device |> get_suitability_score(surface)
