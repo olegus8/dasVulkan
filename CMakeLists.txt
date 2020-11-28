@@ -59,13 +59,17 @@ IF(NOT DAS_VULKAN_INCLUDED)
             ${DAS_VULKAN_DIR}/src/headers_to_bind.h
         )
 
+        SET(DAS_VULKAN_BINDER_DEPS
+            ${DAS_VULKAN_DIR}/src/binding_config.py
+        )
+
         IF(DAS_BINDER_INCLUDED)
             DAS_BINDER(
                 ${DAS_VULKAN_DIR}/src/headers_to_bind.h
                 ${DAS_VULKAN_DIR}/src/module_generated.inc
                 ${DAS_VULKAN_DIR}/src/binding_config.py
-                ${DAS_VULKAN_DIR}/src/boost_generator.py
                 ${DAS_VULKAN_INCLUDE_DIRS}
+                ${DAS_VULKAN_BINDER_DEPS}
             )
         ELSE()
             MESSAGE(STATUS "dasBinder not found. Using pre-generated Vulkan bindings.")
