@@ -27,7 +27,7 @@ def find_best_physical_device(inst : VkInstance; surface : VkSurfaceKHR#
     var devices <- inst |> enumerate_physical_devices_ex()
     defer() <| ${ delete devices; }
     for device in devices
-        var score = device.device |> get_suitability_score(surface)
+        var score = device |> get_suitability_score(surface)
         if score > best_score
             best_score = score
             best_device = device
@@ -37,30 +37,30 @@ def find_best_physical_device(inst : VkInstance; surface : VkSurfaceKHR#
 
 
 [private]
-def get_suitability_score(device : VkPhysicalDevice#; surface : VkSurfaceKHR#)
+def get_suitability_score(device : PhysicalDevice; surface : VkSurfaceKHR#)
     var score = 1
 
     var has_graphics = false
-    device |> with_graphics_queue_family(surface) <| $(qfam)
+    device.device |> with_graphics_queue_family(surface) <| $(qfam)
         has_graphics = true
     if ! has_graphics
         score = 0
     
-    var props <- device |> get_properties()
+    var props <- device.device |> get_properties()
     if (props.deviceType ==
         VkPhysicalDeviceType VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU
     )
         score += 1000
 
-    device |> with_ext_props() <| $(exts)
+    device.device |> with_ext_props() <| $(exts)
         for required_ext in DEFAULT_REQUIRED_EXTENSIONS
             if ! key_exists(exts, hash(required_ext))
                 score = 0
                 break
-    device |> with_formats(surface) <| $(formats)
+    device.device |> with_formats(surface) <| $(formats)
         if formats |> length() == 0
             score = 0
-    device |> with_present_modes(surface) <| $(modes)
+    device.device |> with_present_modes(surface) <| $(modes)
         if modes |> length() == 0
             score = 0
     return score
