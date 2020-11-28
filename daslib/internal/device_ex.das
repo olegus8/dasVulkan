@@ -52,15 +52,16 @@ def get_suitability_score(device : PhysicalDevice; surface : VkSurfaceKHR#)
     )
         score += 1000
 
-    device.device |> with_ext_props() <| $(exts)
+    let vk_device = device.physical_device
+    vk_device |> with_ext_props() <| $(exts)
         for required_ext in DEFAULT_REQUIRED_EXTENSIONS
             if ! key_exists(exts, hash(required_ext))
                 score = 0
                 break
-    device.device |> with_formats(surface) <| $(formats)
+    vk_device |> with_formats(surface) <| $(formats)
         if formats |> length() == 0
             score = 0
-    device.device |> with_present_modes(surface) <| $(modes)
+    vk_device |> with_present_modes(surface) <| $(modes)
         if modes |> length() == 0
             score = 0
     return score
