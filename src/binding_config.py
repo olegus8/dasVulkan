@@ -16,12 +16,6 @@ class Config(ConfigBase):
             macro_const.ignore()
             return
         for prefix in [
-            #'VK_API_VERSION',
-        ]:
-            if macro_const.name.startswith(prefix):
-                macro_const.ignore()
-                return
-        for prefix in [
             'GLFW_',
             'VK_',
         ]:
