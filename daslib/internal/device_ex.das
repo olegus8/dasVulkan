@@ -8,7 +8,7 @@ require math
 require device
 
 let
-    REQUIRED_EXTENSIONS = [[auto[]
+    DEFAULT_REQUIRED_EXTENSIONS = [[auto[]
         "VK_KHR_swapchain" //TODO: use VK_KHR_SWAPCHAIN_EXTENSION_NAME
     ]]
 
@@ -61,7 +61,7 @@ def get_suitability_score(device : VkPhysicalDevice#; surface : VkSurfaceKHR#)
         score += 1000
 
     device |> with_ext_props() <| $(exts)
-        for required_ext in REQUIRED_EXTENSIONS
+        for required_ext in DEFAULT_REQUIRED_EXTENSIONS
             if ! key_exists(exts, hash(required_ext))
                 score = 0
                 break
@@ -259,8 +259,8 @@ def with_device(
         pQueueCreateInfos = safe_addr(queue_info),
         queueCreateInfoCount = 1u,
         pEnabledFeatures = safe_addr(features),
-        enabledExtensionCount = uint(REQUIRED_EXTENSIONS |> length()),
-        ppEnabledExtensionNames = safe_addr(REQUIRED_EXTENSIONS[0])
+        enabledExtensionCount = uint(DEFAULT_REQUIRED_EXTENSIONS |> length()),
+        ppEnabledExtensionNames = safe_addr(DEFAULT_REQUIRED_EXTENSIONS[0])
     ]]
     verify(VkResult VK_SUCCESS == vkCreateDevice(
         phys_dev, safe_addr(create_info), null, safe_addr(device)))
