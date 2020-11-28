@@ -31,7 +31,6 @@ def find_buffer_memory_type(
     mem_props   : uint;
     b : block<(mem_type:uint; mem_size:uint64)>
 )
-    var reqs : VkMemoryRequirements
-    device |> vkGetBufferMemoryRequirements(buffer.buffer, safe_addr(reqs))
+    let reqs <- buffer |> get_buffer_memory_requirements()
     phys_dev |> find_memory_type(reqs.memoryTypeBits, mem_props) <| $(mem_type)
         b |> invoke(mem_type, reqs.size)

@@ -40,3 +40,11 @@ def create_buffer(
 def finalize(var buf : Buffer)
     buf._device |> vkDestroyBuffer(buf.buffer, null)
     memzero(buf)
+
+
+def get_buffer_memory_requirements(buffer : Buffer) : VkMemoryRequirements
+    var reqs : VkMemoryRequirements
+    buffer._device |> vkGetBufferMemoryRequirements(
+        buffer.buffer, safe_addr(reqs))
+    return <- reqs
+    
