@@ -36,21 +36,6 @@ def find_best_physical_device(instance : VkInstance; surface : VkSurfaceKHR#
     return <- best_device
 
 
-def with_queue_families(device : VkPhysicalDevice#;
-    b : block<(families: array<VkQueueFamilyProperties>#)>
-)
-    var families : array<VkQueueFamilyProperties>
-    var count : uint
-    device |> vkGetPhysicalDeviceQueueFamilyProperties(
-        safe_addr(count), null)
-    families |> resize(int(count))
-    families |> lock() <| $(tfamilies)
-        device |> vkGetPhysicalDeviceQueueFamilyProperties(
-            safe_addr(count), addr(tfamilies[0]))
-        b |> invoke(tfamilies)
-    delete families
-
-
 def get_graphics_queue_family(
     device : VkPhysicalDevice#;
     surface : VkSurfaceKHR#
@@ -63,25 +48,26 @@ def get_graphics_queue_family(
 
 
 def with_graphics_queue_family(
-    device : VkPhysicalDevice#;
+    device : PhysicalDevice;
     surface : VkSurfaceKHR#;
     b : block<(qfam:uint)>
 )
-    device |> with_queue_families() <| $(families)
-        for family, index in families, range(INT_MAX)
-            var can_present : uint
-            verify(VkResult VK_SUCCESS ==
-                device |> vkGetPhysicalDeviceSurfaceSupportKHR(
-                    uint(index), surface, safe_addr(can_present)))
-            if can_present == 0u
-                continue
+    var families <- device |> get_physical_device_queue_family_properties()
+    defer() <| ${ delete families; }
+    for family, index in families, range(INT_MAX)
+        var can_present : uint
+        verify(VkResult VK_SUCCESS ==
+            device |> vkGetPhysicalDeviceSurfaceSupportKHR(
+                uint(index), surface, safe_addr(can_present)))
+        if can_present == 0u
+            continue
 
-            var graphics_bit = uint(VkQueueFlagBits VK_QUEUE_GRAPHICS_BIT)
-            if (family.queueFlags & graphics_bit) == 0u
-                continue
+        var graphics_bit = uint(VkQueueFlagBits VK_QUEUE_GRAPHICS_BIT)
+        if (family.queueFlags & graphics_bit) == 0u
+            continue
 
-            b |> invoke(uint(index))
-            return
+        b |> invoke(uint(index))
+        break
 
 
 def get_best_format(
