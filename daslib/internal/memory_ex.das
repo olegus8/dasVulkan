@@ -5,6 +5,7 @@ require daslib/safe_addr
 
 require vulkan
 require memory
+require buffer
 
 
 def find_memory_type(
