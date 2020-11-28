@@ -123,32 +123,6 @@ def with_graphics_queue_family(
             return
 
 
-def with_ext_props(device : kPhysicalDevice#;
-    b : block<(props:table<uint;VkExtensionProperties>)>
-)
-    var props : array<VkExtensionProperties>
-    var count : uint
-    verify(VkResult VK_SUCCESS ==
-        device |> vkEnumerateDeviceExtensionProperties(
-            to_string(null), safe_addr(count), null))
-    props |> resize(int(count))
-    props |> lock() <| $(tprops)
-        verify(VkResult VK_SUCCESS ==
-            device |> vkEnumerateDeviceExtensionProperties(
-                to_string(null), safe_addr(count), addr(tprops[0])))
-
-    var props_table : table<uint; VkExtensionProperties>
-    for prop in props
-        let name <- prop.extensionName |> to_string()
-        props_table[hash(name)] <- prop
-    props_table |> lock() <| $(tprops_table)
-        pass
-        //TODO: make it work
-        //b |> invoke(tprops_table)
-    b |> invoke(props_table)
-    delete props
-
-
 def with_formats(device : VkPhysicalDevice#; surface : VkSurfaceKHR#;
     b : block<(formats:array<VkSurfaceFormatKHR>#)>
 )
