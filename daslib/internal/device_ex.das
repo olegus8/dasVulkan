@@ -20,7 +20,9 @@ def enumerate_physical_devices_ex(instance : VkInstance): array<PhysicalDevice>
     return <- devices |> split()
 
 
-def find_best_physical_device(instance : VkInstance; surface : VkSurfaceKHR#
+def find_physical_device_for_graphics(
+    instance : VkInstance;
+    surface : VkSurfaceKHR
 ) : PhysicalDevice
     var best_score : int = 0
     var best_device : PhysicalDevice

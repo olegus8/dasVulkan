@@ -263,7 +263,7 @@ def with_swapchain_independent_state(width, height, title; b : block<(
     with_instance()                                 <| $(instance)          {
     with_window(width, height, title)               <| $(window)            {
     window |> with_surface(instance)                <| $(surface)           {
-    let phys_dev <- instance |> find_best_physical_device(surface);
+    let phys_dev <- instance |> find_physical_device_for_graphics(surface);
     let vk_phys_dev = phys_dev.physical_device;
     instance |> with_device(phys_dev, surface)      <| $(device, queue)     {
     device |> with_shader_modules([[auto[]
