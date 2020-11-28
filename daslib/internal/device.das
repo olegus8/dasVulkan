@@ -8,7 +8,7 @@ require math
 
 
 struct PhysicalDevices
-    devices : array<VkPhysicalDevice>
+    physical_devices : array<VkPhysicalDevice>
 
 
 struct PhysicalDevice
@@ -16,7 +16,7 @@ struct PhysicalDevice
 
 
 def split(devices : PhysicalDevices) : array<PhysicalDevice>
-    return <- [{for d in devices.devices ;
+    return <- [{for d in devices.physical_devices ;
         [[PhysicalDevice physical_device=d]]}]
 
 
@@ -34,8 +34,8 @@ def enumerate_physical_devices(
     assert(result_ == VkResult VK_SUCCESS)
 
     if result ?? result_ == VkResult VK_SUCCESS
-        devices.devices |> resize(int(count))
-        devices.devices |> lock() <| $(tdevices)
+        devices.physical_devices |> resize(int(count))
+        devices.physical_devices |> lock() <| $(tdevices)
             result ?? result_ = instance |> vkEnumeratePhysicalDevices(
                 safe_addr(count), addr(tdevices[0]))
             assert(result_ == VkResult VK_SUCCESS)
