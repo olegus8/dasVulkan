@@ -5,7 +5,7 @@ require daslib/safe_addr
 require fio
 
 require vulkan
-require internal/device
+require device_ex
 
 let
     ATT_BLENDING_DISABLED <- [[VkPipelineColorBlendAttachmentState
