@@ -12,7 +12,7 @@ struct Memory
 
 
 def allocate_memory(
-    device          : VkDevice implicit;
+    device          : VkDevice;
     allocation_size : uint64;
     mem_type_index  : uint;
     var result      : VkResult? = [[ VkResult? ]]
@@ -22,9 +22,7 @@ def allocate_memory(
         allocationSize = allocation_size,
         memoryTypeIndex = mem_type_index
     ]]
-    var mem : Memory
-    unsafe
-        mem._device = reinterpret<VkDevice>(device)
+    var mem <- [[Memory _device=device]]
     var result_ = VkResult VK_SUCCESS
     result ?? result_ = device |> vkAllocateMemory(
         safe_addr(alloc_info), null, safe_addr(mem.memory))
