@@ -36,3 +36,7 @@ def enumerate_physical_devices(
             assert(result_ == VkResult VK_SUCCESS)
 
     return <- devices
+
+
+def split(devices : PhysicalDevices) : array<PhysicalDevice>
+    return <- [{for d in devices ; [[PhysicalDevice device=d]]}]
