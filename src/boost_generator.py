@@ -29,7 +29,7 @@ class GeneratedModule(LoggingObject):
 
     def generate(self):
         self.__context.write_to_file(
-            fpath='../daslib/internal/{name}.das',
+            fpath=f'../daslib/internal/{name}.das',
             content='\n'.join(self.__make_content() + ['']))
 
     def __make_content(self):
