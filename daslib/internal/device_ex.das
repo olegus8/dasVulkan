@@ -17,7 +17,7 @@ let
 def enumerate_physical_devices_ex(instance : VkInstance): array<PhysicalDevice>
     var devices <- instance |> enumerate_physical_devices()
     defer() <| ${ delete devices; }
-    return <- split(devices)
+    return <- devices |> split()
 
 
 def find_best_physical_device(inst : VkInstance; surface : VkSurfaceKHR#
