@@ -15,6 +15,10 @@ struct PhysicalDevice
     device : VkPhysicalDevice
 
 
+def split(devices : PhysicalDevices) : array<PhysicalDevice>
+    return <- [{for d in devices.devices ; [[PhysicalDevice device=d]]}]
+
+
 def enumerate_physical_devices(
     instance : VkInstance;
     var result : VkResult? = [[VkResult?]]
@@ -38,5 +42,8 @@ def enumerate_physical_devices(
     return <- devices
 
 
-def split(devices : PhysicalDevices) : array<PhysicalDevice>
-    return <- [{for d in devices.devices ; [[PhysicalDevice device=d]]}]
+def get_physical_device_properties(physical_device : PhysicalDevice
+) : VkPhysicalDeviceProperties
+    var props : VkPhysicalDeviceProperties
+    physical_device.device |> vkGetPhysicalDeviceProperties(safe_addr(props))
+    return <- props

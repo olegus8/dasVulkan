@@ -114,12 +114,6 @@ def with_graphics_queue_family(
             return
 
 
-def get_properties(device : VkPhysicalDevice#)
-    var props : VkPhysicalDeviceProperties
-    device |> vkGetPhysicalDeviceProperties(safe_addr(props))
-    return <- props
-
-
 def with_ext_props(device : VkPhysicalDevice#;
     b : block<(props:table<uint;VkExtensionProperties>)>
 )
