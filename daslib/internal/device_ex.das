@@ -40,8 +40,10 @@ def find_best_physical_device(inst : VkInstance; surface : VkSurfaceKHR#
 def get_suitability_score(device : PhysicalDevice; surface : VkSurfaceKHR#)
     var score = 1
 
+    let vk_device = device.physical_device
+
     var has_graphics = false
-    device.device |> with_graphics_queue_family(surface) <| $(qfam)
+    vk_device |> with_graphics_queue_family(surface) <| $(qfam)
         has_graphics = true
     if ! has_graphics
         score = 0
@@ -52,7 +54,6 @@ def get_suitability_score(device : PhysicalDevice; surface : VkSurfaceKHR#)
     )
         score += 1000
 
-    let vk_device = device.physical_device
     vk_device |> with_ext_props() <| $(exts)
         for required_ext in DEFAULT_REQUIRED_EXTENSIONS
             if ! key_exists(exts, hash(required_ext))
