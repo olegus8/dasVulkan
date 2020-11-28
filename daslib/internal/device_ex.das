@@ -57,7 +57,7 @@ def with_graphics_queue_family(
     for family, index in families, range(INT_MAX)
         var can_present : uint
         verify(VkResult VK_SUCCESS ==
-            device |> vkGetPhysicalDeviceSurfaceSupportKHR(
+            device.physical_device |> vkGetPhysicalDeviceSurfaceSupportKHR(
                 uint(index), surface, safe_addr(can_present)))
         if can_present == 0u
             continue
