@@ -125,7 +125,7 @@ def get_physical_device_queue_family_properties(
     var props : array<VkQueueFamilyProperties>
     props |> resize(int(count))
     props |> lock() <| $(tprops)
-        result ?? result_ = vk_dev |> vkGetPhysicalDeviceQueueFamilyProperties(
+        vk_dev |> vkGetPhysicalDeviceQueueFamilyProperties(
             safe_addr(count), addr(tprops[0]))
 
     return <- props
