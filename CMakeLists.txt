@@ -60,7 +60,7 @@ IF(NOT DAS_VULKAN_INCLUDED)
         )
 
         SET(DAS_VULKAN_BINDER_DEPS
-            ${DAS_VULKAN_DIR}/src/binding_config.py
+            ${DAS_VULKAN_DIR}/src/boost_generator.py
         )
 
         IF(DAS_BINDER_INCLUDED)
