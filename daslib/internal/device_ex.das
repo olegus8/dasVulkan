@@ -56,10 +56,13 @@ def get_suitability_score(device : PhysicalDevice; surface : VkSurfaceKHR#)
 
     var exts <- device |> enumerate_device_extension_properties()
     defer() <| ${ delete exts; }
+    let exts_hashes <- [[for e in exts; hash(e.extension_name)]]
     for required_ext in DEFAULT_REQUIRED_EXTENSIONS
-        if ! any([[for e in exts; hash(e) == hash(required_ext)]])
+        let req_hash = hash(required_ext)
+        if ! any([[for h in exts_hashes; h == req_hash]])
             score = 0
             break
+
     vk_device |> with_formats(surface) <| $(formats)
         if formats |> length() == 0
             score = 0
