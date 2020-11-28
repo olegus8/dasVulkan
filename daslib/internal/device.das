@@ -61,7 +61,7 @@ def get_physical_device_properties(physical_device : PhysicalDevice
 def enumerate_device_extension_properties(
     physical_device : PhysicalDevice;
     layer_name : string = [[string]];
-    var result : VkResult ? = [[VkResult?]]
+    var result : VkResult? = [[VkResult?]]
 ) : array<ExtensionProperties>
 
     let vk_dev = physical_device.physical_device
@@ -88,4 +88,23 @@ def enumerate_device_extension_properties(
     ]]}]
 
 
-def get_physical_device_surface_formats_khr
+def get_physical_device_surface_formats_khr(
+    physical_device : PhysicalDevice;
+    surface : VkSurfaceKHR;
+    var result : VkResult? = [[VkResult?]]
+) : array<VkSurfaceFormatKHR>
+
+    let vk_dev = physical_device.physical_device
+    var result_ = VkResult VK_SUCCESS
+    var count : uint
+
+    result ?? result_ = vk_dev |> vkGetPhysicalDeviceSurfaceFormatsKHR(
+        surface, safe_addr(count), null)
+    assert(result_ == VkResult VK_SUCCESS)
+
+    var formats : array<VkSurfaceFormatKHR>
+    if result ?? result_ == VkResult VK_SUCCESS
+        vk_formats |> resize(int(count))
+        vk_formats |> lock() <| $(tformats)
+
+    return <- formats
