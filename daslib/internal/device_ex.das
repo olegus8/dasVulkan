@@ -33,7 +33,7 @@ def find_best_physical_device(inst : VkInstance; surface : VkSurfaceKHR#
             best_device = device
     if best_score == 0
         panic("No suitable physical device found.")
-    return <- invoke(best_device)
+    return <- best_device
 
 
 [private]
