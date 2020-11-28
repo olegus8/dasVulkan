@@ -265,7 +265,7 @@ def with_swapchain_independent_state(width, height, title; b : block<(
     window |> with_surface(instance)                <| $(surface)           {
     let phys_dev <- instance |> find_best_physical_device(surface);
     let vk_phys_dev = phys_dev.physical_device;
-    instance |> with_device(vk_phys_dev, surface)   <| $(device, queue)     {
+    instance |> with_device(phys_dev, surface)      <| $(device, queue)     {
     device |> with_shader_modules([[auto[]
         "{get_das_root()}/modules/dasVulkan/example/vert.spv";
         "{get_das_root()}/modules/dasVulkan/example/frag.spv"
