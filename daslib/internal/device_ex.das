@@ -20,21 +20,20 @@ def enumerate_physical_devices_ex(instance : VkInstance): array<PhysicalDevice>
     return <- split(devices)
 
 
-def with_best_physical_device(inst : VkInstance; surface : VkSurfaceKHR#;
-    b : block<(d:VkPhysicalDevice#)>
-)
+def find_best_physical_device(inst : VkInstance; surface : VkSurfaceKHR#
+) : PhysicalDevice
     var best_score : int = 0
-    var best_device : VkPhysicalDevice
+    var best_device : PhysicalDevice
     var devices <- inst |> enumerate_physical_devices_ex()
     defer() <| ${ delete devices; }
     for device in devices
         var score = device.device |> get_suitability_score(surface)
         if score > best_score
             best_score = score
-            best_device = device.device
+            best_device = device
     if best_score == 0
         panic("No suitable physical device found.")
-    b |> invoke(best_device)
+    return <- invoke(best_device)
 
 
 [private]
