@@ -11,7 +11,7 @@ class Config(ConfigBase):
     def c_headers_to_extract_macro_consts_from(self):
         return ['GLFW/glfw3.h', 'vulkan/vulkan_core.h']
 
-    def generate_custom_files(self, context):
+    def custom_pass(self, context):
         pass
 
     def configure_macro_const(self, macro_const):
