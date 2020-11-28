@@ -9,8 +9,8 @@ require math
 require strings
 
 
-struct PhysicalDevices
-    physical_devices : array<VkPhysicalDevice>
+struct PhysicalDeviceBatch
+    physical_device_batch : array<VkPhysicalDevice>
 
 
 struct PhysicalDevice
@@ -22,15 +22,15 @@ struct ExtensionProperties
     spec_version : uint
 
 
-def split(devices : PhysicalDevices) : array<PhysicalDevice>
-    return <- [{for d in devices.physical_devices ;
+def split(devices : PhysicalDeviceBatch) : array<PhysicalDevice>
+    return <- [{for d in devices.physical_device_batch ;
         [[PhysicalDevice physical_device=d]]}]
 
 
 def enumerate_physical_devices(
     instance : VkInstance;
     var result : VkResult? = [[VkResult?]]
-) : PhysicalDevices
+) : PhysicalDeviceBatch
 
     var count : uint
     var result_ = VkResult VK_SUCCESS
@@ -47,7 +47,7 @@ def enumerate_physical_devices(
                 safe_addr(count), addr(tdevs[0]))
             assert(result_ == VkResult VK_SUCCESS)
 
-    return <- [[PhysicalDevices physical_devices <- vk_devs]]
+    return <- [[PhysicalDeviceBatch physical_device_batch <- vk_devs]]
 
 
 def enumerate_physical_devices_ex(
