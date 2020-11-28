@@ -69,7 +69,7 @@ def enumerate_device_extension_properties(
     assert(result_ == VkResult VK_SUCCESS)
 
     var vk_props : array<VkExtensionProperties>
-    defer() ${ delete vk_props; }
+    defer() <| ${ delete vk_props; }
     if result ?? result_ == VkResult VK_SUCCESS
         vk_props |> resize(int(count))
         vk_props |> lock() <| $(tprops)
