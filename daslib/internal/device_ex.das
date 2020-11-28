@@ -72,7 +72,7 @@ def find_graphics_queue_family(
         break
 
 
-def get_best_format(
+def find_best_format(
     physical_device         : PhysicalDevice;
     surface                 : VkSurfaceKHR;
     preferred_format        : VkFormat;
@@ -94,12 +94,12 @@ def get_best_format(
     return <- formats[0]
 
 
-def get_format_srgb_bgra8(
+def find_format_like_srgb_bgra8(
     physical_device : PhysicalDevice;
     surface         : VkSurfaceKHR
 ) : VkSurfaceFormatKHR
 
-    return <- physical_device |> get_best_format(surface,
+    return <- physical_device |> find_best_format(surface,
         VkFormat VK_FORMAT_B8G8R8A8_SRGB,
         VkColorSpaceKHR VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)
 
