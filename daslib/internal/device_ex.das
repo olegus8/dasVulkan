@@ -134,16 +134,18 @@ def get_best_present_mode(device : VkPhysicalDevice#; surface : VkSurfaceKHR#
 
 
 def with_device(
-    instance : VkInstance#;
-    phys_dev : VkPhysicalDevice#;
-    surface : VkSurfaceKHR;
+    instance    : VkInstance;
+    phys_dev    : PhysicalDevice;
+    surface     : VkSurfaceKHR;
     b : block<(device:VkDevice#; queue:VkQueue#)>
 )
+    let vk_phys_dev = phys_dev.physical_device
+    let graphics_family = phys_dev |> get_graphics_queue_family(surface)
     let queue_priority = 1.0f
     let queue_info <- [[VkDeviceQueueCreateInfo
         sType = (VkStructureType
             VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO),
-        queueFamilyIndex = phys_dev |> get_graphics_queue_family(surface),
+        queueFamilyIndex = graphics_family,
         queueCount = 1u,
         pQueuePriorities = safe_addr(queue_priority)
     ]]
@@ -158,10 +160,9 @@ def with_device(
         ppEnabledExtensionNames = safe_addr(DEFAULT_REQUIRED_EXTENSIONS[0])
     ]]
     verify(VkResult VK_SUCCESS == vkCreateDevice(
-        phys_dev, safe_addr(create_info), null, safe_addr(device)))
+        vk_phys_dev, safe_addr(create_info), null, safe_addr(device)))
     var queue : VkQueue
-    let qfam = phys_dev |> get_graphics_queue_family(surface)
-    device |> vkGetDeviceQueue(qfam, 0u, queue |> safe_addr())
+    device |> vkGetDeviceQueue(graphics_family, 0u, queue |> safe_addr())
     b |> invoke(device, queue)
     device |> vkDeviceWaitIdle()
     device |> vkDestroyDevice(null)
