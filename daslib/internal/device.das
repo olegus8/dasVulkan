@@ -30,6 +30,7 @@ def enumerate_physical_devices(
     instance : VkInstance;
     var result : VkResult? = [[VkResult?]]
 ) : PhysicalDevices
+
     var count : uint
     var result_ = VkResult VK_SUCCESS
 
@@ -61,6 +62,7 @@ def enumerate_device_extension_properties(
     layer_name : string;
     var result : VkResult ? = [[VkResult?]]
 ) : array<ExtensionProperties>
+
     let vk_dev = physical_device.physical_device
     var result_ = VkResult VK_SUCCESS
     var vk_layer = layer_name |> length() > 0 ? layer_name : to_string(null)
