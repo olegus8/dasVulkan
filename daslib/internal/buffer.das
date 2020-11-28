@@ -39,12 +39,10 @@ def create_buffer(
             queueFamilyIndexCount = uint(queue_family_indices |> length()),
             pQueueFamilyIndices = pindices
         ]]
-        var result_ = device |> vkCreateBuffer(
+        var result_ = VkResult VK_SUCCESS
+        result ?? result_ = device |> vkCreateBuffer(
             safe_addr(info), null, safe_addr(buf.buffer))
-        if result == null
-            assert(result_ == VkResult VK_SUCCESS)
-        else
-            *result = result_
+        assert(result_ == VkResult VK_SUCCESS)
     return <- buf
 
 
