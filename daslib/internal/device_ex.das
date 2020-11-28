@@ -132,7 +132,6 @@ def get_best_format(
     preferred_color_space   : VkColorSpaceKHR
 ) : VkSurfaceFormatKHR
 
-    var best_format : VkSurfaceFormatKHR
     var formats <- device |> get_physical_device_surface_formats_khr(surface)
     defer() <| ${ delete formats; }
     // picking ideal format if available
@@ -141,14 +140,11 @@ def get_best_format(
         &&  format.colorSpace == (VkColorSpaceKHR
                 VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)
         )
-            best_format = format
-            return
+            return <- format
     // if no ideal found, picking anything
     for format in formats
-        best_format = format
-        return
+        return <- format
     panic("No surface formats found")
-    return <- best_format
 
 
 def get_format_srgb_bgra8(device : PhysicalDevice; surface : VkSurfaceKHR
