@@ -263,24 +263,24 @@ def with_swapchain_independent_state(width, height, title; b : block<(
     with_instance()                                 <| $(instance)          {
     with_window(width, height, title)               <| $(window)            {
     window |> with_surface(instance)                <| $(surface)           {
-    instance |> with_best_physical_device(surface)  <| $(phys_dev)          {
-    instance |> with_device(phys_dev, surface)      <| $(device, queue)     {
+    let phys_dev <- instance |> find_best_physical_device(surface);
+    instance |> with_device(phys_dev.device, surface) <| $(device, queue)   {
     device |> with_shader_modules([[auto[]
         "{get_das_root()}/modules/dasVulkan/example/vert.spv";
         "{get_das_root()}/modules/dasVulkan/example/frag.spv"
     ]]) <| $(shmods) {
-    let surf_fmt <- phys_dev |> get_format_srgb_bgra8(surface);
-    let present_mode <- phys_dev |> get_best_present_mode(surface);
+    let surf_fmt <- phys_dev.device |> get_format_srgb_bgra8(surface);
+    let present_mode <- phys_dev.device |> get_best_present_mode(surface);
     device |> with_render_pass_simple(surf_fmt)     <| $(render_pass)       {
     device |> with_pipeline_layout_simple()         <| $(pipeline_layout)   {
         var cmd_pool <- device |> create_command_pool(
-            phys_dev |> get_graphics_queue_family(surface));
+            phys_dev.device |> get_graphics_queue_family(surface));
         defer() <| { delete cmd_pool; };
         b |> invoke(
             instance,
             window,
             surface,
-            phys_dev,
+            phys_dev.device,
             device,
             queue,
             surf_fmt,
@@ -291,7 +291,7 @@ def with_swapchain_independent_state(width, height, title; b : block<(
             pipeline_layout,
             cmd_pool.pool
         );
-    }}}}}}}}
+    }}}}}}}
 
 
 def with_swapchain_dependent_state(
