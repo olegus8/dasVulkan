@@ -10,7 +10,7 @@ let
 
 
 def create_buffer_exclusive(
-    device  : VkDevice implicit;
+    device  : VkDevice;
     size    : uint64;
     usage   : uint;
     flags   : uint = 0u
