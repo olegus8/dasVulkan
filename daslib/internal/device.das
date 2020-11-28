@@ -111,3 +111,21 @@ def get_physical_device_surface_formats_khr(
             assert(result_ == VkResult VK_SUCCESS)
 
     return <- formats
+
+
+def get_physical_device_queue_family_properties(
+    physical_device : PhysicalDevice;
+) : array<VkQueueFamilyProperties>
+
+    let vk_dev = physical_device.physical_device
+    var count : uint
+
+    vk_dev |> vkGetPhysicalDeviceQueueFamilyProperties(safe_addr(count), null)
+
+    var props : array<VkSurfaceFormatKHR>
+    props |> resize(int(count))
+    props |> lock() <| $(tprops)
+        result ?? result_ = vk_dev |> vkGetPhysicalDeviceQueueFamilyProperties(
+            safe_addr(count), addr(tprops[0]))
+
+    return <- props
