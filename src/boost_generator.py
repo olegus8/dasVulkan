@@ -7,5 +7,6 @@ class BoostGenerator(LoggingObject):
         self.__context = context
 
     def generate(self):
-        self.__context.write_to_file(fpath='../daslib/internal/hello.das',
+        self.__context.write_to_file(
+            fpath='../daslib/internal/device_generated.das',
             content='hello new world')
