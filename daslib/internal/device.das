@@ -50,6 +50,15 @@ def enumerate_physical_devices(
     return <- [[PhysicalDevices physical_devices <- vk_devs]]
 
 
+def enumerate_physical_devices_ex(
+    instance : VkInstance
+    var result : VkResult? = [[VkResult?]]
+): array<PhysicalDevice>
+    var devices <- instance |> enumerate_physical_devices(result)
+    defer() <| ${ delete devices; }
+    return <- devices |> split()
+
+
 def get_physical_device_properties(physical_device : PhysicalDevice
 ) : VkPhysicalDeviceProperties
     var props : VkPhysicalDeviceProperties

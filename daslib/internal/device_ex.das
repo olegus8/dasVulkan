@@ -14,11 +14,6 @@ let
     ]]
 
 
-def enumerate_physical_devices_ex(instance : VkInstance): array<PhysicalDevice>
-    var devices <- instance |> enumerate_physical_devices()
-    defer() <| ${ delete devices; }
-    return <- devices |> split()
-
 
 def find_physical_device_for_graphics(
     instance : VkInstance;
