@@ -16,7 +16,7 @@ struct PhysicalDevice
 
 
 def enumerate_physical_devices(
-    instance : VkInstance,
+    instance : VkInstance;
     var result : VkResult? = [[VkResult?]]
 ) : PhysicalDevices
 
