@@ -125,44 +125,28 @@ def with_graphics_queue_family(
             return
 
 
-def with_formats(device : VkPhysicalDevice#; surface : VkSurfaceKHR#;
-    b : block<(formats:array<VkSurfaceFormatKHR>#)>
-)
-    var formats : array<VkSurfaceFormatKHR>
-    var count : uint
-    verify(VkResult VK_SUCCESS ==
-        device |> vkGetPhysicalDeviceSurfaceFormatsKHR(
-            surface, safe_addr(count), null))
-    formats |> resize(int(count))
-    formats |> lock() <| $(tformats)
-        verify(VkResult VK_SUCCESS ==
-            device |> vkGetPhysicalDeviceSurfaceFormatsKHR(
-                surface, safe_addr(count), addr(tformats[0])))
-        b |> invoke(tformats)
-    delete formats
-
-
 def get_best_format(
-    device : VkPhysicalDevice#;
-    surface : VkSurfaceKHR#;
-    preferred_format : VkFormat;
-    preferred_color_space : VkColorSpaceKHR
+    device                  : PhysicalDevice;
+    surface                 : VkSurfaceKHR;
+    preferred_format        : VkFormat;
+    preferred_color_space   : VkColorSpaceKHR
 ) : VkSurfaceFormatKHR
     var best_format : VkSurfaceFormatKHR
-    device |> with_formats(surface) <| $(formats)
-        // picking ideal format if available
-        for format in formats
-            if (format.format == VkFormat VK_FORMAT_B8G8R8A8_SRGB
-            &&  format.colorSpace == (VkColorSpaceKHR
-                    VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)
-            )
-                best_format := format
-                return
-        // if no ideal found, picking anything
-        for format in formats
-            best_format := format
+    var formats <- device |> get_physical_device_surface_formats_khr(surface)
+    defer() <| ${ delete formats; }
+    // picking ideal format if available
+    for format in formats
+        if (format.format == VkFormat VK_FORMAT_B8G8R8A8_SRGB
+        &&  format.colorSpace == (VkColorSpaceKHR
+                VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)
+        )
+            best_format = format
             return
-        panic("No surface formats found")
+    // if no ideal found, picking anything
+    for format in formats
+        best_format = format
+        return
+    panic("No surface formats found")
     return <- best_format
 
 
