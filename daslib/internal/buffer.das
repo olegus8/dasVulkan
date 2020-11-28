@@ -22,21 +22,14 @@ def create_buffer(
     var buf : Buffer
     unsafe
         buf._device = reinterpret<VkDevice>(device)
-    queue_family_indices |> lock() <| $(tindices)
-        var pindices : uint const?
-        if tindices |> length() > 0
-            //TODO does not work without reinterpret, saying this:
-            //  can only copy compatible type, uint const?& -const
-            //      = uint const#? const#
-            unsafe
-                pindices = reinterpret<uint const?>(addr(tindices[0]))
+    queue_family_indices |> lock_data() <| $(pindices, nindices)
         let info <- [[VkBufferCreateInfo
             sType = VkStructureType VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO,
             flags = flags,
             size = size,
             usage = usage,
             sharingMode = sharing_mode,
-            queueFamilyIndexCount = uint(queue_family_indices |> length()),
+            queueFamilyIndexCount = uint(nindices),
             pQueueFamilyIndices = pindices
         ]]
         var result_ = VkResult VK_SUCCESS
