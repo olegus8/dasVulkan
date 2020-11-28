@@ -17,7 +17,7 @@ class BoostGenerator(LoggingObject):
 
     def __add_module(self, **kwargs):
         module = GeneratedModule(context=self.__context, **kwargs)
-        self.__modules.add(module)
+        self.__modules.append(module)
         return module
 
 
