@@ -80,4 +80,4 @@ def enumerate_device_extension_properties(
     return <- [{for p in vk_props; [[ExtensionProperties
         extension_name = to_string(p.extensionName),
         spec_version = p.specVersion
-    ]]]}
+    ]]}]
