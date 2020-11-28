@@ -15,6 +15,11 @@ class BoostGenerator(LoggingObject):
     def __add_devices_module(self):
         module = self.__add_module(name='devices')
 
+    def __add_module(self, **kwargs):
+        module = GeneratedModule(context=self.__context, **kwargs)
+        self.__modules.add(module)
+        return module
+
 
 class GeneratedModule(LoggingObject):
 
