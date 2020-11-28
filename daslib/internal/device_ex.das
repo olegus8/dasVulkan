@@ -37,27 +37,29 @@ def find_best_physical_device(instance : VkInstance; surface : VkSurfaceKHR#
 
 
 def get_graphics_queue_family(
-    device : PhysicalDevice;
+    physical_device : PhysicalDevice;
     surface : VkSurfaceKHR#
 ) : uint
     var found_index : uint = UINT_MAX
-    device |> with_graphics_queue_family(surface) <| $(qfam)
+    physical_device |> find_graphics_queue_family(surface) <| $(qfam)
         found_index = qfam
     assert(found_index != UINT_MAX)
     return found_index
 
 
-def with_graphics_queue_family(
-    device : PhysicalDevice;
+def find_graphics_queue_family(
+    physical_device : PhysicalDevice;
     surface : VkSurfaceKHR#;
     b : block<(qfam:uint)>
 )
-    var families <- device |> get_physical_device_queue_family_properties()
+    let vk_phys_dev = physical_device.physical_device
+    var families <- (physical_device |>
+        get_physical_device_queue_family_properties())
     defer() <| ${ delete families; }
     for family, index in families, range(INT_MAX)
         var can_present : uint
         verify(VkResult VK_SUCCESS ==
-            device.physical_device |> vkGetPhysicalDeviceSurfaceSupportKHR(
+            vk_phys_dev |> vkGetPhysicalDeviceSurfaceSupportKHR(
                 uint(index), surface, safe_addr(can_present)))
         if can_present == 0u
             continue
@@ -71,7 +73,7 @@ def with_graphics_queue_family(
 
 
 def get_best_format(
-    device                  : PhysicalDevice;
+    physical_device         : PhysicalDevice;
     surface                 : VkSurfaceKHR;
     preferred_format        : VkFormat;
     preferred_color_space   : VkColorSpaceKHR
@@ -211,7 +213,7 @@ def get_suitability_score(device : PhysicalDevice; surface : VkSurfaceKHR#)
     let vk_device = device.physical_device
 
     var has_graphics = false
-    device |> with_graphics_queue_family(surface) <| $(qfam)
+    device |> find_graphics_queue_family(surface) <| $(qfam)
         has_graphics = true
     if ! has_graphics
         score = 0
