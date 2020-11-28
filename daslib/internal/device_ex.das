@@ -66,9 +66,11 @@ def get_suitability_score(device : PhysicalDevice; surface : VkSurfaceKHR#)
             score = 0
             break
 
-    vk_device |> with_formats(surface) <| $(formats)
-        if formats |> length() == 0
-            score = 0
+    var formats <- device |> get_physical_device_surface_formats_khr(surface)
+    defer() <| ${ delete formats; }
+    if formats |> length() == 0
+        score = 0
+
     vk_device |> with_present_modes(surface) <| $(modes)
         if modes |> length() == 0
             score = 0
