@@ -79,7 +79,8 @@ def get_best_format(
     preferred_color_space   : VkColorSpaceKHR
 ) : VkSurfaceFormatKHR
 
-    var formats <- device |> get_physical_device_surface_formats_khr(surface)
+    var formats <- (physical_device |>
+        get_physical_device_surface_formats_khr(surface))
     defer() <| ${ delete formats; }
 
     for format in formats
@@ -93,10 +94,12 @@ def get_best_format(
     return <- formats[0]
 
 
-def get_format_srgb_bgra8(device : PhysicalDevice; surface : VkSurfaceKHR
+def get_format_srgb_bgra8(
+    physical_device : PhysicalDevice;
+    surface         : VkSurfaceKHR
 ) : VkSurfaceFormatKHR
 
-    return <- device |> get_best_format(surface,
+    return <- physical_device |> get_best_format(surface,
         VkFormat VK_FORMAT_B8G8R8A8_SRGB,
         VkColorSpaceKHR VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)
 
@@ -136,13 +139,13 @@ def get_best_present_mode(device : VkPhysicalDevice#; surface : VkSurfaceKHR#
 
 
 def with_device(
-    instance    : VkInstance;
-    phys_dev    : PhysicalDevice;
-    surface     : VkSurfaceKHR;
+    instance        : VkInstance;
+    physical_device : PhysicalDevice;
+    surface         : VkSurfaceKHR;
     b : block<(device:VkDevice#; queue:VkQueue#)>
 )
-    let vk_phys_dev = phys_dev.physical_device
-    let graphics_family = phys_dev |> get_graphics_queue_family(surface)
+    let vk_phys_dev = physical_device.physical_device
+    let graphics_family = physical_device |> get_graphics_queue_family(surface)
     let queue_priority = 1.0f
     let queue_info <- [[VkDeviceQueueCreateInfo
         sType = (VkStructureType
