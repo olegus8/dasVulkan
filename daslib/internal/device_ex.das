@@ -134,15 +134,15 @@ def get_best_format(
 
     var formats <- device |> get_physical_device_surface_formats_khr(surface)
     defer() <| ${ delete formats; }
-    assert(formats |> length() > 0)
-    // picking ideal format if available
+
     for format in formats
         if (format.format == VkFormat VK_FORMAT_B8G8R8A8_SRGB
         &&  format.colorSpace == (VkColorSpaceKHR
                 VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)
         )
             return <- format
-    // if no ideal found, picking anything
+
+    assert(formats |> length() > 0)
     return <- formats[0]
 
 
