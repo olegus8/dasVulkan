@@ -39,4 +39,4 @@ def enumerate_physical_devices(
 
 
 def split(devices : PhysicalDevices) : array<PhysicalDevice>
-    return <- [{for d in devices ; [[PhysicalDevice device=d]]}]
+    return <- [{for d in devices.devices ; [[PhysicalDevice device=d]]}]
