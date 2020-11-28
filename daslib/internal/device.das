@@ -51,7 +51,7 @@ def enumerate_physical_devices(
 
 
 def enumerate_physical_devices_ex(
-    instance : VkInstance
+    instance : VkInstance;
     var result : VkResult? = [[VkResult?]]
 ): array<PhysicalDevice>
     var devices <- instance |> enumerate_physical_devices(result)
