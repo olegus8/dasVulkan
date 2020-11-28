@@ -86,3 +86,6 @@ def enumerate_device_extension_properties(
         extension_name = to_string(p.extensionName),
         spec_version = p.specVersion
     ]]}]
+
+
+def get_physical_device_surface_formats_khr
