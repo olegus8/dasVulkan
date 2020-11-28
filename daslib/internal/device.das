@@ -5,6 +5,7 @@ require daslib/safe_addr
 require core
 require vulkan
 require math
+require strings
 
 
 struct PhysicalDevices
@@ -61,8 +62,9 @@ def enumerate_device_extension_properties(
     var result : VkResult ? = [[VkResult?]]
 ) : array<ExtensionProperties>
     let vk_dev = physical_device.physical_device
-    var count : uint
+    var result_ = VkResult VK_SUCCESS
     var vk_layer = layer_name |> length() > 0 ? layer_name : to_string(null)
+    var count : uint
 
     result ?? result_ = vk_dev |> vkEnumerateDeviceExtensionProperties(
         vk_layer, safe_addr(count), null)
