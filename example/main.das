@@ -275,7 +275,7 @@ def with_swapchain_independent_state(width, height, title; b : block<(
     device |> with_render_pass_simple(surf_fmt)     <| $(render_pass)       {
     device |> with_pipeline_layout_simple()         <| $(pipeline_layout)   {
         var cmd_pool <- device |> create_command_pool(
-            vk_phys_dev |> get_graphics_queue_family(surface));
+            phys_dev |> get_graphics_queue_family(surface));
         defer() <| { delete cmd_pool; };
         b |> invoke(
             instance,
