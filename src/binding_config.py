@@ -1,4 +1,5 @@
 from das_binder.config import ConfigBase
+from boost_generator import BoostGenerator
 
 
 class Config(ConfigBase):
@@ -12,7 +13,7 @@ class Config(ConfigBase):
         return ['GLFW/glfw3.h', 'vulkan/vulkan_core.h']
 
     def custom_pass(self, context):
-        pass
+        BoostGenerator(context).generate()
 
     def configure_macro_const(self, macro_const):
         if '"' in macro_const.value:
