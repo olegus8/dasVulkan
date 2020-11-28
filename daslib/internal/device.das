@@ -60,8 +60,8 @@ def get_physical_device_properties(physical_device : PhysicalDevice
 
 def enumerate_device_extension_properties(
     physical_device : PhysicalDevice;
-    layer_name : string = [[string]];
-    var result : VkResult? = [[VkResult?]]
+    layer_name      : string = [[string]];
+    var result      : VkResult? = [[VkResult?]]
 ) : array<ExtensionProperties>
 
     let vk_dev = physical_device.physical_device
@@ -90,8 +90,8 @@ def enumerate_device_extension_properties(
 
 def get_physical_device_surface_formats_khr(
     physical_device : PhysicalDevice;
-    surface : VkSurfaceKHR;
-    var result : VkResult? = [[VkResult?]]
+    surface         : VkSurfaceKHR;
+    var result      : VkResult? = [[VkResult?]]
 ) : array<VkSurfaceFormatKHR>
 
     let vk_dev = physical_device.physical_device
