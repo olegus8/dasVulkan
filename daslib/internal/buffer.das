@@ -11,7 +11,7 @@ struct Buffer
 
 
 def create_buffer(
-    device                  : VkDevice implicit; //TODO: remove implicit
+    device                  : VkDevice;
     size                    : uint64;
     usage                   : uint;
     sharing_mode            : VkSharingMode;
@@ -19,10 +19,7 @@ def create_buffer(
     flags                   : uint = 0u;
     var result              : VkResult? = [[ VkResult? ]]
 ) : Buffer
-    var buf : Buffer
-    //TODO: remove reinterpret once implicit removed
-    unsafe
-        buf._device = reinterpret<VkDevice>(device)
+    var buf <- [[Buffer _device=device]]
     queue_family_indices |> lock_data() <| $(pindices, nindices)
         let info <- [[VkBufferCreateInfo
             sType = VkStructureType VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO,
