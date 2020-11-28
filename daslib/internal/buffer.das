@@ -17,7 +17,7 @@ def create_buffer(
     sharing_mode            : VkSharingMode;
     queue_family_indices    : array<uint> implicit;
     flags                   : uint = 0u;
-    var result              : VkResult?
+    var result              : VkResult? = null
 ) : Buffer
     var buf : Buffer
     unsafe
