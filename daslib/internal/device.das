@@ -104,8 +104,8 @@ def get_physical_device_surface_formats_khr(
 
     var formats : array<VkSurfaceFormatKHR>
     if result ?? result_ == VkResult VK_SUCCESS
-        vk_formats |> resize(int(count))
-        vk_formats |> lock() <| $(tformats)
+        formats |> resize(int(count))
+        formats |> lock() <| $(tformats)
             result ?? result_ = vk_dev |> vkGetPhysicalDeviceSurfaceFormatsKHR(
                 surface, safe_addr(count), addr(tformats[0]))
             assert(result_ == VkResult VK_SUCCESS)
