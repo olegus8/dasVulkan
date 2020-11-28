@@ -10,10 +10,10 @@ let
 
 
 def create_buffer_exclusive(
-    device : VkDevice implicit;
-    size : uint64;
-    usage : uint;
-    flags : uint = 0u
+    device  : VkDevice implicit;
+    size    : uint64;
+    usage   : uint;
+    flags   : uint = 0u
 ) : Buffer
     return <- create_buffer([device=device, size=size, usage=usage,
         sharing_mode=VkSharingMode VK_SHARING_MODE_EXCLUSIVE,
