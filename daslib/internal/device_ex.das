@@ -20,7 +20,7 @@ def find_physical_device_for_graphics(
 ) : PhysicalDevice
     var best_score : int = 0
     var best_device : PhysicalDevice
-    var devices <- instance |> enumerate_physical_devices_ex()
+    var devices <- instance |> enumerate_physical_devices_no_batch()
     defer() <| ${ delete devices; }
     for device in devices
         var score = device |> get_suitability_score(surface)

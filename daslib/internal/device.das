@@ -50,7 +50,7 @@ def enumerate_physical_devices(
     return <- [[PhysicalDeviceBatch physical_device_batch <- vk_devs]]
 
 
-def enumerate_physical_devices_ex(
+def enumerate_physical_devices_no_batch(
     instance : VkInstance;
     var result : VkResult? = [[VkResult?]]
 ): array<PhysicalDevice>
