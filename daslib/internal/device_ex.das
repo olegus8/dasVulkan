@@ -104,38 +104,18 @@ def find_format_like_srgb_bgra8(
         VkColorSpaceKHR VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)
 
 
-def with_present_modes(device : VkPhysicalDevice#; surface : VkSurfaceKHR#;
-    b : block<(formats:array<VkPresentModeKHR>#)>
-)
-    var modes : array<VkPresentModeKHR>
-    var count : uint
-    verify(VkResult VK_SUCCESS ==
-        device |> vkGetPhysicalDeviceSurfacePresentModesKHR(
-            surface, safe_addr(count), null))
-    modes |> resize(int(count))
-    modes |> lock() <| $(tmodes)
-        verify(VkResult VK_SUCCESS ==
-            device |> vkGetPhysicalDeviceSurfacePresentModesKHR(
-                surface, safe_addr(count), addr(tmodes[0])))
-        b |> invoke(tmodes)
-    delete modes
-
-
-def get_best_present_mode(device : VkPhysicalDevice#; surface : VkSurfaceKHR#
+def find_best_present_mode(
+    physical_device : PhysicalDevice;
+    surface         : VkSurfaceKHR
 ) : VkPresentModeKHR
-    var found_mode : VkPresentModeKHR
-    device |> with_present_modes(surface) <| $(modes)
-        for preferred in [[auto[]
-            VkPresentModeKHR VK_PRESENT_MODE_MAILBOX_KHR;
-            VkPresentModeKHR VK_PRESENT_MODE_FIFO_KHR
-        ]]
-            for mode in modes
-                if mode == preferred
-                    found_mode = mode
-                    return
-        panic("Should not be here since FIFO mode is required " +
-            "to be supported by Vulkan spec")
-    return found_mode
+    var modes <- (physical_device |>
+        get_physical_device_surface_present_modes_khr(surface))
+    defer() <| ${ delete modes; }
+    for mode in modes
+        if mode == VkPresentModeKHR VK_PRESENT_MODE_MAILBOX_KHR
+            return mode
+    // spec says it's always supported
+    return VkPresentModeKHR VK_PRESENT_MODE_FIFO_KHR
 
 
 def with_device(
