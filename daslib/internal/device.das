@@ -119,7 +119,6 @@ def get_physical_device_queue_family_properties(
 
     let vk_dev = physical_device.physical_device
     var count : uint
-
     vk_dev |> vkGetPhysicalDeviceQueueFamilyProperties(safe_addr(count), null)
 
     var props : array<VkQueueFamilyProperties>
