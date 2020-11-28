@@ -17,7 +17,7 @@ def create_buffer(
     sharing_mode            : VkSharingMode;
     queue_family_indices    : array<uint> implicit;
     flags                   : uint = 0u;
-    result                  : VkResult? = null;
+    var result              : VkResult?;
 ) : Buffer
     var buf : Buffer
     unsafe
@@ -41,10 +41,10 @@ def create_buffer(
         ]]
         var result_ = device |> vkCreateBuffer(
             safe_addr(info), null, safe_addr(buf.buffer))
-        if result == null:
+        if result == null
             assert(result_ == VkResult VK_SUCCESS)
         else
-            deref(result) = result_
+            *result = result_
     return <- buf
 
 
