@@ -37,7 +37,7 @@ def find_best_physical_device(instance : VkInstance; surface : VkSurfaceKHR#
 
 
 def get_graphics_queue_family(
-    device : VkPhysicalDevice#;
+    device : PhysicalDevice;
     surface : VkSurfaceKHR#
 ) : uint
     var found_index : uint = UINT_MAX
@@ -210,7 +210,7 @@ def get_suitability_score(device : PhysicalDevice; surface : VkSurfaceKHR#)
     let vk_device = device.physical_device
 
     var has_graphics = false
-    vk_device |> with_graphics_queue_family(surface) <| $(qfam)
+    device |> with_graphics_queue_family(surface) <| $(qfam)
         has_graphics = true
     if ! has_graphics
         score = 0
