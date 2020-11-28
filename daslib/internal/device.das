@@ -59,7 +59,7 @@ def enumerate_device_extension_properties(
     physical_device : PhysicalDevice;
     layer_name : string;
     var result : VkResult ? = [[VkResult?]]
-)
+) : array<ExtensionProperties>
     let vk_dev = physical_device.physical_device
     var count : uint
     var vk_layer = layer_name |> length() > 0 ? layer_name : to_string(null)
