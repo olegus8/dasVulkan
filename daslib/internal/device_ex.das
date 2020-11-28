@@ -131,6 +131,7 @@ def get_best_format(
     preferred_format        : VkFormat;
     preferred_color_space   : VkColorSpaceKHR
 ) : VkSurfaceFormatKHR
+
     var best_format : VkSurfaceFormatKHR
     var formats <- device |> get_physical_device_surface_formats_khr(surface)
     defer() <| ${ delete formats; }
@@ -150,10 +151,9 @@ def get_best_format(
     return <- best_format
 
 
-def get_format_srgb_bgra8(
-    device : VkPhysicalDevice#;
-    surface : VkSurfaceKHR#
+def get_format_srgb_bgra8(device : PhysicalDevice; surface : VkSurfaceKHR
 ) : VkSurfaceFormatKHR
+
     return <- device |> get_best_format(surface,
         VkFormat VK_FORMAT_B8G8R8A8_SRGB,
         VkColorSpaceKHR VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)

@@ -270,7 +270,7 @@ def with_swapchain_independent_state(width, height, title; b : block<(
         "{get_das_root()}/modules/dasVulkan/example/vert.spv";
         "{get_das_root()}/modules/dasVulkan/example/frag.spv"
     ]]) <| $(shmods) {
-    let surf_fmt <- vk_phys_dev |> get_format_srgb_bgra8(surface);
+    let surf_fmt <- phys_dev |> get_format_srgb_bgra8(surface);
     let present_mode <- vk_phys_dev |> get_best_present_mode(surface);
     device |> with_render_pass_simple(surf_fmt)     <| $(render_pass)       {
     device |> with_pipeline_layout_simple()         <| $(pipeline_layout)   {
