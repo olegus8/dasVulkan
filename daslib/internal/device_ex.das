@@ -14,7 +14,6 @@ let
     ]]
 
 
-
 def find_physical_device_for_graphics(
     instance : VkInstance;
     surface : VkSurfaceKHR
