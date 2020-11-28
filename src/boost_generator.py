@@ -5,8 +5,27 @@ class BoostGenerator(LoggingObject):
 
     def __init__(self, context):
         self.__context = context
+        self.__modules = []
+        self.__add_devices_module()
+
+    def generate(self):
+        for module in self.__modules:
+            module.generate()
+
+    def __add_devices_module(self):
+        module = self.__add_module(name='devices')
+
+
+class GeneratedModule(LoggingObject):
+
+    def __init__(self, name, context):
+        self.__name = name
+        self.__context = context
 
     def generate(self):
         self.__context.write_to_file(
-            fpath='../daslib/internal/device_generated.das',
-            content='hello new world')
+            fpath='../daslib/internal/{name}.das',
+            content='\n'.join(self.__make_content() + ['']))
+
+    def __make_content(self):
+        return ['hello world']
