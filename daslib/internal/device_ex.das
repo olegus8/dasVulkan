@@ -104,7 +104,7 @@ def find_format_like_srgb_bgra8(
         VkColorSpaceKHR VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)
 
 
-def find_best_present_mode(
+def find_present_mode_like_mailbox(
     physical_device : PhysicalDevice;
     surface         : VkSurfaceKHR
 ) : VkPresentModeKHR
