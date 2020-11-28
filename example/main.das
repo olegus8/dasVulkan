@@ -249,7 +249,7 @@ def with_swapchain_independent_state(width, height, title; b : block<(
     instance        : VkInstance#;
     window          : GLFWwindow_DasHandle#;
     surface         : VkSurfaceKHR#;
-    phys_dev        : VkPhysicalDevice#;
+    phys_dev        : PhysicalDevice;
     device          : VkDevice#;
     queue           : VkQueue;
     surf_fmt        : VkSurfaceFormatKHR implicit;
@@ -264,23 +264,24 @@ def with_swapchain_independent_state(width, height, title; b : block<(
     with_window(width, height, title)               <| $(window)            {
     window |> with_surface(instance)                <| $(surface)           {
     let phys_dev <- instance |> find_best_physical_device(surface);
-    instance |> with_device(phys_dev.device, surface) <| $(device, queue)   {
+    let vk_phys_dev = phys_dev.physical_device;
+    instance |> with_device(vk_phys_dev, surface)   <| $(device, queue)     {
     device |> with_shader_modules([[auto[]
         "{get_das_root()}/modules/dasVulkan/example/vert.spv";
         "{get_das_root()}/modules/dasVulkan/example/frag.spv"
     ]]) <| $(shmods) {
-    let surf_fmt <- phys_dev.device |> get_format_srgb_bgra8(surface);
-    let present_mode <- phys_dev.device |> get_best_present_mode(surface);
+    let surf_fmt <- vk_phys_dev |> get_format_srgb_bgra8(surface);
+    let present_mode <- vk_phys_dev |> get_best_present_mode(surface);
     device |> with_render_pass_simple(surf_fmt)     <| $(render_pass)       {
     device |> with_pipeline_layout_simple()         <| $(pipeline_layout)   {
         var cmd_pool <- device |> create_command_pool(
-            phys_dev.device |> get_graphics_queue_family(surface));
+            vk_phys_dev |> get_graphics_queue_family(surface));
         defer() <| { delete cmd_pool; };
         b |> invoke(
             instance,
             window,
             surface,
-            phys_dev.device,
+            phys_dev,
             device,
             queue,
             surf_fmt,
@@ -453,7 +454,7 @@ def main
         instance        : VkInstance;
         window          : GLFWwindow_DasHandle;
         surface         : VkSurfaceKHR;
-        phys_dev        : VkPhysicalDevice;
+        phys_dev        : PhysicalDevice;
         device          : VkDevice;
         queue           : VkQueue;
         surf_fmt        : VkSurfaceFormatKHR implicit;
@@ -464,10 +465,10 @@ def main
         pipeline_layout : VkPipelineLayout;
         cmd_pool        : VkCommandPool
     )
-        let props <- phys_dev |> get_properties()
+        let props <- phys_dev |> get_physical_device_properties()
         print("Using {props.deviceName |> to_string()}\n")
         device |> with_baked_vertex_buffer(
-            phys_dev, cmd_pool, queue, vertices
+            phys_dev.physical_device, cmd_pool, queue, vertices
         ) <| $(vbuf)
             var keep_running = true
             while keep_running // swapchain re-creation loop
@@ -480,7 +481,7 @@ def main
                     instance,
                     window,
                     surface,
-                    phys_dev,
+                    phys_dev.physical_device,
                     device,
                     queue,
                     surf_fmt,
@@ -499,7 +500,8 @@ def main
                 )
                     print("{sc.framebuffers |> length()} " +
                         "images in swap chain\n")
-                    device |> with_draw_commands(phys_dev, window, surface,
+                    device |> with_draw_commands(phys_dev.physical_device,
+                        window, surface,
                         render_pass, sc.framebuffers, pipeline, cmd_pool,
                         queue, vbuf, vertices |> length()
                     ) <| $(sc_draw_cmds)
