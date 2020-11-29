@@ -23,7 +23,7 @@ def split(batch : PhysicalDeviceBatch) : array<PhysicalDevice>
         [[PhysicalDevice physical_device=h]]}]
 
 def enumerate_physical_devices(
-    instance : VkInstance;
+    instance : Instance;
     var result : VkResult? = [[VkResult?]]
 ) : PhysicalDeviceBatch
 
@@ -31,7 +31,7 @@ def enumerate_physical_devices(
     var result_ = VkResult VK_SUCCESS
 
     result ?? result_ = vkEnumeratePhysicalDevices(
-        instance, safe_addr(count), null
+        instance.instance, safe_addr(count), null
     )
     assert(result_ == VkResult VK_SUCCESS)
 
@@ -40,14 +40,14 @@ def enumerate_physical_devices(
         vk_handles |> resize(int(count))
         vk_handles |> lock() <| $(thandles)
             result ?? result_ = vkEnumeratePhysicalDevices(
-                instance, safe_addr(count), addr(thandles[0])
+                instance.instance, safe_addr(count), addr(thandles[0])
             )
             assert(result_ == VkResult VK_SUCCESS)
 
     return <- [[PhysicalDeviceBatch physical_device_batch <- vk_handles]]
 
 def enumerate_physical_devices_no_batch(
-    instance : VkInstance;
+    instance : Instance;
     var result : VkResult? = [[VkResult?]]
 ): array<PhysicalDevice>
     var handles <- enumerate_physical_devices(instance, result)

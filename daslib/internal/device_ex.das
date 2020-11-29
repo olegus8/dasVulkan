@@ -7,6 +7,7 @@ require core
 require vulkan
 require math
 require device
+require instance
 
 let
     DEFAULT_REQUIRED_EXTENSIONS = [[auto[]
@@ -15,7 +16,7 @@ let
 
 
 def find_physical_device_for_graphics(
-    instance : VkInstance;
+    instance : Instance;
     surface : VkSurfaceKHR
 ) : PhysicalDevice
     var best_score : int = 0
@@ -115,7 +116,6 @@ def find_present_mode_like_mailbox(
 
 
 def with_device(
-    instance        : VkInstance;
     physical_device : PhysicalDevice;
     surface         : VkSurfaceKHR;
     b : block<(device:VkDevice#; queue:VkQueue#)>
