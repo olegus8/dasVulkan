@@ -13,7 +13,7 @@ class Config(ConfigBase):
         return ['GLFW/glfw3.h', 'vulkan/vulkan_core.h']
 
     def custom_pass(self, context):
-        BoostGenerator(context).generate()
+        BoostGenerator(context).write()
 
     def configure_macro_const(self, macro_const):
         if '"' in macro_const.value:
