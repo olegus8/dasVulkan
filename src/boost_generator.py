@@ -44,6 +44,9 @@ class Handle(object):
         self.__fn_destroy = fn_destroy
         self.__params = params or []
 
+        if self.__fn_create.is_batched:
+            assert self.__fn_destroy is None or self.__fn_destroy.is_batched
+
     @property
     def __is_batched(self):
         return self.__fn_create.is_batched
