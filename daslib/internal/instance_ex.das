@@ -9,7 +9,7 @@ def with_instance(b : block<(inst:VkInstance implicit)>)
     var exts <- get_required_instance_extensions()
     defer() <| ${ delete exts; }
 
-    var create_info = [[InstanceCreateInfo
+    var create_info <- [[InstanceCreateInfo
         enabled_extension_names = exts]]
     defer() <| ${ delete create_info; }
 
