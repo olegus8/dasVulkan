@@ -20,7 +20,7 @@ class BoostGenerator(LoggingObject):
         self.__add_vk_handles()
 
     def __add_vk_handles(self):
-        self.__add_vk_handle(name='VkPhysicalDevice',
+        self.__add_vk_handle(vk_type_name='VkPhysicalDevice',
             ctor='vkEnumeratePhysicalDevices',
             p_count='pPhysicalDeviceCount',
             p_handles='pPhysicalDevices')
@@ -53,11 +53,11 @@ class BoostGenerator(LoggingObject):
 
 class VkHandle(object):
 
-    def __init__(self, generator, name, ctor,
+    def __init__(self, generator, vk_type_name, ctor,
         dtor=None, life_params=None, p_count=None, p_handles=None
     ):
         self.__generator = generator
-        self.__name = name
+        self.__vk_type_name = vk_type_name
         self.__ctor = ctor
         self.__dtor = dtor
         self.__life_params = life_params or []
@@ -70,8 +70,8 @@ class VkHandle(object):
 
     @property
     def __boost_type(self):
-        assert_starts_with(self.__name, 'Vk')
-        return self.__name[2:]
+        assert_starts_with(self.__vk_type_name, 'Vk')
+        return self.__vk_type_name[2:]
 
     @property
     def __boost_batch_type(self):
@@ -84,10 +84,6 @@ class VkHandle(object):
     @property
     def __boost_batch_attr(self):
         return self.__boost_attr + '_batch'
-
-    @property
-    def __das_handle_type(self):
-        return self.__name
 
     def generate(self):
         lines = []
@@ -111,7 +107,7 @@ class VkHandle(object):
         return [
             '',
            f'struct {self.__boost_type}',
-           f'    {self.__boost_attr} : {self.__das_handle_type}',
+           f'    {self.__boost_attr} : {self.__vk_type_name}',
         ]
 
     def __generate_batched_types(self):
@@ -119,7 +115,7 @@ class VkHandle(object):
             '',
            f'struct {self.__boost_batch_type}',
            f'    {self.__boost_batch_attr} : '
-                    f'array<{self.__das_handle_type}>',
+                    f'array<{self.__vk_type_name}>',
             '',
            f'def split(batch : {self.__boost_batch_type}) '
                 f': array<{self.__boost_type}>',
@@ -148,7 +144,7 @@ class VkHandle(object):
            f'        instance, safe_addr(count), null)',
            f'    assert(result_ == VkResult VK_SUCCESS)',
             '',
-           f'    var vk_handles : array<{self.__das_handle_type}>',
+           f'    var vk_handles : array<{self.__vk_type_name}>',
            f'    if result ?? result_ == VkResult VK_SUCCESS && count > 0u',
            f'        vk_handles |> resize(int(count))',
            f'        vk_handles |> lock() <| $(thandles)',
