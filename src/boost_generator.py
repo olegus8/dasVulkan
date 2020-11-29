@@ -2,6 +2,10 @@ from das_shared.object_base import LoggingObject
 from das_shared.assertions import assert_starts_with
 
 
+class VulkanBoostError(Exception):
+    pass
+
+
 class BoostGenerator(LoggingObject):
 
     def __init__(self, context):
@@ -196,3 +200,10 @@ def boost_camel_to_lower(camel):
             result += '_'
         result += c.lower()
     return result
+
+
+def get_boost_type(c_type):
+    m = re.match(r'struct Vk(.*)_T \*', c_type)
+    if m:
+        return m.group(1)
+    raise VulkanBoostError(f'Unknown type: {c_type}')
