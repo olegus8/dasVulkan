@@ -261,7 +261,7 @@ class BoostVkHandleType(BoostType):
         return f'{boost_value}.{attr}'
 
 
-class BoostVkHandlePassthroughType(BoostType):
+class BoostPassthroughType(BoostType):
     pass
 
 
@@ -299,7 +299,7 @@ def to_boost_type(c_type):
     m = re.match(r'struct Vk(.*)_T \*', c_type)
     if m:
         return BoostVkHandleType(name=m.group(1))
-    raise VulkanBoostError(f'Unknown type: {c_type}')
+    return BoostPassthroughType(name=c_type)
 
 def to_boost_func_name(vk_name):
     assert_starts_with(vk_name, 'vk')
