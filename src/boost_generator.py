@@ -188,10 +188,26 @@ class VkHandle(object):
                     f'{self.__boost_batch_attr} <- vk_handles]]',
             '',
            f'def {self.__boost_enumerator}_no_batch(',
-           f'    instance : VkInstance;',
+        ]
+        for param in self.__vk_enumerator.params:
+            if param.name in [self.__p_count, self.__p_handles]:
+                continue
+            boost_type = get_boost_type(param.type)
+            lines += [
+               f'    {param.das_name} : {boost_type};',
+            ]
+        lines += [
            f'    var result : VkResult? = [[VkResult?]]',
            f'): array<{self.__boost_type}>',
-           f'    var handles <- {self.__boost_enumerator}(instance, result)',
+        ]
+        params = []
+        for param in self.__vk_enumerator.params:
+            if param.name in [self.__p_count, self.__p_handles]:
+                continue
+            params.append(param.das_name)
+        params_text = ', '.join(params + ['result'])
+        lines += [
+           f'    var handles <- {self.__boost_enumerator}({params_text})',
             '    defer() <| ${ delete handles; }',
            f'    return <- handles |> split()',
         ]
