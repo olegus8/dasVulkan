@@ -24,7 +24,7 @@ def split(batch : PhysicalDeviceBatch) : array<PhysicalDevice>
         [[PhysicalDevice physical_device=h]]}]
 
 def enumerate_physical_devices(
-    instance : <boost_generator.BoostVkHandleType object at 0x1096fc460>;
+    instance : Instance;
     var result : VkResult? = [[VkResult?]]
 ) : PhysicalDeviceBatch
 

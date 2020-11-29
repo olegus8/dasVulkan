@@ -182,14 +182,13 @@ class VkHandle(object):
            f'    result ?? result_ = {self.__vk_enumerator_name}('
         ]
         params = []
-        for param in self.__vk_enumerator.params:
-            if param.name == self.__p_count:
+        for param in self.__vk_enumerator_params:
+            if param.vk.name == self.__p_count:
                 params.append('safe_addr(count)')
-            elif param.name == self.__p_handles:
+            elif param.vk.name == self.__p_handles:
                 params.append('null')
             else:
-                boost_type = to_boost_type(param.type)
-                params.append(boost_type.to_vk_value(param.das_name))
+                params.append(param.boost.vk_value)
         lines += [
             '        ' + ', '.join(params),
             '    )',
@@ -202,14 +201,13 @@ class VkHandle(object):
            f'            result ?? result_ = {self.__vk_enumerator_name}(',
         ]
         params = []
-        for param in self.__vk_enumerator.params:
-            if param.name == self.__p_count:
+        for param in self.__vk_enumerator_params:
+            if param.vk.name == self.__p_count:
                 params.append('safe_addr(count)')
-            elif param.name == self.__p_handles:
+            elif param.vk.name == self.__p_handles:
                 params.append('addr(thandles[0])')
             else:
-                boost_type = to_boost_type(param.type)
-                params.append(boost_type.to_vk_value(param.das_name))
+                params.append(param.boost.vk_value)
         lines += [
             '                ' + ', '.join(params),
            f'            )',
@@ -220,22 +218,21 @@ class VkHandle(object):
             '',
            f'def {self.__boost_enumerator}_no_batch(',
         ]
-        for param in self.__vk_enumerator.params:
-            if param.name in [self.__p_count, self.__p_handles]:
+        for param in self.__vk_enumerator_params:
+            if param.vk.name in [self.__p_count, self.__p_handles]:
                 continue
-            boost_type = to_boost_type(param.type)
             lines += [
-               f'    {param.das_name} : {boost_type.name};',
+               f'    {param.boost.name} : {param.boost.type};',
             ]
         lines += [
            f'    var result : VkResult? = [[VkResult?]]',
            f'): array<{self.__boost_type}>',
         ]
         params = []
-        for param in self.__vk_enumerator.params:
-            if param.name in [self.__p_count, self.__p_handles]:
+        for param in self.__vk_enumerator_params:
+            if param.vk.name in [self.__p_count, self.__p_handles]:
                 continue
-            params.append(param.das_name)
+            params.append(param.boost.name)
         params_text = ', '.join(params + ['result'])
         lines += [
            f'    var handles <- {self.__boost_enumerator}({params_text})',
@@ -285,6 +282,10 @@ class BoostParam(object):
     @property
     def type(self):
         return self.__type.name
+
+    @property
+    def vk_value(self):
+        return self.__type.to_vk_value(self.name)
 
 
 def boost_camel_to_lower(camel):
