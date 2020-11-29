@@ -241,7 +241,7 @@ def boost_camel_to_lower(camel):
     return result
 
 
-def get_boost_type(c_type):
+def to_boost_type(c_type):
     m = re.match(r'struct Vk(.*)_T \*', c_type)
     if m:
         return BoostVkHandleType(name=m.group(1))
