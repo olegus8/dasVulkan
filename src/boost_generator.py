@@ -80,6 +80,14 @@ class VkHandle(object):
         return self.__generator.functions[self.__vk_enumerator_name]
 
     @property
+    def __vk_ctor(self):
+        return self.__generator.functions[self.__vk_ctor_name]
+
+    @property
+    def __vk_dtor(self):
+        return self.__generator.functions[self.__vk_dtor_name]
+
+    @property
     def __is_batched(self):
         return self.__p_count is not None
 
