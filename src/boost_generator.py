@@ -120,6 +120,9 @@ class VkHandle(object):
         if self.__is_batched:
             lines += self.__generate_batched_types()
             lines += self.__generate_enumerators()
+        else:
+            lines += self.__generate_ctor()
+            lines += self.__generate_dtor()
         return lines
 
     def __generate_types(self):
