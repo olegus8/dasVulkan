@@ -58,30 +58,52 @@ class VkHandle(object):
         self.__p_count = p_count
         self.__p_items = p_items
 
+    @property
     def __is_batched(self):
-        
+        return self.__p_count is not None
+
+    @property
+    def __boost_type(self):
+        assert_starts_with(self.__name, 'Vk')
+        return self.__name[2:]
+
+    @property
+    def __boost_batch_type(self):
+        return self.__boost_type + 'Batch'
+
+    @property
+    def __boost_attr(self):
+        return boost_camel_to_lower(self.__boost_type)
+
+    @property
+    def __boost_batch_attr(self):
+        return self.__boost_attr + '_batch'
+
+    @property
+    def __das_handle_type(self):
+        return self.__name
 
     def generate(self):
-        return []
+        lines = []
+        lines += [
+            '',
+           f'struct {self.__boost_type}',
+           f'    {self.__boost_attr} : {self.__das_handle_type}',
+        ]
+        if self.__is_batched:
+            lines += [
+                '',
+               f'struct {self.__boost_batch_type}',
+               f'    {self.__boost_batch_attr} : '
+                        f'array<{self.__das_handle_type}>',
+            ]
+        return lines
 
 
-class FuncCreateBase(object):
-
-    def __init__(name):
-        self.name = name
-
-    @property
-    def is_batched(self):
-        return False
-
-
-class FuncCreateBatch(FuncCreateBase):
-
-    def __init__(name, p_count, p_handles):
-        self.__name = name
-        self.__p_count = p_count
-        self.__p_handles = p_handles
-
-    @property
-    def is_batch(self):
-        return True
+def boost_camel_to_lower(camel):
+    result = ''
+    for c in camel:
+        if c.isupper() and result and result[-1] != '_':
+            result += '_'
+        result += c.lower()
+    return result
