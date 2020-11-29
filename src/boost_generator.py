@@ -166,7 +166,7 @@ class VkHandle(object):
         lines += [
             '',
            f'def {self.__boost_enumerator}(']
-        for param in self.__vk_enumerator_params):
+        for param in self.__vk_enumerator_params:
             if param.vk.name in [self.__p_count, self.__p_handles]:
                 continue
             lines += [
