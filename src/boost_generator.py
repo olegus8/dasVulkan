@@ -65,11 +65,13 @@ class BoostGenerator(LoggingObject):
 class VkHandle(object):
 
     def __init__(self, generator, handle, enumerator=None,
-        p_count=None, p_handles=None
+        p_count=None, p_handles=None, ctor=None, dtor=None,
     ):
         self.__generator = generator
         self.__vk_type_name = handle
         self.__vk_enumerator_name = enumerator
+        self.__vk_ctor_name = ctor
+        self.__vk_dtor_name = dtor
         self.__p_count = p_count
         self.__p_handles = p_handles
 
