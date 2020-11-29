@@ -42,6 +42,9 @@ class BoostGenerator(LoggingObject):
             'options indenting = 4',
             'options no_aot = true',
             '',
+            'require daslib/defer',
+            'require daslib/safe_addr',
+            '',
             'require vulkan',
         ] + [
             line for handle in self.__handles for line in handle.generate()
