@@ -103,7 +103,8 @@ def finalize(var instance : Instance)
 def get_required_instance_extensions() : array<string>
     var exts : array<string>
     var count : uint
-    let glfw_exts = glfwGetRequiredInstanceExtensions(safe_addr(count))
+    let glfw_exts : string const ? = glfwGetRequiredInstanceExtensions(
+        safe_addr(count))
     exts.resize(int(count))
     for ext, i in exts, range(INT_MAX)
         ext := *(glfw_exts + i)
