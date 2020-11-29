@@ -147,13 +147,11 @@ class VkHandle(object):
 
     @property
     def __boost_enumerator(self):
-        assert_starts_with(self.__vk_enumerator_name, 'vk')
-        return boost_camel_to_lower(self.__vk_enumerator_name[2:])
+        return to_boost_func_name(self.__vk_enumerator_name)
 
     @property
     def __boost_ctor(self):
-        assert_starts_with(self.__vk_ctor_name, 'vk')
-        return boost_camel_to_lower(self.__vk_ctor_name[2:])
+        return to_boost_func_name(self.__vk_ctor_name)
 
     def __generate_enumerators(self):
         lines = []
@@ -268,9 +266,12 @@ def boost_camel_to_lower(camel):
         result += c.lower()
     return result
 
-
 def to_boost_type(c_type):
     m = re.match(r'struct Vk(.*)_T \*', c_type)
     if m:
         return BoostVkHandleType(name=m.group(1))
     raise VulkanBoostError(f'Unknown type: {c_type}')
+
+def to_boost_func_name(vk_name):
+    assert_starts_with(vk_name, 'vk')
+    return boost_camel_to_lower(vk_name[2:])
