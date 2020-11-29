@@ -12,12 +12,12 @@ struct Buffer
 
 def create_buffer(
     device                  : VkDevice;
-    size                    : uint64 = [[uint64]];
-    usage                   : uint = [[uint]];
+    flags                   : uint          = [[uint]];
+    size                    : uint64        = [[uint64]];
+    usage                   : uint          = [[uint]];
     sharing_mode            : VkSharingMode = [[ VkSharingMode ]];
     queue_family_indices    : array<uint> implicit = [[array<uint>]];
-    flags                   : uint = [[uint]];
-    var result              : VkResult? = [[ VkResult? ]]
+    var result              : VkResult?     = [[ VkResult? ]]
 ) : Buffer
     var buf <- [[Buffer _device=device]]
     queue_family_indices |> lock_data() <| $(pindices, nindices)
