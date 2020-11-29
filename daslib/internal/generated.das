@@ -3,6 +3,8 @@
 options indenting = 4
 options no_aot = true
 
+require vulkan
+
 struct PhysicalDevice
     physical_device : VkPhysicalDevice
 
