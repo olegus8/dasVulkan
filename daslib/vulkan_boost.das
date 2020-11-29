@@ -16,3 +16,5 @@ require internal/memory_ex   public
 require internal/pipeline    public
 require internal/render_pass public
 require internal/swapchain   public
+
+require internal/generated   public
