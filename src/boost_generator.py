@@ -19,7 +19,7 @@ class BoostGenerator(LoggingObject):
         self.__add_vk_handles()
 
     def __add_vk_handles(self):
-        self.__add_handle(name='VkPhysicalDevice',
+        self.__add_vk_handle(name='VkPhysicalDevice',
             fn_create='vkEnumeratePhysicalDevices',
             p_count='pPhysicalDeviceCount',
             p_handles='pPhysicalDevices')
