@@ -33,4 +33,10 @@ class GeneratedModule(LoggingObject):
             content='\n'.join(self.__make_content() + ['']))
 
     def __make_content(self):
-        return ['// hello world']
+        return [
+            'options indenting = 4',
+            'options no_aot = true',
+            '',
+            #TODO: remove once generation is fully working
+            'require internal/device_manual public',
+        ]
