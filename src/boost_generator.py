@@ -156,7 +156,7 @@ class VkHandle(object):
         for param in self.__vk_enumerator.params:
             if param.name == self.__p_count:
                 params.append('safe_addr(count)')
-            elif param.name == self.__p_items:
+            elif param.name == self.__p_handles:
                 params.append('null')
             else:
                 params.append(param.das_name)
@@ -175,7 +175,7 @@ class VkHandle(object):
         for param in self.__vk_enumerator.params:
             if param.name == self.__p_count:
                 params.append('safe_addr(count)')
-            elif param.name == self.__p_items:
+            elif param.name == self.__p_handles:
                 params.append('addr(thandles[0])')
             else:
                 params.append(param.das_name)
