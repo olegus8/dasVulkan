@@ -26,7 +26,7 @@ struct InstanceCreateInfo
 
 [private]
 def with_view(
-    boost_struct : ApplicationInfo,
+    boost_struct : ApplicationInfo;
     b : block<(vk_struct : VkApplicationInfo)>
 ) {
     var vk_struct <- [[ VkApplicationInfo
@@ -43,7 +43,7 @@ def with_view(
 
 [private]
 def with_view(
-    boost_struct : InstanceCreateInfo,
+    boost_struct : InstanceCreateInfo;
     b : block<(vk_struct : VkInstanceCreateInfo)>
 ) {
     boost_struct.p_application_info |> with_p_view() <| $(
@@ -71,7 +71,7 @@ def with_view(
 
 [private]
 def with_p_view(
-    p_boost_struct : auto(BOOST_T)?,
+    p_boost_struct : auto(BOOST_T)?;
     b : block<(p_vk_struct : auto(VK_T)? implicit)>
 )
     if p_boost_struct == null
