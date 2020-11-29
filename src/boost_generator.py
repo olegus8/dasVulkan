@@ -89,6 +89,13 @@ class VkHandle(object):
         return self.__generator.functions[self.__vk_dtor_name]
 
     @property
+    def __vk_enumerator_params(self):
+        return self.__func_params_ex(self.__vk_enumerator)
+
+    def __func_params_ex(self, vk_func):
+        return map(ParamEx, vk_func.params)
+
+    @property
     def __is_batched(self):
         return self.__p_count is not None
 
@@ -159,7 +166,7 @@ class VkHandle(object):
         lines += [
             '',
            f'def {self.__boost_enumerator}(']
-        for param in self.__params_ex(self.__vk_enumerator):
+        for param in self.__vk_enumerator_params):
             if param.vk.name in [self.__p_count, self.__p_handles]:
                 continue
             lines += [
