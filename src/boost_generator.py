@@ -159,10 +159,6 @@ class VkHandle(object):
         ]
         return lines
 
-    def __generate_batched_finalizers(self):
-        lines = []
-        return lines
-
 
 def boost_camel_to_lower(camel):
     result = ''
