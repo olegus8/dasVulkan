@@ -51,6 +51,7 @@ class BoostGenerator(LoggingObject):
             'require daslib/safe_addr',
             '',
             'require vulkan',
+            'require instance',
         ] + [
             line for handle in self.__handles for line in handle.generate()
         ]
