@@ -40,5 +40,5 @@ class GeneratedModule(LoggingObject):
             'options no_aot = true',
             '',
             #TODO: remove once generation is fully working
-            'require internal/device_manual public',
+            'require device_manual public',
         ]
