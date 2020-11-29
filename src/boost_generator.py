@@ -67,6 +67,10 @@ class VkHandle(object):
         self.__p_handles = p_handles
 
     @property
+    def __vk_enumerator(self):
+        return self.__generator.functions[self.__vk_enumerator_name]
+
+    @property
     def __is_batched(self):
         return self.__p_count is not None
 
