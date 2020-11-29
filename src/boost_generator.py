@@ -276,6 +276,7 @@ class BoostParam(object):
 
     def __init__(self, vk_param):
         self.__vk_param = vk_param
+        self.__type = to_boost_type(self.__vk_param.type)
 
     @property
     def name(self):
@@ -283,7 +284,7 @@ class BoostParam(object):
 
     @property
     def type(self):
-        return to_boost_type(self.__vk_param.type)
+        return self.__type.name
 
 
 def boost_camel_to_lower(camel):
