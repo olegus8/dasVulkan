@@ -141,7 +141,7 @@ class VkHandle(object):
                 continue
             boost_type = get_boost_type(param.type)
             lines += [
-               f'    {param.das_name} : {boost_type};',
+               f'    {param.das_name} : {boost_type.name};',
             ]
         lines += [
            f'    var result : VkResult? = [[VkResult?]]',
@@ -159,7 +159,8 @@ class VkHandle(object):
             elif param.name == self.__p_handles:
                 params.append('null')
             else:
-                params.append(param.das_name)
+                boost_type = get_boost_type(param.type)
+                params.append(boost_type.vk_value_expr(param.das_name))
         lines += [
             '        ' + ', '.join(params),
             '    )',
@@ -178,7 +179,8 @@ class VkHandle(object):
             elif param.name == self.__p_handles:
                 params.append('addr(thandles[0])')
             else:
-                params.append(param.das_name)
+                boost_type = get_boost_type(param.type)
+                params.append(boost_type.vk_value_expr(param.das_name))
         lines += [
             '                ' + ', '.join(params),
            f'            )',

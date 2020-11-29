@@ -47,7 +47,7 @@ def enumerate_physical_devices(
     return <- [[PhysicalDeviceBatch physical_device_batch <- vk_handles]]
 
 def enumerate_physical_devices_no_batch(
-    instance : VkInstance;
+    instance : Instance;
     var result : VkResult? = [[VkResult?]]
 ): array<PhysicalDevice>
     var handles <- enumerate_physical_devices(instance, result)
