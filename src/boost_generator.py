@@ -5,6 +5,14 @@ class BoostGenerator(LoggingObject):
 
     def __init__(self, context):
         self.__context = context
+        self.__add_handles()
+
+    def __add_handles(self):
+        self.add_handle(name='VkPhysicalDevice',
+            fn_create=FuncCreateBatch(
+                name='vkEnumeratePhysicalDevices',
+                p_count='pPhysicalDeviceCount',
+                p_handles='pPhysicalDevices'))
 
     def generate(self):
         self.__context.write_to_file(
