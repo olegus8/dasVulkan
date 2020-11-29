@@ -61,8 +61,8 @@ class VkHandle(object):
         self.__vk_ctor_name = ctor
         self.__vk_dtor_name = dtor
         self.__life_params_names = life_params or []
-        self.__p_count_name = p_count
-        self.__p_handles_name = p_handles
+        self.__p_count = p_count
+        self.__p_handles = p_handles
 
     @property
     def __is_batched(self):
