@@ -15,38 +15,6 @@ struct ExtensionProperties
     extension_name : string
     spec_version : uint
 
-/*
-def enumerate_physical_devices(
-    instance : VkInstance;
-    var result : VkResult? = [[VkResult?]]
-) : PhysicalDeviceBatch
-
-    var count : uint
-    var result_ = VkResult VK_SUCCESS
-
-    result ?? result_ = instance |> vkEnumeratePhysicalDevices(
-        safe_addr(count), null)
-    assert(result_ == VkResult VK_SUCCESS)
-
-    var vk_devs : array<VkPhysicalDevice>
-    if result ?? result_ == VkResult VK_SUCCESS
-        vk_devs |> resize(int(count))
-        vk_devs |> lock() <| $(tdevs)
-            result ?? result_ = instance |> vkEnumeratePhysicalDevices(
-                safe_addr(count), addr(tdevs[0]))
-            assert(result_ == VkResult VK_SUCCESS)
-
-    return <- [[PhysicalDeviceBatch physical_device_batch <- vk_devs]]
-
-
-def enumerate_physical_devices_no_batch(
-    instance : VkInstance;
-    var result : VkResult? = [[VkResult?]]
-): array<PhysicalDevice>
-    var devices <- instance |> enumerate_physical_devices(result)
-    defer() <| ${ delete devices; }
-    return <- devices |> split()
-*/
 
 def get_physical_device_properties(physical_device : PhysicalDevice
 ) : VkPhysicalDeviceProperties
