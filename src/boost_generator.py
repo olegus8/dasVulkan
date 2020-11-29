@@ -1,4 +1,5 @@
 from das_shared.object_base import LoggingObject
+from das_shared.assertions import assert_starts_with
 
 
 class BoostGenerator(LoggingObject):
@@ -56,7 +57,7 @@ class VkHandle(object):
         self.__fn_destroy = fn_destroy
         self.__params = params or []
         self.__p_count = p_count
-        self.__p_items = p_items
+        self.__p_handles = p_handles
 
     @property
     def __is_batched(self):
