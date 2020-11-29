@@ -91,10 +91,10 @@ class VkHandle(object):
         lines += self.__generate_types()
         if self.__is_batched:
             lines += self.__generate_batched_types()
-            lines += self.__generate_batched_constructors()
+            lines += self.__generate_batched_ctors()
             lines += self.__generate_batched_finalizers()
         else:
-            lines += self.__generate_constructors()
+            lines += self.__generate_ctors()
             lines += self.__generate_finalizers()
         return lines
 
@@ -118,7 +118,7 @@ class VkHandle(object):
            f'        [[{self.__boost_type} {self.__boost_attr}=h]]}}]',
         ]
 
-    def __generate_batched_constructors(self):
+    def __generate_batched_ctors(self):
         lines = []
         lines += [
            f'def enumerate_physical_devices(',
