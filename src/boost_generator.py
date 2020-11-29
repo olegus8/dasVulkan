@@ -20,8 +20,8 @@ class BoostGenerator(LoggingObject):
         self.__add_vk_handles()
 
     def __add_vk_handles(self):
-        self.__add_vk_handle(vk_type_name='VkPhysicalDevice',
-            vk_ctor_name='vkEnumeratePhysicalDevices',
+        self.__add_vk_handle(vk_type='VkPhysicalDevice',
+            vk_ctor='vkEnumeratePhysicalDevices',
             p_count='pPhysicalDeviceCount',
             p_handles='pPhysicalDevices')
 
@@ -53,16 +53,16 @@ class BoostGenerator(LoggingObject):
 
 class VkHandle(object):
 
-    def __init__(self, generator, vk_type_name, vk_ctor_name,
-        vk_dtor_name=None, life_params=None, p_count=None, p_handles=None
+    def __init__(self, generator, vk_type, vk_ctor,
+        vk_dtor=None, life_params=None, p_count=None, p_handles=None
     ):
         self.__generator = generator
-        self.__vk_type_name = vk_type_name
-        self.__vk_ctor_name = vk_ctor_name
-        self.__vk_dtor_name = vk_dtor_name
-        self.__life_params = life_params or []
-        self.__p_count = p_count
-        self.__p_handles = p_handles
+        self.__vk_type_name = vk_type
+        self.__vk_ctor_name = vk_ctor
+        self.__vk_dtor_name = vk_dtor
+        self.__life_params_names = life_params or []
+        self.__p_count_name = p_count
+        self.__p_handles_name = p_handles
 
     @property
     def __is_batched(self):
