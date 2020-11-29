@@ -260,12 +260,14 @@ def with_swapchain_independent_state(width, height, title; b : block<(
     pipeline_layout : VkPipelineLayout;
     cmd_pool        : VkCommandPool
 )>)
-    with_instance()                                 <| $(instance)          {
+    var instance <- create_default_instance()
+    defer() <| ${ delete instance; }
+    let vk_instance = instance.instance
     with_window(width, height, title)               <| $(window)            {
-    window |> with_surface(instance)                <| $(surface)           {
-    let phys_dev <- instance |> find_physical_device_for_graphics(surface);
+    window |> with_surface(vk_instance)             <| $(surface)           {
+    let phys_dev <- vk_instance |> find_physical_device_for_graphics(surface);
     let vk_phys_dev = phys_dev.physical_device;
-    instance |> with_device(phys_dev, surface)      <| $(device, queue)     {
+    vk_instance |> with_device(phys_dev, surface)   <| $(device, queue)     {
     device |> with_shader_modules([[auto[]
         "{get_das_root()}/modules/dasVulkan/example/vert.spv";
         "{get_das_root()}/modules/dasVulkan/example/frag.spv"
@@ -278,7 +280,7 @@ def with_swapchain_independent_state(width, height, title; b : block<(
             phys_dev |> get_graphics_queue_family(surface));
         defer() <| { delete cmd_pool; };
         b |> invoke(
-            instance,
+            vk_instance,
             window,
             surface,
             phys_dev,
