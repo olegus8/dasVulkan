@@ -137,7 +137,7 @@ class VkHandle(object):
             '',
            f'def {self.__boost_enumerator}(']
         for param in self.__vk_enumerator.params:
-            if param.name not in [self.__p_count, self.__p_handles]:
+            if param.name in [self.__p_count, self.__p_handles]:
                 continue
             boost_type = get_boost_type(param.type)
             lines += [
