@@ -6,16 +6,26 @@ class BoostGenerator(LoggingObject):
     def __init__(self, context):
         self.__context = context
         self.__handles = []
-        self.__add_handles()
 
-    def __add_handles(self):
+        self.enums = dict((x.name, x)
+            for x in self.__context.main_c_header.enums)
+        self.structs = dict((x.name, x)
+            for x in self.__context.main_c_header.structs)
+        self.opaque_structs = dict((x.name, x)
+            for x in self.__context.main_c_header.opaque_structs)
+        self.functions = dict((x.name, x)
+            for x in self.__context.main_c_header.functions)
+
+        self.__add_vk_handles()
+
+    def __add_vk_handles(self):
         self.__add_handle(name='VkPhysicalDevice',
             fn_create='vkEnumeratePhysicalDevices',
             p_count='pPhysicalDeviceCount',
             p_handles='pPhysicalDevices')
 
-    def __add_handle(self, **kwargs):
-        handle = Handle(generator=self, **kwargs)
+    def __add_vk_handle(self, **kwargs):
+        handle = VkHandle(generator=self, **kwargs)
         self.__handles.append(handle)
         return handle
 
@@ -35,7 +45,7 @@ class BoostGenerator(LoggingObject):
         ]
 
 
-class Handle(object):
+class VkHandle(object):
 
     def __init__(self, generator, name, fn_create,
         fn_destroy=None, params=None, p_count=None, p_items=None
