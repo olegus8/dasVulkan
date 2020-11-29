@@ -99,7 +99,7 @@ class VkHandle(object):
                         f'array<{self.__das_handle_type}>',
                 '',
                f'def split(batch : {self.__boost_batch_type}) '
-                    f': array<self.__boost_type>',
+                    f': array<{self.__boost_type}>',
                f'    return <- [{{for h in batch.{self.__boost_batch_attr} ;',
                f'        [[{self.__boost_type} {self.__boost_attr}=h]]}}]',
             ]
