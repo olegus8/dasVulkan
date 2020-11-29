@@ -129,6 +129,7 @@ class VkHandle(object):
     def __generate_batched_ctors(self):
         lines = []
         lines += [
+            '',
            f'def {self.__boost_ctor}(',
            f'    instance : VkInstance;',
            f'    var result : VkResult? = [[VkResult?]]',
