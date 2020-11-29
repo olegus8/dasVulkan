@@ -245,7 +245,11 @@ class VkHandle(object):
 class BoostType(object):
 
     def __init__(self, name):
-        self.name = name
+        self.__name = name
+
+    @property
+    def name(self):
+        return self.__name
 
     def to_vk_value(self, boost_value):
         return boost_value
@@ -259,7 +263,11 @@ class BoostVkHandleType(BoostType):
 
 
 class BoostPassthroughType(BoostType):
-    pass
+
+    @property
+    def name(self):
+        name = super(BoostType, self).name
+        raise VulkanBoostError(f'Cannot convert to boost type: {name}')
 
 
 class ParamEx(object):
@@ -300,7 +308,7 @@ def to_boost_type(c_type):
     m = re.match(r'struct Vk(.*)_T \*', c_type)
     if m:
         return BoostVkHandleType(name=m.group(1))
-    return BoostPassthroughType(name=c_type)
+    return BoostUnknownType(name=c_type)
 
 def to_boost_func_name(vk_name):
     assert_starts_with(vk_name, 'vk')
