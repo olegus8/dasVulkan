@@ -244,5 +244,5 @@ def boost_camel_to_lower(camel):
 def get_boost_type(c_type):
     m = re.match(r'struct Vk(.*)_T \*', c_type)
     if m:
-        return BoostHandleType(name=m.group(1))
+        return BoostVkHandleType(name=m.group(1))
     raise VulkanBoostError(f'Unknown type: {c_type}')
