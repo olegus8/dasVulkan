@@ -94,11 +94,7 @@ class VkHandle(object):
         lines += self.__generate_types()
         if self.__is_batched:
             lines += self.__generate_batched_types()
-            lines += self.__generate_batched_ctors()
-            lines += self.__generate_batched_finalizers()
-        else:
-            lines += self.__generate_ctors()
-            lines += self.__generate_finalizers()
+            lines += self.__generate_enumerators()
         return lines
 
     def __generate_types(self):
@@ -122,15 +118,15 @@ class VkHandle(object):
         ]
 
     @property
-    def __boost_ctor(self):
-        assert_starts_with(self.__vk_ctor_name, 'vk')
-        return boost_camel_to_lower(self.__vk_ctor_name[2:])
+    def __boost_enumerator(self):
+        assert_starts_with(self.__vk_enumerator_name, 'vk')
+        return boost_camel_to_lower(self.__vk_enumerator_name[2:])
 
-    def __generate_batched_ctors(self):
+    def __generate_batched_enumerators(self):
         lines = []
         lines += [
             '',
-           f'def {self.__boost_ctor}(',
+           f'def {self.__boost_enumerator}(',
            f'    instance : VkInstance;',
            f'    var result : VkResult? = [[VkResult?]]',
            f') : {self.__boost_batch_type}',
@@ -138,7 +134,7 @@ class VkHandle(object):
            f'    var count : uint',
            f'    var result_ = VkResult VK_SUCCESS',
             '',
-           f'    result ?? result_ = {self.__vk_ctor_name}(',
+           f'    result ?? result_ = {self.__vk_enumerator_name}(',
            f'        instance, safe_addr(count), null)',
            f'    assert(result_ == VkResult VK_SUCCESS)',
             '',
@@ -146,18 +142,18 @@ class VkHandle(object):
            f'    if result ?? result_ == VkResult VK_SUCCESS && count > 0u',
            f'        vk_handles |> resize(int(count))',
            f'        vk_handles |> lock() <| $(thandles)',
-           f'            result ?? result_ = {self.__vk_ctor_name}(',
+           f'            result ?? result_ = {self.__vk_enumerator_name}(',
            f'                instance, safe_addr(count), addr(thandles[0]))',
            f'            assert(result_ == VkResult VK_SUCCESS)',
             '',
            f'    return <- [[{self.__boost_batch_type} '
                     f'{self.__boost_batch_attr} <- vk_handles]]',
             '',
-           f'def {self.__boost_ctor}_no_batch(',
+           f'def {self.__boost_enumerator}_no_batch(',
            f'    instance : VkInstance;',
            f'    var result : VkResult? = [[VkResult?]]',
            f'): array<{self.__boost_type}>',
-           f'    var handles <- {self.__boost_ctor}(instance, result)',
+           f'    var handles <- {self.__boost_enumerator}(instance, result)',
             '    defer() <| ${ delete handles; }',
            f'    return <- handles |> split()',
         ]
