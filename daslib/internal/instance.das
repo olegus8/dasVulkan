@@ -50,10 +50,10 @@ def with_view(
         vk_p_application_info : VkApplicationInfo?
     ) {
     boost_struct.enabled_layer_names |> lock_data() <| $(
-        vk_enabled_layer_count, vk_p_enabled_layer_names
+        vk_p_enabled_layer_names, vk_enabled_layer_count
     ) {
     boost_struct.enabled_extension_names |> lock_data() <| $(
-        vk_enabled_extension_count, vk_p_enabled_extension_names
+        vk_p_enabled_extension_names, vk_enabled_extension_count
     ) {
     var vk_struct <- [[ VkInstanceCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
