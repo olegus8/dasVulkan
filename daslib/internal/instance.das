@@ -65,7 +65,6 @@ def with_view(
         ppEnabledExtensionNames = vk_p_enabled_extension_names
     ]];
     b |> invoke(vk_struct);
-    delete vk_struct;
     }}};
 }
 
@@ -105,7 +104,8 @@ def get_required_instance_extensions() : array<string>
     var count : uint
     let glfw_exts : string const ? = glfwGetRequiredInstanceExtensions(
         safe_addr(count))
-    exts.resize(int(count))
+    exts |> resize(int(count))
     for ext, i in exts, range(INT_MAX)
-        ext := *(glfw_exts + i)
+        unsafe
+            ext := *(glfw_exts + i)
     return <- exts
