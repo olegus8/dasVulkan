@@ -49,10 +49,10 @@ def with_view(
     boost_struct.p_application_info |> with_p_view() <| $(
         vk_p_application_info
     ) {
-    boost_struct.enabled_layer_names |> lock_data() < $(
+    boost_struct.enabled_layer_names |> lock_data() <| $(
         vk_enabled_layer_count, vk_p_enabled_layer_names
     ) {
-    boost_struct.enabled_extension_names |> lock_data() < $(
+    boost_struct.enabled_extension_names |> lock_data() <| $(
         vk_enabled_extension_count, vk_p_enabled_extension_names
     ) {
     var vk_struct <- [[ VkInstanceCreateInfo
