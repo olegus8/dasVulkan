@@ -8,6 +8,10 @@ require daslib/safe_addr
 
 require vulkan
 
+//
+// {self.__boost_type}
+//
+
 struct PhysicalDevice
     physical_device : VkPhysicalDevice
 
@@ -17,6 +21,7 @@ struct PhysicalDeviceBatch
 def split(batch : PhysicalDeviceBatch) : array<PhysicalDevice>
     return <- [{for h in batch.physical_device_batch ;
         [[PhysicalDevice physical_device=h]]}]
+
 def enumerate_physical_devices(
     instance : VkInstance;
     var result : VkResult? = [[VkResult?]]

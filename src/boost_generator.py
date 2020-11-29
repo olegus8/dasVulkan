@@ -91,6 +91,12 @@ class VkHandle(object):
 
     def generate(self):
         lines = []
+        lines += [
+            '',
+            '//',
+            '// {self.__boost_type}',
+            '//',
+        ]
         lines += self.__generate_types()
         if self.__is_batched:
             lines += self.__generate_batched_types()
