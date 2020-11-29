@@ -12,11 +12,11 @@ struct Buffer
 
 def create_buffer(
     device                  : VkDevice;
-    size                    : uint64;
-    usage                   : uint;
-    sharing_mode            : VkSharingMode;
-    queue_family_indices    : array<uint> implicit;
-    flags                   : uint = 0u;
+    size                    : uint64 = [[uint64]];
+    usage                   : uint = [[uint]];
+    sharing_mode            : VkSharingMode = [[ VkSharingMode ]];
+    queue_family_indices    : array<uint> implicit = [[array<uint>]];
+    flags                   : uint = [[uint]];
     var result              : VkResult? = [[ VkResult? ]]
 ) : Buffer
     var buf <- [[Buffer _device=device]]
