@@ -125,8 +125,8 @@ class VkHandle(object):
 
     @property
     def __boost_ctor(self):
-        assert_starts_with(self.self.__vk_ctor_name, 'vk')
-        return boost_camel_to_lower(self.self.__vk_ctor_name[2:])
+        assert_starts_with(self.__vk_ctor_name, 'vk')
+        return boost_camel_to_lower(self.__vk_ctor_name[2:])
 
     def __generate_batched_ctors(self):
         lines = []
@@ -140,7 +140,7 @@ class VkHandle(object):
            f'    var count : uint',
            f'    var result_ = VkResult VK_SUCCESS',
             '',
-           f'    result ?? result_ = {self.self.__vk_ctor_name}(',
+           f'    result ?? result_ = {self.__vk_ctor_name}(',
            f'        instance, safe_addr(count), null)',
            f'    assert(result_ == VkResult VK_SUCCESS)',
             '',
@@ -148,7 +148,7 @@ class VkHandle(object):
            f'    if result ?? result_ == VkResult VK_SUCCESS && count > 0u',
            f'        vk_handles |> resize(int(count))',
            f'        vk_handles |> lock() <| $(thandles)',
-           f'            result ?? result_ = {self.self.__vk_ctor_name}(',
+           f'            result ?? result_ = {self.__vk_ctor_name}(',
            f'                instance, safe_addr(count), addr(thandles[0]))',
            f'            assert(result_ == VkResult VK_SUCCESS)',
             '',
