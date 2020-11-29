@@ -78,7 +78,8 @@ def with_p_view(
         b |> invoke([[VK_T?]])
     else
         *p_boost_struct |> with_view() <| $(vk_struct)
-            b |> invoke(safe_addr(vk_struct))
+            unsafe
+                b |> invoke(addr(vk_struct))
 
 
 def create_instance(
