@@ -196,7 +196,7 @@ class VkHandle(object):
                 continue
             boost_type = get_boost_type(param.type)
             lines += [
-               f'    {param.das_name} : {boost_type};',
+               f'    {param.das_name} : {boost_type.name};',
             ]
         lines += [
            f'    var result : VkResult? = [[VkResult?]]',
