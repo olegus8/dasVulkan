@@ -116,23 +116,23 @@ class VkHandle(object):
            f'// {self.__boost_type}',
             '//',
         ]
-        lines += self.__generate_types()
+        lines += self.__generate_type()
         if self.__is_batched:
-            lines += self.__generate_batched_types()
+            lines += self.__generate_batched_type()
             lines += self.__generate_enumerators()
         else:
             lines += self.__generate_ctor()
             lines += self.__generate_dtor()
         return lines
 
-    def __generate_types(self):
+    def __generate_type(self):
         return [
             '',
            f'struct {self.__boost_type}',
            f'    {self.__boost_attr} : {self.__vk_type_name}',
         ]
 
-    def __generate_batched_types(self):
+    def __generate_batched_type(self):
         return [
             '',
            f'struct {self.__boost_batch_type}',
@@ -238,6 +238,7 @@ class VkHandle(object):
         return lines
 
     def __generate_ctor(self):
+        return [] #TODO
         lines = []
         lines += [
             '',
@@ -246,8 +247,9 @@ class VkHandle(object):
             if param.type == f'{self.__vk_type_name} *':
                 continue
             boost_type = to_boost_type(param.type)
+            boost_name = to_boost_param_name(param.das_name)
             lines += [
-               f'    {param.das_name} : {boost_type.name} = [[ boost_type.name ]];',
+               f'    {boost_name} : {boost_type.name} = [[ boost_type.name ]];',
             ]
         lines += [
            f'    var result : VkResult? = [[VkResult?]]',
