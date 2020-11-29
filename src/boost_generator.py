@@ -118,13 +118,34 @@ class VkHandle(object):
            f'        [[{self.__boost_type} {self.__boost_attr}=h]]}}]',
         ]
 
-    def __generate_constructors(self):
+    def __generate_batched_constructors(self):
         lines = []
-        if self.__is_batched:
-            pass
+        lines += [
+           f'def enumerate_physical_devices(',
+           f'    instance : VkInstance;',
+           f'    var result : VkResult? = [[VkResult?]]',
+           f') : PhysicalDeviceBatch',
+            '',
+           f'    var count : uint',
+           f'    var result_ = VkResult VK_SUCCESS',
+            '',
+           f'    result ?? result_ = instance |> vkEnumeratePhysicalDevices(',
+           f'        safe_addr(count), null)',
+           f'    assert(result_ == VkResult VK_SUCCESS)',
+            '',
+           f'    var vk_devs : array<VkPhysicalDevice>',
+           f'    if result ?? result_ == VkResult VK_SUCCESS',
+           f'        vk_devs |> resize(int(count))',
+           f'        vk_devs |> lock() <| $(tdevs)',
+           f'            result ?? result_ = instance |> vkEnumeratePhysicalDevices(',
+           f'                safe_addr(count), addr(tdevs[0]))',
+           f'            assert(result_ == VkResult VK_SUCCESS)',
+            '',
+           f'    return <- [[PhysicalDeviceBatch physical_device_batch <- vk_devs]]',
+        ]
         return lines
 
-    def __generate_finalizers(self):
+    def __generate_batched_finalizers(self):
         lines = []
         return lines
 
