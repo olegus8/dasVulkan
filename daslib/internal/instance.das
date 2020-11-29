@@ -47,7 +47,7 @@ def with_view(
     b : block<(vk_struct : VkInstanceCreateInfo)>
 ) {
     boost_struct.p_application_info |> with_p_view() <| $(
-        vk_p_application_info : VkApplicationInfo?
+        vk_p_application_info : VkApplicationInfo const?
     ) {
     boost_struct.enabled_layer_names |> lock_data() <| $(
         vk_p_enabled_layer_names, vk_enabled_layer_count
@@ -65,6 +65,7 @@ def with_view(
         ppEnabledExtensionNames = vk_p_enabled_extension_names
     ]];
     b |> invoke(vk_struct);
+    delete vk_struct;
     }}};
 }
 
@@ -78,8 +79,7 @@ def with_p_view(
         b |> invoke([[VK_T?]])
     else
         *p_boost_struct |> with_view() <| $(vk_struct)
-            unsafe
-                b |> invoke(addr(vk_struct))
+            b |> invoke(safe_addr(vk_struct))
 
 
 def create_instance(
@@ -98,3 +98,13 @@ def create_instance(
 def finalize(var instance : Instance)
     vkDestroyInstance(instance.instance, null)
     memzero(instance)
+
+
+def get_required_instance_extensions() : array<string>
+    var exts : array<string>
+    var count : uint
+    let glfw_exts = glfwGetRequiredInstanceExtensions(safe_addr(count))
+    exts.resize(int(count))
+    for ext, i in exts, range(INT_MAX)
+        ext := *(glfw_exts + i)
+    return <- exts
