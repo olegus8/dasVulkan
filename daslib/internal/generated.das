@@ -7,6 +7,7 @@ require daslib/defer
 require daslib/safe_addr
 
 require vulkan
+require instance
 
 //
 // PhysicalDevice
