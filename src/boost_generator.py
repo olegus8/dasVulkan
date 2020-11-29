@@ -123,7 +123,7 @@ class VkHandle(object):
 
     @property
     def __boost_ctor(self):
-        assert_startswith(self.__ctor, 'vk')
+        assert_starts_with(self.__ctor, 'vk')
         return boost_camel_to_lower(self.__ctor[2:])
 
     def __generate_batched_ctors(self):
@@ -157,7 +157,7 @@ class VkHandle(object):
            f'    var result : VkResult? = [[VkResult?]]',
            f'): array<{self.__boost_type}>',
            f'    var handles <- {self.__boost_ctor}(instance, result)',
-           f'    defer() <| ${ delete handles; }',
+            '    defer() <| ${ delete handles; }',
            f'    return <- handles |> split()',
         ]
         return lines

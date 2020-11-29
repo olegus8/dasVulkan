@@ -3,6 +3,9 @@
 options indenting = 4
 options no_aot = true
 
+require daslib/defer
+require daslib/safe_addr
+
 require vulkan
 
 struct PhysicalDevice
@@ -14,3 +17,32 @@ struct PhysicalDeviceBatch
 def split(batch : PhysicalDeviceBatch) : array<PhysicalDevice>
     return <- [{for h in batch.physical_device_batch ;
         [[PhysicalDevice physical_device=h]]}]
+def enumerate_physical_devices(
+    instance : VkInstance;
+    var result : VkResult? = [[VkResult?]]
+) : PhysicalDeviceBatch
+
+    var count : uint
+    var result_ = VkResult VK_SUCCESS
+
+    result ?? result_ = vkEnumeratePhysicalDevices(
+        instance, safe_addr(count), null)
+    assert(result_ == VkResult VK_SUCCESS)
+
+    var vk_handles : array<VkPhysicalDevice>
+    if result ?? result_ == VkResult VK_SUCCESS && count > 0u
+        vk_handles |> resize(int(count))
+        vk_handles |> lock() <| $(thandles)
+            result ?? result_ = vkEnumeratePhysicalDevices(
+                instance, safe_addr(count), addr(thandles[0]))
+            assert(result_ == VkResult VK_SUCCESS)
+
+    return <- [[PhysicalDeviceBatch physical_device_batch <- vk_handles]]
+
+def enumerate_physical_devices_no_batch(
+    instance : VkInstance;
+    var result : VkResult? = [[VkResult?]]
+): array<PhysicalDevice>
+    var handles <- enumerate_physical_devices(instance, result)
+    defer() <| ${ delete handles; }
+    return <- handles |> split()
