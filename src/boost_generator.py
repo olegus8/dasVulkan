@@ -10,8 +10,6 @@ class BoostGenerator(LoggingObject):
         self.__context.write_to_file(
             fpath=f'../daslib/internal/generated.das',
             content='\n'.join(self.__make_content() + ['']))
-        for module in self.__modules:
-            module.generate()
 
     def __make_content(self):
         return [
