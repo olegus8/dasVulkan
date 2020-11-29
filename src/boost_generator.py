@@ -222,7 +222,7 @@ class BoostType(object):
         self.name = name
 
     def to_vk_value(self, boost_value):
-        raise NotImplementedError()
+        return boost_value
 
 
 class BoostVkHandleType(BoostType):
@@ -230,6 +230,10 @@ class BoostVkHandleType(BoostType):
     def to_vk_value(self, boost_value):
         attr = boost_camel_to_lower(self.name)
         return f'{boost_value}.{attr}'
+
+
+class BoostVkHandlePassthroughType(BoostType):
+    pass
 
 
 def boost_camel_to_lower(camel):
@@ -244,5 +248,7 @@ def boost_camel_to_lower(camel):
 def to_boost_type(c_type):
     m = re.match(r'struct Vk(.*)_T \*', c_type)
     if m:
-        return BoostVkHandleType(name=m.group(1))
+        #TODO: uncomment when VkInstance is converted to boost
+        #return BoostVkHandleType(name=m.group(1))
+        return BoostVkHandlePassthroughType(name='Vk' + m.group(1))
     raise VulkanBoostError(f'Unknown type: {c_type}')
