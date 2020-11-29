@@ -86,6 +86,11 @@ def create_instance(
     var result : VkResult? = [[ VkResult? ]]
 ) : Instance
     var instance : Instance
+    create_info |> with_view() <| $(vk_create_info)
+        var result_ = VkResult VK_SUCCESS
+        result ?? result_ = vkCreateInstance(
+            safe_addr(vk_create_info), null, safe_addr(instance.instance))
+        assert(result_ == VkResult VK_SUCCESS)
     return <- instance
 
 
