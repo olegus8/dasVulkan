@@ -44,13 +44,31 @@ class Handle(object):
         self.__fn_destroy = fn_destroy
         self.__params = params or []
 
+    @property
+    def __is_batched(self):
+        return self.__fn_create.is_batched
+
     def generate(self):
         return []
 
 
-class FuncCreateBatch(object):
+class FuncCreateBase(object):
+
+    def __init__(name):
+        self.name = name
+
+    @property
+    def is_batched(self):
+        return False
+
+
+class FuncCreateBatch(FuncCreateBase):
 
     def __init__(name, p_count, p_handles):
         self.__name = name
         self.__p_count = p_count
         self.__p_handles = p_handles
+
+    @property
+    def is_batch(self):
+        return True
