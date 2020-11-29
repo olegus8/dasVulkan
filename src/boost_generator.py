@@ -21,7 +21,7 @@ class BoostGenerator(LoggingObject):
 
     def __add_vk_handles(self):
         self.__add_vk_handle(name='VkPhysicalDevice',
-            fn_create='vkEnumeratePhysicalDevices',
+            ctor='vkEnumeratePhysicalDevices',
             p_count='pPhysicalDeviceCount',
             p_handles='pPhysicalDevices')
 
@@ -50,14 +50,14 @@ class BoostGenerator(LoggingObject):
 
 class VkHandle(object):
 
-    def __init__(self, generator, name, fn_create,
-        fn_destroy=None, params=None, p_count=None, p_handles=None
+    def __init__(self, generator, name, ctor,
+        dtor=None, life_params=None, p_count=None, p_handles=None
     ):
         self.__generator = generator
         self.__name = name
-        self.__fn_create = fn_create
-        self.__fn_destroy = fn_destroy
-        self.__params = params or []
+        self.__ctor = ctor
+        self.__dtor = dtor
+        self.__life_params = life_params or []
         self.__p_count = p_count
         self.__p_handles = p_handles
 
@@ -118,10 +118,15 @@ class VkHandle(object):
            f'        [[{self.__boost_type} {self.__boost_attr}=h]]}}]',
         ]
 
+    @property
+    def __boost_ctor(self):
+        assert_startswith(self.__ctor, 'vk')
+        return boost_camel_to_lower(self.__ctor[2:])
+
     def __generate_batched_ctors(self):
         lines = []
         lines += [
-           f'def enumerate_physical_devices(',
+           f'def {self.__boost_ctor}(',
            f'    instance : VkInstance;',
            f'    var result : VkResult? = [[VkResult?]]',
            f') : PhysicalDeviceBatch',
@@ -142,6 +147,14 @@ class VkHandle(object):
            f'            assert(result_ == VkResult VK_SUCCESS)',
             '',
            f'    return <- [[PhysicalDeviceBatch physical_device_batch <- vk_devs]]',
+            '',
+           f'def {self.__boost_ctor}_no_batch(',
+           f'    instance : VkInstance;',
+           f'    var result : VkResult? = [[VkResult?]]',
+           f'): array<{self.__boost_type}>',
+           f'    var handles <- {self.__boost_ctor}(instance, result)',
+           f'    defer() <| ${ delete handles; }',
+           f'    return <- handles |> split()',
         ]
         return lines
 

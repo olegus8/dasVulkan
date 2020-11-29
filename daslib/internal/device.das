@@ -15,7 +15,7 @@ struct ExtensionProperties
     extension_name : string
     spec_version : uint
 
-
+/*
 def enumerate_physical_devices(
     instance : VkInstance;
     var result : VkResult? = [[VkResult?]]
@@ -46,7 +46,7 @@ def enumerate_physical_devices_no_batch(
     var devices <- instance |> enumerate_physical_devices(result)
     defer() <| ${ delete devices; }
     return <- devices |> split()
-
+*/
 
 def get_physical_device_properties(physical_device : PhysicalDevice
 ) : VkPhysicalDeviceProperties
