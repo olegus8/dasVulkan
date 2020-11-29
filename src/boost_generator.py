@@ -87,6 +87,13 @@ class VkHandle(object):
         return self.__name
 
     def generate(self):
+        return (
+            self.__generate_types() +
+            self.__generate_constructors() +
+            self.__generate_finalizers()
+        )
+
+    def __generate_types(self):
         lines = []
         lines += [
             '',
@@ -106,6 +113,14 @@ class VkHandle(object):
                f'        [[{self.__boost_type} {self.__boost_attr}=h]]}}]',
             ]
 
+        return lines
+
+    def __generate_constructors(self):
+        lines = []
+        return lines
+
+    def __generate_finalizers(self):
+        lines = []
         return lines
 
 

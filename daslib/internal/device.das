@@ -11,21 +11,6 @@ require strings
 require generated public
 
 
-/*
-struct PhysicalDeviceBatch
-    physical_device_batch : array<VkPhysicalDevice>
-
-
-struct PhysicalDevice
-    physical_device : VkPhysicalDevice
-
-
-def split(devices : PhysicalDeviceBatch) : array<PhysicalDevice>
-    return <- [{for d in devices.physical_device_batch ;
-        [[PhysicalDevice physical_device=d]]}]
-*/
-
-
 struct ExtensionProperties
     extension_name : string
     spec_version : uint
