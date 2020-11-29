@@ -9,7 +9,7 @@ require daslib/safe_addr
 require vulkan
 
 //
-// {self.__boost_type}
+// PhysicalDevice
 //
 
 struct PhysicalDevice

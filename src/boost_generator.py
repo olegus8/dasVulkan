@@ -94,7 +94,7 @@ class VkHandle(object):
         lines += [
             '',
             '//',
-            '// {self.__boost_type}',
+           f'// {self.__boost_type}',
             '//',
         ]
         lines += self.__generate_types()
