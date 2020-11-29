@@ -2,3 +2,12 @@
 
 options indenting = 4
 options no_aot = true
+
+struct PhysicalDevice
+    physical_device : VkPhysicalDevice
+
+struct PhysicalDeviceBatch
+    physical_device_batch : array<VkPhysicalDevice>
+def split(batch : PhysicalDeviceBatch) : array<self.__boost_type>
+    return <- [{for h in batch.physical_device_batch ;
+        [[PhysicalDevice physical_device=h]]}]
