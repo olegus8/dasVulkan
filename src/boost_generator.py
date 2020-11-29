@@ -139,7 +139,7 @@ class VkHandle(object):
         for param in self.__vk_enumerator.params:
             if param.name in [self.__p_count, self.__p_handles]:
                 continue
-            boost_type = get_boost_type(param.type)
+            boost_type = to_boost_type(param.type)
             lines += [
                f'    {param.das_name} : {boost_type.name};',
             ]
@@ -159,8 +159,8 @@ class VkHandle(object):
             elif param.name == self.__p_handles:
                 params.append('null')
             else:
-                boost_type = get_boost_type(param.type)
-                params.append(boost_type.vk_value_expr(param.das_name))
+                boost_type = to_boost_type(param.type)
+                params.append(boost_type.to_vk_value(param.das_name))
         lines += [
             '        ' + ', '.join(params),
             '    )',
@@ -179,8 +179,8 @@ class VkHandle(object):
             elif param.name == self.__p_handles:
                 params.append('addr(thandles[0])')
             else:
-                boost_type = get_boost_type(param.type)
-                params.append(boost_type.vk_value_expr(param.das_name))
+                boost_type = to_boost_type(param.type)
+                params.append(boost_type.to_vk_value(param.das_name))
         lines += [
             '                ' + ', '.join(params),
            f'            )',
@@ -194,7 +194,7 @@ class VkHandle(object):
         for param in self.__vk_enumerator.params:
             if param.name in [self.__p_count, self.__p_handles]:
                 continue
-            boost_type = get_boost_type(param.type)
+            boost_type = to_boost_type(param.type)
             lines += [
                f'    {param.das_name} : {boost_type.name};',
             ]
@@ -221,13 +221,13 @@ class BoostType(object):
     def __init__(self, name):
         self.name = name
 
-    def vk_value_expr(self, boost_value):
+    def to_vk_value(self, boost_value):
         raise NotImplementedError()
 
 
 class BoostVkHandleType(BoostType):
 
-    def vk_value_expr(self, boost_value):
+    def to_vk_value(self, boost_value):
         attr = boost_camel_to_lower(self.name)
         return f'{boost_value}.{attr}'
 
