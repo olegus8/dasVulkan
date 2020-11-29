@@ -87,36 +87,41 @@ class VkHandle(object):
         return self.__name
 
     def generate(self):
-        return (
-            self.__generate_types() +
-            self.__generate_constructors() +
-            self.__generate_finalizers()
-        )
+        lines = []
+        lines += self.__generate_types()
+        if self.__is_batched:
+            lines += self.__generate_batched_types()
+            lines += self.__generate_batched_constructors()
+            lines += self.__generate_batched_finalizers()
+        else:
+            lines += self.__generate_constructors()
+            lines += self.__generate_finalizers()
+        return lines
 
     def __generate_types(self):
-        lines = []
-        lines += [
+        return [
             '',
            f'struct {self.__boost_type}',
            f'    {self.__boost_attr} : {self.__das_handle_type}',
         ]
-        if self.__is_batched:
-            lines += [
-                '',
-               f'struct {self.__boost_batch_type}',
-               f'    {self.__boost_batch_attr} : '
-                        f'array<{self.__das_handle_type}>',
-                '',
-               f'def split(batch : {self.__boost_batch_type}) '
-                    f': array<{self.__boost_type}>',
-               f'    return <- [{{for h in batch.{self.__boost_batch_attr} ;',
-               f'        [[{self.__boost_type} {self.__boost_attr}=h]]}}]',
-            ]
 
-        return lines
+    def __generate_batched_types(self):
+        return [
+            '',
+           f'struct {self.__boost_batch_type}',
+           f'    {self.__boost_batch_attr} : '
+                    f'array<{self.__das_handle_type}>',
+            '',
+           f'def split(batch : {self.__boost_batch_type}) '
+                f': array<{self.__boost_type}>',
+           f'    return <- [{{for h in batch.{self.__boost_batch_attr} ;',
+           f'        [[{self.__boost_type} {self.__boost_attr}=h]]}}]',
+        ]
 
     def __generate_constructors(self):
         lines = []
+        if self.__is_batched:
+            pass
         return lines
 
     def __generate_finalizers(self):
