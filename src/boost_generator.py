@@ -21,7 +21,7 @@ class BoostGenerator(LoggingObject):
 
     def __add_vk_handles(self):
         self.__add_vk_handle(vk_type_name='VkPhysicalDevice',
-            ctor='vkEnumeratePhysicalDevices',
+            vk_ctor_name='vkEnumeratePhysicalDevices',
             p_count='pPhysicalDeviceCount',
             p_handles='pPhysicalDevices')
 
@@ -53,13 +53,13 @@ class BoostGenerator(LoggingObject):
 
 class VkHandle(object):
 
-    def __init__(self, generator, vk_type_name, ctor,
-        dtor=None, life_params=None, p_count=None, p_handles=None
+    def __init__(self, generator, vk_type_name, vk_ctor_name,
+        vk_dtor_name=None, life_params=None, p_count=None, p_handles=None
     ):
         self.__generator = generator
         self.__vk_type_name = vk_type_name
-        self.__ctor = ctor
-        self.__dtor = dtor
+        self.__vk_ctor_name = vk_ctor_name
+        self.__vk_dtor_name = vk_dtor_name
         self.__life_params = life_params or []
         self.__p_count = p_count
         self.__p_handles = p_handles
@@ -125,8 +125,8 @@ class VkHandle(object):
 
     @property
     def __boost_ctor(self):
-        assert_starts_with(self.__ctor, 'vk')
-        return boost_camel_to_lower(self.__ctor[2:])
+        assert_starts_with(self.self.__vk_ctor_name, 'vk')
+        return boost_camel_to_lower(self.self.__vk_ctor_name[2:])
 
     def __generate_batched_ctors(self):
         lines = []
@@ -140,7 +140,7 @@ class VkHandle(object):
            f'    var count : uint',
            f'    var result_ = VkResult VK_SUCCESS',
             '',
-           f'    result ?? result_ = {self.__ctor}(',
+           f'    result ?? result_ = {self.self.__vk_ctor_name}(',
            f'        instance, safe_addr(count), null)',
            f'    assert(result_ == VkResult VK_SUCCESS)',
             '',
@@ -148,7 +148,7 @@ class VkHandle(object):
            f'    if result ?? result_ == VkResult VK_SUCCESS && count > 0u',
            f'        vk_handles |> resize(int(count))',
            f'        vk_handles |> lock() <| $(thandles)',
-           f'            result ?? result_ = {self.__ctor}(',
+           f'            result ?? result_ = {self.self.__vk_ctor_name}(',
            f'                instance, safe_addr(count), addr(thandles[0]))',
            f'            assert(result_ == VkResult VK_SUCCESS)',
             '',
