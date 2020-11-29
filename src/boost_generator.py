@@ -216,6 +216,22 @@ class VkHandle(object):
         return lines
 
 
+class BoostType(object):
+
+    def __init__(self, name):
+        self.name = name
+
+    def vk_value_expr(self, boost_value):
+        raise NotImplementedError()
+
+
+class BoostVkHandleType(BoostType):
+
+    def vk_value_expr(self, boost_value):
+        attr = boost_camel_to_lower(self.name)
+        return f'{boost_value}.{attr}'
+
+
 def boost_camel_to_lower(camel):
     result = ''
     for c in camel:
@@ -228,5 +244,5 @@ def boost_camel_to_lower(camel):
 def get_boost_type(c_type):
     m = re.match(r'struct Vk(.*)_T \*', c_type)
     if m:
-        return m.group(1)
+        return BoostHandleType(name=m.group(1))
     raise VulkanBoostError(f'Unknown type: {c_type}')
