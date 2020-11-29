@@ -159,98 +159,11 @@ class VkHandle(object):
         lines += [
             '',
            f'def {self.__boost_enumerator}(']
-        for param in self.__vk_enumerator.params:
-            if param.name in [self.__p_count, self.__p_handles]:
+        for param in self.__params_ex(self.__vk_enumerator):
+            if param.vk.name in [self.__p_count, self.__p_handles]:
                 continue
-            boost_type = to_boost_type(param.type)
             lines += [
-               f'    {param.das_name} : {boost_type.name};',
-            ]
-        lines += [
-           f'    var result : VkResult? = [[VkResult?]]',
-           f') : {self.__boost_batch_type}',
-            '',
-           f'    var count : uint',
-           f'    var result_ = VkResult VK_SUCCESS',
-            '',
-           f'    result ?? result_ = {self.__vk_enumerator_name}('
-        ]
-        params = []
-        for param in self.__vk_enumerator.params:
-            if param.name == self.__p_count:
-                params.append('safe_addr(count)')
-            elif param.name == self.__p_handles:
-                params.append('null')
-            else:
-                boost_type = to_boost_type(param.type)
-                params.append(boost_type.to_vk_value(param.das_name))
-        lines += [
-            '        ' + ', '.join(params),
-            '    )',
-           f'    assert(result_ == VkResult VK_SUCCESS)',
-            '',
-           f'    var vk_handles : array<{self.__vk_type_name}>',
-           f'    if result ?? result_ == VkResult VK_SUCCESS && count > 0u',
-           f'        vk_handles |> resize(int(count))',
-           f'        vk_handles |> lock() <| $(thandles)',
-           f'            result ?? result_ = {self.__vk_enumerator_name}(',
-        ]
-        params = []
-        for param in self.__vk_enumerator.params:
-            if param.name == self.__p_count:
-                params.append('safe_addr(count)')
-            elif param.name == self.__p_handles:
-                params.append('addr(thandles[0])')
-            else:
-                boost_type = to_boost_type(param.type)
-                params.append(boost_type.to_vk_value(param.das_name))
-        lines += [
-            '                ' + ', '.join(params),
-           f'            )',
-           f'            assert(result_ == VkResult VK_SUCCESS)',
-            '',
-           f'    return <- [[{self.__boost_batch_type} '
-                    f'{self.__boost_batch_attr} <- vk_handles]]',
-            '',
-           f'def {self.__boost_enumerator}_no_batch(',
-        ]
-        for param in self.__vk_enumerator.params:
-            if param.name in [self.__p_count, self.__p_handles]:
-                continue
-            boost_type = to_boost_type(param.type)
-            lines += [
-               f'    {param.das_name} : {boost_type.name};',
-            ]
-        lines += [
-           f'    var result : VkResult? = [[VkResult?]]',
-           f'): array<{self.__boost_type}>',
-        ]
-        params = []
-        for param in self.__vk_enumerator.params:
-            if param.name in [self.__p_count, self.__p_handles]:
-                continue
-            params.append(param.das_name)
-        params_text = ', '.join(params + ['result'])
-        lines += [
-           f'    var handles <- {self.__boost_enumerator}({params_text})',
-            '    defer() <| ${ delete handles; }',
-           f'    return <- handles |> split()',
-        ]
-        return lines
-
-    def __generate_ctor(self):
-        return [] #TODO
-        lines = []
-        lines += [
-            '',
-           f'def {self.__boost_ctor}(']
-        for param in self.__vk_ctor.params:
-            if param.type == f'{self.__vk_type_name} *':
-                continue
-            boost_type = to_boost_type(param.type)
-            boost_name = to_boost_param_name(param.das_name)
-            lines += [
-               f'    {boost_name} : {boost_type.name} = [[ boost_type.name ]];',
+               f'    {param.boost.name} : {param.boost.type};',
             ]
         lines += [
            f'    var result : VkResult? = [[VkResult?]]',
@@ -343,6 +256,27 @@ class BoostVkHandleType(BoostType):
 
 class BoostVkHandlePassthroughType(BoostType):
     pass
+
+
+class ParamEx(object):
+
+    def __init__(self, vk_param):
+        self.vk = vk_param
+        self.boost = BoostParam(vk_param)
+
+
+class BoostParam(object):
+
+    def __init__(self, vk_param):
+        self.__vk_param = vk_param
+
+    @property
+    def name(self):
+        return boost_camel_to_lower(self.__vk_param.das_name)
+
+    @property
+    def type(self):
+        return to_boost_type(self.__vk_param.type)
 
 
 def boost_camel_to_lower(camel):
