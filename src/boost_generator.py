@@ -8,7 +8,7 @@ class BoostGenerator(LoggingObject):
 
     def generate(self):
         self.__context.write_to_file(
-            fpath=f'../daslib/internal/generated.das',
+            fpath='../daslib/internal/generated.das',
             content='\n'.join(self.__make_content() + ['']))
 
     def __make_content(self):
