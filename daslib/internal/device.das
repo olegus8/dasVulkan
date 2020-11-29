@@ -8,6 +8,8 @@ require vulkan
 require math
 require strings
 
+require generated public
+
 
 /*
 struct PhysicalDeviceBatch
