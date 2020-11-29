@@ -122,7 +122,7 @@ class VkHandle(object):
         assert_starts_with(self.__vk_enumerator_name, 'vk')
         return boost_camel_to_lower(self.__vk_enumerator_name[2:])
 
-    def __generate_batched_enumerators(self):
+    def __generate_enumerators(self):
         lines = []
         lines += [
             '',
