@@ -10,13 +10,12 @@ class BoostGenerator(LoggingObject):
 
     def __add_handles(self):
         self.__add_handle(name='VkPhysicalDevice',
-            fn_create=FuncCreateBatch(
-                name='vkEnumeratePhysicalDevices',
-                p_count='pPhysicalDeviceCount',
-                p_handles='pPhysicalDevices'))
+            fn_create='vkEnumeratePhysicalDevices',
+            p_count='pPhysicalDeviceCount',
+            p_handles='pPhysicalDevices')
 
     def __add_handle(self, **kwargs):
-        handle = Handle(**kwargs)
+        handle = Handle(generator=self, **kwargs)
         self.__handles.append(handle)
         return handle
 
@@ -38,18 +37,19 @@ class BoostGenerator(LoggingObject):
 
 class Handle(object):
 
-    def __init__(self, name, fn_create, fn_destroy=None, params=None):
+    def __init__(self, generator, name, fn_create,
+        fn_destroy=None, params=None, p_count=None, p_items=None
+    ):
+        self.__generator = generator
         self.__name = name
         self.__fn_create = fn_create
         self.__fn_destroy = fn_destroy
         self.__params = params or []
+        self.__p_count = p_count
+        self.__p_items = p_items
 
-        if self.__fn_create.is_batched:
-            assert self.__fn_destroy is None or self.__fn_destroy.is_batched
-
-    @property
     def __is_batched(self):
-        return self.__fn_create.is_batched
+        
 
     def generate(self):
         return []
