@@ -47,7 +47,7 @@ def with_view(
     b : block<(vk_struct : VkInstanceCreateInfo)>
 ) {
     boost_struct.p_application_info |> with_p_view() <| $(
-        vk_p_application_info
+        vk_p_application_info : VkApplicationInfo?
     ) {
     boost_struct.enabled_layer_names |> lock_data() <| $(
         vk_enabled_layer_count, vk_p_enabled_layer_names
@@ -57,7 +57,7 @@ def with_view(
     ) {
     var vk_struct <- [[ VkInstanceCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
-        flags = instance_create_info.flags,
+        flags = boost_struct.flags,
         pApplicationInfo = vk_p_application_info,
         enabledLayerCount = uint(vk_enabled_layer_count),
         ppEnabledLayerNames = vk_p_enabled_layer_names,
