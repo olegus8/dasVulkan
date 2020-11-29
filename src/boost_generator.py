@@ -126,16 +126,34 @@ class VkHandle(object):
         lines = []
         lines += [
             '',
-           f'def {self.__boost_enumerator}(',
-           f'    instance : VkInstance;',
+           f'def {self.__boost_enumerator}(']
+        for param in self.__vk_enumerator.params:
+            if param.name not in [self.__p_count, self.__p_handles]:
+                continue
+            boost_type = get_boost_type(param.type)
+            lines += [
+               f'    {param.das_name} : {boost_type};',
+            ]
+        lines += [
            f'    var result : VkResult? = [[VkResult?]]',
            f') : {self.__boost_batch_type}',
             '',
            f'    var count : uint',
            f'    var result_ = VkResult VK_SUCCESS',
             '',
-           f'    result ?? result_ = {self.__vk_enumerator_name}(',
-           f'        instance, safe_addr(count), null)',
+           f'    result ?? result_ = {self.__vk_enumerator_name}('
+        ]
+        params = []
+        for param in self.__vk_enumerator.params:
+            if param.name == self.__p_count:
+                params.append('safe_addr(count)')
+            elif param.name == self.__p_items:
+                params.append('null')
+            else:
+                params.append(param.das_name)
+        lines += [
+            '        ' + ', '.join(params),
+            '    )',
            f'    assert(result_ == VkResult VK_SUCCESS)',
             '',
            f'    var vk_handles : array<{self.__vk_type_name}>',
@@ -143,7 +161,18 @@ class VkHandle(object):
            f'        vk_handles |> resize(int(count))',
            f'        vk_handles |> lock() <| $(thandles)',
            f'            result ?? result_ = {self.__vk_enumerator_name}(',
-           f'                instance, safe_addr(count), addr(thandles[0]))',
+        ]
+        params = []
+        for param in self.__vk_enumerator.params:
+            if param.name == self.__p_count:
+                params.append('safe_addr(count)')
+            elif param.name == self.__p_items:
+                params.append('addr(thandles[0])')
+            else:
+                params.append(param.das_name)
+        lines += [
+            '                ' + ', '.join(params),
+           f'            )',
            f'            assert(result_ == VkResult VK_SUCCESS)',
             '',
            f'    return <- [[{self.__boost_batch_type} '
