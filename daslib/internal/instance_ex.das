@@ -6,11 +6,8 @@ require instance
 
 
 def with_instance(b : block<(inst:VkInstance implicit)>)
-    var exts <- get_required_instance_extensions()
-    defer() <| ${ delete exts; }
-
     var create_info <- [[InstanceCreateInfo
-        enabled_extension_names = exts]]
+        enabled_extension_names <- get_required_instance_extensions()]]
     defer() <| ${ delete create_info; }
 
     var instance <- create_instance(create_info)
