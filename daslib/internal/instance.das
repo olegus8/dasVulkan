@@ -82,11 +82,8 @@ def with_p_view(
 
 
 def create_instance(
-    flags                   : uint              = [[uint]];
-    application_info        : ApplicationInfo?  = [[ApplicationInfo?]];
-    enabled_layer_names     : array<string>     = [[array<string>]];
-    enabled_extension_names : array<string>     = [[array<string>]];
-    var result              : VkResult?     = [[ VkResult? ]]
+    create_info : InstanceCreateInfo = [[ InstanceCreateInfo ]];
+    var result : VkResult? = [[ VkResult? ]]
 ) : Instance
     var instance : Instance
     return <- instance
