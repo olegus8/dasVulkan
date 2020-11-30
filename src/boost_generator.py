@@ -219,14 +219,6 @@ class VkStruct(object):
                 ]
 
         lines += [
-           f'    boost_struct.enabled_layer_names |> lock_data() <| $(',
-           f'        vk_p_enabled_layer_names, vk_enabled_layer_count',
-           f'    ) {',
-           f'    boost_struct.enabled_extension_names |> lock_data() <| $(',
-           f'        vk_p_enabled_extension_names, vk_enabled_extension_count',
-           f'    ) {',
-        ]
-        lines += [
            f'    let vk_struct <- [[ {self.__vk_type_name}',
         ]
 
@@ -555,6 +547,14 @@ class BoostType(object):
     def adjust_field_name(self, name):
         return name
 
+    @property
+    def needs_view_to_vk(self):
+        return False
+
+    @property
+    def view_to_vk_type(self):
+        raise NotImplemented()
+
 
 class BoostVkHandleType(BoostType):
 
@@ -729,6 +729,14 @@ class BoostFieldBase(object):
     @property
     def vk_value(self):
         return self._type.to_vk_value(self.name)
+
+    @property
+    def needs_view_to_vk(self):
+        return self._type.needs_view_to_vk
+
+    @property
+    def view_to_vk_type(self):
+        return self._type.view_to_vk_type
 
 
 class BoostParam(BoostFieldBase):
