@@ -70,9 +70,14 @@ def create_instance(
     var instance : Instance
     create_info |> with_view() <| $(vk_info)
         var result_ = VkResult VK_SUCCESS
-        result ?? result_ = self.__vk_ctor_name(
+        result ?? result_ = vkCreateInstance(
+            safe_addr(vk_info), null, safe_addr(instance.instance)
+        )
+        assert(result_ == VkResult VK_SUCCESS)
+    return <- instance
+
 def finalize(var instance : Instance)
-    self.__vk_dtor_name(
+    vkDestroyInstance(
         instance.instance, null
     )
     memzero(instance)
