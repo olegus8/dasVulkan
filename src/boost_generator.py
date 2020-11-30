@@ -72,6 +72,7 @@ class BoostGenerator(LoggingObject):
         for type_class in [
             BoostVkHandleType,
             BoostVkStructPtrType,
+            BoostStringType,
             BoostUnknownType,
         ]:
             boost_type = type_class.maybe_create(
@@ -484,6 +485,18 @@ class BoostVkHandleType(BoostType):
     def to_vk_value(self, boost_value):
         attr = boost_camel_to_lower(self.name)
         return f'{boost_value}.{attr}'
+
+
+class BoostStringType(BoostType):
+
+    @classmethod
+    def maybe_create(cls, c_type_name, **kwargs):
+        if c_type_name == 'const char *':
+            return cls(c_type_name=c_type_name, **kwargs)
+
+    @property
+    def name(self):
+        return 'string'
 
 
 class BoostVkStructPtrType(BoostType):
