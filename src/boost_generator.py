@@ -214,7 +214,24 @@ class VkStruct(object):
         return lines
 
     def __generate_vk_to_boost(self):
-        #TODO
+        lines = []
+        lines += [
+            '',
+           f'def construct(vk_struct : {self.__vk_type_name}) '
+                f': {self.__boost_type}'
+           f'return <- [[{self.__boost_type}'
+        ]
+        for field in self.__fields:
+            if field.vk.name in ['sType', 'pNext']:
+                continue
+            vk_value = field.boost.to_boost_value(
+                f'vk_struct.{field.vk.name}')
+            lines += [f'    {field.boost.name} = {vk_value},']
+        assert_ends_with(lines[-1], ',')
+        lines[-1] = lines[-1][:-1]
+        lines += [
+            ']]'
+        ]
         return []
 
     def __generate_boost_to_vk(self):
