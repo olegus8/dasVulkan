@@ -64,6 +64,10 @@ class BoostGenerator(LoggingObject):
     def get_func_params_ex(self, vk_func):
         return [ParamEx(vk_param=p, generator=self) for p in vk_func.params]
 
+    def get_struct_fields_ex(self, vk_struct):
+        return [StructFieldEx(vk_field=f, generator=self)
+            for f in vk_struct.fields]
+
     def get_boost_type(self, c_type):
         for type_class in [
             BoostVkHandleType,
@@ -111,6 +115,14 @@ class VkStruct(object):
         return self
 
     @property
+    def __vk_struct(self):
+        return self.__generator.structs[self.__vk_type_name]
+
+    @property
+    def __fields(self):
+        return self.__generator.get_struct_fields_ex(self.__vk_struct)
+
+    @property
     def __boost_type(self):
         assert_starts_with(self.__vk_type_name, 'Vk')
         return self.__vk_type_name[2:]
@@ -125,6 +137,14 @@ class VkStruct(object):
         ]
         lines += self.__generate_type()
         lines += self.__generate_view()
+        return lines
+
+    def __generate_type(self):
+        lines = []
+        lines += [
+            '',
+           f'struct {self.__boost_type}',
+        ]
         return lines
 
 
@@ -164,15 +184,15 @@ class VkHandle(object):
 
     @property
     def __vk_enumerator_params(self):
-        return self.__func_params_ex(self.__vk_enumerator)
+        return self.__generator.get_func_params_ex(self.__vk_enumerator)
 
     @property
     def __vk_ctor_params(self):
-        return self.__func_params_ex(self.__vk_ctor)
+        return self.__generator.get_func_params_ex(self.__vk_ctor)
 
     @property
     def __vk_dtor_params(self):
-        return self.__func_params_ex(self.__vk_dtor)
+        return self.__generator.get_func_params_ex(self.__vk_dtor)
 
     @property
     def __is_batched(self):
