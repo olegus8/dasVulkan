@@ -24,7 +24,6 @@ struct InstanceCreateInfo
     enabled_extension_names : array<string>
 
 
-[private]
 def with_view(
     boost_struct : ApplicationInfo;
     b : block<(vk_struct : VkApplicationInfo)>
@@ -41,7 +40,6 @@ def with_view(
 }
 
 
-[private]
 def with_view(
     boost_struct : InstanceCreateInfo;
     b : block<(vk_struct : VkInstanceCreateInfo)>
