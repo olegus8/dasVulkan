@@ -95,15 +95,3 @@ def create_instance(
 def finalize(var instance : Instance)
     vkDestroyInstance(instance.instance, null)
     memzero(instance)
-
-
-def get_required_instance_extensions() : array<string>
-    var exts : array<string>
-    var count : uint
-    let glfw_exts : string const ? = glfwGetRequiredInstanceExtensions(
-        safe_addr(count))
-    exts |> resize(int(count))
-    for ext, i in exts, range(INT_MAX)
-        unsafe
-            ext := *(glfw_exts + i)
-    return <- exts
