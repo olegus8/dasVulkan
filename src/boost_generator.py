@@ -201,6 +201,17 @@ class VkStruct(object):
         lines += [
            f'    let vk_struct <- [[ {self.__vk_type_name}',
         ]
+        for field in self.__fields:
+            if field.vk.name in ['sType', 'pNext']:
+                continue
+            if self.__is_array_count(field.vk.name):
+                boost_value = f'uint(vk_{field.boost.name})'
+            elif self.__is_array_items(field.vk.name):
+                boost_value = f'vk_p_{field.boost.name_ptr_as_array}' 
+            else:
+                boost_value = field.boost.type.to_vk_value(
+                    f'boost_struct.{field.boost.name}')
+            lines.append(f'        {field.vk.name} = {boost_value},')
         lines += [
            f'        flags = boost_struct.flags,',
            f'        pApplicationInfo = vk_p_application_info,',
