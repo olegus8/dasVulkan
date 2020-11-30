@@ -143,6 +143,15 @@ class VkStruct(object):
                 return True
         return False
 
+    def __vk_structure_type(self):
+        return 'VK_STRUCTURE_TYPE_' + (
+            boost_camel_to_lower(self.__boost_type).upper())
+
+    def __get_array(self, vk_items_name):
+        for array in self.__arrays:
+            if vk_items_name == array.vk_items_name:
+                return array
+
     def generate(self):
         lines = []
         lines += [
@@ -174,10 +183,6 @@ class VkStruct(object):
                 lines += [f'    {field.boost.name} : {field.boost.type}']
         return lines
 
-    def __vk_structure_type(self):
-        return 'VK_STRUCTURE_TYPE_' + (
-            boost_camel_to_lower(self.__boost_type).upper())
-
     def __generate_view(self):
         lines = []
         lines += [
@@ -186,11 +191,34 @@ class VkStruct(object):
            f'    b : block<(vk_struct : {self.__vk_type_name})>',
             ') {',
         ]
+
         depth = 0
+        for field in self.__fields:
+            if field.vk.name in ['sType', 'pNext']:
+                continue
+            if self.__is_array_count(field.vk.name):
+                continue
+            elif self.__is_array_items(field.vk.name):
+                depth += 1
+                ar = self.__get_array(field.vk.name)
+                items_name = field.boost.name_ptr_as_array
+                count_name = boost_camel_to_lower(ar.vk_count_name)
+                lines += [
+                   f'    boost_struct.{items_name} |> lock_data() <| $(',
+                   f'        vk_p_{items_name}, vk_{count_name}',
+                    '    ) {',
+                ]
+            elif field.boost.needs_view_to_vk:
+                depth += 1
+                boost_name = field.boost.name
+                view_type = field.boost.view_to_vk_type
+                lines += [
+                   f'    boost_struct.{boost_name} |> with_p_view() <| $(',
+                   f'        vk_{boost_name} : {view_type}',
+                    '    ) {',
+                ]
+
         lines += [
-           f'    boost_struct.p_application_info |> with_p_view() <| $(',
-           f'        vk_p_application_info : VkApplicationInfo const?',
-           f'    ) {',
            f'    boost_struct.enabled_layer_names |> lock_data() <| $(',
            f'        vk_p_enabled_layer_names, vk_enabled_layer_count',
            f'    ) {',
@@ -209,7 +237,7 @@ class VkStruct(object):
                 boost_value = f'uint(vk_{field.boost.name})'
             elif self.__is_array_items(field.vk.name):
                 boost_value = f'vk_p_{field.boost.name_ptr_as_array}' 
-            elif field.boost.needs_view:
+            elif field.boost.needs_view_to_vk:
                 boost_value = f'vk_{field.boost.name}'
             else:
                 boost_value = field.boost.type.to_vk_value(
