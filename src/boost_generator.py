@@ -97,6 +97,14 @@ class VkHandle(object):
     def __vk_enumerator_params(self):
         return self.__func_params_ex(self.__vk_enumerator)
 
+    @property
+    def __vk_ctor_params(self):
+        return self.__func_params_ex(self.__vk_ctor)
+
+    @property
+    def __vk_dtor_params(self):
+        return self.__func_params_ex(self.__vk_ctor)
+
     def __func_params_ex(self, vk_func):
         return map(ParamEx, vk_func.params)
 
