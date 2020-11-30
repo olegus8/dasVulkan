@@ -99,7 +99,21 @@ class BoostGenerator(LoggingObject):
             'require daslib/safe_addr',
             '',
             'require vulkan',
-            'require instance',
+            '',
+            '//',
+            '// Helpers',
+            '//',
+            '',
+            'def with_p_view(',
+            '    p_boost_struct : auto(BOOST_T)?;',
+            '    b : block<(p_vk_struct : auto(VK_T)?)>',
+            ')',
+            '    if p_boost_struct == null',
+            '        b |> invoke([[VK_T?]])',
+            '    else',
+            '        *p_boost_struct |> with_view() <| $(vk_struct)',
+            '            unsafe',
+            '                b |> invoke(addr(vk_struct))',
         ] + [
             line for items in [self.__structs, self.__handles]
             for item in items for line in item.generate()

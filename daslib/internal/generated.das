@@ -30,7 +30,7 @@ def with_view(
         pEngineName = boost_struct.engine_name,
         engineVersion = boost_struct.engine_version,
         apiVersion = boost_struct.api_version,
-        sType = VkStructureType VK_STRUCTURE_TYPE_APPLICATION_INFO,
+        sType = VkStructureType VK_STRUCTURE_TYPE_APPLICATION_INFO
     ]];
     b |> invoke(vk_struct);
 }
@@ -65,7 +65,7 @@ def with_view(
         ppEnabledLayerNames = vk_p_enabled_layer_names,
         enabledExtensionCount = uint(vk_enabled_extension_count),
         ppEnabledExtensionNames = vk_p_enabled_extension_names,
-        sType = VkStructureType VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
+        sType = VkStructureType VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO
     ]];
     b |> invoke(vk_struct);
     }}};

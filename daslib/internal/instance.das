@@ -3,7 +3,7 @@ options no_aot = true
 
 require daslib/safe_addr
 require vulkan
-
+/*
 
 struct ApplicationInfo
     application_name        : string
@@ -61,7 +61,7 @@ def with_view(
     b |> invoke(vk_struct);
     }}};
 }
-
+*/
 
 def with_p_view(
     p_boost_struct : auto(BOOST_T)?;
