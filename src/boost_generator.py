@@ -71,6 +71,7 @@ class BoostGenerator(LoggingObject):
     def get_boost_type(self, c_type):
         for type_class in [
             BoostVkHandleType,
+            BoostVkHandlePtrType,
             BoostVkStructPtrType,
             BoostStringType,
             BoostStringPtrType,
@@ -492,6 +493,28 @@ class BoostVkHandleType(BoostType):
     def to_vk_value(self, boost_value):
         attr = boost_camel_to_lower(self.name)
         return f'{boost_value}.{attr}'
+
+
+class BoostVkHandlePtrType(BoostType):
+
+    @classmethod
+    def maybe_create(cls, c_type_name, generator):
+        name = self.__get_boost_handle_type_name(c_type_name)
+        if f'Vk{name}_T' in generator.opaque_structs:
+            return cls(c_type_name=c_type_name, generator=generator)
+
+    @staticmethod
+    def __get_boost_handle_type_name(c_type_name):
+        m = re.match(r'Vk(\S*) \*', c_type_name)
+        if m:
+            return m.group(1)
+
+    @property
+    def name(self):
+        return self.__get_boost_handle_type_name(self.c_type_name) + ' ?'
+
+    def to_vk_value(self, boost_value):
+        raise Exception(f'Conversion of "{self.name}" to vk not supported')
 
 
 class BoostStringType(BoostType):
