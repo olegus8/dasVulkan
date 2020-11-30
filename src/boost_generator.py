@@ -665,7 +665,15 @@ class BoostVkStructPtrType(BoostType):
         return self.__vk_type_name[2:] + ' ?'
 
     def to_vk_value(self, boost_value):
-        raise Exception('Not supported')
+        raise Exception('Use view for conversion')
+
+    @property
+    def needs_view_to_vk(self):
+        return True
+
+    @property
+    def view_to_vk_type(self):
+        return f'{self.__vk_type_name} const ?'
 
 
 class BoostUnknownType(BoostType):
