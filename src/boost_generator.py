@@ -458,6 +458,10 @@ class BoostType(object):
     def name(self):
         return self.c_type_name
 
+    @property
+    def deref_name(self):
+        raise NotImplementedError()
+
     def to_vk_value(self, boost_value):
         return boost_value
 
@@ -506,6 +510,11 @@ class BoostVkStructPtrType(BoostType):
         assert_starts_with(self.__vk_type_name, 'Vk')
         return self.__vk_type_name[2:] + ' ?'
 
+    @property
+    def deref_name(self):
+        assert_ends_with(self.name, '?')
+        return self.name[:-1].strip()
+
     def to_vk_value(self, boost_value):
         raise Exception('Not supported')
 
@@ -545,9 +554,7 @@ class BoostParam(object):
 
     @property
     def type_deref(self):
-        t = self.type
-        assert_ends_with(t, '?')
-        return t[:-1].strip()
+        return self.__type.deref_name
 
     @property
     def vk_value(self):
@@ -559,6 +566,29 @@ class StructFieldEx(object):
     def __init__(self, vk_field, generator):
         self.vk = vk_field
         self.boost = BoostStructField(vk_field=vk_field, generator=generator)
+
+
+class BoostStructField(object):
+
+    def __init__(self, vk_field, generator):
+        self.__vk_field = vk_field
+        self.__type = generator.get_boost_type(self.__vk_field.type)
+
+    @property
+    def name(self):
+        return boost_camel_to_lower(self.__vk_param.das_name)
+
+    @property
+    def type(self):
+        return self.__type.name
+
+    @property
+    def type_deref(self):
+        return self.__type.deref_name
+
+    @property
+    def vk_value(self):
+        return self.__type.to_vk_value(self.name)
 
 
 def boost_camel_to_lower(camel):
