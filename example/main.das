@@ -1,5 +1,7 @@
 //options log, log_infer_passes
 
+options persistent_heap = true
+
 require daslib/safe_addr
 require daslib/vulkan_boost
 require daslib/defer
@@ -531,4 +533,5 @@ def main
     print("Finished\n")
     print("{heap_bytes_allocated()} bytes on heap\n")
     print("{string_heap_bytes_allocated()} bytes on string heap\n")
+    heap_report()
     return true
