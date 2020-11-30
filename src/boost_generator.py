@@ -61,6 +61,20 @@ class BoostGenerator(LoggingObject):
         self.__structs.append(struct)
         return struct
 
+    def get_func_params_ex(self, vk_func):
+        return [ParamEx(vk_param=p, generator=self) for p in vk_func.params]
+
+    def get_boost_type(self, c_type):
+        for type_class in [
+            BoostVkHandleType,
+            BoostVkStructPtrType,
+            BoostUnknownType,
+        ]:
+            boost_type = type_class.maybe_create(
+                c_type_name=c_type, generator=self)
+            if boost_type:
+                return boost_type
+
     def write(self):
         self.__context.write_to_file(
             fpath='../daslib/internal/generated.das',
@@ -95,6 +109,23 @@ class VkStruct(object):
         array = VkStructFieldArray(struct=self, **kwargs)
         self.__arrays.append(array)
         return self
+
+    @property
+    def __boost_type(self):
+        assert_starts_with(self.__vk_type_name, 'Vk')
+        return self.__vk_type_name[2:]
+
+    def generate(self):
+        lines = []
+        lines += [
+            '',
+            '//',
+           f'// {self.__boost_type}',
+            '//',
+        ]
+        lines += self.__generate_type()
+        lines += self.__generate_view()
+        return lines
 
 
 class VkStructFieldArray(object):
@@ -142,9 +173,6 @@ class VkHandle(object):
     @property
     def __vk_dtor_params(self):
         return self.__func_params_ex(self.__vk_dtor)
-
-    def __func_params_ex(self, vk_func):
-        return map(ParamEx, vk_func.params)
 
     @property
     def __is_batched(self):
@@ -379,8 +407,9 @@ class VkHandle(object):
 
 class BoostType(object):
 
-    def __init__(self, c_type_name):
+    def __init__(self, c_type_name, generator):
         self.c_type_name = c_type_name
+        self.generator = generator
 
     @property
     def name(self):
@@ -393,9 +422,9 @@ class BoostType(object):
 class BoostVkHandleType(BoostType):
 
     @classmethod
-    def maybe_create(cls, c_type_name):
+    def maybe_create(cls, c_type_name, **kwargs):
         if cls.__get_boost_handle_type_name(c_type_name):
-            return cls(c_type_name=c_type_name)
+            return cls(c_type_name=c_type_name, **kwargs)
 
     @staticmethod
     def __get_boost_handle_type_name(c_type_name):
@@ -412,12 +441,12 @@ class BoostVkHandleType(BoostType):
         return f'{boost_value}.{attr}'
 
 
-class BoostVkPtrType(BoostType):
+class BoostVkStructPtrType(BoostType):
 
     @classmethod
-    def maybe_create(cls, c_type_name):
-        if cls.__get_vk_type_name(c_type_name):
-            return cls(c_type_name=c_type_name)
+    def maybe_create(cls, c_type_name, generator=generator):
+        if cls.__get_vk_type_name(c_type_name) in generator.structs:
+            return cls(c_type_name=c_type_name, generator=generator)
 
     @staticmethod
     def __get_vk_type_name(c_type_name):
@@ -440,6 +469,10 @@ class BoostVkPtrType(BoostType):
 
 class BoostUnknownType(BoostType):
 
+    @classmethod
+    def maybe_create(cls, **kwargs):
+        return cls(**kwargs)
+
     @property
     def name(self):
         raise VulkanBoostError(
@@ -448,16 +481,16 @@ class BoostUnknownType(BoostType):
 
 class ParamEx(object):
 
-    def __init__(self, vk_param):
+    def __init__(self, vk_param, generator):
         self.vk = vk_param
-        self.boost = BoostParam(vk_param)
+        self.boost = BoostParam(vk_param=vk_param, generator=generator)
 
 
 class BoostParam(object):
 
-    def __init__(self, vk_param):
+    def __init__(self, vk_param, generator):
         self.__vk_param = vk_param
-        self.__type = to_boost_type(self.__vk_param.type)
+        self.__type = generator.get_boost_type(self.__vk_param.type)
 
     @property
     def name(self):
@@ -485,16 +518,6 @@ def boost_camel_to_lower(camel):
             result += '_'
         result += c.lower()
     return result
-
-def to_boost_type(c_type):
-    for type_class in [
-        BoostVkHandleType,
-        BoostVkPtrType,
-    ]:
-        boost_type = type_class.maybe_create(c_type)
-        if boost_type:
-            return boost_type
-    return BoostUnknownType(c_type_name=c_type)
 
 def to_boost_func_name(vk_name):
     assert_starts_with(vk_name, 'vk')
