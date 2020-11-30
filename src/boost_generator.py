@@ -26,6 +26,7 @@ class BoostGenerator(LoggingObject):
             for x in self.__context.main_c_header.functions)
 
         self.__add_vk_handles()
+        self.__add_vk_structs()
 
     def __add_vk_handles(self):
         self.__add_vk_handle(
@@ -38,6 +39,16 @@ class BoostGenerator(LoggingObject):
             enumerator      = 'vkEnumeratePhysicalDevices',
             p_count         = 'pPhysicalDeviceCount',
             p_handles       = 'pPhysicalDevices')
+
+    def __add_vk_structs(self):
+        self.__add_vk_struct(name='VkApplicationInfo')
+        self.__add_vk_struct(name='VkInstanceCreateInfo'
+            ).declare_array(
+                count = 'enabledLayerCount',
+                items = 'ppEnabledLayerNames',
+            ).declare_array(
+                count = 'enabledExtensionCount',
+                items = 'ppEnabledExtensionNames')
 
     def __add_vk_handle(self, **kwargs):
         handle = VkHandle(generator=self, **kwargs)
