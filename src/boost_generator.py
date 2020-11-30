@@ -576,7 +576,7 @@ class BoostStructField(object):
 
     @property
     def name(self):
-        return boost_camel_to_lower(self.__vk_param.das_name)
+        return boost_camel_to_lower(self.__vk_field.das_name)
 
     @property
     def type(self):
