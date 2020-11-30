@@ -42,9 +42,15 @@ class BoostGenerator(LoggingObject):
             p_handles       = 'pPhysicalDevices')
 
     def __add_vk_structs(self):
-        self.__add_vk_struct(struct='VkApplicationInfo')
-        self.__add_vk_struct(struct='VkExtensionProperties')
-        self.__add_vk_struct(struct='VkInstanceCreateInfo'
+        self.__add_vk_struct(
+            struct          = 'VkApplicationInfo',
+            boost_to_vk     = True)
+        self.__add_vk_struct(
+            struct          = 'VkExtensionProperties',
+            vk_to_boost     = True)
+        self.__add_vk_struct(
+            struct          = 'VkInstanceCreateInfo',
+            boost_to_vk     = True
             ).declare_array(
                 count = 'enabledLayerCount',
                 items = 'ppEnabledLayerNames',
