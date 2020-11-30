@@ -122,6 +122,10 @@ class BoostGenerator(LoggingObject):
             '        *p_boost_struct |> with_view() <| $(vk_struct)',
             '            unsafe',
             '                b |> invoke(addr(vk_struct))',
+            '',
+            'def to_string(bytes : int8[])',
+            '    unsafe',
+            '        return reinterpret<string>(addr(bytes[0]))',
         ] + [
             line for items in [self.__structs, self.__handles]
             for item in items for line in item.generate()

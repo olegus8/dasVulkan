@@ -58,10 +58,10 @@ struct ExtensionProperties
     spec_version : uint
 
 def construct(vk_struct : VkExtensionProperties) : ExtensionProperties
-return <- [[ExtensionProperties
-    extension_name = to_string(vk_struct.extensionName),
-    spec_version = vk_struct.specVersion
-]]
+    return <- [[ExtensionProperties
+        extension_name = to_string(vk_struct.extensionName),
+        spec_version = vk_struct.specVersion
+    ]]
 
 //
 // InstanceCreateInfo
