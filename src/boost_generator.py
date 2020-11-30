@@ -644,6 +644,7 @@ class BoostFieldBase(object):
 
     @property
     def name_ptr_as_array(self):
+        name = self.name
         return name[2:] if name.stastswith('p_') else name
 
     @property
