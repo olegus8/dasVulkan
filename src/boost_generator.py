@@ -232,7 +232,7 @@ class VkStruct(object):
         lines += [
             ']]'
         ]
-        return []
+        return lines
 
     def __generate_boost_to_vk(self):
         lines = []
