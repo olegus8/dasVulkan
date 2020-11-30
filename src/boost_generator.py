@@ -188,7 +188,9 @@ class VkStruct(object):
         ]
         lines += self.__generate_type()
         if self.__boost_to_vk:
-            lines += self.__generate_view_to_vk()
+            lines += self.__generate_boost_to_vk()
+        if self.__vk_to_boost:
+            lines += self.__generate_vk_to_boost()
         return lines
 
     def __generate_type(self):
@@ -210,7 +212,11 @@ class VkStruct(object):
                 lines += [f'    {field.boost.name} : {field.boost.type}']
         return lines
 
-    def __generate_view_to_vk(self):
+    def __generate_vk_to_boost(self):
+        #TODO
+        return []
+
+    def __generate_boost_to_vk(self):
         lines = []
         lines += [
             '',
