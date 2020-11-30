@@ -201,6 +201,7 @@ class VkStruct(object):
         lines += [
            f'    let vk_struct <- [[ {self.__vk_type_name}',
         ]
+
         for field in self.__fields:
             if field.vk.name in ['sType', 'pNext']:
                 continue
@@ -208,18 +209,13 @@ class VkStruct(object):
                 boost_value = f'uint(vk_{field.boost.name})'
             elif self.__is_array_items(field.vk.name):
                 boost_value = f'vk_p_{field.boost.name_ptr_as_array}' 
+            elif field.boost.needs_view:
+                boost_value = f'vk_{field.boost.name}'
             else:
                 boost_value = field.boost.type.to_vk_value(
                     f'boost_struct.{field.boost.name}')
             lines.append(f'        {field.vk.name} = {boost_value},')
-        lines += [
-           f'        flags = boost_struct.flags,',
-           f'        pApplicationInfo = vk_p_application_info,',
-           f'        enabledLayerCount = uint(vk_enabled_layer_count),',
-           f'        ppEnabledLayerNames = vk_p_enabled_layer_names,',
-           f'        enabledExtensionCount = uint(vk_enabled_extension_count),',
-           f'        ppEnabledExtensionNames = vk_p_enabled_extension_names,',
-        ]
+
         lines += [
            f'        sType = VkStructureType {self.__vk_structure_type},',
            f'    ]];',
