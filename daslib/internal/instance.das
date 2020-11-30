@@ -5,10 +5,6 @@ require daslib/safe_addr
 require vulkan
 
 
-struct Instance
-    instance : VkInstance
-
-
 struct ApplicationInfo
     application_name        : string
     application_version     : uint
@@ -78,6 +74,10 @@ def with_p_view(
             unsafe
                 b |> invoke(addr(vk_struct))
 
+/*
+struct Instance
+    instance : VkInstance
+
 
 def create_instance(
     create_info : InstanceCreateInfo = [[ InstanceCreateInfo ]];
@@ -95,3 +95,4 @@ def create_instance(
 def finalize(var instance : Instance)
     vkDestroyInstance(instance.instance, null)
     memzero(instance)
+*/
