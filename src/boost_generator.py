@@ -70,7 +70,7 @@ class VkHandle(object):
 
     def __init__(self, generator, handle,
         enumerator=None, ctor=None, dtor=None,
-        p_count=None, p_handles=None, c_create_info=None,
+        p_count=None, p_handles=None, p_create_info=None,
     ):
         self.__generator = generator
         self.__vk_type_name = handle
