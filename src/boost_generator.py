@@ -127,6 +127,18 @@ class VkStruct(object):
         assert_starts_with(self.__vk_type_name, 'Vk')
         return self.__vk_type_name[2:]
 
+    def __is_array_count(self, vk_field):
+        for array in self.__arrays:
+            if vk_field == array.vk_count_name:
+                return True
+        return False
+
+    def __is_array_items(self, vk_field):
+        for array in self.__arrays:
+            if vk_field == array.vk_items_name:
+                return True
+        return False
+
     def generate(self):
         lines = []
         lines += [
@@ -145,14 +157,21 @@ class VkStruct(object):
             '',
            f'struct {self.__boost_type}',
         ]
+        for field in self.__fields:
+            if self.__is_array_count(field.vk.name):
+                continue
+            elif self.__is_array_items(field.vk.name):
+                pass
+            else:
+                pass
         return lines
 
 
 class VkStructFieldArray(object):
 
     def __init__(self, count, items):
-        self.param_count = count
-        self.param_items = items
+        self.vk_count_name = count
+        self.vk_items_name = items
 
 
 class VkHandle(object):
