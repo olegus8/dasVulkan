@@ -129,7 +129,8 @@ class VkHandle(object):
         lines += self.__generate_type()
         if self.__is_batched:
             lines += self.__generate_batched_type()
-            lines += self.__generate_enumerators()
+            lines += self.__generate_enumerator_batched()
+            lines += self.__generate_enumerator_not_batched()
         else:
             lines += self.__generate_ctor()
             lines += self.__generate_dtor()
@@ -163,7 +164,7 @@ class VkHandle(object):
     def __boost_ctor(self):
         return to_boost_func_name(self.__vk_ctor_name)
 
-    def __generate_enumerators(self):
+    def __generate_enumerator_batched(self):
         lines = []
         lines += [
             '',
@@ -217,6 +218,12 @@ class VkHandle(object):
             '',
            f'    return <- [[{self.__boost_batch_type} '
                     f'{self.__boost_batch_attr} <- vk_handles]]',
+        ]
+        return lines
+
+    def __generate_enumerator_not_batched(self):
+        lines = []
+        lines += [
             '',
            f'def {self.__boost_enumerator}_no_batch(',
         ]
