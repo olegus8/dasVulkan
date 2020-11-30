@@ -67,7 +67,6 @@ def with_view(
 }
 
 
-[private]
 def with_p_view(
     p_boost_struct : auto(BOOST_T)?;
     b : block<(p_vk_struct : auto(VK_T)?)>
