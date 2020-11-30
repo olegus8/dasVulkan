@@ -61,7 +61,6 @@ def with_view(
     b |> invoke(vk_struct);
     }}};
 }
-*/
 
 def with_p_view(
     p_boost_struct : auto(BOOST_T)?;
@@ -73,3 +72,4 @@ def with_p_view(
         *p_boost_struct |> with_view() <| $(vk_struct)
             unsafe
                 b |> invoke(addr(vk_struct))
+*/
