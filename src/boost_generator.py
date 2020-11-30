@@ -499,7 +499,7 @@ class BoostVkHandlePtrType(BoostType):
 
     @classmethod
     def maybe_create(cls, c_type_name, generator):
-        name = self.__get_boost_handle_type_name(c_type_name)
+        name = cls.__get_boost_handle_type_name(c_type_name)
         if f'Vk{name}_T' in generator.opaque_structs:
             return cls(c_type_name=c_type_name, generator=generator)
 

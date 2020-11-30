@@ -10,6 +10,27 @@ require vulkan
 require instance
 
 //
+// ApplicationInfo
+//
+
+struct ApplicationInfo
+    p_application_name : string
+    application_version : uint
+    p_engine_name : string
+    engine_version : uint
+    api_version : uint
+
+//
+// InstanceCreateInfo
+//
+
+struct InstanceCreateInfo
+    flags : uint
+    p_application_info : ApplicationInfo ?
+    pp_enabled_layer_names : array<string>
+    pp_enabled_extension_names : array<string>
+
+//
 // Instance
 //
 
