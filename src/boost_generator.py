@@ -188,7 +188,7 @@ class VkStruct(object):
         ]
         lines += self.__generate_type()
         if self.__boost_to_vk:
-            lines += self.__generate_view()
+            lines += self.__generate_view_to_vk()
         return lines
 
     def __generate_type(self):
