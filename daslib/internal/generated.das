@@ -23,6 +23,10 @@ def with_p_view(
             unsafe
                 b |> invoke(addr(vk_struct))
 
+def to_string(bytes : int8[])
+    unsafe
+        return reinterpret<string>(addr(bytes[0]))
+
 //
 // ApplicationInfo
 //

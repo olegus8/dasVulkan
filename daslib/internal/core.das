@@ -5,12 +5,6 @@ require daslib/safe_addr
 require vulkan
 
 
-//TODO: move to stdlib?
-def to_string(bytes : int8[])
-    unsafe
-        return reinterpret<string>(addr(bytes[0]))
-
-
 def to_string(bytes : void?)
     unsafe
         return reinterpret<string>(bytes)
