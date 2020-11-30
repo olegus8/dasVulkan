@@ -373,27 +373,27 @@ class BoostVkHandleType(BoostType):
         return f'{boost_value}.{attr}'
 
 
-class BoostVkStructConstPtrType(BoostType):
+class BoostVkPtrType(BoostType):
 
     @classmethod
     def maybe_create(cls, c_type_name):
-        if cls.__get_vk_struct_name(c_type_name):
+        if cls.__get_vk_type_name(c_type_name):
             return cls(c_type_name=c_type_name)
 
     @staticmethod
-    def __get_vk_struct_name(c_type_name):
-        m = re.match(r'const (Vk\S*) \*', c_type_name)
+    def __get_vk_type_name(c_type_name):
+        m = re.match(r'(const )?(Vk\S*) \*', c_type_name)
         if m:
-            return m.group(1)
+            return m.group(2)
 
     @property
-    def __vk_struct_name(self):
-        return self.__get_vk_struct_name(self.c_type_name)
+    def __vk_type_name(self):
+        return self.__get_vk_type_name(self.c_type_name)
 
     @property
     def name(self):
-        assert_starts_with(self.__vk_struct_name, 'Vk')
-        return self.__vk_struct_name[2:] + ' *'
+        assert_starts_with(self.__vk_type_name, 'Vk')
+        return self.__vk_type_name[2:] + ' *'
 
     def to_vk_value(self, boost_value):
         raise Exception('Not supported')
@@ -450,7 +450,7 @@ def boost_camel_to_lower(camel):
 def to_boost_type(c_type):
     for type_class in [
         BoostVkHandleType,
-        BoostVkStructConstPtrType,
+        BoostVkPtrType,
     ]:
         boost_type = type_class.maybe_create(c_type)
         if boost_type:
