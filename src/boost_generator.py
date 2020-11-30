@@ -143,6 +143,7 @@ class VkStruct(object):
                 return True
         return False
 
+    @property
     def __vk_structure_type(self):
         return 'VK_STRUCTURE_TYPE_' + (
             boost_camel_to_lower(self.__boost_type).upper())
@@ -186,6 +187,7 @@ class VkStruct(object):
     def __generate_view(self):
         lines = []
         lines += [
+            '',
             'def with_view(',
            f'    boost_struct : {self.__boost_type};',
            f'    b : block<(vk_struct : {self.__vk_type_name})>',
