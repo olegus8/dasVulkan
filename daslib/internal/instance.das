@@ -73,26 +73,3 @@ def with_p_view(
         *p_boost_struct |> with_view() <| $(vk_struct)
             unsafe
                 b |> invoke(addr(vk_struct))
-
-/*
-struct Instance
-    instance : VkInstance
-
-
-def create_instance(
-    create_info : InstanceCreateInfo = [[ InstanceCreateInfo ]];
-    var result : VkResult? = [[ VkResult? ]]
-) : Instance
-    var instance : Instance
-    create_info |> with_view() <| $(vk_create_info)
-        var result_ = VkResult VK_SUCCESS
-        result ?? result_ = vkCreateInstance(
-            safe_addr(vk_create_info), null, safe_addr(instance.instance))
-        assert(result_ == VkResult VK_SUCCESS)
-    return <- instance
-
-
-def finalize(var instance : Instance)
-    vkDestroyInstance(instance.instance, null)
-    memzero(instance)
-*/
