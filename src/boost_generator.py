@@ -458,10 +458,6 @@ class BoostType(object):
     def name(self):
         return self.c_type_name
 
-    @property
-    def deref_name(self):
-        raise NotImplementedError()
-
     def to_vk_value(self, boost_value):
         return boost_value
 
@@ -555,6 +551,10 @@ class BoostParam(object):
     @property
     def type_deref(self):
         return self.__type.deref_name
+
+    @property
+    def ptr_as_array(self):
+        return f'array<{self.type_deref}>'
 
     @property
     def vk_value(self):
