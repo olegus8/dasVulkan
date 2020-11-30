@@ -50,6 +50,14 @@ def with_view(
 }
 
 //
+// ExtensionProperties
+//
+
+struct ExtensionProperties
+    extension_name : string
+    spec_version : uint
+
+//
 // InstanceCreateInfo
 //
 
