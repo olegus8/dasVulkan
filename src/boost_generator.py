@@ -321,7 +321,6 @@ class VkHandle(object):
         lines += [
             '',
            f'def finalize(var {self.__boost_attr} : {self.__boost_type})',
-           f'    {self.__vk_dtor_name}(',
         ]
         params = []
         for param in self.__vk_dtor_params:
@@ -334,8 +333,7 @@ class VkHandle(object):
                     f'{param.vk.name}')
         params_text = ', '.join(params)
         lines += [
-           f'        {params_text}',
-           f'    )',
+           f'    {self.__vk_dtor_name}({params_text})',
            f'    memzero({self.__boost_attr})',
         ]
         return lines

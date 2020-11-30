@@ -17,7 +17,7 @@ struct Instance
     instance : VkInstance
 
 def create_instance(
-    create_info : InstanceCreateInfo
+    create_info : InstanceCreateInfo = [[ InstanceCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : Instance
 
