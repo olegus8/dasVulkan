@@ -239,7 +239,7 @@ class VkStruct(object):
             lines.append(f'        {field.vk.name} = {boost_value},')
 
         lines += [
-           f'        sType = VkStructureType {self.__vk_structure_type},',
+           f'        sType = VkStructureType {self.__vk_structure_type}',
            f'    ]];',
            f'    b |> invoke(vk_struct);',
         ]

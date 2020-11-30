@@ -19,6 +19,7 @@ struct ApplicationInfo
     engine_name : string
     engine_version : uint
     api_version : uint
+
 def with_view(
     boost_struct : ApplicationInfo;
     b : block<(vk_struct : VkApplicationInfo)>
@@ -29,7 +30,7 @@ def with_view(
         pEngineName = boost_struct.engine_name,
         engineVersion = boost_struct.engine_version,
         apiVersion = boost_struct.api_version,
-        sType = VkStructureType <bound method VkStruct.__vk_structure_type of <boost_generator.VkStruct object at 0x109e7a790>>,
+        sType = VkStructureType VK_STRUCTURE_TYPE_APPLICATION_INFO,
     ]];
     b |> invoke(vk_struct);
 }
@@ -43,6 +44,7 @@ struct InstanceCreateInfo
     p_application_info : ApplicationInfo ?
     enabled_layer_names : array<string>
     enabled_extension_names : array<string>
+
 def with_view(
     boost_struct : InstanceCreateInfo;
     b : block<(vk_struct : VkInstanceCreateInfo)>
@@ -63,7 +65,7 @@ def with_view(
         ppEnabledLayerNames = vk_p_enabled_layer_names,
         enabledExtensionCount = uint(vk_enabled_extension_count),
         ppEnabledExtensionNames = vk_p_enabled_extension_names,
-        sType = VkStructureType <bound method VkStruct.__vk_structure_type of <boost_generator.VkStruct object at 0x109e7a880>>,
+        sType = VkStructureType VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
     ]];
     b |> invoke(vk_struct);
     }}};
