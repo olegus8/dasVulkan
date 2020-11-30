@@ -394,7 +394,7 @@ class BoostVkPtrType(BoostType):
     @property
     def name(self):
         assert_starts_with(self.__vk_type_name, 'Vk')
-        return self.__vk_type_name[2:] + ' *'
+        return self.__vk_type_name[2:] + ' ?'
 
     def to_vk_value(self, boost_value):
         raise Exception('Not supported')
@@ -432,7 +432,7 @@ class BoostParam(object):
     @property
     def type_deref(self):
         t = self.type
-        assert_ends_with(t, '*')
+        assert_ends_with(t, '?')
         return t[:-1].strip()
 
     @property
