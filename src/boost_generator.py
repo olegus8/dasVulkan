@@ -161,9 +161,9 @@ class VkStruct(object):
             if self.__is_array_count(field.vk.name):
                 continue
             elif self.__is_array_items(field.vk.name):
-                pass
+                lines += [f'    {field.boost.name} : {field.boost.array_type}']
             else:
-                pass
+                lines += [f'    {field.boost.name} : {field.boost.type}']
         return lines
 
 
