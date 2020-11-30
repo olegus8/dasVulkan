@@ -487,7 +487,7 @@ class BoostVkHandleType(BoostType):
 class BoostVkStructPtrType(BoostType):
 
     @classmethod
-    def maybe_create(cls, c_type_name, generator=generator):
+    def maybe_create(cls, c_type_name, generator):
         if cls.__get_vk_type_name(c_type_name) in generator.structs:
             return cls(c_type_name=c_type_name, generator=generator)
 
