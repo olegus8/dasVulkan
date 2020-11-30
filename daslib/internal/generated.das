@@ -31,9 +31,7 @@ def create_instance(
     return <- instance
 
 def finalize(var instance : Instance)
-    vkDestroyInstance(
-        instance.instance, null
-    )
+    vkDestroyInstance(instance.instance, null)
     memzero(instance)
 
 //
