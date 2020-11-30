@@ -160,6 +160,8 @@ class VkStruct(object):
         for field in self.__fields:
             if self.__is_array_count(field.vk.name):
                 continue
+            if field.vk.name in ['sType', 'pNext']:
+                continue
             elif self.__is_array_items(field.vk.name):
                 boost_type = field.boost.ptr_as_array
                 lines += [f'    {field.boost.name} : {boost_type}']
