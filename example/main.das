@@ -530,6 +530,8 @@ def main
                         device |> vkDeviceWaitIdle()
 
     delete vertices
+    unsafe
+        string_heap_collect()
 
     glfwTerminate()
     print("Finished\n")
