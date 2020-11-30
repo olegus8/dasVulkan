@@ -1,5 +1,5 @@
 from das_shared.object_base import LoggingObject
-from das_shared.assertions import assert_starts_with
+from das_shared.assertions import assert_starts_with, assert_ends_with
 import re
 
 
@@ -425,7 +425,7 @@ class BoostParam(object):
     @property
     def type_deref(self):
         t = self.type
-        assert_endswith(t, '*')
+        assert_ends_with(t, '*')
         return t[:-1].strip()
 
     @property
