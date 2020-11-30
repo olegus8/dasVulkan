@@ -73,6 +73,7 @@ class BoostGenerator(LoggingObject):
             BoostVkHandleType,
             BoostVkStructPtrType,
             BoostStringType,
+            BoostUInt32Type,
             BoostUnknownType,
         ]:
             boost_type = type_class.maybe_create(
@@ -497,6 +498,18 @@ class BoostStringType(BoostType):
     @property
     def name(self):
         return 'string'
+
+
+class BoostUInt32Type(BoostType):
+
+    @classmethod
+    def maybe_create(cls, c_type_name, **kwargs):
+        if c_type_name == 'unsigned int':
+            return cls(c_type_name=c_type_name, **kwargs)
+
+    @property
+    def name(self):
+        return 'uint'
 
 
 class BoostVkStructPtrType(BoostType):
