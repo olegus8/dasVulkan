@@ -332,18 +332,33 @@ class VkHandle(object):
 
 class BoostType(object):
 
-    def __init__(self, name):
-        self.__name = name
+    def __init__(self, c_type_name):
+        self.c_type_name = c_type_name
 
     @property
     def name(self):
-        return self.__name
+        return self.c_type_name
 
     def to_vk_value(self, boost_value):
         return boost_value
 
 
 class BoostVkHandleType(BoostType):
+
+    @classmethod
+    def maybe_create(cls, c_type_name):
+        if cls.__get_boost_handle_type_name(c_type_name):
+            return cls(c_type_name=c_type_name)
+
+    @staticmethod
+    def __get_boost_handle_type_name(c_type_name):
+        m = re.match(r'struct Vk(.*)_T \*', c_type_name)
+        if m:
+            m.group(1)
+
+    @property
+    def name(self):
+        return self.__get_boost_handle_type_name(self.c_type_name)
 
     def to_vk_value(self, boost_value):
         attr = boost_camel_to_lower(self.name)
@@ -393,10 +408,13 @@ def boost_camel_to_lower(camel):
     return result
 
 def to_boost_type(c_type):
-    m = re.match(r'struct Vk(.*)_T \*', c_type)
-    if m:
-        return BoostVkHandleType(name=m.group(1))
-    return BoostUnknownType(name=c_type)
+    for type_class in [
+        BoostVkHandleType,
+    ]:
+        boost_type = type_class.maybe_create(c_type)
+        if boost_type:
+            return boost_type
+    return BoostUnknownType(c_type_name=c_type)
 
 def to_boost_func_name(vk_name):
     assert_starts_with(vk_name, 'vk')
