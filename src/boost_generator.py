@@ -360,7 +360,7 @@ class BoostVkHandleType(BoostType):
 
     @property
     def name(self):
-        return self.__get_boost_handle_type_name
+        return self.__get_boost_handle_type_name(self.c_type_name)
 
     def to_vk_value(self, boost_value):
         attr = boost_camel_to_lower(self.name)
