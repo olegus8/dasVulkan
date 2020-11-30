@@ -81,6 +81,7 @@ class BoostGenerator(LoggingObject):
             BoostVkHandlePtrType,
             BoostVkStructPtrType,
             BoostStringType,
+            BoostFixedStringType,
             BoostStringPtrType,
             BoostUInt32Type,
             BoostUnknownType,
@@ -631,7 +632,25 @@ class BoostVkHandlePtrType(BoostType):
         return self.__get_boost_handle_type_name(self.c_type_name) + ' ?'
 
     def to_vk_value(self, boost_value):
-        raise Exception(f'Conversion of "{self.name}" to vk not supported')
+        raise Exception(f'TODO: add if needed ({self.name})')
+
+
+class BoostFixedStringType(BoostType):
+
+    @classmethod
+    def maybe_create(cls, c_type_name, **kwargs):
+        if re.match(r'char \[\d+\]', c_type_name):
+            return cls(c_type_name=c_type_name, **kwargs)
+
+    @property
+    def name(self):
+        return 'string'
+
+    def to_vk_value(self, boost_value):
+        raise Exception(f'TODO: add if needed')
+
+    def to_boost_value(self, vk_value):
+        return f'to_string({vk_value})'
 
 
 class BoostStringType(BoostType):
