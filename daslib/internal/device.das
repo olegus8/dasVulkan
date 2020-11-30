@@ -43,10 +43,7 @@ def enumerate_device_extension_properties(
                 vk_layer, safe_addr(count), addr(tprops[0]))
             assert(result_ == VkResult VK_SUCCESS)
         
-    return <- [{for p in vk_props; [[ExtensionProperties
-        extension_name = to_string(p.extensionName),
-        spec_version = p.specVersion
-    ]]}]
+    return <- [{for p in vk_props; construct(p)}]
 
 
 def get_physical_device_surface_formats_khr(
