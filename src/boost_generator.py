@@ -574,6 +574,9 @@ class BoostType(object):
     def to_vk_value(self, boost_value):
         return boost_value
 
+    def to_boost_value(self, vk_value):
+        return vk_value
+
     @property
     def deref_name(self):
         assert_ends_with(self.name, '?')
