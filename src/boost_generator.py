@@ -298,7 +298,7 @@ class VkHandle(object):
         for param in self.__vk_ctor_params:
             if param.vk.name == self.__p_create_info:
                 params.append('safe_addr(vk_info)')
-            elif param.boost.type == self.__boost_type+' *':
+            elif param.boost.type == self.__boost_type+' ?':
                 params.append(
                     f'safe_addr({self.__boost_attr}.{self.__boost_attr})')
             elif param.vk.name == 'pAllocator':
