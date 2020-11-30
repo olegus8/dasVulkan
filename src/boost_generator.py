@@ -174,13 +174,19 @@ class VkStruct(object):
                 lines += [f'    {field.boost.name} : {field.boost.type}']
         return lines
 
+    def __vk_structure_type(self):
+        return 'VK_STRUCTURE_TYPE_' + (
+            boost_camel_to_lower(self.__boost_type).upper())
+
     def __generate_view(self):
         lines = []
         lines += [
-           f'def with_view(',
+            'def with_view(',
            f'    boost_struct : {self.__boost_type};',
            f'    b : block<(vk_struct : {self.__vk_type_name})>',
-           f') {{',
+            ') {',
+        ]
+        lines += [
            f'    boost_struct.p_application_info |> with_p_view() <| $(',
            f'        vk_p_application_info : VkApplicationInfo const?',
            f'    ) {',
@@ -190,18 +196,27 @@ class VkStruct(object):
            f'    boost_struct.enabled_extension_names |> lock_data() <| $(',
            f'        vk_p_enabled_extension_names, vk_enabled_extension_count',
            f'    ) {',
-           f'    let vk_struct <- [[ VkInstanceCreateInfo',
-           f'        sType = VkStructureType VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,',
+        ]
+        lines += [
+           f'    let vk_struct <- [[ {self.__vk_type_name}',
+           f'        sType = VkStructureType {self.__vk_structure_type},',
+        ]
+        lines += [
            f'        flags = boost_struct.flags,',
            f'        pApplicationInfo = vk_p_application_info,',
            f'        enabledLayerCount = uint(vk_enabled_layer_count),',
            f'        ppEnabledLayerNames = vk_p_enabled_layer_names,',
            f'        enabledExtensionCount = uint(vk_enabled_extension_count),',
            f'        ppEnabledExtensionNames = vk_p_enabled_extension_names',
+        ]
+        lines += [
            f'    ]];',
            f'    b |> invoke(vk_struct);',
-           f'    }}};',
-           f'}',
+        ]
+        if depth > 0:
+            lines += ['    ' + ('}'*depth) + ';']
+        lines += [
+            '}',
         ]
         return lines
 
