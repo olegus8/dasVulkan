@@ -472,6 +472,9 @@ class BoostType(object):
         assert_ends_with(self.name, '?')
         return self.name[:-1].strip()
 
+    def adjust_field_name(self, name):
+        return name
+
 
 class BoostVkHandleType(BoostType):
 
@@ -528,6 +531,9 @@ class BoostStringType(BoostType):
     def name(self):
         return 'string'
 
+    def adjust_field_name(self, name):
+        return name[2:] if name.startswith('p_') else name
+
 
 class BoostStringPtrType(BoostType):
 
@@ -539,6 +545,9 @@ class BoostStringPtrType(BoostType):
     @property
     def name(self):
         return 'string ?'
+
+    def adjust_field_name(self, name):
+        return name[1:] if name.startswith('pp_') else name
 
 
 class BoostUInt32Type(BoostType):
@@ -617,7 +626,8 @@ class BoostFieldBase(object):
 
     @property
     def name(self):
-        return boost_camel_to_lower(self._vk_field.das_name)
+        return self._type.adjust_field_name(
+            boost_camel_to_lower(self._vk_field.das_name))
 
     @property
     def type(self):
