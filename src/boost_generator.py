@@ -536,11 +536,22 @@ class ParamEx(object):
         self.boost = BoostParam(vk_param=vk_param, generator=generator)
 
 
-class BoostParam(object):
+class BoostFieldBase(object):
 
-    def __init__(self, vk_param, generator):
-        self.__vk_param = vk_param
-        self.__type = generator.get_boost_type(self.__vk_param.type)
+    def __init__(self, generator):
+        self.__cached_type = None
+        self.__generator = generator
+
+    @property
+    def _vk_field(self):
+        raise NotImplemented()
+
+    @property
+    def _type(self):
+        if self.__cached_type is None:
+            self.__cached_type = self.__generator.get_boost_type(
+                self._vk_field.type)
+        return self.__cached_type
 
     @property
     def name(self):
@@ -548,11 +559,11 @@ class BoostParam(object):
 
     @property
     def type(self):
-        return self.__type.name
+        return self._type.name
 
     @property
     def type_deref(self):
-        return self.__type.deref_name
+        return self._type.deref_name
 
     @property
     def ptr_as_array(self):
@@ -560,7 +571,18 @@ class BoostParam(object):
 
     @property
     def vk_value(self):
-        return self.__type.to_vk_value(self.name)
+        return self._type.to_vk_value(self.name)
+
+
+class BoostParam(BoostFieldBase):
+
+    def __init__(self, vk_param, **kwargs):
+        super(BoostParam, self).__init__(**kwargs)
+        self.__vk_param = vk_param
+
+    @property
+    def _vk_field(self):
+        return self.__vk_param
 
 
 class StructFieldEx(object):
@@ -572,25 +594,13 @@ class StructFieldEx(object):
 
 class BoostStructField(object):
 
-    def __init__(self, vk_field, generator):
+    def __init__(self, vk_field, **kwargs):
+        super(BoostStructField, self).__init__(**kwargs)
         self.__vk_field = vk_field
-        self.__type = generator.get_boost_type(self.__vk_field.type)
 
     @property
-    def name(self):
-        return boost_camel_to_lower(self.__vk_field.das_name)
-
-    @property
-    def type(self):
-        return self.__type.name
-
-    @property
-    def type_deref(self):
-        return self.__type.deref_name
-
-    @property
-    def vk_value(self):
-        return self.__type.to_vk_value(self.name)
+    def _vk_field(self):
+        return self.__vk_field
 
 
 def boost_camel_to_lower(camel):
