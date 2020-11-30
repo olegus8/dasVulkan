@@ -555,7 +555,7 @@ class BoostFieldBase(object):
 
     @property
     def name(self):
-        return boost_camel_to_lower(self.__vk_param.das_name)
+        return boost_camel_to_lower(self._vk_field.das_name)
 
     @property
     def type(self):
@@ -592,7 +592,7 @@ class StructFieldEx(object):
         self.boost = BoostStructField(vk_field=vk_field, generator=generator)
 
 
-class BoostStructField(object):
+class BoostStructField(BoostFieldBase):
 
     def __init__(self, vk_field, **kwargs):
         super(BoostStructField, self).__init__(**kwargs)
