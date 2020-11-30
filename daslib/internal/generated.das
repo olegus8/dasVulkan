@@ -27,8 +27,8 @@ struct ApplicationInfo
 struct InstanceCreateInfo
     flags : uint
     p_application_info : ApplicationInfo ?
-    p_enabled_layer_names : array<string>
-    p_enabled_extension_names : array<string>
+    enabled_layer_names : array<string>
+    enabled_extension_names : array<string>
 
 //
 // Instance

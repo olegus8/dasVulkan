@@ -175,7 +175,35 @@ class VkStruct(object):
         return lines
 
     def __generate_view(self):
-        return []
+        lines = []
+        lines += [
+           f'def with_view(',
+           f'    boost_struct : {self.__boost_type};',
+           f'    b : block<(vk_struct : {self.__vk_type_name})>',
+           f') {{',
+           f'    boost_struct.p_application_info |> with_p_view() <| $(',
+           f'        vk_p_application_info : VkApplicationInfo const?',
+           f'    ) {',
+           f'    boost_struct.enabled_layer_names |> lock_data() <| $(',
+           f'        vk_p_enabled_layer_names, vk_enabled_layer_count',
+           f'    ) {',
+           f'    boost_struct.enabled_extension_names |> lock_data() <| $(',
+           f'        vk_p_enabled_extension_names, vk_enabled_extension_count',
+           f'    ) {',
+           f'    let vk_struct <- [[ VkInstanceCreateInfo',
+           f'        sType = VkStructureType VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,',
+           f'        flags = boost_struct.flags,',
+           f'        pApplicationInfo = vk_p_application_info,',
+           f'        enabledLayerCount = uint(vk_enabled_layer_count),',
+           f'        ppEnabledLayerNames = vk_p_enabled_layer_names,',
+           f'        enabledExtensionCount = uint(vk_enabled_extension_count),',
+           f'        ppEnabledExtensionNames = vk_p_enabled_extension_names',
+           f'    ]];',
+           f'    b |> invoke(vk_struct);',
+           f'    }}};',
+           f'}',
+        ]
+        return lines
 
 
 class VkStructFieldArray(object):
