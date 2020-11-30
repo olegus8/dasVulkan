@@ -167,8 +167,9 @@ class VkStruct(object):
             if field.vk.name in ['sType', 'pNext']:
                 continue
             elif self.__is_array_items(field.vk.name):
-                boost_type = field.boost.ptr_as_array
-                lines += [f'    {field.boost.name} : {boost_type}']
+                boost_name = field.boost.name_ptr_as_array
+                boost_type = field.boost.type_ptr_as_array
+                lines += [f'    {boost_name} : {boost_type}']
             else:
                 lines += [f'    {field.boost.name} : {field.boost.type}']
         return lines
@@ -638,8 +639,12 @@ class BoostFieldBase(object):
         return self._type.deref_name
 
     @property
-    def ptr_as_array(self):
+    def type_ptr_as_array(self):
         return f'array<{self.type_deref}>'
+
+    @property
+    def name_ptr_as_array(self):
+        return name[2:] if name.stastswith('p_') else name
 
     @property
     def vk_value(self):
