@@ -397,8 +397,8 @@ class BoostUnknownType(BoostType):
 
     @property
     def name(self):
-        name = super(BoostType, self).name
-        raise VulkanBoostError(f'Cannot convert to boost type: {name}')
+        raise VulkanBoostError(
+            f'Cannot convert to boost type: {self.c_type_name}')
 
 
 class ParamEx(object):
