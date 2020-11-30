@@ -356,7 +356,7 @@ class BoostVkHandleType(BoostType):
     def __get_boost_handle_type_name(c_type_name):
         m = re.match(r'struct Vk(\S*)_T \*', c_type_name)
         if m:
-            m.group(1)
+            return m.group(1)
 
     @property
     def name(self):
@@ -378,7 +378,7 @@ class BoostVkStructConstPtrType(BoostType):
     def __get_vk_struct_name(c_type_name):
         m = re.match(r'const (Vk\S*) \*', c_type_name)
         if m:
-            m.group(1)
+            return m.group(1)
 
     @property
     def __vk_struct_name(self):
