@@ -186,6 +186,7 @@ class VkStruct(object):
            f'    b : block<(vk_struct : {self.__vk_type_name})>',
             ') {',
         ]
+        depth = 0
         lines += [
            f'    boost_struct.p_application_info |> with_p_view() <| $(',
            f'        vk_p_application_info : VkApplicationInfo const?',
@@ -199,7 +200,6 @@ class VkStruct(object):
         ]
         lines += [
            f'    let vk_struct <- [[ {self.__vk_type_name}',
-           f'        sType = VkStructureType {self.__vk_structure_type},',
         ]
         lines += [
            f'        flags = boost_struct.flags,',
@@ -207,9 +207,10 @@ class VkStruct(object):
            f'        enabledLayerCount = uint(vk_enabled_layer_count),',
            f'        ppEnabledLayerNames = vk_p_enabled_layer_names,',
            f'        enabledExtensionCount = uint(vk_enabled_extension_count),',
-           f'        ppEnabledExtensionNames = vk_p_enabled_extension_names',
+           f'        ppEnabledExtensionNames = vk_p_enabled_extension_names,',
         ]
         lines += [
+           f'        sType = VkStructureType {self.__vk_structure_type},',
            f'    ]];',
            f'    b |> invoke(vk_struct);',
         ]
