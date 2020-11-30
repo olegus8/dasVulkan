@@ -26,15 +26,15 @@ class BoostGenerator(LoggingObject):
 
     def __add_vk_handles(self):
         self.__add_vk_handle(
-            handle      = 'VkPhysicalDevice',
-            enumerator  = 'vkEnumeratePhysicalDevices',
-            p_count     = 'pPhysicalDeviceCount',
-            p_handles   = 'pPhysicalDevices')
-        if False: #TODO
-            self.__add_vk_handle(
-                handle      = 'VkInstance',
-                ctor        = 'vkCreateInstance',
-                dtor        = 'vkDestroyInstance')
+            handle          = 'VkPhysicalDevice',
+            enumerator      = 'vkEnumeratePhysicalDevices',
+            p_count         = 'pPhysicalDeviceCount',
+            p_handles       = 'pPhysicalDevices')
+        self.__add_vk_handle(
+            handle          = 'VkInstance',
+            ctor            = 'vkCreateInstance',
+            dtor            = 'vkDestroyInstance',
+            p_create_info   = 'pCreateInfo')
 
     def __add_vk_handle(self, **kwargs):
         handle = VkHandle(generator=self, **kwargs)
