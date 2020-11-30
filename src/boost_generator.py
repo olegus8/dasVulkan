@@ -262,7 +262,7 @@ class BoostVkHandleType(BoostType):
         return f'{boost_value}.{attr}'
 
 
-class BoostPassthroughType(BoostType):
+class BoostUnknownType(BoostType):
 
     @property
     def name(self):

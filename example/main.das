@@ -442,6 +442,8 @@ def draw_frame(device, queue, cmd_bufs, swapchain, frame,
 [export]
 def main
     print("\nStarted\n")
+    print("{heap_bytes_allocated()} bytes on heap\n")
+    print("{string_heap_bytes_allocated()} bytes on string heap\n")
     glfwInit()
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API)
     glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE)
@@ -527,4 +529,6 @@ def main
 
     glfwTerminate()
     print("Finished\n")
+    print("{heap_bytes_allocated()} bytes on heap\n")
+    print("{string_heap_bytes_allocated()} bytes on string heap\n")
     return true
