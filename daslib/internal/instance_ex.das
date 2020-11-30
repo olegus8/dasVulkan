@@ -2,7 +2,6 @@ options indenting = 4
 options no_aot = true
 
 require daslib/defer
-require instance
 require generated
 require glfw
 
