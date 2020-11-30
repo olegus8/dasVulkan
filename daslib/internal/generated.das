@@ -54,3 +54,25 @@ def enumerate_physical_devices_no_batch(
     var handles <- enumerate_physical_devices(instance, result)
     defer() <| ${ delete handles; }
     return <- handles |> split()
+
+//
+// Instance
+//
+
+struct Instance
+    instance : VkInstance
+
+def create_instance(
+    p_create_info : InstanceCreateInfo
+    var result : VkResult? = [[VkResult?]]
+) : Instance
+
+    var instance : Instance
+    create_info |> with_view() <| $(vk_info)
+        var result_ = VkResult VK_SUCCESS
+        result ?? result_ = self.__vk_ctor_name(
+def finalize(var instance : Instance)
+    self.__vk_dtor_name(
+        instance.instance, null
+    )
+    memzero(instance)
