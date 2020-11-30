@@ -291,7 +291,7 @@ class VkHandle(object):
            f'    var {self.__boost_attr} : {self.__boost_type}',
            f'    {self.__boost_create_info} |> with_view() <| $(vk_info)',
            f'        var result_ = VkResult VK_SUCCESS',
-           f'        result ?? result_ = self.__vk_ctor_name(',
+           f'        result ?? result_ = {self.__vk_ctor_name}(',
         ]
         params = []
         for param in self.__vk_ctor_params:
@@ -307,7 +307,7 @@ class VkHandle(object):
                     f'{param.vk.name}')
                 params.append(param.boost.vk_value)
         params_text = ', '.join(params)
-        lines + [
+        lines += [
            f'            {params_text}',
            f'        )',
            f'        assert(result_ == VkResult VK_SUCCESS)',
@@ -318,8 +318,9 @@ class VkHandle(object):
     def __generate_dtor(self):
         lines = []
         lines += [
+            '',
            f'def finalize(var {self.__boost_attr} : {self.__boost_type})',
-           f'    self.__vk_dtor_name(',
+           f'    {self.__vk_dtor_name}(',
         ]
         params = []
         for param in self.__vk_dtor_params:

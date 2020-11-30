@@ -63,7 +63,7 @@ struct Instance
     instance : VkInstance
 
 def create_instance(
-    p_create_info : InstanceCreateInfo
+    create_info : InstanceCreateInfo
     var result : VkResult? = [[VkResult?]]
 ) : Instance
 
