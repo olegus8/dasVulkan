@@ -269,6 +269,8 @@ class VkHandle(object):
         for param in self.__vk_ctor_params:
             if param.vk.name == 'pAllocator':
                 continue
+            elif param.vk.type == f'{self.__vk_type_name} *':
+                continue
             elif param.vk.name == self.__p_create_info:
                 lines += [f'    {param.boost.name} : {param.boost.type_deref}']
             else:
@@ -352,17 +354,40 @@ class BoostVkHandleType(BoostType):
 
     @staticmethod
     def __get_boost_handle_type_name(c_type_name):
-        m = re.match(r'struct Vk(.*)_T \*', c_type_name)
+        m = re.match(r'struct Vk(\S*)_T \*', c_type_name)
         if m:
             m.group(1)
 
     @property
     def name(self):
-        return self.__get_boost_handle_type_name(self.c_type_name)
+        return self.__get_boost_handle_type_name
 
     def to_vk_value(self, boost_value):
         attr = boost_camel_to_lower(self.name)
         return f'{boost_value}.{attr}'
+
+
+class BoostVkStructConstPtrType(BoostType):
+
+    @classmethod
+    def maybe_create(cls, c_type_name):
+        if cls.__get_vk_struct_name(c_type_name):
+            return cls(c_type_name=c_type_name)
+
+    @staticmethod
+    def __get_vk_struct_name(c_type_name):
+        m = re.match(r'const (Vk\S*) \*', c_type_name)
+        if m:
+            m.group(1)
+
+    @property
+    def __vk_struct_name(self):
+        return self.__get_vk_struct_name(self.c_type_name)
+
+    @property
+    def name(self):
+        assert_starts_with(self.__vk_struct_name, 'Vk')
+        return self.__vk_struct_name[2:] + ' *'
 
 
 class BoostUnknownType(BoostType):
@@ -395,6 +420,12 @@ class BoostParam(object):
         return self.__type.name
 
     @property
+    def type_deref(self):
+        t = self.type
+        assert_endswith(t, '*')
+        return t[:-1].strip()
+
+    @property
     def vk_value(self):
         return self.__type.to_vk_value(self.name)
 
@@ -410,6 +441,7 @@ def boost_camel_to_lower(camel):
 def to_boost_type(c_type):
     for type_class in [
         BoostVkHandleType,
+        BoostVkStructConstPtrType,
     ]:
         boost_type = type_class.maybe_create(c_type)
         if boost_type:
