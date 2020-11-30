@@ -129,9 +129,13 @@ class BoostGenerator(LoggingObject):
 
 class VkStruct(object):
 
-    def __init__(self, generator, struct):
+    def __init__(self, generator, struct,
+        boost_to_vk=False, vk_to_boost=False,
+    ):
         self.__generator = generator
         self.__vk_type_name = struct
+        self.__boost_to_vk = boost_to_vk
+        self.__vk_to_boost = vk_to_boost
         self.__arrays = []
 
     def declare_array(self, **kwargs):
@@ -183,7 +187,8 @@ class VkStruct(object):
             '//',
         ]
         lines += self.__generate_type()
-        lines += self.__generate_view()
+        if self.__boost_to_vk:
+            lines += self.__generate_view()
         return lines
 
     def __generate_type(self):
@@ -205,7 +210,7 @@ class VkStruct(object):
                 lines += [f'    {field.boost.name} : {field.boost.type}']
         return lines
 
-    def __generate_view(self):
+    def __generate_view_to_vk(self):
         lines = []
         lines += [
             '',
