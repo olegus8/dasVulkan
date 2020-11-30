@@ -7,7 +7,7 @@ require core
 require vulkan
 require math
 require device
-require instance
+require generated
 
 let
     DEFAULT_REQUIRED_EXTENSIONS = [[auto[]
