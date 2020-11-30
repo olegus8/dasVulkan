@@ -15,6 +15,7 @@ class BoostGenerator(LoggingObject):
     def __init__(self, context):
         self.__context = context
         self.__handles = []
+        self.__structs = []
 
         self.enums = dict((x.name, x)
             for x in self.__context.main_c_header.enums)
@@ -55,6 +56,11 @@ class BoostGenerator(LoggingObject):
         self.__handles.append(handle)
         return handle
 
+    def __add_vk_struct(self, **kwargs):
+        struct = VkStruct(generator=self, **kwargs)
+        self.__structs.append(struct)
+        return struct
+
     def write(self):
         self.__context.write_to_file(
             fpath='../daslib/internal/generated.das',
@@ -73,7 +79,8 @@ class BoostGenerator(LoggingObject):
             'require vulkan',
             'require instance',
         ] + [
-            line for handle in self.__handles for line in handle.generate()
+            line for items in [self.__structs, self.__handles]
+            for item in items for line in item.generate()
         ]
 
 
