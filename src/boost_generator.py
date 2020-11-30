@@ -161,10 +161,14 @@ class VkStruct(object):
             if self.__is_array_count(field.vk.name):
                 continue
             elif self.__is_array_items(field.vk.name):
-                lines += [f'    {field.boost.name} : {field.boost.array_type}']
+                boost_type = field.boost.ptr_as_array
+                lines += [f'    {field.boost.name} : {boost_type}']
             else:
                 lines += [f'    {field.boost.name} : {field.boost.type}']
         return lines
+
+    def __generate_view(self):
+        return []
 
 
 class VkStructFieldArray(object):
@@ -548,6 +552,13 @@ class BoostParam(object):
     @property
     def vk_value(self):
         return self.__type.to_vk_value(self.name)
+
+
+class StructFieldEx(object):
+
+    def __init__(self, vk_field, generator):
+        self.vk = vk_field
+        self.boost = BoostStructField(vk_field=vk_field, generator=generator)
 
 
 def boost_camel_to_lower(camel):
