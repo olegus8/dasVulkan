@@ -110,7 +110,7 @@ class VkStruct(object):
         self.__arrays = []
 
     def declare_array(self, **kwargs):
-        array = VkStructFieldArray(struct=self, **kwargs)
+        array = VkStructFieldArray(**kwargs)
         self.__arrays.append(array)
         return self
 
