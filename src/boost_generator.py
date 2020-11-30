@@ -42,8 +42,8 @@ class BoostGenerator(LoggingObject):
             p_handles       = 'pPhysicalDevices')
 
     def __add_vk_structs(self):
-        self.__add_vk_struct(name='VkApplicationInfo')
-        self.__add_vk_struct(name='VkInstanceCreateInfo'
+        self.__add_vk_struct(struct='VkApplicationInfo')
+        self.__add_vk_struct(struct='VkInstanceCreateInfo'
             ).declare_array(
                 count = 'enabledLayerCount',
                 items = 'ppEnabledLayerNames',
@@ -82,6 +82,26 @@ class BoostGenerator(LoggingObject):
             line for items in [self.__structs, self.__handles]
             for item in items for line in item.generate()
         ]
+
+
+class VkStruct(object):
+
+    def __init__(self, generator, struct):
+        self.__generator = generator
+        self.__vk_type_name = struct
+        self.__arrays = []
+
+    def declare_array(self, **kwargs):
+        array = VkStructFieldArray(struct=self, **kwargs)
+        self.__arrays.append(array)
+        return self
+
+
+class VkStructFieldArray(object):
+
+    def __init__(self, count, items):
+        self.param_count = count
+        self.param_items = items
 
 
 class VkHandle(object):
