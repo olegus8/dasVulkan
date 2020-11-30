@@ -29,7 +29,7 @@ def with_view(
     boost_struct : ApplicationInfo;
     b : block<(vk_struct : VkApplicationInfo)>
 ) {
-    var vk_struct <- [[ VkApplicationInfo
+    let vk_struct <- [[ VkApplicationInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_APPLICATION_INFO,
         pApplicationName = boost_struct.application_name,
         applicationVersion = boost_struct.application_version,
@@ -55,7 +55,7 @@ def with_view(
     boost_struct.enabled_extension_names |> lock_data() <| $(
         vk_p_enabled_extension_names, vk_enabled_extension_count
     ) {
-    var vk_struct <- [[ VkInstanceCreateInfo
+    let vk_struct <- [[ VkInstanceCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
         flags = boost_struct.flags,
         pApplicationInfo = vk_p_application_info,
