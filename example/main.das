@@ -450,7 +450,7 @@ def main
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API)
     glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE)
 
-    let vertices <- [{auto[]
+    var vertices <- [{auto[]
         [[Vertex position=float2( 0.0f, -0.5f), color=float3(1f, 0f, 0f)]];
         [[Vertex position=float2( 0.5f,  0.5f), color=float3(0f, 1f, 0f)]];
         [[Vertex position=float2(-0.5f,  0.5f), color=float3(0f, 0f, 1f)]]
@@ -528,6 +528,8 @@ def main
                             frame = (frame + 1) % MAX_FRAMES_IN_FLIGHT
                         delete imgs_used_by_frames
                         device |> vkDeviceWaitIdle()
+
+    delete vertices
 
     glfwTerminate()
     print("Finished\n")
