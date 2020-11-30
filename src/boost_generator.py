@@ -794,8 +794,11 @@ class BoostFieldBase(object):
     def vk_value(self):
         return self._type.to_vk_value(self.name)
 
-    def to_vk_value(self, value):
-        return self._type.to_vk_value(value)
+    def to_vk_value(self, boost_value):
+        return self._type.to_vk_value(boost_value)
+
+    def to_boost_value(self, vk_value):
+        return self._type.to_boost_value(vk_value)
 
     @property
     def needs_view_to_vk(self):
