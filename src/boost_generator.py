@@ -232,7 +232,7 @@ class VkStruct(object):
             elif field.boost.needs_view_to_vk:
                 boost_value = f'vk_{field.boost.name}'
             else:
-                boost_value = field.boost.type.to_vk_value(
+                boost_value = field.boost.to_vk_value(
                     f'boost_struct.{field.boost.name}')
             lines.append(f'        {field.vk.name} = {boost_value},')
 
@@ -737,6 +737,9 @@ class BoostFieldBase(object):
     @property
     def vk_value(self):
         return self._type.to_vk_value(self.name)
+
+    def to_vk_value(self, value):
+        return self._type.to_vk_value(value)
 
     @property
     def needs_view_to_vk(self):
