@@ -73,6 +73,7 @@ class BoostGenerator(LoggingObject):
             BoostVkHandleType,
             BoostVkStructPtrType,
             BoostStringType,
+            BoostStringPtrType,
             BoostUInt32Type,
             BoostUnknownType,
         ]:
@@ -503,6 +504,18 @@ class BoostStringType(BoostType):
     @property
     def name(self):
         return 'string'
+
+
+class BoostStringPtrType(BoostType):
+
+    @classmethod
+    def maybe_create(cls, c_type_name, **kwargs):
+        if c_type_name == 'const char *const *':
+            return cls(c_type_name=c_type_name, **kwargs)
+
+    @property
+    def name(self):
+        return 'string ?'
 
 
 class BoostUInt32Type(BoostType):
