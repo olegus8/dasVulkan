@@ -10,10 +10,11 @@ require strings
 
 require generated public
 
-
+/*
 struct ExtensionProperties
     extension_name : string
     spec_version : uint
+*/
 
 
 def get_physical_device_properties(physical_device : PhysicalDevice

@@ -43,6 +43,7 @@ class BoostGenerator(LoggingObject):
 
     def __add_vk_structs(self):
         self.__add_vk_struct(struct='VkApplicationInfo')
+        self.__add_vk_struct(struct='VkExtensionProperties')
         self.__add_vk_struct(struct='VkInstanceCreateInfo'
             ).declare_array(
                 count = 'enabledLayerCount',
