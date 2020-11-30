@@ -218,7 +218,7 @@ class VkStruct(object):
         lines += [
             '',
            f'def construct(vk_struct : {self.__vk_type_name}) '
-                f': {self.__boost_type}'
+                f': {self.__boost_type}',
            f'return <- [[{self.__boost_type}'
         ]
         for field in self.__fields:
