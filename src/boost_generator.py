@@ -126,6 +126,12 @@ class VkHandle(object):
         return boost_camel_to_lower(self.__boost_type)
 
     @property
+    def __boost_create_info(self):
+        param = boost_camel_to_lower(self.__p_create_info)
+        assert_starts_with(param, 'p_')
+        return param[2:]
+
+    @property
     def __boost_batch_attr(self):
         return self.__boost_attr + '_batch'
 
