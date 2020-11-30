@@ -10,6 +10,33 @@ require vulkan
 require instance
 
 //
+// Instance
+//
+
+struct Instance
+    instance : VkInstance
+
+def create_instance(
+    create_info : InstanceCreateInfo
+    var result : VkResult? = [[VkResult?]]
+) : Instance
+
+    var instance : Instance
+    create_info |> with_view() <| $(vk_info)
+        var result_ = VkResult VK_SUCCESS
+        result ?? result_ = vkCreateInstance(
+            safe_addr(vk_info), null, safe_addr(instance.instance)
+        )
+        assert(result_ == VkResult VK_SUCCESS)
+    return <- instance
+
+def finalize(var instance : Instance)
+    vkDestroyInstance(
+        instance.instance, null
+    )
+    memzero(instance)
+
+//
 // PhysicalDevice
 //
 
@@ -54,30 +81,3 @@ def enumerate_physical_devices_no_batch(
     var handles <- enumerate_physical_devices(instance, result)
     defer() <| ${ delete handles; }
     return <- handles |> split()
-
-//
-// Instance
-//
-
-struct Instance
-    instance : VkInstance
-
-def create_instance(
-    create_info : InstanceCreateInfo
-    var result : VkResult? = [[VkResult?]]
-) : Instance
-
-    var instance : Instance
-    create_info |> with_view() <| $(vk_info)
-        var result_ = VkResult VK_SUCCESS
-        result ?? result_ = vkCreateInstance(
-            safe_addr(vk_info), null, safe_addr(instance.instance)
-        )
-        assert(result_ == VkResult VK_SUCCESS)
-    return <- instance
-
-def finalize(var instance : Instance)
-    vkDestroyInstance(
-        instance.instance, null
-    )
-    memzero(instance)

@@ -278,8 +278,9 @@ class VkHandle(object):
             elif param.vk.type == f'{self.__vk_type_name} *':
                 continue
             elif param.vk.name == self.__p_create_info:
-                lines += [f'    {self.__boost_create_info} : '
-                                    f'{param.boost.type_deref}']
+                pname = self.__boost_create_info
+                ptype = param.boost.type_deref
+                lines += [f'    {pname} : {ptype} = [[ {ptype} ]];']
             else:
                 raise Exception(f'TODO: add support for extra param '
                     f'{param.vk.name}')
