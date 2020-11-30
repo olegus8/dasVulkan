@@ -389,6 +389,9 @@ class BoostVkStructConstPtrType(BoostType):
         assert_starts_with(self.__vk_struct_name, 'Vk')
         return self.__vk_struct_name[2:] + ' *'
 
+    def to_vk_value(self, boost_value):
+        raise Exception('Not supported')
+
 
 class BoostUnknownType(BoostType):
 
