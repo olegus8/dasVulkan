@@ -487,23 +487,23 @@ class GenHandle(object):
             ]
         lines += [
            f'    var result : VkResult? = [[VkResult?]]',
-           f') : {self.__boost_batch_type}',
+           f') : {self.__boost_handle_batch_type_name}',
             '',
            f'    var count : uint',
            f'    var result_ = VkResult VK_SUCCESS',
             '',
            f'    result ?? result_ = {self.__vk_enumerator_name}('
         ]
-        params = []
         for param in self.__vk_enumerator_params:
-            if param.vk.name == self.__p_count:
-                params.append('safe_addr(count)')
-            elif param.vk.name == self.__p_handles:
-                params.append('null')
+            if param.vk_name == self.__vk_p_count:
+                vk_value = 'safe_addr(count)'
+            elif param.vk_name == self.__vk_p_handles:
+                vk_value = 'null'
             else:
-                params.append(param.boost.vk_value)
+                vk_value = param.boost_value_to_vk(param.boost_name)
+            lines.append('        {vk_value},')
+        remove_last_char(lines, ',')
         lines += [
-            '        ' + ', '.join(params),
             '    )',
            f'    assert(result_ == VkResult VK_SUCCESS)',
             '',
