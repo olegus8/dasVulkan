@@ -273,15 +273,14 @@ class GenStruct(object):
         lines += [
             '',
            f'def construct(vk_struct : {self.__vk_type_name}) '
-                f': {self.__boost_type}',
-           f'    return <- [[{self.__boost_type}'
+                f': {self.__boost_type_name}',
+           f'    return <- [[{self.__boost_type_name}'
         ]
         for field in self.__fields:
-            if field.vk.name in ['sType', 'pNext']:
+            if field.vk_name in ['sType', 'pNext']:
                 continue
-            vk_value = field.boost.to_boost_value(
-                f'vk_struct.{field.vk.name}')
-            lines += [f'        {field.boost.name} = {vk_value},']
+            vk_value = field.vk_value_to_boost(f'vk_struct.{field.vk_name}')
+            lines += [f'        {field.boost_name} = {vk_value},']
         assert_ends_with(lines[-1], ',')
         lines[-1] = lines[-1][:-1]
         lines += [
