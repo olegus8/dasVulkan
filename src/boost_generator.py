@@ -628,13 +628,15 @@ class GenHandle(object):
         for param in self.__vk_dtor_params:
             if param.vk_name == 'pAllocator':
                 vk_value = 'null'
+            elif param.boost_type == bh_type:
+                vk_value = param.boost_value_to_vk(bh_attr)
             else:
-                vk_value = param.boost_value_to_vk(param.boost_name)
+                raise Exception('TODO: handle extra params here')
             lines.append('        {vk_value},')
         remove_last_char(lines, ',')
         lines += [
             '    )',
-           f'    memzero({self.__boost_attr})',
+           f'    memzero({bh_attr})',
         ]
         return lines
 
