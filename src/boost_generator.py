@@ -140,9 +140,7 @@ class GenQueryFunc(object):
         return returns_vk_result(self.__vk_func)
 
     def generate(self):
-        # TODO: refactor BoostType into VkType and BoostType
-        # TODO: rename vk_type to c_type everywhere
-        return [] 
+        return [] #TODO
         lines = []
         lines += [
            f'def {self.__boost_func}('
@@ -157,7 +155,10 @@ class GenQueryFunc(object):
             lines[-1] = lines[-1][:-1]
         lines += [
            f') : {self.__output_param.boost.type_deref}',
+
+            #TODO: BoostType is combining too many entities in itself
            f'    var vk_output : {self.__output_param.vk.type_deref}',
+
            f'    physical_device.physical_device |> vkGetPhysicalDeviceProperties(',
            f'        safe_addr(props))',
            f'    return <- props',
