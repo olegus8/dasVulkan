@@ -293,21 +293,21 @@ class GenStruct(object):
         lines += [
             '',
             'def with_view(',
-           f'    boost_struct : {self.__boost_type};',
+           f'    boost_struct : {self.__boost_type_name};',
            f'    b : block<(vk_struct : {self.__vk_type_name})>',
             ') {',
         ]
 
         depth = 0
         for field in self.__fields:
-            if field.vk.name in ['sType', 'pNext']:
+            if field.vk_name in ['sType', 'pNext']:
                 continue
-            if self.__is_array_count(field.vk.name):
+            if self.__is_array_count(field.vk_name):
                 continue
-            elif self.__is_array_items(field.vk.name):
+            elif self.__is_array_items(field.vk_name):
                 depth += 1
-                ar = self.__get_array(field.vk.name)
-                items_name = field.boost.name_ptr_as_array
+                ar = self.__get_array(field.vk_name)
+                items_name = boost_ptr_name_to_array(field.boost_name)
                 count_name = boost_camel_to_lower(ar.vk_count_name)
                 lines += [
                    f'    boost_struct.{items_name} |> lock_data() <| $(',
