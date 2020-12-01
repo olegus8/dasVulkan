@@ -537,31 +537,26 @@ class GenHandle(object):
         return lines
 
     def __generate_enumerator_not_batched(self):
-
-        #
-        #TODO: continue from here
-        #
-
         lines = []
         lines += [
             '',
-           f'def {self.__boost_enumerator}_no_batch(',
+           f'def {self.__boost_enumerator_name}_no_batch(',
         ]
         for param in self.__vk_enumerator_params:
-            if param.vk.name in [self.__p_count, self.__p_handles]:
+            if param.vk_name in [self.__p_count, self.__p_handles]:
                 continue
             lines += [
-               f'    {param.boost.name} : {param.boost.type};',
+               f'    {param.boost_name} : {param.boost_type};',
             ]
         lines += [
            f'    var result : VkResult? = [[VkResult?]]',
-           f'): array<{self.__boost_type}>',
+           f'): array<{self.__boost_handle_type_name}>',
         ]
         params = []
         for param in self.__vk_enumerator_params:
-            if param.vk.name in [self.__p_count, self.__p_handles]:
+            if param.vk_name in [self.__p_count, self.__p_handles]:
                 continue
-            params.append(param.boost.name)
+            params.append(param.boost_name)
         params_text = ', '.join(params + ['result'])
         lines += [
            f'    var handles <- {self.__boost_enumerator}({params_text})',
