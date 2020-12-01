@@ -121,7 +121,7 @@ class GenQueryFunc(object):
 
     @property
     def __params(self):
-        return self.__generator.get_func_params_ex(self.__vk_func_name)
+        return self.__generator.get_func_params(self.__vk_func_name)
 
     @property
     def __output_param(self):
@@ -130,12 +130,12 @@ class GenQueryFunc(object):
                 return param
 
     @property
-    def __vk_func(self):
+    def __c_func(self):
         return self.__generator.functions[self.__vk_func_name]
 
     @property
     def __returns_vk_result(self):
-        return returns_vk_result(self.__vk_func)
+        return returns_vk_result(self.__c_func)
 
     def generate(self):
         lines = []
@@ -201,17 +201,16 @@ class GenStruct(object):
         return self
 
     @property
-    def __vk_struct(self):
+    def __c_struct(self):
         return self.__generator.structs[self.__vk_type_name]
 
     @property
     def __fields(self):
-        return self.__generator.get_struct_fields_ex(self.__vk_struct)
+        return self.__generator.get_struct_fields(self.__c_struct)
 
     @property
-    def __boost_type(self):
-        assert_starts_with(self.__vk_type_name, 'Vk')
-        return self.__vk_type_name[2:]
+    def __boost_type_name(self):
+        return vk_struct_name_to_boost(self.__vk_type_name)
 
     def __is_array_count(self, vk_field):
         for array in self.__arrays:
@@ -945,3 +944,7 @@ def returns_vk_result(func):
 def deref_das_type(type_name):
     assert_ends_with(type_name, '?')
     return type_name[:-1].strip()
+
+def vk_struct_name_to_boost(vk_name):
+    assert_starts_with(vk_name, 'Vk')
+    return vk_name[2:]
