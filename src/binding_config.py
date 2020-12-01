@@ -130,6 +130,6 @@ def add_boost_content(g):
     # Query functions
     #
 
-    g.add_query_func(
+    g.add_gen_query_func(
         func        = 'vkGetPhysicalDeviceProperties',
         p_output    = 'pProperties')

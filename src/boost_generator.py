@@ -109,6 +109,14 @@ class BoostGenerator(LoggingObject):
         ]
 
 
+class GenQueryFunc(object):
+
+    def __init__(self, generator, func, p_output):
+        self.__generator = generator
+        self.__vk_func_name = func
+        self.__p_output = p_output
+
+
 class GenStruct(object):
 
     def __init__(self, generator, struct,
