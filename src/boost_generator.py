@@ -467,12 +467,12 @@ class GenHandle(object):
         ]
 
     @property
-    def __boost_enumerator(self):
-        return to_boost_func_name(self.__vk_enumerator_name)
+    def __boost_enumerator_name(self):
+        return vk_func_name_to_boost(self.__vk_enumerator_name)
 
     @property
-    def __boost_ctor(self):
-        return to_boost_func_name(self.__vk_ctor_name)
+    def __boost_ctor_name(self):
+        return vk_func_name_to_boost(self.__vk_ctor_name)
 
     def __generate_enumerator_batched(self):
         lines = []
@@ -927,10 +927,6 @@ def boost_camel_to_lower(camel):
             result += '_'
         result += c.lower()
     return result
-
-def to_boost_func_name(vk_name):
-    assert_starts_with(vk_name, 'vk')
-    return boost_camel_to_lower(vk_name[2:])
 
 def returns_vk_result(func):
     return func.return_type == 'VkResult'
