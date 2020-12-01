@@ -328,18 +328,19 @@ class GenStruct(object):
         ]
 
         for field in self.__fields:
-            if field.vk.name in ['sType', 'pNext']:
+            if field.vk_name in ['sType', 'pNext']:
                 continue
-            if self.__is_array_count(field.vk.name):
-                boost_value = f'uint(vk_{field.boost.name})'
-            elif self.__is_array_items(field.vk.name):
-                boost_value = f'vk_p_{field.boost.name_ptr_as_array}' 
-            elif field.boost.needs_view_to_vk:
-                boost_value = f'vk_{field.boost.name}'
+            elif self.__is_array_count(field.vk_name):
+                vk_value = f'uint(vk_{field.boost_name})'
+            elif self.__is_array_items(field.vk_name):
+                items_name = boost_ptr_name_to_array(field.boost_name)
+                vk_value = f'vk_p_{items_name}' 
+            elif field.needs_vk_view:
+                vk_value = f'vk_{field.boost_name}'
             else:
-                boost_value = field.boost.to_vk_value(
-                    f'boost_struct.{field.boost.name}')
-            lines.append(f'        {field.vk.name} = {boost_value},')
+                vk_value = field.boost_value_to_vk(
+                    f'boost_struct.{field.boost_name}')
+            lines.append(f'        {field.vk_name} = {vk_value},')
 
         lines += [
            f'        sType = VkStructureType {self.__vk_structure_type}',
