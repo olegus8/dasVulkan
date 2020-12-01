@@ -314,13 +314,12 @@ class GenStruct(object):
                    f'        vk_p_{items_name}, vk_{count_name}',
                     '    ) {',
                 ]
-            elif field.boost.needs_view_to_vk:
+            elif field.needs_vk_view:
                 depth += 1
-                boost_name = field.boost.name
-                view_type = field.boost.view_to_vk_type
+                boost_name = field.boost_name
                 lines += [
                    f'    boost_struct.{boost_name} |> with_p_view() <| $(',
-                   f'        vk_{boost_name} : {view_type}',
+                   f'        vk_{boost_name} : {field.vk_view_type}',
                     '    ) {',
                 ]
 
@@ -675,6 +674,10 @@ class ParamBase(object):
 
     def boost_value_to_vk(self, boost_value):
         return boost_value
+
+    @property
+    def needs_vk_view(self):
+        return self.vk_view_type is not None
 
     @property
     def vk_view_type(self):
