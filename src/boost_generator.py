@@ -14,8 +14,8 @@ class BoostGenerator(LoggingObject):
 
     def __init__(self, context):
         self.__context = context
-        self.__handles = []
-        self.__structs = []
+        self.__gen_handles = []
+        self.__gen_structs = []
 
         self.enums = dict((x.name, x)
             for x in self.__context.main_c_header.enums)
@@ -26,29 +26,29 @@ class BoostGenerator(LoggingObject):
         self.functions = dict((x.name, x)
             for x in self.__context.main_c_header.functions)
 
-        self.__add_vk_handles()
-        self.__add_vk_structs()
+        self.__add_gen_handles()
+        self.__add_gen_structs()
 
-    def __add_vk_handles(self):
-        self.__add_vk_handle(
+    def __add_gen_handles(self):
+        self.__add_gen_handle(
             handle          = 'VkInstance',
             ctor            = 'vkCreateInstance',
             dtor            = 'vkDestroyInstance',
             p_create_info   = 'pCreateInfo')
-        self.__add_vk_handle(
+        self.__add_gen_handle(
             handle          = 'VkPhysicalDevice',
             enumerator      = 'vkEnumeratePhysicalDevices',
             p_count         = 'pPhysicalDeviceCount',
             p_handles       = 'pPhysicalDevices')
 
-    def __add_vk_structs(self):
-        self.__add_vk_struct(
+    def __add_gen_structs(self):
+        self.__add_gen_struct(
             struct          = 'VkApplicationInfo',
             boost_to_vk     = True)
-        self.__add_vk_struct(
+        self.__add_gen_struct(
             struct          = 'VkExtensionProperties',
             vk_to_boost     = True)
-        self.__add_vk_struct(
+        self.__add_gen_struct(
             struct          = 'VkInstanceCreateInfo',
             boost_to_vk     = True
             ).declare_array(
@@ -58,14 +58,14 @@ class BoostGenerator(LoggingObject):
                 count = 'enabledExtensionCount',
                 items = 'ppEnabledExtensionNames')
 
-    def __add_vk_handle(self, **kwargs):
+    def __add_gen_handle(self, **kwargs):
         handle = VkHandle(generator=self, **kwargs)
-        self.__handles.append(handle)
+        self.__gen_handles.append(handle)
         return handle
 
-    def __add_vk_struct(self, **kwargs):
+    def __add_gen_struct(self, **kwargs):
         struct = VkStruct(generator=self, **kwargs)
-        self.__structs.append(struct)
+        self.__gen_structs.append(struct)
         return struct
 
     def get_func_params_ex(self, vk_func):
@@ -127,7 +127,7 @@ class BoostGenerator(LoggingObject):
             '    unsafe',
             '        return reinterpret<string>(addr(bytes[0]))',
         ] + [
-            line for items in [self.__structs, self.__handles]
+            line for items in [self.__gen_structs, self.__gen_handles]
             for item in items for line in item.generate()
         ]
 
