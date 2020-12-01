@@ -669,7 +669,7 @@ class ParamBase(object):
 
     @property
     def vk_unqual_type(self):
-        return self.c_unqual_type
+        raise NotImplementedError()
 
     @property
     def boost_unqual_type(self):
@@ -765,6 +765,10 @@ class ParamVkHandlePtr(BoostType):
     def c_unqual_type(self):
         return self.__get_c_unqual_type(self._c_param.type)
 
+    @property
+    def vk_unqual_type(self):
+        return self.c_unqual_type
+
     def vk_value_to_boost(self, vk_value):
         raise VulkanBoostError('Not supported')
 
@@ -853,15 +857,19 @@ class ParamStringPtr(BoostType):
         return name
 
 
-class BoostUInt32Type(BoostType):
+class ParamUInt32(BoostType):
 
     @classmethod
-    def maybe_create(cls, c_type_name, **kwargs):
-        if c_type_name == 'unsigned int':
-            return cls(c_type_name=c_type_name, **kwargs)
+    def maybe_create(cls, c_param, **kwargs):
+        if c_param.type == 'unsigned int':
+            return cls(c_param=c_param, **kwargs)
 
     @property
-    def name(self):
+    def c_unqual_type(self):
+        return 'unsigned int'
+
+    @property
+    def vk_unqual_type(self):
         return 'uint'
 
 
