@@ -537,6 +537,11 @@ class GenHandle(object):
         return lines
 
     def __generate_enumerator_not_batched(self):
+
+        #
+        #TODO: continue from here
+        #
+
         lines = []
         lines += [
             '',
