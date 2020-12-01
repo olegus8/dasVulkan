@@ -16,6 +16,7 @@ class BoostGenerator(LoggingObject):
         self.__context = context
         self.__gen_handles = []
         self.__gen_structs = []
+        self.__gen_query_funcs = []
 
         self.enums = dict((x.name, x)
             for x in self.__context.main_c_header.enums)
@@ -28,6 +29,7 @@ class BoostGenerator(LoggingObject):
 
         self.__add_gen_handles()
         self.__add_gen_structs()
+        self.__add_gen_query_funcs()
 
     def __add_gen_handles(self):
         self.__add_gen_handle(
@@ -58,13 +60,21 @@ class BoostGenerator(LoggingObject):
                 count = 'enabledExtensionCount',
                 items = 'ppEnabledExtensionNames')
 
+    def __add_gen_query_funcs(self):
+        pass
+
     def __add_gen_handle(self, **kwargs):
-        handle = VkHandle(generator=self, **kwargs)
+        handle = GenHandle(generator=self, **kwargs)
         self.__gen_handles.append(handle)
         return handle
 
     def __add_gen_struct(self, **kwargs):
-        struct = VkStruct(generator=self, **kwargs)
+        struct = GenStruct(generator=self, **kwargs)
+        self.__gen_structs.append(struct)
+        return struct
+
+    def __add_gen_query_func(self, **kwargs):
+        struct = GenQueryFunc(generator=self, **kwargs)
         self.__gen_structs.append(struct)
         return struct
 
@@ -127,12 +137,15 @@ class BoostGenerator(LoggingObject):
             '    unsafe',
             '        return reinterpret<string>(addr(bytes[0]))',
         ] + [
-            line for items in [self.__gen_structs, self.__gen_handles]
-            for item in items for line in item.generate()
+            line for items in [
+                self.__gen_structs,
+                self.__gen_handles,
+                self.__gen_query_funcs,
+            ] for item in items for line in item.generate()
         ]
 
 
-class VkStruct(object):
+class GenStruct(object):
 
     def __init__(self, generator, struct,
         boost_to_vk=False, vk_to_boost=False,
@@ -144,7 +157,7 @@ class VkStruct(object):
         self.__arrays = []
 
     def declare_array(self, **kwargs):
-        array = VkStructFieldArray(**kwargs)
+        array = GenStructFieldArray(**kwargs)
         self.__arrays.append(array)
         return self
 
@@ -305,14 +318,14 @@ class VkStruct(object):
         return lines
 
 
-class VkStructFieldArray(object):
+class GenStructFieldArray(object):
 
     def __init__(self, count, items):
         self.vk_count_name = count
         self.vk_items_name = items
 
 
-class VkHandle(object):
+class GenHandle(object):
 
     def __init__(self, generator, handle,
         enumerator=None, ctor=None, dtor=None,
