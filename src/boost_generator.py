@@ -648,14 +648,6 @@ class ParamBase(object):
         self._generator = generator
 
     @property
-    def vk_type(self):
-        return self.c_unqual_type
-
-    @property
-    def c_unqual_type(self):
-        raise NotImplementedError()
-
-    @property
     def is_enum(self):
         return self.c_unqual_type in self._generator.enums
 
@@ -666,6 +658,14 @@ class ParamBase(object):
     @property
     def is_handle(self):
         return self.c_unqual_type in self._generator.opaque_structs
+
+    @property
+    def c_unqual_type(self):
+        raise NotImplementedError()
+
+    @property
+    def vk_type(self):
+        return self.c_unqual_type
 
     @property
     def boost_type(self):
@@ -694,26 +694,39 @@ class ParamBase(object):
         return None
 
 
-class BoostVkHandleType(BoostType):
+class ParamVkHandle(Parambase):
 
     @classmethod
-    def maybe_create(cls, c_type_name, **kwargs):
-        if cls.__get_boost_handle_type_name(c_type_name):
-            return cls(c_type_name=c_type_name, **kwargs)
+    def maybe_create(cls, c_param, **kwargs):
+        if cls.__get_c_unqual_type(c_param.type):
+            return cls(c_param=c_param, **kwargs)
 
     @staticmethod
-    def __get_boost_handle_type_name(c_type_name):
-        m = re.match(r'struct Vk(\S*)_T \*', c_type_name)
+    def __get_c_unqual_type(c_type_name):
+        m = re.match(r'struct (Vk\S*_T) \*', c_type_name)
         if m:
             return m.group(1)
 
     @property
-    def name(self):
-        return self.__get_boost_handle_type_name(self.c_type_name)
+    def c_unqual_type(self):
+        return self.__get_c_unqual_type(self._c_param.type)
 
-    def to_vk_value(self, boost_value):
-        attr = boost_camel_to_lower(self.name)
+    @property
+    def vk_type(self):
+        ct = self.c_unqual_type
+        assert_ends_with(ct, '_T')
+        return ct[:-2]
+
+    @property
+    def boost_type(self):
+        return vk_handle_type_to_boost(self.vk_type)
+
+    def boost_value_to_vk(self, boost_value):
+        attr = boost_handle_attr_name(self.boost_type)
         return f'{boost_value}.{attr}'
+
+    def vk_value_to_boost(self, vk_value):
+        raise VulkanBoostError('Cannot convert vk handle to boost handle')
 
 
 class BoostVkHandlePtrType(BoostType):
@@ -950,6 +963,10 @@ def vk_struct_name_to_boost(vk_name):
 
 def vk_handle_name_to_boost(vk_name):
     return vk_struct_name_to_boost(vk_name)
+
+def vk_handle_type_to_boost(vk_type_):
+    assert_starts_with(vk_type_, 'Vk')
+    return vk_type_[2:]
 
 def boost_handle_attr_name(boost_handle_type_name):
     return boost_camel_to_lower(boost_handle_type_name)
