@@ -115,7 +115,7 @@ class GenQueryFunc(object):
         self.__p_output = p_output
 
     @property
-    def __boost_func(self):
+    def __boost_func_name(self):
         assert_starts_with(self.__vk_func_name, 'vk')
         return boost_camel_to_lower(self.__vk_func_name[2:])
 
@@ -126,7 +126,7 @@ class GenQueryFunc(object):
     @property
     def __output_param(self):
         for param in self.__params:
-            if param.vk.name == self.__p_output:
+            if param.vk_name == self.__p_output:
                 return param
 
     @property
@@ -138,32 +138,44 @@ class GenQueryFunc(object):
         return returns_vk_result(self.__vk_func)
 
     def generate(self):
-        return [] #TODO
         lines = []
         lines += [
-           f'def {self.__boost_func}('
+           f'def {self.__boost_func_name}('
         ]
         for param in self.__params:
-            if param.vk.name == self.__p_output:
+            if param.vk_name == self.__p_output:
                 continue
-            lines.append(f'    {param.boost.name} : {param.boost.type},')
+            lines.append(f'    {param.boost_name} : {param.boost_type},')
         if self.__returns_vk_result:
-            lines.append(f'    var result : VkResult? = [[VkResult?]]')
-        if lines[-1].endswith(','):
-            lines[-1] = lines[-1][:-1]
+            lines.append(f'    var result : VkResult? = [[VkResult?]],')
+        lines[-1] = lines[-1][:-1]
+
+        boost_type_deref = deref_das_type(self.__output_param.boost_type)
+        vk_type_deref = deref_das_type(self.__output_param.vk_type)
         lines += [
-           f') : {self.__output_param.boost.type_deref}',
+           f') : {boost_type_deref}',
+           f'    var vk_output : {vk_type_deref}',
+        ]
 
-            #TODO: refactor ParamEx: make it single entity with type;
-            #   rename "vk" into "c", and make clear separation between
-            #   vk and boost parts -- like vk_name, boost_name,
-            #   vk_type, boost_type,
-            #   boost_value_to_vk, vk_value_to_boost, etc.
-           f'    var vk_output : {?????}',
+        if self.__returns_vk_result:
+            lines.append(f'    var result_ = VkResult VK_SUCCESS')
+        maybe_capture_result = ('result ?? result_ = '
+            if self.__returns_vk_result else '')
+        lines += [
+           f'    {maybe_capture_result}{self.__vk_func_name}(',
+        ]
 
-           f'    physical_device.physical_device |> vkGetPhysicalDeviceProperties(',
-           f'        safe_addr(props))',
-           f'    return <- props',
+        for param in self.__params:
+            if param.vk_name == self.__p_output:
+                vk_value = safe_addr(vk_output)
+            else:
+                vk_value = param.boost_value_to_vk(param.boost_name)
+            lines.append(f'        {vk_value},')
+        lines[-1] = lines[-1][:-1]
+
+        lines += [
+           f'    )',
+           f'    return <- vk_output',
         ]
         return lines
 
@@ -626,23 +638,23 @@ class ParamBase(object):
 
     @property
     def vk_type(self):
-        return self.c_unqualified_type
+        return self.c_unqual_type
 
     @property
-    def c_unqualified_type(self):
+    def c_unqual_type(self):
         raise NotImplementedError()
 
     @property
     def is_enum(self):
-        return self.c_unqualified_type in self._generator.enums
+        return self.c_unqual_type in self._generator.enums
 
     @property
     def is_struct(self):
-        return self.c_unqualified_type in self._generator.structs
+        return self.c_unqual_type in self._generator.structs
 
     @property
     def is_handle(self):
-        return self.c_unqualified_type in self._generator.opaque_structs
+        return self.c_unqual_type in self._generator.opaque_structs
 
     @property
     def boost_type(self):
