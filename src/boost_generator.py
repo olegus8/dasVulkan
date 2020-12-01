@@ -116,6 +116,23 @@ class GenQueryFunc(object):
         self.__vk_func_name = func
         self.__p_output = p_output
 
+    @property
+    def __boost_func(self):
+        assert_starts_with(self.__vk_func_name, 'vk')
+        return boost_camel_to_lower(self.__vk_func_name[2:])
+
+    @property
+    def __params(self):
+        return self.__generator.get_func_params_ex(self.__vk_func_name)
+
+    @property
+    def __vk_func(self):
+        return self.__generator.functions[self.__vk_func_name]
+
+    def generate(self):
+        lines = []
+        return lines
+
 
 class GenStruct(object):
 
