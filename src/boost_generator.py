@@ -126,11 +126,42 @@ class GenQueryFunc(object):
         return self.__generator.get_func_params_ex(self.__vk_func_name)
 
     @property
+    def __output_param(self):
+        for param in self.__params:
+            if param.vk.name == self.__p_output:
+                return param
+
+    @property
     def __vk_func(self):
         return self.__generator.functions[self.__vk_func_name]
 
+    @property
+    def __returns_vk_result(self):
+        return returns_vk_result(self.__vk_func)
+
     def generate(self):
+        # TODO: refactor BoostType into VkType and BoostType
+        # TODO: rename vk_type to c_type everywhere
+        return [] 
         lines = []
+        lines += [
+           f'def {self.__boost_func}('
+        ]
+        for param in self.__params:
+            if param.vk.name == self.__p_output:
+                continue
+            lines.append(f'    {param.boost.name} : {param.boost.type},')
+        if self.__returns_vk_result:
+            lines.append(f'    var result : VkResult? = [[VkResult?]]')
+        if lines[-1].endswith(','):
+            lines[-1] = lines[-1][:-1]
+        lines += [
+           f') : {self.__output_param.boost.type_deref}',
+           f'    var vk_output : {self.__output_param.vk.type_deref}',
+           f'    physical_device.physical_device |> vkGetPhysicalDeviceProperties(',
+           f'        safe_addr(props))',
+           f'    return <- props',
+        ]
         return lines
 
 
@@ -872,3 +903,6 @@ def boost_camel_to_lower(camel):
 def to_boost_func_name(vk_name):
     assert_starts_with(vk_name, 'vk')
     return boost_camel_to_lower(vk_name[2:])
+
+def returns_vk_result(func):
+    return func.return_type == 'VkResult'
