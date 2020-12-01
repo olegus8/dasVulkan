@@ -660,6 +660,10 @@ class ParamBase(object):
         return self.c_unqual_type in self._generator.opaque_structs
 
     @property
+    def is_pointer(self):
+        return is_c_pointer_type(self._c_param.type)
+
+    @property
     def c_unqual_type(self):
         raise NotImplementedError()
 
@@ -674,14 +678,14 @@ class ParamBase(object):
     @property
     def vk_type(self):
         t = self.vk_unqual_type
-        if is_c_pointer_type(self._c_param.type):
+        if self.is_pointer:
             t += ' ?'
         return t
 
     @property
     def boost_type(self):
         t = self.boost_unqual_type
-        if is_c_pointer_type(self._c_param.type):
+        if self.is_pointer:
             t += ' ?'
         return t
 
@@ -772,9 +776,13 @@ class ParamVkHandlePtr(BoostType):
 class ParamFixedString(BoostType):
 
     @classmethod
-    def maybe_create(cls, c_type_name, **kwargs):
-        if re.match(r'char \[\d+\]', c_type_name):
-            return cls(c_type_name=c_type_name, **kwargs)
+    def maybe_create(cls, c_param, **kwargs):
+        if re.match(r'char \[\d+\]', c_param.type):
+            return cls(c_param=c_param, **kwargs)
+
+    @property
+    def is_pointer(self):
+        return False
 
     @property
     def c_unqual_type(self):
@@ -798,9 +806,13 @@ class ParamFixedString(BoostType):
 class ParamString(BoostType):
 
     @classmethod
-    def maybe_create(cls, c_type_name, **kwargs):
-        if c_type_name == 'const char *':
-            return cls(c_type_name=c_type_name, **kwargs)
+    def maybe_create(cls, c_param, **kwargs):
+        if c_param.type == 'const char *':
+            return cls(c_param=c_param, **kwargs)
+
+    @property
+    def is_pointer(self):
+        return False
 
     @property
     def c_unqual_type(self):
@@ -818,19 +830,27 @@ class ParamString(BoostType):
         return name
 
 
-class BoostStringPtrType(BoostType):
+class ParamStringPtr(BoostType):
 
     @classmethod
-    def maybe_create(cls, c_type_name, **kwargs):
-        if c_type_name == 'const char *const *':
-            return cls(c_type_name=c_type_name, **kwargs)
+    def maybe_create(cls, c_param, **kwargs):
+        if c_param.type == 'const char *const *':
+            return cls(c_param=c_param, **kwargs)
 
     @property
-    def name(self):
-        return 'string ?'
+    def c_unqual_type(self):
+        return 'char'
 
-    def adjust_field_name(self, name):
-        return name[1:] if name.startswith('pp_') else name
+    @property
+    def vk_unqual_type(self):
+        return 'string'
+
+    @property
+    def boost_name(self):
+        name = vk_param_name_to_boost(self.vk_name)
+        if name.startswith('pp_'):
+            name = name[1:]
+        return name
 
 
 class BoostUInt32Type(BoostType):
