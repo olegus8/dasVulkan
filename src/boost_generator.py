@@ -795,7 +795,7 @@ class ParamFixedString(BoostType):
         return f'to_string({vk_value})'
 
 
-class BoostStringType(BoostType):
+class ParamString(BoostType):
 
     @classmethod
     def maybe_create(cls, c_type_name, **kwargs):
@@ -803,11 +803,19 @@ class BoostStringType(BoostType):
             return cls(c_type_name=c_type_name, **kwargs)
 
     @property
-    def name(self):
+    def c_unqual_type(self):
+        return 'char'
+
+    @property
+    def vk_unqual_type(self):
         return 'string'
 
-    def adjust_field_name(self, name):
-        return name[2:] if name.startswith('p_') else name
+    @property
+    def boost_name(self):
+        name = vk_param_name_to_boost(self.vk_name)
+        if name.startswith('p_'):
+            name = name[2:]
+        return name
 
 
 class BoostStringPtrType(BoostType):
