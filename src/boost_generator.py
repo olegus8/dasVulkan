@@ -769,7 +769,7 @@ class ParamVkHandlePtr(BoostType):
         return f'{boost_value}?.{attr}'
 
 
-class BoostFixedStringType(BoostType):
+class ParamFixedString(BoostType):
 
     @classmethod
     def maybe_create(cls, c_type_name, **kwargs):
@@ -777,13 +777,21 @@ class BoostFixedStringType(BoostType):
             return cls(c_type_name=c_type_name, **kwargs)
 
     @property
-    def name(self):
+    def c_unqual_type(self):
+        return 'char'
+
+    @property
+    def vk_unqual_type(self):
+        raise Exception(f'add if needed')
+
+    @property
+    def boost_unqual_type(self):
         return 'string'
 
-    def to_vk_value(self, boost_value):
-        raise Exception(f'TODO: add if needed')
+    def boost_value_to_vk(self, boost_value):
+        raise Exception(f'add if needed')
 
-    def to_boost_value(self, vk_value):
+    def vk_value_to_boost(self, vk_value):
         return f'to_string({vk_value})'
 
 
