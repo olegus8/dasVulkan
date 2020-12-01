@@ -157,7 +157,7 @@ class GenQueryFunc(object):
            f') : {self.__output_param.boost.type_deref}',
 
             #TODO: BoostType is combining too many entities in itself
-           f'    var vk_output : {self.__output_param.vk.type_deref}',
+           f'    var vk_output : {?????}',
 
            f'    physical_device.physical_device |> vkGetPhysicalDeviceProperties(',
            f'        safe_addr(props))',
