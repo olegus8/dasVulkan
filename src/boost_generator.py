@@ -42,28 +42,26 @@ class BoostGenerator(LoggingObject):
         self.__gen_query_funcs.append(func)
         return func
 
-    def get_func_params_ex(self, vk_func):
-        return [ParamEx(vk_param=p, generator=self) for p in vk_func.params]
+    def get_func_params(self, c_func):
+        return map(self.__get_param, c_func.params)
 
-    def get_struct_fields_ex(self, vk_struct):
-        return [StructFieldEx(vk_field=f, generator=self)
-            for f in vk_struct.fields]
+    def get_struct_fields(self, c_struct):
+        return map(self.__get_param, c_struct.fields)
 
-    def get_boost_type(self, c_type):
-        for type_class in [
-            BoostVkHandleType,
-            BoostVkHandlePtrType,
-            BoostVkStructPtrType,
-            BoostStringType,
-            BoostFixedStringType,
-            BoostStringPtrType,
-            BoostUInt32Type,
-            BoostUnknownType,
+    def __get_param_ex(self, c_param):
+        for param_class in [
+            ParamVkHandle,
+            ParamVkHandlePtr,
+            ParamVkStructPtr,
+            ParamString,
+            ParamFixedString,
+            ParamStringPtr,
+            ParamUInt32,
+            ParamUnknown,
         ]:
-            boost_type = type_class.maybe_create(
-                c_type_name=c_type, generator=self)
-            if boost_type:
-                return boost_type
+            param = param_class.maybe_create(c_param=c_param, generator=self)
+            if param:
+                return param
 
     def write(self):
         self.__context.write_to_file(
