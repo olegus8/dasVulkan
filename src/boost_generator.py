@@ -253,19 +253,19 @@ class GenStruct(object):
         lines = []
         lines += [
             '',
-           f'struct {self.__boost_type}',
+           f'struct {self.__boost_type_name}',
         ]
         for field in self.__fields:
-            if self.__is_array_count(field.vk.name):
+            if self.__is_array_count(field.vk_name):
                 continue
-            if field.vk.name in ['sType', 'pNext']:
+            if field.vk_name in ['sType', 'pNext']:
                 continue
-            elif self.__is_array_items(field.vk.name):
-                boost_name = field.boost.name_ptr_as_array
-                boost_type = field.boost.type_ptr_as_array
-                lines += [f'    {boost_name} : {boost_type}']
-            else:
-                lines += [f'    {field.boost.name} : {field.boost.type}']
+            boost_name = field.boost_name
+            boost_type = field.boost_type
+            if self.__is_array_items(field.vk_name):
+                boost_name = boost_ptr_name_to_array(boost_name)
+                boost_type = boost_ptr_type_to_array(boost_type)
+            lines += [f'    {boost_name} : {boost_type}']
         return lines
 
     def __generate_vk_to_boost(self):
@@ -870,15 +870,6 @@ class BoostFieldBase(object):
         return self._type.deref_name
 
     @property
-    def type_ptr_as_array(self):
-        return f'array<{self.type_deref}>'
-
-    @property
-    def name_ptr_as_array(self):
-        name = self.name
-        return name[2:] if name.startswith('p_') else name
-
-    @property
     def vk_value(self):
         return self._type.to_vk_value(self.name)
 
@@ -948,3 +939,9 @@ def deref_das_type(type_name):
 def vk_struct_name_to_boost(vk_name):
     assert_starts_with(vk_name, 'Vk')
     return vk_name[2:]
+
+def boost_ptr_type_to_array(type_):
+    return f'array<{deref_das_type(type_)}>'
+
+def boost_ptr_name_to_array(name):
+    return name[2:] if name.startswith('p_') else name
