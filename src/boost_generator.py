@@ -566,51 +566,53 @@ class GenHandle(object):
         return lines
 
     def __generate_ctor(self):
+        bh_attr = self.__boost_handle_attr
+        bh_type = self.__boost_handle_type_name
+
         lines = []
         lines += [
             '',
-           f'def {self.__boost_ctor}(']
+           f'def {self.__boost_ctor_name}(']
+
         for param in self.__vk_ctor_params:
-            if param.vk.name == 'pAllocator':
+            if param.vk_name == 'pAllocator':
                 continue
-            elif param.vk.type == f'{self.__vk_type_name} *':
+            elif param.vk_type == f'{self.__vk_handle_type_name} ?':
                 continue
-            elif param.vk.name == self.__p_create_info:
-                pname = self.__boost_create_info
-                ptype = param.boost.type_deref
-                lines += [f'    {pname} : {ptype} = [[ {ptype} ]];']
+            elif param.vk_name == self.__vk_p_create_info:
+                boost_name = self.__boost_p_create_info
+                boost_type = deref_das_type(param.boost_type)
             else:
-                raise Exception(f'TODO: add support for extra param '
-                    f'{param.vk.name}')
-                lines += [f'    {param.boost.name} : {param.boost.type};']
+                boost_name = param.boost_name
+                boost_type = param.boost_type
+            lines += [f'    {boost_name} : {boost_type} = [[ {boost_type} ]];']
+
         lines += [
            f'    var result : VkResult? = [[VkResult?]]',
-           f') : {self.__boost_type}',
+           f') : {bh_type}',
             '',
-           f'    var {self.__boost_attr} : {self.__boost_type}',
-           f'    {self.__boost_create_info} |> with_view() <| $(vk_info)',
+           f'    var {bh_attr} : {bh_type}',
+           f'    {self.__boost_p_create_info} |> with_view() <| $(vk_info)',
            f'        var result_ = VkResult VK_SUCCESS',
            f'        result ?? result_ = {self.__vk_ctor_name}(',
         ]
-        params = []
+
         for param in self.__vk_ctor_params:
-            if param.vk.name == self.__p_create_info:
-                params.append('safe_addr(vk_info)')
-            elif param.boost.type == self.__boost_type+' ?':
-                params.append(
-                    f'safe_addr({self.__boost_attr}.{self.__boost_attr})')
+            if param.vk_name == self.__vk_p_create_info:
+                vk_value = 'safe_addr(vk_info)'
+            elif param.vk_type == f'{self.__vk_handle_type_name} ?':
+                vk_value = f'safe_addr({bh_attr}.{bh_attr})'
             elif param.vk.name == 'pAllocator':
-                params.append('null')
+                vk_value = 'null'
             else:
-                raise Exception(f'TODO: add support for extra param '
-                    f'{param.vk.name}')
-                params.append(param.boost.vk_value)
-        params_text = ', '.join(params)
+                vk_value = param.boost_value_to_vk(param.boost_name)
+            lines.append(f'            {vk_value},')
+        remove_last_char(lines, ',')
+
         lines += [
-           f'            {params_text}',
            f'        )',
            f'        assert(result_ == VkResult VK_SUCCESS)',
-           f'    return <- {self.__boost_attr}',
+           f'    return <- {bh_attr}',
         ]
         return lines
 
