@@ -116,8 +116,7 @@ class GenQueryFunc(object):
 
     @property
     def __boost_func_name(self):
-        assert_starts_with(self.__vk_func_name, 'vk')
-        return boost_camel_to_lower(self.__vk_func_name[2:])
+        return vk_func_name_to_boost(self.__vk_func_name)
 
     @property
     def __params(self):
@@ -307,7 +306,7 @@ class GenStruct(object):
                 depth += 1
                 ar = self.__get_array(field.vk_name)
                 items_name = boost_ptr_name_to_array(field.boost_name)
-                count_name = boost_camel_to_lower(ar.vk_count_name)
+                count_name = vk_param_name_to_boost(ar.vk_count_name)
                 lines += [
                    f'    boost_struct.{items_name} |> lock_data() <| $(',
                    f'        vk_p_{items_name}, vk_{count_name}',
@@ -368,13 +367,13 @@ class GenHandle(object):
         p_count=None, p_handles=None, p_create_info=None,
     ):
         self.__generator = generator
-        self.__vk_type_name = handle
+        self.__vk_handle_type_name = handle
         self.__vk_enumerator_name = enumerator
         self.__vk_ctor_name = ctor
         self.__vk_dtor_name = dtor
-        self.__p_count = p_count
-        self.__p_handles = p_handles
-        self.__p_create_info = p_create_info
+        self.__vk_p_count = p_count
+        self.__vk_p_handles = p_handles
+        self.__vk_p_create_info = p_create_info
 
     @property
     def __c_enumerator(self):
@@ -405,27 +404,26 @@ class GenHandle(object):
         return self.__p_count is not None
 
     @property
-    def __boost_type(self):
-        assert_starts_with(self.__vk_type_name, 'Vk')
-        return self.__vk_type_name[2:]
+    def __boost_handle_type_name(self):
+        return vk_handle_name_to_boost(self.__vk_handle_type_name)
 
     @property
-    def __boost_batch_type(self):
-        return self.__boost_type + 'Batch'
+    def __boost_handle_attr(self):
+        return boost_handle_attr_name(self.__boost_type_name)
 
     @property
-    def __boost_attr(self):
-        return boost_camel_to_lower(self.__boost_type)
+    def __boost_handle_batch_type_name(self):
+        return self.__boost_handle_type_name + 'Batch'
 
     @property
-    def __boost_create_info(self):
-        param = boost_camel_to_lower(self.__p_create_info)
+    def __boost_handle_batch_attr(self):
+        return self.__boost_handle_attr + '_batch'
+
+    @property
+    def __boost_p_create_info(self):
+        param = vk_param_name_to_boost(self.__vk_p_create_info)
         assert_starts_with(param, 'p_')
         return param[2:]
-
-    @property
-    def __boost_batch_attr(self):
-        return self.__boost_attr + '_batch'
 
     def generate(self):
         lines = []
@@ -667,7 +665,7 @@ class ParamBase(object):
 
     @property
     def boost_name(self):
-        return boost_camel_to_lower(self.vk_name)
+        return vk_param_name_to_boost(self.vk_name)
 
     def vk_value_to_boost(self, vk_value):
         return vk_value
@@ -941,6 +939,19 @@ def deref_das_type(type_name):
 def vk_struct_name_to_boost(vk_name):
     assert_starts_with(vk_name, 'Vk')
     return vk_name[2:]
+
+def vk_handle_name_to_boost(vk_name):
+    return vk_struct_name_to_boost(vk_name)
+
+def boost_handle_attr_name(boost_handle_type_name):
+    return boost_camel_to_lower(boost_handle_type_name)
+
+def vk_param_name_to_boost(vk_name):
+    return boost_camel_to_lower(vk_name)
+
+def vk_func_name_to_boost(vk_name):
+    assert_starts_with(vk_name, 'vk')
+    return boost_camel_to_lower(vk_name[2:])
 
 def boost_ptr_type_to_array(type_):
     return f'array<{deref_das_type(type_)}>'
