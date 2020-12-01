@@ -559,7 +559,7 @@ class GenHandle(object):
             params.append(param.boost_name)
         params_text = ', '.join(params + ['result'])
         lines += [
-           f'    var handles <- {self.__boost_enumerator}({params_text})',
+           f'    var handles <- {self.__boost_enumerator_name}({params_text})',
             '    defer() <| ${ delete handles; }',
            f'    return <- handles |> split()',
         ]
