@@ -646,10 +646,7 @@ class ParamBase(object):
 
     @property
     def boost_type(self):
-        tname = self.vk_type
-        if tname.startswith('Vk') and not self.is_enum:
-            tname = tname[2:]
-        return tname
+        return self.vk_type
 
     @property
     def vk_name(self):
@@ -657,7 +654,7 @@ class ParamBase(object):
 
     @property
     def boost_name(self):
-        return self.vk_name
+        return boost_camel_to_lower(self.vk_name)
 
     def vk_value_to_boost(self, vk_value):
         return vk_value
