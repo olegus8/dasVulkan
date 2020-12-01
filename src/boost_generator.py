@@ -377,28 +377,28 @@ class GenHandle(object):
         self.__p_create_info = p_create_info
 
     @property
-    def __vk_enumerator(self):
+    def __c_enumerator(self):
         return self.__generator.functions[self.__vk_enumerator_name]
 
     @property
-    def __vk_ctor(self):
+    def __c_ctor(self):
         return self.__generator.functions[self.__vk_ctor_name]
 
     @property
-    def __vk_dtor(self):
+    def __c_dtor(self):
         return self.__generator.functions[self.__vk_dtor_name]
 
     @property
     def __vk_enumerator_params(self):
-        return self.__generator.get_func_params_ex(self.__vk_enumerator)
+        return self.__generator.get_func_params(self.__c_enumerator)
 
     @property
     def __vk_ctor_params(self):
-        return self.__generator.get_func_params_ex(self.__vk_ctor)
+        return self.__generator.get_func_params(self.__c_ctor)
 
     @property
     def __vk_dtor_params(self):
-        return self.__generator.get_func_params_ex(self.__vk_dtor)
+        return self.__generator.get_func_params(self.__c_dtor)
 
     @property
     def __is_batched(self):
