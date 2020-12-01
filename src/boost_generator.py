@@ -617,23 +617,23 @@ class GenHandle(object):
         return lines
 
     def __generate_dtor(self):
+        bh_attr = self.__boost_handle_attr
+        bh_type = self.__boost_handle_type_name
         lines = []
         lines += [
             '',
-           f'def finalize(var {self.__boost_attr} : {self.__boost_type})',
+           f'def finalize(var {bh_attr} : {bh_type})',
+           f'    {self.__vk_dtor_name}(',
         ]
-        params = []
         for param in self.__vk_dtor_params:
-            if param.boost.type == self.__boost_type:
-                params.append(f'{self.__boost_attr}.{self.__boost_attr}')
-            elif param.vk.name == 'pAllocator':
-                params.append('null')
+            if param.vk_name == 'pAllocator':
+                vk_value = 'null'
             else:
-                raise Exception(f'TODO: add support for extra param '
-                    f'{param.vk.name}')
-        params_text = ', '.join(params)
+                vk_value = param.boost_value_to_vk(param.boost_name)
+            lines.append('        {vk_value},')
+        remove_last_char(lines, ',')
         lines += [
-           f'    {self.__vk_dtor_name}({params_text})',
+            '    )',
            f'    memzero({self.__boost_attr})',
         ]
         return lines
