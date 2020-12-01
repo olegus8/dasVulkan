@@ -227,7 +227,7 @@ class GenStruct(object):
     @property
     def __vk_structure_type(self):
         return 'VK_STRUCTURE_TYPE_' + (
-            boost_camel_to_lower(self.__boost_type).upper())
+            boost_camel_to_lower(self.__boost_type_name).upper())
 
     def __get_array(self, vk_items_name):
         for array in self.__arrays:
