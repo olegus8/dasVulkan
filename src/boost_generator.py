@@ -209,7 +209,7 @@ class GenStruct(object):
 
     @property
     def __boost_type_name(self):
-        return vk_struct_name_to_boost(self.__vk_type_name)
+        return vk_struct_type_to_boost(self.__vk_type_name)
 
     def __is_array_count(self, vk_field):
         for array in self.__arrays:
@@ -405,7 +405,7 @@ class GenHandle(object):
 
     @property
     def __boost_handle_type_name(self):
-        return vk_handle_name_to_boost(self.__vk_handle_type_name)
+        return vk_handle_type_to_boost(self.__vk_handle_type_name)
 
     @property
     def __boost_handle_attr(self):
@@ -737,7 +737,7 @@ class ParamVkHandle(Parambase):
 
     @property
     def boost_unqual_type(self):
-        return vk_handle_type_to_boost(self.vk_type)
+        return vk_handle_type_to_boost(self.vk_unqual_type)
 
     def boost_value_to_vk(self, boost_value):
         attr = boost_handle_attr_name(self.boost_type)
@@ -775,6 +775,42 @@ class ParamVkHandlePtr(BoostType):
     def boost_value_to_vk(self, boost_value):
         attr = boost_handle_attr_name(self.boost_type)
         return f'{boost_value}?.{attr}'
+
+
+class ParamVkStructPtr(BoostType):
+
+    @classmethod
+    def maybe_create(cls, c_param, generator):
+        if cls.__get_c_unqual_type(c_param.type) in generator.structs:
+            return cls(c_param=c_param, generator=generator)
+
+    @staticmethod
+    def __get_c_unqual_type(c_type_name):
+        m = re.match(r'(const )?(Vk\S*) \*', c_type_name)
+        if m:
+            return m.group(2)
+
+    @property
+    def c_unqual_type(self):
+        return self.__get_c_unqual_type(self._c_param.type)
+
+    @property
+    def vk_unqual_type(self):
+        return self.c_unqual_type
+
+    @property
+    def boost_unqual_type(self):
+        return vk_struct_type_to_boost(self.vk_unqual_type)
+
+    def boost_value_to_vk(self, boost_value):
+        raise ValueBoostError('Not supported')
+
+    def vk_value_to_boost(self, vk_value):
+        raise Exception('add if needed')
+
+    @property
+    def vk_view_type(self):
+        return f'{self.vk_unqual_type} const ?'
 
 
 class ParamFixedString(BoostType):
@@ -873,135 +909,21 @@ class ParamUInt32(BoostType):
         return 'uint'
 
 
-class BoostVkStructPtrType(BoostType):
-
-    @classmethod
-    def maybe_create(cls, c_type_name, generator):
-        if cls.__get_vk_type_name(c_type_name) in generator.structs:
-            return cls(c_type_name=c_type_name, generator=generator)
-
-    @staticmethod
-    def __get_vk_type_name(c_type_name):
-        m = re.match(r'(const )?(Vk\S*) \*', c_type_name)
-        if m:
-            return m.group(2)
-
-    @property
-    def __vk_type_name(self):
-        return self.__get_vk_type_name(self.c_type_name)
-
-    @property
-    def name(self):
-        assert_starts_with(self.__vk_type_name, 'Vk')
-        return self.__vk_type_name[2:] + ' ?'
-
-    def to_vk_value(self, boost_value):
-        raise Exception('Use view for conversion')
-
-    @property
-    def needs_view_to_vk(self):
-        return True
-
-    @property
-    def view_to_vk_type(self):
-        return f'{self.__vk_type_name} const ?'
-
-
-class BoostUnknownType(BoostType):
+class ParamUnknown(BoostType):
 
     @classmethod
     def maybe_create(cls, **kwargs):
         return cls(**kwargs)
 
     @property
-    def name(self):
+    def c_unqual_type(self):
         raise VulkanBoostError(
-            f'Cannot convert to boost type: {self.c_type_name}')
-
-
-class ParamEx(object):
-
-    def __init__(self, vk_param, generator):
-        self.vk = vk_param
-        self.boost = BoostParam(vk_param=vk_param, generator=generator)
-
-
-class BoostFieldBase(object):
-
-    def __init__(self, generator):
-        self.__cached_type = None
-        self.__generator = generator
+            f'Cannot convert to boost type: {self._c_param.type}')
 
     @property
-    def _vk_field(self):
-        raise NotImplemented()
-
-    @property
-    def _type(self):
-        if self.__cached_type is None:
-            self.__cached_type = self.__generator.get_boost_type(
-                self._vk_field.type)
-        return self.__cached_type
-
-    @property
-    def name(self):
-        return self._type.adjust_field_name(
-            boost_camel_to_lower(self._vk_field.das_name))
-
-    @property
-    def type(self):
-        return self._type.name
-
-    @property
-    def type_deref(self):
-        return self._type.deref_name
-
-    @property
-    def vk_value(self):
-        return self._type.to_vk_value(self.name)
-
-    def to_vk_value(self, boost_value):
-        return self._type.to_vk_value(boost_value)
-
-    def to_boost_value(self, vk_value):
-        return self._type.to_boost_value(vk_value)
-
-    @property
-    def needs_view_to_vk(self):
-        return self._type.needs_view_to_vk
-
-    @property
-    def view_to_vk_type(self):
-        return self._type.view_to_vk_type
-
-
-class BoostParam(BoostFieldBase):
-
-    def __init__(self, vk_param, **kwargs):
-        super(BoostParam, self).__init__(**kwargs)
-        self.__vk_param = vk_param
-
-    @property
-    def _vk_field(self):
-        return self.__vk_param
-
-
-class StructFieldEx(object):
-
-    def __init__(self, vk_field, generator):
-        self.vk = vk_field
-        self.boost = BoostStructField(vk_field=vk_field, generator=generator)
-
-
-class BoostStructField(BoostFieldBase):
-
-    def __init__(self, vk_field, **kwargs):
-        super(BoostStructField, self).__init__(**kwargs)
-        self.__vk_field = vk_field
-
-    @property
-    def _vk_field(self):
-        return self.__vk_field
+    def vk_unqual_type(self):
+        raise VulkanBoostError(
+            f'Cannot convert to boost type: {self._c_param.type}')
 
 
 def boost_camel_to_lower(camel):
@@ -1019,16 +941,12 @@ def deref_das_type(type_name):
     assert_ends_with(type_name, '?')
     return type_name[:-1].strip()
 
-def vk_struct_name_to_boost(vk_name):
-    assert_starts_with(vk_name, 'Vk')
-    return vk_name[2:]
+def vk_struct_type_to_boost(vk_type):
+    assert_starts_with(vk_type, 'Vk')
+    return vk_type[2:]
 
-def vk_handle_name_to_boost(vk_name):
-    return vk_struct_name_to_boost(vk_name)
-
-def vk_handle_type_to_boost(vk_type_):
-    assert_starts_with(vk_type_, 'Vk')
-    return vk_type_[2:]
+def vk_handle_type_to_boost(vk_type):
+    return vk_struct_type_to_boost(vk_type)
 
 def boost_handle_attr_name(boost_handle_type_name):
     return boost_camel_to_lower(boost_handle_type_name)
