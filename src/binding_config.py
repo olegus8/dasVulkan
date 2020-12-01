@@ -111,14 +111,14 @@ def add_boost_content(g):
     #
 
     g.add_gen_struct(
-        struct          = 'VkApplicationInfo',
-        boost_to_vk     = True)
+        struct      = 'VkApplicationInfo',
+        boost_to_vk = True)
     g.add_gen_struct(
-        struct          = 'VkExtensionProperties',
-        vk_to_boost     = True)
+        struct      = 'VkExtensionProperties',
+        vk_to_boost = True)
     g.add_gen_struct(
-        struct          = 'VkInstanceCreateInfo',
-        boost_to_vk     = True
+        struct      = 'VkInstanceCreateInfo',
+        boost_to_vk = True
         ).declare_array(
             count = 'enabledLayerCount',
             items = 'ppEnabledLayerNames',
@@ -129,3 +129,7 @@ def add_boost_content(g):
     #
     # Query functions
     #
+
+    g.add_query_func(
+        func        = 'vkGetPhysicalDeviceProperties',
+        p_output    = 'pProperties')
