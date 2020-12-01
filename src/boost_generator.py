@@ -618,37 +618,56 @@ class GenHandle(object):
         return lines
 
 
-class BoostType(object):
+class ParamBase(object):
 
-    def __init__(self, c_type_name, generator):
-        self.c_type_name = c_type_name
-        self.generator = generator
+    def __init__(self, c_param, generator):
+        self._c_param = c_param
+        self._generator = generator
 
     @property
-    def name(self):
-        return self.c_type_name
+    def vk_type(self):
+        return self.c_unqualified_type
 
-    def to_vk_value(self, boost_value):
-        return boost_value
+    @property
+    def c_unqualified_type(self):
+        raise NotImplementedError()
 
-    def to_boost_value(self, vk_value):
+    @property
+    def is_enum(self):
+        return self.c_unqualified_type in self._generator.enums
+
+    @property
+    def is_struct(self):
+        return self.c_unqualified_type in self._generator.structs
+
+    @property
+    def is_handle(self):
+        return self.c_unqualified_type in self._generator.opaque_structs
+
+    @property
+    def boost_type(self):
+        tname = self.vk_type
+        if tname.startswith('Vk') and not self.is_enum:
+            tname = tname[2:]
+        return tname
+
+    @property
+    def vk_name(self):
+        return self._c_param.name
+
+    @property
+    def boost_name(self):
+        return self.vk_name
+
+    def vk_value_to_boost(self, vk_value):
         return vk_value
 
-    @property
-    def deref_name(self):
-        assert_ends_with(self.name, '?')
-        return self.name[:-1].strip()
-
-    def adjust_field_name(self, name):
-        return name
+    def boost_value_to_vk(self, boost_value):
+        return boost_value
 
     @property
-    def needs_view_to_vk(self):
-        return False
-
-    @property
-    def view_to_vk_type(self):
-        raise NotImplemented()
+    def vk_view_type(self):
+        return None
 
 
 class BoostVkHandleType(BoostType):
@@ -909,3 +928,7 @@ def to_boost_func_name(vk_name):
 
 def returns_vk_result(func):
     return func.return_type == 'VkResult'
+
+def deref_das_type(type_name):
+    assert_ends_with(type_name, '?')
+    return type_name[:-1].strip()
