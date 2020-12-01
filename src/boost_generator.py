@@ -175,6 +175,10 @@ class GenQueryFunc(object):
 
         lines += [
            f'    )',
+        ]
+        if self.__returns_vk_result:
+            lines.append('    assert(result_ == VkResult VK_SUCCESS)')
+        lines += [
            f'    return <- vk_output',
         ]
         return lines
