@@ -74,9 +74,9 @@ class BoostGenerator(LoggingObject):
         return struct
 
     def __add_gen_query_func(self, **kwargs):
-        struct = GenQueryFunc(generator=self, **kwargs)
-        self.__gen_structs.append(struct)
-        return struct
+        func = GenQueryFunc(generator=self, **kwargs)
+        self.__gen_query_funcs.append(func)
+        return func
 
     def get_func_params_ex(self, vk_func):
         return [ParamEx(vk_param=p, generator=self) for p in vk_func.params]
