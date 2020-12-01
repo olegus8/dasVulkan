@@ -478,12 +478,12 @@ class GenHandle(object):
         lines = []
         lines += [
             '',
-           f'def {self.__boost_enumerator}(']
+           f'def {self.__boost_enumerator_name}(']
         for param in self.__vk_enumerator_params:
-            if param.vk.name in [self.__p_count, self.__p_handles]:
+            if param.vk_name in [self.__vk_p_count, self.__vk_p_handles]:
                 continue
             lines += [
-               f'    {param.boost.name} : {param.boost.type};',
+               f'    {param.boost_name} : {param.boost_type};',
             ]
         lines += [
            f'    var result : VkResult? = [[VkResult?]]',
