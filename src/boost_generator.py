@@ -144,10 +144,10 @@ class GenQueryFunc(object):
         for param in self.__params:
             if param.vk_name == self.__p_output:
                 continue
-            lines.append(f'    {param.boost_name} : {param.boost_type},')
+            lines.append(f'    {param.boost_name} : {param.boost_type};')
         if self.__returns_vk_result:
-            lines.append(f'    var result : VkResult? = [[VkResult?]],')
-        remove_last_comma(lines)
+            lines.append(f'    var result : VkResult? = [[VkResult?]];')
+        remove_last_char(lines, ';')
 
         boost_type_deref = deref_das_type(self.__output_param.boost_type)
         vk_type_deref = deref_das_type(self.__output_param.vk_type)
@@ -170,7 +170,7 @@ class GenQueryFunc(object):
             else:
                 vk_value = param.boost_value_to_vk(param.boost_name)
             lines.append(f'        {vk_value},')
-        remove_last_comma(lines)
+        remove_last_char(lines, ',')
 
         lines += [
            f'    )',
@@ -280,7 +280,7 @@ class GenStruct(object):
                 continue
             vk_value = field.vk_value_to_boost(f'vk_struct.{field.vk_name}')
             lines += [f'        {field.boost_name} = {vk_value},']
-        remove_last_comma(lines)
+        remove_last_char(lines, ',')
         lines += [
             '    ]]'
         ]
@@ -420,6 +420,14 @@ class GenHandle(object):
         return self.__boost_handle_attr + '_batch'
 
     @property
+    def __boost_enumerator_name(self):
+        return vk_func_name_to_boost(self.__vk_enumerator_name)
+
+    @property
+    def __boost_ctor_name(self):
+        return vk_func_name_to_boost(self.__vk_ctor_name)
+
+    @property
     def __boost_p_create_info(self):
         param = vk_param_name_to_boost(self.__vk_p_create_info)
         assert_starts_with(param, 'p_')
@@ -465,14 +473,6 @@ class GenHandle(object):
            f'    return <- [{{for h in batch.{batch_attr} ;',
            f'        [[{single_type} {single_attr}=h]]}}]',
         ]
-
-    @property
-    def __boost_enumerator_name(self):
-        return vk_func_name_to_boost(self.__vk_enumerator_name)
-
-    @property
-    def __boost_ctor_name(self):
-        return vk_func_name_to_boost(self.__vk_ctor_name)
 
     def __generate_enumerator_batched(self):
         lines = []
@@ -958,6 +958,6 @@ def boost_ptr_type_to_array(type_):
 def boost_ptr_name_to_array(name):
     return name[2:] if name.startswith('p_') else name
 
-def remove_last_comma(lines):
-    assert_ends_with(lines[-1], ',')
+def remove_last_char(lines, char):
+    assert_ends_with(lines[-1], char)
     lines[-1] = lines[-1][:-1]
