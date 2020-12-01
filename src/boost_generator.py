@@ -148,7 +148,7 @@ class GenQueryFunc(object):
             lines.append(f'    {param.boost_name} : {param.boost_type},')
         if self.__returns_vk_result:
             lines.append(f'    var result : VkResult? = [[VkResult?]],')
-        lines[-1] = lines[-1][:-1]
+        remove_last_comma(lines)
 
         boost_type_deref = deref_das_type(self.__output_param.boost_type)
         vk_type_deref = deref_das_type(self.__output_param.vk_type)
@@ -171,7 +171,7 @@ class GenQueryFunc(object):
             else:
                 vk_value = param.boost_value_to_vk(param.boost_name)
             lines.append(f'        {vk_value},')
-        lines[-1] = lines[-1][:-1]
+        remove_last_comma(lines)
 
         lines += [
            f'    )',
@@ -281,8 +281,7 @@ class GenStruct(object):
                 continue
             vk_value = field.vk_value_to_boost(f'vk_struct.{field.vk_name}')
             lines += [f'        {field.boost_name} = {vk_value},']
-        assert_ends_with(lines[-1], ',')
-        lines[-1] = lines[-1][:-1]
+        remove_last_comma(lines)
         lines += [
             '    ]]'
         ]
@@ -948,3 +947,7 @@ def boost_ptr_type_to_array(type_):
 
 def boost_ptr_name_to_array(name):
     return name[2:] if name.startswith('p_') else name
+
+def remove_last_comma(lines):
+    assert_ends_with(lines[-1], ',')
+    lines[-1] = lines[-1][:-1]
