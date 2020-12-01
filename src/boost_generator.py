@@ -475,6 +475,8 @@ class GenHandle(object):
         ]
 
     def __generate_enumerator_batched(self):
+        batch_attr = self.__boost_handle_batch_attr
+        batch_type = self.__boost_handle_batch_type_name
         lines = []
         lines += [
             '',
@@ -494,6 +496,7 @@ class GenHandle(object):
             '',
            f'    result ?? result_ = {self.__vk_enumerator_name}('
         ]
+
         for param in self.__vk_enumerator_params:
             if param.vk_name == self.__vk_p_count:
                 vk_value = 'safe_addr(count)'
@@ -503,6 +506,7 @@ class GenHandle(object):
                 vk_value = param.boost_value_to_vk(param.boost_name)
             lines.append('        {vk_value},')
         remove_last_char(lines, ',')
+
         lines += [
             '    )',
            f'    assert(result_ == VkResult VK_SUCCESS)',
@@ -513,21 +517,22 @@ class GenHandle(object):
            f'        vk_handles |> lock() <| $(thandles)',
            f'            result ?? result_ = {self.__vk_enumerator_name}(',
         ]
-        params = []
+
         for param in self.__vk_enumerator_params:
-            if param.vk.name == self.__p_count:
-                params.append('safe_addr(count)')
+            if param.vk_name == self.__p_count:
+                vk_value = 'safe_addr(count)'
             elif param.vk.name == self.__p_handles:
-                params.append('addr(thandles[0])')
+                vk_value = 'addr(thandles[0])'
             else:
-                params.append(param.boost.vk_value)
+                vk_value = param.boost_value_to_vk(param.boost_name)
+            lines.append('                {vk_value},')
+        remove_last_char(lines, ',')
+
         lines += [
-            '                ' + ', '.join(params),
            f'            )',
            f'            assert(result_ == VkResult VK_SUCCESS)',
             '',
-           f'    return <- [[{self.__boost_batch_type} '
-                    f'{self.__boost_batch_attr} <- vk_handles]]',
+           f'    return <- [[{batch_type} {batch_attr} <- vk_handles]]',
         ]
         return lines
 
