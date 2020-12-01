@@ -95,12 +95,12 @@ def add_boost_content(g):
     # Handles
     #
 
-    self.__add_gen_handle(
+    g.add_gen_handle(
         handle          = 'VkInstance',
         ctor            = 'vkCreateInstance',
         dtor            = 'vkDestroyInstance',
         p_create_info   = 'pCreateInfo')
-    self.__add_gen_handle(
+    g.add_gen_handle(
         handle          = 'VkPhysicalDevice',
         enumerator      = 'vkEnumeratePhysicalDevices',
         p_count         = 'pPhysicalDeviceCount',
@@ -110,13 +110,13 @@ def add_boost_content(g):
     # Structs
     #
 
-    self.__add_gen_struct(
+    g.add_gen_struct(
         struct          = 'VkApplicationInfo',
         boost_to_vk     = True)
-    self.__add_gen_struct(
+    g.add_gen_struct(
         struct          = 'VkExtensionProperties',
         vk_to_boost     = True)
-    self.__add_gen_struct(
+    g.add_gen_struct(
         struct          = 'VkInstanceCreateInfo',
         boost_to_vk     = True
         ).declare_array(
