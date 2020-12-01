@@ -17,7 +17,9 @@ class Config(ConfigBase):
         return ['GLFW/glfw3.h', 'vulkan/vulkan_core.h']
 
     def custom_pass(self, context):
-        BoostGenerator(context).write()
+        generator = BoostGenerator(context)
+        add_boost_content(generator)
+        generator.write()
 
     def configure_macro_const(self, macro_const):
         if '"' in macro_const.value:
@@ -85,3 +87,45 @@ class Config(ConfigBase):
             ]:
                 if kw in func.name:
                     func.ignore()
+
+
+def add_boost_content(g):
+
+    #
+    # Handles
+    #
+
+    self.__add_gen_handle(
+        handle          = 'VkInstance',
+        ctor            = 'vkCreateInstance',
+        dtor            = 'vkDestroyInstance',
+        p_create_info   = 'pCreateInfo')
+    self.__add_gen_handle(
+        handle          = 'VkPhysicalDevice',
+        enumerator      = 'vkEnumeratePhysicalDevices',
+        p_count         = 'pPhysicalDeviceCount',
+        p_handles       = 'pPhysicalDevices')
+
+    #
+    # Structs
+    #
+
+    self.__add_gen_struct(
+        struct          = 'VkApplicationInfo',
+        boost_to_vk     = True)
+    self.__add_gen_struct(
+        struct          = 'VkExtensionProperties',
+        vk_to_boost     = True)
+    self.__add_gen_struct(
+        struct          = 'VkInstanceCreateInfo',
+        boost_to_vk     = True
+        ).declare_array(
+            count = 'enabledLayerCount',
+            items = 'ppEnabledLayerNames',
+        ).declare_array(
+            count = 'enabledExtensionCount',
+            items = 'ppEnabledExtensionNames')
+
+    #
+    # Query functions
+    #

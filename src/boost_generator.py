@@ -27,53 +27,17 @@ class BoostGenerator(LoggingObject):
         self.functions = dict((x.name, x)
             for x in self.__context.main_c_header.functions)
 
-        self.__add_gen_handles()
-        self.__add_gen_structs()
-        self.__add_gen_query_funcs()
-
-    def __add_gen_handles(self):
-        self.__add_gen_handle(
-            handle          = 'VkInstance',
-            ctor            = 'vkCreateInstance',
-            dtor            = 'vkDestroyInstance',
-            p_create_info   = 'pCreateInfo')
-        self.__add_gen_handle(
-            handle          = 'VkPhysicalDevice',
-            enumerator      = 'vkEnumeratePhysicalDevices',
-            p_count         = 'pPhysicalDeviceCount',
-            p_handles       = 'pPhysicalDevices')
-
-    def __add_gen_structs(self):
-        self.__add_gen_struct(
-            struct          = 'VkApplicationInfo',
-            boost_to_vk     = True)
-        self.__add_gen_struct(
-            struct          = 'VkExtensionProperties',
-            vk_to_boost     = True)
-        self.__add_gen_struct(
-            struct          = 'VkInstanceCreateInfo',
-            boost_to_vk     = True
-            ).declare_array(
-                count = 'enabledLayerCount',
-                items = 'ppEnabledLayerNames',
-            ).declare_array(
-                count = 'enabledExtensionCount',
-                items = 'ppEnabledExtensionNames')
-
-    def __add_gen_query_funcs(self):
-        pass
-
-    def __add_gen_handle(self, **kwargs):
+    def add_gen_handle(self, **kwargs):
         handle = GenHandle(generator=self, **kwargs)
         self.__gen_handles.append(handle)
         return handle
 
-    def __add_gen_struct(self, **kwargs):
+    def add_gen_struct(self, **kwargs):
         struct = GenStruct(generator=self, **kwargs)
         self.__gen_structs.append(struct)
         return struct
 
-    def __add_gen_query_func(self, **kwargs):
+    def add_gen_query_func(self, **kwargs):
         func = GenQueryFunc(generator=self, **kwargs)
         self.__gen_query_funcs.append(func)
         return func
