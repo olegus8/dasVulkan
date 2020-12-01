@@ -664,12 +664,23 @@ class ParamBase(object):
         raise NotImplementedError()
 
     @property
-    def vk_type(self):
+    def vk_unqual_type(self):
         return self.c_unqual_type
 
     @property
+    def boost_unqual_type(self):
+        return self.vk_unqual_type
+
+    @property
+    def vk_type(self):
+        t = self.vk_unqual_type
+        if is_c_pointer_type(self._c_param.type):
+            t += ' ?'
+        return t
+
+    @property
     def boost_type(self):
-        return self.vk_type
+        return self.boost_unqual_type
 
     @property
     def vk_name(self):
@@ -712,13 +723,13 @@ class ParamVkHandle(Parambase):
         return self.__get_c_unqual_type(self._c_param.type)
 
     @property
-    def vk_type(self):
+    def vk_unqual_type(self):
         ct = self.c_unqual_type
         assert_ends_with(ct, '_T')
         return ct[:-2]
 
     @property
-    def boost_type(self):
+    def boost_unqual_type(self):
         return vk_handle_type_to_boost(self.vk_type)
 
     def boost_value_to_vk(self, boost_value):
@@ -729,19 +740,30 @@ class ParamVkHandle(Parambase):
         raise VulkanBoostError('Cannot convert vk handle to boost handle')
 
 
-class BoostVkHandlePtrType(BoostType):
+class ParamVkHandlePtr(BoostType):
 
     @classmethod
-    def maybe_create(cls, c_type_name, generator):
-        name = cls.__get_boost_handle_type_name(c_type_name)
-        if f'Vk{name}_T' in generator.opaque_structs:
+    def maybe_create(cls, c_param, generator):
+        name = cls.__get_c_unqual_type(c_type_name)
+        if f'{name}_T' in generator.opaque_structs:
             return cls(c_type_name=c_type_name, generator=generator)
 
     @staticmethod
-    def __get_boost_handle_type_name(c_type_name):
-        m = re.match(r'Vk(\S*) \*', c_type_name)
+    def __get_c_unqual_type(c_type_name):
+        m = re.match(r'(Vk\S*) \*', c_type_name)
         if m:
             return m.group(1)
+
+    @property
+    def c_unqual_type(self):
+        return self.__get_c_unqual_type(self._c_param.type)
+
+    @property
+    def vk_type(self):
+        return f'{self.c_unqual_type} ?'
+
+    @property
+    def 
 
     @property
     def name(self):
@@ -987,3 +1009,11 @@ def boost_ptr_name_to_array(name):
 def remove_last_char(lines, char):
     assert_ends_with(lines[-1], char)
     lines[-1] = lines[-1][:-1]
+
+def is_c_pointer_type(c_type):
+    for pattern in [
+        r'(const )?(\S+) \*',
+    ]:
+        if re.match(pattern, c_type):
+            return True
+    return False
