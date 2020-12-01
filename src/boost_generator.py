@@ -680,7 +680,10 @@ class ParamBase(object):
 
     @property
     def boost_type(self):
-        return self.boost_unqual_type
+        t = self.boost_unqual_type
+        if is_c_pointer_type(self._c_param.type):
+            t += ' ?'
+        return t
 
     @property
     def vk_name(self):
@@ -737,7 +740,7 @@ class ParamVkHandle(Parambase):
         return f'{boost_value}.{attr}'
 
     def vk_value_to_boost(self, vk_value):
-        raise VulkanBoostError('Cannot convert vk handle to boost handle')
+        raise VulkanBoostError('Not supported')
 
 
 class ParamVkHandlePtr(BoostType):
@@ -758,19 +761,12 @@ class ParamVkHandlePtr(BoostType):
     def c_unqual_type(self):
         return self.__get_c_unqual_type(self._c_param.type)
 
-    @property
-    def vk_type(self):
-        return f'{self.c_unqual_type} ?'
+    def vk_value_to_boost(self, vk_value):
+        raise VulkanBoostError('Not supported')
 
-    @property
-    def 
-
-    @property
-    def name(self):
-        return self.__get_boost_handle_type_name(self.c_type_name) + ' ?'
-
-    def to_vk_value(self, boost_value):
-        raise Exception(f'TODO: add if needed ({self.name})')
+    def boost_value_to_vk(self, boost_value):
+        attr = boost_handle_attr_name(self.boost_type)
+        return f'{boost_value}?.{attr}'
 
 
 class BoostFixedStringType(BoostType):
