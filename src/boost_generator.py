@@ -156,7 +156,11 @@ class GenQueryFunc(object):
         lines += [
            f') : {self.__output_param.boost.type_deref}',
 
-            #TODO: BoostType is combining too many entities in itself
+            #TODO: refactor ParamEx: make it single entity with type;
+            #   rename "vk" into "c", and make clear separation between
+            #   vk and boost parts -- like vk_name, boost_name,
+            #   vk_type, boost_type,
+            #   boost_value_to_vk, vk_value_to_boost, etc.
            f'    var vk_output : {?????}',
 
            f'    physical_device.physical_device |> vkGetPhysicalDeviceProperties(',
