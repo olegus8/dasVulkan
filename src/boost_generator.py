@@ -446,21 +446,24 @@ class GenHandle(object):
     def __generate_type(self):
         return [
             '',
-           f'struct {self.__boost_type}',
-           f'    {self.__boost_attr} : {self.__vk_type_name}',
+           f'struct {self.__boost_handle_type_name}',
+           f'    {self.__boost_handle_attr} : {self.__vk_handle_type_name}',
         ]
 
     def __generate_batched_type(self):
+        batch_attr = self.__boost_handle_batch_attr
+        batch_type = self.__boost_handle_batch_type_name
+        single_attr = self.__boost_handle_attr
+        single_type = self.__boost_handle_type_name
+        vk_type = self.__vk_handle_type_name
         return [
             '',
-           f'struct {self.__boost_batch_type}',
-           f'    {self.__boost_batch_attr} : '
-                    f'array<{self.__vk_type_name}>',
+           f'struct {batch_type}',
+           f'    {batch_attr} : array<{vk_type}>',
             '',
-           f'def split(batch : {self.__boost_batch_type}) '
-                f': array<{self.__boost_type}>',
-           f'    return <- [{{for h in batch.{self.__boost_batch_attr} ;',
-           f'        [[{self.__boost_type} {self.__boost_attr}=h]]}}]',
+           f'def split(batch : {batch_type}) : array<{single_type}>',
+           f'    return <- [{{for h in batch.{batch_attr} ;',
+           f'        [[{single_type} {single_attr}=h]]}}]',
         ]
 
     @property
