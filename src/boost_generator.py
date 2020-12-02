@@ -841,7 +841,8 @@ class ParamVkStructPtr(ParamBase):
     @classmethod
     def maybe_create(cls, c_param, **kwargs):
         c_type = c_param.type
-        if c_type.is_struct and c_type.unqual_name.startswith('Vk'):
+        if (c_type.is_struct and c_type.is_pointer
+        and c_type.unqual_name.startswith('Vk')):
             return cls(c_param=c_param, **kwargs)
 
     @property
@@ -856,7 +857,7 @@ class ParamVkStructPtr(ParamBase):
         raise ValueBoostError('Not supported')
 
     def vk_value_to_boost(self, vk_value):
-        raise Exception('add if needed')
+        raise Exception(f'add if needed')
 
     @property
     def vk_view_type(self):
