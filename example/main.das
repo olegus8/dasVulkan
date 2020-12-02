@@ -472,7 +472,7 @@ def main
         cmd_pool        : VkCommandPool
     )
         let props <- phys_dev |> get_physical_device_properties()
-        print("Using {props.deviceName |> to_string()}\n")
+        print("Using {props.device_name}\n")
         device |> with_baked_vertex_buffer(
             phys_dev.physical_device, cmd_pool, queue, vertices
         ) <| $(vbuf)
