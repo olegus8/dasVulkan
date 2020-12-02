@@ -211,7 +211,8 @@ class GenQueryArrayFunc(object):
     def __init__(self, generator, func, p_count, p_items):
         self.__generator = generator
         self.__vk_func_name = func
-        self.__p_count = p_items
+        self.__p_count = p_count
+        self.__p_items = p_items
 
     @property
     def __boost_func_name(self):
