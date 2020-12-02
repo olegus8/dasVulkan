@@ -1181,19 +1181,23 @@ class ParamUnknown(ParamBase):
 
 def boost_camel_to_lower(camel):
     result = ''
+    for force_sep_after in ['2D', '3D', '4D']:
+        camel = camel.replace(force_sep_after, force_sep_after + '_')
     state = None
     for c in camel:
         if c.islower():
             state = 'lower'
         if c.isupper() and state == 'lower':
             state = 'upper'
-            if result:
+            if result and result[-1] != '_':
                 result += '_'
         if c.isdigit() and state == 'lower':
             state = 'digit'
-            if result:
+            if result and result[-1] != '_':
                 result += '_'
         result += c.lower()
+    while result[-1] == '_':
+        result = result[:-1]
     return result
 
 def returns_vk_result(func):

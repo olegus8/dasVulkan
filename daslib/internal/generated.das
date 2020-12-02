@@ -219,9 +219,9 @@ def with_view(
 //
 
 struct PhysicalDeviceLimits
-    max_image_dimension1_d : uint
-    max_image_dimension2_d : uint
-    max_image_dimension3_d : uint
+    max_image_dimension_1d : uint
+    max_image_dimension_2d : uint
+    max_image_dimension_3d : uint
     max_image_dimension_cube : uint
     max_image_array_layers : uint
     max_texel_buffer_elements : uint
@@ -328,9 +328,9 @@ struct PhysicalDeviceLimits
 
 def construct(vk_struct : VkPhysicalDeviceLimits) : PhysicalDeviceLimits
     return <- [[PhysicalDeviceLimits
-        max_image_dimension1_d = vk_struct.maxImageDimension1D,
-        max_image_dimension2_d = vk_struct.maxImageDimension2D,
-        max_image_dimension3_d = vk_struct.maxImageDimension3D,
+        max_image_dimension_1d = vk_struct.maxImageDimension1D,
+        max_image_dimension_2d = vk_struct.maxImageDimension2D,
+        max_image_dimension_3d = vk_struct.maxImageDimension3D,
         max_image_dimension_cube = vk_struct.maxImageDimensionCube,
         max_image_array_layers = vk_struct.maxImageArrayLayers,
         max_texel_buffer_elements = vk_struct.maxTexelBufferElements,
@@ -469,17 +469,17 @@ def construct(vk_struct : VkPhysicalDeviceProperties) : PhysicalDeviceProperties
 //
 
 struct PhysicalDeviceSparseProperties
-    residency_standard2_dblock_shape : uint
-    residency_standard2_dmultisample_block_shape : uint
-    residency_standard3_dblock_shape : uint
+    residency_standard_2d_block_shape : uint
+    residency_standard_2d_multisample_block_shape : uint
+    residency_standard_3d_block_shape : uint
     residency_aligned_mip_size : uint
     residency_non_resident_strict : uint
 
 def construct(vk_struct : VkPhysicalDeviceSparseProperties) : PhysicalDeviceSparseProperties
     return <- [[PhysicalDeviceSparseProperties
-        residency_standard2_dblock_shape = vk_struct.residencyStandard2DBlockShape,
-        residency_standard2_dmultisample_block_shape = vk_struct.residencyStandard2DMultisampleBlockShape,
-        residency_standard3_dblock_shape = vk_struct.residencyStandard3DBlockShape,
+        residency_standard_2d_block_shape = vk_struct.residencyStandard2DBlockShape,
+        residency_standard_2d_multisample_block_shape = vk_struct.residencyStandard2DMultisampleBlockShape,
+        residency_standard_3d_block_shape = vk_struct.residencyStandard3DBlockShape,
         residency_aligned_mip_size = vk_struct.residencyAlignedMipSize,
         residency_non_resident_strict = vk_struct.residencyNonResidentStrict
     ]]
