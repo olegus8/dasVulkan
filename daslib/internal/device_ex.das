@@ -196,7 +196,7 @@ def get_suitability_score(device : PhysicalDevice; surface : VkSurfaceKHR#)
         score = 0
     
     let props <- device |> get_physical_device_properties()
-    if (props.deviceType ==
+    if (props.device_type ==
         VkPhysicalDeviceType VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU
     )
         score += 1000
