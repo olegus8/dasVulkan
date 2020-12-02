@@ -158,8 +158,7 @@ def with_view(
         applicationVersion = boost_struct.application_version,
         pEngineName = boost_struct.engine_name,
         engineVersion = boost_struct.engine_version,
-        apiVersion = boost_struct.api_version,
-        sType = VkStructureType VK_STRUCTURE_TYPE_APPLICATION_INFO
+        apiVersion = boost_struct.api_version
     ]];
     b |> invoke(vk_struct);
 }
@@ -207,8 +206,7 @@ def with_view(
         enabledLayerCount = uint(vk_enabled_layer_count),
         ppEnabledLayerNames = vk_p_enabled_layer_names,
         enabledExtensionCount = uint(vk_enabled_extension_count),
-        ppEnabledExtensionNames = vk_p_enabled_extension_names,
-        sType = VkStructureType VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO
+        ppEnabledExtensionNames = vk_p_enabled_extension_names
     ]];
     b |> invoke(vk_struct);
     }}};
@@ -498,8 +496,7 @@ def with_view(
 ) {
     let vk_struct <- [[ VkSurfaceFormatKHR
         format = boost_struct.format,
-        colorSpace = boost_struct.color_space,
-        sType = VkStructureType VK_STRUCTURE_TYPE_SURFACE_FORMAT_KHR
+        colorSpace = boost_struct.color_space
     ]];
     b |> invoke(vk_struct);
 }
