@@ -928,11 +928,11 @@ class ParamStringPtr(ParamBase):
 
 class ParamUInt32(ParamBase):
 
-    _C_TYPES = ['unsigned int', 'uint32_t']
+    _C_TYPE = 'unsigned int'
 
     @classmethod
     def maybe_create(cls, c_param, **kwargs):
-        if c_param.type in cls._C_TYPES:
+        if c_param.type == cls._C_TYPE:
             return cls(c_param=c_param, **kwargs)
 
     @property
@@ -946,11 +946,11 @@ class ParamUInt32(ParamBase):
 
 class ParamUInt64(ParamBase):
 
-    _C_TYPES = ['unsigned long long']
+    _C_TYPE = 'unsigned long long'
 
     @classmethod
     def maybe_create(cls, c_param, **kwargs):
-        if c_param.type in cls._C_TYPES:
+        if c_param.type == cls._C_TYPE:
             return cls(c_param=c_param, **kwargs)
 
     @property
