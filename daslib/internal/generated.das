@@ -53,7 +53,7 @@ def create_window_surface(
     return <- surface
 
 def finalize(var surface : SurfaceKHR)
-    vkDestroyInstance(
+    vkDestroySurfaceKHR(
         surface._instance,
         surface.surface_khr,
         null
