@@ -60,7 +60,6 @@ def finalize(var surface : SurfaceKHR)
     )
     memzero(surface)
 
-
 //
 // Functions
 //
