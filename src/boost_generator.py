@@ -946,8 +946,7 @@ class ParamFloat(ParamBase):
 
     @classmethod
     def maybe_create(cls, c_param, **kwargs):
-        c_type = c_param.type
-        if c_type.unqual_type == 'float':
+        if c_param.type.unqual_name == 'float':
             return cls(c_param=c_param, **kwargs)
 
     @property
