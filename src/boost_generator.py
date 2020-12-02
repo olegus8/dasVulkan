@@ -59,6 +59,7 @@ class BoostGenerator(LoggingObject):
             ParamString,
             ParamFixedString,
             ParamStringPtr,
+            ParamFloat,
             ParamUInt32,
             ParamUInt32FixedArray,
             ParamUInt64,
@@ -931,6 +932,24 @@ class ParamStringPtr(ParamBase):
         if name.startswith('pp_'):
             name = name[1:]
         return name
+
+
+class ParamFloat(ParamBase):
+
+    _C_TYPE = 'float'
+
+    @classmethod
+    def maybe_create(cls, c_param, **kwargs):
+        if c_param.type == cls._C_TYPE:
+            return cls(c_param=c_param, **kwargs)
+
+    @property
+    def c_unqual_type(self):
+        return self._c_param.type
+
+    @property
+    def vk_unqual_type(self):
+        return 'float'
 
 
 class ParamUInt32(ParamBase):
