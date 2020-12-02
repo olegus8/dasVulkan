@@ -28,6 +28,39 @@ def to_string(bytes : int8[])
         return reinterpret<string>(addr(bytes[0]))
 
 //
+// Surface
+//
+
+struct SurfaceKHR
+    surface_khr : VkSurfaceKHR
+    _instance : VkInstance
+
+def create_window_surface(
+    instance : Instance = [[ Instance ]];
+    window : GLFWwindow_DasHandle = [[ GLFWwindow_DasHandle ]];
+    var result : VkResult? = [[VkResult?]]
+) : SurfaceKHR
+
+    var surface <- [[SurfaceKHR _instance=instance.instance]]
+    var result_ = VkResult VK_SUCCESS
+    result ?? result_ = glfwCreateWindowSurface(
+        instance,
+        window,
+        null,
+        safe_addr(surface.surface_khr)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+    return <- surface
+
+def finalize(var surface : SurfaceKHR)
+    vkDestroyInstance(
+        surface._instance,
+        surface.surface_khr,
+        null
+    )
+    memzero(surface)
+
+//
 // Functions
 //
 
