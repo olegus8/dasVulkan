@@ -11,6 +11,7 @@ require strings
 require generated public
 
 
+/*
 def get_physical_device_surface_formats_khr(
     physical_device : PhysicalDevice;
     surface         : VkSurfaceKHR;
@@ -34,6 +35,7 @@ def get_physical_device_surface_formats_khr(
             assert(result_ == VkResult VK_SUCCESS)
 
     return <- formats
+*/
 
 
 def get_physical_device_queue_family_properties(

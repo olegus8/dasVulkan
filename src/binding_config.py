@@ -125,6 +125,9 @@ def add_boost_content(g):
     g.add_gen_struct(
         struct      = 'VkPhysicalDeviceSparseProperties',
         vk_to_boost = True)
+    g.add_gen_struct(
+        struct      = 'VkSurfaceFormatKHR',
+        vk_to_boost = True)
 
     #
     # Structs consumed by Vulkan
@@ -152,3 +155,8 @@ def add_boost_content(g):
         func        = 'vkEnumerateDeviceExtensionProperties',
         p_count     = 'pPropertyCount',
         p_items     = 'pProperties')
+
+    g.add_gen_query_array_func(
+        func        = 'vkGetPhysicalDeviceSurfaceFormatsKHR',
+        p_count     = 'pSurfaceFormatCount',
+        p_items     = 'pSurfaceFormats')
