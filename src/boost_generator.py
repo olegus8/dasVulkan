@@ -104,9 +104,9 @@ class BoostGenerator(LoggingObject):
             '        return reinterpret<string>(addr(bytes[0]))',
         ] + [
             line for items in [
+                self.__gen_query_funcs,
                 self.__gen_structs,
                 self.__gen_handles,
-                self.__gen_query_funcs,
             ] for item in items for line in item.generate()
         ]
 
