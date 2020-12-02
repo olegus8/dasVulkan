@@ -631,7 +631,7 @@ class GenHandle(object):
             elif param.boost_type == bh_type:
                 vk_value = param.boost_value_to_vk(bh_attr)
             else:
-                raise Exception('TODO: handle extra params here')
+                raise Exception('handle extra params if needed')
             lines.append('        {vk_value},')
         remove_last_char(lines, ',')
         lines += [
