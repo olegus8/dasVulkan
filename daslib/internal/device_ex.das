@@ -195,7 +195,8 @@ def get_suitability_score(device : PhysicalDevice; surface : VkSurfaceKHR#)
     if ! has_graphics
         score = 0
     
-    let props <- device |> get_physical_device_properties()
+    var props <- device |> get_physical_device_properties()
+    defer() <| ${ delete props; }
     if (props.device_type ==
         VkPhysicalDeviceType VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU
     )

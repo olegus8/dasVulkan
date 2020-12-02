@@ -471,7 +471,8 @@ def main
         pipeline_layout : VkPipelineLayout;
         cmd_pool        : VkCommandPool
     )
-        let props <- phys_dev |> get_physical_device_properties()
+        var props <- phys_dev |> get_physical_device_properties()
+        defer() <| ${ delete props ; }
         print("Using {props.device_name}\n")
         device |> with_baked_vertex_buffer(
             phys_dev.physical_device, cmd_pool, queue, vertices
