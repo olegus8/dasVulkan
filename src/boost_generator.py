@@ -50,7 +50,7 @@ class BoostGenerator(LoggingObject):
     def get_struct_fields(self, c_struct):
         return map(self.__get_param, c_struct.fields)
 
-    def __get_param(self, c_param):
+    def __get_param(self, c_node):
         for param_class in [
             ParamVkHandle,
             ParamVkHandlePtr,
@@ -65,7 +65,8 @@ class BoostGenerator(LoggingObject):
             ParamUInt64,
             ParamUnknown,
         ]:
-            param = param_class.maybe_create(c_param=c_param, generator=self)
+            param = param_class.maybe_create(
+                c_param=C_Param(c_node=c_node), generator=self)
             if param:
                 return param
 
@@ -654,6 +655,46 @@ class GenHandle(object):
         return lines
 
 
+class C_Param(object):
+
+    def __init__(self, c_node):
+        self._c_node = c_node
+        self.type = C_Type(c_node.type)
+
+    @property
+    def name(self):
+        return self._c_node.name
+
+
+class C_Type(object):
+
+    def __init__(self, name):
+        self.name = name
+
+    @property
+    def is_pointer(self):
+        return self.type_name.endswith('*')
+
+    @property
+    def is_fixed_array(self):
+        return self.fixed_array_size is not None
+
+    @property
+    def fixed_array_size(self):
+        m = re.match(r'.*\[(\d+)\]$', self.type_name)
+        if m:
+            return int(m.group(1))
+
+    @property
+    def unqual_type(self):
+        for pattern in [
+            r'^(?P<type>\S+)$',
+        ]:
+            m = re.match(pattern, self.type_name)
+            if m:
+                return m.groupdict()['type']
+
+
 class ParamBase(object):
 
     def __init__(self, c_param, generator):
@@ -673,16 +714,8 @@ class ParamBase(object):
         return self.c_unqual_type in self._generator.opaque_structs
 
     @property
-    def is_pointer(self):
-        return is_c_pointer_type(self._c_param.type)
-
-    @property
-    def fixed_array_size(self):
-        return None
-
-    @property
     def c_unqual_type(self):
-        raise NotImplementedError()
+        return self._c_param.type.unqual_type
 
     @property
     def vk_unqual_type(self):
@@ -724,10 +757,10 @@ class ParamBase(object):
 
     def __make_qual_das_type(self, type_name):
         t = type_name
-        if self.is_pointer:
+        if self._c_param.type.is_pointer:
             t += ' ?'
-        if self.fixed_array_size is not None:
-            t += f' [{self.fixed_array_size}]'
+        if self._c_param.type.is_fixed_array is not None:
+            t += f' [{self._c_param.type.fixed_array_size}]'
         return t
 
 
@@ -1076,11 +1109,3 @@ def boost_ptr_name_to_array(name):
 def remove_last_char(lines, char):
     assert_ends_with(lines[-1], char)
     lines[-1] = lines[-1][:-1]
-
-def is_c_pointer_type(c_type):
-    for pattern in [
-        r'(const )?(\S+) \*',
-    ]:
-        if re.match(pattern, c_type):
-            return True
-    return False
