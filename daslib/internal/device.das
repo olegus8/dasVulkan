@@ -11,6 +11,7 @@ require strings
 require generated public
 
 
+/*
 def enumerate_device_extension_properties(
     physical_device : PhysicalDevice;
     layer_name      : string = [[string]];
@@ -36,6 +37,7 @@ def enumerate_device_extension_properties(
             assert(result_ == VkResult VK_SUCCESS)
         
     return <- [{for p in vk_props; construct(p)}]
+*/
 
 
 def get_physical_device_surface_formats_khr(
