@@ -913,7 +913,7 @@ class ParamUInt32(ParamBase):
         return 'uint'
 
 
-class ParamUnknown(BoostType):
+class ParamUnknown(ParamBase):
 
     @classmethod
     def maybe_create(cls, **kwargs):
