@@ -1072,8 +1072,12 @@ class ParamUnknown(ParamBase):
 
 def boost_camel_to_lower(camel):
     result = ''
+    upper_streak = False
     for c in camel:
-        if c.isupper() and len(result) > 1 and result[-2] != '_':
+        if c.islower():
+            upper_streak = False
+        if c.isupper() and not upper_streak:
+            upper_streak = True
             result += '_'
         result += c.lower()
     return result
