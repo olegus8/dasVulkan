@@ -956,7 +956,9 @@ class ParamUInt32(ParamBase):
 
     @classmethod
     def maybe_create(cls, c_param, **kwargs):
-        if c_param.type.unqual_name in ['unsigned int', 'uint32_t']:
+        if c_param.type.unqual_name in [
+            'unsigned int', 'unsigned long', 'uint32_t',
+        ]:
             return cls(c_param=c_param, **kwargs)
 
     @property
