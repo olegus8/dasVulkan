@@ -147,3 +147,8 @@ def add_boost_content(g):
     g.add_gen_query_func(
         func        = 'vkGetPhysicalDeviceProperties',
         p_output    = 'pProperties')
+
+    g.add_gen_query_array_func(
+        func        = 'vkEnumerateDeviceExtensionProperties',
+        p_count     = 'pPropertyCount',
+        p_items     = 'pProperties')

@@ -19,6 +19,7 @@ class BoostGenerator(LoggingObject):
         self.__gen_handles = []
         self.__gen_structs = []
         self.__gen_query_funcs = []
+        self.__gen_query_array_funcs = []
 
         self.enums = dict((x.name, x)
             for x in self.__context.main_c_header.enums)
@@ -42,6 +43,11 @@ class BoostGenerator(LoggingObject):
     def add_gen_query_func(self, **kwargs):
         func = GenQueryFunc(generator=self, **kwargs)
         self.__gen_query_funcs.append(func)
+        return func
+
+    def add_gen_query_array_func(self, **kwargs):
+        func = GenQueryArrayFunc(generator=self, **kwargs)
+        self.__gen_query_array_funcs.append(func)
         return func
 
     def get_func_params(self, c_func):
@@ -116,6 +122,7 @@ class BoostGenerator(LoggingObject):
         ] + [
             line for items in [
                 self.__gen_query_funcs,
+                self.__gen_query_array_funcs,
                 self.__gen_structs,
                 self.__gen_handles,
             ] for item in items for line in item.generate()
@@ -141,6 +148,89 @@ class GenQueryFunc(object):
     def __output_param(self):
         for param in self.__params:
             if param.vk_name == self.__p_output:
+                return param
+
+    @property
+    def __c_func(self):
+        return self.__generator.functions[self.__vk_func_name]
+
+    @property
+    def __returns_vk_result(self):
+        return returns_vk_result(self.__c_func)
+
+    def generate(self):
+        lines = []
+        lines += [
+            '',
+           f'def {self.__boost_func_name}('
+        ]
+        for param in self.__params:
+            if param.vk_name == self.__p_output:
+                continue
+            lines.append(f'    {param.boost_name} : {param.boost_type};')
+        if self.__returns_vk_result:
+            lines.append(f'    var result : VkResult? = [[VkResult?]];')
+        remove_last_char(lines, ';')
+
+        boost_type_deref = deref_das_type(self.__output_param.boost_type)
+        vk_type_deref = deref_das_type(self.__output_param.vk_type)
+        lines += [
+           f') : {boost_type_deref}',
+           f'    var vk_output : {vk_type_deref}',
+        ]
+
+        if self.__returns_vk_result:
+            lines.append(f'    var result_ = VkResult VK_SUCCESS')
+        maybe_capture_result = ('result ?? result_ = '
+            if self.__returns_vk_result else '')
+        lines += [
+           f'    {maybe_capture_result}{self.__vk_func_name}(',
+        ]
+
+        for param in self.__params:
+            if param.vk_name == self.__p_output:
+                vk_value = 'safe_addr(vk_output)'
+            else:
+                vk_value = param.boost_value_to_vk(param.boost_name)
+            lines.append(f'        {vk_value},')
+        remove_last_char(lines, ',')
+
+        lines += [
+           f'    )',
+        ]
+        if self.__returns_vk_result:
+            lines.append('    assert(result_ == VkResult VK_SUCCESS)')
+        lines += [
+           f'    return <- construct(vk_output)',
+        ]
+        return lines
+
+
+class GenQueryArrayFunc(object):
+
+    def __init__(self, generator, func, p_count, p_items):
+        self.__generator = generator
+        self.__vk_func_name = func
+        self.__p_count = p_items
+
+    @property
+    def __boost_func_name(self):
+        return vk_func_name_to_boost(self.__vk_func_name)
+
+    @property
+    def __params(self):
+        return self.__generator.get_func_params(self.__c_func)
+
+    @property
+    def __items_param(self):
+        for param in self.__params:
+            if param.vk_name == self.__p_items:
+                return param
+
+    @property
+    def __count_param(self):
+        for param in self.__params:
+            if param.vk_name == self.__p_count:
                 return param
 
     @property
