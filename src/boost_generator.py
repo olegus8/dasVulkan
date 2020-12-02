@@ -248,17 +248,17 @@ class GenQueryArrayFunc(object):
            f'def {self.__boost_func_name}('
         ]
         for param in self.__params:
-            if param.vk_name == self.__p_output:
+            if param.vk_name in [self.__p_items, self.__p_count]:
                 continue
             lines.append(f'    {param.boost_name} : {param.boost_type};')
         if self.__returns_vk_result:
             lines.append(f'    var result : VkResult? = [[VkResult?]];')
         remove_last_char(lines, ';')
 
-        boost_type_deref = deref_das_type(self.__output_param.boost_type)
-        vk_type_deref = deref_das_type(self.__output_param.vk_type)
+        boost_type_deref = deref_das_type(self.__items_param.boost_type)
+        vk_type_deref = deref_das_type(self.__items_param.vk_type)
         lines += [
-           f') : {boost_type_deref}',
+           f') : array<{boost_type_deref}>',
            f'    var vk_output : {vk_type_deref}',
         ]
 
