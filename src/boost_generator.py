@@ -113,7 +113,7 @@ class BoostGenerator(LoggingObject):
 
     def __preamble(self):
         with open(path.join(path.dirname(__file__),
-            'preamble_for_generated.das'), 'r'
+            '../daslib/internal/preamble_for_generated.das'), 'r'
         ) as f:
             return f.read()
 
