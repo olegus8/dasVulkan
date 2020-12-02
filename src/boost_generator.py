@@ -937,7 +937,10 @@ def boost_camel_to_lower(camel):
     return result
 
 def returns_vk_result(func):
-    return func.return_type == 'VkResult'
+    return get_c_func_return_type(func.type) == 'VkResult'
+
+def get_c_func_return_type(func_type):
+    return re.match(r'^([^(]+) \(.*', func_type).group(1).strip()
 
 def deref_das_type(type_name):
     assert_ends_with(type_name, '?')
