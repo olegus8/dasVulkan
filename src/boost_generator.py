@@ -170,7 +170,7 @@ class GenQueryFunc(object):
 
         for param in self.__params:
             if param.vk_name == self.__p_output:
-                vk_value = safe_addr(vk_output)
+                vk_value = 'safe_addr(vk_output)'
             else:
                 vk_value = param.boost_value_to_vk(param.boost_name)
             lines.append(f'        {vk_value},')
