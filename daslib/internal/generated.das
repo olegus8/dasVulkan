@@ -154,6 +154,7 @@ def with_view(
     b : block<(vk_struct : VkApplicationInfo)>
 ) {
     let vk_struct <- [[ VkApplicationInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_APPLICATION_INFO,
         pApplicationName = boost_struct.application_name,
         applicationVersion = boost_struct.application_version,
         pEngineName = boost_struct.engine_name,
@@ -201,6 +202,7 @@ def with_view(
         vk_p_enabled_extension_names, vk_enabled_extension_count
     ) {
     let vk_struct <- [[ VkInstanceCreateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
         flags = boost_struct.flags,
         pApplicationInfo = vk_p_application_info,
         enabledLayerCount = uint(vk_enabled_layer_count),
