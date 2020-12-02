@@ -673,7 +673,7 @@ class C_Type(object):
 
     @property
     def is_pointer(self):
-        return self.type_name.endswith('*')
+        return self.name.endswith('*')
 
     @property
     def is_fixed_array(self):
@@ -681,7 +681,7 @@ class C_Type(object):
 
     @property
     def fixed_array_size(self):
-        m = re.match(r'.*\[(\d+)\]$', self.type_name)
+        m = re.match(r'.*\[(\d+)\]$', self.name)
         if m:
             return int(m.group(1))
 
@@ -690,9 +690,11 @@ class C_Type(object):
         for pattern in [
             r'^(?P<type>\S+)$',
         ]:
-            m = re.match(pattern, self.type_name)
+            m = re.match(pattern, self.name)
             if m:
                 return m.groupdict()['type']
+        raise VulkanBoostError(f'Cannot extract unqualified C type from '
+            f'"{self.name}"')
 
 
 class ParamBase(object):
