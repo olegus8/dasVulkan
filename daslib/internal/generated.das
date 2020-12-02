@@ -44,7 +44,7 @@ def create_window_surface(
     var surface <- [[SurfaceKHR _instance=instance.instance]]
     var result_ = VkResult VK_SUCCESS
     result ?? result_ = glfwCreateWindowSurface(
-        instance,
+        instance.instance,
         window,
         null,
         safe_addr(surface.surface_khr)

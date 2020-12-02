@@ -17,7 +17,7 @@ let
 
 def find_physical_device_for_graphics(
     instance : Instance;
-    surface : VkSurfaceKHR
+    surface : SurfaceKHR
 ) : PhysicalDevice
     var best_score : int = 0
     var best_device : PhysicalDevice
@@ -186,7 +186,7 @@ def get_capabilities(device : VkPhysicalDevice#; surface : VkSurfaceKHR#)
 
 
 [private]
-def get_suitability_score(device : PhysicalDevice; surface : VkSurfaceKHR#)
+def get_suitability_score(device : PhysicalDevice; surface : SurfaceKHR)
     var score = 1
 
     var has_graphics = false

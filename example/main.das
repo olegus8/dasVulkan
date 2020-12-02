@@ -250,7 +250,7 @@ def with_fences(device, count, flags; b : block<(fences:array<VkFence>)>)
 def with_swapchain_independent_state(width, height, title; b : block<(
     instance        : VkInstance#;
     window          : GLFWwindow_DasHandle#;
-    surface         : VkSurfaceKHR#;
+    surface         : VkSurfaceKHR;
     phys_dev        : PhysicalDevice;
     device          : VkDevice#;
     queue           : VkQueue;
@@ -266,25 +266,27 @@ def with_swapchain_independent_state(width, height, title; b : block<(
     defer() <| ${ delete instance; }
     let vk_instance = instance.instance
     with_window(width, height, title)               <| $(window)            {
-    window |> with_surface(vk_instance)             <| $(surface)           {
+    var surface <- instance |> create_window_surface(window);
+    defer() <| ${ delete surface; };
+    let vk_surface = surface.surface_khr;
     let phys_dev <- instance |> find_physical_device_for_graphics(surface);
     let vk_phys_dev = phys_dev.physical_device;
-    phys_dev |> with_device(surface)                <| $(device, queue)     {
+    phys_dev |> with_device(vk_surface)             <| $(device, queue)     {
     device |> with_shader_modules([[auto[]
         "{get_das_root()}/modules/dasVulkan/example/vert.spv";
         "{get_das_root()}/modules/dasVulkan/example/frag.spv"
     ]]) <| $(shmods) {
-    let surf_fmt <- phys_dev |> find_format_like_srgb_bgra8(surface);
-    let present_mode <- phys_dev |> find_present_mode_like_mailbox(surface);
+    let surf_fmt <- phys_dev |> find_format_like_srgb_bgra8(vk_surface);
+    let present_mode <- phys_dev |> find_present_mode_like_mailbox(vk_surface);
     device |> with_render_pass_simple(surf_fmt)     <| $(render_pass)       {
     device |> with_pipeline_layout_simple()         <| $(pipeline_layout)   {
         var cmd_pool <- device |> create_command_pool(
-            phys_dev |> get_graphics_queue_family(surface));
+            phys_dev |> get_graphics_queue_family(vk_surface));
         defer() <| { delete cmd_pool; };
         b |> invoke(
             vk_instance,
             window,
-            surface,
+            vk_surface,
             phys_dev,
             device,
             queue,
