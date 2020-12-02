@@ -932,7 +932,7 @@ class ParamUInt32(ParamBase):
 
     @classmethod
     def maybe_create(cls, c_param, **kwargs):
-        if c_param.type == self._C_TYPE:
+        if c_param.type == cls._C_TYPE:
             return cls(c_param=c_param, **kwargs)
 
     @property
@@ -950,7 +950,7 @@ class ParamUInt64(ParamBase):
 
     @classmethod
     def maybe_create(cls, c_param, **kwargs):
-        if c_param.type == self._C_TYPE:
+        if c_param.type == cls._C_TYPE:
             return cls(c_param=c_param, **kwargs)
 
     @property
