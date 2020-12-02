@@ -61,7 +61,6 @@ class BoostGenerator(LoggingObject):
             ParamStringPtr,
             ParamFloat,
             ParamUInt32,
-            ParamUInt32FixedArray,
             ParamUInt64,
             ParamUnknown,
         ]:
@@ -702,7 +701,10 @@ class C_Type(object):
     @property
     def unqual_name(self):
         for pattern in [
-            r'^(const)?(struct|enum)\s*?(?P<type>(unsigned )?\S+)( \*)?$',
+            (   r'^(const)?(struct|enum)\s*?'
+                r'(?P<type>(unsigned )?(long )?\S+)'
+                r'( \*)?$'
+            ),
         ]:
             m = re.match(pattern, self.name)
             if m:
@@ -955,8 +957,6 @@ class ParamFloat(ParamBase):
 
 class ParamUInt32(ParamBase):
 
-    _C_TYPES = 'unsigned int'
-
     @classmethod
     def maybe_create(cls, c_param, **kwargs):
         c_type = c_param.type
@@ -968,28 +968,13 @@ class ParamUInt32(ParamBase):
         return 'uint'
 
 
-class ParamUInt32FixedArray(ParamBase):
-
-    _C_TYPE = 'uint32_t'
+class ParamUInt64(ParamBase):
 
     @classmethod
-    def maybe_create(cls, c_param, generator):
-        if cls.__get_array_size(c_param.type):
-            return cls(c_param=c_param, generator=generator)
-
-    @classmethod
-    def __get_array_size(cls, c_type_name):
-        m = re.match(f'{cls._C_TYPE} \[(\d+)\]', c_type_name)
-        if m:
-            return int(m.group(1))
-
-    @property
-    def fixed_array_size(self):
-        return self.__get_array_size(self._c_param.type)
-
-    @property
-    def c_unqual_type(self):
-        return self._C_TYPE
+    def maybe_create(cls, c_param, **kwargs):
+        c_type = c_param.type
+        if c_type.unqual_name in ['unsigned long long']:
+            return cls(c_param=c_param, **kwargs)
 
     @property
     def vk_unqual_type(self):
@@ -998,7 +983,7 @@ class ParamUInt32FixedArray(ParamBase):
 
 class ParamUInt64(ParamBase):
 
-    _C_TYPE = 'unsigned long long'
+    _C_TYPE = ''
 
     @classmethod
     def maybe_create(cls, c_param, **kwargs):
