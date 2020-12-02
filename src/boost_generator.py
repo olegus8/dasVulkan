@@ -978,24 +978,6 @@ class ParamUInt64(ParamBase):
 
     @property
     def vk_unqual_type(self):
-        return 'uint'
-
-
-class ParamUInt64(ParamBase):
-
-    _C_TYPE = ''
-
-    @classmethod
-    def maybe_create(cls, c_param, **kwargs):
-        if c_param.type == cls._C_TYPE:
-            return cls(c_param=c_param, **kwargs)
-
-    @property
-    def c_unqual_type(self):
-        return self._c_param.type
-
-    @property
-    def vk_unqual_type(self):
         return 'uint64'
 
 
