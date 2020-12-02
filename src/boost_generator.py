@@ -929,10 +929,6 @@ class ParamStringPtr(ParamBase):
             return cls(c_param=c_param, **kwargs)
 
     @property
-    def c_unqual_type(self):
-        return 'char'
-
-    @property
     def vk_unqual_type(self):
         return 'string'
 
