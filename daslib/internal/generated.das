@@ -62,12 +62,12 @@ def enumerate_device_extension_properties(
     var vk_items : array<VkExtensionProperties>
     defer() <| ${ delete vk_items; }
     vk_items |> resize(int(count))
-    vk_props |> lock() <| $(titems)
+    vk_props |> lock_data() <| $(pitems, count_)
         result ?? result_ = vkEnumerateDeviceExtensionProperties(
             physical_device.physical_device,
             layer_name,
             safe_addr(count),
-            safe_addr(titems)
+            addr(pitems)
         )
         assert(result_ == VkResult VK_SUCCESS)
 
