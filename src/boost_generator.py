@@ -413,7 +413,7 @@ class GenHandle(object):
 
     @property
     def __boost_handle_attr(self):
-        return boost_handle_attr_name(self.__boost_type_name)
+        return boost_handle_attr_name(self.__boost_handle_type_name)
 
     @property
     def __boost_handle_batch_type_name(self):
