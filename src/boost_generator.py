@@ -55,6 +55,7 @@ class BoostGenerator(LoggingObject):
             ParamVkHandle,
             ParamVkHandlePtr,
             ParamVkStructPtr,
+            ParamVkEnum,
             ParamString,
             ParamFixedString,
             ParamStringPtr,
@@ -820,6 +821,28 @@ class ParamVkStructPtr(ParamBase):
     @property
     def vk_view_type(self):
         return f'{self.vk_unqual_type} const ?'
+
+
+class ParamVkEnum(ParamBase):
+
+    @classmethod
+    def maybe_create(cls, c_param, generator):
+        if cls.__get_c_unqual_type(c_param.type) in generator.enums:
+            return cls(c_param=c_param, generator=generator)
+
+    @staticmethod
+    def __get_c_unqual_type(c_type_name):
+        m = re.match(r'enum (Vk\S*)', c_type_name)
+        if m:
+            return m.group(2)
+
+    @property
+    def c_unqual_type(self):
+        return self.__get_c_unqual_type(self._c_param.type)
+
+    @property
+    def vk_unqual_type(self):
+        return self.c_unqual_type
 
 
 class ParamFixedString(ParamBase):
