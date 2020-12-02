@@ -515,7 +515,7 @@ class GenHandle(object):
             '    )',
            f'    assert(result_ == VkResult VK_SUCCESS)',
             '',
-           f'    var vk_handles : array<{self.__vk_type_name}>',
+           f'    var vk_handles : array<{self.__vk_handle_type_name}>',
            f'    if result ?? result_ == VkResult VK_SUCCESS && count > 0u',
            f'        vk_handles |> resize(int(count))',
            f'        vk_handles |> lock() <| $(thandles)',
