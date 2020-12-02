@@ -702,7 +702,7 @@ class C_Type(object):
     @property
     def unqual_name(self):
         for pattern in [
-            r'^(const)?(struct|enum)\s*?(?P<type>\S+)( \*)?$',
+            r'^(const)?(struct|enum)\s*?(?P<type>(unsigned )?\S+)( \*)?$',
         ]:
             m = re.match(pattern, self.name)
             if m:
@@ -955,16 +955,13 @@ class ParamFloat(ParamBase):
 
 class ParamUInt32(ParamBase):
 
-    _C_TYPE = 'unsigned int'
+    _C_TYPES = 'unsigned int'
 
     @classmethod
     def maybe_create(cls, c_param, **kwargs):
-        if c_param.type == cls._C_TYPE:
+        c_type = c_param.type
+        if c_type.unqual_name in ['unsigned int', 'uint32_t']:
             return cls(c_param=c_param, **kwargs)
-
-    @property
-    def c_unqual_type(self):
-        return self._c_param.type
 
     @property
     def vk_unqual_type(self):
