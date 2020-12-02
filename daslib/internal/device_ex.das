@@ -74,7 +74,7 @@ def find_closest_format(
     surface                 : SurfaceKHR;
     preferred_format        : VkFormat;
     preferred_color_space   : VkColorSpaceKHR
-) : VkSurfaceFormatKHR
+) : SurfaceFormatKHR
 
     var formats <- (physical_device |>
         get_physical_device_surface_formats_khr(surface))
@@ -94,7 +94,7 @@ def find_closest_format(
 def find_format_like_srgb_bgra8(
     physical_device : PhysicalDevice;
     surface         : SurfaceKHR
-) : VkSurfaceFormatKHR
+) : SurfaceFormatKHR
 
     return <- physical_device |> find_closest_format(surface,
         VkFormat VK_FORMAT_B8G8R8A8_SRGB,
