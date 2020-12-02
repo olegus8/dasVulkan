@@ -179,6 +179,42 @@ def construct(vk_struct : VkExtensionProperties) : ExtensionProperties
     ]]
 
 //
+// InstanceCreateInfo
+//
+
+struct InstanceCreateInfo
+    flags : uint
+    p_application_info : ApplicationInfo ?
+    enabled_layer_names : array<string>
+    enabled_extension_names : array<string>
+
+def with_view(
+    boost_struct : InstanceCreateInfo;
+    b : block<(vk_struct : VkInstanceCreateInfo)>
+) {
+    boost_struct.p_application_info |> with_p_view() <| $(
+        vk_p_application_info : VkApplicationInfo const ?
+    ) {
+    boost_struct.enabled_layer_names |> lock_data() <| $(
+        vk_p_enabled_layer_names, vk_enabled_layer_count
+    ) {
+    boost_struct.enabled_extension_names |> lock_data() <| $(
+        vk_p_enabled_extension_names, vk_enabled_extension_count
+    ) {
+    let vk_struct <- [[ VkInstanceCreateInfo
+        flags = boost_struct.flags,
+        pApplicationInfo = vk_p_application_info,
+        enabledLayerCount = uint(vk_enabled_layer_count),
+        ppEnabledLayerNames = vk_p_enabled_layer_names,
+        enabledExtensionCount = uint(vk_enabled_extension_count),
+        ppEnabledExtensionNames = vk_p_enabled_extension_names,
+        sType = VkStructureType VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO
+    ]];
+    b |> invoke(vk_struct);
+    }}};
+}
+
+//
 // PhysicalDeviceLimits
 //
 
@@ -456,47 +492,23 @@ struct SurfaceFormatKHR
     format : VkFormat
     color_space : VkColorSpaceKHR
 
+def with_view(
+    boost_struct : SurfaceFormatKHR;
+    b : block<(vk_struct : VkSurfaceFormatKHR)>
+) {
+    let vk_struct <- [[ VkSurfaceFormatKHR
+        format = boost_struct.format,
+        colorSpace = boost_struct.color_space,
+        sType = VkStructureType VK_STRUCTURE_TYPE_SURFACE_FORMAT_KHR
+    ]];
+    b |> invoke(vk_struct);
+}
+
 def construct(vk_struct : VkSurfaceFormatKHR) : SurfaceFormatKHR
     return <- [[SurfaceFormatKHR
         format = vk_struct.format,
         color_space = vk_struct.colorSpace
     ]]
-
-//
-// InstanceCreateInfo
-//
-
-struct InstanceCreateInfo
-    flags : uint
-    p_application_info : ApplicationInfo ?
-    enabled_layer_names : array<string>
-    enabled_extension_names : array<string>
-
-def with_view(
-    boost_struct : InstanceCreateInfo;
-    b : block<(vk_struct : VkInstanceCreateInfo)>
-) {
-    boost_struct.p_application_info |> with_p_view() <| $(
-        vk_p_application_info : VkApplicationInfo const ?
-    ) {
-    boost_struct.enabled_layer_names |> lock_data() <| $(
-        vk_p_enabled_layer_names, vk_enabled_layer_count
-    ) {
-    boost_struct.enabled_extension_names |> lock_data() <| $(
-        vk_p_enabled_extension_names, vk_enabled_extension_count
-    ) {
-    let vk_struct <- [[ VkInstanceCreateInfo
-        flags = boost_struct.flags,
-        pApplicationInfo = vk_p_application_info,
-        enabledLayerCount = uint(vk_enabled_layer_count),
-        ppEnabledLayerNames = vk_p_enabled_layer_names,
-        enabledExtensionCount = uint(vk_enabled_extension_count),
-        ppEnabledExtensionNames = vk_p_enabled_extension_names,
-        sType = VkStructureType VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO
-    ]];
-    b |> invoke(vk_struct);
-    }}};
-}
 
 //
 // Instance
