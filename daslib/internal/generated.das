@@ -41,6 +41,38 @@ def get_physical_device_properties(
     )
     return <- construct(vk_output)
 
+def enumerate_device_extension_properties(
+    physical_device : PhysicalDevice;
+    layer_name : string;
+    var result : VkResult? = [[VkResult?]]
+) : array<ExtensionProperties>
+    var count : uint
+    var result_ = VkResult VK_SUCCESS
+    result ?? result_ = vkEnumerateDeviceExtensionProperties(
+        physical_device.physical_device,
+        layer_name,
+        safe_addr(count),
+        null
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+
+    if result ?? result_ != VkResult VK_SUCCESS
+        return <- array<boost_type_deref>
+
+    var vk_items : array<VkExtensionProperties>
+    defer() <| ${ delete vk_items; }
+    vk_items |> resize(int(count))
+    vk_props |> lock() <| $(titems)
+        result ?? result_ = vkEnumerateDeviceExtensionProperties(
+            physical_device.physical_device,
+            layer_name,
+            safe_addr(count),
+            safe_addr(titems)
+        )
+        assert(result_ == VkResult VK_SUCCESS)
+
+    return <- [{for item in vk_items ; construct(item)}]
+
 //
 // ApplicationInfo
 //

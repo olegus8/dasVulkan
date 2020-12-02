@@ -300,13 +300,13 @@ class GenQueryArrayFunc(object):
            f'    var vk_items : array<{vk_type_deref}>',
             '    defer() <| ${ delete vk_items; }',
             '    vk_items |> resize(int(count))',
-            '    vk_props |> lock() <| $(titems)',
+            '    vk_props |> lock_data() <| $(pitems, count_)',
            f'        {maybe_capture_result}{self.__vk_func_name}(',
         ]
 
         for param in self.__params:
             if param.vk_name == self.__p_items:
-                vk_value = 'safe_addr(titems)'
+                vk_value = 'addr(pitems)'
             elif param.vk_name == self.__p_count:
                 vk_value = 'safe_addr(count)'
             else:
