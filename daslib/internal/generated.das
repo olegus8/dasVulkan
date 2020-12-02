@@ -32,7 +32,7 @@ def to_string(bytes : int8[])
 //
 
 def get_physical_device_properties(
-    physical_device : PhysicalDevice
+    physical_device : PhysicalDevice = [[ PhysicalDevice ]]
 ) : PhysicalDeviceProperties
     var vk_output : VkPhysicalDeviceProperties
     vkGetPhysicalDeviceProperties(

@@ -11,35 +11,6 @@ require strings
 require generated public
 
 
-/*
-def enumerate_device_extension_properties(
-    physical_device : PhysicalDevice;
-    layer_name      : string = [[string]];
-    var result      : VkResult? = [[VkResult?]]
-) : array<ExtensionProperties>
-
-    let vk_dev = physical_device.physical_device
-    var result_ = VkResult VK_SUCCESS
-    var vk_layer = layer_name |> length() > 0 ? layer_name : to_string(null)
-    var count : uint
-
-    result ?? result_ = vk_dev |> vkEnumerateDeviceExtensionProperties(
-        vk_layer, safe_addr(count), null)
-    assert(result_ == VkResult VK_SUCCESS)
-
-    var vk_props : array<VkExtensionProperties>
-    defer() <| ${ delete vk_props; }
-    if result ?? result_ == VkResult VK_SUCCESS
-        vk_props |> resize(int(count))
-        vk_props |> lock() <| $(tprops)
-            result ?? result_ = vk_dev |> vkEnumerateDeviceExtensionProperties(
-                vk_layer, safe_addr(count), addr(tprops[0]))
-            assert(result_ == VkResult VK_SUCCESS)
-        
-    return <- [{for p in vk_props; construct(p)}]
-*/
-
-
 def get_physical_device_surface_formats_khr(
     physical_device : PhysicalDevice;
     surface         : VkSurfaceKHR;
