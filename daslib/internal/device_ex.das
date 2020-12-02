@@ -82,7 +82,7 @@ def find_closest_format(
 
     for format in formats
         if (format.format == VkFormat VK_FORMAT_B8G8R8A8_SRGB
-        &&  format.colorSpace == (VkColorSpaceKHR
+        &&  format.color_space == (VkColorSpaceKHR
                 VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)
         )
             return <- format
@@ -93,7 +93,7 @@ def find_closest_format(
 
 def find_format_like_srgb_bgra8(
     physical_device : PhysicalDevice;
-    surface         : VkSurfaceKHR
+    surface         : SurfaceKHR
 ) : VkSurfaceFormatKHR
 
     return <- physical_device |> find_closest_format(surface,
