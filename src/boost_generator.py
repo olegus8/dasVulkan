@@ -703,6 +703,8 @@ class C_Type(object):
     def unqual_name(self):
         for pattern in [
             r'^(?P<type>\S+)$',
+            r'^struct (?P<type>\S+) \*$',
+            r'^(const )?(?P<type>\S+) \*$',
         ]:
             m = re.match(pattern, self.name)
             if m:
@@ -830,9 +832,10 @@ class ParamVkHandlePtr(ParamBase):
 class ParamVkStructPtr(ParamBase):
 
     @classmethod
-    def maybe_create(cls, c_param, generator):
-        if cls.__get_c_unqual_type(c_param.type) in generator.structs:
-            return cls(c_param=c_param, generator=generator)
+    def maybe_create(cls, c_param, **kwargs):
+        c_type = c_param.type
+        if c_type.is_struct and c_type.unqual_name.startswith('Vk'):
+            return cls(c_param=c_param, **kwargs)
 
     @staticmethod
     def __get_c_unqual_type(c_type_name):
