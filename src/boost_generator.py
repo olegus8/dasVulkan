@@ -927,7 +927,7 @@ class ParamStringPtr(ParamBase):
 
     @classmethod
     def maybe_create(cls, c_param, **kwargs):
-        if c_param.type == 'const char *const *':
+        if c_param.type.name == 'const char *const *':
             return cls(c_param=c_param, **kwargs)
 
     @property
@@ -958,8 +958,7 @@ class ParamUInt32(ParamBase):
 
     @classmethod
     def maybe_create(cls, c_param, **kwargs):
-        c_type = c_param.type
-        if c_type.unqual_name in ['unsigned int', 'uint32_t']:
+        if c_param.type.unqual_name in ['unsigned int', 'uint32_t']:
             return cls(c_param=c_param, **kwargs)
 
     @property
@@ -971,8 +970,7 @@ class ParamUInt64(ParamBase):
 
     @classmethod
     def maybe_create(cls, c_param, **kwargs):
-        c_type = c_param.type
-        if c_type.unqual_name in ['unsigned long long']:
+        if c_param.type.unqual_name in ['unsigned long long']:
             return cls(c_param=c_param, **kwargs)
 
     @property
