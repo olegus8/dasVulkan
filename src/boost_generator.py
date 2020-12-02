@@ -716,7 +716,7 @@ class C_Type(object):
                 return m.groupdict()['type']
 
         unqual_name = {
-            'const char* const *': 'char',
+            'const char *const *': 'char',
         }.get(self.name)
 
         if unqual_name:
