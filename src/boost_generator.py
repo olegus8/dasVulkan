@@ -50,7 +50,7 @@ class BoostGenerator(LoggingObject):
     def get_struct_fields(self, c_struct):
         return map(self.__get_param, c_struct.fields)
 
-    def __get_param_ex(self, c_param):
+    def __get_param(self, c_param):
         for param_class in [
             ParamVkHandle,
             ParamVkHandlePtr,
