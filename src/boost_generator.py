@@ -777,7 +777,7 @@ class ParamBase(object):
         t = type_name
         if self.is_pointer:
             t += ' ?'
-        if self.is_fixed_array is not None:
+        if self.is_fixed_array:
             t += f' [{self._c_param.type.fixed_array_size}]'
         return t
 
