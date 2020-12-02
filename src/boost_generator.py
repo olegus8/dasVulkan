@@ -251,7 +251,9 @@ class GenQueryArrayFunc(object):
         for param in self.__params:
             if param.vk_name in [self.__p_items, self.__p_count]:
                 continue
-            lines.append(f'    {param.boost_name} : {param.boost_type};')
+            bname = param.boost_name
+            btype = param.boost_type
+            lines.append(f'    {bname} : {btype} = [[ {btype} ]];')
         if self.__returns_vk_result:
             lines.append(f'    var result : VkResult? = [[VkResult?]];')
         remove_last_char(lines, ';')
