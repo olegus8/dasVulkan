@@ -73,6 +73,38 @@ def enumerate_device_extension_properties(
 
     return <- [{for item in vk_items ; construct(item)}]
 
+def get_physical_device_surface_formats_khr(
+    physical_device : PhysicalDevice = [[ PhysicalDevice ]];
+    surface : SurfaceKHR = [[ SurfaceKHR ]];
+    var result : VkResult? = [[VkResult?]]
+) : array<SurfaceFormatKHR>
+    var count : uint
+    var result_ = VkResult VK_SUCCESS
+    result ?? result_ = vkGetPhysicalDeviceSurfaceFormatsKHR(
+        physical_device.physical_device,
+        surface.surface_khr,
+        safe_addr(count),
+        null
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+
+    if result ?? result_ != VkResult VK_SUCCESS
+        return <- [[array<SurfaceFormatKHR>]]
+
+    var vk_items : array<VkSurfaceFormatKHR>
+    defer() <| ${ delete vk_items; }
+    vk_items |> resize(int(count))
+    vk_items |> lock_data() <| $(vk_p_items, count_)
+        result ?? result_ = vkGetPhysicalDeviceSurfaceFormatsKHR(
+            physical_device.physical_device,
+            surface.surface_khr,
+            safe_addr(count),
+            vk_p_items
+        )
+        assert(result_ == VkResult VK_SUCCESS)
+
+    return <- [{for item in vk_items ; construct(item)}]
+
 //
 // ApplicationInfo
 //
@@ -381,6 +413,20 @@ def construct(vk_struct : VkPhysicalDeviceSparseProperties) : PhysicalDeviceSpar
         residency_standard3_dblock_shape = vk_struct.residencyStandard3DBlockShape,
         residency_aligned_mip_size = vk_struct.residencyAlignedMipSize,
         residency_non_resident_strict = vk_struct.residencyNonResidentStrict
+    ]]
+
+//
+// SurfaceFormatKHR
+//
+
+struct SurfaceFormatKHR
+    format : VkFormat
+    color_space : VkColorSpaceKHR
+
+def construct(vk_struct : VkSurfaceFormatKHR) : SurfaceFormatKHR
+    return <- [[SurfaceFormatKHR
+        format = vk_struct.format,
+        color_space = vk_struct.colorSpace
     ]]
 
 //
