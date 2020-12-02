@@ -1,11 +1,3 @@
-options indenting = 4
-options no_aot = true
-
-require daslib/defer
-require daslib/safe_addr
-
-require vulkan
-
 //
 // Helpers
 //

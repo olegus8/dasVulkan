@@ -96,7 +96,8 @@ class BoostGenerator(LoggingObject):
             'require daslib/safe_addr',
             '',
             'require vulkan',
-            'require helpers_for_generated',
+            '',
+            self.__preamble(),
             '',
             '//',
             '// Functions',
@@ -109,6 +110,12 @@ class BoostGenerator(LoggingObject):
                 self.__gen_handles,
             ] for item in items for line in item.generate()
         ]
+
+    def __preamble(self):
+        with open(path.join(path.dirname(__file__),
+            'preamble_for_generated.das'), 'r'
+        ) as f:
+            return f.read()
 
 
 class GenQueryFunc(object):
