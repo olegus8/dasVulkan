@@ -716,7 +716,7 @@ class ParamBase(object):
         return None
 
 
-class ParamVkHandle(Parambase):
+class ParamVkHandle(ParamBase):
 
     @classmethod
     def maybe_create(cls, c_param, **kwargs):
