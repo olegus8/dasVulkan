@@ -727,7 +727,7 @@ class ParamBase(object):
 
     @property
     def c_unqual_type(self):
-        return self._c_param.type.unqual_type
+        return self._c_param.type.unqual_name
 
     @property
     def is_pointer(self):
