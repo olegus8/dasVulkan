@@ -702,8 +702,8 @@ class C_Type(object):
     def unqual_name(self):
         for pattern in [
             (   r'^(const)?(struct|enum)\s*?'
-                r'(?P<type>(unsigned )?(long )?\S+)'
-                r'( \*)?$'
+                r'(?P<type>(unsigned )?(long )?[a-Z0-9_]+)'
+                r'( \*| \[\d+\])?$'
             ),
         ]:
             m = re.match(pattern, self.name)
