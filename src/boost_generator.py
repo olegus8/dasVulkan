@@ -60,6 +60,7 @@ class BoostGenerator(LoggingObject):
             ParamFixedString,
             ParamStringPtr,
             ParamUInt32,
+            ParamUInt64,
             ParamUnknown,
         ]:
             param = param_class.maybe_create(c_param=c_param, generator=self)
@@ -927,18 +928,38 @@ class ParamStringPtr(ParamBase):
 
 class ParamUInt32(ParamBase):
 
+    _C_TYPE = 'unsigned int'
+
     @classmethod
     def maybe_create(cls, c_param, **kwargs):
-        if c_param.type == 'unsigned int':
+        if c_param.type == self._C_TYPE:
             return cls(c_param=c_param, **kwargs)
 
     @property
     def c_unqual_type(self):
-        return 'unsigned int'
+        return self._C_TYPE
 
     @property
     def vk_unqual_type(self):
         return 'uint'
+
+
+class ParamUInt64(ParamBase):
+
+    _C_TYPE = 'unsigned long long'
+
+    @classmethod
+    def maybe_create(cls, c_param, **kwargs):
+        if c_param.type == self._C_TYPE:
+            return cls(c_param=c_param, **kwargs)
+
+    @property
+    def c_unqual_type(self):
+        return self._C_TYPE
+
+    @property
+    def vk_unqual_type(self):
+        return 'uint64'
 
 
 class ParamUnknown(ParamBase):
