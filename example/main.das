@@ -298,7 +298,7 @@ def with_swapchain_independent_state(width, height, title; b : block<(
             pipeline_layout,
             cmd_pool.pool
         );
-    }}}}}}
+    }}}}}
 
 
 def with_swapchain_dependent_state(

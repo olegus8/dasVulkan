@@ -107,7 +107,7 @@ def add_boost_content(g):
         p_handles       = 'pPhysicalDevices')
 
     #
-    # Structs produced by Vulkan
+    # Structs
     #
 
     g.add_gen_struct(
@@ -116,6 +116,15 @@ def add_boost_content(g):
     g.add_gen_struct(
         struct      = 'VkExtensionProperties',
         vk_to_boost = True)
+    g.add_gen_struct(
+        struct      = 'VkInstanceCreateInfo',
+        boost_to_vk = True
+        ).declare_array(
+            count = 'enabledLayerCount',
+            items = 'ppEnabledLayerNames',
+        ).declare_array(
+            count = 'enabledExtensionCount',
+            items = 'ppEnabledExtensionNames')
     g.add_gen_struct(
         struct      = 'VkPhysicalDeviceLimits',
         vk_to_boost = True)
@@ -127,21 +136,8 @@ def add_boost_content(g):
         vk_to_boost = True)
     g.add_gen_struct(
         struct      = 'VkSurfaceFormatKHR',
-        vk_to_boost = True)
-
-    #
-    # Structs consumed by Vulkan
-    #
-
-    g.add_gen_struct(
-        struct      = 'VkInstanceCreateInfo',
-        boost_to_vk = True
-        ).declare_array(
-            count = 'enabledLayerCount',
-            items = 'ppEnabledLayerNames',
-        ).declare_array(
-            count = 'enabledExtensionCount',
-            items = 'ppEnabledExtensionNames')
+        vk_to_boost = True,
+        boost_to_vk = True)
 
     #
     # Query functions
