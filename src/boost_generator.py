@@ -1189,8 +1189,8 @@ def boost_camel_to_lower(camel):
             state = 'upper'
             if result:
                 result += '_'
-        if c.isnum() and state == 'lower':
-            state = 'num'
+        if c.isdigit() and state == 'lower':
+            state = 'digit'
             if result:
                 result += '_'
         result += c.lower()
