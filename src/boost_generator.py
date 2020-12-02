@@ -606,7 +606,7 @@ class GenHandle(object):
                 vk_value = 'safe_addr(vk_info)'
             elif param.vk_type == f'{self.__vk_handle_type_name} ?':
                 vk_value = f'safe_addr({bh_attr}.{bh_attr})'
-            elif param.vk.name == 'pAllocator':
+            elif param.vk_name == 'pAllocator':
                 vk_value = 'null'
             else:
                 vk_value = param.boost_value_to_vk(param.boost_name)
