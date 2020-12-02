@@ -71,7 +71,7 @@ def find_graphics_queue_family(
 
 def find_closest_format(
     physical_device         : PhysicalDevice;
-    surface                 : VkSurfaceKHR;
+    surface                 : SurfaceKHR;
     preferred_format        : VkFormat;
     preferred_color_space   : VkColorSpaceKHR
 ) : VkSurfaceFormatKHR
