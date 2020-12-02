@@ -1,5 +1,7 @@
 from das_shared.object_base import LoggingObject
+from das_shared.op_sys import full_path, write_to_file
 from das_shared.assertions import assert_starts_with, assert_ends_with
+from os import path
 import re
 
 
@@ -64,8 +66,10 @@ class BoostGenerator(LoggingObject):
                 return param
 
     def write(self):
-        self.__context.write_to_file(
-            fpath='../daslib/internal/generated.das',
+        fpath = full_path(path.join(path.dirname(__file__),
+            '../daslib/internal/generated.das'))
+        self._log_info(f'Writing to: {fpath}')
+        write_to_file(fpath=fpath,
             content='\n'.join(self.__generate() + ['']))
 
     def __generate(self):
