@@ -187,10 +187,11 @@ def get_capabilities(device : VkPhysicalDevice#; surface : VkSurfaceKHR#)
 
 [private]
 def get_suitability_score(device : PhysicalDevice; surface : SurfaceKHR)
+    let vk_surface = surface.surface_khr
     var score = 1
 
     var has_graphics = false
-    device |> find_graphics_queue_family(surface) <| $(qfam)
+    device |> find_graphics_queue_family(vk_surface) <| $(qfam)
         has_graphics = true
     if ! has_graphics
         score = 0
@@ -220,7 +221,7 @@ def get_suitability_score(device : PhysicalDevice; surface : SurfaceKHR)
         score = 0
 
     var present_modes <- (
-        device |> get_physical_device_surface_present_modes_khr(surface))
+        device |> get_physical_device_surface_present_modes_khr(vk_surface))
     defer() <| ${ delete present_modes; }
     if present_modes |> length() == 0
         score = 0
