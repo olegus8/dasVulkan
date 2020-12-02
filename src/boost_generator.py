@@ -60,6 +60,7 @@ class BoostGenerator(LoggingObject):
             ParamFixedString,
             ParamStringPtr,
             ParamUInt32,
+            ParamUInt32FixedArray,
             ParamUInt64,
             ParamUnknown,
         ]:
@@ -675,6 +676,10 @@ class ParamBase(object):
         return is_c_pointer_type(self._c_param.type)
 
     @property
+    def fixed_array_size(self):
+        return None
+
+    @property
     def c_unqual_type(self):
         raise NotImplementedError()
 
@@ -688,17 +693,11 @@ class ParamBase(object):
 
     @property
     def vk_type(self):
-        t = self.vk_unqual_type
-        if self.is_pointer:
-            t += ' ?'
-        return t
+        return self.__make_qual_das_type(self.vk_unqual_type)
 
     @property
     def boost_type(self):
-        t = self.boost_unqual_type
-        if self.is_pointer:
-            t += ' ?'
-        return t
+        return self.__make_qual_das_type(self.boost_unqual_type)
 
     @property
     def vk_name(self):
@@ -721,6 +720,14 @@ class ParamBase(object):
     @property
     def vk_view_type(self):
         return None
+
+    def __make_qual_das_type(self, type_name):
+        t = type_name
+        if self.is_pointer:
+            t += ' ?'
+        if self.fixed_array_size is not None:
+            t += f' [{self.fixed_array_size}]'
+        return t
 
 
 class ParamVkHandle(ParamBase):
@@ -938,6 +945,34 @@ class ParamUInt32(ParamBase):
     @property
     def c_unqual_type(self):
         return self._c_param.type
+
+    @property
+    def vk_unqual_type(self):
+        return 'uint'
+
+
+class ParamUInt32FixedArray(ParamBase):
+
+    _C_TYPE = 'uint32_t'
+
+    @classmethod
+    def maybe_create(cls, c_param, generator):
+        if cls.__get_array_size(c_param.type):
+            return cls(c_param=c_param, generator=generator)
+
+    @classmethod
+    def __get_array_size(cls, c_type_name):
+        m = re.match(f'{cls._C_TYPE} \[(\d+)\]', c_type_name)
+        if m:
+            return int(m.group(1))
+
+    @property
+    def fixed_array_size(self):
+        return self.__get_array_size(self._c_param.type)
+
+    @property
+    def c_unqual_type(self):
+        return self._C_TYPE
 
     @property
     def vk_unqual_type(self):
