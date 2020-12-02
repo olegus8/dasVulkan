@@ -646,7 +646,7 @@ class GenHandle(object):
         for param in self.__vk_dtor_params:
             if param.vk_name == 'pAllocator':
                 vk_value = 'null'
-            elif param.boost_type == bh_type + ' ?':
+            elif param.boost_type == bh_type:
                 vk_value = param.boost_value_to_vk(bh_attr)
             else:
                 raise Exception('handle extra params if needed')
