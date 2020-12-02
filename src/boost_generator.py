@@ -922,8 +922,7 @@ class ParamUnknown(BoostType):
 
     @property
     def vk_unqual_type(self):
-        raise VulkanBoostError(
-            f'Cannot convert to boost type: {self._c_param.type}')
+        return self.c_unqual_type
 
 
 def boost_camel_to_lower(camel):
