@@ -106,7 +106,6 @@ class BoostGenerator(LoggingObject):
             '//',
             '// Functions',
             '//',
-            '',
         ] + [
             line for items in [
                 self.__gen_query_funcs,

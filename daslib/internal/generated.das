@@ -27,6 +27,11 @@ def to_string(bytes : int8[])
     unsafe
         return reinterpret<string>(addr(bytes[0]))
 
+//
+// Functions
+//
+
+
 def get_physical_device_properties(
     physical_device : PhysicalDevice
 ) : PhysicalDeviceProperties
