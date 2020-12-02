@@ -942,16 +942,11 @@ class ParamStringPtr(ParamBase):
 
 class ParamFloat(ParamBase):
 
-    _C_TYPE = 'float'
-
     @classmethod
     def maybe_create(cls, c_param, **kwargs):
-        if c_param.type == cls._C_TYPE:
+        c_type = c_param.type
+        if c_type.unqual_type == 'float':
             return cls(c_param=c_param, **kwargs)
-
-    @property
-    def c_unqual_type(self):
-        return self._c_param.type
 
     @property
     def vk_unqual_type(self):
