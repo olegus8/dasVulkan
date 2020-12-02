@@ -293,7 +293,7 @@ class GenQueryArrayFunc(object):
         if self.__returns_vk_result:
             lines += [
                 '    if result ?? result_ != VkResult VK_SUCCESS',
-               f'        return <- array<boost_type_deref>',
+               f'        return <- array<{boost_type_deref}>',
             ]
         lines += [
             '',
