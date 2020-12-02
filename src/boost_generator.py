@@ -834,7 +834,7 @@ class ParamVkEnum(ParamBase):
     def __get_c_unqual_type(c_type_name):
         m = re.match(r'enum (Vk\S*)', c_type_name)
         if m:
-            return m.group(2)
+            return m.group(1)
 
     @property
     def c_unqual_type(self):
