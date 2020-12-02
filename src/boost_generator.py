@@ -808,6 +808,10 @@ class ParamVkHandle(ParamBase):
             return cls(c_param=c_param, **kwargs)
 
     @property
+    def is_pointer(self):
+        return False
+
+    @property
     def vk_unqual_type(self):
         ct = self.c_unqual_type
         assert_ends_with(ct, '_T')
