@@ -27,6 +27,16 @@ def to_string(bytes : int8[])
     unsafe
         return reinterpret<string>(addr(bytes[0]))
 
+def get_physical_device_properties(
+    physical_device : PhysicalDevice
+) : PhysicalDeviceProperties
+    var vk_output : VkPhysicalDeviceProperties
+    vkGetPhysicalDeviceProperties(
+        physical_device.physical_device,
+        safe_addr(vk_output)
+    )
+    return <- vk_output
+
 //
 // ApplicationInfo
 //
@@ -182,13 +192,3 @@ def enumerate_physical_devices_no_batch(
     var handles <- enumerate_physical_devices(instance, result)
     defer() <| ${ delete handles; }
     return <- handles |> split()
-
-def get_physical_device_properties(
-    physical_device : PhysicalDevice
-) : PhysicalDeviceProperties
-    var vk_output : VkPhysicalDeviceProperties
-    vkGetPhysicalDeviceProperties(
-        physical_device.physical_device,
-        safe_addr(vk_output)
-    )
-    return <- vk_output

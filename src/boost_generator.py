@@ -102,6 +102,11 @@ class BoostGenerator(LoggingObject):
             'def to_string(bytes : int8[])',
             '    unsafe',
             '        return reinterpret<string>(addr(bytes[0]))',
+            '',
+            '//',
+            '// Functions',
+            '//',
+            '',
         ] + [
             line for items in [
                 self.__gen_query_funcs,
