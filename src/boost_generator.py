@@ -300,7 +300,7 @@ class GenQueryArrayFunc(object):
            f'    var vk_items : array<{vk_type_deref}>',
             '    defer() <| ${ delete vk_items; }',
             '    vk_items |> resize(int(count))',
-            '    vk_props |> lock_data() <| $(vk_p_items, count_)',
+            '    vk_items |> lock_data() <| $(vk_p_items, count_)',
            f'        {maybe_capture_result}{self.__vk_func_name}(',
         ]
 
