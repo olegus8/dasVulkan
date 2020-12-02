@@ -868,7 +868,7 @@ class ParamVkEnum(ParamBase):
     @classmethod
     def maybe_create(cls, c_param, **kwargs):
         c_type = c_param.type
-        if c_type.is_enum and c_type.startswith('Vk'):
+        if c_type.is_enum and c_type.unqual_name.startswith('Vk'):
             return cls(c_param=c_param, **kwargs)
 
     @property
