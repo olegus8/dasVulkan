@@ -124,7 +124,7 @@ class GenQueryFunc(object):
 
     @property
     def __params(self):
-        return self.__generator.get_func_params(self.__vk_func_name)
+        return self.__generator.get_func_params(self.__c_func)
 
     @property
     def __output_param(self):
