@@ -42,8 +42,8 @@ def get_physical_device_properties(
     return <- construct(vk_output)
 
 def enumerate_device_extension_properties(
-    physical_device : PhysicalDevice;
-    layer_name : string;
+    physical_device : PhysicalDevice = [[ PhysicalDevice ]];
+    layer_name : string = [[ string ]];
     var result : VkResult? = [[VkResult?]]
 ) : array<ExtensionProperties>
     var count : uint
