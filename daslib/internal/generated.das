@@ -57,7 +57,7 @@ def enumerate_device_extension_properties(
     assert(result_ == VkResult VK_SUCCESS)
 
     if result ?? result_ != VkResult VK_SUCCESS
-        return <- array<ExtensionProperties>
+        return <- [[array<ExtensionProperties>]]
 
     var vk_items : array<VkExtensionProperties>
     defer() <| ${ delete vk_items; }

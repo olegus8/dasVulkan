@@ -306,7 +306,7 @@ class GenQueryArrayFunc(object):
 
         for param in self.__params:
             if param.vk_name == self.__p_items:
-                vk_value = 'addr(vk_p_items)'
+                vk_value = 'vk_p_items'
             elif param.vk_name == self.__p_count:
                 vk_value = 'safe_addr(count)'
             else:
