@@ -296,8 +296,8 @@ class GenStruct(object):
                 continue
             assign_op = field.vk_to_boost_assign_op
             boost_name = field.boost_name
-            vk_name = field.vk_name
-            lines += [f'        {boost_name} {assign_op} vk_struct.{vk_name},']
+            boost_value = field.vk_value_to_boost(f'vk_struct.{vk_name}')
+            lines += [f'        {boost_name} {assign_op} {boost_value},']
         remove_last_char(lines, ',')
         lines += [
             '    ]]'

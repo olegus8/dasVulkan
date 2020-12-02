@@ -72,7 +72,7 @@ def with_view(
 //
 
 struct ExtensionProperties
-    extension_name : string [256]
+    extension_name : string
     spec_version : uint
 
 def construct(vk_struct : VkExtensionProperties) : ExtensionProperties
@@ -313,7 +313,7 @@ struct PhysicalDeviceProperties
     vendor_i_d : uint
     device_i_d : uint
     device_type : VkPhysicalDeviceType
-    device_name : string [256]
+    device_name : string
     pipeline_cache_u_u_i_d : uint8 [16]
     limits : PhysicalDeviceLimits
     sparse_properties : PhysicalDeviceSparseProperties
