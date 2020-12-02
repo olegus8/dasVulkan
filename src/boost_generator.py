@@ -61,6 +61,7 @@ class BoostGenerator(LoggingObject):
             ParamStringPtr,
             ParamFloat,
             ParamInt32,
+            ParamUInt8,
             ParamUInt32,
             ParamUInt64,
             ParamUnknown,
@@ -963,6 +964,18 @@ class ParamInt32(ParamBase):
     @property
     def vk_unqual_type(self):
         return 'int'
+
+
+class ParamUInt8(ParamBase):
+
+    @classmethod
+    def maybe_create(cls, c_param, **kwargs):
+        if c_param.type.unqual_name == 'uint8_t':
+            return cls(c_param=c_param, **kwargs)
+
+    @property
+    def vk_unqual_type(self):
+        return 'uint8'
 
 
 class ParamUInt32(ParamBase):
