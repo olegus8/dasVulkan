@@ -32,11 +32,11 @@ def to_string(bytes : int8[])
 //
 
 def get_physical_device_properties(
-    physical_device : PhysicalDevice ?
+    physical_device : PhysicalDevice
 ) : PhysicalDeviceProperties
     var vk_output : VkPhysicalDeviceProperties
     vkGetPhysicalDeviceProperties(
-        physical_device.physical_device ?,
+        physical_device.physical_device,
         safe_addr(vk_output)
     )
     return <- construct(vk_output)
@@ -412,7 +412,7 @@ def create_instance(
 
 def finalize(var instance : Instance)
     vkDestroyInstance(
-        instance.instance ?,
+        instance.instance,
         null
     )
     memzero(instance)
@@ -432,7 +432,7 @@ def split(batch : PhysicalDeviceBatch) : array<PhysicalDevice>
         [[PhysicalDevice physical_device=h]]}]
 
 def enumerate_physical_devices(
-    instance : Instance ?;
+    instance : Instance;
     var result : VkResult? = [[VkResult?]]
 ) : PhysicalDeviceBatch
 
@@ -440,7 +440,7 @@ def enumerate_physical_devices(
     var result_ = VkResult VK_SUCCESS
 
     result ?? result_ = vkEnumeratePhysicalDevices(
-        instance.instance ?,
+        instance.instance,
         safe_addr(count),
         null
     )
@@ -451,7 +451,7 @@ def enumerate_physical_devices(
         vk_handles |> resize(int(count))
         vk_handles |> lock() <| $(thandles)
             result ?? result_ = vkEnumeratePhysicalDevices(
-                instance.instance ?,
+                instance.instance,
                 safe_addr(count),
                 addr(thandles[0])
             )
@@ -460,7 +460,7 @@ def enumerate_physical_devices(
     return <- [[PhysicalDeviceBatch physical_device_batch <- vk_handles]]
 
 def enumerate_physical_devices_no_batch(
-    instance : Instance ?;
+    instance : Instance;
     var result : VkResult? = [[VkResult?]]
 ): array<PhysicalDevice>
     var handles <- enumerate_physical_devices(instance, result)

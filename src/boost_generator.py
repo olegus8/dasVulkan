@@ -929,6 +929,10 @@ class ParamFixedString(ParamBase):
             return cls(c_param=c_param, **kwargs)
 
     @property
+    def is_fixed_array(self):
+        return False
+
+    @property
     def vk_unqual_type(self):
         raise Exception(f'add if needed')
 
