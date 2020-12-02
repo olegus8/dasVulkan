@@ -703,7 +703,7 @@ class C_Type(object):
     def unqual_name(self):
         for pattern in [
             r'^(?P<type>\S+)$',
-            r'^struct (?P<type>\S+) \*$',
+            r'^struct (?P<type>\S+)$',
             r'^(const )?(?P<type>\S+) \*$',
         ]:
             m = re.match(pattern, self.name)
