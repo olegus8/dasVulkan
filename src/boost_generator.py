@@ -837,16 +837,6 @@ class ParamVkStructPtr(ParamBase):
         if c_type.is_struct and c_type.unqual_name.startswith('Vk'):
             return cls(c_param=c_param, **kwargs)
 
-    @staticmethod
-    def __get_c_unqual_type(c_type_name):
-        m = re.match(r'(const )?(Vk\S*) \*', c_type_name)
-        if m:
-            return m.group(2)
-
-    @property
-    def c_unqual_type(self):
-        return self.__get_c_unqual_type(self._c_param.type)
-
     @property
     def vk_unqual_type(self):
         return self.c_unqual_type
