@@ -405,7 +405,7 @@ class GenHandle(object):
 
     @property
     def __is_batched(self):
-        return self.__p_count is not None
+        return self.__vk_p_count is not None
 
     @property
     def __boost_handle_type_name(self):
@@ -523,9 +523,9 @@ class GenHandle(object):
         ]
 
         for param in self.__vk_enumerator_params:
-            if param.vk_name == self.__p_count:
+            if param.vk_name == self.__vk_p_count:
                 vk_value = 'safe_addr(count)'
-            elif param.vk.name == self.__p_handles:
+            elif param.vk.name == self.__vk_p_handles:
                 vk_value = 'addr(thandles[0])'
             else:
                 vk_value = param.boost_value_to_vk(param.boost_name)
@@ -547,7 +547,7 @@ class GenHandle(object):
            f'def {self.__boost_enumerator_name}_no_batch(',
         ]
         for param in self.__vk_enumerator_params:
-            if param.vk_name in [self.__p_count, self.__p_handles]:
+            if param.vk_name in [self.__vk_p_count, self.__vk_p_handles]:
                 continue
             lines += [
                f'    {param.boost_name} : {param.boost_type};',
@@ -558,7 +558,7 @@ class GenHandle(object):
         ]
         params = []
         for param in self.__vk_enumerator_params:
-            if param.vk_name in [self.__p_count, self.__p_handles]:
+            if param.vk_name in [self.__vk_p_count, self.__vk_p_handles]:
                 continue
             params.append(param.boost_name)
         params_text = ', '.join(params + ['result'])
