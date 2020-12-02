@@ -791,7 +791,7 @@ class ParamVkHandle(ParamBase):
         c_type = c_param.type
         if (c_type.is_opaque_struct
         and c_type.unqual_name.startswith('Vk')
-        and c_type.unqual_name.endsswith('_T')
+        and c_type.unqual_name.endswith('_T')
         and not c_type.is_pointer
         and not c_type.is_fixed_array):
             return cls(c_param=c_param, **kwargs)
