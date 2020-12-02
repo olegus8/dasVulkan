@@ -755,9 +755,9 @@ class ParamVkHandlePtr(ParamBase):
 
     @classmethod
     def maybe_create(cls, c_param, generator):
-        name = cls.__get_c_unqual_type(c_type_name)
+        name = cls.__get_c_unqual_type(c_param.type)
         if f'{name}_T' in generator.opaque_structs:
-            return cls(c_type_name=c_type_name, generator=generator)
+            return cls(c_param=c_param, generator=generator)
 
     @staticmethod
     def __get_c_unqual_type(c_type_name):
