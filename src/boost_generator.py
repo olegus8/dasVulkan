@@ -54,6 +54,7 @@ class BoostGenerator(LoggingObject):
         for param_class in [
             ParamVkHandle,
             ParamVkHandlePtr,
+            ParamVkStruct,
             ParamVkStructPtr,
             ParamVkEnum,
             ParamString,
@@ -293,8 +294,10 @@ class GenStruct(object):
         for field in self.__fields:
             if field.vk_name in ['sType', 'pNext']:
                 continue
-            vk_value = field.vk_value_to_boost(f'vk_struct.{field.vk_name}')
-            lines += [f'        {field.boost_name} = {vk_value},']
+            assignment = field.assign_vk_value_to_boost(
+                boost_value = f'{field.boost_name}',
+                vk_value = f'vk_struct.{field.vk_name}')
+            lines += [f'        {assignment},']
         remove_last_char(lines, ',')
         lines += [
             '    ]]'
@@ -763,6 +766,12 @@ class ParamBase(object):
     def boost_name(self):
         return vk_param_name_to_boost(self.vk_name)
 
+    def assign_vk_value_to_boost(self, boost_value, vk_value):
+        return f'{boost_value} = {self.vk_value_to_boost(vk_value)}'
+
+    def assign_boost_value_to_vk(self, vk_value, boost_value):
+        return f'{vk_value} = {self.boost_value_to_vk(boost_value)}'
+
     def vk_value_to_boost(self, vk_value):
         return vk_value
 
@@ -834,6 +843,30 @@ class ParamVkHandlePtr(ParamBase):
     def boost_value_to_vk(self, boost_value):
         attr = boost_handle_attr_name(self.boost_type)
         return f'{boost_value}?.{attr}'
+
+
+class ParamVkStruct(ParamBase):
+
+    @classmethod
+    def maybe_create(cls, c_param, **kwargs):
+        c_type = c_param.type
+        if (c_type.is_struct and not c_type.is_pointer
+        and c_type.unqual_name.startswith('Vk')):
+            return cls(c_param=c_param, **kwargs)
+
+    @property
+    def vk_unqual_type(self):
+        return self.c_unqual_type
+
+    @property
+    def boost_unqual_type(self):
+        return vk_struct_type_to_boost(self.vk_unqual_type)
+
+    def boost_value_to_vk(self, boost_value):
+        raise ValueBoostError('Not supported')
+
+    def vk_value_to_boost(self, vk_value):
+        return f'construct({vk_value})'
 
 
 class ParamVkStructPtr(ParamBase):
