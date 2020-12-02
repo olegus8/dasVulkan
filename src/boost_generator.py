@@ -707,6 +707,13 @@ class C_Type(object):
             m = re.match(pattern, self.name)
             if m:
                 return m.groupdict()['type']
+
+        unqual_name = {
+            'const char* const *': 'char',
+        }.get(self.name)
+
+        if unqual_name:
+            return unqual_name
         raise VulkanBoostError(f'Cannot extract unqualified C type from '
             f'"{self.name}"')
 
@@ -721,11 +728,11 @@ class ParamBase(object):
         return self._c_param.type.unqual_type
 
     @property
-    def is_c_pointer(self):
+    def is_pointer(self):
         return self._c_param.type.is_pointer
 
     @property
-    def is_c_fixed_array(self):
+    def is_fixed_array(self):
         return self._c_param.type.is_fixed_array
 
     @property
@@ -768,9 +775,9 @@ class ParamBase(object):
 
     def __make_qual_das_type(self, type_name):
         t = type_name
-        if self._c_param.type.is_pointer:
+        if self.is_pointer:
             t += ' ?'
-        if self._c_param.type.is_fixed_array is not None:
+        if self.is_fixed_array is not None:
             t += f' [{self._c_param.type.fixed_array_size}]'
         return t
 
@@ -872,7 +879,7 @@ class ParamFixedString(ParamBase):
     @classmethod
     def maybe_create(cls, c_param, **kwargs):
         c_type = c_param.type
-        if c_type.unqual_name == 'char' and c_type.is_array:
+        if c_type.unqual_name == 'char' and c_type.is_fixed_array:
             return cls(c_param=c_param, **kwargs)
 
     @property
@@ -894,16 +901,13 @@ class ParamString(ParamBase):
 
     @classmethod
     def maybe_create(cls, c_param, **kwargs):
-        if c_param.type == 'const char *':
+        c_type = c_param.type
+        if c_type.unqual_name == 'char' and c_type.is_pointer:
             return cls(c_param=c_param, **kwargs)
 
     @property
     def is_pointer(self):
         return False
-
-    @property
-    def c_unqual_type(self):
-        return 'char'
 
     @property
     def vk_unqual_type(self):
