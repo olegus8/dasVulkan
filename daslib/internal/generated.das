@@ -119,13 +119,18 @@ def create_instance(
     create_info |> with_view() <| $(vk_info)
         var result_ = VkResult VK_SUCCESS
         result ?? result_ = vkCreateInstance(
-            safe_addr(vk_info), null, safe_addr(instance.instance)
+            safe_addr(vk_info),
+            null,
+            safe_addr(instance.instance)
         )
         assert(result_ == VkResult VK_SUCCESS)
     return <- instance
 
 def finalize(var instance : Instance)
-    vkDestroyInstance(instance.instance, null)
+    vkDestroyInstance(
+        instance.instance,
+        null
+    )
     memzero(instance)
 
 //
@@ -151,7 +156,9 @@ def enumerate_physical_devices(
     var result_ = VkResult VK_SUCCESS
 
     result ?? result_ = vkEnumeratePhysicalDevices(
-        instance.instance, safe_addr(count), null
+        instance.instance,
+        safe_addr(count),
+        null
     )
     assert(result_ == VkResult VK_SUCCESS)
 
@@ -160,7 +167,9 @@ def enumerate_physical_devices(
         vk_handles |> resize(int(count))
         vk_handles |> lock() <| $(thandles)
             result ?? result_ = vkEnumeratePhysicalDevices(
-                instance.instance, safe_addr(count), addr(thandles[0])
+                instance.instance,
+                safe_addr(count),
+                addr(thandles[0])
             )
             assert(result_ == VkResult VK_SUCCESS)
 
@@ -173,3 +182,13 @@ def enumerate_physical_devices_no_batch(
     var handles <- enumerate_physical_devices(instance, result)
     defer() <| ${ delete handles; }
     return <- handles |> split()
+
+def get_physical_device_properties(
+    physical_device : PhysicalDevice
+) : PhysicalDeviceProperties
+    var vk_output : VkPhysicalDeviceProperties
+    vkGetPhysicalDeviceProperties(
+        physical_device.physical_device,
+        safe_addr(vk_output)
+    )
+    return <- vk_output

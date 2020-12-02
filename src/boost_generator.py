@@ -143,6 +143,7 @@ class GenQueryFunc(object):
     def generate(self):
         lines = []
         lines += [
+            '',
            f'def {self.__boost_func_name}('
         ]
         for param in self.__params:
@@ -508,7 +509,7 @@ class GenHandle(object):
                 vk_value = 'null'
             else:
                 vk_value = param.boost_value_to_vk(param.boost_name)
-            lines.append('        {vk_value},')
+            lines.append(f'        {vk_value},')
         remove_last_char(lines, ',')
 
         lines += [
@@ -529,7 +530,7 @@ class GenHandle(object):
                 vk_value = 'addr(thandles[0])'
             else:
                 vk_value = param.boost_value_to_vk(param.boost_name)
-            lines.append('                {vk_value},')
+            lines.append(f'                {vk_value},')
         remove_last_char(lines, ',')
 
         lines += [
@@ -636,7 +637,7 @@ class GenHandle(object):
                 vk_value = param.boost_value_to_vk(bh_attr)
             else:
                 raise Exception('handle extra params if needed')
-            lines.append('        {vk_value},')
+            lines.append(f'        {vk_value},')
         remove_last_char(lines, ',')
         lines += [
             '    )',
