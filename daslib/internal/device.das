@@ -10,13 +10,14 @@ require strings
 
 require generated public
 
-
+/*
 def get_physical_device_properties(physical_device : PhysicalDevice
 ) : VkPhysicalDeviceProperties
     var props : VkPhysicalDeviceProperties
     physical_device.physical_device |> vkGetPhysicalDeviceProperties(
         safe_addr(props))
     return <- props
+*/
 
 
 def enumerate_device_extension_properties(

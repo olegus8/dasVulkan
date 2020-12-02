@@ -31,7 +31,6 @@ def to_string(bytes : int8[])
 // Functions
 //
 
-
 def get_physical_device_properties(
     physical_device : PhysicalDevice
 ) : PhysicalDeviceProperties
