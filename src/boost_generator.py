@@ -751,7 +751,7 @@ class ParamVkHandle(ParamBase):
         raise VulkanBoostError('Not supported')
 
 
-class ParamVkHandlePtr(BoostType):
+class ParamVkHandlePtr(ParamBase):
 
     @classmethod
     def maybe_create(cls, c_param, generator):
@@ -781,7 +781,7 @@ class ParamVkHandlePtr(BoostType):
         return f'{boost_value}?.{attr}'
 
 
-class ParamVkStructPtr(BoostType):
+class ParamVkStructPtr(ParamBase):
 
     @classmethod
     def maybe_create(cls, c_param, generator):
@@ -817,7 +817,7 @@ class ParamVkStructPtr(BoostType):
         return f'{self.vk_unqual_type} const ?'
 
 
-class ParamFixedString(BoostType):
+class ParamFixedString(ParamBase):
 
     @classmethod
     def maybe_create(cls, c_param, **kwargs):
@@ -847,7 +847,7 @@ class ParamFixedString(BoostType):
         return f'to_string({vk_value})'
 
 
-class ParamString(BoostType):
+class ParamString(ParamBase):
 
     @classmethod
     def maybe_create(cls, c_param, **kwargs):
@@ -874,7 +874,7 @@ class ParamString(BoostType):
         return name
 
 
-class ParamStringPtr(BoostType):
+class ParamStringPtr(ParamBase):
 
     @classmethod
     def maybe_create(cls, c_param, **kwargs):
@@ -897,7 +897,7 @@ class ParamStringPtr(BoostType):
         return name
 
 
-class ParamUInt32(BoostType):
+class ParamUInt32(ParamBase):
 
     @classmethod
     def maybe_create(cls, c_param, **kwargs):
