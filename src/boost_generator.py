@@ -871,16 +871,9 @@ class ParamFixedString(ParamBase):
 
     @classmethod
     def maybe_create(cls, c_param, **kwargs):
-        if re.match(r'char \[\d+\]', c_param.type):
+        c_type = c_param.type
+        if c_type.unqual_name == 'char' and c_type.is_array:
             return cls(c_param=c_param, **kwargs)
-
-    @property
-    def is_pointer(self):
-        return False
-
-    @property
-    def c_unqual_type(self):
-        return 'char'
 
     @property
     def vk_unqual_type(self):
