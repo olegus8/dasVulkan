@@ -116,15 +116,15 @@ def add_boost_content(g):
     g.add_gen_struct(
         struct      = 'VkExtensionProperties',
         vk_to_boost = True)
-    #g.add_gen_struct(
-    #    struct      = 'VkPhysicalDeviceLimits',
-    #    vk_to_boost = True)
-    #g.add_gen_struct(
-    #    struct      = 'VkPhysicalDeviceProperties',
-    #    vk_to_boost = True)
-    #g.add_gen_struct(
-    #    struct      = 'VkPhysicalDeviceSparseProperties',
-    #    vk_to_boost = True)
+    g.add_gen_struct(
+        struct      = 'VkPhysicalDeviceLimits',
+        vk_to_boost = True)
+    g.add_gen_struct(
+        struct      = 'VkPhysicalDeviceProperties',
+        vk_to_boost = True)
+    g.add_gen_struct(
+        struct      = 'VkPhysicalDeviceSparseProperties',
+        vk_to_boost = True)
 
     #
     # Structs consumed by Vulkan
@@ -144,6 +144,6 @@ def add_boost_content(g):
     # Query functions
     #
 
-    #g.add_gen_query_func(
-    #    func        = 'vkGetPhysicalDeviceProperties',
-    #    p_output    = 'pProperties')
+    g.add_gen_query_func(
+        func        = 'vkGetPhysicalDeviceProperties',
+        p_output    = 'pProperties')
