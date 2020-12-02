@@ -789,11 +789,9 @@ class ParamVkHandle(ParamBase):
     @classmethod
     def maybe_create(cls, c_param, **kwargs):
         c_type = c_param.type
-        if (c_type.is_opaque_struct
-        and c_type.unqual_name.startswith('Vk')
+        if (c_type.unqual_name.startswith('Vk')
         and c_type.unqual_name.endswith('_T')
-        and not c_type.is_pointer
-        and not c_type.is_fixed_array):
+        and c_type.is_pointer):
             return cls(c_param=c_param, **kwargs)
 
     @property
