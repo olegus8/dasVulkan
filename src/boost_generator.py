@@ -525,7 +525,7 @@ class GenHandle(object):
         for param in self.__vk_enumerator_params:
             if param.vk_name == self.__vk_p_count:
                 vk_value = 'safe_addr(count)'
-            elif param.vk.name == self.__vk_p_handles:
+            elif param.vk_name == self.__vk_p_handles:
                 vk_value = 'addr(thandles[0])'
             else:
                 vk_value = param.boost_value_to_vk(param.boost_name)
