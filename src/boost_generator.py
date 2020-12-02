@@ -453,7 +453,7 @@ class GenStruct(object):
         ]
 
         for field in self.__fields:
-            if field.vk_name in ['sType', 'pNext']:
+            if field.vk_name in ['pNext']:
                 continue
             elif field.vk_name == 'sType':
                 vk_value = f'VkStructureType {self.__vk_structure_type}'
