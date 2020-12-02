@@ -242,7 +242,7 @@ class GenStruct(object):
         lines += [
             '',
             '//',
-           f'// {self.__boost_type}',
+           f'// {self.__boost_type_name}',
             '//',
         ]
         lines += self.__generate_type()
