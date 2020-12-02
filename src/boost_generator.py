@@ -88,7 +88,6 @@ class BoostGenerator(LoggingObject):
     def __generate(self):
         return [
             self.__preamble(),
-            '',
             '//',
             '// Functions',
             '//',
