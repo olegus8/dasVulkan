@@ -66,7 +66,7 @@ class BoostGenerator(LoggingObject):
             ParamUnknown,
         ]:
             param = param_class.maybe_create(
-                c_param=C_Param(c_node=c_node), generator=self)
+                c_param=C_Param(c_node=c_node, generator=generator))
             if param:
                 return param
 
@@ -657,9 +657,10 @@ class GenHandle(object):
 
 class C_Param(object):
 
-    def __init__(self, c_node):
+    def __init__(self, c_node, generator):
         self._c_node = c_node
-        self.type = C_Type(c_node.type)
+        self._generator = generator
+        self.type = C_Type(name=c_node.type, generator=generator)
 
     @property
     def name(self):
@@ -668,8 +669,21 @@ class C_Param(object):
 
 class C_Type(object):
 
-    def __init__(self, name):
+    def __init__(self, name, generator):
         self.name = name
+        self._generator = generator
+
+    @property
+    def is_enum(self):
+        return self.unqual_name in self._generator.enums
+
+    @property
+    def is_struct(self):
+        return self.unqual_name in self._generator.structs
+
+    @property
+    def is_opaque_struct(self):
+        return self.unqual_name in self._generator.opaque_structs
 
     @property
     def is_pointer(self):
@@ -686,7 +700,7 @@ class C_Type(object):
             return int(m.group(1))
 
     @property
-    def unqual_type(self):
+    def unqual_name(self):
         for pattern in [
             r'^(?P<type>\S+)$',
         ]:
@@ -699,25 +713,20 @@ class C_Type(object):
 
 class ParamBase(object):
 
-    def __init__(self, c_param, generator):
+    def __init__(self, c_param):
         self._c_param = c_param
-        self._generator = generator
-
-    @property
-    def is_enum(self):
-        return self.c_unqual_type in self._generator.enums
-
-    @property
-    def is_struct(self):
-        return self.c_unqual_type in self._generator.structs
-
-    @property
-    def is_handle(self):
-        return self.c_unqual_type in self._generator.opaque_structs
 
     @property
     def c_unqual_type(self):
         return self._c_param.type.unqual_type
+
+    @property
+    def is_c_pointer(self):
+        return self._c_param.type.is_pointer
+
+    @property
+    def is_c_fixed_array(self):
+        return self._c_param.type.is_fixed_array
 
     @property
     def vk_unqual_type(self):
@@ -770,18 +779,13 @@ class ParamVkHandle(ParamBase):
 
     @classmethod
     def maybe_create(cls, c_param, **kwargs):
-        if cls.__get_c_unqual_type(c_param.type):
+        c_type = c_param.type
+        if (c_type.is_opaque_struct
+        and c_type.unqual_name.startswith('Vk')
+        and c_type.unqual_name.endsswith('_T')
+        and not c_type.is_pointer
+        and not c_type.is_fixed_array):
             return cls(c_param=c_param, **kwargs)
-
-    @staticmethod
-    def __get_c_unqual_type(c_type_name):
-        m = re.match(r'struct (Vk\S*_T) \*', c_type_name)
-        if m:
-            return m.group(1)
-
-    @property
-    def c_unqual_type(self):
-        return self.__get_c_unqual_type(self._c_param.type)
 
     @property
     def vk_unqual_type(self):
@@ -804,20 +808,12 @@ class ParamVkHandle(ParamBase):
 class ParamVkHandlePtr(ParamBase):
 
     @classmethod
-    def maybe_create(cls, c_param, generator):
-        name = cls.__get_c_unqual_type(c_param.type)
-        if f'{name}_T' in generator.opaque_structs:
-            return cls(c_param=c_param, generator=generator)
-
-    @staticmethod
-    def __get_c_unqual_type(c_type_name):
-        m = re.match(r'(Vk\S*) \*', c_type_name)
-        if m:
-            return m.group(1)
-
-    @property
-    def c_unqual_type(self):
-        return self.__get_c_unqual_type(self._c_param.type)
+    def maybe_create(cls, c_param, **kwargs):
+        c_type = c_param.type
+        generator = c_param._generator
+        if (f'{c_type.unqual_name}_T' in generator.opaque_structs
+        and c_type.is_pointer):
+            return cls(c_param=c_param, **kwargs)
 
     @property
     def vk_unqual_type(self):
