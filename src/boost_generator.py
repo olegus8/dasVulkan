@@ -455,6 +455,8 @@ class GenStruct(object):
         for field in self.__fields:
             if field.vk_name in ['sType', 'pNext']:
                 continue
+            elif field.vk_name == 'sType':
+                vk_value = f'VkStructureType {self.__vk_structure_type}'
             elif self.__is_array_count(field.vk_name):
                 vk_value = f'uint(vk_{field.boost_name})'
             elif self.__is_array_items(field.vk_name):
@@ -466,9 +468,8 @@ class GenStruct(object):
                 vk_value = field.boost_value_to_vk(
                     f'boost_struct.{field.boost_name}')
             lines.append(f'        {field.vk_name} = {vk_value},')
-
+        remove_last_char(lines, ',')
         lines += [
-           f'        sType = VkStructureType {self.__vk_structure_type}',
            f'    ]];',
            f'    b |> invoke(vk_struct);',
         ]
