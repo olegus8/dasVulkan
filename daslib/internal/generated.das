@@ -32,14 +32,14 @@ def to_string(bytes : int8[])
 //
 
 def get_physical_device_properties(
-    physical_device : PhysicalDevice
+    physical_device : PhysicalDevice ?
 ) : PhysicalDeviceProperties
     var vk_output : VkPhysicalDeviceProperties
     vkGetPhysicalDeviceProperties(
-        physical_device.physical_device,
+        physical_device.physical_device ?,
         safe_addr(vk_output)
     )
-    return <- vk_output
+    return <- construct(vk_output)
 
 //
 // ApplicationInfo
@@ -72,13 +72,283 @@ def with_view(
 //
 
 struct ExtensionProperties
-    extension_name : string
+    extension_name : string [256]
     spec_version : uint
 
 def construct(vk_struct : VkExtensionProperties) : ExtensionProperties
     return <- [[ExtensionProperties
-        extension_name = to_string(vk_struct.extensionName),
+        extension_name = vk_struct.extensionName,
         spec_version = vk_struct.specVersion
+    ]]
+
+//
+// PhysicalDeviceLimits
+//
+
+struct PhysicalDeviceLimits
+    max_image_dimension1_d : uint
+    max_image_dimension2_d : uint
+    max_image_dimension3_d : uint
+    max_image_dimension_cube : uint
+    max_image_array_layers : uint
+    max_texel_buffer_elements : uint
+    max_uniform_buffer_range : uint
+    max_storage_buffer_range : uint
+    max_push_constants_size : uint
+    max_memory_allocation_count : uint
+    max_sampler_allocation_count : uint
+    buffer_image_granularity : uint64
+    sparse_address_space_size : uint64
+    max_bound_descriptor_sets : uint
+    max_per_stage_descriptor_samplers : uint
+    max_per_stage_descriptor_uniform_buffers : uint
+    max_per_stage_descriptor_storage_buffers : uint
+    max_per_stage_descriptor_sampled_images : uint
+    max_per_stage_descriptor_storage_images : uint
+    max_per_stage_descriptor_input_attachments : uint
+    max_per_stage_resources : uint
+    max_descriptor_set_samplers : uint
+    max_descriptor_set_uniform_buffers : uint
+    max_descriptor_set_uniform_buffers_dynamic : uint
+    max_descriptor_set_storage_buffers : uint
+    max_descriptor_set_storage_buffers_dynamic : uint
+    max_descriptor_set_sampled_images : uint
+    max_descriptor_set_storage_images : uint
+    max_descriptor_set_input_attachments : uint
+    max_vertex_input_attributes : uint
+    max_vertex_input_bindings : uint
+    max_vertex_input_attribute_offset : uint
+    max_vertex_input_binding_stride : uint
+    max_vertex_output_components : uint
+    max_tessellation_generation_level : uint
+    max_tessellation_patch_size : uint
+    max_tessellation_control_per_vertex_input_components : uint
+    max_tessellation_control_per_vertex_output_components : uint
+    max_tessellation_control_per_patch_output_components : uint
+    max_tessellation_control_total_output_components : uint
+    max_tessellation_evaluation_input_components : uint
+    max_tessellation_evaluation_output_components : uint
+    max_geometry_shader_invocations : uint
+    max_geometry_input_components : uint
+    max_geometry_output_components : uint
+    max_geometry_output_vertices : uint
+    max_geometry_total_output_components : uint
+    max_fragment_input_components : uint
+    max_fragment_output_attachments : uint
+    max_fragment_dual_src_attachments : uint
+    max_fragment_combined_output_resources : uint
+    max_compute_shared_memory_size : uint
+    max_compute_work_group_count : uint [3]
+    max_compute_work_group_invocations : uint
+    max_compute_work_group_size : uint [3]
+    sub_pixel_precision_bits : uint
+    sub_texel_precision_bits : uint
+    mipmap_precision_bits : uint
+    max_draw_indexed_index_value : uint
+    max_draw_indirect_count : uint
+    max_sampler_lod_bias : float
+    max_sampler_anisotropy : float
+    max_viewports : uint
+    max_viewport_dimensions : uint [2]
+    viewport_bounds_range : float [2]
+    viewport_sub_pixel_bits : uint
+    min_memory_map_alignment : uint
+    min_texel_buffer_offset_alignment : uint64
+    min_uniform_buffer_offset_alignment : uint64
+    min_storage_buffer_offset_alignment : uint64
+    min_texel_offset : int
+    max_texel_offset : uint
+    min_texel_gather_offset : int
+    max_texel_gather_offset : uint
+    min_interpolation_offset : float
+    max_interpolation_offset : float
+    sub_pixel_interpolation_offset_bits : uint
+    max_framebuffer_width : uint
+    max_framebuffer_height : uint
+    max_framebuffer_layers : uint
+    framebuffer_color_sample_counts : uint
+    framebuffer_depth_sample_counts : uint
+    framebuffer_stencil_sample_counts : uint
+    framebuffer_no_attachments_sample_counts : uint
+    max_color_attachments : uint
+    sampled_image_color_sample_counts : uint
+    sampled_image_integer_sample_counts : uint
+    sampled_image_depth_sample_counts : uint
+    sampled_image_stencil_sample_counts : uint
+    storage_image_sample_counts : uint
+    max_sample_mask_words : uint
+    timestamp_compute_and_graphics : uint
+    timestamp_period : float
+    max_clip_distances : uint
+    max_cull_distances : uint
+    max_combined_clip_and_cull_distances : uint
+    discrete_queue_priorities : uint
+    point_size_range : float [2]
+    line_width_range : float [2]
+    point_size_granularity : float
+    line_width_granularity : float
+    strict_lines : uint
+    standard_sample_locations : uint
+    optimal_buffer_copy_offset_alignment : uint64
+    optimal_buffer_copy_row_pitch_alignment : uint64
+    non_coherent_atom_size : uint64
+
+def construct(vk_struct : VkPhysicalDeviceLimits) : PhysicalDeviceLimits
+    return <- [[PhysicalDeviceLimits
+        max_image_dimension1_d = vk_struct.maxImageDimension1D,
+        max_image_dimension2_d = vk_struct.maxImageDimension2D,
+        max_image_dimension3_d = vk_struct.maxImageDimension3D,
+        max_image_dimension_cube = vk_struct.maxImageDimensionCube,
+        max_image_array_layers = vk_struct.maxImageArrayLayers,
+        max_texel_buffer_elements = vk_struct.maxTexelBufferElements,
+        max_uniform_buffer_range = vk_struct.maxUniformBufferRange,
+        max_storage_buffer_range = vk_struct.maxStorageBufferRange,
+        max_push_constants_size = vk_struct.maxPushConstantsSize,
+        max_memory_allocation_count = vk_struct.maxMemoryAllocationCount,
+        max_sampler_allocation_count = vk_struct.maxSamplerAllocationCount,
+        buffer_image_granularity = vk_struct.bufferImageGranularity,
+        sparse_address_space_size = vk_struct.sparseAddressSpaceSize,
+        max_bound_descriptor_sets = vk_struct.maxBoundDescriptorSets,
+        max_per_stage_descriptor_samplers = vk_struct.maxPerStageDescriptorSamplers,
+        max_per_stage_descriptor_uniform_buffers = vk_struct.maxPerStageDescriptorUniformBuffers,
+        max_per_stage_descriptor_storage_buffers = vk_struct.maxPerStageDescriptorStorageBuffers,
+        max_per_stage_descriptor_sampled_images = vk_struct.maxPerStageDescriptorSampledImages,
+        max_per_stage_descriptor_storage_images = vk_struct.maxPerStageDescriptorStorageImages,
+        max_per_stage_descriptor_input_attachments = vk_struct.maxPerStageDescriptorInputAttachments,
+        max_per_stage_resources = vk_struct.maxPerStageResources,
+        max_descriptor_set_samplers = vk_struct.maxDescriptorSetSamplers,
+        max_descriptor_set_uniform_buffers = vk_struct.maxDescriptorSetUniformBuffers,
+        max_descriptor_set_uniform_buffers_dynamic = vk_struct.maxDescriptorSetUniformBuffersDynamic,
+        max_descriptor_set_storage_buffers = vk_struct.maxDescriptorSetStorageBuffers,
+        max_descriptor_set_storage_buffers_dynamic = vk_struct.maxDescriptorSetStorageBuffersDynamic,
+        max_descriptor_set_sampled_images = vk_struct.maxDescriptorSetSampledImages,
+        max_descriptor_set_storage_images = vk_struct.maxDescriptorSetStorageImages,
+        max_descriptor_set_input_attachments = vk_struct.maxDescriptorSetInputAttachments,
+        max_vertex_input_attributes = vk_struct.maxVertexInputAttributes,
+        max_vertex_input_bindings = vk_struct.maxVertexInputBindings,
+        max_vertex_input_attribute_offset = vk_struct.maxVertexInputAttributeOffset,
+        max_vertex_input_binding_stride = vk_struct.maxVertexInputBindingStride,
+        max_vertex_output_components = vk_struct.maxVertexOutputComponents,
+        max_tessellation_generation_level = vk_struct.maxTessellationGenerationLevel,
+        max_tessellation_patch_size = vk_struct.maxTessellationPatchSize,
+        max_tessellation_control_per_vertex_input_components = vk_struct.maxTessellationControlPerVertexInputComponents,
+        max_tessellation_control_per_vertex_output_components = vk_struct.maxTessellationControlPerVertexOutputComponents,
+        max_tessellation_control_per_patch_output_components = vk_struct.maxTessellationControlPerPatchOutputComponents,
+        max_tessellation_control_total_output_components = vk_struct.maxTessellationControlTotalOutputComponents,
+        max_tessellation_evaluation_input_components = vk_struct.maxTessellationEvaluationInputComponents,
+        max_tessellation_evaluation_output_components = vk_struct.maxTessellationEvaluationOutputComponents,
+        max_geometry_shader_invocations = vk_struct.maxGeometryShaderInvocations,
+        max_geometry_input_components = vk_struct.maxGeometryInputComponents,
+        max_geometry_output_components = vk_struct.maxGeometryOutputComponents,
+        max_geometry_output_vertices = vk_struct.maxGeometryOutputVertices,
+        max_geometry_total_output_components = vk_struct.maxGeometryTotalOutputComponents,
+        max_fragment_input_components = vk_struct.maxFragmentInputComponents,
+        max_fragment_output_attachments = vk_struct.maxFragmentOutputAttachments,
+        max_fragment_dual_src_attachments = vk_struct.maxFragmentDualSrcAttachments,
+        max_fragment_combined_output_resources = vk_struct.maxFragmentCombinedOutputResources,
+        max_compute_shared_memory_size = vk_struct.maxComputeSharedMemorySize,
+        max_compute_work_group_count = vk_struct.maxComputeWorkGroupCount,
+        max_compute_work_group_invocations = vk_struct.maxComputeWorkGroupInvocations,
+        max_compute_work_group_size = vk_struct.maxComputeWorkGroupSize,
+        sub_pixel_precision_bits = vk_struct.subPixelPrecisionBits,
+        sub_texel_precision_bits = vk_struct.subTexelPrecisionBits,
+        mipmap_precision_bits = vk_struct.mipmapPrecisionBits,
+        max_draw_indexed_index_value = vk_struct.maxDrawIndexedIndexValue,
+        max_draw_indirect_count = vk_struct.maxDrawIndirectCount,
+        max_sampler_lod_bias = vk_struct.maxSamplerLodBias,
+        max_sampler_anisotropy = vk_struct.maxSamplerAnisotropy,
+        max_viewports = vk_struct.maxViewports,
+        max_viewport_dimensions = vk_struct.maxViewportDimensions,
+        viewport_bounds_range = vk_struct.viewportBoundsRange,
+        viewport_sub_pixel_bits = vk_struct.viewportSubPixelBits,
+        min_memory_map_alignment = vk_struct.minMemoryMapAlignment,
+        min_texel_buffer_offset_alignment = vk_struct.minTexelBufferOffsetAlignment,
+        min_uniform_buffer_offset_alignment = vk_struct.minUniformBufferOffsetAlignment,
+        min_storage_buffer_offset_alignment = vk_struct.minStorageBufferOffsetAlignment,
+        min_texel_offset = vk_struct.minTexelOffset,
+        max_texel_offset = vk_struct.maxTexelOffset,
+        min_texel_gather_offset = vk_struct.minTexelGatherOffset,
+        max_texel_gather_offset = vk_struct.maxTexelGatherOffset,
+        min_interpolation_offset = vk_struct.minInterpolationOffset,
+        max_interpolation_offset = vk_struct.maxInterpolationOffset,
+        sub_pixel_interpolation_offset_bits = vk_struct.subPixelInterpolationOffsetBits,
+        max_framebuffer_width = vk_struct.maxFramebufferWidth,
+        max_framebuffer_height = vk_struct.maxFramebufferHeight,
+        max_framebuffer_layers = vk_struct.maxFramebufferLayers,
+        framebuffer_color_sample_counts = vk_struct.framebufferColorSampleCounts,
+        framebuffer_depth_sample_counts = vk_struct.framebufferDepthSampleCounts,
+        framebuffer_stencil_sample_counts = vk_struct.framebufferStencilSampleCounts,
+        framebuffer_no_attachments_sample_counts = vk_struct.framebufferNoAttachmentsSampleCounts,
+        max_color_attachments = vk_struct.maxColorAttachments,
+        sampled_image_color_sample_counts = vk_struct.sampledImageColorSampleCounts,
+        sampled_image_integer_sample_counts = vk_struct.sampledImageIntegerSampleCounts,
+        sampled_image_depth_sample_counts = vk_struct.sampledImageDepthSampleCounts,
+        sampled_image_stencil_sample_counts = vk_struct.sampledImageStencilSampleCounts,
+        storage_image_sample_counts = vk_struct.storageImageSampleCounts,
+        max_sample_mask_words = vk_struct.maxSampleMaskWords,
+        timestamp_compute_and_graphics = vk_struct.timestampComputeAndGraphics,
+        timestamp_period = vk_struct.timestampPeriod,
+        max_clip_distances = vk_struct.maxClipDistances,
+        max_cull_distances = vk_struct.maxCullDistances,
+        max_combined_clip_and_cull_distances = vk_struct.maxCombinedClipAndCullDistances,
+        discrete_queue_priorities = vk_struct.discreteQueuePriorities,
+        point_size_range = vk_struct.pointSizeRange,
+        line_width_range = vk_struct.lineWidthRange,
+        point_size_granularity = vk_struct.pointSizeGranularity,
+        line_width_granularity = vk_struct.lineWidthGranularity,
+        strict_lines = vk_struct.strictLines,
+        standard_sample_locations = vk_struct.standardSampleLocations,
+        optimal_buffer_copy_offset_alignment = vk_struct.optimalBufferCopyOffsetAlignment,
+        optimal_buffer_copy_row_pitch_alignment = vk_struct.optimalBufferCopyRowPitchAlignment,
+        non_coherent_atom_size = vk_struct.nonCoherentAtomSize
+    ]]
+
+//
+// PhysicalDeviceProperties
+//
+
+struct PhysicalDeviceProperties
+    api_version : uint
+    driver_version : uint
+    vendor_i_d : uint
+    device_i_d : uint
+    device_type : VkPhysicalDeviceType
+    device_name : string [256]
+    pipeline_cache_u_u_i_d : uint8 [16]
+    limits : PhysicalDeviceLimits
+    sparse_properties : PhysicalDeviceSparseProperties
+
+def construct(vk_struct : VkPhysicalDeviceProperties) : PhysicalDeviceProperties
+    return <- [[PhysicalDeviceProperties
+        api_version = vk_struct.apiVersion,
+        driver_version = vk_struct.driverVersion,
+        vendor_i_d = vk_struct.vendorID,
+        device_i_d = vk_struct.deviceID,
+        device_type = vk_struct.deviceType,
+        device_name = vk_struct.deviceName,
+        pipeline_cache_u_u_i_d = vk_struct.pipelineCacheUUID,
+        limits <- vk_struct.limits,
+        sparse_properties <- vk_struct.sparseProperties
+    ]]
+
+//
+// PhysicalDeviceSparseProperties
+//
+
+struct PhysicalDeviceSparseProperties
+    residency_standard2_d_block_shape : uint
+    residency_standard2_d_multisample_block_shape : uint
+    residency_standard3_d_block_shape : uint
+    residency_aligned_mip_size : uint
+    residency_non_resident_strict : uint
+
+def construct(vk_struct : VkPhysicalDeviceSparseProperties) : PhysicalDeviceSparseProperties
+    return <- [[PhysicalDeviceSparseProperties
+        residency_standard2_d_block_shape = vk_struct.residencyStandard2DBlockShape,
+        residency_standard2_d_multisample_block_shape = vk_struct.residencyStandard2DMultisampleBlockShape,
+        residency_standard3_d_block_shape = vk_struct.residencyStandard3DBlockShape,
+        residency_aligned_mip_size = vk_struct.residencyAlignedMipSize,
+        residency_non_resident_strict = vk_struct.residencyNonResidentStrict
     ]]
 
 //
@@ -142,7 +412,7 @@ def create_instance(
 
 def finalize(var instance : Instance)
     vkDestroyInstance(
-        instance.instance,
+        instance.instance ?,
         null
     )
     memzero(instance)
@@ -162,7 +432,7 @@ def split(batch : PhysicalDeviceBatch) : array<PhysicalDevice>
         [[PhysicalDevice physical_device=h]]}]
 
 def enumerate_physical_devices(
-    instance : Instance;
+    instance : Instance ?;
     var result : VkResult? = [[VkResult?]]
 ) : PhysicalDeviceBatch
 
@@ -170,7 +440,7 @@ def enumerate_physical_devices(
     var result_ = VkResult VK_SUCCESS
 
     result ?? result_ = vkEnumeratePhysicalDevices(
-        instance.instance,
+        instance.instance ?,
         safe_addr(count),
         null
     )
@@ -181,7 +451,7 @@ def enumerate_physical_devices(
         vk_handles |> resize(int(count))
         vk_handles |> lock() <| $(thandles)
             result ?? result_ = vkEnumeratePhysicalDevices(
-                instance.instance,
+                instance.instance ?,
                 safe_addr(count),
                 addr(thandles[0])
             )
@@ -190,7 +460,7 @@ def enumerate_physical_devices(
     return <- [[PhysicalDeviceBatch physical_device_batch <- vk_handles]]
 
 def enumerate_physical_devices_no_batch(
-    instance : Instance;
+    instance : Instance ?;
     var result : VkResult? = [[VkResult?]]
 ): array<PhysicalDevice>
     var handles <- enumerate_physical_devices(instance, result)
