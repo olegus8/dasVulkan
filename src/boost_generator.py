@@ -294,10 +294,10 @@ class GenStruct(object):
         for field in self.__fields:
             if field.vk_name in ['sType', 'pNext']:
                 continue
-            assignment = field.assign_vk_value_to_boost(
-                boost_value = f'{field.boost_name}',
-                vk_value = f'vk_struct.{field.vk_name}')
-            lines += [f'        {assignment},']
+            assign_op = field.vk_to_boost_assign_op
+            boost_name = field.boost_name
+            vk_name = field.vk_name
+            lines += [f'        {boost_name} {assign_op} vk_struct.{vk_name},']
         remove_last_char(lines, ',')
         lines += [
             '    ]]'
@@ -766,11 +766,13 @@ class ParamBase(object):
     def boost_name(self):
         return vk_param_name_to_boost(self.vk_name)
 
-    def assign_vk_value_to_boost(self, boost_value, vk_value):
-        return f'{boost_value} = {self.vk_value_to_boost(vk_value)}'
+    @property
+    def vk_to_boost_assign_op(self):
+        return '='
 
-    def assign_boost_value_to_vk(self, vk_value, boost_value):
-        return f'{vk_value} = {self.boost_value_to_vk(boost_value)}'
+    @property
+    def boost_to_vk_assign_op(self):
+        return '='
 
     def vk_value_to_boost(self, vk_value):
         return vk_value
@@ -867,6 +869,10 @@ class ParamVkStruct(ParamBase):
 
     def vk_value_to_boost(self, vk_value):
         return f'construct({vk_value})'
+
+    @property
+    def vk_to_boost_assign_op(self):
+        return '<-'
 
 
 class ParamVkStructPtr(ParamBase):
