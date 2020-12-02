@@ -1073,7 +1073,7 @@ class ParamUnknown(ParamBase):
 def boost_camel_to_lower(camel):
     result = ''
     for c in camel:
-        if c.isupper() and result and result[-1] != '_':
+        if c.isupper() and len(result) > 1 and result[-2] != '_':
             result += '_'
         result += c.lower()
     return result
