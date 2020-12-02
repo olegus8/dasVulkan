@@ -702,10 +702,7 @@ class C_Type(object):
     @property
     def unqual_name(self):
         for pattern in [
-            r'^(?P<type>\S+)$',
-            r'^struct (?P<type>\S+)$',
-            r'^(const )?(?P<type>\S+) \*$',
-            r'^enum (\S+)$',
+            r'^(const)?(struct|enum)\s*?(?P<type>\S+)( \*)?$',
         ]:
             m = re.match(pattern, self.name)
             if m:
