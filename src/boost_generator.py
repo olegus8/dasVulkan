@@ -705,6 +705,7 @@ class C_Type(object):
             r'^(?P<type>\S+)$',
             r'^struct (?P<type>\S+)$',
             r'^(const )?(?P<type>\S+) \*$',
+            r'^enum (\S+)$',
         ]:
             m = re.match(pattern, self.name)
             if m:
