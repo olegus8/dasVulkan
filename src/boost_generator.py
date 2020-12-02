@@ -1078,7 +1078,8 @@ def boost_camel_to_lower(camel):
             upper_streak = False
         if c.isupper() and not upper_streak:
             upper_streak = True
-            result += '_'
+            if result:
+                result += '_'
         result += c.lower()
     return result
 

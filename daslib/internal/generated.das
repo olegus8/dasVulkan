@@ -31,12 +31,12 @@ def to_string(bytes : int8[])
 // Functions
 //
 
-def _get_physical_device_properties(
+def get_physical_device_properties(
     physical_device : PhysicalDevice
 ) : PhysicalDeviceProperties
     var vk_output : VkPhysicalDeviceProperties
     vkGetPhysicalDeviceProperties(
-        physical_device._physical_device,
+        physical_device.physical_device,
         safe_addr(vk_output)
     )
     return <- construct(vk_output)
@@ -62,7 +62,7 @@ def with_view(
         pEngineName = boost_struct.engine_name,
         engineVersion = boost_struct.engine_version,
         apiVersion = boost_struct.api_version,
-        sType = VkStructureType VK_STRUCTURE_TYPE__APPLICATION_INFO
+        sType = VkStructureType VK_STRUCTURE_TYPE_APPLICATION_INFO
     ]];
     b |> invoke(vk_struct);
 }
@@ -314,7 +314,7 @@ struct PhysicalDeviceProperties
     device_id : uint
     device_type : VkPhysicalDeviceType
     device_name : string
-    pipeline_cache_uu_id : uint8 [16]
+    pipeline_cache_uuid : uint8 [16]
     limits : PhysicalDeviceLimits
     sparse_properties : PhysicalDeviceSparseProperties
 
@@ -326,7 +326,7 @@ def construct(vk_struct : VkPhysicalDeviceProperties) : PhysicalDeviceProperties
         device_id = vk_struct.deviceID,
         device_type = vk_struct.deviceType,
         device_name = to_string(vk_struct.deviceName),
-        pipeline_cache_uu_id = vk_struct.pipelineCacheUUID,
+        pipeline_cache_uuid = vk_struct.pipelineCacheUUID,
         limits <- construct(vk_struct.limits),
         sparse_properties <- construct(vk_struct.sparseProperties)
     ]]
@@ -381,7 +381,7 @@ def with_view(
         ppEnabledLayerNames = vk_p_enabled_layer_names,
         enabledExtensionCount = uint(vk_enabled_extension_count),
         ppEnabledExtensionNames = vk_p_enabled_extension_names,
-        sType = VkStructureType VK_STRUCTURE_TYPE__INSTANCE_CREATE_INFO
+        sType = VkStructureType VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO
     ]];
     b |> invoke(vk_struct);
     }}};
@@ -392,46 +392,46 @@ def with_view(
 //
 
 struct Instance
-    _instance : VkInstance
+    instance : VkInstance
 
-def _create_instance(
+def create_instance(
     create_info : InstanceCreateInfo = [[ InstanceCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : Instance
 
-    var _instance : Instance
+    var instance : Instance
     create_info |> with_view() <| $(vk_info)
         var result_ = VkResult VK_SUCCESS
         result ?? result_ = vkCreateInstance(
             safe_addr(vk_info),
             null,
-            safe_addr(_instance._instance)
+            safe_addr(instance.instance)
         )
         assert(result_ == VkResult VK_SUCCESS)
-    return <- _instance
+    return <- instance
 
-def finalize(var _instance : Instance)
+def finalize(var instance : Instance)
     vkDestroyInstance(
-        _instance._instance,
+        instance.instance,
         null
     )
-    memzero(_instance)
+    memzero(instance)
 
 //
 // PhysicalDevice
 //
 
 struct PhysicalDevice
-    _physical_device : VkPhysicalDevice
+    physical_device : VkPhysicalDevice
 
 struct PhysicalDeviceBatch
-    _physical_device_batch : array<VkPhysicalDevice>
+    physical_device_batch : array<VkPhysicalDevice>
 
 def split(batch : PhysicalDeviceBatch) : array<PhysicalDevice>
-    return <- [{for h in batch._physical_device_batch ;
-        [[PhysicalDevice _physical_device=h]]}]
+    return <- [{for h in batch.physical_device_batch ;
+        [[PhysicalDevice physical_device=h]]}]
 
-def _enumerate_physical_devices(
+def enumerate_physical_devices(
     instance : Instance;
     var result : VkResult? = [[VkResult?]]
 ) : PhysicalDeviceBatch
@@ -440,7 +440,7 @@ def _enumerate_physical_devices(
     var result_ = VkResult VK_SUCCESS
 
     result ?? result_ = vkEnumeratePhysicalDevices(
-        instance._instance,
+        instance.instance,
         safe_addr(count),
         null
     )
@@ -451,18 +451,18 @@ def _enumerate_physical_devices(
         vk_handles |> resize(int(count))
         vk_handles |> lock() <| $(thandles)
             result ?? result_ = vkEnumeratePhysicalDevices(
-                instance._instance,
+                instance.instance,
                 safe_addr(count),
                 addr(thandles[0])
             )
             assert(result_ == VkResult VK_SUCCESS)
 
-    return <- [[PhysicalDeviceBatch _physical_device_batch <- vk_handles]]
+    return <- [[PhysicalDeviceBatch physical_device_batch <- vk_handles]]
 
-def _enumerate_physical_devices_no_batch(
+def enumerate_physical_devices_no_batch(
     instance : Instance;
     var result : VkResult? = [[VkResult?]]
 ): array<PhysicalDevice>
-    var handles <- _enumerate_physical_devices(instance, result)
+    var handles <- enumerate_physical_devices(instance, result)
     defer() <| ${ delete handles; }
     return <- handles |> split()
