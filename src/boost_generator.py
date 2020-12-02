@@ -949,7 +949,8 @@ class ParamUnknown(ParamBase):
 
     @property
     def c_unqual_type(self):
-        raise VulkanBoostError(f'Unknown type: {self._c_param.type}')
+        raise VulkanBoostError(
+            f'Param {self.vk_name} has unknown type: {self._c_param.type}')
 
     @property
     def vk_unqual_type(self):
