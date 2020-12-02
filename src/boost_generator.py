@@ -928,16 +928,16 @@ class ParamStringPtr(ParamBase):
 
 class ParamUInt32(ParamBase):
 
-    _C_TYPE = 'unsigned int'
+    _C_TYPES = ['unsigned int', 'uint32_t']
 
     @classmethod
     def maybe_create(cls, c_param, **kwargs):
-        if c_param.type == cls._C_TYPE:
+        if c_param.type in cls._C_TYPES:
             return cls(c_param=c_param, **kwargs)
 
     @property
     def c_unqual_type(self):
-        return self._C_TYPE
+        return self._c_param.type
 
     @property
     def vk_unqual_type(self):
@@ -946,16 +946,16 @@ class ParamUInt32(ParamBase):
 
 class ParamUInt64(ParamBase):
 
-    _C_TYPE = 'unsigned long long'
+    _C_TYPES = ['unsigned long long']
 
     @classmethod
     def maybe_create(cls, c_param, **kwargs):
-        if c_param.type == cls._C_TYPE:
+        if c_param.type in cls._C_TYPES:
             return cls(c_param=c_param, **kwargs)
 
     @property
     def c_unqual_type(self):
-        return self._C_TYPE
+        return self._c_param.type
 
     @property
     def vk_unqual_type(self):
