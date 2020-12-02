@@ -259,20 +259,23 @@ class GenQueryArrayFunc(object):
         vk_type_deref = deref_das_type(self.__items_param.vk_type)
         lines += [
            f') : array<{boost_type_deref}>',
-           f'    var vk_output : {vk_type_deref}',
+           f'    var count : uint',
         ]
+
+        maybe_capture_result = ('result ?? result_ = '
+            if self.__returns_vk_result else '')
 
         if self.__returns_vk_result:
             lines.append(f'    var result_ = VkResult VK_SUCCESS')
-        maybe_capture_result = ('result ?? result_ = '
-            if self.__returns_vk_result else '')
         lines += [
            f'    {maybe_capture_result}{self.__vk_func_name}(',
         ]
 
         for param in self.__params:
-            if param.vk_name == self.__p_output:
-                vk_value = 'safe_addr(vk_output)'
+            if param.vk_name == self.__p_items:
+                vk_value = 'null'
+            elif param.vk_name == self.__p_count:
+                vk_value = 'safe_addr(count)'
             else:
                 vk_value = param.boost_value_to_vk(param.boost_name)
             lines.append(f'        {vk_value},')
@@ -284,7 +287,40 @@ class GenQueryArrayFunc(object):
         if self.__returns_vk_result:
             lines.append('    assert(result_ == VkResult VK_SUCCESS)')
         lines += [
-           f'    return <- construct(vk_output)',
+            '',
+        ]
+        if self.__returns_vk_result:
+            lines += [
+                '    if result ?? result_ != VkResult VK_SUCCESS',
+               f'        return <- array<boost_type_deref>',
+            ]
+        lines += [
+            '',
+           f'    var vk_items : array<{vk_type_deref}>',
+            '    defer() <| ${ delete vk_items; }',
+            '    vk_items |> resize(int(count))',
+            '    vk_props |> lock() <| $(titems)',
+           f'        {maybe_capture_result}{self.__vk_func_name}(',
+        ]
+
+        for param in self.__params:
+            if param.vk_name == self.__p_items:
+                vk_value = 'safe_addr(titems)'
+            elif param.vk_name == self.__p_count:
+                vk_value = 'safe_addr(count)'
+            else:
+                vk_value = param.boost_value_to_vk(param.boost_name)
+            lines.append(f'            {vk_value},')
+        remove_last_char(lines, ',')
+
+        lines += [
+           f'        )',
+        ]
+        if self.__returns_vk_result:
+            lines.append('        assert(result_ == VkResult VK_SUCCESS)')
+        lines += [
+            '',
+            '    return <- [{for item in vk_items ; construct(item)}]',
         ]
         return lines
 
