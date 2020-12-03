@@ -6,7 +6,6 @@ require daslib/defer
 require core
 require vulkan
 require math
-require device
 require generated
 
 let
