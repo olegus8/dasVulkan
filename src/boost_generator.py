@@ -1191,6 +1191,11 @@ class ParamUnknown(ParamBase):
     def vk_type(self):
         return None
 
+    @property
+    def __unknown_param_error(self):
+        return VulkanBoostError(f'Unknown param "{self.c_name}" of type '
+            '"{self.c_type}".')
+
 
 def boost_camel_to_lower(camel):
     result = ''
