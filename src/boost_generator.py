@@ -1173,23 +1173,23 @@ class ParamUnknown(ParamBase):
 
     @property
     def c_unqual_type(self):
-        return None
+        raise self.__unknown_param_error
 
     @property
     def vk_unqual_type(self):
-        return None
+        raise self.__unknown_param_error
 
     @property
     def boost_unqual_type(self):
-        return None
+        raise self.__unknown_param_error
 
     @property
     def boost_type(self):
-        return None
+        raise self.__unknown_param_error
 
     @property
     def vk_type(self):
-        return None
+        raise self.__unknown_param_error
 
     @property
     def __unknown_param_error(self):
