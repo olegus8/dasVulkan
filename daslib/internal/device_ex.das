@@ -34,7 +34,7 @@ def find_physical_device_for_graphics(
 
 def get_graphics_queue_family(
     physical_device : PhysicalDevice;
-    surface : VkSurfaceKHR#
+    surface : SurfaceKHR
 ) : uint
     var found_index : uint = UINT_MAX
     physical_device |> find_graphics_queue_family(surface) <| $(qfam)
@@ -45,19 +45,16 @@ def get_graphics_queue_family(
 
 def find_graphics_queue_family(
     physical_device : PhysicalDevice;
-    surface : VkSurfaceKHR#;
+    surface : SurfaceKHR;
     b : block<(qfam:uint)>
 )
-    let vk_phys_dev = physical_device.physical_device
     var families <- (physical_device |>
         get_physical_device_queue_family_properties())
     defer() <| ${ delete families; }
     for family, index in families, range(INT_MAX)
-        var can_present : uint
-        verify(VkResult VK_SUCCESS ==
-            vk_phys_dev |> vkGetPhysicalDeviceSurfaceSupportKHR(
-                uint(index), surface, safe_addr(can_present)))
-        if can_present == 0u
+        if 0u == phys_dev |> get_physical_device_surface_support_khr(
+            uint(index), surface
+        )
             continue
 
         var graphics_bit = uint(VkQueueFlagBits VK_QUEUE_GRAPHICS_BIT)
@@ -116,7 +113,7 @@ def find_present_mode_like_mailbox(
 
 def with_device(
     physical_device : PhysicalDevice;
-    surface         : VkSurfaceKHR;
+    surface         : SurfaceKHR;
     b : block<(device:VkDevice#; queue:VkQueue#)>
 )
     let vk_phys_dev = physical_device.physical_device
@@ -186,11 +183,10 @@ def get_capabilities(device : VkPhysicalDevice#; surface : VkSurfaceKHR#)
 
 [private]
 def get_suitability_score(device : PhysicalDevice; surface : SurfaceKHR)
-    let vk_surface = surface.surface_khr
     var score = 1
 
     var has_graphics = false
-    device |> find_graphics_queue_family(vk_surface) <| $(qfam)
+    device |> find_graphics_queue_family(surface) <| $(qfam)
         has_graphics = true
     if ! has_graphics
         score = 0
