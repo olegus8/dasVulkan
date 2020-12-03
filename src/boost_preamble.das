@@ -30,6 +30,7 @@ def to_string(bytes : int8[])
 
 def boost_value_to_vk(b)
     return b
+
 def vk_value_to_boost(v)
     return v
 

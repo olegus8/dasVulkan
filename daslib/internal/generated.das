@@ -30,6 +30,7 @@ def to_string(bytes : int8[])
 
 def boost_value_to_vk(b)
     return b
+
 def vk_value_to_boost(v)
     return v
 
@@ -671,15 +672,21 @@ def enumerate_physical_devices_no_batch(
 // Param converters
 //
 
+
 def vk_value_to_boost(v : VkExtent3D) : Extent3D
     return <- construct(v)
+
 def boost_value_to_vk(b : Instance) : VkInstance
     return b.instance
+
 def boost_value_to_vk(b : PhysicalDevice) : VkPhysicalDevice
     return b.physical_device
+
 def vk_value_to_boost(v : VkPhysicalDeviceLimits) : PhysicalDeviceLimits
     return <- construct(v)
+
 def vk_value_to_boost(v : VkPhysicalDeviceSparseProperties) : PhysicalDeviceSparseProperties
     return <- construct(v)
+
 def boost_value_to_vk(b : SurfaceKHR) : VkSurfaceKHR
     return b.surface_khr
