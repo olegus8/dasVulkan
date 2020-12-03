@@ -272,8 +272,8 @@ class GenQueryArrayFunc(object):
         ]
         if self.__returns_vk_result:
             lines += [
-                '    assert(result_ == VkResult VK_SUCCESS)',
                 '',
+                '    assert(result_ == VkResult VK_SUCCESS)',
                 '    if result ?? result_ != VkResult VK_SUCCESS',
                f'        return <- [[array<{boost_type_deref}>]]',
             ]
