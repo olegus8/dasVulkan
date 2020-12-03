@@ -692,12 +692,6 @@ def boost_value_to_vk(VkFormat b; var VkFormat v)
 def vk_value_to_boost(VkFormat v; var VkFormat b)
     v = vk_value
 
-def boost_value_to_vk(VkInstance ? b; var VkInstance ? v)
-    v = boost_value?.vk_instance
-
-def boost_value_to_vk(VkPhysicalDevice ? b; var VkPhysicalDevice ? v)
-    v = boost_value?.vk_physical_device
-
 def boost_value_to_vk(VkPhysicalDeviceType b; var VkPhysicalDeviceType v)
     v = boost_value
 def vk_value_to_boost(VkPhysicalDeviceType v; var VkPhysicalDeviceType b)

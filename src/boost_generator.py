@@ -934,13 +934,13 @@ class ParamBase(object):
 
         if converted_b2v:
             lines += [
-                f'def boost_value_to_vk({btype} b; var {vtype} v)',
+                f'def boost_value_to_vk(b : {btype}; var v : {vtype})',
                 f'    v {assign_b2v} {converted_b2v}'
             ]
 
         if converted_v2b:
             lines += [
-                f'def vk_value_to_boost({vtype} v; var {btype} b)',
+                f'def vk_value_to_boost(v : {vtype}; var b : {btype})',
                 f'    v {assign_v2b} {converted_v2b}'
             ]
 
