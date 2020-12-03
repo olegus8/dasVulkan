@@ -922,7 +922,7 @@ class ParamBase(object):
             t += f' [{self._c_param.type.fixed_array_size}]'
         return t
 
-    def generate(self):
+    def generate_converters(self):
         lines = []
 
         btype = self.boost_type
@@ -1002,6 +1002,9 @@ class ParamVkHandlePtr(ParamBase):
     def boost_value_to_vk(self, boost_value):
         return None
 
+    def generate_converters(self):
+        return []
+
 
 class ParamVkStruct(ParamBase):
 
@@ -1058,6 +1061,9 @@ class ParamVkStructPtr(ParamBase):
     def vk_view_type(self):
         return f'{self.vk_unqual_type} const ?'
 
+    def generate_converters(self):
+        return []
+
 
 class ParamVkEnum(ParamBase):
 
@@ -1070,6 +1076,9 @@ class ParamVkEnum(ParamBase):
     @property
     def vk_unqual_type(self):
         return self.c_unqual_type
+
+    def generate_converters(self):
+        return []
 
 
 class ParamFixedString(ParamBase):
@@ -1099,6 +1108,9 @@ class ParamFixedString(ParamBase):
     def vk_value_to_boost(self, vk_value):
         return f'to_string({vk_value})'
 
+    def generate_converters(self):
+        return []
+
 
 class ParamString(ParamBase):
 
@@ -1122,6 +1134,9 @@ class ParamString(ParamBase):
             name = name[2:]
         return name
 
+    def generate_converters(self):
+        return []
+
 
 class ParamStringPtr(ParamBase):
 
@@ -1141,6 +1156,9 @@ class ParamStringPtr(ParamBase):
             name = name[1:]
         return name
 
+    def generate_converters(self):
+        return []
+
 
 class ParamFloat(ParamBase):
 
@@ -1152,6 +1170,9 @@ class ParamFloat(ParamBase):
     @property
     def vk_unqual_type(self):
         return 'float'
+
+    def generate_converters(self):
+        return []
 
 
 class ParamInt32(ParamBase):
@@ -1165,6 +1186,9 @@ class ParamInt32(ParamBase):
     def vk_unqual_type(self):
         return 'int'
 
+    def generate_converters(self):
+        return []
+
 
 class ParamUInt8(ParamBase):
 
@@ -1176,6 +1200,9 @@ class ParamUInt8(ParamBase):
     @property
     def vk_unqual_type(self):
         return 'uint8'
+
+    def generate_converters(self):
+        return []
 
 
 class ParamUInt32(ParamBase):
@@ -1191,6 +1218,9 @@ class ParamUInt32(ParamBase):
     def vk_unqual_type(self):
         return 'uint'
 
+    def generate_converters(self):
+        return []
+
 
 class ParamUInt64(ParamBase):
 
@@ -1204,6 +1234,9 @@ class ParamUInt64(ParamBase):
     @property
     def vk_unqual_type(self):
         return 'uint64'
+
+    def generate_converters(self):
+        return []
 
 
 class ParamUnknown(ParamBase):
@@ -1231,6 +1264,9 @@ class ParamUnknown(ParamBase):
     @property
     def vk_type(self):
         return None
+
+    def generate_converters(self):
+        return []
 
 
 def boost_camel_to_lower(camel):

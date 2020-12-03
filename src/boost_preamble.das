@@ -33,6 +33,9 @@ def boost_value_to_vk(b, var v : auto)
 def vk_value_to_boost(v, var b : auto)
     b = v
 
+def vk_value_to_boost(v : int8[], var b : string)
+    b = to_string(v)
+
 //
 // Surface
 //
