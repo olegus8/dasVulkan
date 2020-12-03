@@ -82,7 +82,7 @@ def get_physical_device_properties(
         boost_value_to_vk(physical_device),
         safe_addr(vk_output)
     )
-    return <- construct(vk_output)
+    return <- vk_value_to_boost(vk_output)
 
 def enumerate_device_extension_properties(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]];
@@ -114,7 +114,7 @@ def enumerate_device_extension_properties(
         )
         assert(result_ == VkResult VK_SUCCESS)
 
-    return <- [{for item in vk_items ; construct(item)}]
+    return <- [{for item in vk_items ; vk_value_to_boost(item)}]
 
 def get_physical_device_queue_family_properties(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]]
@@ -137,7 +137,7 @@ def get_physical_device_queue_family_properties(
             vk_p_items
         )
 
-    return <- [{for item in vk_items ; construct(item)}]
+    return <- [{for item in vk_items ; vk_value_to_boost(item)}]
 
 def get_physical_device_surface_formats_khr(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]];
@@ -169,7 +169,7 @@ def get_physical_device_surface_formats_khr(
         )
         assert(result_ == VkResult VK_SUCCESS)
 
-    return <- [{for item in vk_items ; construct(item)}]
+    return <- [{for item in vk_items ; vk_value_to_boost(item)}]
 
 //
 // ApplicationInfo

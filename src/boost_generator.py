@@ -415,7 +415,7 @@ class GenStruct(object):
         lines = []
         lines += [
             '',
-           f'def construct(vk_struct : {self.__vk_type_name}) '
+           f'def vk_value_to_boost(vk_struct : {self.__vk_type_name}) '
                 f': {self.__boost_type_name}',
            f'    return <- [[{self.__boost_type_name}'
         ]
@@ -1014,15 +1014,6 @@ class ParamVkStruct(ParamBase):
     @property
     def vk_to_boost_assign_op(self):
         return '<-'
-
-    def generate_converters(self):
-        btype = self.boost_type
-        vtype = self.vk_type
-        return [
-             '',
-            f'def vk_value_to_boost(v : {vtype}) : {btype}',
-            f'    return <- construct(v)'
-        ]
 
 
 class ParamVkStructPtr(ParamBase):
