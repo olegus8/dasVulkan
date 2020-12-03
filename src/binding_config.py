@@ -135,6 +135,9 @@ def add_boost_content(g):
         struct      = 'VkPhysicalDeviceSparseProperties',
         vk_to_boost = True)
     g.add_gen_struct(
+        struct      = 'VkQueueFamilyProperties',
+        vk_to_boost = True)
+    g.add_gen_struct(
         struct      = 'VkSurfaceFormatKHR',
         vk_to_boost = True,
         boost_to_vk = True)
@@ -143,15 +146,17 @@ def add_boost_content(g):
     # Query functions
     #
 
-    g.add_gen_query_func(
-        func        = 'vkGetPhysicalDeviceProperties',
-        p_output    = 'pProperties')
-
     g.add_gen_query_array_func(
         func        = 'vkEnumerateDeviceExtensionProperties',
         p_count     = 'pPropertyCount',
         p_items     = 'pProperties')
-
+    g.add_gen_query_func(
+        func        = 'vkGetPhysicalDeviceProperties',
+        p_output    = 'pProperties')
+    g.add_gen_query_array_func(
+        func        = 'vkGetPhysicalDeviceQueueFamilyProperties',
+        p_count     = 'pQueueFamilyPropertyCount',
+        p_items     = 'pQueueFamilyProperties')
     g.add_gen_query_array_func(
         func        = 'vkGetPhysicalDeviceSurfaceFormatsKHR',
         p_count     = 'pSurfaceFormatCount',

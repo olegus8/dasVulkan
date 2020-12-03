@@ -11,6 +11,7 @@ require strings
 require generated public
 
 
+/*
 def get_physical_device_queue_family_properties(
     physical_device : PhysicalDevice
 ) : array<VkQueueFamilyProperties>
@@ -26,6 +27,7 @@ def get_physical_device_queue_family_properties(
             safe_addr(count), addr(tprops[0]))
 
     return <- props
+*/
 
 
 def get_physical_device_surface_present_modes_khr(
