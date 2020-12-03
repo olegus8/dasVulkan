@@ -23,10 +23,10 @@ def with_p_view(
             unsafe
                 b |> invoke(addr(vk_struct))
 
-def boost_value_to_vk(b)
+def boost_value_to_vk(b : auto(T)) : T
     return b
 
-def vk_value_to_boost(v)
+def vk_value_to_boost(v : auto(T)) : T
     return v
 
 def vk_value_to_boost(v : int8[]) : string
