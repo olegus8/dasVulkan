@@ -114,7 +114,6 @@ class BoostGenerator(LoggingObject):
             '//',
             '// Param converters',
             '//',
-            '',
         ] + [
             line for _, param in sorted(self.__all_params.items())
             for line in param.generate_converters()
