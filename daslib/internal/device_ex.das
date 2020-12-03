@@ -52,7 +52,7 @@ def find_graphics_queue_family(
         get_physical_device_queue_family_properties())
     defer() <| ${ delete families; }
     for family, index in families, range(INT_MAX)
-        if 0u == phys_dev |> get_physical_device_surface_support_khr(
+        if 0u == physical_device |> get_physical_device_surface_support_khr(
             uint(index), surface
         )
             continue
