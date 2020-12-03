@@ -1193,8 +1193,8 @@ class ParamUnknown(ParamBase):
 
     @property
     def __unknown_param_error(self):
-        return VulkanBoostError(f'Unknown param "{self.c_name}" of type '
-            '"{self.c_type}".')
+        return VulkanBoostError(f'Unknown param "{self._c_param.name}" '
+            f'of type "{self._c_param.type}".')
 
 
 def boost_camel_to_lower(camel):
