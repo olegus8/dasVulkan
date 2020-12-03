@@ -74,7 +74,8 @@ class BoostGenerator(LoggingObject):
             ParamUnknown,
         ]:
             param = param_class.maybe_create(
-                c_param=C_Param(c_node=c_node, generator=self))
+                c_param=C_Param(c_name=c_node.name, c_type=c_node.type,
+                    generator=self))
             if param:
                 return param
 
@@ -771,14 +772,10 @@ class GenHandle(object):
 
 class C_Param(object):
 
-    def __init__(self, c_node, generator):
-        self._c_node = c_node
+    def __init__(self, c_name, c_type, generator):
+        self.name = c_name
+        self.type = C_Type(name=c_type, generator=generator)
         self._generator = generator
-        self.type = C_Type(name=c_node.type, generator=generator)
-
-    @property
-    def name(self):
-        return self._c_node.name
 
 
 class C_Type(object):
