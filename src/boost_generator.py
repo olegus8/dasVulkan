@@ -20,6 +20,7 @@ class BoostGenerator(LoggingObject):
         self.__gen_structs = []
         self.__gen_query_funcs = []
         self.__gen_query_array_funcs = []
+        self.__all_params = {}
 
         self.enums = dict((x.name, x)
             for x in self.__context.main_c_header.enums)
