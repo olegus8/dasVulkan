@@ -1000,8 +1000,7 @@ class ParamVkHandlePtr(ParamBase):
         return None
 
     def boost_value_to_vk(self, boost_value):
-        attr = boost_handle_attr_name(self.boost_unqual_type)
-        return f'{boost_value}?.{attr}'
+        return None
 
 
 class ParamVkStruct(ParamBase):
