@@ -20,7 +20,6 @@ class BoostGenerator(LoggingObject):
         self.__gen_structs = []
         self.__gen_query_funcs = []
         self.__gen_query_array_funcs = []
-        self.__all_params = {}
 
         self.enums = dict((x.name, x)
             for x in self.__context.main_c_header.enums)
@@ -78,13 +77,7 @@ class BoostGenerator(LoggingObject):
                 c_param=C_Param(c_name=c_name, c_type=c_type,
                     generator=self))
             if param:
-                self.__register_param(param)
                 return param
-
-    def __register_param(self, param):
-        boost_type, vk_type = param.boost_type, param.vk_type
-        if boost_type and vk_type:
-            self.__all_params[(boost_type, vk_type)] = param
 
     def get_param_from_node(self, c_node):
         return self.get_param(c_node.name, c_node.type)
@@ -109,15 +102,7 @@ class BoostGenerator(LoggingObject):
                 self.__gen_structs,
                 self.__gen_handles,
             ] for item in items for line in item.generate()
-        ] + [
-            '',
-            '//',
-            '// Param converters',
-            '//',
-        ] + [
-            line for _, param in sorted(self.__all_params.items())
-            for line in param.generate_converters()
-        ]
+        ] 
 
     def __preamble(self):
         fpath = path.join(path.dirname(__file__), 'boost_preamble.das')
@@ -599,10 +584,16 @@ class GenHandle(object):
         return lines
 
     def __generate_type(self):
+        btype = self.__boost_handle_type_name
+        vtype = self.__vk_handle_type_name
+        attr = self.__boost_handle_attr
         return [
             '',
-           f'struct {self.__boost_handle_type_name}',
-           f'    {self.__boost_handle_attr} : {self.__vk_handle_type_name}',
+           f'struct {btype}',
+           f'    {attr} : {vtype}',
+            '',
+           f'def boost_value_to_vk(b : {btype}) : {vtype}',
+            '    return b.{attr}',
         ]
 
     def __generate_batched_type(self):
@@ -921,9 +912,6 @@ class ParamBase(object):
             t += f' [{self._c_param.type.fixed_array_size}]'
         return t
 
-    def generate_converters(self):
-        return []
-
 
 class ParamVkHandle(ParamBase):
 
@@ -954,16 +942,6 @@ class ParamVkHandle(ParamBase):
 
     def vk_value_to_boost(self, vk_value):
         return None
-
-    def generate_converters(self):
-        btype = self.boost_type
-        vtype = self.vk_type
-        attr = boost_handle_attr_name(self.boost_type)
-        return [
-             '',
-            f'def boost_value_to_vk(b : {btype}) : {vtype}',
-            f'    return b.{attr}'
-        ]
 
 
 class ParamVkHandlePtr(ParamBase):
