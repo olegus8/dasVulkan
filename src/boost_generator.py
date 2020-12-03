@@ -1220,6 +1220,9 @@ class ParamUnknown(ParamBase):
     def vk_unqual_type(self):
         return self.c_unqual_type
 
+    def generate(self):
+        return []
+
 
 def boost_camel_to_lower(camel):
     result = ''
