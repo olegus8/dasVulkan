@@ -200,7 +200,7 @@ class GenQueryFunc(object):
         if self.__returns_vk_result:
             lines.append('    assert(result_ == VkResult VK_SUCCESS)')
         lines += [
-           f'    return <- construct(vk_output)',
+           f'    return <- vk_value_to_boost(vk_output)',
         ]
         return lines
 
@@ -322,7 +322,7 @@ class GenQueryArrayFunc(object):
             lines.append('        assert(result_ == VkResult VK_SUCCESS)')
         lines += [
             '',
-            '    return <- [{for item in vk_items ; construct(item)}]',
+            '    return <- [{for item in vk_items ; vk_value_to_boost(item)}]',
         ]
         return lines
 
