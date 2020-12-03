@@ -25,7 +25,8 @@ def with_p_view(
 
 def to_string(bytes : int8[])
     unsafe
-        return reinterpret<string>(addr(bytes[0]))
+        let s := reinterpret<string>(addr(bytes[0]))
+        return s
 
 //
 // Surface
