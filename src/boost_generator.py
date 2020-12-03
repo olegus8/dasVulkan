@@ -79,7 +79,7 @@ class BoostGenerator(LoggingObject):
             if param:
                 return param
 
-    def __get_param_from_node(self, c_node):
+    def get_param_from_node(self, c_node):
         return self.get_param(c_node.name, c_node.type)
 
     def write(self):
