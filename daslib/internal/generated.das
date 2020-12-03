@@ -126,7 +126,6 @@ def get_physical_device_queue_family_properties(
         null
     )
 
-
     var vk_items : array<VkQueueFamilyProperties>
     defer() <| ${ delete vk_items; }
     vk_items |> resize(int(count))
