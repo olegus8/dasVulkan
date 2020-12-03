@@ -1219,10 +1219,19 @@ class ParamUnknown(ParamBase):
 
     @property
     def vk_unqual_type(self):
-        return self.c_unqual_type
+        return None
 
-    def generate(self):
-        return []
+    @property
+    def boost_unqual_type(self):
+        return None
+
+    @property
+    def boost_type(self):
+        return None
+
+    @property
+    def vk_type(self):
+        return None
 
 
 def boost_camel_to_lower(camel):
