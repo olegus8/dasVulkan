@@ -23,11 +23,6 @@ def with_p_view(
             unsafe
                 b |> invoke(addr(vk_struct))
 
-def to_string(bytes : int8[])
-    unsafe
-        let s := reinterpret<string>(addr(bytes[0]))
-        return s
-
 def boost_value_to_vk(b)
     return b
 
@@ -35,7 +30,9 @@ def vk_value_to_boost(v)
     return v
 
 def vk_value_to_boost(v : int8[])
-    return to_string(v)
+    unsafe
+        let s := reinterpret<string>(addr(v[0]))
+        return s
 
 //
 // Surface

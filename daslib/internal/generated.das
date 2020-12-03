@@ -596,7 +596,7 @@ struct Instance
     instance : VkInstance
 
 def boost_value_to_vk(b : Instance) : VkInstance
-    return b.{attr}
+    return b.instance
 
 def create_instance(
     create_info : InstanceCreateInfo = [[ InstanceCreateInfo ]];
@@ -629,7 +629,7 @@ struct PhysicalDevice
     physical_device : VkPhysicalDevice
 
 def boost_value_to_vk(b : PhysicalDevice) : VkPhysicalDevice
-    return b.{attr}
+    return b.physical_device
 
 struct PhysicalDeviceBatch
     physical_device_batch : array<VkPhysicalDevice>
