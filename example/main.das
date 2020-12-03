@@ -278,7 +278,7 @@ def with_swapchain_independent_state(width, height, title; b : block<(
     ]]) <| $(shmods) {
     let surf_fmt <- phys_dev |> find_format_like_srgb_bgra8(surface);
     surf_fmt |> with_view()                         <| $(vk_surf_fmt)       {
-    let present_mode <- phys_dev |> find_present_mode_like_mailbox(vk_surface);
+    let present_mode <- phys_dev |> find_present_mode_like_mailbox(surface);
     device |> with_render_pass_simple(vk_surf_fmt)  <| $(render_pass)       {
     device |> with_pipeline_layout_simple()         <| $(pipeline_layout)   {
         var cmd_pool <- device |> create_command_pool(
