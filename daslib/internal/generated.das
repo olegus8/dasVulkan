@@ -82,7 +82,7 @@ def get_physical_device_properties(
         boost_value_to_vk(physical_device),
         safe_addr(vk_output)
     )
-    return <- vk_value_to_boost(vk_output)
+    return  vk_value_to_boost(vk_output)
 
 def get_physical_device_surface_support_khr(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]];
@@ -99,7 +99,7 @@ def get_physical_device_surface_support_khr(
         safe_addr(vk_output)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return <- vk_value_to_boost(vk_output)
+    return  vk_value_to_boost(vk_output)
 
 def enumerate_device_extension_properties(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]];
