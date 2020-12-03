@@ -114,6 +114,13 @@ def add_boost_content(g):
         struct      = 'VkApplicationInfo',
         boost_to_vk = True)
     g.add_gen_struct(
+        struct      = 'VkDeviceQueueCreateInfo',
+        boost_to_vk = True
+        ).declare_array(
+            count = 'queueCount',
+            items = 'pQueuePriorities',
+        )
+    g.add_gen_struct(
         struct      = 'VkExtensionProperties',
         vk_to_boost = True)
     g.add_gen_struct(
