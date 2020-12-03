@@ -74,7 +74,7 @@ class BoostGenerator(LoggingObject):
             ParamUnknown,
         ]:
             param = param_class.maybe_create(
-                c_param=C_Param(c_name=c_node.name, c_type=c_node.type,
+                c_param=C_Param(c_name=c_name, c_type=c_type,
                     generator=self))
             if param:
                 return param
