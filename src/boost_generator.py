@@ -185,9 +185,9 @@ class GenQueryFunc(object):
         if self.__returns_vk_result:
             lines.append('    assert(result_ == VkResult VK_SUCCESS)')
         
-        ret_op = '<-' if self.__output_param.is_struct else ''
+        ret_op = '<- ' if self.__output_param.is_struct else ''
         lines += [
-           f'    return {ret_op} vk_value_to_boost(vk_output)',
+           f'    return {ret_op}vk_value_to_boost(vk_output)',
         ]
         return lines
 
