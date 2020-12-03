@@ -929,8 +929,8 @@ class ParamBase(object):
         vtype = self.vk_type
         assign_b2v = self.boost_to_vk_assign_op
         assign_v2b = self.vk_to_boost_assign_op
-        converted_b2v = self.boost_value_to_vk('boost_value')
-        converted_v2b = self.vk_value_to_boost('vk_value')
+        converted_b2v = self.boost_value_to_vk('b')
+        converted_v2b = self.vk_value_to_boost('v')
 
         if converted_b2v:
             lines += [
@@ -941,7 +941,7 @@ class ParamBase(object):
         if converted_v2b:
             lines += [
                 f'def vk_value_to_boost(v : {vtype}; var b : {btype})',
-                f'    v {assign_v2b} {converted_v2b}'
+                f'    b {assign_v2b} {converted_v2b}'
             ]
 
         if lines:
