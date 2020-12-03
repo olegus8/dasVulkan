@@ -51,12 +51,12 @@ class BoostGenerator(LoggingObject):
         return func
 
     def get_func_params(self, c_func):
-        return map(self.__get_param, c_func.params)
+        return map(self.get_param_from_node, c_func.params)
 
     def get_struct_fields(self, c_struct):
-        return map(self.__get_param, c_struct.fields)
+        return map(self.get_param_from_node, c_struct.fields)
 
-    def __get_param(self, c_node):
+    def get_param(self, c_name, c_type):
         for param_class in [
             ParamVkHandle,
             ParamVkHandlePtr,
@@ -78,6 +78,9 @@ class BoostGenerator(LoggingObject):
                     generator=self))
             if param:
                 return param
+
+    def __get_param_from_node(self, c_node):
+        return self.get_param(c_node.name, c_node.type)
 
     def write(self):
         fpath = full_path(path.join(path.dirname(__file__),
