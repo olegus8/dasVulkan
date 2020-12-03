@@ -100,15 +100,6 @@ class BoostGenerator(LoggingObject):
         return [
             self.__preamble(),
             '//',
-            '// Param helpers',
-            '//',
-            '',
-        ] + [
-            line for _, param in sorted(self.__all_params.items())
-            for line in param.generate()
-        ] + [
-            '',
-            '//',
             '// Functions',
             '//',
         ] + [
@@ -118,6 +109,15 @@ class BoostGenerator(LoggingObject):
                 self.__gen_structs,
                 self.__gen_handles,
             ] for item in items for line in item.generate()
+        ] + [
+            '',
+            '//',
+            '// Param helpers',
+            '//',
+            '',
+        ] + [
+            line for _, param in sorted(self.__all_params.items())
+            for line in param.generate()
         ]
 
     def __preamble(self):
