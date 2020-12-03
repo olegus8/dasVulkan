@@ -205,7 +205,7 @@ struct ExtensionProperties
     extension_name : string
     spec_version : uint
 
-def construct(vk_struct : VkExtensionProperties) : ExtensionProperties
+def vk_value_to_boost(vk_struct : VkExtensionProperties) : ExtensionProperties
     return <- [[ExtensionProperties
         extension_name = vk_value_to_boost(vk_struct.extensionName),
         spec_version = vk_struct.specVersion
@@ -232,7 +232,7 @@ def with_view(
     b |> invoke(vk_struct);
 }
 
-def construct(vk_struct : VkExtent3D) : Extent3D
+def vk_value_to_boost(vk_struct : VkExtent3D) : Extent3D
     return <- [[Extent3D
         width = vk_struct.width,
         height = vk_struct.height,
@@ -387,7 +387,7 @@ struct PhysicalDeviceLimits
     optimal_buffer_copy_row_pitch_alignment : uint64
     non_coherent_atom_size : uint64
 
-def construct(vk_struct : VkPhysicalDeviceLimits) : PhysicalDeviceLimits
+def vk_value_to_boost(vk_struct : VkPhysicalDeviceLimits) : PhysicalDeviceLimits
     return <- [[PhysicalDeviceLimits
         max_image_dimension_1d = vk_struct.maxImageDimension1D,
         max_image_dimension_2d = vk_struct.maxImageDimension2D,
@@ -512,7 +512,7 @@ struct PhysicalDeviceProperties
     limits : PhysicalDeviceLimits
     sparse_properties : PhysicalDeviceSparseProperties
 
-def construct(vk_struct : VkPhysicalDeviceProperties) : PhysicalDeviceProperties
+def vk_value_to_boost(vk_struct : VkPhysicalDeviceProperties) : PhysicalDeviceProperties
     return <- [[PhysicalDeviceProperties
         api_version = vk_struct.apiVersion,
         driver_version = vk_struct.driverVersion,
@@ -536,7 +536,7 @@ struct PhysicalDeviceSparseProperties
     residency_aligned_mip_size : uint
     residency_non_resident_strict : uint
 
-def construct(vk_struct : VkPhysicalDeviceSparseProperties) : PhysicalDeviceSparseProperties
+def vk_value_to_boost(vk_struct : VkPhysicalDeviceSparseProperties) : PhysicalDeviceSparseProperties
     return <- [[PhysicalDeviceSparseProperties
         residency_standard_2d_block_shape = vk_struct.residencyStandard2DBlockShape,
         residency_standard_2d_multisample_block_shape = vk_struct.residencyStandard2DMultisampleBlockShape,
@@ -555,7 +555,7 @@ struct QueueFamilyProperties
     timestamp_valid_bits : uint
     min_image_transfer_granularity : Extent3D
 
-def construct(vk_struct : VkQueueFamilyProperties) : QueueFamilyProperties
+def vk_value_to_boost(vk_struct : VkQueueFamilyProperties) : QueueFamilyProperties
     return <- [[QueueFamilyProperties
         queue_flags = vk_struct.queueFlags,
         queue_count = vk_struct.queueCount,
@@ -582,7 +582,7 @@ def with_view(
     b |> invoke(vk_struct);
 }
 
-def construct(vk_struct : VkSurfaceFormatKHR) : SurfaceFormatKHR
+def vk_value_to_boost(vk_struct : VkSurfaceFormatKHR) : SurfaceFormatKHR
     return <- [[SurfaceFormatKHR
         format = vk_struct.format,
         color_space = vk_struct.colorSpace
@@ -673,20 +673,11 @@ def enumerate_physical_devices_no_batch(
 //
 
 
-def vk_value_to_boost(v : VkExtent3D) : Extent3D
-    return <- construct(v)
-
 def boost_value_to_vk(b : Instance) : VkInstance
     return b.instance
 
 def boost_value_to_vk(b : PhysicalDevice) : VkPhysicalDevice
     return b.physical_device
-
-def vk_value_to_boost(v : VkPhysicalDeviceLimits) : PhysicalDeviceLimits
-    return <- construct(v)
-
-def vk_value_to_boost(v : VkPhysicalDeviceSparseProperties) : PhysicalDeviceSparseProperties
-    return <- construct(v)
 
 def boost_value_to_vk(b : SurfaceKHR) : VkSurfaceKHR
     return b.surface_khr
