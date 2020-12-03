@@ -71,7 +71,7 @@ class BoostGenerator(LoggingObject):
             ParamUInt8,
             ParamUInt32,
             ParamUInt64,
-            ParamVkBool,
+            ParamVkBool32,
             ParamUnknown,
         ]:
             param = param_class.maybe_create(
@@ -1166,11 +1166,11 @@ class ParamUInt64(ParamBase):
         return 'uint64'
 
 
-class ParamVkBool(ParamBase):
+class ParamVkBool32(ParamBase):
 
     @classmethod
     def maybe_create(cls, c_param, **kwargs):
-        if c_param.type.unqual_name == 'VkBool':
+        if c_param.type.unqual_name == 'VkBool32':
             return cls(c_param=c_param, **kwargs)
 
     @property
