@@ -1098,7 +1098,7 @@ class ParamFixedString(ParamBase):
         return None
 
     def vk_value_to_boost(self, vk_value):
-        return f'to_string({vk_value})'
+        return f'vk_value_to_boost({vk_value})'
 
     def generate_converters(self):
         return []
