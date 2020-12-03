@@ -170,6 +170,38 @@ def get_physical_device_surface_formats_khr(
 
     return <- [{for item in vk_items ; vk_value_to_boost(item)}]
 
+def get_physical_device_surface_present_modes_khr(
+    physical_device : PhysicalDevice = [[ PhysicalDevice ]];
+    surface : SurfaceKHR = [[ SurfaceKHR ]];
+    var result : VkResult? = [[VkResult?]]
+) : array<VkPresentModeKHR>
+    var count : uint
+    var result_ = VkResult VK_SUCCESS
+    result ?? result_ = vkGetPhysicalDeviceSurfacePresentModesKHR(
+        boost_value_to_vk(physical_device),
+        boost_value_to_vk(surface),
+        safe_addr(count),
+        null
+    )
+
+    assert(result_ == VkResult VK_SUCCESS)
+    if result ?? result_ != VkResult VK_SUCCESS
+        return <- [[array<VkPresentModeKHR>]]
+
+    var vk_items : array<VkPresentModeKHR>
+    defer() <| ${ delete vk_items; }
+    vk_items |> resize(int(count))
+    vk_items |> lock_data() <| $(vk_p_items, count_)
+        result ?? result_ = vkGetPhysicalDeviceSurfacePresentModesKHR(
+            boost_value_to_vk(physical_device),
+            boost_value_to_vk(surface),
+            safe_addr(count),
+            vk_p_items
+        )
+        assert(result_ == VkResult VK_SUCCESS)
+
+    return <- [{for item in vk_items ; vk_value_to_boost(item)}]
+
 //
 // ApplicationInfo
 //
