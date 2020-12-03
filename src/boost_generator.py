@@ -593,7 +593,7 @@ class GenHandle(object):
            f'    {attr} : {vtype}',
             '',
            f'def boost_value_to_vk(b : {btype}) : {vtype}',
-            '    return b.{attr}',
+           f'    return b.{attr}',
         ]
 
     def __generate_batched_type(self):

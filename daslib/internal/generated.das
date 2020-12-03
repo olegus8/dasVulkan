@@ -595,6 +595,9 @@ def vk_value_to_boost(vk_struct : VkSurfaceFormatKHR) : SurfaceFormatKHR
 struct Instance
     instance : VkInstance
 
+def boost_value_to_vk(b : Instance) : VkInstance
+    return b.{attr}
+
 def create_instance(
     create_info : InstanceCreateInfo = [[ InstanceCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
@@ -624,6 +627,9 @@ def finalize(var instance : Instance)
 
 struct PhysicalDevice
     physical_device : VkPhysicalDevice
+
+def boost_value_to_vk(b : PhysicalDevice) : VkPhysicalDevice
+    return b.{attr}
 
 struct PhysicalDeviceBatch
     physical_device_batch : array<VkPhysicalDevice>
@@ -667,17 +673,3 @@ def enumerate_physical_devices_no_batch(
     var handles <- enumerate_physical_devices(instance, result)
     defer() <| ${ delete handles; }
     return <- handles |> split()
-
-//
-// Param converters
-//
-
-
-def boost_value_to_vk(b : Instance) : VkInstance
-    return b.instance
-
-def boost_value_to_vk(b : PhysicalDevice) : VkPhysicalDevice
-    return b.physical_device
-
-def boost_value_to_vk(b : SurfaceKHR) : VkSurfaceKHR
-    return b.surface_khr
