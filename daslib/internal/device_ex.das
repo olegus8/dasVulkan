@@ -62,7 +62,7 @@ def find_graphics_queue_family(
             continue
 
         var graphics_bit = uint(VkQueueFlagBits VK_QUEUE_GRAPHICS_BIT)
-        if (family.queueFlags & graphics_bit) == 0u
+        if (family.queue_flags & graphics_bit) == 0u
             continue
 
         b |> invoke(uint(index))

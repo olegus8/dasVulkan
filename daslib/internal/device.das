@@ -11,25 +11,6 @@ require strings
 require generated public
 
 
-/*
-def get_physical_device_queue_family_properties(
-    physical_device : PhysicalDevice
-) : array<VkQueueFamilyProperties>
-
-    let vk_dev = physical_device.physical_device
-    var count : uint
-    vk_dev |> vkGetPhysicalDeviceQueueFamilyProperties(safe_addr(count), null)
-
-    var props : array<VkQueueFamilyProperties>
-    props |> resize(int(count))
-    props |> lock() <| $(tprops)
-        vk_dev |> vkGetPhysicalDeviceQueueFamilyProperties(
-            safe_addr(count), addr(tprops[0]))
-
-    return <- props
-*/
-
-
 def get_physical_device_surface_present_modes_khr(
     physical_device : PhysicalDevice;
     surface         : VkSurfaceKHR;

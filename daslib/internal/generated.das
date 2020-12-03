@@ -202,6 +202,34 @@ def construct(vk_struct : VkExtensionProperties) : ExtensionProperties
     ]]
 
 //
+// Extent3D
+//
+
+struct Extent3D
+    width : uint
+    height : uint
+    depth : uint
+
+def with_view(
+    boost_struct : Extent3D;
+    b : block<(vk_struct : VkExtent3D)>
+) {
+    let vk_struct <- [[ VkExtent3D
+        width = boost_struct.width,
+        height = boost_struct.height,
+        depth = boost_struct.depth
+    ]];
+    b |> invoke(vk_struct);
+}
+
+def construct(vk_struct : VkExtent3D) : Extent3D
+    return <- [[Extent3D
+        width = vk_struct.width,
+        height = vk_struct.height,
+        depth = vk_struct.depth
+    ]]
+
+//
 // InstanceCreateInfo
 //
 
