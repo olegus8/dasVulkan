@@ -165,3 +165,7 @@ def add_boost_content(g):
         func        = 'vkGetPhysicalDeviceSurfaceFormatsKHR',
         p_count     = 'pSurfaceFormatCount',
         p_items     = 'pSurfaceFormats')
+    g.add_gen_query_array_func(
+        func        = 'vkGetPhysicalDeviceSurfacePresentModesKHR',
+        p_count     = 'pPresentModeCount',
+        p_items     = 'pPresentModes')

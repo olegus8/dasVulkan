@@ -11,6 +11,7 @@ require strings
 require generated public
 
 
+/*
 def get_physical_device_surface_present_modes_khr(
     physical_device : PhysicalDevice;
     surface         : VkSurfaceKHR;
@@ -35,3 +36,4 @@ def get_physical_device_surface_present_modes_khr(
             assert(result_ == VkResult VK_SUCCESS)
 
     return <- modes
+*/
