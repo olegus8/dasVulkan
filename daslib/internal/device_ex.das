@@ -102,7 +102,7 @@ def find_format_like_srgb_bgra8(
 
 def find_present_mode_like_mailbox(
     physical_device : PhysicalDevice;
-    surface         : VkSurfaceKHR
+    surface         : SurfaceKHR
 ) : VkPresentModeKHR
     var modes <- (physical_device |>
         get_physical_device_surface_present_modes_khr(surface))
@@ -220,7 +220,7 @@ def get_suitability_score(device : PhysicalDevice; surface : SurfaceKHR)
         score = 0
 
     var present_modes <- (
-        device |> get_physical_device_surface_present_modes_khr(vk_surface))
+        device |> get_physical_device_surface_present_modes_khr(surface))
     defer() <| ${ delete present_modes; }
     if present_modes |> length() == 0
         score = 0
