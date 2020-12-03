@@ -83,7 +83,8 @@ class BoostGenerator(LoggingObject):
 
     def __register_param(self, param):
         boost_type, vk_type = param.boost_type, param.vk_type
-        self.__all_params[(boost_type, vk_type)] = param
+        if boost_type and vk_type:
+            self.__all_params[(boost_type, vk_type)] = param
 
     def get_param_from_node(self, c_node):
         return self.get_param(c_node.name, c_node.type)
@@ -1086,7 +1087,8 @@ class ParamFixedString(ParamBase):
 
     @property
     def vk_unqual_type(self):
-        raise Exception(f'add if needed')
+        #TODO: add if needed
+        return None
 
     @property
     def boost_unqual_type(self):
@@ -1213,8 +1215,7 @@ class ParamUnknown(ParamBase):
 
     @property
     def c_unqual_type(self):
-        raise VulkanBoostError(f'Param {self._c_param.name} has unknown type: '
-            f'{self._c_param.type.name}')
+        return None
 
     @property
     def vk_unqual_type(self):
