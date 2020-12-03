@@ -28,6 +28,14 @@ def to_string(bytes : int8[])
         let s := reinterpret<string>(addr(bytes[0]))
         return s
 
+def boost_value_to_vk(b, var v : auto)
+    v = b
+def vk_value_to_boost(v, var b : auto)
+    b = v
+
+def vk_value_to_boost(v : int8[], var b : string)
+    b = to_string(v)
+
 //
 // Surface
 //
@@ -660,99 +668,24 @@ def enumerate_physical_devices_no_batch(
     return <- handles |> split()
 
 //
-// Param helpers
+// Param converters
 //
 
 
 def vk_value_to_boost(v : VkExtent3D; var b : Extent3D)
-    v <- construct(vk_value)
+    b <- construct(v)
 
 def boost_value_to_vk(b : Instance; var v : VkInstance)
-    v = boost_value.instance
+    v = b.instance
 
 def boost_value_to_vk(b : PhysicalDevice; var v : VkPhysicalDevice)
-    v = boost_value.physical_device
+    v = b.physical_device
 
 def vk_value_to_boost(v : VkPhysicalDeviceLimits; var b : PhysicalDeviceLimits)
-    v <- construct(vk_value)
+    b <- construct(v)
 
 def vk_value_to_boost(v : VkPhysicalDeviceSparseProperties; var b : PhysicalDeviceSparseProperties)
-    v <- construct(vk_value)
+    b <- construct(v)
 
 def boost_value_to_vk(b : SurfaceKHR; var v : VkSurfaceKHR)
-    v = boost_value.surface_khr
-
-def boost_value_to_vk(b : VkColorSpaceKHR; var v : VkColorSpaceKHR)
-    v = boost_value
-def vk_value_to_boost(v : VkColorSpaceKHR; var b : VkColorSpaceKHR)
-    v = vk_value
-
-def boost_value_to_vk(b : VkFormat; var v : VkFormat)
-    v = boost_value
-def vk_value_to_boost(v : VkFormat; var b : VkFormat)
-    v = vk_value
-
-def boost_value_to_vk(b : VkPhysicalDeviceType; var v : VkPhysicalDeviceType)
-    v = boost_value
-def vk_value_to_boost(v : VkPhysicalDeviceType; var b : VkPhysicalDeviceType)
-    v = vk_value
-
-def boost_value_to_vk(b : VkStructureType; var v : VkStructureType)
-    v = boost_value
-def vk_value_to_boost(v : VkStructureType; var b : VkStructureType)
-    v = vk_value
-
-def boost_value_to_vk(b : float; var v : float)
-    v = boost_value
-def vk_value_to_boost(v : float; var b : float)
-    v = vk_value
-
-def boost_value_to_vk(b : float [2]; var v : float [2])
-    v = boost_value
-def vk_value_to_boost(v : float [2]; var b : float [2])
-    v = vk_value
-
-def boost_value_to_vk(b : int; var v : int)
-    v = boost_value
-def vk_value_to_boost(v : int; var b : int)
-    v = vk_value
-
-def boost_value_to_vk(b : string; var v : string)
-    v = boost_value
-def vk_value_to_boost(v : string; var b : string)
-    v = vk_value
-
-def boost_value_to_vk(b : string ?; var v : string ?)
-    v = boost_value
-def vk_value_to_boost(v : string ?; var b : string ?)
-    v = vk_value
-
-def boost_value_to_vk(b : uint; var v : uint)
-    v = boost_value
-def vk_value_to_boost(v : uint; var b : uint)
-    v = vk_value
-
-def boost_value_to_vk(b : uint ?; var v : uint ?)
-    v = boost_value
-def vk_value_to_boost(v : uint ?; var b : uint ?)
-    v = vk_value
-
-def boost_value_to_vk(b : uint [2]; var v : uint [2])
-    v = boost_value
-def vk_value_to_boost(v : uint [2]; var b : uint [2])
-    v = vk_value
-
-def boost_value_to_vk(b : uint [3]; var v : uint [3])
-    v = boost_value
-def vk_value_to_boost(v : uint [3]; var b : uint [3])
-    v = vk_value
-
-def boost_value_to_vk(b : uint64; var v : uint64)
-    v = boost_value
-def vk_value_to_boost(v : uint64; var b : uint64)
-    v = vk_value
-
-def boost_value_to_vk(b : uint8 [16]; var v : uint8 [16])
-    v = boost_value
-def vk_value_to_boost(v : uint8 [16]; var b : uint8 [16])
-    v = vk_value
+    v = b.surface_khr

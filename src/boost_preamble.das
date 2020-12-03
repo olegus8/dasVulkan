@@ -28,13 +28,13 @@ def to_string(bytes : int8[])
         let s := reinterpret<string>(addr(bytes[0]))
         return s
 
-def boost_value_to_vk(b, var v : auto)
-    v = b
-def vk_value_to_boost(v, var b : auto)
-    b = v
+def boost_value_to_vk(b)
+    return b
+def vk_value_to_boost(v)
+    return v
 
-def vk_value_to_boost(v : int8[], var b : string)
-    b = to_string(v)
+def vk_value_to_boost(v : int8[])
+    return to_string(v)
 
 //
 // Surface

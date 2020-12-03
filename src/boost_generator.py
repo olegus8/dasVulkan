@@ -923,31 +923,7 @@ class ParamBase(object):
         return t
 
     def generate_converters(self):
-        lines = []
-
-        btype = self.boost_type
-        vtype = self.vk_type
-        assign_b2v = self.boost_to_vk_assign_op
-        assign_v2b = self.vk_to_boost_assign_op
-        converted_b2v = self.boost_value_to_vk('b')
-        converted_v2b = self.vk_value_to_boost('v')
-
-        if converted_b2v:
-            lines += [
-                f'def boost_value_to_vk(b : {btype}; var v : {vtype})',
-                f'    v {assign_b2v} {converted_b2v}'
-            ]
-
-        if converted_v2b:
-            lines += [
-                f'def vk_value_to_boost(v : {vtype}; var b : {btype})',
-                f'    b {assign_v2b} {converted_v2b}'
-            ]
-
-        if lines:
-            lines = [''] + lines
-
-        return lines
+        return []
 
 
 class ParamVkHandle(ParamBase):
@@ -975,11 +951,19 @@ class ParamVkHandle(ParamBase):
         return vk_handle_type_to_boost(self.vk_unqual_type)
 
     def boost_value_to_vk(self, boost_value):
-        attr = boost_handle_attr_name(self.boost_type)
-        return f'{boost_value}.{attr}'
+        return f'boost_value_to_vk({boost_value})'
 
     def vk_value_to_boost(self, vk_value):
         return None
+
+    def generate_converters(self):
+        btype = self.boost_type
+        vtype = self.vk_type
+        attr = boost_handle_attr_name(self.boost_type)
+        return [
+            f'def boost_value_to_vk(b : {btype}) : {vtype}',
+            f'    return b.{attr}'
+        ]
 
 
 class ParamVkHandlePtr(ParamBase):
@@ -1027,11 +1011,19 @@ class ParamVkStruct(ParamBase):
         return None
 
     def vk_value_to_boost(self, vk_value):
-        return f'construct({vk_value})'
+        return f'vk_value_to_boost({vk_value})'
 
     @property
     def vk_to_boost_assign_op(self):
         return '<-'
+
+    def generate_converters(self):
+        btype = self.boost_type
+        vtype = self.vk_type
+        return [
+            f'def vk_value_to_boost(v : {vtype}) : {btype}',
+            f'    return <- construct(v)'
+        ]
 
 
 class ParamVkStructPtr(ParamBase):
