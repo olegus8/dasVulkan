@@ -246,6 +246,33 @@ def with_view(
 }
 
 //
+// DeviceQueueCreateInfo
+//
+
+struct DeviceQueueCreateInfo
+    flags : uint
+    queue_family_index : uint
+    queue_priorities : array<float>
+
+def with_view(
+    boost_struct : DeviceQueueCreateInfo;
+    b : block<(vk_struct : VkDeviceQueueCreateInfo)>
+) {
+    boost_struct.queue_priorities |> lock_data() <| $(
+        vk_p_queue_priorities, vk_queue_count
+    ) {
+    let vk_struct <- [[ VkDeviceQueueCreateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO,
+        flags = boost_struct.flags,
+        queueFamilyIndex = boost_struct.queue_family_index,
+        queueCount = uint(vk_queue_count),
+        pQueuePriorities = vk_p_queue_priorities
+    ]];
+    b |> invoke(vk_struct);
+    };
+}
+
+//
 // ExtensionProperties
 //
 
