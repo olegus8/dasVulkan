@@ -42,6 +42,9 @@ struct SurfaceKHR
     surface_khr : VkSurfaceKHR
     _instance : VkInstance
 
+def boost_value_to_vk(b : SurfaceKHR) : VkSurfaceKHR
+    return b.surface_khr
+
 def create_window_surface(
     instance : Instance = [[ Instance ]];
     window : GLFWwindow_DasHandle = [[ GLFWwindow_DasHandle ]];
