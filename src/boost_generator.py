@@ -7,8 +7,6 @@ import re
 
 #TODO: add pAllocator support
 
-PANIC_NOT_SUPPORTED = 'panic("not supported")'
-
 
 class VulkanBoostError(Exception):
     pass
@@ -922,6 +920,33 @@ class ParamBase(object):
             t += f' [{self._c_param.type.fixed_array_size}]'
         return t
 
+    def generate(self):
+        lines = []
+
+        btype = self.boost_type
+        vtype = self.vk_type
+        assign_b2v = self.boost_to_vk_assign_op
+        assign_v2b = self.vk_to_boost_assign_op
+        converted_b2v = self.boost_value_to_vk('boost_value')
+        converted_v2b = self.vk_value_to_boost('vk_value')
+
+        if converted_b2v:
+            lines += [
+                f'def boost_value_to_vk({btype} b; var {vtype} v)',
+                f'    v {assign_b2v} {converted_b2v}'
+            ]
+
+        if converted_v2b:
+            lines += [
+                f'def vk_value_to_boost({vtype} v; var {btype} b)',
+                f'    v {assign_v2b} {converted_v2b}'
+            ]
+
+        if lines:
+            lines = [''] + lines
+
+        return lines
+
 
 class ParamVkHandle(ParamBase):
 
@@ -952,7 +977,7 @@ class ParamVkHandle(ParamBase):
         return f'{boost_value}.{attr}'
 
     def vk_value_to_boost(self, vk_value):
-        return PANIC_NOT_SUPPORTED
+        return None
 
 
 class ParamVkHandlePtr(ParamBase):
@@ -970,7 +995,7 @@ class ParamVkHandlePtr(ParamBase):
         return self.c_unqual_type
 
     def vk_value_to_boost(self, vk_value):
-        return PANIC_NOT_SUPPORTED
+        return None
 
     def boost_value_to_vk(self, boost_value):
         attr = boost_handle_attr_name(self.boost_type)
@@ -995,7 +1020,7 @@ class ParamVkStruct(ParamBase):
         return vk_struct_type_to_boost(self.vk_unqual_type)
 
     def boost_value_to_vk(self, boost_value):
-        return PANIC_NOT_SUPPORTED
+        return None
 
     def vk_value_to_boost(self, vk_value):
         return f'construct({vk_value})'
@@ -1023,10 +1048,10 @@ class ParamVkStructPtr(ParamBase):
         return vk_struct_type_to_boost(self.vk_unqual_type)
 
     def boost_value_to_vk(self, boost_value):
-        return PANIC_NOT_SUPPORTED
+        return None
 
     def vk_value_to_boost(self, vk_value):
-        return PANIC_NOT_SUPPORTED
+        return None
 
     @property
     def vk_view_type(self):
@@ -1067,7 +1092,7 @@ class ParamFixedString(ParamBase):
         return 'string'
 
     def boost_value_to_vk(self, boost_value):
-        return PANIC_NOT_SUPPORTED
+        return None
 
     def vk_value_to_boost(self, vk_value):
         return f'to_string({vk_value})'
