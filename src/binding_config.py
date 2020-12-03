@@ -157,6 +157,9 @@ def add_boost_content(g):
     g.add_gen_query_func(
         func        = 'vkGetPhysicalDeviceProperties',
         p_output    = 'pProperties')
+    g.add_gen_query_func(
+        func        = 'vkGetPhysicalDeviceSurfaceSupportKHR',
+        p_output    = 'pSupported')
     g.add_gen_query_array_func(
         func        = 'vkGetPhysicalDeviceQueueFamilyProperties',
         p_count     = 'pQueueFamilyPropertyCount',
