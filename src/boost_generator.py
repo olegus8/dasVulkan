@@ -185,9 +185,7 @@ class GenQueryFunc(object):
         if self.__returns_vk_result:
             lines.append('    assert(result_ == VkResult VK_SUCCESS)')
         
-        ret_op = self.__output_param.vk_to_boost_assign_op
-        if ret_op == '=':
-            ret_op = ''
+        ret_op = '<-' if self.__output_param.is_struct else ''
         lines += [
            f'    return {ret_op} vk_value_to_boost(vk_output)',
         ]
@@ -859,6 +857,10 @@ class ParamBase(object):
     @property
     def is_fixed_array(self):
         return self._c_param.type.is_fixed_array
+
+    @property
+    def is_struct(self):
+        return self._c_param.type.is_struct
 
     @property
     def vk_unqual_type(self):
