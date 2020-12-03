@@ -106,6 +106,29 @@ def enumerate_device_extension_properties(
 
     return <- [{for item in vk_items ; construct(item)}]
 
+def get_physical_device_queue_family_properties(
+    physical_device : PhysicalDevice = [[ PhysicalDevice ]]
+) : array<QueueFamilyProperties>
+    var count : uint
+    vkGetPhysicalDeviceQueueFamilyProperties(
+        physical_device.physical_device,
+        safe_addr(count),
+        null
+    )
+
+
+    var vk_items : array<VkQueueFamilyProperties>
+    defer() <| ${ delete vk_items; }
+    vk_items |> resize(int(count))
+    vk_items |> lock_data() <| $(vk_p_items, count_)
+        vkGetPhysicalDeviceQueueFamilyProperties(
+            physical_device.physical_device,
+            safe_addr(count),
+            vk_p_items
+        )
+
+    return <- [{for item in vk_items ; construct(item)}]
+
 def get_physical_device_surface_formats_khr(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]];
     surface : SurfaceKHR = [[ SurfaceKHR ]];
@@ -482,6 +505,24 @@ def construct(vk_struct : VkPhysicalDeviceSparseProperties) : PhysicalDeviceSpar
         residency_standard_3d_block_shape = vk_struct.residencyStandard3DBlockShape,
         residency_aligned_mip_size = vk_struct.residencyAlignedMipSize,
         residency_non_resident_strict = vk_struct.residencyNonResidentStrict
+    ]]
+
+//
+// QueueFamilyProperties
+//
+
+struct QueueFamilyProperties
+    queue_flags : uint
+    queue_count : uint
+    timestamp_valid_bits : uint
+    min_image_transfer_granularity : Extent3D
+
+def construct(vk_struct : VkQueueFamilyProperties) : QueueFamilyProperties
+    return <- [[QueueFamilyProperties
+        queue_flags = vk_struct.queueFlags,
+        queue_count = vk_struct.queueCount,
+        timestamp_valid_bits = vk_struct.timestampValidBits,
+        min_image_transfer_granularity <- construct(vk_struct.minImageTransferGranularity)
     ]]
 
 //
