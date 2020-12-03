@@ -97,8 +97,8 @@ def enumerate_device_extension_properties(
         safe_addr(count),
         null
     )
-    assert(result_ == VkResult VK_SUCCESS)
 
+    assert(result_ == VkResult VK_SUCCESS)
     if result ?? result_ != VkResult VK_SUCCESS
         return <- [[array<ExtensionProperties>]]
 
@@ -151,8 +151,8 @@ def get_physical_device_surface_formats_khr(
         safe_addr(count),
         null
     )
-    assert(result_ == VkResult VK_SUCCESS)
 
+    assert(result_ == VkResult VK_SUCCESS)
     if result ?? result_ != VkResult VK_SUCCESS
         return <- [[array<SurfaceFormatKHR>]]
 
