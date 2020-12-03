@@ -28,13 +28,13 @@ def to_string(bytes : int8[])
         let s := reinterpret<string>(addr(bytes[0]))
         return s
 
-def boost_value_to_vk(b, var v : auto)
-    v = b
-def vk_value_to_boost(v, var b : auto)
-    b = v
+def boost_value_to_vk(b)
+    return b
+def vk_value_to_boost(v)
+    return v
 
-def vk_value_to_boost(v : int8[], var b : string)
-    b = to_string(v)
+def vk_value_to_boost(v : int8[])
+    return to_string(v)
 
 //
 // Surface
@@ -78,7 +78,7 @@ def get_physical_device_properties(
 ) : PhysicalDeviceProperties
     var vk_output : VkPhysicalDeviceProperties
     vkGetPhysicalDeviceProperties(
-        physical_device.physical_device,
+        boost_value_to_vk(physical_device),
         safe_addr(vk_output)
     )
     return <- construct(vk_output)
@@ -91,7 +91,7 @@ def enumerate_device_extension_properties(
     var count : uint
     var result_ = VkResult VK_SUCCESS
     result ?? result_ = vkEnumerateDeviceExtensionProperties(
-        physical_device.physical_device,
+        boost_value_to_vk(physical_device),
         layer_name,
         safe_addr(count),
         null
@@ -106,7 +106,7 @@ def enumerate_device_extension_properties(
     vk_items |> resize(int(count))
     vk_items |> lock_data() <| $(vk_p_items, count_)
         result ?? result_ = vkEnumerateDeviceExtensionProperties(
-            physical_device.physical_device,
+            boost_value_to_vk(physical_device),
             layer_name,
             safe_addr(count),
             vk_p_items
@@ -120,7 +120,7 @@ def get_physical_device_queue_family_properties(
 ) : array<QueueFamilyProperties>
     var count : uint
     vkGetPhysicalDeviceQueueFamilyProperties(
-        physical_device.physical_device,
+        boost_value_to_vk(physical_device),
         safe_addr(count),
         null
     )
@@ -131,7 +131,7 @@ def get_physical_device_queue_family_properties(
     vk_items |> resize(int(count))
     vk_items |> lock_data() <| $(vk_p_items, count_)
         vkGetPhysicalDeviceQueueFamilyProperties(
-            physical_device.physical_device,
+            boost_value_to_vk(physical_device),
             safe_addr(count),
             vk_p_items
         )
@@ -146,8 +146,8 @@ def get_physical_device_surface_formats_khr(
     var count : uint
     var result_ = VkResult VK_SUCCESS
     result ?? result_ = vkGetPhysicalDeviceSurfaceFormatsKHR(
-        physical_device.physical_device,
-        surface.surface_khr,
+        boost_value_to_vk(physical_device),
+        boost_value_to_vk(surface),
         safe_addr(count),
         null
     )
@@ -161,8 +161,8 @@ def get_physical_device_surface_formats_khr(
     vk_items |> resize(int(count))
     vk_items |> lock_data() <| $(vk_p_items, count_)
         result ?? result_ = vkGetPhysicalDeviceSurfaceFormatsKHR(
-            physical_device.physical_device,
-            surface.surface_khr,
+            boost_value_to_vk(physical_device),
+            boost_value_to_vk(surface),
             safe_addr(count),
             vk_p_items
         )
@@ -206,7 +206,7 @@ struct ExtensionProperties
 
 def construct(vk_struct : VkExtensionProperties) : ExtensionProperties
     return <- [[ExtensionProperties
-        extension_name = to_string(vk_struct.extensionName),
+        extension_name = vk_value_to_boost(vk_struct.extensionName),
         spec_version = vk_struct.specVersion
     ]]
 
@@ -518,10 +518,10 @@ def construct(vk_struct : VkPhysicalDeviceProperties) : PhysicalDeviceProperties
         vendor_id = vk_struct.vendorID,
         device_id = vk_struct.deviceID,
         device_type = vk_struct.deviceType,
-        device_name = to_string(vk_struct.deviceName),
+        device_name = vk_value_to_boost(vk_struct.deviceName),
         pipeline_cache_uuid = vk_struct.pipelineCacheUUID,
-        limits <- construct(vk_struct.limits),
-        sparse_properties <- construct(vk_struct.sparseProperties)
+        limits <- vk_value_to_boost(vk_struct.limits),
+        sparse_properties <- vk_value_to_boost(vk_struct.sparseProperties)
     ]]
 
 //
@@ -559,7 +559,7 @@ def construct(vk_struct : VkQueueFamilyProperties) : QueueFamilyProperties
         queue_flags = vk_struct.queueFlags,
         queue_count = vk_struct.queueCount,
         timestamp_valid_bits = vk_struct.timestampValidBits,
-        min_image_transfer_granularity <- construct(vk_struct.minImageTransferGranularity)
+        min_image_transfer_granularity <- vk_value_to_boost(vk_struct.minImageTransferGranularity)
     ]]
 
 //
@@ -612,7 +612,7 @@ def create_instance(
 
 def finalize(var instance : Instance)
     vkDestroyInstance(
-        instance.instance,
+        boost_value_to_vk(instance),
         null
     )
     memzero(instance)
@@ -640,7 +640,7 @@ def enumerate_physical_devices(
     var result_ = VkResult VK_SUCCESS
 
     result ?? result_ = vkEnumeratePhysicalDevices(
-        instance.instance,
+        boost_value_to_vk(instance),
         safe_addr(count),
         null
     )
@@ -651,7 +651,7 @@ def enumerate_physical_devices(
         vk_handles |> resize(int(count))
         vk_handles |> lock() <| $(thandles)
             result ?? result_ = vkEnumeratePhysicalDevices(
-                instance.instance,
+                boost_value_to_vk(instance),
                 safe_addr(count),
                 addr(thandles[0])
             )
@@ -671,21 +671,15 @@ def enumerate_physical_devices_no_batch(
 // Param converters
 //
 
-
-def vk_value_to_boost(v : VkExtent3D; var b : Extent3D)
-    b <- construct(v)
-
-def boost_value_to_vk(b : Instance; var v : VkInstance)
-    v = b.instance
-
-def boost_value_to_vk(b : PhysicalDevice; var v : VkPhysicalDevice)
-    v = b.physical_device
-
-def vk_value_to_boost(v : VkPhysicalDeviceLimits; var b : PhysicalDeviceLimits)
-    b <- construct(v)
-
-def vk_value_to_boost(v : VkPhysicalDeviceSparseProperties; var b : PhysicalDeviceSparseProperties)
-    b <- construct(v)
-
-def boost_value_to_vk(b : SurfaceKHR; var v : VkSurfaceKHR)
-    v = b.surface_khr
+def vk_value_to_boost(v : VkExtent3D) : Extent3D
+    return <- construct(v)
+def boost_value_to_vk(b : Instance) : VkInstance
+    return b.instance
+def boost_value_to_vk(b : PhysicalDevice) : VkPhysicalDevice
+    return b.physical_device
+def vk_value_to_boost(v : VkPhysicalDeviceLimits) : PhysicalDeviceLimits
+    return <- construct(v)
+def vk_value_to_boost(v : VkPhysicalDeviceSparseProperties) : PhysicalDeviceSparseProperties
+    return <- construct(v)
+def boost_value_to_vk(b : SurfaceKHR) : VkSurfaceKHR
+    return b.surface_khr

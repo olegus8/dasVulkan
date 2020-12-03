@@ -961,6 +961,7 @@ class ParamVkHandle(ParamBase):
         vtype = self.vk_type
         attr = boost_handle_attr_name(self.boost_type)
         return [
+             '',
             f'def boost_value_to_vk(b : {btype}) : {vtype}',
             f'    return b.{attr}'
         ]
@@ -1018,6 +1019,7 @@ class ParamVkStruct(ParamBase):
         btype = self.boost_type
         vtype = self.vk_type
         return [
+             '',
             f'def vk_value_to_boost(v : {vtype}) : {btype}',
             f'    return <- construct(v)'
         ]
