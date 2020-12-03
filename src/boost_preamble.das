@@ -29,7 +29,7 @@ def boost_value_to_vk(b)
 def vk_value_to_boost(v)
     return v
 
-def vk_value_to_boost(v : int8[])
+def vk_value_to_boost(v : int8[]) : string
     unsafe
         let s := reinterpret<string>(addr(v[0]))
         return s
