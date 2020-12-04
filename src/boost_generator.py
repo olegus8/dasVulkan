@@ -400,8 +400,9 @@ class GenStruct(object):
             bname, vname = field.boost_name, field.vk_name
             btype, vtype = field.boost_type, field.vk_type
             if self.__is_array_items(vname) and field.needs_vk_view:
+                dvtype = deref_das_type(vtype)
                 biname = boost_ptr_name_to_array(field.boost_name)
-                lines += [f'    _vk_view_{biname} : array<{vtype}>']
+                lines += [f'    _vk_view_{biname} : array<{dvtype}>']
             elif field.is_pointer and field.needs_vk_view:
                 dvtype = deref_das_type(vtype)
                 lines += [f'    _vk_view_{bname} : {dvtype}']

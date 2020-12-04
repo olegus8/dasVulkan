@@ -250,7 +250,7 @@ def vk_view_create(boost_struct : ApplicationInfo) : VkApplicationInfo
     assert(!boost_struct._vk_view_active)
     boost_struct._vk_view_active = true
 
-    var vk_struct : [[ VkApplicationInfo ]]
+    var vk_struct : VkApplicationInfo
     vk_struct.sType = VkStructureType VK_STRUCTURE_TYPE_APPLICATION_INFO
     vk_struct.pApplicationName = boost_struct.application_name
     vk_struct.applicationVersion = boost_struct.application_version
@@ -283,7 +283,7 @@ def vk_view_create(boost_struct : DeviceCreateInfo) : VkDeviceCreateInfo
     assert(!boost_struct._vk_view_active)
     boost_struct._vk_view_active = true
 
-    var vk_struct : [[ VkDeviceCreateInfo ]]
+    var vk_struct : VkDeviceCreateInfo
     vk_struct.sType = VkStructureType VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO
     vk_struct.flags = boost_struct.flags
     vk_struct.queueCreateInfoCount = uint(boost_struct.queue_create_info_count |> length())
@@ -327,7 +327,7 @@ def vk_view_create(boost_struct : DeviceQueueCreateInfo) : VkDeviceQueueCreateIn
     assert(!boost_struct._vk_view_active)
     boost_struct._vk_view_active = true
 
-    var vk_struct : [[ VkDeviceQueueCreateInfo ]]
+    var vk_struct : VkDeviceQueueCreateInfo
     vk_struct.sType = VkStructureType VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO
     vk_struct.flags = boost_struct.flags
     vk_struct.queueFamilyIndex = boost_struct.queue_family_index
@@ -371,7 +371,7 @@ def vk_view_create(boost_struct : Extent3D) : VkExtent3D
     assert(!boost_struct._vk_view_active)
     boost_struct._vk_view_active = true
 
-    var vk_struct : [[ VkExtent3D ]]
+    var vk_struct : VkExtent3D
     vk_struct.width = boost_struct.width
     vk_struct.height = boost_struct.height
     vk_struct.depth = boost_struct.depth
@@ -406,7 +406,7 @@ def vk_view_create(boost_struct : InstanceCreateInfo) : VkInstanceCreateInfo
     assert(!boost_struct._vk_view_active)
     boost_struct._vk_view_active = true
 
-    var vk_struct : [[ VkInstanceCreateInfo ]]
+    var vk_struct : VkInstanceCreateInfo
     vk_struct.sType = VkStructureType VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO
     vk_struct.flags = boost_struct.flags
     if boost_struct.p_application_info != null
@@ -747,7 +747,7 @@ def vk_view_create(boost_struct : PhysicalDeviceFeatures) : VkPhysicalDeviceFeat
     assert(!boost_struct._vk_view_active)
     boost_struct._vk_view_active = true
 
-    var vk_struct : [[ VkPhysicalDeviceFeatures ]]
+    var vk_struct : VkPhysicalDeviceFeatures
     vk_struct.robustBufferAccess = boost_struct.robust_buffer_access
     vk_struct.fullDrawIndexUint32 = boost_struct.full_draw_index_uint_32
     vk_struct.imageCubeArray = boost_struct.image_cube_array
@@ -864,7 +864,7 @@ def vk_view_create(boost_struct : SurfaceFormatKHR) : VkSurfaceFormatKHR
     assert(!boost_struct._vk_view_active)
     boost_struct._vk_view_active = true
 
-    var vk_struct : [[ VkSurfaceFormatKHR ]]
+    var vk_struct : VkSurfaceFormatKHR
     vk_struct.format = boost_struct.format
     vk_struct.colorSpace = boost_struct.color_space
 
