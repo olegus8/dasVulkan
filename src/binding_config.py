@@ -99,6 +99,10 @@ def add_boost_content(g):
         handle          = 'VkDevice',
         ctor            = 'vkCreateDevice')
     g.add_gen_handle(
+        handle          = 'VkCommandPool',
+        ctor            = 'vkCreateCommandPool',
+        dtor            = 'vkDestroyCommandPool')
+    g.add_gen_handle(
         handle          = 'VkInstance',
         ctor            = 'vkCreateInstance',
         dtor            = 'vkDestroyInstance')
@@ -117,6 +121,9 @@ def add_boost_content(g):
 
     g.add_gen_struct(
         struct      = 'VkApplicationInfo',
+        boost_to_vk = True)
+    g.add_gen_struct(
+        struct      = 'VkCommandPoolCreateInfo',
         boost_to_vk = True)
     g.add_gen_struct(
         struct      = 'VkDeviceCreateInfo',
