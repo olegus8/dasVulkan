@@ -8,9 +8,22 @@ require vulkan
 // Command pool
 //
 
+/*
+This says 
+30304: too many custom  finalize functions exist for finalize ( pool : command::CommandPool explicit -const ) : void
+candidates are:
+	command::finalize ( pool : command::CommandPool explicit -const ) : void
+	generated::finalize ( device : generated::Device ) : void
+
 struct CommandPool
     device : VkDevice
     pool : VkCommandPool
+*/
+
+// this works
+struct CommandPool
+    pool : VkCommandPool
+    device : VkDevice
 
 
 def create_command_pool(
