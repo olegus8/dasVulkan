@@ -446,8 +446,7 @@ class GenStruct(object):
         lines = []
         lines += [
             '',
-            '[unsafe_function]',
-           f'def vk_view_create(boost_struct : {bstype}) : {vstype}',
+           f'def vk_view_create_unsafe(boost_struct : {bstype}) : {vstype}',
             '    assert(!boost_struct._vk_view_active)',
             '    boost_struct._vk_view_active = true',
             '',
@@ -474,23 +473,22 @@ class GenStruct(object):
                     lines += [
                        f'    boost_struct._vk_view_{biname} <- '
                            f'[{{for item in boost_struct.{biname} ; '
-                               f'item |> vk_view_create()}}]',
-                        '    unsafe',
-                       f'        vk_struct.{vname} = array_addr('
-                                    f'boost_struct._vk_view_{biname})',
+                               f'item |> vk_view_create_unsafe()}}]',
+                       f'    vk_struct.{vname} = array_addr_unsafe('
+                                f'boost_struct._vk_view_{biname})',
                     ]
                 else:
                     lines += [
-                        '    unsafe',
-                       f'        vk_struct.{vname} = array_addr('
-                                    f'boost_struct.{biname})',
+                       f'    vk_struct.{vname} = array_addr_unsafe('
+                                f'boost_struct.{biname})',
                     ]
             elif field.is_pointer:
                 if field.needs_vk_view:
                     lines += [
                        f'    if boost_struct.{bname} != null',
                        f'        boost_struct._vk_view_{bname} <- '
-                                  f'*boost_struct.{bname} |> vk_view_create()',
+                                  f'*boost_struct.{bname} |> '
+                                        f'vk_view_create_unsafe()',
                         '        unsafe',
                        f'            vk_struct.{vname} = addr('
                                          f'boost_struct.{bname})',
