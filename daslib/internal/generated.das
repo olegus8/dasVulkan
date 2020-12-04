@@ -601,6 +601,131 @@ def vk_value_to_boost(vk_struct : VkPhysicalDeviceProperties) : PhysicalDevicePr
     ]]
 
 //
+// PhysicalDeviceFeatures
+//
+
+struct PhysicalDeviceFeatures
+    robust_buffer_access : uint
+    full_draw_index_uint_32 : uint
+    image_cube_array : uint
+    independent_blend : uint
+    geometry_shader : uint
+    tessellation_shader : uint
+    sample_rate_shading : uint
+    dual_src_blend : uint
+    logic_op : uint
+    multi_draw_indirect : uint
+    draw_indirect_first_instance : uint
+    depth_clamp : uint
+    depth_bias_clamp : uint
+    fill_mode_non_solid : uint
+    depth_bounds : uint
+    wide_lines : uint
+    large_points : uint
+    alpha_to_one : uint
+    multi_viewport : uint
+    sampler_anisotropy : uint
+    texture_compression_etc2 : uint
+    texture_compression_astc_ldr : uint
+    texture_compression_bc : uint
+    occlusion_query_precise : uint
+    pipeline_statistics_query : uint
+    vertex_pipeline_stores_and_atomics : uint
+    fragment_stores_and_atomics : uint
+    shader_tessellation_and_geometry_point_size : uint
+    shader_image_gather_extended : uint
+    shader_storage_image_extended_formats : uint
+    shader_storage_image_multisample : uint
+    shader_storage_image_read_without_format : uint
+    shader_storage_image_write_without_format : uint
+    shader_uniform_buffer_array_dynamic_indexing : uint
+    shader_sampled_image_array_dynamic_indexing : uint
+    shader_storage_buffer_array_dynamic_indexing : uint
+    shader_storage_image_array_dynamic_indexing : uint
+    shader_clip_distance : uint
+    shader_cull_distance : uint
+    shader_float_64 : uint
+    shader_int_64 : uint
+    shader_int_16 : uint
+    shader_resource_residency : uint
+    shader_resource_min_lod : uint
+    sparse_binding : uint
+    sparse_residency_buffer : uint
+    sparse_residency_image_2d : uint
+    sparse_residency_image_3d : uint
+    sparse_residency_2samples : uint
+    sparse_residency_4samples : uint
+    sparse_residency_8samples : uint
+    sparse_residency_16samples : uint
+    sparse_residency_aliased : uint
+    variable_multisample_rate : uint
+    inherited_queries : uint
+
+def with_view(
+    boost_struct : PhysicalDeviceFeatures;
+    b : block<(vk_struct : VkPhysicalDeviceFeatures)>
+) {
+    let vk_struct <- [[ VkPhysicalDeviceFeatures
+        robustBufferAccess = boost_struct.robust_buffer_access,
+        fullDrawIndexUint32 = boost_struct.full_draw_index_uint_32,
+        imageCubeArray = boost_struct.image_cube_array,
+        independentBlend = boost_struct.independent_blend,
+        geometryShader = boost_struct.geometry_shader,
+        tessellationShader = boost_struct.tessellation_shader,
+        sampleRateShading = boost_struct.sample_rate_shading,
+        dualSrcBlend = boost_struct.dual_src_blend,
+        logicOp = boost_struct.logic_op,
+        multiDrawIndirect = boost_struct.multi_draw_indirect,
+        drawIndirectFirstInstance = boost_struct.draw_indirect_first_instance,
+        depthClamp = boost_struct.depth_clamp,
+        depthBiasClamp = boost_struct.depth_bias_clamp,
+        fillModeNonSolid = boost_struct.fill_mode_non_solid,
+        depthBounds = boost_struct.depth_bounds,
+        wideLines = boost_struct.wide_lines,
+        largePoints = boost_struct.large_points,
+        alphaToOne = boost_struct.alpha_to_one,
+        multiViewport = boost_struct.multi_viewport,
+        samplerAnisotropy = boost_struct.sampler_anisotropy,
+        textureCompressionETC2 = boost_struct.texture_compression_etc2,
+        textureCompressionASTC_LDR = boost_struct.texture_compression_astc_ldr,
+        textureCompressionBC = boost_struct.texture_compression_bc,
+        occlusionQueryPrecise = boost_struct.occlusion_query_precise,
+        pipelineStatisticsQuery = boost_struct.pipeline_statistics_query,
+        vertexPipelineStoresAndAtomics = boost_struct.vertex_pipeline_stores_and_atomics,
+        fragmentStoresAndAtomics = boost_struct.fragment_stores_and_atomics,
+        shaderTessellationAndGeometryPointSize = boost_struct.shader_tessellation_and_geometry_point_size,
+        shaderImageGatherExtended = boost_struct.shader_image_gather_extended,
+        shaderStorageImageExtendedFormats = boost_struct.shader_storage_image_extended_formats,
+        shaderStorageImageMultisample = boost_struct.shader_storage_image_multisample,
+        shaderStorageImageReadWithoutFormat = boost_struct.shader_storage_image_read_without_format,
+        shaderStorageImageWriteWithoutFormat = boost_struct.shader_storage_image_write_without_format,
+        shaderUniformBufferArrayDynamicIndexing = boost_struct.shader_uniform_buffer_array_dynamic_indexing,
+        shaderSampledImageArrayDynamicIndexing = boost_struct.shader_sampled_image_array_dynamic_indexing,
+        shaderStorageBufferArrayDynamicIndexing = boost_struct.shader_storage_buffer_array_dynamic_indexing,
+        shaderStorageImageArrayDynamicIndexing = boost_struct.shader_storage_image_array_dynamic_indexing,
+        shaderClipDistance = boost_struct.shader_clip_distance,
+        shaderCullDistance = boost_struct.shader_cull_distance,
+        shaderFloat64 = boost_struct.shader_float_64,
+        shaderInt64 = boost_struct.shader_int_64,
+        shaderInt16 = boost_struct.shader_int_16,
+        shaderResourceResidency = boost_struct.shader_resource_residency,
+        shaderResourceMinLod = boost_struct.shader_resource_min_lod,
+        sparseBinding = boost_struct.sparse_binding,
+        sparseResidencyBuffer = boost_struct.sparse_residency_buffer,
+        sparseResidencyImage2D = boost_struct.sparse_residency_image_2d,
+        sparseResidencyImage3D = boost_struct.sparse_residency_image_3d,
+        sparseResidency2Samples = boost_struct.sparse_residency_2samples,
+        sparseResidency4Samples = boost_struct.sparse_residency_4samples,
+        sparseResidency8Samples = boost_struct.sparse_residency_8samples,
+        sparseResidency16Samples = boost_struct.sparse_residency_16samples,
+        sparseResidencyAliased = boost_struct.sparse_residency_aliased,
+        variableMultisampleRate = boost_struct.variable_multisample_rate,
+        inheritedQueries = boost_struct.inherited_queries
+    ]];
+    b |> invoke(vk_struct);
+}
+
+//
 // PhysicalDeviceSparseProperties
 //
 
