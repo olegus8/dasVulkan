@@ -8,6 +8,7 @@ require vulkan
 require internal/buffer      public
 require internal/buffer_ex   public
 require internal/command     public
+require internal/command_ex  public
 require internal/core        public
 require internal/device_ex   public
 require internal/glfw        public
