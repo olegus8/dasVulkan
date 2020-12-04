@@ -894,7 +894,7 @@ class GenHandle(object):
                 vk_value = param.boost_value_to_vk(bh_attr)
             else:
                 bname = param.boost_name
-                vk_value = parah.boost_value_to_vk(f'{bh_attr}._{bname}')
+                vk_value = param.boost_value_to_vk(f'{bh_attr}._{bname}')
             lines.append(f'        {vk_value},')
         remove_last_char(lines, ',')
         lines += [
