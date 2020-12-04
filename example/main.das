@@ -272,12 +272,15 @@ def with_swapchain_independent_state(width, height, title; b : block<(
         let phys_dev <- instance |> find_physical_device_for_graphics(surface)
         let present_mode <- phys_dev |> find_present_mode_like_mailbox(surface)
         var surf_fmt <- phys_dev |> find_format_like_srgb_bgra8(surface)
+        let qfam <- phys_dev |> get_graphics_queue_family(surface)
 
-        var gdev <- phys_dev |> create_graphics_device(surface)
-        defer() <| ${ delete gdev; }
-        let vk_device = gdev.device.device;
+        var device <- phys_dev |> create_single_queue_device(qfam)
+        defer() <| ${ delete device; }
+        let vk_device = device.device
 
-        var cmd_pool <- vk_device |> create_command_pool(gdev.queue_family)
+        var queue <- device |> get_device_queue(qfam)
+
+        var cmd_pool <- vk_device |> create_command_pool(qfam)
         defer() <| ${ delete cmd_pool; };
 
         vk_device |> with_shader_modules([[auto[]

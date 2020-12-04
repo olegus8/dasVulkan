@@ -117,13 +117,11 @@ struct GraphicsDevice
     queue_family : uint
 
 
-def create_graphics_device(
+def create_single_queue_device(
     physical_device : PhysicalDevice;
-    surface         : SurfaceKHR;
+    queue_family    : uint;
     extensions      : array<string> = DEFAULT_REQUIRED_EXTENSIONS
 ) : GraphicsDevice
-    let graphics_family <- physical_device|>get_graphics_queue_family(surface)
-
     var create_info <- [[DeviceCreateInfo
         queue_create_infos <- [{auto[] [[DeviceQueueCreateInfo
             queue_family_index = graphics_family,
@@ -134,13 +132,7 @@ def create_graphics_device(
     ]]
     defer() <| ${ delete create_info; }
 
-    var device <- physical_device |> create_device(create_info)
-    var queue <- device |> get_device_queue(graphics_family)
-    return <- [[GraphicsDevice
-        device <- device,
-        queue <- queue,
-        queue_family = graphics_family
-    ]]
+    return <- physical_device |> create_device(create_info)
 
 
 def get_swap_extent(
