@@ -483,9 +483,9 @@ class GenStruct(object):
                 if field.needs_vk_view:
                     lines += [
                        f'    boost_struct._vk_view_{biname} <- [{{',
-                       f'        for item in boost_struct.{biname} ;'f
+                       f'        for item in boost_struct.{biname} ;',
                        f'        item |> vk_view_create_unsafe()}}]',
-                       f'    vk_struct.{vname} = array_addr_unsafe('f
+                       f'    vk_struct.{vname} = array_addr_unsafe(',
                        f'        boost_struct._vk_view_{biname})',
                     ]
                 else:
