@@ -463,7 +463,16 @@ class GenStruct(object):
                                     f'boost_struct.{biname})',
                     ]
             elif field.is_pointer:
-                pass
+                if field.needs_view:
+                    lines += [
+                       f'    if boost_struct.{bname} != null',
+                       f'        boost_struct._vk_view_{bname} <- '
+                                  f'*boost_struct.{bname} |> vk_view_create()',
+                        '        unsafe',
+                       f'            vk_struct.{vname} = addr('
+                                         f'boost_struct.{bname})'
+                else:
+                    raise Exception('add when needed')
             else:
                 vk_value = field.boost_value_to_vk(f'boost_struct.{bname}')
             lines.append(f'    vk_struct.{field.vk_name} = {vk_value}')
