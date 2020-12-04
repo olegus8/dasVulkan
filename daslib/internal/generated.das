@@ -248,7 +248,8 @@ struct ApplicationInfo
     api_version : uint
     _vk_view_active : bool
 
-def vk_view_create_unsafe(var boost_struct : ApplicationInfo) : VkApplicationInfo
+def vk_view_create_unsafe(var boost_struct : ApplicationInfo
+) : VkApplicationInfo
     assert(!boost_struct._vk_view_active)
     boost_struct._vk_view_active = true
 
@@ -281,7 +282,8 @@ struct DeviceCreateInfo
     _vk_view_p_enabled_features : VkPhysicalDeviceFeatures
     _vk_view_active : bool
 
-def vk_view_create_unsafe(var boost_struct : DeviceCreateInfo) : VkDeviceCreateInfo
+def vk_view_create_unsafe(var boost_struct : DeviceCreateInfo
+) : VkDeviceCreateInfo
     assert(!boost_struct._vk_view_active)
     boost_struct._vk_view_active = true
 
@@ -336,7 +338,8 @@ struct DeviceQueueCreateInfo
     queue_priorities : array<float>
     _vk_view_active : bool
 
-def vk_view_create_unsafe(var boost_struct : DeviceQueueCreateInfo) : VkDeviceQueueCreateInfo
+def vk_view_create_unsafe(var boost_struct : DeviceQueueCreateInfo
+) : VkDeviceQueueCreateInfo
     assert(!boost_struct._vk_view_active)
     boost_struct._vk_view_active = true
 
@@ -382,7 +385,8 @@ struct Extent3D
     depth : uint
     _vk_view_active : bool
 
-def vk_view_create_unsafe(var boost_struct : Extent3D) : VkExtent3D
+def vk_view_create_unsafe(var boost_struct : Extent3D
+) : VkExtent3D
     assert(!boost_struct._vk_view_active)
     boost_struct._vk_view_active = true
 
@@ -417,7 +421,8 @@ struct InstanceCreateInfo
     _vk_view_p_application_info : VkApplicationInfo
     _vk_view_active : bool
 
-def vk_view_create_unsafe(var boost_struct : InstanceCreateInfo) : VkInstanceCreateInfo
+def vk_view_create_unsafe(var boost_struct : InstanceCreateInfo
+) : VkInstanceCreateInfo
     assert(!boost_struct._vk_view_active)
     boost_struct._vk_view_active = true
 
@@ -765,7 +770,8 @@ struct PhysicalDeviceFeatures
     inherited_queries : uint
     _vk_view_active : bool
 
-def vk_view_create_unsafe(var boost_struct : PhysicalDeviceFeatures) : VkPhysicalDeviceFeatures
+def vk_view_create_unsafe(var boost_struct : PhysicalDeviceFeatures
+) : VkPhysicalDeviceFeatures
     assert(!boost_struct._vk_view_active)
     boost_struct._vk_view_active = true
 
@@ -882,7 +888,8 @@ struct SurfaceFormatKHR
     color_space : VkColorSpaceKHR
     _vk_view_active : bool
 
-def vk_view_create_unsafe(var boost_struct : SurfaceFormatKHR) : VkSurfaceFormatKHR
+def vk_view_create_unsafe(var boost_struct : SurfaceFormatKHR
+) : VkSurfaceFormatKHR
     assert(!boost_struct._vk_view_active)
     boost_struct._vk_view_active = true
 
