@@ -269,10 +269,6 @@ struct DeviceCreateInfo
     _vk_view_queue_create_infos : array<VkDeviceQueueCreateInfo>
     _vk_view_enabled_features : VkPhysicalDeviceFeatures
 
-def unsafe_array_addr(ar : array<auto(T)>) : T?
-    unsafe
-        return length(ar) > 0 ? addr(ar[0]) : [[T?]]
-
 [unsafe]
 def vk_view_create(var boost_struct : DeviceCreateInfo) : VkDeviceCreateInfo
     assert(!boost_struct._vk_view_created)
