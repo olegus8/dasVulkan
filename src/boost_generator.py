@@ -824,13 +824,13 @@ class GenHandle(object):
         ]
 
         for param in self.__vk_ctor_params:
-            if param.is_struct and param.is_pointer:
+            if param.vk_name == 'pAllocator':
+                vk_value = 'null'
+            elif param.is_struct and param.is_pointer:
                 bname = deref_boost_ptr_name(param.boost_name)
                 vk_value = f'safe_addr(vk_{bname})'
             elif param.vk_type == f'{self.__vk_handle_type_name} ?':
                 vk_value = f'safe_addr({bh_attr}.{bh_attr})'
-            elif param.vk_name == 'pAllocator':
-                vk_value = 'null'
             else:
                 vk_value = param.boost_value_to_vk(param.boost_name)
             lines.append(f'        {vk_value},')
