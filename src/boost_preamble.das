@@ -34,6 +34,10 @@ def vk_value_to_boost(v : int8[]) : string
         let s := reinterpret<string>(addr(v[0]))
         return s
 
+def unsafe_array_addr(ar : array<auto(T)>) : T?
+    unsafe
+        return length(ar) > 0 ? addr(ar[0]) : [[T?]]
+
 //
 // Device
 //
