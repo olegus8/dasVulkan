@@ -490,7 +490,7 @@ class GenStruct(object):
                     ]
                 else:
                     lines += [
-                       f'    vk_struct.{vname} = array_addr_unsafe('f
+                       f'    vk_struct.{vname} = array_addr_unsafe(',
                        f'        boost_struct.{biname})',
                     ]
             elif field.is_pointer:
