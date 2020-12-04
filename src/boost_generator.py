@@ -482,27 +482,27 @@ class GenStruct(object):
                 biname = boost_ptr_name_to_array(field.boost_name)
                 if field.needs_vk_view:
                     lines += [
-                       f'    boost_struct._vk_view_{biname} <- '
-                           f'[{{for item in boost_struct.{biname} ; '
-                               f'item |> vk_view_create_unsafe()}}]',
-                       f'    vk_struct.{vname} = array_addr_unsafe('
-                                f'boost_struct._vk_view_{biname})',
+                       f'    boost_struct._vk_view_{biname} <- [{{',
+                       f'        for item in boost_struct.{biname} ;'f
+                       f'        item |> vk_view_create_unsafe()}}]',
+                       f'    vk_struct.{vname} = array_addr_unsafe('f
+                       f'        boost_struct._vk_view_{biname})',
                     ]
                 else:
                     lines += [
-                       f'    vk_struct.{vname} = array_addr_unsafe('
-                                f'boost_struct.{biname})',
+                       f'    vk_struct.{vname} = array_addr_unsafe('f
+                       f'        boost_struct.{biname})',
                     ]
             elif field.is_pointer:
                 if field.needs_vk_view:
                     lines += [
                        f'    if boost_struct.{bname} != null',
-                       f'        boost_struct._vk_view_{bname} <- '
-                                  f'*boost_struct.{bname} |> '
-                                        f'vk_view_create_unsafe()',
+                       f'        boost_struct._vk_view_{bname} <- (',
+                       f'            *boost_struct.{bname} |> '
+                                        f'vk_view_create_unsafe())',
                         '        unsafe',
-                       f'            vk_struct.{vname} = addr('
-                                         f'boost_struct.{bname})',
+                       f'            vk_struct.{vname} = addr(',
+                       f'                boost_struct.{bname})',
                     ]
                 else:
                     raise Exception('add when needed')

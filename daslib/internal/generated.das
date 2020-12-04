@@ -263,7 +263,7 @@ def vk_view_create_unsafe(var boost_struct : ApplicationInfo) : VkApplicationInf
 
     return <- vk_struct
 
-def vk_view_destroy(boost_struct : ApplicationInfo)
+def vk_view_destroy(var boost_struct : ApplicationInfo)
     assert(boost_struct._vk_view_active)
     boost_struct._vk_view_active = false
 
@@ -303,7 +303,7 @@ def vk_view_create_unsafe(var boost_struct : DeviceCreateInfo) : VkDeviceCreateI
 
     return <- vk_struct
 
-def vk_view_destroy(boost_struct : DeviceCreateInfo)
+def vk_view_destroy(var boost_struct : DeviceCreateInfo)
     assert(boost_struct._vk_view_active)
     for item in boost_struct.queue_create_infos
         item |> vk_view_destroy()
@@ -336,7 +336,7 @@ def vk_view_create_unsafe(var boost_struct : DeviceQueueCreateInfo) : VkDeviceQu
 
     return <- vk_struct
 
-def vk_view_destroy(boost_struct : DeviceQueueCreateInfo)
+def vk_view_destroy(var boost_struct : DeviceQueueCreateInfo)
     assert(boost_struct._vk_view_active)
     boost_struct._vk_view_active = false
 
@@ -377,7 +377,7 @@ def vk_view_create_unsafe(var boost_struct : Extent3D) : VkExtent3D
 
     return <- vk_struct
 
-def vk_view_destroy(boost_struct : Extent3D)
+def vk_view_destroy(var boost_struct : Extent3D)
     assert(boost_struct._vk_view_active)
     boost_struct._vk_view_active = false
 
@@ -419,7 +419,7 @@ def vk_view_create_unsafe(var boost_struct : InstanceCreateInfo) : VkInstanceCre
 
     return <- vk_struct
 
-def vk_view_destroy(boost_struct : InstanceCreateInfo)
+def vk_view_destroy(var boost_struct : InstanceCreateInfo)
     assert(boost_struct._vk_view_active)
     if boost_struct.p_application_info != null
         *boost_struct.p_application_info |> vk_view_destroy()
@@ -803,7 +803,7 @@ def vk_view_create_unsafe(var boost_struct : PhysicalDeviceFeatures) : VkPhysica
 
     return <- vk_struct
 
-def vk_view_destroy(boost_struct : PhysicalDeviceFeatures)
+def vk_view_destroy(var boost_struct : PhysicalDeviceFeatures)
     assert(boost_struct._vk_view_active)
     boost_struct._vk_view_active = false
 
@@ -867,7 +867,7 @@ def vk_view_create_unsafe(var boost_struct : SurfaceFormatKHR) : VkSurfaceFormat
 
     return <- vk_struct
 
-def vk_view_destroy(boost_struct : SurfaceFormatKHR)
+def vk_view_destroy(var boost_struct : SurfaceFormatKHR)
     assert(boost_struct._vk_view_active)
     boost_struct._vk_view_active = false
 
