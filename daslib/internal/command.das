@@ -5,54 +5,6 @@ require daslib/safe_addr
 require vulkan
 
 //
-// Command pool
-//
-
-/*
-This says 
-30304: too many custom  finalize functions exist for finalize ( pool : command::CommandPool explicit -const ) : void
-candidates are:
-	command::finalize ( pool : command::CommandPool explicit -const ) : void
-	generated::finalize ( device : generated::Device ) : void
-
-struct CommandPool
-    device : VkDevice
-    pool : VkCommandPool
-
-foo
-*/
-
-// this works
-/*
-struct CommandPool
-    pool : VkCommandPool
-    device : VkDevice
-
-
-def create_command_pool(
-    device : VkDevice#;
-    queue_family : uint;
-    flags : uint = 0u
-) : CommandPool
-    let create_info <- [[VkCommandPoolCreateInfo
-        sType = VkStructureType VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO,
-        queueFamilyIndex = queue_family,
-        flags = flags
-    ]]
-    var pool : CommandPool
-    unsafe
-        pool.device = reinterpret<VkDevice>(device)
-    verify(VkResult VK_SUCCESS == device |> vkCreateCommandPool(
-        safe_addr(create_info), null, safe_addr(pool.pool)))
-    return <- pool
-
-
-def finalize(var pool : CommandPool explicit)
-    pool.device |> vkDestroyCommandPool(pool.pool, null)
-    memzero(pool)
-*/
-
-//
 // Command buffer
 //
 

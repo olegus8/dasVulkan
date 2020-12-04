@@ -954,7 +954,7 @@ def create_command_pool(
 ) : CommandPool
 
     var command_pool <- [[ CommandPool
-    _device = boost_value_to_vk(device)
+        _device = boost_value_to_vk(device)
     ]]
 
     var vk_create_info : VkCommandPoolCreateInfo
