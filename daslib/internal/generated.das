@@ -904,7 +904,7 @@ def create_device(
     result ?? result_ = vkCreateDevice(
         boost_value_to_vk(physical_device),
         safe_addr(vk_create_info),
-        safe_addr(vk_allocator),
+        null,
         safe_addr(device.device)
     )
     assert(result_ == VkResult VK_SUCCESS)
@@ -935,7 +935,7 @@ def create_instance(
     var result_ = VkResult VK_SUCCESS
     result ?? result_ = vkCreateInstance(
         safe_addr(vk_create_info),
-        safe_addr(vk_allocator),
+        null,
         safe_addr(instance.instance)
     )
     assert(result_ == VkResult VK_SUCCESS)

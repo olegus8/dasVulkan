@@ -590,6 +590,9 @@ class GenHandle(object):
     def __vk_dtor_params(self):
         return self.__generator.get_func_params(self.__c_dtor)
 
+    def __vk_ctor_returns_vk_result(self):
+        return returns_vk_result(self.__c_ctor)
+
     @property
     def __is_batched(self):
         return self.__vk_p_count_name is not None
