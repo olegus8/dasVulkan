@@ -472,12 +472,7 @@ class GenStruct(object):
                    f'        boost_struct._vk_view_{bname} <- (',
                    f'            *boost_struct.{bname} |> '
                                     f'vk_view_create_unsafe())',
-                    '        unsafe',
-                   f'            vk_struct.{vname} = addr(',
-                   f'                boost_struct._vk_view_{bname})',
                 ]
-            elif field.is_pointer and not field.needs_vk_view:
-                raise Exception('add when needed')
         if lines[-1] != '':
             lines.append('')
         lines += [
@@ -505,8 +500,8 @@ class GenStruct(object):
                    f'        {vcname} = '
                                 f'uint(boost_struct.{biname} |> length()),'
                 ]
-            elif field.is_pointer:
-                continue
+            elif field.is_pointer and field.needs_vk_view:
+                vk_value = f'addr(boost_struct._vk_view_{bname})'
             else:
                 vk_value = field.boost_value_to_vk(f'boost_struct.{bname}')
             lines += [f'        {vname} = {vk_value},']
