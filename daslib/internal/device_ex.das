@@ -113,7 +113,8 @@ def find_present_mode_like_mailbox(
 def with_device(
     physical_device : PhysicalDevice;
     surface         : SurfaceKHR;
-    b : block<(device:Device; queue:Queue)>
+    b : block<(device:Device; queue:Queue)>;
+    extensions      : array<string> = DEFAULT_REQUIRED_EXTENSIONS
 )
     let graphics_family <- physical_device|>get_graphics_queue_family(surface)
 
@@ -123,7 +124,7 @@ def with_device(
             queue_priorities <- [{ auto[] 1.0f }]
         ]]}],
         p_enabled_features = new [[PhysicalDeviceFeatures]],
-        enabled_extension_names := DEFAULT_REQUIRED_EXTENSIONS
+        enabled_extension_names := extensions
     ]]
     defer() <| ${ delete create_info; }
 
