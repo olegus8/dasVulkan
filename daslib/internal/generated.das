@@ -293,7 +293,7 @@ def vk_view_create_unsafe(var boost_struct : DeviceCreateInfo
 
     if boost_struct.p_enabled_features != null
         boost_struct._vk_view_p_enabled_features <- (
-            *boost_struct.p_enabled_features |> vk_view_create_unsafe())
+            *(boost_struct.p_enabled_features) |> vk_view_create_unsafe())
 
     return <- [[ VkDeviceCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO,
