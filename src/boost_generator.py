@@ -784,42 +784,58 @@ class GenHandle(object):
                 continue
             elif param.vk_type == f'{self.__vk_handle_type_name} ?':
                 continue
-            elif param.vk_name == self.__vk_p_create_info_name:
-                boost_name = f'var {self.__boost_p_create_info_name}'
+            elif param.is_struct and param.is_pointer:
+                boost_name = deref_boost_ptr_name(param.boost_name)
+                boost_name = 'var ' + boost_name
                 boost_type = deref_das_type(param.boost_type)
             else:
                 boost_name = param.boost_name
                 boost_type = param.boost_type
             lines += [f'    {boost_name} : {boost_type} = [[ {boost_type} ]];']
 
-        vk_ci_type = deref_das_type(self.__p_create_info.vk_type)
-
         lines += [
            f'    var result : VkResult? = [[VkResult?]]',
            f') : {bh_type}',
             '',
            f'    var {bh_attr} : {bh_type}',
-           f'    {self.__boost_p_create_info_name} |> with_view() <| '
-                 f'$(vk_info : {vk_ci_type})',
-           f'        var result_ = VkResult VK_SUCCESS',
-           f'        result ?? result_ = {self.__vk_ctor_name}(',
         ]
 
         for param in self.__vk_ctor_params:
-            if param.vk_name == self.__vk_p_create_info_name:
-                vk_value = 'safe_addr(vk_info)'
+            if param.vk_name == 'pAllocator':
+                continue
+            if param.is_struct and param.is_pointer:
+                bname = deref_boost_ptr_name(param.boost_name)
+                btype = deref_das_type(param.boost_type)
+                vdtype = deref_das_type(param.vk_type)
+                lines += [
+                    '',
+                   f'    var vk_{bname} : {vdtype}',
+                   f'    unsafe',
+                   f'        vk_{bname} <- {bname} |> vk_view_create_unsafe()',
+                   f'    deref() <| ${ delete vk_{bname}; }',
+                ]
+
+        lines += [
+           f'    var result_ = VkResult VK_SUCCESS',
+           f'    result ?? result_ = {self.__vk_ctor_name}(',
+        ]
+
+        for param in self.__vk_ctor_params:
+            if param.is_struct and param.is_pointer:
+                bname = deref_boost_ptr_name(param.boost_name)
+                vk_value = f'safe_addr(vk_{bname})'
             elif param.vk_type == f'{self.__vk_handle_type_name} ?':
                 vk_value = f'safe_addr({bh_attr}.{bh_attr})'
             elif param.vk_name == 'pAllocator':
                 vk_value = 'null'
             else:
                 vk_value = param.boost_value_to_vk(param.boost_name)
-            lines.append(f'            {vk_value},')
+            lines.append(f'        {vk_value},')
         remove_last_char(lines, ',')
 
         lines += [
-           f'        )',
-           f'        assert(result_ == VkResult VK_SUCCESS)',
+           f'    )',
+           f'    assert(result_ == VkResult VK_SUCCESS)',
            f'    return <- {bh_attr}',
         ]
         return lines
@@ -1318,6 +1334,10 @@ def get_c_func_return_type(func_type):
 def deref_das_type(type_name):
     assert_ends_with(type_name, '?')
     return type_name[:-1].strip()
+
+def deref_boost_ptr_name(name):
+    assert_starts_with(name, 'p_')
+    return name[2:]
 
 def vk_struct_type_to_boost(vk_type):
     assert_starts_with(vk_type, 'Vk')
