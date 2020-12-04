@@ -832,6 +832,9 @@ class GenHandle(object):
                    f'    defer() <| ${{ {bname} |> vk_view_destroy(); }}',
                 ]
 
+        if lines[-1] != '':
+            lines.append('')
+
         for param in self.__vk_dtor_params:
             if param.vk_name == 'pAllocator':
                 continue

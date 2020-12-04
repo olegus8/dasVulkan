@@ -919,13 +919,11 @@ def create_device(
 ) : Device
 
     var device : Device
-    device._physical_device = boost_value_to_vk(physical_device)
 
     var vk_create_info : VkDeviceCreateInfo
     unsafe
         vk_create_info <- create_info |> vk_view_create_unsafe()
     defer() <| ${ create_info |> vk_view_destroy(); }
-    device._p_device = None
 
     var result_ = VkResult VK_SUCCESS
     result ?? result_ = vkCreateDevice(
@@ -955,13 +953,12 @@ def create_command_pool(
 ) : CommandPool
 
     var command_pool : CommandPool
-    command_pool._device = boost_value_to_vk(device)
 
     var vk_create_info : VkCommandPoolCreateInfo
     unsafe
         vk_create_info <- create_info |> vk_view_create_unsafe()
     defer() <| ${ create_info |> vk_view_destroy(); }
-    command_pool._p_command_pool = None
+    command_pool._device = boost_value_to_vk(device)
 
     var result_ = VkResult VK_SUCCESS
     result ?? result_ = vkCreateCommandPool(
@@ -1002,7 +999,6 @@ def create_instance(
     unsafe
         vk_create_info <- create_info |> vk_view_create_unsafe()
     defer() <| ${ create_info |> vk_view_destroy(); }
-    instance._p_instance = None
 
     var result_ = VkResult VK_SUCCESS
     result ?? result_ = vkCreateInstance(
@@ -1090,10 +1086,6 @@ def get_device_queue(
 ) : Queue
 
     var queue : Queue
-    queue._device = boost_value_to_vk(device)
-    queue._queue_family_index = queue_family_index
-    queue._queue_index = queue_index
-    queue._p_queue = None
 
     vkGetDeviceQueue(
         boost_value_to_vk(device),
