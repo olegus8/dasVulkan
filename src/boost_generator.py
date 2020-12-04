@@ -476,7 +476,7 @@ class GenStruct(object):
         if lines[-1] != '':
             lines.append('')
         lines += [
-           f'    var vk_struct <- [[ {vstype}',
+           f'    return <- [[ {vstype}',
         ]
         for field in self.__fields:
             if field.vk_name in ['pNext']:
@@ -508,10 +508,6 @@ class GenStruct(object):
         remove_last_char(lines, ',')
         lines += [
            f'    ]]',
-        ]
-        lines += [
-            '',
-            '    return <- vk_struct',
         ]
         return lines
 
