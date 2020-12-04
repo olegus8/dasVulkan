@@ -836,7 +836,7 @@ class GenHandle(object):
             maybe_cauture_result = ''
 
         lines += [
-           f'    {maybe_capture_result{self.__vk_ctor_name}(',
+           f'    {maybe_capture_result}{self.__vk_ctor_name}(',
         ]
 
         for param in self.__vk_ctor_params:
