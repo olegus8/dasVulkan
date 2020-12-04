@@ -445,7 +445,7 @@ class GenStruct(object):
         lines = []
         lines += [
             '',
-            '[unsafe]',
+            '[unsafe_function]',
            f'def vk_view_create(boost_struct : {bstype}) : {vstype}',
             '    assert(!boost_struct._vk_view_active)',
             '    boost_struct._vk_view_active = true',
