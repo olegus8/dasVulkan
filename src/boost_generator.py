@@ -705,7 +705,7 @@ class GenHandle(object):
 
     def __generate_ctor(self):
         if self.__vk_ctor_name == None:
-            return
+            return []
         bh_attr = self.__boost_handle_attr
         bh_type = self.__boost_handle_type_name
 
@@ -758,7 +758,7 @@ class GenHandle(object):
 
     def __generate_dtor(self):
         if self.__vk_dtor_name == None:
-            return
+            return []
         bh_attr = self.__boost_handle_attr
         bh_type = self.__boost_handle_type_name
         lines = []
