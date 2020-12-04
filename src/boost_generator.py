@@ -583,11 +583,13 @@ class GenHandle(object):
 
     @property
     def __vk_ctor_params(self):
-        return self.__generator.get_func_params(self.__c_ctor)
+        return (self.__generator.get_func_params(self.__c_ctor)
+            if self.__vk_ctor_name else [])
 
     @property
     def __vk_dtor_params(self):
-        return self.__generator.get_func_params(self.__c_dtor)
+        return (self.__generator.get_func_params(self.__c_dtor)
+            if self.__vk_dtor_name else [])
 
     @property
     def __vk_ctor_returns_vk_result(self):
@@ -640,17 +642,29 @@ class GenHandle(object):
         return lines
 
     def __generate_type(self):
+        lines = []
         btype = self.__boost_handle_type_name
         vtype = self.__vk_handle_type_name
         attr = self.__boost_handle_attr
-        return [
+        lines += [
             '',
            f'struct {btype}',
            f'    {attr} : {vtype}',
+        ]
+        for param in self.__vk_dtor_params:
+            if param.vk_name == 'pAllocator':
+                continue
+            elif param.boost_type == btype:
+                continue
+            lines += [
+               f'    _{param.boost_name} : {param.vk_type}'
+            ]
+        lines += [
             '',
            f'def boost_value_to_vk(b : {btype}) : {vtype}',
            f'    return b.{attr}',
         ]
+        return lines
 
     def __generate_batched_type(self):
         batch_attr = self.__boost_handle_batch_attr
@@ -875,7 +889,7 @@ class GenHandle(object):
             elif param.boost_type == bh_type:
                 vk_value = param.boost_value_to_vk(bh_attr)
             else:
-                raise Exception('handle extra params if needed')
+                vk_value = f'{bh_attr}._{param.boost_name}'
             lines.append(f'        {vk_value},')
         remove_last_char(lines, ',')
         lines += [
