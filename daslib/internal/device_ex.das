@@ -110,7 +110,6 @@ def find_present_mode_like_mailbox(
     // spec says it's always supported
     return VkPresentModeKHR VK_PRESENT_MODE_FIFO_KHR
 
-
 def with_device(
     physical_device : PhysicalDevice;
     surface         : SurfaceKHR;
@@ -119,22 +118,15 @@ def with_device(
     let vk_phys_dev = physical_device.physical_device
     let graphics_family <- physical_device|>get_graphics_queue_family(surface)
 
-    var features : PhysicalDeviceFeatures
-    var p_features : PhysicalDeviceFeatures ?
-    unsafe
-        p_features = addr(features)
-
     var create_info <- [[DeviceCreateInfo
         queue_create_infos <- [{auto[] [[DeviceQueueCreateInfo
             queue_family_index = graphics_family,
             queue_priorities <- [{ auto[] 1.0f }]
         ]]}],
-        p_enabled_features = p_features,
+        p_enabled_features = new [[PhysicalDeviceFeatures]],
         enabled_extension_names := DEFAULT_REQUIRED_EXTENSIONS
     ]]
-    defer() <|
-        delete create_info.queue_create_infos
-        delete create_info.enabled_extension_names
+    defer() <| ${ delete create_info; }
 
     var device <- physical_device |> create_device(create_info)
     defer() <| ${ delete device; }
