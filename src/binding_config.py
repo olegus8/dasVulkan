@@ -142,6 +142,9 @@ def add_boost_content(g):
         struct      = 'VkPhysicalDeviceProperties',
         vk_to_boost = True)
     g.add_gen_struct(
+        struct      = 'VkPhysicalDeviceFeatures',
+        boost_to_vk = True)
+    g.add_gen_struct(
         struct      = 'VkPhysicalDeviceSparseProperties',
         vk_to_boost = True)
     g.add_gen_struct(
