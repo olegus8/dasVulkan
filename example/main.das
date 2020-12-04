@@ -444,7 +444,6 @@ def draw_frame(device, queue, cmd_bufs, swapchain, frame,
     return img_acquired && presented
 
 
-
 [export]
 def main
     print("\nStarted\n")

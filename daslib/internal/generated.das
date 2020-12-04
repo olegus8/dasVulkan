@@ -38,7 +38,7 @@ def vk_value_to_boost(v : int8[]) : string
 // Device
 //
 
-def finalize(var device : Device)
+def finalize(var device : Device explicit)
     let vk_device = boost_value_to_vk(device)
     vk_device |> vkDeviceWaitIdle()
     vk_device |> vkDestroyDevice(null)

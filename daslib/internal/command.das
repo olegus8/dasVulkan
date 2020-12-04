@@ -9,8 +9,8 @@ require vulkan
 //
 
 struct CommandPool
-    pool : VkCommandPool
     device : VkDevice
+    pool : VkCommandPool
 
 
 def create_command_pool(
@@ -31,7 +31,7 @@ def create_command_pool(
     return <- pool
 
 
-def finalize(var pool : CommandPool)
+def finalize(var pool : CommandPool explicit)
     pool.device |> vkDestroyCommandPool(pool.pool, null)
     memzero(pool)
 
