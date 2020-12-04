@@ -831,12 +831,17 @@ class GenHandle(object):
                    f'        vk_{bname} <- {bname} |> vk_view_create_unsafe()',
                    f'    defer() <| ${{ {bname} |> vk_view_destroy(); }}',
                 ]
-            else:
-                bname = param.boost_name
-                vk_value = param.boost_value_to_vk(bname)
-                lines += [
-                   f'    {bh_attr}._{bname} = {vk_value}'
-                ]
+
+        for param in self.__vk_dtor_params:
+            if param.vk_name == 'pAllocator':
+                continue
+            elif param.boost_type == bh_type:
+                continue
+            bname = param.boost_name
+            vk_value = param.boost_value_to_vk(bname)
+            lines += [
+               f'    {bh_attr}._{bname} = {vk_value}'
+            ]
 
         if lines[-1] != '':
             lines.append('')
