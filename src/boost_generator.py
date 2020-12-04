@@ -403,7 +403,7 @@ class GenStruct(object):
                 biname = boost_ptr_name_to_array(field.boost_name)
                 lines += [f'    _vk_view_{biname} : array<{vtype}>']
             elif field.is_pointer and field.needs_vk_view:
-                lines += [f'    _vk_view_{bname} : {type}']
+                lines += [f'    _vk_view_{bname} : {vtype}']
 
         lines += [f'    _vk_view_active : bool']
         return lines
