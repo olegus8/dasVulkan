@@ -132,7 +132,6 @@ def with_device(
         p_enabled_features = p_features,
         enabled_extension_names := DEFAULT_REQUIRED_EXTENSIONS
     ]]
-    //defer() <| ${ delete create_info; }
     defer() <|
         delete create_info.queue_create_infos
         delete create_info.enabled_extension_names
