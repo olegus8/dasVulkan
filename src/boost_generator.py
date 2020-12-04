@@ -437,18 +437,25 @@ class GenStruct(object):
                 continue
             elif vname == 'sType':
                 stype = self.__vk_structure_type
-                lines.append(f'    vk_struct.sType = VkStructureType {stype}')
-            elif self.__is_array_count(vname):
-                lines.append(f'    vk_struct.{vname} = '
-                    f'uint(boost_struct.{bname} |> length())')
-            elif self.__is_array_items(vname):
-                iname = boost_ptr_name_to_array(bname)
                 lines += [
-                   f'    var vk_{iname} <- [{{for x in boost_struct.{bname} ; '
-                           f'{field.boost_value_to_vk("x")}}}]',
-                   #'    defer() <| ${{ delete vk_{iname}; }}',
+                   f'    vk_struct.sType = VkStructureType {stype}'
                 ]
-                vk_value = f'unsafe_array_addr(vk_{iname})' 
+            elif self.__is_array_count(vname):
+                lines += [
+                   f'    vk_struct.{vname} = '
+                       f'uint(boost_struct.{bname} |> length())'
+                ]
+            elif self.__is_array_items(vname):
+                if field.needs_view:
+                    lines += [
+                       f'    boost_struct._vk_view_{bname} <- '
+                           f'[{{for item in boost_struct.{bname} ; '
+                               f'item |> vk_view_create()}}]',
+                        '    unsafe',
+                       f'        vk_struct.{vname} = array_addr('
+                                    f'boost_struct._vk_view_{bname})',
+                    ]
+                lines += [
             elif field.is_pointer:
                 pass
             else:
