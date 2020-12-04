@@ -446,16 +446,22 @@ class GenStruct(object):
                        f'uint(boost_struct.{bname} |> length())'
                 ]
             elif self.__is_array_items(vname):
+                biname = boost_ptr_name_to_array(field.boost_name)
                 if field.needs_view:
                     lines += [
-                       f'    boost_struct._vk_view_{bname} <- '
-                           f'[{{for item in boost_struct.{bname} ; '
+                       f'    boost_struct._vk_view_{biname} <- '
+                           f'[{{for item in boost_struct.{biname} ; '
                                f'item |> vk_view_create()}}]',
                         '    unsafe',
                        f'        vk_struct.{vname} = array_addr('
-                                    f'boost_struct._vk_view_{bname})',
+                                    f'boost_struct._vk_view_{biname})',
                     ]
-                lines += [
+                else:
+                    lines += [
+                        '    unsafe',
+                       f'        vk_struct.{vname} = array_addr('
+                                    f'boost_struct.{biname})',
+                    ]
             elif field.is_pointer:
                 pass
             else:
