@@ -450,7 +450,7 @@ class GenStruct(object):
             '    assert(!boost_struct._vk_view_active)',
             '    boost_struct._vk_view_active = true',
             '',
-           f'    var vk_struct : {vstype}',
+           f'    var vk_struct <- [[ {vstype}',
         ]
         for field in self.__fields:
             if field.vk_name in ['pNext']:
@@ -460,14 +460,31 @@ class GenStruct(object):
             if vname == 'sType':
                 stype = self.__vk_structure_type
                 lines += [
-                   f'    vk_struct.sType = VkStructureType {stype}'
+                   f'    sType = VkStructureType {stype}'
                 ]
             elif self.__is_array_count(vname):
                 lines += [
-                   f'    vk_struct.{vname} = '
+                   f'    {vname} = '
                        f'uint(boost_struct.{bname} |> length())'
                 ]
             elif self.__is_array_items(vname):
+                continue
+            elif field.is_pointer:
+                continue
+            else:
+                vk_value = field.boost_value_to_vk(f'boost_struct.{bname}')
+                lines += [
+                    f'    vk_struct.{vname} = {vk_value}'
+                ]
+        lines += [
+           f'    ]]',
+        ]
+        for field in self.__fields:
+            if field.vk_name in ['pNext', 'sType']:
+                continue
+            bname, vname = field.boost_name, field.vk_name
+            btype, vtype = field.boost_type, field.vk_type
+            if self.__is_array_items(vname):
                 biname = boost_ptr_name_to_array(field.boost_name)
                 if field.needs_vk_view:
                     lines += [
@@ -495,11 +512,6 @@ class GenStruct(object):
                     ]
                 else:
                     raise Exception('add when needed')
-            else:
-                vk_value = field.boost_value_to_vk(f'boost_struct.{bname}')
-                lines += [
-                    f'    vk_struct.{vname} = {vk_value}'
-                ]
         lines += [
             '',
             '    return <- vk_struct',

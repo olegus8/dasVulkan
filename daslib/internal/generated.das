@@ -33,10 +33,13 @@ def vk_value_to_boost(v : int8[]) : string
         let s := reinterpret<string>(addr(v[0]))
         return s
 
-[unsafe_function]
-def array_addr(ar : array<auto(T)>) : T?
+def array_addr_unsafe(ar : array<auto(T)>) : T const ?
     unsafe
-        return length(ar) > 0 ? addr(ar[0]) : [[T?]]
+        return length(ar) > 0 ? addr(ar[0]) : [[T const ?]]
+
+def array_addr_unsafe(var ar : array<auto(T)>) : T?
+    unsafe
+        return length(ar) > 0 ? addr(ar[0]) : [[T ?]]
 
 //
 // Device
@@ -245,8 +248,7 @@ struct ApplicationInfo
     api_version : uint
     _vk_view_active : bool
 
-[unsafe_function]
-def vk_view_create(boost_struct : ApplicationInfo) : VkApplicationInfo
+def vk_view_create_unsafe(boost_struct : ApplicationInfo) : VkApplicationInfo
     assert(!boost_struct._vk_view_active)
     boost_struct._vk_view_active = true
 
@@ -278,8 +280,7 @@ struct DeviceCreateInfo
     _vk_view_p_enabled_features : VkPhysicalDeviceFeatures
     _vk_view_active : bool
 
-[unsafe_function]
-def vk_view_create(boost_struct : DeviceCreateInfo) : VkDeviceCreateInfo
+def vk_view_create_unsafe(boost_struct : DeviceCreateInfo) : VkDeviceCreateInfo
     assert(!boost_struct._vk_view_active)
     boost_struct._vk_view_active = true
 
@@ -287,17 +288,14 @@ def vk_view_create(boost_struct : DeviceCreateInfo) : VkDeviceCreateInfo
     vk_struct.sType = VkStructureType VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO
     vk_struct.flags = boost_struct.flags
     vk_struct.queueCreateInfoCount = uint(boost_struct.queue_create_info_count |> length())
-    boost_struct._vk_view_queue_create_infos <- [{for item in boost_struct.queue_create_infos ; item |> vk_view_create()}]
-    unsafe
-        vk_struct.pQueueCreateInfos = array_addr(boost_struct._vk_view_queue_create_infos)
+    boost_struct._vk_view_queue_create_infos <- [{for item in boost_struct.queue_create_infos ; item |> vk_view_create_unsafe()}]
+    vk_struct.pQueueCreateInfos = array_addr_unsafe(boost_struct._vk_view_queue_create_infos)
     vk_struct.enabledLayerCount = uint(boost_struct.enabled_layer_count |> length())
-    unsafe
-        vk_struct.ppEnabledLayerNames = array_addr(boost_struct.enabled_layer_names)
+    vk_struct.ppEnabledLayerNames = array_addr_unsafe(boost_struct.enabled_layer_names)
     vk_struct.enabledExtensionCount = uint(boost_struct.enabled_extension_count |> length())
-    unsafe
-        vk_struct.ppEnabledExtensionNames = array_addr(boost_struct.enabled_extension_names)
+    vk_struct.ppEnabledExtensionNames = array_addr_unsafe(boost_struct.enabled_extension_names)
     if boost_struct.p_enabled_features != null
-        boost_struct._vk_view_p_enabled_features <- *boost_struct.p_enabled_features |> vk_view_create()
+        boost_struct._vk_view_p_enabled_features <- *boost_struct.p_enabled_features |> vk_view_create_unsafe()
         unsafe
             vk_struct.pEnabledFeatures = addr(boost_struct.p_enabled_features)
 
@@ -322,8 +320,7 @@ struct DeviceQueueCreateInfo
     queue_priorities : array<float>
     _vk_view_active : bool
 
-[unsafe_function]
-def vk_view_create(boost_struct : DeviceQueueCreateInfo) : VkDeviceQueueCreateInfo
+def vk_view_create_unsafe(boost_struct : DeviceQueueCreateInfo) : VkDeviceQueueCreateInfo
     assert(!boost_struct._vk_view_active)
     boost_struct._vk_view_active = true
 
@@ -332,8 +329,7 @@ def vk_view_create(boost_struct : DeviceQueueCreateInfo) : VkDeviceQueueCreateIn
     vk_struct.flags = boost_struct.flags
     vk_struct.queueFamilyIndex = boost_struct.queue_family_index
     vk_struct.queueCount = uint(boost_struct.queue_count |> length())
-    unsafe
-        vk_struct.pQueuePriorities = array_addr(boost_struct.queue_priorities)
+    vk_struct.pQueuePriorities = array_addr_unsafe(boost_struct.queue_priorities)
 
     return <- vk_struct
 
@@ -366,8 +362,7 @@ struct Extent3D
     depth : uint
     _vk_view_active : bool
 
-[unsafe_function]
-def vk_view_create(boost_struct : Extent3D) : VkExtent3D
+def vk_view_create_unsafe(boost_struct : Extent3D) : VkExtent3D
     assert(!boost_struct._vk_view_active)
     boost_struct._vk_view_active = true
 
@@ -401,8 +396,7 @@ struct InstanceCreateInfo
     _vk_view_p_application_info : VkApplicationInfo
     _vk_view_active : bool
 
-[unsafe_function]
-def vk_view_create(boost_struct : InstanceCreateInfo) : VkInstanceCreateInfo
+def vk_view_create_unsafe(boost_struct : InstanceCreateInfo) : VkInstanceCreateInfo
     assert(!boost_struct._vk_view_active)
     boost_struct._vk_view_active = true
 
@@ -410,15 +404,13 @@ def vk_view_create(boost_struct : InstanceCreateInfo) : VkInstanceCreateInfo
     vk_struct.sType = VkStructureType VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO
     vk_struct.flags = boost_struct.flags
     if boost_struct.p_application_info != null
-        boost_struct._vk_view_p_application_info <- *boost_struct.p_application_info |> vk_view_create()
+        boost_struct._vk_view_p_application_info <- *boost_struct.p_application_info |> vk_view_create_unsafe()
         unsafe
             vk_struct.pApplicationInfo = addr(boost_struct.p_application_info)
     vk_struct.enabledLayerCount = uint(boost_struct.enabled_layer_count |> length())
-    unsafe
-        vk_struct.ppEnabledLayerNames = array_addr(boost_struct.enabled_layer_names)
+    vk_struct.ppEnabledLayerNames = array_addr_unsafe(boost_struct.enabled_layer_names)
     vk_struct.enabledExtensionCount = uint(boost_struct.enabled_extension_count |> length())
-    unsafe
-        vk_struct.ppEnabledExtensionNames = array_addr(boost_struct.enabled_extension_names)
+    vk_struct.ppEnabledExtensionNames = array_addr_unsafe(boost_struct.enabled_extension_names)
 
     return <- vk_struct
 
@@ -742,8 +734,7 @@ struct PhysicalDeviceFeatures
     inherited_queries : uint
     _vk_view_active : bool
 
-[unsafe_function]
-def vk_view_create(boost_struct : PhysicalDeviceFeatures) : VkPhysicalDeviceFeatures
+def vk_view_create_unsafe(boost_struct : PhysicalDeviceFeatures) : VkPhysicalDeviceFeatures
     assert(!boost_struct._vk_view_active)
     boost_struct._vk_view_active = true
 
@@ -859,8 +850,7 @@ struct SurfaceFormatKHR
     color_space : VkColorSpaceKHR
     _vk_view_active : bool
 
-[unsafe_function]
-def vk_view_create(boost_struct : SurfaceFormatKHR) : VkSurfaceFormatKHR
+def vk_view_create_unsafe(boost_struct : SurfaceFormatKHR) : VkSurfaceFormatKHR
     assert(!boost_struct._vk_view_active)
     boost_struct._vk_view_active = true
 
