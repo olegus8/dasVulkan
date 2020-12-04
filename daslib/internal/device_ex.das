@@ -115,7 +115,7 @@ def create_single_queue_device(
     physical_device : PhysicalDevice;
     queue_family    : uint;
     extensions      : array<string> = DEFAULT_REQUIRED_EXTENSIONS
-) : GraphicsDevice
+) : Device
     var create_info <- [[DeviceCreateInfo
         queue_create_infos <- [{auto[] [[DeviceQueueCreateInfo
             queue_family_index = queue_family,
