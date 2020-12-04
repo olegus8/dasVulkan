@@ -812,7 +812,7 @@ class GenHandle(object):
                    f'    var vk_{bname} : {vdtype}',
                    f'    unsafe',
                    f'        vk_{bname} <- {bname} |> vk_view_create_unsafe()',
-                   f'    deref() <| ${ delete vk_{bname}; }',
+                   f'    deref() <| ${{ delete vk_{bname}; }}',
                 ]
 
         lines += [
