@@ -351,7 +351,6 @@ def vk_view_destroy(var boost_struct : DeviceQueueCreateInfo)
 struct ExtensionProperties
     extension_name : string
     spec_version : uint
-    _vk_view__active : bool
 
 def vk_value_to_boost(vk_struct : VkExtensionProperties) : ExtensionProperties
     return <- [[ExtensionProperties
@@ -541,7 +540,6 @@ struct PhysicalDeviceLimits
     optimal_buffer_copy_offset_alignment : uint64
     optimal_buffer_copy_row_pitch_alignment : uint64
     non_coherent_atom_size : uint64
-    _vk_view__active : bool
 
 def vk_value_to_boost(vk_struct : VkPhysicalDeviceLimits) : PhysicalDeviceLimits
     return <- [[PhysicalDeviceLimits
@@ -667,7 +665,6 @@ struct PhysicalDeviceProperties
     pipeline_cache_uuid : uint8 [16]
     limits : PhysicalDeviceLimits
     sparse_properties : PhysicalDeviceSparseProperties
-    _vk_view__active : bool
 
 def vk_value_to_boost(vk_struct : VkPhysicalDeviceProperties) : PhysicalDeviceProperties
     return <- [[PhysicalDeviceProperties
@@ -822,7 +819,6 @@ struct PhysicalDeviceSparseProperties
     residency_standard_3d_block_shape : uint
     residency_aligned_mip_size : uint
     residency_non_resident_strict : uint
-    _vk_view__active : bool
 
 def vk_value_to_boost(vk_struct : VkPhysicalDeviceSparseProperties) : PhysicalDeviceSparseProperties
     return <- [[PhysicalDeviceSparseProperties
@@ -842,7 +838,6 @@ struct QueueFamilyProperties
     queue_count : uint
     timestamp_valid_bits : uint
     min_image_transfer_granularity : Extent3D
-    _vk_view__active : bool
 
 def vk_value_to_boost(vk_struct : VkQueueFamilyProperties) : QueueFamilyProperties
     return <- [[QueueFamilyProperties
