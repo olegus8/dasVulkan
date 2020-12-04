@@ -514,22 +514,10 @@ class GenStruct(object):
                    f'        item |> vk_view_destroy()',
                    f'    delete boost_struct._vk_view_{biname}',
                 ]
-            elif field.is_pointer:
-                if field.needs_view:
-                    lines += [
-                       f'    if boost_struct.{bname} != null',
-                       f'        boost_struct._vk_view_{bname} <- '
-                                  f'*boost_struct.{bname} |> vk_view_create()',
-                        '        unsafe',
-                       f'            vk_struct.{vname} = addr('
-                                         f'boost_struct.{bname})',
-                    ]
-                else:
-                    raise Exception('add when needed')
-            else:
-                vk_value = field.boost_value_to_vk(f'boost_struct.{bname}')
+            elif field.is_pointer and field.needs_view:
                 lines += [
-                    f'    vk_struct.{vname} = {vk_value}'
+                   f'    if boost_struct.{bname} != null',
+                   f'        *boost_struct.{bname} |> vk_view_destroy()',
                 ]
         lines += [
             '    boost_struct._vk_view_active = false',
