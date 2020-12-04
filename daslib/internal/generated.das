@@ -268,6 +268,31 @@ def vk_view_destroy(var boost_struct : ApplicationInfo)
     boost_struct._vk_view__active = false
 
 //
+// CommandPoolCreateInfo
+//
+
+struct CommandPoolCreateInfo
+    flags : uint
+    queue_family_index : uint
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : CommandPoolCreateInfo
+) : VkCommandPoolCreateInfo
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+
+    return <- [[ VkCommandPoolCreateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO,
+        flags = boost_struct.flags,
+        queueFamilyIndex = boost_struct.queue_family_index
+    ]]
+
+def vk_view_destroy(var boost_struct : CommandPoolCreateInfo)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+//
 // DeviceCreateInfo
 //
 
@@ -909,6 +934,48 @@ def create_device(
     )
     assert(result_ == VkResult VK_SUCCESS)
     return <- device
+
+//
+// CommandPool
+//
+
+struct CommandPool
+    command_pool : VkCommandPool
+    _device : VkDevice
+
+def boost_value_to_vk(b : CommandPool) : VkCommandPool
+    return b.command_pool
+
+def create_command_pool(
+    device : Device = [[ Device ]];
+    var create_info : CommandPoolCreateInfo = [[ CommandPoolCreateInfo ]];
+    var result : VkResult? = [[VkResult?]]
+) : CommandPool
+
+    var command_pool : CommandPool
+
+    var vk_create_info : VkCommandPoolCreateInfo
+    unsafe
+        vk_create_info <- create_info |> vk_view_create_unsafe()
+    defer() <| ${ create_info |> vk_view_destroy(); }
+
+    var result_ = VkResult VK_SUCCESS
+    result ?? result_ = vkCreateCommandPool(
+        boost_value_to_vk(device),
+        safe_addr(vk_create_info),
+        null,
+        safe_addr(command_pool.command_pool)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+    return <- command_pool
+
+def finalize(var command_pool : CommandPool explicit)
+    vkDestroyCommandPool(
+        command_pool._device,
+        boost_value_to_vk(command_pool),
+        null
+    )
+    memzero(command_pool)
 
 //
 // Instance

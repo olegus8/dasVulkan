@@ -23,6 +23,7 @@ foo
 */
 
 // this works
+/*
 struct CommandPool
     pool : VkCommandPool
     device : VkDevice
@@ -49,6 +50,7 @@ def create_command_pool(
 def finalize(var pool : CommandPool explicit)
     pool.device |> vkDestroyCommandPool(pool.pool, null)
     memzero(pool)
+*/
 
 //
 // Command buffer

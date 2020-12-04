@@ -831,6 +831,12 @@ class GenHandle(object):
                    f'        vk_{bname} <- {bname} |> vk_view_create_unsafe()',
                    f'    defer() <| ${{ {bname} |> vk_view_destroy(); }}',
                 ]
+            else:
+                bname = param.boost_name
+                vk_value = param.boost_value_to_vk(param.boost_name)
+                lines += [
+                   f'    {bh_attr}._{bname} = {vk_value}'
+                ]
 
         if lines[-1] != '':
             lines.append('')
