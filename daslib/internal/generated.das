@@ -265,6 +265,7 @@ struct DeviceCreateInfo
     enabled_layer_names : array<string>
     enabled_extension_names : array<string>
     p_enabled_features : PhysicalDeviceFeatures ?
+    _vk_view_created : bool
     _vk_view_queue_create_infos : array<VkDeviceQueueCreateInfo>
     _vk_view_enabled_features : VkPhysicalDeviceFeatures
 
@@ -274,6 +275,9 @@ def unsafe_array_addr(ar : array<auto(T)>) : T?
 
 [unsafe]
 def vk_view_create(var boost_struct : DeviceCreateInfo) : VkDeviceCreateInfo
+    assert(!boost_struct._vk_view_created)
+    boost_struct._vk_view_created = true
+
     var vk_struct : VkDeviceCreateInfo
     vk_struct.sType = VkStructureType VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO
     vk_struct.flags = boost_struct.flags
@@ -310,7 +314,13 @@ def vk_view_create(var boost_struct : DeviceCreateInfo) : VkDeviceCreateInfo
     return <- vk_struct
 
 def vk_view_destroy(var boost_struct : DeviceCreateInfo)
+    assert(boost_struct._vk_view_created)
+    for item in boost_struct.queue_create_infos
+        item |> vk_view_destroy()
+    if boost_struct.p_enabled_features != null
+        *boost_struct.p_enabled_features |> vk_view_destroy()
     delete boost_struct._vk_view_queue_create_infos
+    boost_struct._vk_view_created = false
 
 def with_view(
     var boost_struct : DeviceCreateInfo;
