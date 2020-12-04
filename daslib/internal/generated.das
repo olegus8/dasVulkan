@@ -894,7 +894,7 @@ def boost_value_to_vk(b : Device) : VkDevice
 
 def create_device(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]];
-    create_info : DeviceCreateInfo = [[ DeviceCreateInfo ]];
+    var create_info : DeviceCreateInfo = [[ DeviceCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : Device
 
@@ -921,7 +921,7 @@ def boost_value_to_vk(b : Instance) : VkInstance
     return b.instance
 
 def create_instance(
-    create_info : InstanceCreateInfo = [[ InstanceCreateInfo ]];
+    var create_info : InstanceCreateInfo = [[ InstanceCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : Instance
 

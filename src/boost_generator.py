@@ -623,6 +623,12 @@ class GenHandle(object):
         assert_starts_with(param, 'p_')
         return param[2:]
 
+    @property
+    def __p_create_info(self):
+        for param in self.__vk_ctor_params:
+            if param.vk_name == self.__vk_p_create_info_name:
+                return param
+
     def generate(self):
         lines = []
         lines += [
@@ -761,12 +767,6 @@ class GenHandle(object):
         ]
         return lines
 
-    @property
-    def __p_create_info(self):
-        for param in self.__vk_ctor_params:
-            if param.vk_name == self.__vk_p_create_info_name:
-                return param
-
     def __generate_ctor(self):
         if self.__vk_ctor_name == None:
             return []
@@ -784,7 +784,7 @@ class GenHandle(object):
             elif param.vk_type == f'{self.__vk_handle_type_name} ?':
                 continue
             elif param.vk_name == self.__vk_p_create_info_name:
-                boost_name = self.__boost_p_create_info_name
+                boost_name = f'var {self.__boost_p_create_info_name}'
                 boost_type = deref_das_type(param.boost_type)
             else:
                 boost_name = param.boost_name
