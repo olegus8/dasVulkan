@@ -561,9 +561,9 @@ class GenHandle(object):
         self.__vk_enumerator_name = enumerator
         self.__vk_ctor_name = ctor
         self.__vk_dtor_name = dtor
-        self.__vk_p_count = p_count
-        self.__vk_p_handles = p_handles
-        self.__vk_p_create_info = p_create_info
+        self.__vk_p_count_name = p_count
+        self.__vk_p_handles_name = p_handles
+        self.__vk_p_create_info_name = p_create_info
 
     @property
     def __c_enumerator(self):
@@ -591,7 +591,7 @@ class GenHandle(object):
 
     @property
     def __is_batched(self):
-        return self.__vk_p_count is not None
+        return self.__vk_p_count_name is not None
 
     @property
     def __boost_handle_type_name(self):
@@ -618,8 +618,8 @@ class GenHandle(object):
         return vk_func_name_to_boost(self.__vk_ctor_name)
 
     @property
-    def __boost_p_create_info(self):
-        param = vk_param_name_to_boost(self.__vk_p_create_info)
+    def __boost_p_create_info_name(self):
+        param = vk_param_name_to_boost(self.__vk_p_create_info_name)
         assert_starts_with(param, 'p_')
         return param[2:]
 
@@ -678,7 +678,7 @@ class GenHandle(object):
             '',
            f'def {self.__boost_enumerator_name}(']
         for param in self.__vk_enumerator_params:
-            if param.vk_name in [self.__vk_p_count, self.__vk_p_handles]:
+            if param.vk_name in [self.__vk_p_count_name, self.__vk_p_handles_name]:
                 continue
             lines += [
                f'    {param.boost_name} : {param.boost_type};',
@@ -694,9 +694,9 @@ class GenHandle(object):
         ]
 
         for param in self.__vk_enumerator_params:
-            if param.vk_name == self.__vk_p_count:
+            if param.vk_name == self.__vk_p_count_name:
                 vk_value = 'safe_addr(count)'
-            elif param.vk_name == self.__vk_p_handles:
+            elif param.vk_name == self.__vk_p_handles_name:
                 vk_value = 'null'
             else:
                 vk_value = param.boost_value_to_vk(param.boost_name)
@@ -715,9 +715,9 @@ class GenHandle(object):
         ]
 
         for param in self.__vk_enumerator_params:
-            if param.vk_name == self.__vk_p_count:
+            if param.vk_name == self.__vk_p_count_name:
                 vk_value = 'safe_addr(count)'
-            elif param.vk_name == self.__vk_p_handles:
+            elif param.vk_name == self.__vk_p_handles_name:
                 vk_value = 'addr(thandles[0])'
             else:
                 vk_value = param.boost_value_to_vk(param.boost_name)
@@ -739,7 +739,7 @@ class GenHandle(object):
            f'def {self.__boost_enumerator_name}_no_batch(',
         ]
         for param in self.__vk_enumerator_params:
-            if param.vk_name in [self.__vk_p_count, self.__vk_p_handles]:
+            if param.vk_name in [self.__vk_p_count_name, self.__vk_p_handles_name]:
                 continue
             lines += [
                f'    {param.boost_name} : {param.boost_type};',
@@ -750,7 +750,7 @@ class GenHandle(object):
         ]
         params = []
         for param in self.__vk_enumerator_params:
-            if param.vk_name in [self.__vk_p_count, self.__vk_p_handles]:
+            if param.vk_name in [self.__vk_p_count_name, self.__vk_p_handles_name]:
                 continue
             params.append(param.boost_name)
         params_text = ', '.join(params + ['result'])
@@ -760,6 +760,12 @@ class GenHandle(object):
            f'    return <- handles |> split()',
         ]
         return lines
+
+    @property
+    def __p_create_info(self)
+        for param in self.__vk_ctor_params:
+            if param.vk_name == self.__vk_p_create_info_name:
+                return param
 
     def __generate_ctor(self):
         if self.__vk_ctor_name == None:
@@ -777,26 +783,29 @@ class GenHandle(object):
                 continue
             elif param.vk_type == f'{self.__vk_handle_type_name} ?':
                 continue
-            elif param.vk_name == self.__vk_p_create_info:
-                boost_name = self.__boost_p_create_info
+            elif param.vk_name == self.__vk_p_create_info_name:
+                boost_name = self.__boost_p_create_info_name
                 boost_type = deref_das_type(param.boost_type)
             else:
                 boost_name = param.boost_name
                 boost_type = param.boost_type
             lines += [f'    {boost_name} : {boost_type} = [[ {boost_type} ]];']
 
+        vk_ci_type = deref_das_type(self.__p_create_info.vk_type)
+
         lines += [
            f'    var result : VkResult? = [[VkResult?]]',
            f') : {bh_type}',
             '',
            f'    var {bh_attr} : {bh_type}',
-           f'    {self.__boost_p_create_info} |> with_view() <| $(vk_info)',
+           f'    {self.__boost_p_create_info_name} |> with_view() <| '
+                 f'$(vk_info : {vk_ci_type})',
            f'        var result_ = VkResult VK_SUCCESS',
            f'        result ?? result_ = {self.__vk_ctor_name}(',
         ]
 
         for param in self.__vk_ctor_params:
-            if param.vk_name == self.__vk_p_create_info:
+            if param.vk_name == self.__vk_p_create_info_name:
                 vk_value = 'safe_addr(vk_info)'
             elif param.vk_type == f'{self.__vk_handle_type_name} ?':
                 vk_value = f'safe_addr({bh_attr}.{bh_attr})'
