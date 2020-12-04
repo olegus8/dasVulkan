@@ -264,7 +264,7 @@ def with_swapchain_independent_state(width, height, title; b : block<(
 )>)
     var instance <- create_default_instance()
     defer() <| ${ delete instance; }
-    with_window(width, height, title)               <| $(window)            {
+    with_window(width, height, title) <| $(window) {
     var surface <- instance |> create_window_surface(window);
     defer() <| ${ delete surface; };
     let phys_dev <- instance |> find_physical_device_for_graphics(surface);
@@ -278,8 +278,8 @@ def with_swapchain_independent_state(width, height, title; b : block<(
     var surf_fmt <- phys_dev |> find_format_like_srgb_bgra8(surface);
     surf_fmt |> with_view() <| $(vk_surf_fmt : VkSurfaceFormatKHR) {
     let present_mode <- phys_dev |> find_present_mode_like_mailbox(surface);
-    vk_device |> with_render_pass_simple(vk_surf_fmt)  <| $(render_pass)    {
-    vk_device |> with_pipeline_layout_simple()         <| $(pipeline_layout){
+    vk_device |> with_render_pass_simple(vk_surf_fmt) <| $(render_pass) {
+    vk_device |> with_pipeline_layout_simple() <| $(pipeline_layout){
         var cmd_pool <- vk_device |> create_command_pool(
             phys_dev |> get_graphics_queue_family(surface));
         defer() <| ${ delete cmd_pool; };
