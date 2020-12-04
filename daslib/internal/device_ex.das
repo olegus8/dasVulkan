@@ -110,12 +110,15 @@ def find_present_mode_like_mailbox(
     // spec says it's always supported
     return VkPresentModeKHR VK_PRESENT_MODE_FIFO_KHR
 
-def with_device(
+struct GraphicsDevice
+    device : Device
+    queue : Queue
+
+def create_graphics_device(
     physical_device : PhysicalDevice;
     surface         : SurfaceKHR;
-    b : block<(device:Device; queue:Queue)>;
     extensions      : array<string> = DEFAULT_REQUIRED_EXTENSIONS
-)
+) : GraphicsDevice
     let graphics_family <- physical_device|>get_graphics_queue_family(surface)
 
     var create_info <- [[DeviceCreateInfo
@@ -128,13 +131,10 @@ def with_device(
     ]]
     defer() <| ${ delete create_info; }
 
-    var device <- physical_device |> create_device(create_info)
-    defer() <| ${ delete device; }
-
-    var queue <- device |> get_device_queue(graphics_family)
-    defer() <| ${ delete queue; }
-
-    b |> invoke(device, queue)
+    return <- [[GraphicsDevice
+        device <- physical_device |> create_device(create_info),
+        queue <- device |> get_device_queue(graphics_family)
+    ]]
 
 
 def get_swap_extent(
