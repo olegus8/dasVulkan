@@ -110,9 +110,11 @@ def find_present_mode_like_mailbox(
     // spec says it's always supported
     return VkPresentModeKHR VK_PRESENT_MODE_FIFO_KHR
 
+
 struct GraphicsDevice
     device : Device
     queue : Queue
+
 
 def create_graphics_device(
     physical_device : PhysicalDevice;

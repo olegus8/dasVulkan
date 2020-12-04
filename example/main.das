@@ -271,10 +271,9 @@ def with_swapchain_independent_state(width, height, title; b : block<(
     let vk_surface = surface.surface_khr;
     let phys_dev <- instance |> find_physical_device_for_graphics(surface);
     let vk_phys_dev = phys_dev.physical_device;
-    var device <- phys_dev |> create_device_for_graphics(surface);
-    defer <| ${ delete device; };
-    let vk_device = device.device;
-    phys_dev |> with_device(surface)                <| $(device, queue)     {
+    var gfx_dev <- phys_dev |> create_graphics_device(surface);
+    defer <| ${ delete gfx_dev; };
+    let vk_device = gfx_dev.device.device;
     vk_device |> with_shader_modules([[auto[]
         "{get_das_root()}/modules/dasVulkan/example/vert.spv";
         "{get_das_root()}/modules/dasVulkan/example/frag.spv"
@@ -293,7 +292,7 @@ def with_swapchain_independent_state(width, height, title; b : block<(
             vk_surface,
             phys_dev,
             vk_device,
-            queue.queue,
+            gfx_dev.queue.queue,
             vk_surf_fmt,
             present_mode,
             shmods[0],
@@ -302,7 +301,7 @@ def with_swapchain_independent_state(width, height, title; b : block<(
             pipeline_layout,
             cmd_pool.pool
         );
-    }}}}}}
+    }}}}}
 
 
 def with_swapchain_dependent_state(
