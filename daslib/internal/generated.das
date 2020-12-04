@@ -899,6 +899,7 @@ def create_device(
     unsafe
         vk_create_info <- create_info |> vk_view_create_unsafe()
     deref() <| ${ delete vk_create_info; }
+
     var result_ = VkResult VK_SUCCESS
     result ?? result_ = vkCreateDevice(
         boost_value_to_vk(physical_device),
@@ -930,6 +931,7 @@ def create_instance(
     unsafe
         vk_create_info <- create_info |> vk_view_create_unsafe()
     deref() <| ${ delete vk_create_info; }
+
     var result_ = VkResult VK_SUCCESS
     result ?? result_ = vkCreateInstance(
         safe_addr(vk_create_info),
@@ -1017,6 +1019,7 @@ def get_device_queue(
 ) : Queue
 
     var queue : Queue
+
     var result_ = VkResult VK_SUCCESS
     result ?? result_ = vkGetDeviceQueue(
         boost_value_to_vk(device),
