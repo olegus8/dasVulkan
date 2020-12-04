@@ -264,41 +264,45 @@ def with_swapchain_independent_state(width, height, title; b : block<(
 )>)
     var instance <- create_default_instance()
     defer() <| ${ delete instance; }
-    with_window(width, height, title) <| $(window) {
-    var surface <- instance |> create_window_surface(window);
-    defer() <| ${ delete surface; };
-    let phys_dev <- instance |> find_physical_device_for_graphics(surface);
-    var gfx_dev <- phys_dev |> create_graphics_device(surface);
-    defer() <| ${ delete gfx_dev; };
-    let vk_device = gfx_dev.device.device;
-    vk_device |> with_shader_modules([[auto[]
-        "{get_das_root()}/modules/dasVulkan/example/vert.spv";
-        "{get_das_root()}/modules/dasVulkan/example/frag.spv"
-    ]]) <| $(shmods) {
-    var surf_fmt <- phys_dev |> find_format_like_srgb_bgra8(surface);
-    surf_fmt |> with_view() <| $(vk_surf_fmt : VkSurfaceFormatKHR) {
-    let present_mode <- phys_dev |> find_present_mode_like_mailbox(surface);
-    vk_device |> with_render_pass_simple(vk_surf_fmt) <| $(render_pass) {
-    vk_device |> with_pipeline_layout_simple() <| $(pipeline_layout){
-        var cmd_pool <- vk_device |> create_command_pool(
-            phys_dev |> get_graphics_queue_family(surface));
+
+    with_window(width, height, title) <| $(window)
+        var surface <- instance |> create_window_surface(window)
+        defer() <| ${ delete surface; }
+
+        let phys_dev <- instance |> find_physical_device_for_graphics(surface)
+        let present_mode <- phys_dev |> find_present_mode_like_mailbox(surface)
+        var surf_fmt <- phys_dev |> find_format_like_srgb_bgra8(surface)
+
+        var gfx_dev <- phys_dev |> create_graphics_device(surface)
+        defer() <| ${ delete gfx_dev; }
+        let vk_device = gfx_dev.device.device;
+
+        var cmd_pool <- vk_device |> create_command_pool(gfx_dev.queue_family)
         defer() <| ${ delete cmd_pool; };
-        b |> invoke(
-            instance.instance,
-            window,
-            surface.surface_khr,
-            phys_dev,
-            vk_device,
-            gfx_dev.queue.queue,
-            vk_surf_fmt,
-            present_mode,
-            shmods[0],
-            shmods[1],
-            render_pass,
-            pipeline_layout,
-            cmd_pool.pool
-        );
-    }}}}}
+
+        vk_device |> with_shader_modules([[auto[]
+            "{get_das_root()}/modules/dasVulkan/example/vert.spv";
+            "{get_das_root()}/modules/dasVulkan/example/frag.spv"
+        ]]) <| $(shmods) {
+        surf_fmt |> with_view() <| $(vk_surf_fmt : VkSurfaceFormatKHR) {
+        vk_device |> with_render_pass_simple(vk_surf_fmt) <| $(render_pass) {
+        vk_device |> with_pipeline_layout_simple() <| $(pipeline_layout) {
+            b |> invoke(
+                instance.instance,
+                window,
+                surface.surface_khr,
+                phys_dev,
+                vk_device,
+                gfx_dev.queue.queue,
+                vk_surf_fmt,
+                present_mode,
+                shmods[0],
+                shmods[1],
+                render_pass,
+                pipeline_layout,
+                cmd_pool.pool
+            );
+        }}}}
 
 
 def with_swapchain_dependent_state(

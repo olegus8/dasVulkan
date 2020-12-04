@@ -114,6 +114,7 @@ def find_present_mode_like_mailbox(
 struct GraphicsDevice
     device : Device
     queue : Queue
+    queue_family : uint
 
 
 def create_graphics_device(
@@ -135,7 +136,11 @@ def create_graphics_device(
 
     var device <- physical_device |> create_device(create_info)
     var queue <- device |> get_device_queue(graphics_family)
-    return <- [[GraphicsDevice device <- device, queue <- queue]]
+    return <- [[GraphicsDevice
+        device <- device,
+        queue <- queue,
+        queue_family = graphics_family
+    ]]
 
 
 def get_swap_extent(
