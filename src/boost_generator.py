@@ -535,7 +535,7 @@ class GenStruct(object):
             elif field.is_pointer and field.needs_vk_view:
                 lines += [
                    f'    if boost_struct.{bname} != null',
-                   f'        (*boost_struct.{bname}) |> vk_view_destroy()',
+                   f'        *(boost_struct.{bname}) |> vk_view_destroy()',
                 ]
         lines += [
             '    boost_struct._vk_view__active = false',
