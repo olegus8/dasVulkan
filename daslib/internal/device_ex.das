@@ -115,7 +115,6 @@ def with_device(
     surface         : SurfaceKHR;
     b : block<(device:Device; queue:VkQueue)>
 )
-    let vk_phys_dev = physical_device.physical_device
     let graphics_family <- physical_device|>get_graphics_queue_family(surface)
 
     var create_info <- [[DeviceCreateInfo
