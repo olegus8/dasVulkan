@@ -395,7 +395,7 @@ class GenStruct(object):
             lines += [f'    {boost_name} : {boost_type}']
 
         for field in self.__fields:
-            if vname in ['pNext', 'sType']:
+            if field.vk_name in ['pNext', 'sType']:
                 continue
             bname, vname = field.boost_name, field.vk_name
             btype, vtype = field.boost_type, field.vk_type
