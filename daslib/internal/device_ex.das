@@ -111,12 +111,6 @@ def find_present_mode_like_mailbox(
     return VkPresentModeKHR VK_PRESENT_MODE_FIFO_KHR
 
 
-struct GraphicsDevice
-    device : Device
-    queue : Queue
-    queue_family : uint
-
-
 def create_single_queue_device(
     physical_device : PhysicalDevice;
     queue_family    : uint;
