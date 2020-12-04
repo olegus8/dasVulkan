@@ -452,11 +452,11 @@ class GenStruct(object):
            f'    var vk_struct : [[ {vstype} ]]',
         ]
         for field in self.__fields:
+            if field.vk_name in ['pNext']:
+                continue
             bname, vname = field.boost_name, field.vk_name
             btype, vtype = field.boost_type, field.vk_type
-            if vname in ['pNext']:
-                continue
-            elif vname == 'sType':
+            if vname == 'sType':
                 stype = self.__vk_structure_type
                 lines += [
                    f'    vk_struct.sType = VkStructureType {stype}'
@@ -516,11 +516,11 @@ class GenStruct(object):
             '    assert(boost_struct._vk_view_active)',
         ]
         for field in self.__fields:
+            if field.vk_name in ['pNext', 'sType']:
+                continue
             bname, vname = field.boost_name, field.vk_name
             btype, vtype = field.boost_type, field.vk_type
-            if vname in ['pNext', 'sType']:
-                continue
-            elif self.__is_array_items(vname) and field.needs_view:
+            if self.__is_array_items(vname) and field.needs_view:
                 biname = boost_ptr_name_to_array(field.boost_name)
                 lines += [
                    f'    for item in boost_struct.{biname}',
