@@ -309,36 +309,16 @@ def vk_view_create(var boost_struct : DeviceCreateInfo) : VkDeviceCreateInfo
 
     return <- vk_struct
 
+def vk_view_destroy(var boost_struct : DeviceCreateInfo)
+    delete boost_struct._vk_view_queue_create_infos
+
 def with_view(
-    boost_struct : DeviceCreateInfo;
+    var boost_struct : DeviceCreateInfo;
     b : block<(vk_struct : VkDeviceCreateInfo)>
-) {
-    boost_struct.queue_create_infos |> lock_data() <| $(
-        vk_p_queue_create_infos, vk_queue_create_info_count
-    ) {
-    boost_struct.enabled_layer_names |> lock_data() <| $(
-        vk_p_enabled_layer_names, vk_enabled_layer_count
-    ) {
-    boost_struct.enabled_extension_names |> lock_data() <| $(
-        vk_p_enabled_extension_names, vk_enabled_extension_count
-    ) {
-    boost_struct.p_enabled_features |> with_p_view() <| $(
-        vk_p_enabled_features : VkPhysicalDeviceFeatures const ?
-    ) {
-    let vk_struct <- [[ VkDeviceCreateInfo
-        sType = VkStructureType VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO,
-        flags = boost_struct.flags,
-        queueCreateInfoCount = uint(vk_queue_create_info_count),
-        pQueueCreateInfos = vk_p_queue_create_infos,
-        enabledLayerCount = uint(vk_enabled_layer_count),
-        ppEnabledLayerNames = vk_p_enabled_layer_names,
-        enabledExtensionCount = uint(vk_enabled_extension_count),
-        ppEnabledExtensionNames = vk_p_enabled_extension_names,
-        pEnabledFeatures = vk_p_enabled_features
-    ]];
-    b |> invoke(vk_struct);
-    }}}};
-}
+)
+    var vk_view <- boost_struct |> vk_view_create()
+    b |> invoke(vk_view)
+    boost_struct |> vk_view_destroy()
 
 //
 // DeviceQueueCreateInfo
