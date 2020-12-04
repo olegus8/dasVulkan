@@ -898,7 +898,7 @@ def create_device(
     var vk_create_info : VkDeviceCreateInfo
     unsafe
         vk_create_info <- create_info |> vk_view_create_unsafe()
-    defer() <| ${ delete vk_create_info; }
+    defer() <| ${ create_info |> vk_view_destroy(); }
 
     var result_ = VkResult VK_SUCCESS
     result ?? result_ = vkCreateDevice(
@@ -930,7 +930,7 @@ def create_instance(
     var vk_create_info : VkInstanceCreateInfo
     unsafe
         vk_create_info <- create_info |> vk_view_create_unsafe()
-    defer() <| ${ delete vk_create_info; }
+    defer() <| ${ create_info |> vk_view_destroy(); }
 
     var result_ = VkResult VK_SUCCESS
     result ?? result_ = vkCreateInstance(
