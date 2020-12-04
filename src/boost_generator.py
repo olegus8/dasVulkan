@@ -475,7 +475,13 @@ class GenStruct(object):
                     raise Exception('add when needed')
             else:
                 vk_value = field.boost_value_to_vk(f'boost_struct.{bname}')
-            lines.append(f'    vk_struct.{field.vk_name} = {vk_value}')
+                lines += [
+                    f'    vk_struct.{field.vk_name} = {vk_value}'
+                ]
+            lines += [
+                '',
+                '    return <- vk_struct',
+            ]
 
         lines += [
             '',
