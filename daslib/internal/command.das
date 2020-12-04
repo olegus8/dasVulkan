@@ -18,6 +18,8 @@ candidates are:
 struct CommandPool
     device : VkDevice
     pool : VkCommandPool
+
+foo
 */
 
 // this works
