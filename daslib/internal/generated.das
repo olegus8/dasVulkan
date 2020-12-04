@@ -326,7 +326,9 @@ def with_view(
     var boost_struct : DeviceCreateInfo;
     b : block<(vk_struct : VkDeviceCreateInfo)>
 )
-    var vk_view <- boost_struct |> vk_view_create()
+    var vk_struct : VkDeviceCreateInfo
+    unsafe
+        vk_struct <- boost_struct |> vk_view_create()
     b |> invoke(vk_view)
     boost_struct |> vk_view_destroy()
 
