@@ -510,7 +510,7 @@ class GenStruct(object):
                                         f'vk_view_create_unsafe())',
                         '        unsafe',
                        f'            vk_struct.{vname} = addr(',
-                       f'                boost_struct.{bname})',
+                       f'                boost_struct._vk_view_{bname})',
                     ]
                 else:
                     raise Exception('add when needed')
