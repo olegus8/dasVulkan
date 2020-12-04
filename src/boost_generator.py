@@ -1410,5 +1410,5 @@ def boost_ptr_name_to_array(name):
     return name[2:] if name.startswith('p_') else name
 
 def remove_last_char(lines, char):
-    assert_ends_with(lines[-1], char)
-    lines[-1] = lines[-1][:-1]
+    if lines[-1].endswith(char):
+        lines[-1] = lines[-1][:-1]
