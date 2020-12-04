@@ -395,11 +395,11 @@ class GenStruct(object):
             lines += [f'    {boost_name} : {boost_type}']
 
         for field in self.__fields:
-            bname, vname = field.boost_name, field.vk_name
-            btype, vtype = field.boost_type, field.vk_type
             if vname in ['pNext', 'sType']:
                 continue
-            elif self.__is_array_items(vname) and field.needs_view:
+            bname, vname = field.boost_name, field.vk_name
+            btype, vtype = field.boost_type, field.vk_type
+            if self.__is_array_items(vname) and field.needs_view:
                 biname = boost_ptr_name_to_array(field.boost_name)
                 lines += [f'    _vk_view_{biname} : array<{vtype}>']
             elif field.is_pointer and field.needs_view:
