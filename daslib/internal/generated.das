@@ -266,17 +266,38 @@ struct DeviceCreateInfo
     enabled_extension_names : array<string>
     p_enabled_features : PhysicalDeviceFeatures ?
     _vk_view_queue_create_infos : array<VkDeviceQueueCreateInfo>
-    _vk_view_p_enabled_features : VkPhysicalDeviceFeatures
+    _vk_view_enabled_features : VkPhysicalDeviceFeatures
 
-def vk_view_populate(var boost_struct : DeviceCreateInfo)
-    for item in boost_struct.queue_create_infos:
-        item |> vk_view_populate()
-    if boost_struct.p_enabled_features != null
-        *boost_struct.p_enabled_features |> vk_view_populate()
+def unsafe_array_addr(ar : array<auto(T)>) : T?
+    unsafe
+        return length(ar) > 0 ? addr(ar[0]) : [[T?]]
+
+[unsafe]
+def vk_view_create(var boost_struct : DeviceCreateInfo) : VkDeviceCreateInfo
+    var vk_struct : VkDeviceCreateInfo
+    vk_struct.sType = VkStructureType VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO
+    vk_struct.flags = boost_struct.flags
+    vk_struct.queueCreateInfoCount = uint(
+        boost_struct.queue_create_infos |> length())
+
     boost_struct._vk_view_queue_create_infos <- [{
         for item in boost_struct.queue_create_infos ;
-        item |> unsafe_vk_view()
+        item |> vk_view_create()
     }]
+    unsafe
+        vk_struct.pQueueCreateInfos = unsafe_array_addr
+
+    if boost_struct.p_enabled_features != null
+        boost_struct._vk_view_enabled_features <- (
+            *boost_struct.p_enabled_features |> vk_view_create())
+    unsafe
+        return [[ VkDeviceCreateInfo
+            enabledLayerCount = uint(vk_enabled_layer_count),
+            ppEnabledLayerNames = vk_p_enabled_layer_names,
+            enabledExtensionCount = uint(vk_enabled_extension_count),
+            ppEnabledExtensionNames = vk_p_enabled_extension_names,
+            pEnabledFeatures = vk_p_enabled_features
+        ]]
 
 def with_view(
     boost_struct : DeviceCreateInfo;
