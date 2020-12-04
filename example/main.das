@@ -278,7 +278,7 @@ def with_swapchain_independent_state(width, height, title; b : block<(
         defer() <| ${ delete device; }
         let vk_device = device.device
 
-        var queue <- device |> get_device_queue(qfam)
+        let queue <- device |> get_device_queue(qfam)
 
         var cmd_pool <- vk_device |> create_command_pool(qfam)
         defer() <| ${ delete cmd_pool; };
@@ -296,7 +296,7 @@ def with_swapchain_independent_state(width, height, title; b : block<(
                 surface.surface_khr,
                 phys_dev,
                 vk_device,
-                gdev.queue.queue,
+                queue.queue,
                 vk_surf_fmt,
                 present_mode,
                 shmods[0],
