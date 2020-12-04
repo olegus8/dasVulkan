@@ -796,8 +796,14 @@ class GenHandle(object):
                 boost_type = param.boost_type
             lines += [f'    {boost_name} : {boost_type} = [[ {boost_type} ]];']
 
+        if self.__vk_ctor_returns_vk_result:
+            lines += [
+               f'    var result : VkResult? = [[VkResult?]];',
+            ]
+
+        remove_last_char(lines, ';')
+
         lines += [
-           f'    var result : VkResult? = [[VkResult?]]',
            f') : {bh_type}',
             '',
            f'    var {bh_attr} : {bh_type}',
@@ -821,9 +827,16 @@ class GenHandle(object):
         if lines[-1] != '':
             lines.append('')
 
+        if self.__vk_ctor_returns_vk_result:
+            lines += [
+               f'    var result_ = VkResult VK_SUCCESS',
+            ]
+            maybe_capture_result = 'result ?? result_ = '
+        else:
+            maybe_cauture_result = ''
+
         lines += [
-           f'    var result_ = VkResult VK_SUCCESS',
-           f'    result ?? result_ = {self.__vk_ctor_name}(',
+           f'    {maybe_capture_result{self.__vk_ctor_name}(',
         ]
 
         for param in self.__vk_ctor_params:
