@@ -831,7 +831,7 @@ class GenHandle(object):
         lines = []
         lines += [
             '',
-           f'def finalize(var {bh_attr} : {bh_type})',
+           f'def finalize(var {bh_attr} : {bh_type} explicit)',
            f'    {self.__vk_dtor_name}(',
         ]
         for param in self.__vk_dtor_params:
