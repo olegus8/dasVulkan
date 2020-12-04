@@ -98,7 +98,7 @@ def add_boost_content(g):
     g.add_gen_handle(
         handle          = 'VkDevice',
         ctor            = 'vkCreateDevice',
-        dtor            = 'vkDestroyDevice', #TODO: do vkDeviceWaitIlde too
+        dtor            = 'vkDestroyDeviceSafe',
         p_create_info   = 'pCreateInfo')
     g.add_gen_handle(
         handle          = 'VkInstance',

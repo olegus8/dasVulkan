@@ -34,6 +34,13 @@ def vk_value_to_boost(v : int8[]) : string
         let s := reinterpret<string>(addr(v[0]))
         return s
 
+def vkDestroyDeviceSafe(
+    device : VkDevice,
+    pAllocator : VkAllocationCallbacks ?
+)
+    device |> vkDeviceWaitIdle()
+    device |> vkDestroyDevice(pAllocator)
+
 //
 // Surface
 //

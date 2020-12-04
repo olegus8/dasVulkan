@@ -831,6 +831,41 @@ def vk_value_to_boost(vk_struct : VkSurfaceFormatKHR) : SurfaceFormatKHR
     ]]
 
 //
+// Device
+//
+
+struct Device
+    device : VkDevice
+
+def boost_value_to_vk(b : Device) : VkDevice
+    return b.device
+
+def create_device(
+    physical_device : PhysicalDevice = [[ PhysicalDevice ]];
+    create_info : DeviceCreateInfo = [[ DeviceCreateInfo ]];
+    var result : VkResult? = [[VkResult?]]
+) : Device
+
+    var device : Device
+    create_info |> with_view() <| $(vk_info)
+        var result_ = VkResult VK_SUCCESS
+        result ?? result_ = vkCreateDevice(
+            boost_value_to_vk(physical_device),
+            safe_addr(vk_info),
+            null,
+            safe_addr(device.device)
+        )
+        assert(result_ == VkResult VK_SUCCESS)
+    return <- device
+
+def finalize(var device : Device)
+    vkDestroyDevice(
+        boost_value_to_vk(device),
+        null
+    )
+    memzero(device)
+
+//
 // Instance
 //
 
