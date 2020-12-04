@@ -262,10 +262,10 @@ def with_swapchain_independent_state(width, height, title; b : block<(
     pipeline_layout : VkPipelineLayout;
     cmd_pool        : VkCommandPool
 )>)
-    var instance <- create_default_instance()
-    defer() <| ${ delete instance; }
-
     with_window(width, height, title) <| $(window)
+        var instance <- create_default_instance()
+        defer() <| ${ delete instance; }
+
         var surface <- instance |> create_window_surface(window)
         defer() <| ${ delete surface; }
 
