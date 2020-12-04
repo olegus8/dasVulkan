@@ -41,6 +41,10 @@ def array_addr_unsafe(var ar : array<auto(T)>) : T?
     unsafe
         return length(ar) > 0 ? addr(ar[0]) : [[T ?]]
 
+def addr_unsafe(v):
+    unsafe
+        return addr(v)
+
 //
 // Device
 //
