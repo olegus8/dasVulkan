@@ -407,7 +407,7 @@ class GenStruct(object):
                 dvtype = deref_das_type(vtype)
                 lines += [f'    _vk_view_{bname} : {dvtype}']
 
-        lines += [f'    _vk_view_active : bool']
+        lines += [f'    _vk_view__active : bool']
         return lines
 
     def __generate_vk_to_boost(self):
@@ -449,8 +449,8 @@ class GenStruct(object):
            f'def vk_view_create_unsafe(var boost_struct : {bstype}',
            f') : {vstype}',
             '',
-            '    assert(!boost_struct._vk_view_active)',
-            '    boost_struct._vk_view_active = true',
+            '    assert(!boost_struct._vk_view__active)',
+            '    boost_struct._vk_view__active = true',
         ]
         for field in self.__fields:
             if field.vk_name in ['pNext', 'sType']:
@@ -518,7 +518,7 @@ class GenStruct(object):
         lines += [
             '',
            f'def vk_view_destroy(var boost_struct : {bstype})',
-            '    assert(boost_struct._vk_view_active)',
+            '    assert(boost_struct._vk_view__active)',
         ]
         for field in self.__fields:
             if field.vk_name in ['pNext', 'sType']:
@@ -538,7 +538,7 @@ class GenStruct(object):
                    f'        *boost_struct.{bname} |> vk_view_destroy()',
                 ]
         lines += [
-            '    boost_struct._vk_view_active = false',
+            '    boost_struct._vk_view__active = false',
         ]
         return lines
 

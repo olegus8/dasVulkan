@@ -41,6 +41,10 @@ def array_addr_unsafe(var ar : array<auto(T)>) : T?
     unsafe
         return length(ar) > 0 ? addr(ar[0]) : [[T ?]]
 
+def addr_unsafe(v):
+    unsafe
+        return addr(v)
+
 //
 // Device
 //
@@ -304,7 +308,7 @@ def vk_view_create_unsafe(var boost_struct : DeviceCreateInfo
         ppEnabledLayerNames = array_addr_unsafe(boost_struct.enabled_layer_names),
         enabledExtensionCount = uint(boost_struct.enabled_extension_names |> length()),
         ppEnabledExtensionNames = array_addr_unsafe(boost_struct.enabled_extension_names),
-        pEnabledFeatures = addr(boost_struct._vk_view_p_enabled_features)
+        pEnabledFeatures = addr_unsafe(boost_struct._vk_view_p_enabled_features)
     ]]
 
 def vk_view_destroy(var boost_struct : DeviceCreateInfo)
@@ -417,7 +421,7 @@ def vk_view_create_unsafe(var boost_struct : InstanceCreateInfo
     return <- [[ VkInstanceCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
         flags = boost_struct.flags,
-        pApplicationInfo = addr(boost_struct._vk_view_p_application_info),
+        pApplicationInfo = addr_unsafe(boost_struct._vk_view_p_application_info),
         enabledLayerCount = uint(boost_struct.enabled_layer_names |> length()),
         ppEnabledLayerNames = array_addr_unsafe(boost_struct.enabled_layer_names),
         enabledExtensionCount = uint(boost_struct.enabled_extension_names |> length()),
