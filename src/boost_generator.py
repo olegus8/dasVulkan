@@ -356,9 +356,9 @@ class GenStruct(object):
         return 'VK_STRUCTURE_TYPE_' + (
             boost_camel_to_lower(self.__boost_type_name).upper())
 
-    def __get_array(self, vk_items_name):
+    def __get_array(self, vk_name):
         for array in self.__arrays:
-            if vk_items_name == array.vk_items_name:
+            if vk_name in [array.vk_items_name, array.vk_count_name]:
                 return array
 
     def generate(self):
@@ -461,7 +461,7 @@ class GenStruct(object):
             if vname == 'sType':
                 vk_value = f'VkStructureType {self.__vk_structure_type}'
             elif self.__is_array_count(vname):
-                vk_value = f'uint(boost_struct.{bname} |> length())'
+                continue
             elif self.__is_array_items(vname):
                 continue
             elif field.is_pointer:
@@ -493,6 +493,10 @@ class GenStruct(object):
                        f'    vk_struct.{vname} = array_addr_unsafe(',
                        f'        boost_struct.{biname})',
                     ]
+                vcname = self.__get_array(vname).vk_count_name
+                lines += [
+                   f'    vk_struct.{vcname} = uint(',
+                   f'        boost_struct.{biname} |> length())'
             elif field.is_pointer:
                 if field.needs_vk_view:
                     lines += [
