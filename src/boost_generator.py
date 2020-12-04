@@ -497,6 +497,7 @@ class GenStruct(object):
                 lines += [
                    f'    vk_struct.{vcname} = uint(',
                    f'        boost_struct.{biname} |> length())'
+                ]
             elif field.is_pointer:
                 if field.needs_vk_view:
                     lines += [
