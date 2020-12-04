@@ -9,9 +9,9 @@ require math
 require generated
 
 let
-    DEFAULT_REQUIRED_EXTENSIONS = [[auto[]
+    DEFAULT_REQUIRED_EXTENSIONS <- [{auto[]
         "VK_KHR_swapchain" //TODO: use VK_KHR_SWAPCHAIN_EXTENSION_NAME
-    ]]
+    }]
 
 
 def find_physical_device_for_graphics(
@@ -119,15 +119,15 @@ def with_device(
     let vk_phys_dev = physical_device.physical_device
     let graphics_family <- physical_device|>get_graphics_queue_family(surface)
 
-    let features : PhysicalDeviceFeatures
-    var p_features : PhysicalDeviceFeatures const ?
+    var features : PhysicalDeviceFeatures
+    var p_features : PhysicalDeviceFeatures ?
     unsafe
         p_features = addr(features)
 
     var create_info <- [[DeviceCreateInfo
-        queue_create_infos <- [{[[DeviceQueueCreateInfo
+        queue_create_infos <- [{auto[] [[DeviceQueueCreateInfo
             queue_family_index = graphics_family,
-            queue_priorities <- [{ 1.0f }]
+            queue_priorities <- [{ auto[] 1.0f }]
         ]]}],
         p_enabled_features = p_features,
         enabled_extension_names := DEFAULT_REQUIRED_EXTENSIONS
@@ -140,7 +140,7 @@ def with_device(
     let vk_device = device.device
     var queue : VkQueue
     vk_device |> vkGetDeviceQueue(graphics_family, 0u, queue |> safe_addr())
-    b |> invoke(device, vk_queue)
+    b |> invoke(device, queue)
 
 
 def get_swap_extent(
