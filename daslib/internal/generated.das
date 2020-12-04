@@ -19,7 +19,7 @@ def with_view(
     var vk_struct : VK_T
     unsafe
         vk_struct <- boost_struct |> vk_view_create_unsafe()
-    b |> invoke(vk_view)
+    b |> invoke(vk_struct)
     boost_struct |> vk_view_destroy()
 
 def boost_value_to_vk(b : auto(T)) : T
@@ -899,7 +899,7 @@ def create_device(
 ) : Device
 
     var device : Device
-    create_info |> with_view() <| $(vk_info)
+    create_info |> with_view() <| $(vk_info : VkDeviceCreateInfo)
         var result_ = VkResult VK_SUCCESS
         result ?? result_ = vkCreateDevice(
             boost_value_to_vk(physical_device),
@@ -926,7 +926,7 @@ def create_instance(
 ) : Instance
 
     var instance : Instance
-    create_info |> with_view() <| $(vk_info)
+    create_info |> with_view() <| $(vk_info : VkInstanceCreateInfo)
         var result_ = VkResult VK_SUCCESS
         result ?? result_ = vkCreateInstance(
             safe_addr(vk_info),
