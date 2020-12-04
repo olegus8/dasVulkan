@@ -132,6 +132,7 @@ def with_device(
 
     var queue <- device |> get_device_queue(graphics_family)
     defer() <| ${ delete queue; }
+
     b |> invoke(device, queue)
 
 
