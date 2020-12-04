@@ -676,7 +676,9 @@ class GenHandle(object):
             '',
            f'def {self.__boost_enumerator_name}(']
         for param in self.__vk_enumerator_params:
-            if param.vk_name in [self.__vk_p_count_name, self.__vk_p_handles_name]:
+            if param.vk_name in [
+                self.__vk_p_count_name, self.__vk_p_handles_name
+            ]:
                 continue
             lines += [
                f'    {param.boost_name} : {param.boost_type};',
@@ -737,7 +739,9 @@ class GenHandle(object):
            f'def {self.__boost_enumerator_name}_no_batch(',
         ]
         for param in self.__vk_enumerator_params:
-            if param.vk_name in [self.__vk_p_count_name, self.__vk_p_handles_name]:
+            if param.vk_name in [
+                self.__vk_p_count_name, self.__vk_p_handles_name
+            ]:
                 continue
             lines += [
                f'    {param.boost_name} : {param.boost_type};',
@@ -748,7 +752,9 @@ class GenHandle(object):
         ]
         params = []
         for param in self.__vk_enumerator_params:
-            if param.vk_name in [self.__vk_p_count_name, self.__vk_p_handles_name]:
+            if param.vk_name in [
+                self.__vk_p_count_name, self.__vk_p_handles_name
+            ]:
                 continue
             params.append(param.boost_name)
         params_text = ', '.join(params + ['result'])
