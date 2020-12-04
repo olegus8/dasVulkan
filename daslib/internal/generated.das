@@ -287,7 +287,7 @@ def with_view(
             sType = VkStructureType VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO,
             flags = boost_struct.flags,
             queueCreateInfoCount = uint(vk_queue_create_info_count),
-            pQueueCreateInfos = reinterpret<VkDeviceQueueCreateInfo const ?>(vk_p_queue_create_infos),
+            pQueueCreateInfos = vk_p_queue_create_infos,
             enabledLayerCount = uint(vk_enabled_layer_count),
             ppEnabledLayerNames = vk_p_enabled_layer_names,
             enabledExtensionCount = uint(vk_enabled_extension_count),
