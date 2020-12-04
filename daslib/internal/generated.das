@@ -33,15 +33,11 @@ def vk_value_to_boost(v : int8[]) : string
         let s := reinterpret<string>(addr(v[0]))
         return s
 
-def array_addr_unsafe(ar : array<auto(T)>) : T const ?
-    unsafe
-        return length(ar) > 0 ? addr(ar[0]) : [[T const ?]]
-
 def array_addr_unsafe(var ar : array<auto(T)>) : T?
     unsafe
         return length(ar) > 0 ? addr(ar[0]) : [[T ?]]
 
-def addr_unsafe(v):
+def addr_unsafe(v)
     unsafe
         return addr(v)
 
@@ -250,13 +246,13 @@ struct ApplicationInfo
     engine_name : string
     engine_version : uint
     api_version : uint
-    _vk_view_active : bool
+    _vk_view__active : bool
 
 def vk_view_create_unsafe(var boost_struct : ApplicationInfo
 ) : VkApplicationInfo
 
-    assert(!boost_struct._vk_view_active)
-    boost_struct._vk_view_active = true
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
 
     return <- [[ VkApplicationInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_APPLICATION_INFO,
@@ -268,8 +264,8 @@ def vk_view_create_unsafe(var boost_struct : ApplicationInfo
     ]]
 
 def vk_view_destroy(var boost_struct : ApplicationInfo)
-    assert(boost_struct._vk_view_active)
-    boost_struct._vk_view_active = false
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
 
 //
 // DeviceCreateInfo
@@ -283,13 +279,13 @@ struct DeviceCreateInfo
     p_enabled_features : PhysicalDeviceFeatures ?
     _vk_view_queue_create_infos : array<VkDeviceQueueCreateInfo>
     _vk_view_p_enabled_features : VkPhysicalDeviceFeatures
-    _vk_view_active : bool
+    _vk_view__active : bool
 
 def vk_view_create_unsafe(var boost_struct : DeviceCreateInfo
 ) : VkDeviceCreateInfo
 
-    assert(!boost_struct._vk_view_active)
-    boost_struct._vk_view_active = true
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
 
     boost_struct._vk_view_queue_create_infos <- [{
         for item in boost_struct.queue_create_infos ;
@@ -312,13 +308,13 @@ def vk_view_create_unsafe(var boost_struct : DeviceCreateInfo
     ]]
 
 def vk_view_destroy(var boost_struct : DeviceCreateInfo)
-    assert(boost_struct._vk_view_active)
+    assert(boost_struct._vk_view__active)
     for item in boost_struct.queue_create_infos
         item |> vk_view_destroy()
     delete boost_struct._vk_view_queue_create_infos
     if boost_struct.p_enabled_features != null
         *boost_struct.p_enabled_features |> vk_view_destroy()
-    boost_struct._vk_view_active = false
+    boost_struct._vk_view__active = false
 
 //
 // DeviceQueueCreateInfo
@@ -328,13 +324,13 @@ struct DeviceQueueCreateInfo
     flags : uint
     queue_family_index : uint
     queue_priorities : array<float>
-    _vk_view_active : bool
+    _vk_view__active : bool
 
 def vk_view_create_unsafe(var boost_struct : DeviceQueueCreateInfo
 ) : VkDeviceQueueCreateInfo
 
-    assert(!boost_struct._vk_view_active)
-    boost_struct._vk_view_active = true
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
 
     return <- [[ VkDeviceQueueCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO,
@@ -345,8 +341,8 @@ def vk_view_create_unsafe(var boost_struct : DeviceQueueCreateInfo
     ]]
 
 def vk_view_destroy(var boost_struct : DeviceQueueCreateInfo)
-    assert(boost_struct._vk_view_active)
-    boost_struct._vk_view_active = false
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
 
 //
 // ExtensionProperties
@@ -355,7 +351,7 @@ def vk_view_destroy(var boost_struct : DeviceQueueCreateInfo)
 struct ExtensionProperties
     extension_name : string
     spec_version : uint
-    _vk_view_active : bool
+    _vk_view__active : bool
 
 def vk_value_to_boost(vk_struct : VkExtensionProperties) : ExtensionProperties
     return <- [[ExtensionProperties
@@ -371,13 +367,13 @@ struct Extent3D
     width : uint
     height : uint
     depth : uint
-    _vk_view_active : bool
+    _vk_view__active : bool
 
 def vk_view_create_unsafe(var boost_struct : Extent3D
 ) : VkExtent3D
 
-    assert(!boost_struct._vk_view_active)
-    boost_struct._vk_view_active = true
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
 
     return <- [[ VkExtent3D
         width = boost_struct.width,
@@ -386,8 +382,8 @@ def vk_view_create_unsafe(var boost_struct : Extent3D
     ]]
 
 def vk_view_destroy(var boost_struct : Extent3D)
-    assert(boost_struct._vk_view_active)
-    boost_struct._vk_view_active = false
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
 
 def vk_value_to_boost(vk_struct : VkExtent3D) : Extent3D
     return <- [[Extent3D
@@ -406,13 +402,13 @@ struct InstanceCreateInfo
     enabled_layer_names : array<string>
     enabled_extension_names : array<string>
     _vk_view_p_application_info : VkApplicationInfo
-    _vk_view_active : bool
+    _vk_view__active : bool
 
 def vk_view_create_unsafe(var boost_struct : InstanceCreateInfo
 ) : VkInstanceCreateInfo
 
-    assert(!boost_struct._vk_view_active)
-    boost_struct._vk_view_active = true
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
 
     if boost_struct.p_application_info != null
         boost_struct._vk_view_p_application_info <- (
@@ -429,10 +425,10 @@ def vk_view_create_unsafe(var boost_struct : InstanceCreateInfo
     ]]
 
 def vk_view_destroy(var boost_struct : InstanceCreateInfo)
-    assert(boost_struct._vk_view_active)
+    assert(boost_struct._vk_view__active)
     if boost_struct.p_application_info != null
         *boost_struct.p_application_info |> vk_view_destroy()
-    boost_struct._vk_view_active = false
+    boost_struct._vk_view__active = false
 
 //
 // PhysicalDeviceLimits
@@ -545,7 +541,7 @@ struct PhysicalDeviceLimits
     optimal_buffer_copy_offset_alignment : uint64
     optimal_buffer_copy_row_pitch_alignment : uint64
     non_coherent_atom_size : uint64
-    _vk_view_active : bool
+    _vk_view__active : bool
 
 def vk_value_to_boost(vk_struct : VkPhysicalDeviceLimits) : PhysicalDeviceLimits
     return <- [[PhysicalDeviceLimits
@@ -671,7 +667,7 @@ struct PhysicalDeviceProperties
     pipeline_cache_uuid : uint8 [16]
     limits : PhysicalDeviceLimits
     sparse_properties : PhysicalDeviceSparseProperties
-    _vk_view_active : bool
+    _vk_view__active : bool
 
 def vk_value_to_boost(vk_struct : VkPhysicalDeviceProperties) : PhysicalDeviceProperties
     return <- [[PhysicalDeviceProperties
@@ -746,13 +742,13 @@ struct PhysicalDeviceFeatures
     sparse_residency_aliased : uint
     variable_multisample_rate : uint
     inherited_queries : uint
-    _vk_view_active : bool
+    _vk_view__active : bool
 
 def vk_view_create_unsafe(var boost_struct : PhysicalDeviceFeatures
 ) : VkPhysicalDeviceFeatures
 
-    assert(!boost_struct._vk_view_active)
-    boost_struct._vk_view_active = true
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
 
     return <- [[ VkPhysicalDeviceFeatures
         robustBufferAccess = boost_struct.robust_buffer_access,
@@ -813,8 +809,8 @@ def vk_view_create_unsafe(var boost_struct : PhysicalDeviceFeatures
     ]]
 
 def vk_view_destroy(var boost_struct : PhysicalDeviceFeatures)
-    assert(boost_struct._vk_view_active)
-    boost_struct._vk_view_active = false
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
 
 //
 // PhysicalDeviceSparseProperties
@@ -826,7 +822,7 @@ struct PhysicalDeviceSparseProperties
     residency_standard_3d_block_shape : uint
     residency_aligned_mip_size : uint
     residency_non_resident_strict : uint
-    _vk_view_active : bool
+    _vk_view__active : bool
 
 def vk_value_to_boost(vk_struct : VkPhysicalDeviceSparseProperties) : PhysicalDeviceSparseProperties
     return <- [[PhysicalDeviceSparseProperties
@@ -846,7 +842,7 @@ struct QueueFamilyProperties
     queue_count : uint
     timestamp_valid_bits : uint
     min_image_transfer_granularity : Extent3D
-    _vk_view_active : bool
+    _vk_view__active : bool
 
 def vk_value_to_boost(vk_struct : VkQueueFamilyProperties) : QueueFamilyProperties
     return <- [[QueueFamilyProperties
@@ -863,13 +859,13 @@ def vk_value_to_boost(vk_struct : VkQueueFamilyProperties) : QueueFamilyProperti
 struct SurfaceFormatKHR
     format : VkFormat
     color_space : VkColorSpaceKHR
-    _vk_view_active : bool
+    _vk_view__active : bool
 
 def vk_view_create_unsafe(var boost_struct : SurfaceFormatKHR
 ) : VkSurfaceFormatKHR
 
-    assert(!boost_struct._vk_view_active)
-    boost_struct._vk_view_active = true
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
 
     return <- [[ VkSurfaceFormatKHR
         format = boost_struct.format,
@@ -877,8 +873,8 @@ def vk_view_create_unsafe(var boost_struct : SurfaceFormatKHR
     ]]
 
 def vk_view_destroy(var boost_struct : SurfaceFormatKHR)
-    assert(boost_struct._vk_view_active)
-    boost_struct._vk_view_active = false
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
 
 def vk_value_to_boost(vk_struct : VkSurfaceFormatKHR) : SurfaceFormatKHR
     return <- [[SurfaceFormatKHR

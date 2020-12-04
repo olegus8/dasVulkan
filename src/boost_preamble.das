@@ -33,15 +33,11 @@ def vk_value_to_boost(v : int8[]) : string
         let s := reinterpret<string>(addr(v[0]))
         return s
 
-def array_addr_unsafe(ar : array<auto(T)>) : T const ?
-    unsafe
-        return length(ar) > 0 ? addr(ar[0]) : [[T const ?]]
-
 def array_addr_unsafe(var ar : array<auto(T)>) : T?
     unsafe
         return length(ar) > 0 ? addr(ar[0]) : [[T ?]]
 
-def addr_unsafe(v):
+def addr_unsafe(v)
     unsafe
         return addr(v)
 
