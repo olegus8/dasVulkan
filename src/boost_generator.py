@@ -424,7 +424,10 @@ class GenStruct(object):
         lines += [
             '',
             '[unsafe]',
-           f'def boost_value_to_vk(boost_struct : {bstype}) : {vstype}',
+           f'def vk_view_create(boost_struct : {bstype}) : {vstype}',
+            '    assert(!boost_struct._vk_view_active)',
+            '    boost_struct._vk_view_active = true',
+            '',
            f'    var vk_struct : [[ {vstype} ]]',
         ]
         for field in self.__fields:
@@ -433,9 +436,11 @@ class GenStruct(object):
             if vname in ['pNext']:
                 continue
             elif vname == 'sType':
-                vk_value = f'VkStructureType {self.__vk_structure_type}'
+                stype = self.__vk_structure_type
+                lines.append(f'    vk_struct.sType = VkStructureType {stype}')
             elif self.__is_array_count(vname):
-                vk_value = f'uint(boost_struct.{bname} |> length())'
+                lines.append(f'    vk_struct.{vname} = '
+                    f'uint(boost_struct.{bname} |> length())')
             elif self.__is_array_items(vname):
                 iname = boost_ptr_name_to_array(bname)
                 lines += [
@@ -448,7 +453,7 @@ class GenStruct(object):
                 pass
             else:
                 vk_value = field.boost_value_to_vk(f'boost_struct.{bname}')
-            lines.append(f'     vk_struct.{field.vk_name} = {vk_value}')
+            lines.append(f'    vk_struct.{field.vk_name} = {vk_value}')
 
         lines += [
             '',
@@ -937,11 +942,7 @@ class ParamBase(object):
 
     @property
     def needs_vk_view(self):
-        return self.vk_view_type is not None
-
-    @property
-    def vk_view_type(self):
-        return None
+        return False
 
     def __make_qual_das_type(self, type_name):
         t = type_name
@@ -1031,6 +1032,10 @@ class ParamVkStruct(ParamBase):
     def vk_to_boost_assign_op(self):
         return '<-'
 
+    @property
+    def needs_vk_view(self):
+        return True
+
 
 class ParamVkStructPtr(ParamBase):
 
@@ -1056,8 +1061,8 @@ class ParamVkStructPtr(ParamBase):
         return None
 
     @property
-    def vk_view_type(self):
-        return f'{self.vk_unqual_type} const ?'
+    def needs_vk_view(self):
+        return True
 
 
 class ParamVkEnum(ParamBase):
