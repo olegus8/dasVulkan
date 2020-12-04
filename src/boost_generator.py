@@ -493,6 +493,49 @@ class GenStruct(object):
         ]
         return lines
 
+    def __generate_vk_view_destroy(self):
+        bstype = self.__boost_type_name
+        vstype = self.__vk_type_name
+        lines = []
+        lines += [
+            '',
+           f'def vk_view_destroy(boost_struct : {bstype})',
+            '    assert(boost_struct._vk_view_active)',
+        ]
+        for field in self.__fields:
+            bname, vname = field.boost_name, field.vk_name
+            btype, vtype = field.boost_type, field.vk_type
+            if vname in ['pNext', 'sType']:
+                continue
+            elif self.__is_array_items(vname) and field.needs_view:
+                biname = boost_ptr_name_to_array(field.boost_name)
+                lines += [
+                   f'    for item in boost_struct.{biname}',
+                   f'        item |> vk_view_destroy()',
+                   f'    delete boost_struct._vk_view_{biname}',
+                ]
+            elif field.is_pointer:
+                if field.needs_view:
+                    lines += [
+                       f'    if boost_struct.{bname} != null',
+                       f'        boost_struct._vk_view_{bname} <- '
+                                  f'*boost_struct.{bname} |> vk_view_create()',
+                        '        unsafe',
+                       f'            vk_struct.{vname} = addr('
+                                         f'boost_struct.{bname})',
+                    ]
+                else:
+                    raise Exception('add when needed')
+            else:
+                vk_value = field.boost_value_to_vk(f'boost_struct.{bname}')
+                lines += [
+                    f'    vk_struct.{vname} = {vk_value}'
+                ]
+        lines += [
+            '    boost_struct._vk_view_active = false',
+        ]
+        return lines
+
 
 class GenStructFieldArray(object):
 
