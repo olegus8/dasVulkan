@@ -272,7 +272,7 @@ def with_swapchain_independent_state(width, height, title; b : block<(
     let phys_dev <- instance |> find_physical_device_for_graphics(surface);
     let vk_phys_dev = phys_dev.physical_device;
     var gfx_dev <- phys_dev |> create_graphics_device(surface);
-    defer <| ${ delete gfx_dev; };
+    defer() <| ${ delete gfx_dev; };
     let vk_device = gfx_dev.device.device;
     vk_device |> with_shader_modules([[auto[]
         "{get_das_root()}/modules/dasVulkan/example/vert.spv";
