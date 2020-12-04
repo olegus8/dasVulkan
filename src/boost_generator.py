@@ -854,7 +854,12 @@ class GenHandle(object):
 
         lines += [
            f'    )',
-           f'    assert(result_ == VkResult VK_SUCCESS)',
+        ]
+        if self.__vk_ctor_returns_vk_result:
+            lines += [
+               f'    assert(result_ == VkResult VK_SUCCESS)',
+            ]
+        lines += [
            f'    return <- {bh_attr}',
         ]
         return lines
