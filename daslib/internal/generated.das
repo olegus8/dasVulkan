@@ -274,7 +274,7 @@ struct DeviceCreateInfo
     enabled_layer_names : array<string>
     enabled_extension_names : array<string>
     p_enabled_features : PhysicalDeviceFeatures ?
-    _vk_view_queue_create_infos : array<VkDeviceQueueCreateInfo ?>
+    _vk_view_queue_create_infos : array<VkDeviceQueueCreateInfo>
     _vk_view_p_enabled_features : VkPhysicalDeviceFeatures
     _vk_view_active : bool
 
