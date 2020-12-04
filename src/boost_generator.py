@@ -480,6 +480,7 @@ class GenStruct(object):
             btype, vtype = field.boost_type, field.vk_type
             if self.__is_array_items(vname):
                 biname = boost_ptr_name_to_array(field.boost_name)
+                lines += ['']
                 if field.needs_vk_view:
                     lines += [
                        f'    boost_struct._vk_view_{biname} <- [{{',
@@ -501,6 +502,7 @@ class GenStruct(object):
             elif field.is_pointer:
                 if field.needs_vk_view:
                     lines += [
+                        '',
                        f'    if boost_struct.{bname} != null',
                        f'        boost_struct._vk_view_{bname} <- (',
                        f'            *boost_struct.{bname} |> '
