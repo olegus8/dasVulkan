@@ -79,7 +79,7 @@ def create_window_surface(
     assert(result_ == VkResult VK_SUCCESS)
     return <- surface
 
-def finalize(var surface : SurfaceKHR)
+def finalize(var surface : SurfaceKHR explicit)
     vkDestroySurfaceKHR(
         surface._instance,
         surface.surface_khr,

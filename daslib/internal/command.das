@@ -22,8 +22,8 @@ struct CommandPool
 
 // this works
 struct CommandPool
-    pool : VkCommandPool
     device : VkDevice
+    pool : VkCommandPool
 
 
 def create_command_pool(

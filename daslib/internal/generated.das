@@ -45,7 +45,7 @@ def addr_unsafe(v)
 // Device
 //
 
-def finalize(var device : Device)
+def finalize(var device : Device explicit)
     let vk_device = boost_value_to_vk(device)
     vk_device |> vkDeviceWaitIdle()
     vk_device |> vkDestroyDevice(null)
@@ -79,7 +79,7 @@ def create_window_surface(
     assert(result_ == VkResult VK_SUCCESS)
     return <- surface
 
-def finalize(var surface : SurfaceKHR)
+def finalize(var surface : SurfaceKHR explicit)
     vkDestroySurfaceKHR(
         surface._instance,
         surface.surface_khr,
@@ -936,7 +936,7 @@ def create_instance(
         assert(result_ == VkResult VK_SUCCESS)
     return <- instance
 
-def finalize(var instance : Instance)
+def finalize(var instance : Instance explicit)
     vkDestroyInstance(
         boost_value_to_vk(instance),
         null
