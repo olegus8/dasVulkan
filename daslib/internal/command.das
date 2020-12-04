@@ -9,8 +9,8 @@ require vulkan
 //
 
 struct CommandPool
-    device : VkDevice
     pool : VkCommandPool
+    device : VkDevice
 
 
 def create_command_pool(

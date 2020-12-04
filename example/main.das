@@ -283,7 +283,7 @@ def with_swapchain_independent_state(width, height, title; b : block<(
     device |> with_pipeline_layout_simple()         <| $(pipeline_layout)   {
         var cmd_pool <- device |> create_command_pool(
             phys_dev |> get_graphics_queue_family(surface));
-        defer() <| { delete cmd_pool; };
+        defer() <| ${ delete cmd_pool; };
         b |> invoke(
             vk_instance,
             window,
@@ -442,6 +442,7 @@ def draw_frame(device, queue, cmd_bufs, swapchain, frame,
             presented = true
 
     return img_acquired && presented
+
 
 
 [export]
