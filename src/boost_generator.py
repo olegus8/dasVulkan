@@ -643,25 +643,25 @@ class GenHandle(object):
 
     def __generate_type(self):
         lines = []
-        btype = self.__boost_handle_type_name
-        vtype = self.__vk_handle_type_name
+        bhtype = self.__boost_handle_type_name
+        vhtype = self.__vk_handle_type_name
         attr = self.__boost_handle_attr
         lines += [
             '',
-           f'struct {btype}',
-           f'    {attr} : {vtype}',
+           f'struct {bhtype}',
+           f'    {attr} : {vhtype}',
         ]
         for param in self.__vk_dtor_params:
             if param.vk_name == 'pAllocator':
                 continue
-            elif param.boost_type == btype:
+            elif param.boost_type == bhtype:
                 continue
             lines += [
-               f'    _{param.boost_name} : {param.vk_type}'
+               f'    _{param.boost_name} : {param.boost_type}'
             ]
         lines += [
             '',
-           f'def boost_value_to_vk(b : {btype}) : {vtype}',
+           f'def boost_value_to_vk(b : {bhtype}) : {vhtype}',
            f'    return b.{attr}',
         ]
         return lines
@@ -832,10 +832,8 @@ class GenHandle(object):
                    f'    defer() <| ${{ {bname} |> vk_view_destroy(); }}',
                 ]
             else:
-                bname = param.boost_name
-                vk_value = param.boost_value_to_vk(param.boost_name)
                 lines += [
-                   f'    {bh_attr}._{bname} = {vk_value}'
+                   f'    {bh_attr}._{param.boost_name} := {param.boost_name}'
                 ]
 
         if lines[-1] != '':
@@ -895,7 +893,8 @@ class GenHandle(object):
             elif param.boost_type == bh_type:
                 vk_value = param.boost_value_to_vk(bh_attr)
             else:
-                vk_value = f'{bh_attr}._{param.boost_name}'
+                bname = param.boost_name
+                vk_value = parah.boost_value_to_vk(f'{bh_attr}._{bname}')
             lines.append(f'        {vk_value},')
         remove_last_char(lines, ',')
         lines += [
