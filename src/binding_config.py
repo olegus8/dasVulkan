@@ -100,9 +100,6 @@ def add_boost_content(g):
         ctor            = 'vkCreateDevice',
         p_create_info   = 'pCreateInfo')
     g.add_gen_handle(
-        handle          = 'VkQueue',
-        ctor            = 'vkGetDeviceQueue')
-    g.add_gen_handle(
         handle          = 'VkInstance',
         ctor            = 'vkCreateInstance',
         dtor            = 'vkDestroyInstance',
@@ -112,6 +109,9 @@ def add_boost_content(g):
         enumerator      = 'vkEnumeratePhysicalDevices',
         p_count         = 'pPhysicalDeviceCount',
         p_handles       = 'pPhysicalDevices')
+    g.add_gen_handle(
+        handle          = 'VkQueue',
+        ctor            = 'vkGetDeviceQueue')
 
     #
     # Structs
