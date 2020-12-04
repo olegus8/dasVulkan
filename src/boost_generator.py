@@ -470,13 +470,14 @@ class GenStruct(object):
                                   f'*boost_struct.{bname} |> vk_view_create()',
                         '        unsafe',
                        f'            vk_struct.{vname} = addr('
-                                         f'boost_struct.{bname})'
+                                         f'boost_struct.{bname})',
+                    ]
                 else:
                     raise Exception('add when needed')
             else:
                 vk_value = field.boost_value_to_vk(f'boost_struct.{bname}')
                 lines += [
-                    f'    vk_struct.{field.vk_name} = {vk_value}'
+                    f'    vk_struct.{vname} = {vk_value}'
                 ]
             lines += [
                 '',
