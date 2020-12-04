@@ -657,7 +657,7 @@ class GenHandle(object):
             elif param.boost_type == bhtype:
                 continue
             lines += [
-               f'    _{param.boost_name} : {param.boost_type}'
+               f'    _{param.boost_name} : {param.vk_type}'
             ]
         lines += [
             '',
@@ -832,8 +832,10 @@ class GenHandle(object):
                    f'    defer() <| ${{ {bname} |> vk_view_destroy(); }}',
                 ]
             else:
+                bname = param.boost_name
+                vk_value = param.boost_value_to_vk(bname)
                 lines += [
-                   f'    {bh_attr}._{param.boost_name} := {param.boost_name}'
+                   f'    {bh_attr}._{bname} = {vk_value}'
                 ]
 
         if lines[-1] != '':
@@ -893,8 +895,7 @@ class GenHandle(object):
             elif param.boost_type == bh_type:
                 vk_value = param.boost_value_to_vk(bh_attr)
             else:
-                bname = param.boost_name
-                vk_value = param.boost_value_to_vk(f'{bh_attr}._{bname}')
+                vk_value = f'{bh_attr}._{bname}'
             lines.append(f'        {vk_value},')
         remove_last_char(lines, ',')
         lines += [

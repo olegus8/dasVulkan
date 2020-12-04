@@ -919,11 +919,13 @@ def create_device(
 ) : Device
 
     var device : Device
+    device._physical_device := physical_device
 
     var vk_create_info : VkDeviceCreateInfo
     unsafe
         vk_create_info <- create_info |> vk_view_create_unsafe()
     defer() <| ${ create_info |> vk_view_destroy(); }
+    device._p_device := p_device
 
     var result_ = VkResult VK_SUCCESS
     result ?? result_ = vkCreateDevice(
@@ -941,7 +943,7 @@ def create_device(
 
 struct CommandPool
     command_pool : VkCommandPool
-    _device : VkDevice
+    _device : Device
 
 def boost_value_to_vk(b : CommandPool) : VkCommandPool
     return b.command_pool
@@ -953,11 +955,13 @@ def create_command_pool(
 ) : CommandPool
 
     var command_pool : CommandPool
+    command_pool._device := device
 
     var vk_create_info : VkCommandPoolCreateInfo
     unsafe
         vk_create_info <- create_info |> vk_view_create_unsafe()
     defer() <| ${ create_info |> vk_view_destroy(); }
+    command_pool._p_command_pool := p_command_pool
 
     var result_ = VkResult VK_SUCCESS
     result ?? result_ = vkCreateCommandPool(
@@ -971,7 +975,7 @@ def create_command_pool(
 
 def finalize(var command_pool : CommandPool explicit)
     vkDestroyCommandPool(
-        command_pool._device,
+        boost_value_to_vk(command_pool._device),
         boost_value_to_vk(command_pool),
         null
     )
@@ -998,6 +1002,7 @@ def create_instance(
     unsafe
         vk_create_info <- create_info |> vk_view_create_unsafe()
     defer() <| ${ create_info |> vk_view_destroy(); }
+    instance._p_instance := p_instance
 
     var result_ = VkResult VK_SUCCESS
     result ?? result_ = vkCreateInstance(
@@ -1085,6 +1090,10 @@ def get_device_queue(
 ) : Queue
 
     var queue : Queue
+    queue._device := device
+    queue._queue_family_index := queue_family_index
+    queue._queue_index := queue_index
+    queue._p_queue := p_queue
 
     vkGetDeviceQueue(
         boost_value_to_vk(device),
