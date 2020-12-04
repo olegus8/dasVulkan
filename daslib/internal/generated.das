@@ -33,10 +33,6 @@ def vk_value_to_boost(v : int8[]) : string
         let s := reinterpret<string>(addr(v[0]))
         return s
 
-def array_addr_unsafe(ar : array<auto(T)>) : T const ?
-    unsafe
-        return length(ar) > 0 ? addr(ar[0]) : [[T const ?]]
-
 def array_addr_unsafe(var ar : array<auto(T)>) : T?
     unsafe
         return length(ar) > 0 ? addr(ar[0]) : [[T ?]]
@@ -317,7 +313,7 @@ def vk_view_create_unsafe(var boost_struct : DeviceCreateInfo
             *boost_struct.p_enabled_features |> vk_view_create_unsafe())
         unsafe
             vk_struct.pEnabledFeatures = addr(
-                boost_struct.p_enabled_features)
+                boost_struct._vk_view_p_enabled_features)
 
     return <- vk_struct
 
@@ -441,7 +437,7 @@ def vk_view_create_unsafe(var boost_struct : InstanceCreateInfo
             *boost_struct.p_application_info |> vk_view_create_unsafe())
         unsafe
             vk_struct.pApplicationInfo = addr(
-                boost_struct.p_application_info)
+                boost_struct._vk_view_p_application_info)
 
     vk_struct.ppEnabledLayerNames = array_addr_unsafe(
         boost_struct.enabled_layer_names)

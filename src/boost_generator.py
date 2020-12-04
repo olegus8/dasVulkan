@@ -451,7 +451,36 @@ class GenStruct(object):
             '',
             '    assert(!boost_struct._vk_view_active)',
             '    boost_struct._vk_view_active = true',
-            '',
+        ]
+        for field in self.__fields:
+            if field.vk_name in ['pNext', 'sType']:
+                continue
+            bname, vname = field.boost_name, field.vk_name
+            btype, vtype = field.boost_type, field.vk_type
+            if self.__is_array_items(vname) and field.needs_vk_view:
+                biname = boost_ptr_name_to_array(field.boost_name)
+                lines += ['']
+                lines += [
+                   f'    boost_struct._vk_view_{biname} <- [{{',
+                   f'        for item in boost_struct.{biname} ;',
+                   f'        item |> vk_view_create_unsafe()}}]',
+                ]
+            elif field.is_pointer and field.needs_vk_view:
+                lines += [
+                    '',
+                   f'    if boost_struct.{bname} != null',
+                   f'        boost_struct._vk_view_{bname} <- (',
+                   f'            *boost_struct.{bname} |> '
+                                    f'vk_view_create_unsafe())',
+                    '        unsafe',
+                   f'            vk_struct.{vname} = addr(',
+                   f'                boost_struct._vk_view_{bname})',
+                ]
+            elif field.is_pointer and not field.needs_vk_view:
+                raise Exception('add when needed')
+        if lines[-1] != '':
+            lines.append('')
+        lines += [
            f'    var vk_struct <- [[ {vstype}',
         ]
         for field in self.__fields:
@@ -464,7 +493,18 @@ class GenStruct(object):
             elif self.__is_array_count(vname):
                 continue
             elif self.__is_array_items(vname):
-                continue
+                biname = boost_ptr_name_to_array(field.boost_name)
+                if field.needs_vk_view:
+                    vk_value = (
+                        f'array_addr_unsafe(boost_struct._vk_view_{biname})')
+                else:
+                    vk_value = (
+                        f'array_addr_unsafe(boost_struct.{biname})')
+                vcname = self.__get_array(vname).vk_count_name
+                lines += [
+                   f'        {vcname} = '
+                                f'uint(boost_struct.{biname} |> length()),'
+                ]
             elif field.is_pointer:
                 continue
             else:
@@ -474,46 +514,6 @@ class GenStruct(object):
         lines += [
            f'    ]]',
         ]
-        for field in self.__fields:
-            if field.vk_name in ['pNext', 'sType']:
-                continue
-            bname, vname = field.boost_name, field.vk_name
-            btype, vtype = field.boost_type, field.vk_type
-            if self.__is_array_items(vname):
-                biname = boost_ptr_name_to_array(field.boost_name)
-                lines += ['']
-                if field.needs_vk_view:
-                    lines += [
-                       f'    boost_struct._vk_view_{biname} <- [{{',
-                       f'        for item in boost_struct.{biname} ;',
-                       f'        item |> vk_view_create_unsafe()}}]',
-                       f'    vk_struct.{vname} = array_addr_unsafe(',
-                       f'        boost_struct._vk_view_{biname})',
-                    ]
-                else:
-                    lines += [
-                       f'    vk_struct.{vname} = array_addr_unsafe(',
-                       f'        boost_struct.{biname})',
-                    ]
-                vcname = self.__get_array(vname).vk_count_name
-                lines += [
-                   f'    vk_struct.{vcname} = uint(',
-                   f'        boost_struct.{biname} |> length())'
-                ]
-            elif field.is_pointer:
-                if field.needs_vk_view:
-                    lines += [
-                        '',
-                       f'    if boost_struct.{bname} != null',
-                       f'        boost_struct._vk_view_{bname} <- (',
-                       f'            *boost_struct.{bname} |> '
-                                        f'vk_view_create_unsafe())',
-                        '        unsafe',
-                       f'            vk_struct.{vname} = addr(',
-                       f'                boost_struct._vk_view_{bname})',
-                    ]
-                else:
-                    raise Exception('add when needed')
         lines += [
             '',
             '    return <- vk_struct',
