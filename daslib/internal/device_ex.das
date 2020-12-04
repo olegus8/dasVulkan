@@ -118,7 +118,7 @@ def create_single_queue_device(
 ) : GraphicsDevice
     var create_info <- [[DeviceCreateInfo
         queue_create_infos <- [{auto[] [[DeviceQueueCreateInfo
-            queue_family_index = graphics_family,
+            queue_family_index = queue_family,
             queue_priorities <- [{ auto[] 1.0f }]
         ]]}],
         p_enabled_features = new [[PhysicalDeviceFeatures]],
