@@ -275,7 +275,7 @@ struct DeviceCreateInfo
     enabled_extension_names : array<string>
     p_enabled_features : PhysicalDeviceFeatures ?
     _vk_view_queue_create_infos : array<VkDeviceQueueCreateInfo ?>
-    _vk_view_p_enabled_features : <class 'type'>
+    _vk_view_p_enabled_features : VkPhysicalDeviceFeatures ?
     _vk_view_active : bool
 
 [unsafe]
@@ -398,7 +398,7 @@ struct InstanceCreateInfo
     p_application_info : ApplicationInfo ?
     enabled_layer_names : array<string>
     enabled_extension_names : array<string>
-    _vk_view_p_application_info : <class 'type'>
+    _vk_view_p_application_info : VkApplicationInfo ?
     _vk_view_active : bool
 
 [unsafe]
