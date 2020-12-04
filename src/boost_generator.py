@@ -450,7 +450,7 @@ class GenStruct(object):
             '    assert(!boost_struct._vk_view_active)',
             '    boost_struct._vk_view_active = true',
             '',
-           f'    var vk_struct : [[ {vstype} ]]',
+           f'    var vk_struct : {vstype}',
         ]
         for field in self.__fields:
             if field.vk_name in ['pNext']:
