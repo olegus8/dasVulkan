@@ -280,7 +280,7 @@ def with_swapchain_independent_state(width, height, title; b : block<(
 
         let queue <- device |> get_device_queue(qfam)
 
-        var cmd_pool <- device |> create_command_pool([queue_family=qfam])
+        var cmd_pool <- create_command_pool([device=device, queue_family=qfam])
         defer() <| ${ delete cmd_pool; };
 
         vk_device |> with_shader_modules([[auto[]
