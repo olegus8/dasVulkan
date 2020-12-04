@@ -590,6 +590,7 @@ class GenHandle(object):
     def __vk_dtor_params(self):
         return self.__generator.get_func_params(self.__c_dtor)
 
+    @property
     def __vk_ctor_returns_vk_result(self):
         return returns_vk_result(self.__c_ctor)
 
@@ -833,7 +834,7 @@ class GenHandle(object):
             ]
             maybe_capture_result = 'result ?? result_ = '
         else:
-            maybe_cauture_result = ''
+            maybe_capture_result = ''
 
         lines += [
            f'    {maybe_capture_result}{self.__vk_ctor_name}(',
