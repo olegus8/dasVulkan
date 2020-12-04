@@ -113,7 +113,7 @@ def find_present_mode_like_mailbox(
 def with_device(
     physical_device : PhysicalDevice;
     surface         : SurfaceKHR;
-    b : block<(device:Device; queue:VkQueue)>
+    b : block<(device:Device; queue:Queue)>
 )
     let graphics_family <- physical_device|>get_graphics_queue_family(surface)
 
@@ -130,9 +130,8 @@ def with_device(
     var device <- physical_device |> create_device(create_info)
     defer() <| ${ delete device; }
 
-    let vk_device = device.device
-    var queue : VkQueue
-    vk_device |> vkGetDeviceQueue(graphics_family, 0u, queue |> safe_addr())
+    var queue <- device |> get_device_queue(graphics_family)
+    defer() <| ${ delete queue; }
     b |> invoke(device, queue)
 
 

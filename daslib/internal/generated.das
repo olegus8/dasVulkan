@@ -1014,18 +1014,15 @@ def boost_value_to_vk(b : Queue) : VkQueue
 def get_device_queue(
     device : Device = [[ Device ]];
     queue_family_index : uint = [[ uint ]];
-    queue_index : uint = [[ uint ]];
-    var result : VkResult? = [[VkResult?]]
+    queue_index : uint = [[ uint ]]
 ) : Queue
 
     var queue : Queue
 
-    var result_ = VkResult VK_SUCCESS
-    result ?? result_ = vkGetDeviceQueue(
+    vkGetDeviceQueue(
         boost_value_to_vk(device),
         queue_family_index,
         queue_index,
         safe_addr(queue.queue)
     )
-    assert(result_ == VkResult VK_SUCCESS)
     return <- queue
