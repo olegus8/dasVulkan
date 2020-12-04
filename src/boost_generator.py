@@ -421,6 +421,14 @@ class GenStruct(object):
         bstype = self.__boost_type_name
         vstype = self.__vk_type_name
         lines = []
+        lines += self.__generate_vk_view_create()
+        lines += self.__generate_vk_view_destroy()
+        return lines
+
+    def __generate_vk_view_create(self):
+        bstype = self.__boost_type_name
+        vstype = self.__vk_type_name
+        lines = []
         lines += [
             '',
             '[unsafe]',
@@ -479,73 +487,9 @@ class GenStruct(object):
                 lines += [
                     f'    vk_struct.{vname} = {vk_value}'
                 ]
-            lines += [
-                '',
-                '    return <- vk_struct',
-            ]
-
         lines += [
             '',
-            'def with_view(',
-           f'    boost_struct : {btype};',
-           f'    b : block<(vk_struct : {vtype})>',
-            ') {',
-        ]
-
-        depth = 0
-        for field in self.__fields:
-            if field.vk_name in ['sType', 'pNext']:
-                continue
-            if self.__is_array_count(field.vk_name):
-                continue
-            elif self.__is_array_items(field.vk_name):
-                depth += 1
-                ar = self.__get_array(field.vk_name)
-                items_name = boost_ptr_name_to_array(field.boost_name)
-                count_name = vk_param_name_to_boost(ar.vk_count_name)
-                lines += [
-                   f'    boost_struct.{items_name} |> lock_data() <| $(',
-                   f'        vk_p_{items_name}, vk_{count_name}',
-                    '    ) {',
-                ]
-            elif field.needs_vk_view:
-                depth += 1
-                boost_name = field.boost_name
-                lines += [
-                   f'    boost_struct.{boost_name} |> with_p_view() <| $(',
-                   f'        vk_{boost_name} : {field.vk_view_type}',
-                    '    ) {',
-                ]
-
-        lines += [
-           f'    let vk_struct <- [[ {self.__vk_type_name}',
-        ]
-
-        for field in self.__fields:
-            if field.vk_name in ['pNext']:
-                continue
-            elif field.vk_name == 'sType':
-                vk_value = f'VkStructureType {self.__vk_structure_type}'
-            elif self.__is_array_count(field.vk_name):
-                vk_value = f'uint(vk_{field.boost_name})'
-            elif self.__is_array_items(field.vk_name):
-                items_name = boost_ptr_name_to_array(field.boost_name)
-                vk_value = f'vk_p_{items_name}' 
-            elif field.needs_vk_view:
-                vk_value = f'vk_{field.boost_name}'
-            else:
-                vk_value = field.boost_value_to_vk(
-                    f'boost_struct.{field.boost_name}')
-            lines.append(f'        {field.vk_name} = {vk_value},')
-        remove_last_char(lines, ',')
-        lines += [
-           f'    ]];',
-           f'    b |> invoke(vk_struct);',
-        ]
-        if depth > 0:
-            lines += ['    ' + ('}'*depth) + ';']
-        lines += [
-            '}',
+            '    return <- vk_struct',
         ]
         return lines
 

@@ -12,16 +12,15 @@ require vulkan
 // Helpers
 //
 
-def with_p_view(
-    p_boost_struct : auto(BOOST_T)?;
-    b : block<(p_vk_struct : auto(VK_T)?)>
+def with_view(
+    var boost_struct : auto(BOOST_T);
+    b : block<(vk_struct : auto(VK_T))>
 )
-    if p_boost_struct == null
-        b |> invoke([[VK_T?]])
-    else
-        *p_boost_struct |> with_view() <| $(vk_struct)
-            unsafe
-                b |> invoke(addr(vk_struct))
+    var vk_struct : VK_T
+    unsafe
+        vk_struct <- boost_struct |> vk_view_create()
+    b |> invoke(vk_view)
+    boost_struct |> vk_view_destroy()
 
 def boost_value_to_vk(b : auto(T)) : T
     return b
