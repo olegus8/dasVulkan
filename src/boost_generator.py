@@ -762,7 +762,7 @@ class GenHandle(object):
         return lines
 
     @property
-    def __p_create_info(self)
+    def __p_create_info(self):
         for param in self.__vk_ctor_params:
             if param.vk_name == self.__vk_p_create_info_name:
                 return param
