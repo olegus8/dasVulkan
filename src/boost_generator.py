@@ -555,7 +555,7 @@ class GenHandle(object):
 
     def __init__(self, generator, handle,
         enumerator=None, ctor=None, dtor=None,
-        p_count=None, p_handles=None, p_create_info=None,
+        p_count=None, p_handles=None
     ):
         self.__generator = generator
         self.__vk_handle_type_name = handle
@@ -564,7 +564,6 @@ class GenHandle(object):
         self.__vk_dtor_name = dtor
         self.__vk_p_count_name = p_count
         self.__vk_p_handles_name = p_handles
-        self.__vk_p_create_info_name = p_create_info
 
     @property
     def __c_enumerator(self):
@@ -621,18 +620,6 @@ class GenHandle(object):
     @property
     def __boost_ctor_name(self):
         return vk_func_name_to_boost(self.__vk_ctor_name)
-
-    @property
-    def __boost_p_create_info_name(self):
-        param = vk_param_name_to_boost(self.__vk_p_create_info_name)
-        assert_starts_with(param, 'p_')
-        return param[2:]
-
-    @property
-    def __p_create_info(self):
-        for param in self.__vk_ctor_params:
-            if param.vk_name == self.__vk_p_create_info_name:
-                return param
 
     def generate(self):
         lines = []

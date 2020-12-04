@@ -97,13 +97,11 @@ def add_boost_content(g):
 
     g.add_gen_handle(
         handle          = 'VkDevice',
-        ctor            = 'vkCreateDevice',
-        p_create_info   = 'pCreateInfo')
+        ctor            = 'vkCreateDevice')
     g.add_gen_handle(
         handle          = 'VkInstance',
         ctor            = 'vkCreateInstance',
-        dtor            = 'vkDestroyInstance',
-        p_create_info   = 'pCreateInfo')
+        dtor            = 'vkDestroyInstance')
     g.add_gen_handle(
         handle          = 'VkPhysicalDevice',
         enumerator      = 'vkEnumeratePhysicalDevices',
