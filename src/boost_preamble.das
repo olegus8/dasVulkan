@@ -18,7 +18,7 @@ def with_view(
 )
     var vk_struct : VK_T
     unsafe
-        vk_struct <- boost_struct |> vk_view_create()
+        vk_struct <- boost_struct |> vk_view_create_unsafe()
     b |> invoke(vk_view)
     boost_struct |> vk_view_destroy()
 
