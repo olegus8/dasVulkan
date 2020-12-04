@@ -394,20 +394,21 @@ class GenStruct(object):
                 boost_type = boost_ptr_type_to_array(boost_type)
             lines += [f'    {boost_name} : {boost_type}']
 
-        for field in self.__fields:
-            if field.vk_name in ['pNext', 'sType']:
-                continue
-            bname, vname = field.boost_name, field.vk_name
-            btype, vtype = field.boost_type, field.vk_type
-            if self.__is_array_items(vname) and field.needs_vk_view:
-                dvtype = deref_das_type(vtype)
-                biname = boost_ptr_name_to_array(field.boost_name)
-                lines += [f'    _vk_view_{biname} : array<{dvtype}>']
-            elif field.is_pointer and field.needs_vk_view:
-                dvtype = deref_das_type(vtype)
-                lines += [f'    _vk_view_{bname} : {dvtype}']
+        if self.__boost_to_vk:
+            for field in self.__fields:
+                if field.vk_name in ['pNext', 'sType']:
+                    continue
+                bname, vname = field.boost_name, field.vk_name
+                btype, vtype = field.boost_type, field.vk_type
+                if self.__is_array_items(vname) and field.needs_vk_view:
+                    dvtype = deref_das_type(vtype)
+                    biname = boost_ptr_name_to_array(field.boost_name)
+                    lines += [f'    _vk_view_{biname} : array<{dvtype}>']
+                elif field.is_pointer and field.needs_vk_view:
+                    dvtype = deref_das_type(vtype)
+                    lines += [f'    _vk_view_{bname} : {dvtype}']
 
-        lines += [f'    _vk_view__active : bool']
+            lines += [f'    _vk_view__active : bool']
         return lines
 
     def __generate_vk_to_boost(self):
