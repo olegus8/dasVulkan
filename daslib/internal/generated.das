@@ -252,13 +252,14 @@ def vk_view_create_unsafe(boost_struct : ApplicationInfo) : VkApplicationInfo
     assert(!boost_struct._vk_view_active)
     boost_struct._vk_view_active = true
 
-    var vk_struct : VkApplicationInfo
-    vk_struct.sType = VkStructureType VK_STRUCTURE_TYPE_APPLICATION_INFO
-    vk_struct.pApplicationName = boost_struct.application_name
-    vk_struct.applicationVersion = boost_struct.application_version
-    vk_struct.pEngineName = boost_struct.engine_name
-    vk_struct.engineVersion = boost_struct.engine_version
-    vk_struct.apiVersion = boost_struct.api_version
+    var vk_struct <- [[ VkApplicationInfo
+        sType = VkStructureType {self.__vk_structure_type},
+        pApplicationName = boost_struct.application_name,
+        applicationVersion = boost_struct.application_version,
+        pEngineName = boost_struct.engine_name,
+        engineVersion = boost_struct.engine_version,
+        apiVersion = boost_struct.api_version
+    ]]
 
     return <- vk_struct
 
@@ -284,15 +285,16 @@ def vk_view_create_unsafe(boost_struct : DeviceCreateInfo) : VkDeviceCreateInfo
     assert(!boost_struct._vk_view_active)
     boost_struct._vk_view_active = true
 
-    var vk_struct : VkDeviceCreateInfo
-    vk_struct.sType = VkStructureType VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO
-    vk_struct.flags = boost_struct.flags
-    vk_struct.queueCreateInfoCount = uint(boost_struct.queue_create_info_count |> length())
+    var vk_struct <- [[ VkDeviceCreateInfo
+        sType = VkStructureType {self.__vk_structure_type},
+        flags = boost_struct.flags,
+        queueCreateInfoCount = uint(boost_struct.queue_create_info_count |> length()),
+        enabledLayerCount = uint(boost_struct.enabled_layer_count |> length()),
+        enabledExtensionCount = uint(boost_struct.enabled_extension_count |> length())
+    ]]
     boost_struct._vk_view_queue_create_infos <- [{for item in boost_struct.queue_create_infos ; item |> vk_view_create_unsafe()}]
     vk_struct.pQueueCreateInfos = array_addr_unsafe(boost_struct._vk_view_queue_create_infos)
-    vk_struct.enabledLayerCount = uint(boost_struct.enabled_layer_count |> length())
     vk_struct.ppEnabledLayerNames = array_addr_unsafe(boost_struct.enabled_layer_names)
-    vk_struct.enabledExtensionCount = uint(boost_struct.enabled_extension_count |> length())
     vk_struct.ppEnabledExtensionNames = array_addr_unsafe(boost_struct.enabled_extension_names)
     if boost_struct.p_enabled_features != null
         boost_struct._vk_view_p_enabled_features <- *boost_struct.p_enabled_features |> vk_view_create_unsafe()
@@ -324,11 +326,12 @@ def vk_view_create_unsafe(boost_struct : DeviceQueueCreateInfo) : VkDeviceQueueC
     assert(!boost_struct._vk_view_active)
     boost_struct._vk_view_active = true
 
-    var vk_struct : VkDeviceQueueCreateInfo
-    vk_struct.sType = VkStructureType VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO
-    vk_struct.flags = boost_struct.flags
-    vk_struct.queueFamilyIndex = boost_struct.queue_family_index
-    vk_struct.queueCount = uint(boost_struct.queue_count |> length())
+    var vk_struct <- [[ VkDeviceQueueCreateInfo
+        sType = VkStructureType {self.__vk_structure_type},
+        flags = boost_struct.flags,
+        queueFamilyIndex = boost_struct.queue_family_index,
+        queueCount = uint(boost_struct.queue_count |> length())
+    ]]
     vk_struct.pQueuePriorities = array_addr_unsafe(boost_struct.queue_priorities)
 
     return <- vk_struct
@@ -366,10 +369,11 @@ def vk_view_create_unsafe(boost_struct : Extent3D) : VkExtent3D
     assert(!boost_struct._vk_view_active)
     boost_struct._vk_view_active = true
 
-    var vk_struct : VkExtent3D
-    vk_struct.width = boost_struct.width
-    vk_struct.height = boost_struct.height
-    vk_struct.depth = boost_struct.depth
+    var vk_struct <- [[ VkExtent3D
+        width = boost_struct.width,
+        height = boost_struct.height,
+        depth = boost_struct.depth
+    ]]
 
     return <- vk_struct
 
@@ -400,16 +404,17 @@ def vk_view_create_unsafe(boost_struct : InstanceCreateInfo) : VkInstanceCreateI
     assert(!boost_struct._vk_view_active)
     boost_struct._vk_view_active = true
 
-    var vk_struct : VkInstanceCreateInfo
-    vk_struct.sType = VkStructureType VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO
-    vk_struct.flags = boost_struct.flags
+    var vk_struct <- [[ VkInstanceCreateInfo
+        sType = VkStructureType {self.__vk_structure_type},
+        flags = boost_struct.flags,
+        enabledLayerCount = uint(boost_struct.enabled_layer_count |> length()),
+        enabledExtensionCount = uint(boost_struct.enabled_extension_count |> length())
+    ]]
     if boost_struct.p_application_info != null
         boost_struct._vk_view_p_application_info <- *boost_struct.p_application_info |> vk_view_create_unsafe()
         unsafe
             vk_struct.pApplicationInfo = addr(boost_struct.p_application_info)
-    vk_struct.enabledLayerCount = uint(boost_struct.enabled_layer_count |> length())
     vk_struct.ppEnabledLayerNames = array_addr_unsafe(boost_struct.enabled_layer_names)
-    vk_struct.enabledExtensionCount = uint(boost_struct.enabled_extension_count |> length())
     vk_struct.ppEnabledExtensionNames = array_addr_unsafe(boost_struct.enabled_extension_names)
 
     return <- vk_struct
@@ -738,62 +743,63 @@ def vk_view_create_unsafe(boost_struct : PhysicalDeviceFeatures) : VkPhysicalDev
     assert(!boost_struct._vk_view_active)
     boost_struct._vk_view_active = true
 
-    var vk_struct : VkPhysicalDeviceFeatures
-    vk_struct.robustBufferAccess = boost_struct.robust_buffer_access
-    vk_struct.fullDrawIndexUint32 = boost_struct.full_draw_index_uint_32
-    vk_struct.imageCubeArray = boost_struct.image_cube_array
-    vk_struct.independentBlend = boost_struct.independent_blend
-    vk_struct.geometryShader = boost_struct.geometry_shader
-    vk_struct.tessellationShader = boost_struct.tessellation_shader
-    vk_struct.sampleRateShading = boost_struct.sample_rate_shading
-    vk_struct.dualSrcBlend = boost_struct.dual_src_blend
-    vk_struct.logicOp = boost_struct.logic_op
-    vk_struct.multiDrawIndirect = boost_struct.multi_draw_indirect
-    vk_struct.drawIndirectFirstInstance = boost_struct.draw_indirect_first_instance
-    vk_struct.depthClamp = boost_struct.depth_clamp
-    vk_struct.depthBiasClamp = boost_struct.depth_bias_clamp
-    vk_struct.fillModeNonSolid = boost_struct.fill_mode_non_solid
-    vk_struct.depthBounds = boost_struct.depth_bounds
-    vk_struct.wideLines = boost_struct.wide_lines
-    vk_struct.largePoints = boost_struct.large_points
-    vk_struct.alphaToOne = boost_struct.alpha_to_one
-    vk_struct.multiViewport = boost_struct.multi_viewport
-    vk_struct.samplerAnisotropy = boost_struct.sampler_anisotropy
-    vk_struct.textureCompressionETC2 = boost_struct.texture_compression_etc2
-    vk_struct.textureCompressionASTC_LDR = boost_struct.texture_compression_astc_ldr
-    vk_struct.textureCompressionBC = boost_struct.texture_compression_bc
-    vk_struct.occlusionQueryPrecise = boost_struct.occlusion_query_precise
-    vk_struct.pipelineStatisticsQuery = boost_struct.pipeline_statistics_query
-    vk_struct.vertexPipelineStoresAndAtomics = boost_struct.vertex_pipeline_stores_and_atomics
-    vk_struct.fragmentStoresAndAtomics = boost_struct.fragment_stores_and_atomics
-    vk_struct.shaderTessellationAndGeometryPointSize = boost_struct.shader_tessellation_and_geometry_point_size
-    vk_struct.shaderImageGatherExtended = boost_struct.shader_image_gather_extended
-    vk_struct.shaderStorageImageExtendedFormats = boost_struct.shader_storage_image_extended_formats
-    vk_struct.shaderStorageImageMultisample = boost_struct.shader_storage_image_multisample
-    vk_struct.shaderStorageImageReadWithoutFormat = boost_struct.shader_storage_image_read_without_format
-    vk_struct.shaderStorageImageWriteWithoutFormat = boost_struct.shader_storage_image_write_without_format
-    vk_struct.shaderUniformBufferArrayDynamicIndexing = boost_struct.shader_uniform_buffer_array_dynamic_indexing
-    vk_struct.shaderSampledImageArrayDynamicIndexing = boost_struct.shader_sampled_image_array_dynamic_indexing
-    vk_struct.shaderStorageBufferArrayDynamicIndexing = boost_struct.shader_storage_buffer_array_dynamic_indexing
-    vk_struct.shaderStorageImageArrayDynamicIndexing = boost_struct.shader_storage_image_array_dynamic_indexing
-    vk_struct.shaderClipDistance = boost_struct.shader_clip_distance
-    vk_struct.shaderCullDistance = boost_struct.shader_cull_distance
-    vk_struct.shaderFloat64 = boost_struct.shader_float_64
-    vk_struct.shaderInt64 = boost_struct.shader_int_64
-    vk_struct.shaderInt16 = boost_struct.shader_int_16
-    vk_struct.shaderResourceResidency = boost_struct.shader_resource_residency
-    vk_struct.shaderResourceMinLod = boost_struct.shader_resource_min_lod
-    vk_struct.sparseBinding = boost_struct.sparse_binding
-    vk_struct.sparseResidencyBuffer = boost_struct.sparse_residency_buffer
-    vk_struct.sparseResidencyImage2D = boost_struct.sparse_residency_image_2d
-    vk_struct.sparseResidencyImage3D = boost_struct.sparse_residency_image_3d
-    vk_struct.sparseResidency2Samples = boost_struct.sparse_residency_2samples
-    vk_struct.sparseResidency4Samples = boost_struct.sparse_residency_4samples
-    vk_struct.sparseResidency8Samples = boost_struct.sparse_residency_8samples
-    vk_struct.sparseResidency16Samples = boost_struct.sparse_residency_16samples
-    vk_struct.sparseResidencyAliased = boost_struct.sparse_residency_aliased
-    vk_struct.variableMultisampleRate = boost_struct.variable_multisample_rate
-    vk_struct.inheritedQueries = boost_struct.inherited_queries
+    var vk_struct <- [[ VkPhysicalDeviceFeatures
+        robustBufferAccess = boost_struct.robust_buffer_access,
+        fullDrawIndexUint32 = boost_struct.full_draw_index_uint_32,
+        imageCubeArray = boost_struct.image_cube_array,
+        independentBlend = boost_struct.independent_blend,
+        geometryShader = boost_struct.geometry_shader,
+        tessellationShader = boost_struct.tessellation_shader,
+        sampleRateShading = boost_struct.sample_rate_shading,
+        dualSrcBlend = boost_struct.dual_src_blend,
+        logicOp = boost_struct.logic_op,
+        multiDrawIndirect = boost_struct.multi_draw_indirect,
+        drawIndirectFirstInstance = boost_struct.draw_indirect_first_instance,
+        depthClamp = boost_struct.depth_clamp,
+        depthBiasClamp = boost_struct.depth_bias_clamp,
+        fillModeNonSolid = boost_struct.fill_mode_non_solid,
+        depthBounds = boost_struct.depth_bounds,
+        wideLines = boost_struct.wide_lines,
+        largePoints = boost_struct.large_points,
+        alphaToOne = boost_struct.alpha_to_one,
+        multiViewport = boost_struct.multi_viewport,
+        samplerAnisotropy = boost_struct.sampler_anisotropy,
+        textureCompressionETC2 = boost_struct.texture_compression_etc2,
+        textureCompressionASTC_LDR = boost_struct.texture_compression_astc_ldr,
+        textureCompressionBC = boost_struct.texture_compression_bc,
+        occlusionQueryPrecise = boost_struct.occlusion_query_precise,
+        pipelineStatisticsQuery = boost_struct.pipeline_statistics_query,
+        vertexPipelineStoresAndAtomics = boost_struct.vertex_pipeline_stores_and_atomics,
+        fragmentStoresAndAtomics = boost_struct.fragment_stores_and_atomics,
+        shaderTessellationAndGeometryPointSize = boost_struct.shader_tessellation_and_geometry_point_size,
+        shaderImageGatherExtended = boost_struct.shader_image_gather_extended,
+        shaderStorageImageExtendedFormats = boost_struct.shader_storage_image_extended_formats,
+        shaderStorageImageMultisample = boost_struct.shader_storage_image_multisample,
+        shaderStorageImageReadWithoutFormat = boost_struct.shader_storage_image_read_without_format,
+        shaderStorageImageWriteWithoutFormat = boost_struct.shader_storage_image_write_without_format,
+        shaderUniformBufferArrayDynamicIndexing = boost_struct.shader_uniform_buffer_array_dynamic_indexing,
+        shaderSampledImageArrayDynamicIndexing = boost_struct.shader_sampled_image_array_dynamic_indexing,
+        shaderStorageBufferArrayDynamicIndexing = boost_struct.shader_storage_buffer_array_dynamic_indexing,
+        shaderStorageImageArrayDynamicIndexing = boost_struct.shader_storage_image_array_dynamic_indexing,
+        shaderClipDistance = boost_struct.shader_clip_distance,
+        shaderCullDistance = boost_struct.shader_cull_distance,
+        shaderFloat64 = boost_struct.shader_float_64,
+        shaderInt64 = boost_struct.shader_int_64,
+        shaderInt16 = boost_struct.shader_int_16,
+        shaderResourceResidency = boost_struct.shader_resource_residency,
+        shaderResourceMinLod = boost_struct.shader_resource_min_lod,
+        sparseBinding = boost_struct.sparse_binding,
+        sparseResidencyBuffer = boost_struct.sparse_residency_buffer,
+        sparseResidencyImage2D = boost_struct.sparse_residency_image_2d,
+        sparseResidencyImage3D = boost_struct.sparse_residency_image_3d,
+        sparseResidency2Samples = boost_struct.sparse_residency_2samples,
+        sparseResidency4Samples = boost_struct.sparse_residency_4samples,
+        sparseResidency8Samples = boost_struct.sparse_residency_8samples,
+        sparseResidency16Samples = boost_struct.sparse_residency_16samples,
+        sparseResidencyAliased = boost_struct.sparse_residency_aliased,
+        variableMultisampleRate = boost_struct.variable_multisample_rate,
+        inheritedQueries = boost_struct.inherited_queries
+    ]]
 
     return <- vk_struct
 
@@ -854,9 +860,10 @@ def vk_view_create_unsafe(boost_struct : SurfaceFormatKHR) : VkSurfaceFormatKHR
     assert(!boost_struct._vk_view_active)
     boost_struct._vk_view_active = true
 
-    var vk_struct : VkSurfaceFormatKHR
-    vk_struct.format = boost_struct.format
-    vk_struct.colorSpace = boost_struct.color_space
+    var vk_struct <- [[ VkSurfaceFormatKHR
+        format = boost_struct.format,
+        colorSpace = boost_struct.color_space
+    ]]
 
     return <- vk_struct
 

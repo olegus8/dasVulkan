@@ -458,7 +458,7 @@ class GenStruct(object):
             bname, vname = field.boost_name, field.vk_name
             btype, vtype = field.boost_type, field.vk_type
             if vname == 'sType':
-                vk_value = 'VkStructureType {self.__vk_structure_type}'
+                vk_value = f'VkStructureType {self.__vk_structure_type}'
             elif self.__is_array_count(vname):
                 vk_value = f'uint(boost_struct.{bname} |> length())'
             elif self.__is_array_items(vname):
