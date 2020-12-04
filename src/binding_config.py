@@ -175,6 +175,13 @@ def add_boost_content(g):
         struct      = 'VkQueueFamilyProperties',
         vk_to_boost = True)
     g.add_gen_struct(
+        struct      = 'VkShaderModuleCreateInfo',
+        boost_to_vk = True,
+        ).declare_array(
+            count = 'codeSize',
+            items = 'pCode',
+            force_item_type = 'uint8')
+    g.add_gen_struct(
         struct      = 'VkSurfaceFormatKHR',
         vk_to_boost = True,
         boost_to_vk = True)

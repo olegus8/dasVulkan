@@ -390,8 +390,10 @@ class GenStruct(object):
             boost_name = field.boost_name
             boost_type = field.boost_type
             if self.__is_array_items(field.vk_name):
+                array = self.__get_array(field.vk_name)
                 boost_name = boost_ptr_name_to_array(boost_name)
-                boost_type = boost_ptr_type_to_array(boost_type)
+                boost_type = (array.boost_item_type_name or 
+                    boost_ptr_type_to_array(boost_type))
             lines += [f'    {boost_name} : {boost_type}']
 
         if self.__boost_to_vk:
@@ -477,7 +479,8 @@ class GenStruct(object):
         if lines[-1] != '':
             lines.append('')
         lines += [
-           f'    return <- [[ {vstype}',
+            '    unsafe',
+           f'        return <- [[ {vstype}',
         ]
         for field in self.__fields:
             if field.vk_name in ['pNext']:
@@ -490,25 +493,29 @@ class GenStruct(object):
                 continue
             elif self.__is_array_items(vname):
                 biname = boost_ptr_name_to_array(field.boost_name)
+                array = self.__get_array(vname)
                 if field.needs_vk_view:
                     vk_value = (
                         f'array_addr_unsafe(boost_struct._vk_view_{biname})')
                 else:
                     vk_value = (
                         f'array_addr_unsafe(boost_struct.{biname})')
-                vcname = self.__get_array(vname).vk_count_name
+                    item_type = array.boost_item_type_name
+                    if item_type:
+                        vk_value = f'reinterpret<{item_type}>({vk_value})'
+                vcname = array.vk_count_name
                 lines += [
-                   f'        {vcname} = '
+                   f'            {vcname} = '
                                 f'uint(boost_struct.{biname} |> length()),'
                 ]
             elif field.is_pointer and field.needs_vk_view:
                 vk_value = f'addr_unsafe(boost_struct._vk_view_{bname})'
             else:
                 vk_value = field.boost_value_to_vk(f'boost_struct.{bname}')
-            lines += [f'        {vname} = {vk_value},']
+            lines += [f'            {vname} = {vk_value},']
         remove_last_char(lines, ',')
         lines += [
-           f'    ]]',
+           f'        ]]',
         ]
         return lines
 
@@ -546,9 +553,10 @@ class GenStruct(object):
 
 class GenStructFieldArray(object):
 
-    def __init__(self, count, items):
+    def __init__(self, count, items, force_item_type=None):
         self.vk_count_name = count
         self.vk_items_name = items
+        self.boost_item_type_name = force_item_type
 
 
 class GenHandle(object):
