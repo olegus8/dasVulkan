@@ -399,10 +399,10 @@ class GenStruct(object):
                 continue
             bname, vname = field.boost_name, field.vk_name
             btype, vtype = field.boost_type, field.vk_type
-            if self.__is_array_items(vname) and field.needs_view:
+            if self.__is_array_items(vname) and field.needs_vk_view:
                 biname = boost_ptr_name_to_array(field.boost_name)
                 lines += [f'    _vk_view_{biname} : array<{vtype}>']
-            elif field.is_pointer and field.needs_view:
+            elif field.is_pointer and field.needs_vk_view:
                 lines += [f'    _vk_view_{bname} : {type}']
 
         lines += [f'    _vk_view_active : bool']
@@ -468,7 +468,7 @@ class GenStruct(object):
                 ]
             elif self.__is_array_items(vname):
                 biname = boost_ptr_name_to_array(field.boost_name)
-                if field.needs_view:
+                if field.needs_vk_view:
                     lines += [
                        f'    boost_struct._vk_view_{biname} <- '
                            f'[{{for item in boost_struct.{biname} ; '
@@ -484,7 +484,7 @@ class GenStruct(object):
                                     f'boost_struct.{biname})',
                     ]
             elif field.is_pointer:
-                if field.needs_view:
+                if field.needs_vk_view:
                     lines += [
                        f'    if boost_struct.{bname} != null',
                        f'        boost_struct._vk_view_{bname} <- '
@@ -520,14 +520,14 @@ class GenStruct(object):
                 continue
             bname, vname = field.boost_name, field.vk_name
             btype, vtype = field.boost_type, field.vk_type
-            if self.__is_array_items(vname) and field.needs_view:
+            if self.__is_array_items(vname) and field.needs_vk_view:
                 biname = boost_ptr_name_to_array(field.boost_name)
                 lines += [
                    f'    for item in boost_struct.{biname}',
                    f'        item |> vk_view_destroy()',
                    f'    delete boost_struct._vk_view_{biname}',
                 ]
-            elif field.is_pointer and field.needs_view:
+            elif field.is_pointer and field.needs_vk_view:
                 lines += [
                    f'    if boost_struct.{bname} != null',
                    f'        *boost_struct.{bname} |> vk_view_destroy()',
