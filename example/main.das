@@ -252,7 +252,7 @@ def with_swapchain_independent_state(width, height, title; b : block<(
     window          : GLFWwindow_DasHandle#;
     surface         : VkSurfaceKHR;
     phys_dev        : PhysicalDevice;
-    device          : VkDevice#;
+    device          : VkDevice;
     queue           : VkQueue;
     surf_fmt        : VkSurfaceFormatKHR implicit;
     present_mode    : VkPresentModeKHR;
@@ -272,16 +272,17 @@ def with_swapchain_independent_state(width, height, title; b : block<(
     let phys_dev <- instance |> find_physical_device_for_graphics(surface);
     let vk_phys_dev = phys_dev.physical_device;
     phys_dev |> with_device(surface)                <| $(device, queue)     {
-    device |> with_shader_modules([[auto[]
+    let vk_device = device.device
+    vk_device |> with_shader_modules([[auto[]
         "{get_das_root()}/modules/dasVulkan/example/vert.spv";
         "{get_das_root()}/modules/dasVulkan/example/frag.spv"
     ]]) <| $(shmods) {
     var surf_fmt <- phys_dev |> find_format_like_srgb_bgra8(surface);
     surf_fmt |> with_view() <| $(vk_surf_fmt : VkSurfaceFormatKHR) {
     let present_mode <- phys_dev |> find_present_mode_like_mailbox(surface);
-    device |> with_render_pass_simple(vk_surf_fmt)  <| $(render_pass)       {
-    device |> with_pipeline_layout_simple()         <| $(pipeline_layout)   {
-        var cmd_pool <- device |> create_command_pool(
+    vk_device |> with_render_pass_simple(vk_surf_fmt)  <| $(render_pass)    {
+    vk_device |> with_pipeline_layout_simple()         <| $(pipeline_layout){
+        var cmd_pool <- vk_device |> create_command_pool(
             phys_dev |> get_graphics_queue_family(surface));
         defer() <| ${ delete cmd_pool; };
         b |> invoke(
@@ -289,7 +290,7 @@ def with_swapchain_independent_state(width, height, title; b : block<(
             window,
             vk_surface,
             phys_dev,
-            device,
+            vk_device,
             queue,
             vk_surf_fmt,
             present_mode,
