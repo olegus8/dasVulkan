@@ -958,6 +958,7 @@ def create_command_pool(
     unsafe
         vk_create_info <- create_info |> vk_view_create_unsafe()
     defer() <| ${ create_info |> vk_view_destroy(); }
+
     command_pool._device = boost_value_to_vk(device)
 
     var result_ = VkResult VK_SUCCESS
