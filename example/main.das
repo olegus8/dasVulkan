@@ -303,7 +303,7 @@ def with_swapchain_independent_state(width, height, title; b : block<(
                 shmods[1],
                 render_pass,
                 pipeline_layout,
-                cmd_pool.pool
+                cmd_pool.command_pool
             );
         }}}}
 
