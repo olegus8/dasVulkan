@@ -392,8 +392,11 @@ class GenStruct(object):
             if self.__is_array_items(field.vk_name):
                 array = self.__get_array(field.vk_name)
                 boost_name = boost_ptr_name_to_array(boost_name)
-                boost_type = (array.boost_item_type_name or 
-                    boost_ptr_type_to_array(boost_type))
+                forced_item_type = array.boost_item_type_name
+                if forced_item_type:
+                    boost_type = 'array<{forced_item_type}>'
+                else:
+                    boost_type = boost_ptr_type_to_array(boost_type)
             lines += [f'    {boost_name} : {boost_type}']
 
         if self.__boost_to_vk:
