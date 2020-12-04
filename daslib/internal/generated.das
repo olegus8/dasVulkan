@@ -253,7 +253,7 @@ def vk_view_create_unsafe(boost_struct : ApplicationInfo) : VkApplicationInfo
     boost_struct._vk_view_active = true
 
     var vk_struct <- [[ VkApplicationInfo
-        sType = VkStructureType {self.__vk_structure_type},
+        sType = VkStructureType VK_STRUCTURE_TYPE_APPLICATION_INFO,
         pApplicationName = boost_struct.application_name,
         applicationVersion = boost_struct.application_version,
         pEngineName = boost_struct.engine_name,
@@ -286,7 +286,7 @@ def vk_view_create_unsafe(boost_struct : DeviceCreateInfo) : VkDeviceCreateInfo
     boost_struct._vk_view_active = true
 
     var vk_struct <- [[ VkDeviceCreateInfo
-        sType = VkStructureType {self.__vk_structure_type},
+        sType = VkStructureType VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO,
         flags = boost_struct.flags,
         queueCreateInfoCount = uint(boost_struct.queue_create_info_count |> length()),
         enabledLayerCount = uint(boost_struct.enabled_layer_count |> length()),
@@ -327,7 +327,7 @@ def vk_view_create_unsafe(boost_struct : DeviceQueueCreateInfo) : VkDeviceQueueC
     boost_struct._vk_view_active = true
 
     var vk_struct <- [[ VkDeviceQueueCreateInfo
-        sType = VkStructureType {self.__vk_structure_type},
+        sType = VkStructureType VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO,
         flags = boost_struct.flags,
         queueFamilyIndex = boost_struct.queue_family_index,
         queueCount = uint(boost_struct.queue_count |> length())
@@ -405,7 +405,7 @@ def vk_view_create_unsafe(boost_struct : InstanceCreateInfo) : VkInstanceCreateI
     boost_struct._vk_view_active = true
 
     var vk_struct <- [[ VkInstanceCreateInfo
-        sType = VkStructureType {self.__vk_structure_type},
+        sType = VkStructureType VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
         flags = boost_struct.flags,
         enabledLayerCount = uint(boost_struct.enabled_layer_count |> length()),
         enabledExtensionCount = uint(boost_struct.enabled_extension_count |> length())
