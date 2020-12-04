@@ -133,10 +133,9 @@ def create_graphics_device(
     ]]
     defer() <| ${ delete create_info; }
 
-    return <- [[GraphicsDevice
-        device <- physical_device |> create_device(create_info),
-        queue <- device |> get_device_queue(graphics_family)
-    ]]
+    var device <- physical_device |> create_device(create_info)
+    var queue <- device |> get_device_queue(graphics_family)
+    return <- [[GraphicsDevice device <- device, queue <- queue]]
 
 
 def get_swap_extent(
