@@ -440,15 +440,14 @@ class GenStruct(object):
                 iname = boost_ptr_name_to_array(bname)
                 lines += [
                    f'    var vk_{iname} <- [{{for x in boost_struct.{bname} ; '
-                           f'boost_value_to_vk(x)}}]',
-                    '    defer() <| ${{ delete vk_{iname}; }}',
+                           f'{field.boost_value_to_vk("x")}}}]',
+                   #'    defer() <| ${{ delete vk_{iname}; }}',
                 ]
-                vk_value = f'unsafe_array_addr(vk_{items_name})' 
+                vk_value = f'unsafe_array_addr(vk_{iname})' 
             elif field.is_pointer:
                 pass
             else:
-                vk_value = field.boost_value_to_vk(
-                    f'boost_struct.{field.boost_name}')
+                vk_value = field.boost_value_to_vk(f'boost_struct.{bname}')
             lines.append(f'     vk_struct.{field.vk_name} = {vk_value}')
 
         lines += [

@@ -265,6 +265,18 @@ struct DeviceCreateInfo
     enabled_layer_names : array<string>
     enabled_extension_names : array<string>
     p_enabled_features : PhysicalDeviceFeatures ?
+    _vk_view_queue_create_infos : array<VkDeviceQueueCreateInfo>
+    _vk_view_p_enabled_features : VkPhysicalDeviceFeatures
+
+def vk_view_populate(var boost_struct : DeviceCreateInfo)
+    for item in boost_struct.queue_create_infos:
+        item |> vk_view_populate()
+    if boost_struct.p_enabled_features != null
+        *boost_struct.p_enabled_features |> vk_view_populate()
+    boost_struct._vk_view_queue_create_infos <- [{
+        for item in boost_struct.queue_create_infos ;
+        item |> unsafe_vk_view()
+    }]
 
 def with_view(
     boost_struct : DeviceCreateInfo;
@@ -305,6 +317,12 @@ struct DeviceQueueCreateInfo
     flags : uint
     queue_family_index : uint
     queue_priorities : array<float>
+
+def with_view(
+    boost_structs : array<DeviceQueueCreateInfo>;
+    b : block<(vk_structs : array<VkDeviceQueueCreateInfo>)>
+) {
+}
 
 def with_view(
     boost_struct : DeviceQueueCreateInfo;
