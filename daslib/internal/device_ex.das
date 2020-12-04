@@ -114,35 +114,33 @@ def find_present_mode_like_mailbox(
 def with_device(
     physical_device : PhysicalDevice;
     surface         : SurfaceKHR;
-    b : block<(device:VkDevice#; queue:VkQueue#)>
+    b : block<(device:Device; queue:VkQueue)>
 )
     let vk_phys_dev = physical_device.physical_device
-    let graphics_family = physical_device |> get_graphics_queue_family(surface)
-    let queue_priority = 1.0f
-    let queue_info <- [[VkDeviceQueueCreateInfo
-        sType = (VkStructureType
-            VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO),
-        queueFamilyIndex = graphics_family,
-        queueCount = 1u,
-        pQueuePriorities = safe_addr(queue_priority)
+    let graphics_family <- physical_device|>get_graphics_queue_family(surface)
+
+    let features : PhysicalDeviceFeatures
+    var p_features : PhysicalDeviceFeatures const ?
+    unsafe
+        p_features = addr(features)
+
+    var create_info <- [[DeviceCreateInfo
+        queue_create_infos <- [{[[DeviceQueueCreateInfo
+            queue_family_index = graphics_family,
+            queue_priorities <- [{ 1.0f }]
+        ]]}],
+        p_enabled_features = p_features,
+        enabled_extension_names := DEFAULT_REQUIRED_EXTENSIONS
     ]]
-    let features : VkPhysicalDeviceFeatures
-    var device : VkDevice
-    let create_info = [[VkDeviceCreateInfo
-        sType = VkStructureType VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO,
-        pQueueCreateInfos = safe_addr(queue_info),
-        queueCreateInfoCount = 1u,
-        pEnabledFeatures = safe_addr(features),
-        enabledExtensionCount = uint(DEFAULT_REQUIRED_EXTENSIONS |> length()),
-        ppEnabledExtensionNames = safe_addr(DEFAULT_REQUIRED_EXTENSIONS[0])
-    ]]
-    verify(VkResult VK_SUCCESS == vkCreateDevice(
-        vk_phys_dev, safe_addr(create_info), null, safe_addr(device)))
+    defer() <| ${ delete create_info; }
+
+    var device <- physical_device |> create_device(create_info)
+    defer() <| ${ delete device; }
+
+    let vk_device = device.device
     var queue : VkQueue
-    device |> vkGetDeviceQueue(graphics_family, 0u, queue |> safe_addr())
-    b |> invoke(device, queue)
-    device |> vkDeviceWaitIdle()
-    device |> vkDestroyDevice(null)
+    vk_device |> vkGetDeviceQueue(graphics_family, 0u, queue |> safe_addr())
+    b |> invoke(device, vk_queue)
 
 
 def get_swap_extent(
