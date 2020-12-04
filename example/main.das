@@ -264,13 +264,10 @@ def with_swapchain_independent_state(width, height, title; b : block<(
 )>)
     var instance <- create_default_instance()
     defer() <| ${ delete instance; }
-    let vk_instance = instance.instance
     with_window(width, height, title)               <| $(window)            {
     var surface <- instance |> create_window_surface(window);
     defer() <| ${ delete surface; };
-    let vk_surface = surface.surface_khr;
     let phys_dev <- instance |> find_physical_device_for_graphics(surface);
-    let vk_phys_dev = phys_dev.physical_device;
     var gfx_dev <- phys_dev |> create_graphics_device(surface);
     defer() <| ${ delete gfx_dev; };
     let vk_device = gfx_dev.device.device;
@@ -287,9 +284,9 @@ def with_swapchain_independent_state(width, height, title; b : block<(
             phys_dev |> get_graphics_queue_family(surface));
         defer() <| ${ delete cmd_pool; };
         b |> invoke(
-            vk_instance,
+            instance.instance,
             window,
-            vk_surface,
+            surface.surface_khr,
             phys_dev,
             vk_device,
             gfx_dev.queue.queue,
