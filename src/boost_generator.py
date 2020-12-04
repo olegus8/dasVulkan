@@ -815,6 +815,9 @@ class GenHandle(object):
                    f'    deref() <| ${{ delete vk_{bname}; }}',
                 ]
 
+        if lines[-1] != '':
+            lines.append('')
+
         lines += [
            f'    var result_ = VkResult VK_SUCCESS',
            f'    result ?? result_ = {self.__vk_ctor_name}(',

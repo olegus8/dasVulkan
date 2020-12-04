@@ -894,15 +894,19 @@ def create_device(
 ) : Device
 
     var device : Device
-    create_info |> with_view() <| $(vk_info : VkDeviceCreateInfo)
-        var result_ = VkResult VK_SUCCESS
-        result ?? result_ = vkCreateDevice(
-            boost_value_to_vk(physical_device),
-            safe_addr(vk_info),
-            null,
-            safe_addr(device.device)
-        )
-        assert(result_ == VkResult VK_SUCCESS)
+
+    var vk_create_info : VkDeviceCreateInfo
+    unsafe
+        vk_create_info <- create_info |> vk_view_create_unsafe()
+    deref() <| ${ delete vk_create_info; }
+    var result_ = VkResult VK_SUCCESS
+    result ?? result_ = vkCreateDevice(
+        boost_value_to_vk(physical_device),
+        safe_addr(vk_create_info),
+        safe_addr(vk_allocator),
+        safe_addr(device.device)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
     return <- device
 
 //
@@ -921,14 +925,18 @@ def create_instance(
 ) : Instance
 
     var instance : Instance
-    create_info |> with_view() <| $(vk_info : VkInstanceCreateInfo)
-        var result_ = VkResult VK_SUCCESS
-        result ?? result_ = vkCreateInstance(
-            safe_addr(vk_info),
-            null,
-            safe_addr(instance.instance)
-        )
-        assert(result_ == VkResult VK_SUCCESS)
+
+    var vk_create_info : VkInstanceCreateInfo
+    unsafe
+        vk_create_info <- create_info |> vk_view_create_unsafe()
+    deref() <| ${ delete vk_create_info; }
+    var result_ = VkResult VK_SUCCESS
+    result ?? result_ = vkCreateInstance(
+        safe_addr(vk_create_info),
+        safe_addr(vk_allocator),
+        safe_addr(instance.instance)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
     return <- instance
 
 def finalize(var instance : Instance explicit)
@@ -990,3 +998,31 @@ def enumerate_physical_devices_no_batch(
     var handles <- enumerate_physical_devices(instance, result)
     defer() <| ${ delete handles; }
     return <- handles |> split()
+
+//
+// Queue
+//
+
+struct Queue
+    queue : VkQueue
+
+def boost_value_to_vk(b : Queue) : VkQueue
+    return b.queue
+
+def get_device_queue(
+    device : Device = [[ Device ]];
+    queue_family_index : uint = [[ uint ]];
+    queue_index : uint = [[ uint ]];
+    var result : VkResult? = [[VkResult?]]
+) : Queue
+
+    var queue : Queue
+    var result_ = VkResult VK_SUCCESS
+    result ?? result_ = vkGetDeviceQueue(
+        boost_value_to_vk(device),
+        queue_family_index,
+        queue_index,
+        safe_addr(queue.queue)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+    return <- queue
