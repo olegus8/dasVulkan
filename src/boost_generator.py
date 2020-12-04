@@ -518,7 +518,7 @@ class GenStruct(object):
         lines = []
         lines += [
             '',
-           f'def vk_view_destroy(boost_struct : {bstype})',
+           f'def vk_view_destroy(var boost_struct : {bstype})',
             '    assert(boost_struct._vk_view_active)',
         ]
         for field in self.__fields:
