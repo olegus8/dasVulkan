@@ -473,9 +473,8 @@ class GenStruct(object):
                 continue
             else:
                 vk_value = field.boost_value_to_vk(f'boost_struct.{bname}')
-                lines += [
-                    f'    vk_struct.{vname} = {vk_value}'
-                ]
+            lines += [f'        {vname} = {vk_value},']
+        remove_last_char(lines, ',')
         lines += [
            f'    ]]',
         ]
