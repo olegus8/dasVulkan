@@ -273,11 +273,11 @@ def with_swapchain_independent_state(width, height, title; b : block<(
         let present_mode <- phys_dev |> find_present_mode_like_mailbox(surface)
         var surf_fmt <- phys_dev |> find_format_like_srgb_bgra8(surface)
 
-        var gfx_dev <- phys_dev |> create_graphics_device(surface)
-        defer() <| ${ delete gfx_dev; }
-        let vk_device = gfx_dev.device.device;
+        var gdev <- phys_dev |> create_graphics_device(surface)
+        defer() <| ${ delete gdev; }
+        let vk_device = gdev.device.device;
 
-        var cmd_pool <- vk_device |> create_command_pool(gfx_dev.queue_family)
+        var cmd_pool <- vk_device |> create_command_pool(gdev.queue_family)
         defer() <| ${ delete cmd_pool; };
 
         vk_device |> with_shader_modules([[auto[]
@@ -293,7 +293,7 @@ def with_swapchain_independent_state(width, height, title; b : block<(
                 surface.surface_khr,
                 phys_dev,
                 vk_device,
-                gfx_dev.queue.queue,
+                gdev.queue.queue,
                 vk_surf_fmt,
                 present_mode,
                 shmods[0],
