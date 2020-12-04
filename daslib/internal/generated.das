@@ -918,7 +918,8 @@ def create_device(
     var result : VkResult? = [[VkResult?]]
 ) : Device
 
-    var device : Device
+    var device <- [[ Device
+    ]]
 
     var vk_create_info : VkDeviceCreateInfo
     unsafe
@@ -952,14 +953,14 @@ def create_command_pool(
     var result : VkResult? = [[VkResult?]]
 ) : CommandPool
 
-    var command_pool : CommandPool
+    var command_pool <- [[ CommandPool
+    _device = boost_value_to_vk(device)
+    ]]
 
     var vk_create_info : VkCommandPoolCreateInfo
     unsafe
         vk_create_info <- create_info |> vk_view_create_unsafe()
     defer() <| ${ create_info |> vk_view_destroy(); }
-
-    command_pool._device = boost_value_to_vk(device)
 
     var result_ = VkResult VK_SUCCESS
     result ?? result_ = vkCreateCommandPool(
@@ -994,7 +995,8 @@ def create_instance(
     var result : VkResult? = [[VkResult?]]
 ) : Instance
 
-    var instance : Instance
+    var instance <- [[ Instance
+    ]]
 
     var vk_create_info : VkInstanceCreateInfo
     unsafe
@@ -1086,7 +1088,8 @@ def get_device_queue(
     queue_index : uint = [[ uint ]]
 ) : Queue
 
-    var queue : Queue
+    var queue <- [[ Queue
+    ]]
 
     vkGetDeviceQueue(
         boost_value_to_vk(device),

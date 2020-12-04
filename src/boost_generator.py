@@ -825,7 +825,7 @@ class GenHandle(object):
             bname = param.boost_name
             vk_value = param.boost_value_to_vk(bname)
             lines += [
-               f'    _{bname} = {vk_value},'
+               f'        _{bname} = {vk_value},'
             ]
         remove_last_char(lines, ',')
         lines += [
