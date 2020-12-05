@@ -380,10 +380,10 @@ def with_swapchain_dependent_state(
     var vk_render_done_sems <- [{for sem in render_done_sems; sem.semaphore}]
     defer() <| ${ delete vk_render_done_sems; }
 
-    surf_fmt |> with_view() <| $(vk_surf_fmt : VkSurfaceFormatKHR) {
     vk_device |> with_fences(MAX_FRAMES_IN_FLIGHT,
         uint(VkFenceCreateFlagBits
             VK_FENCE_CREATE_SIGNALED_BIT))           <| $(frame_fences)      {
+    surf_fmt |> with_view() <| $(vk_surf_fmt : VkSurfaceFormatKHR) {
     vk_device |> with_swapchain_ex(phys_dev, surface,
         window, vk_surf_fmt, present_mode, render_pass) <| $(swapchain)      {
     vk_device |> with_graphics_pipeline(
