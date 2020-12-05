@@ -209,7 +209,7 @@ def add_boost_content(g):
             force_item_type = 'uint8')
     g.add_gen_struct(
         struct      = 'VkSubpassDependency',
-        vk_to_boost = True)
+        boost_to_vk = True)
     g.add_gen_struct(
         struct      = 'VkSubpassDescription',
         boost_to_vk = True

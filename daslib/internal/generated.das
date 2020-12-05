@@ -1361,6 +1361,50 @@ def get_device_queue(
     return <- queue
 
 //
+// RenderPass
+//
+
+struct RenderPass
+    render_pass : VkRenderPass
+    _device : VkDevice
+
+def boost_value_to_vk(b : RenderPass) : VkRenderPass
+    return b.render_pass
+
+def create_render_pass(
+    device : Device = [[ Device ]];
+    var create_info : RenderPassCreateInfo = [[ RenderPassCreateInfo ]];
+    var result : VkResult? = [[VkResult?]]
+) : RenderPass
+
+    var render_pass <- [[ RenderPass
+        _device = boost_value_to_vk(device)
+    ]]
+
+    var vk_create_info : VkRenderPassCreateInfo
+    unsafe
+        vk_create_info <- create_info |> vk_view_create_unsafe()
+    defer() <| ${ create_info |> vk_view_destroy(); }
+
+    var result_ = VkResult VK_SUCCESS
+    result ?? result_ = vkCreateRenderPass(
+        boost_value_to_vk(device),
+        safe_addr(vk_create_info),
+        null,
+        safe_addr(render_pass.render_pass)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+    return <- render_pass
+
+def finalize(var render_pass : RenderPass explicit)
+    vkDestroyRenderPass(
+        render_pass._device,
+        boost_value_to_vk(render_pass),
+        null
+    )
+    memzero(render_pass)
+
+//
 // ShaderModule
 //
 
