@@ -185,6 +185,18 @@ def add_boost_content(g):
         struct      = 'VkQueueFamilyProperties',
         vk_to_boost = True)
     g.add_gen_struct(
+        struct      = 'VkRenderPassCreateInfo',
+        boost_to_vk = True
+        ).declare_array(
+            count = 'attachmentCount',
+            items = 'pAttachments',
+        ).declare_array(
+            count = 'subpassCount',
+            items = 'pSubpasses',
+        ).declare_array(
+            count = 'dependencyCount',
+            items = 'pDependencies')
+    g.add_gen_struct(
         struct      = 'VkShaderModuleCreateInfo',
         boost_to_vk = True,
         ).declare_array(

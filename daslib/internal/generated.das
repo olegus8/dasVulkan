@@ -981,6 +981,30 @@ def vk_view_destroy(var boost_struct : ShaderModuleCreateInfo)
     boost_struct._vk_view__active = false
 
 //
+// SubpassDependency
+//
+
+struct SubpassDependency
+    src_subpass : uint
+    dst_subpass : uint
+    src_stage_mask : uint
+    dst_stage_mask : uint
+    src_access_mask : uint
+    dst_access_mask : uint
+    dependency_flags : uint
+
+def vk_value_to_boost(vk_struct : VkSubpassDependency) : SubpassDependency
+    return <- [[SubpassDependency
+        src_subpass = vk_struct.srcSubpass,
+        dst_subpass = vk_struct.dstSubpass,
+        src_stage_mask = vk_struct.srcStageMask,
+        dst_stage_mask = vk_struct.dstStageMask,
+        src_access_mask = vk_struct.srcAccessMask,
+        dst_access_mask = vk_struct.dstAccessMask,
+        dependency_flags = vk_struct.dependencyFlags
+    ]]
+
+//
 // SubpassDescription
 //
 
