@@ -463,14 +463,29 @@ class GenStruct(object):
                 continue
             bname, vname = field.boost_name, field.vk_name
             btype, vtype = field.boost_type, field.vk_type
-            if self.__is_array_items(vname) and field.needs_vk_view:
+            if self.__is_array_items(vname):
                 biname = boost_ptr_name_to_array(field.boost_name)
-                lines += ['']
-                lines += [
-                   f'    boost_struct._vk_view_{biname} <- [{{',
-                   f'        for item in boost_struct.{biname} ;',
-                   f'        item |> vk_view_create_unsafe()}}]',
-                ]
+                array = self.__get_array(vname)
+                if field.needs_vk_view:
+                    lines += ['']
+                    lines += [
+                       f'    boost_struct._vk_view_{biname} <- [{{',
+                       f'        for item in boost_struct.{biname} ;',
+                       f'        item |> vk_view_create_unsafe()}}]',
+                    ]
+                else:
+                    lines += ['']
+                    adr = f'array_addr_unsafe(boost_struct.{biname})'
+                    if array.boost_item_type_name:
+                        lines += [
+                           f'    var vk_{bname} : {vtype}',
+                            '    unsafe',
+                           f'       vk_{bname} = reinterpret<{vtype}>({adr})',
+                        ]
+                    else:
+                        lines += [
+                           f'    let vk_{bname} = {adr}',
+                        ]
             elif field.is_pointer and field.needs_vk_view:
                 lines += [
                     '',
@@ -482,8 +497,7 @@ class GenStruct(object):
         if lines[-1] != '':
             lines.append('')
         lines += [
-            '    unsafe',
-           f'        return <- [[ {vstype}',
+           f'    return <- [[ {vstype}',
         ]
         for field in self.__fields:
             if field.vk_name in ['pNext']:
@@ -496,28 +510,24 @@ class GenStruct(object):
                 continue
             elif self.__is_array_items(vname):
                 biname = boost_ptr_name_to_array(field.boost_name)
-                array = self.__get_array(vname)
                 if field.needs_vk_view:
                     vk_value = (
                         f'array_addr_unsafe(boost_struct._vk_view_{biname})')
                 else:
-                    vk_value = (
-                        f'array_addr_unsafe(boost_struct.{biname})')
-                    if array.boost_item_type_name:
-                        vk_value = f'reinterpret<{vtype}>({vk_value})'
+                    vk_value = f'vk_{bname}'
                 vcname = array.vk_count_name
                 lines += [
-                   f'            {vcname} = '
+                   f'        {vcname} = '
                                 f'uint(boost_struct.{biname} |> length()),'
                 ]
             elif field.is_pointer and field.needs_vk_view:
                 vk_value = f'addr_unsafe(boost_struct._vk_view_{bname})'
             else:
                 vk_value = field.boost_value_to_vk(f'boost_struct.{bname}')
-            lines += [f'            {vname} = {vk_value},']
+            lines += [f'        {vname} = {vk_value},']
         remove_last_char(lines, ',')
         lines += [
-           f'        ]]',
+           f'    ]]',
         ]
         return lines
 
