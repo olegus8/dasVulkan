@@ -363,7 +363,7 @@ struct DescriptorSetLayoutBinding
     descriptor_type : VkDescriptorType
     descriptor_count : uint
     stage_flags : uint
-    immutable_samplers : array<VkSampler>
+    immutable_samplers : array<Sampler>
     _vk_view_immutable_samplers : array<VkSampler>
     _vk_view__active : bool
 
@@ -1005,7 +1005,7 @@ def vk_value_to_boost(vk_struct : VkPhysicalDeviceSparseProperties) : PhysicalDe
 
 struct PipelineLayoutCreateInfo
     flags : uint
-    set_layouts : array<VkDescriptorSetLayout>
+    set_layouts : array<DescriptorSetLayout>
     push_constant_ranges : array<PushConstantRange>
     _vk_view_set_layouts : array<VkDescriptorSetLayout>
     _vk_view_push_constant_ranges : array<VkPushConstantRange>
@@ -1316,6 +1316,9 @@ struct Device
 def boost_value_to_vk(b : Device) : VkDevice
     return b.device
 
+def boost_value_to_vk(b : Device ?) : VkDevice ?
+    return b?.device
+
 def create_device(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]];
     var create_info : DeviceCreateInfo = [[ DeviceCreateInfo ]];
@@ -1350,6 +1353,9 @@ struct CommandPool
 
 def boost_value_to_vk(b : CommandPool) : VkCommandPool
     return b.command_pool
+
+def boost_value_to_vk(b : CommandPool ?) : VkCommandPool ?
+    return b?.command_pool
 
 def create_command_pool(
     device : Device = [[ Device ]];
@@ -1395,6 +1401,9 @@ struct DescriptorSetLayout
 def boost_value_to_vk(b : DescriptorSetLayout) : VkDescriptorSetLayout
     return b.descriptor_set_layout
 
+def boost_value_to_vk(b : DescriptorSetLayout ?) : VkDescriptorSetLayout ?
+    return b?.descriptor_set_layout
+
 def create_descriptor_set_layout(
     device : Device = [[ Device ]];
     var create_info : DescriptorSetLayoutCreateInfo = [[ DescriptorSetLayoutCreateInfo ]];
@@ -1438,6 +1447,9 @@ struct Instance
 def boost_value_to_vk(b : Instance) : VkInstance
     return b.instance
 
+def boost_value_to_vk(b : Instance ?) : VkInstance ?
+    return b?.instance
+
 def create_instance(
     var create_info : InstanceCreateInfo = [[ InstanceCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
@@ -1476,6 +1488,9 @@ struct PhysicalDevice
 
 def boost_value_to_vk(b : PhysicalDevice) : VkPhysicalDevice
     return b.physical_device
+
+def boost_value_to_vk(b : PhysicalDevice ?) : VkPhysicalDevice ?
+    return b?.physical_device
 
 struct PhysicalDeviceBatch
     physical_device_batch : array<VkPhysicalDevice>
@@ -1530,6 +1545,9 @@ struct Queue
 def boost_value_to_vk(b : Queue) : VkQueue
     return b.queue
 
+def boost_value_to_vk(b : Queue ?) : VkQueue ?
+    return b?.queue
+
 def get_device_queue(
     device : Device = [[ Device ]];
     queue_family_index : uint = [[ uint ]];
@@ -1557,6 +1575,9 @@ struct RenderPass
 
 def boost_value_to_vk(b : RenderPass) : VkRenderPass
     return b.render_pass
+
+def boost_value_to_vk(b : RenderPass ?) : VkRenderPass ?
+    return b?.render_pass
 
 def create_render_pass(
     device : Device = [[ Device ]];
@@ -1601,6 +1622,9 @@ struct ShaderModule
 
 def boost_value_to_vk(b : ShaderModule) : VkShaderModule
     return b.shader_module
+
+def boost_value_to_vk(b : ShaderModule ?) : VkShaderModule ?
+    return b?.shader_module
 
 def create_shader_module(
     device : Device = [[ Device ]];

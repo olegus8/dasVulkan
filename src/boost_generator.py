@@ -472,6 +472,13 @@ class GenStruct(object):
                        f'        for item in boost_struct.{biname} ;',
                        f'        item |> vk_view_create_unsafe()}}]',
                     ]
+                elif field.needs_conversion:
+                    lines += ['']
+                    lines += [
+                       f'    boost_struct._vk_view_{biname} <- [{{',
+                       f'        for item in boost_struct.{biname} ;',
+                       f'        item |> boost_value_to_vk()}}]',
+                    ]
                 else:
                     lines += ['']
                     adr = f'array_addr_unsafe(boost_struct.{biname})'
@@ -512,7 +519,7 @@ class GenStruct(object):
                 continue
             elif self.__is_array_items(vname):
                 biname = boost_ptr_name_to_array(field.boost_name)
-                if field.needs_vk_view:
+                if field.needs_vk_view or field.needs_conversion:
                     vk_value = (
                         f'array_addr_unsafe(boost_struct._vk_view_{biname})')
                 else:
