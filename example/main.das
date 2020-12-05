@@ -95,21 +95,24 @@ def record(cmd_buf : VkCommandBuffer; b : block)
 def record_render_pass(cmd_buf, phys_dev, window, surface, render_pass, fbuf;
     b : block
 )
+    let vk_phys_dev = phys_dev.physical_device
     let extent <- phys_dev |> get_swap_extent(surface, window)
-    cmd_buf |> record() <| $()
-        let clear_values <- [[auto[] [[VkClearValue]]]]
-        let info <- [[VkRenderPassBeginInfo
-            sType = VkStructureType VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO,
-            renderPass      = render_pass,
-            framebuffer     = fbuf.framebuffer,
-            renderArea      = [[VkRect2D extent = extent]],
-            clearValueCount = uint(clear_values |> length()),
-            pClearValues    = clear_values |> safe_addr()
-        ]]
-        cmd_buf |> vkCmdBeginRenderPass(
-            info |> safe_addr(), VkSubpassContents VK_SUBPASS_CONTENTS_INLINE)
-        b |> invoke()
-        cmd_buf |> vkCmdEndRenderPass()
+    extent |> with_view() <| $(vk_extent)
+        cmd_buf |> record() <| $()
+            let clear_values <- [[auto[] [[VkClearValue]]]]
+            let info <- [[VkRenderPassBeginInfo
+                sType = (VkStructureType
+                    VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO),
+                renderPass      = render_pass,
+                framebuffer     = fbuf.framebuffer,
+                renderArea      = [[VkRect2D extent = vk_extent]],
+                clearValueCount = uint(clear_values |> length()),
+                pClearValues    = clear_values |> safe_addr()
+            ]]
+            cmd_buf |> vkCmdBeginRenderPass(info |> safe_addr(),
+                VkSubpassContents VK_SUBPASS_CONTENTS_INLINE)
+            b |> invoke()
+            cmd_buf |> vkCmdEndRenderPass()
 
 
 def submit(queue, cmd_bufs)
@@ -557,8 +560,7 @@ def main
                 )
                     print("{sc.framebuffers |> length()} " +
                         "images in swap chain\n")
-                    vk_device |> with_draw_commands(phys_dev.physical_device,
-                        window, surface,
+                    vk_device |> with_draw_commands(phys_dev, window, surface,
                         render_pass, sc.framebuffers, pipeline, cmd_pool,
                         queue, vbuf, vertices |> length()
                     ) <| $(sc_draw_cmds)

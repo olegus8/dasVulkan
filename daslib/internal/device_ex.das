@@ -130,17 +130,17 @@ def create_single_queue_device(
 
 
 def get_swap_extent(
-    device : VkPhysicalDevice#;
+    device : PhysicalDevice;
     surface : VkSurfaceKHR#;
     window : GLFWwindow_DasHandle#
-)
-    var caps <- device |> get_capabilities(surface)
+) : Extent2D
+    var caps <- device |> get_physical_device_surface_capabilities_khr(surface)
 
-    if caps.currentExtent.width != UINT_MAX
-        return <- caps.currentExtent
+    if caps.current_extent.width != UINT_MAX
+        return <- caps.current_extent
     else
         let fb_size = window |> get_framebuffer_size()
-        return [[VkExtent2D
+        return [[Extent2D
             width = clamp(fb_size[0],
                 caps.minImageExtent.width,
                 caps.maxImageExtent.width),
@@ -148,14 +148,6 @@ def get_swap_extent(
                 caps.minImageExtent.height,
                 caps.maxImageExtent.height)
         ]]
-
-
-def get_capabilities(device : VkPhysicalDevice#; surface : VkSurfaceKHR#)
-    var caps : VkSurfaceCapabilitiesKHR
-    verify(VkResult VK_SUCCESS ==
-        device |> vkGetPhysicalDeviceSurfaceCapabilitiesKHR(
-            surface, safe_addr(caps)))
-    return <- caps
 
 
 ////////////////////////////

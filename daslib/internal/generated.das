@@ -530,6 +530,36 @@ def vk_value_to_boost(vk_struct : VkExtensionProperties) : ExtensionProperties
     ]]
 
 //
+// Extent2D
+//
+
+struct Extent2D
+    width : uint
+    height : uint
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : Extent2D
+) : VkExtent2D
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+
+    return <- [[ VkExtent2D
+        width = boost_struct.width,
+        height = boost_struct.height
+    ]]
+
+def vk_view_destroy(var boost_struct : Extent2D)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+def vk_value_to_boost(vk_struct : VkExtent2D) : Extent2D
+    return <- [[Extent2D
+        width = vk_struct.width,
+        height = vk_struct.height
+    ]]
+
+//
 // Extent3D
 //
 
