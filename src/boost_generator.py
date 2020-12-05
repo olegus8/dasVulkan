@@ -323,7 +323,7 @@ class GenStruct(object):
         self.__arrays = []
 
     def declare_array(self, **kwargs):
-        array = GenStructFieldArray(**kwargs)
+        array = GenStructFieldArray(struct=self, **kwargs)
         self.__arrays.append(array)
         return self
 
@@ -332,7 +332,7 @@ class GenStruct(object):
         return self.__generator.structs[self.__vk_type_name]
 
     @property
-    def __fields(self):
+    def _fields(self):
         return self.__generator.get_struct_fields(self.__c_struct)
 
     @property
@@ -382,7 +382,7 @@ class GenStruct(object):
             '',
            f'struct {self.__boost_type_name}',
         ]
-        for field in self.__fields:
+        for field in self._fields:
             if self.__is_array_count(field.vk_name):
                 continue
             if field.vk_name in ['sType', 'pNext']:
@@ -400,7 +400,7 @@ class GenStruct(object):
             lines += [f'    {boost_name} : {boost_type}']
 
         if self.__boost_to_vk:
-            for field in self.__fields:
+            for field in self._fields:
                 if field.vk_name in ['pNext', 'sType']:
                     continue
                 bname, vname = field.boost_name, field.vk_name
@@ -424,7 +424,7 @@ class GenStruct(object):
                 f': {self.__boost_type_name}',
            f'    return <- [[{self.__boost_type_name}'
         ]
-        for field in self.__fields:
+        for field in self._fields:
             if field.vk_name in ['sType', 'pNext']:
                 continue
             assign_op = field.vk_to_boost_assign_op
@@ -458,7 +458,7 @@ class GenStruct(object):
             '    assert(!boost_struct._vk_view__active)',
             '    boost_struct._vk_view__active = true',
         ]
-        for field in self.__fields:
+        for field in self._fields:
             if field.vk_name in ['pNext', 'sType']:
                 continue
             bname, vname = field.boost_name, field.vk_name
@@ -499,7 +499,7 @@ class GenStruct(object):
         lines += [
            f'    return <- [[ {vstype}',
         ]
-        for field in self.__fields:
+        for field in self._fields:
             if field.vk_name in ['pNext']:
                 continue
             bname, vname = field.boost_name, field.vk_name
@@ -516,9 +516,10 @@ class GenStruct(object):
                 else:
                     vk_value = f'vk_{bname}'
                 vcname = array.vk_count_name
+                vctype = array.vk_count.vk_type
                 lines += [
                    f'        {vcname} = '
-                                f'{vtype}(boost_struct.{biname} |> length()),'
+                                f'{vctype}(boost_struct.{biname} |> length()),'
                 ]
             elif field.is_pointer and field.needs_vk_view:
                 vk_value = f'addr_unsafe(boost_struct._vk_view_{bname})'
@@ -540,7 +541,7 @@ class GenStruct(object):
            f'def vk_view_destroy(var boost_struct : {bstype})',
             '    assert(boost_struct._vk_view__active)',
         ]
-        for field in self.__fields:
+        for field in self._fields:
             if field.vk_name in ['pNext', 'sType']:
                 continue
             bname, vname = field.boost_name, field.vk_name
@@ -565,10 +566,17 @@ class GenStruct(object):
 
 class GenStructFieldArray(object):
 
-    def __init__(self, count, items, force_item_type=None):
+    def __init__(self, struct, count, items, force_item_type=None):
+        self.__gen_struct = struct
         self.vk_count_name = count
         self.vk_items_name = items
         self.boost_item_type_name = force_item_type
+
+    @property
+    def vk_count(self):
+        for field in self.__gen_struct._fields:
+            if field.vk_name == self.vk_count_name:
+                return field
 
 
 class GenHandle(object):
