@@ -1140,6 +1140,59 @@ def vk_view_destroy(var boost_struct : RenderPassCreateInfo)
     boost_struct._vk_view__active = false
 
 //
+// SamplerCreateInfo
+//
+
+struct SamplerCreateInfo
+    flags : uint
+    mag_filter : VkFilter
+    min_filter : VkFilter
+    mipmap_mode : VkSamplerMipmapMode
+    address_mode_u : VkSamplerAddressMode
+    address_mode_v : VkSamplerAddressMode
+    address_mode_w : VkSamplerAddressMode
+    mip_lod_bias : float
+    anisotropy_enable : uint
+    max_anisotropy : float
+    compare_enable : uint
+    compare_op : VkCompareOp
+    min_lod : float
+    max_lod : float
+    border_color : VkBorderColor
+    unnormalized_coordinates : uint
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : SamplerCreateInfo
+) : VkSamplerCreateInfo
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+
+    return <- [[ VkSamplerCreateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO,
+        flags = boost_struct.flags,
+        magFilter = boost_struct.mag_filter,
+        minFilter = boost_struct.min_filter,
+        mipmapMode = boost_struct.mipmap_mode,
+        addressModeU = boost_struct.address_mode_u,
+        addressModeV = boost_struct.address_mode_v,
+        addressModeW = boost_struct.address_mode_w,
+        mipLodBias = boost_struct.mip_lod_bias,
+        anisotropyEnable = boost_struct.anisotropy_enable,
+        maxAnisotropy = boost_struct.max_anisotropy,
+        compareEnable = boost_struct.compare_enable,
+        compareOp = boost_struct.compare_op,
+        minLod = boost_struct.min_lod,
+        maxLod = boost_struct.max_lod,
+        borderColor = boost_struct.border_color,
+        unnormalizedCoordinates = boost_struct.unnormalized_coordinates
+    ]]
+
+def vk_view_destroy(var boost_struct : SamplerCreateInfo)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+//
 // ShaderModuleCreateInfo
 //
 
