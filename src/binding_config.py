@@ -209,8 +209,7 @@ def add_boost_content(g):
             optional = True
         ).declare_array(
             count = 'preserveAttachmentCount',
-            items = 'pPreserveAttachments'
-        )
+            items = 'pPreserveAttachments')
     g.add_gen_struct(
         struct      = 'VkSurfaceFormatKHR',
         vk_to_boost = True,
