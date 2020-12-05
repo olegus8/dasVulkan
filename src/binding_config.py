@@ -293,6 +293,9 @@ def add_boost_content(g):
         p_count     = 'pPropertyCount',
         p_items     = 'pProperties')
     g.add_gen_query_func(
+        func        = 'vkGetPhysicalDeviceSurfaceCapabilitiesKHR',
+        p_output    = 'pSurfaceCapabilities')
+    g.add_gen_query_func(
         func        = 'vkGetPhysicalDeviceProperties',
         p_output    = 'pProperties')
     g.add_gen_query_func(
