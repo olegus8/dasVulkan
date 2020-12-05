@@ -49,19 +49,6 @@ let
     ]]
 
 
-def with_pipeline_layout_simple(device : VkDevice#;
-    b : block<(layout:VkPipelineLayout#)>
-)
-    let create_info <- [[ VkPipelineLayoutCreateInfo
-        sType = VkStructureType VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO
-    ]]
-    var layout : VkPipelineLayout
-    verify(VkResult VK_SUCCESS == device |> vkCreatePipelineLayout(
-        create_info |> safe_addr(), null, layout |> safe_addr()))
-    b |> invoke(layout)
-    device |> vkDestroyPipelineLayout(layout, null)
-
-
 def with_pipeline_shader_stages(
     vert : VkShaderModule#; vert_main : string;
     frag : VkShaderModule#; frag_main : string;

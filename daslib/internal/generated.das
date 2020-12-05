@@ -1622,6 +1622,53 @@ def get_device_queue(
     return <- queue
 
 //
+// PipelineLayout
+//
+
+struct PipelineLayout
+    pipeline_layout : VkPipelineLayout
+    _device : VkDevice
+
+def boost_value_to_vk(b : PipelineLayout) : VkPipelineLayout
+    return b.pipeline_layout
+
+def boost_value_to_vk(b : PipelineLayout ?) : VkPipelineLayout ?
+    return b?.pipeline_layout
+
+def create_pipeline_layout(
+    device : Device = [[ Device ]];
+    var create_info : PipelineLayoutCreateInfo = [[ PipelineLayoutCreateInfo ]];
+    var result : VkResult? = [[VkResult?]]
+) : PipelineLayout
+
+    var pipeline_layout <- [[ PipelineLayout
+        _device = boost_value_to_vk(device)
+    ]]
+
+    var vk_create_info : VkPipelineLayoutCreateInfo
+    unsafe
+        vk_create_info <- create_info |> vk_view_create_unsafe()
+    defer() <| ${ create_info |> vk_view_destroy(); }
+
+    var result_ = VkResult VK_SUCCESS
+    result ?? result_ = vkCreatePipelineLayout(
+        boost_value_to_vk(device),
+        safe_addr(vk_create_info),
+        null,
+        safe_addr(pipeline_layout.pipeline_layout)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+    return <- pipeline_layout
+
+def finalize(var pipeline_layout : PipelineLayout explicit)
+    vkDestroyPipelineLayout(
+        pipeline_layout._device,
+        boost_value_to_vk(pipeline_layout),
+        null
+    )
+    memzero(pipeline_layout)
+
+//
 // RenderPass
 //
 
