@@ -193,6 +193,10 @@ def add_boost_content(g):
         struct      = 'VkExtensionProperties',
         vk_to_boost = True)
     g.add_gen_struct(
+        struct      = 'VkExtent2D',
+        vk_to_boost = True,
+        boost_to_vk = True)
+    g.add_gen_struct(
         struct      = 'VkExtent3D',
         vk_to_boost = True,
         boost_to_vk = True)

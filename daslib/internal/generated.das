@@ -1387,6 +1387,36 @@ def vk_view_destroy(var boost_struct : SubpassDescription)
     boost_struct._vk_view__active = false
 
 //
+// SurfaceCapabilitiesKHR
+//
+
+struct SurfaceCapabilitiesKHR
+    min_image_count : uint
+    max_image_count : uint
+    current_extent : Extent2D
+    min_image_extent : Extent2D
+    max_image_extent : Extent2D
+    max_image_array_layers : uint
+    supported_transforms : uint
+    current_transform : VkSurfaceTransformFlagBitsKHR
+    supported_composite_alpha : uint
+    supported_usage_flags : uint
+
+def vk_value_to_boost(vk_struct : VkSurfaceCapabilitiesKHR) : SurfaceCapabilitiesKHR
+    return <- [[SurfaceCapabilitiesKHR
+        min_image_count = vk_struct.minImageCount,
+        max_image_count = vk_struct.maxImageCount,
+        current_extent <- vk_value_to_boost(vk_struct.currentExtent),
+        min_image_extent <- vk_value_to_boost(vk_struct.minImageExtent),
+        max_image_extent <- vk_value_to_boost(vk_struct.maxImageExtent),
+        max_image_array_layers = vk_struct.maxImageArrayLayers,
+        supported_transforms = vk_struct.supportedTransforms,
+        current_transform = vk_struct.currentTransform,
+        supported_composite_alpha = vk_struct.supportedCompositeAlpha,
+        supported_usage_flags = vk_struct.supportedUsageFlags
+    ]]
+
+//
 // SurfaceFormatKHR
 //
 
