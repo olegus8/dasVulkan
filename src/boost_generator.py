@@ -515,6 +515,7 @@ class GenStruct(object):
                         f'array_addr_unsafe(boost_struct._vk_view_{biname})')
                 else:
                     vk_value = f'vk_{bname}'
+                array = self.__get_array(vname)
                 vcname = array.vk_count_name
                 vctype = array.vk_count.vk_type
                 lines += [

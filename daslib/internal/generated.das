@@ -327,11 +327,11 @@ def vk_view_create_unsafe(var boost_struct : DeviceCreateInfo
     return <- [[ VkDeviceCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO,
         flags = boost_struct.flags,
-        enabledExtensionCount = VkDeviceQueueCreateInfo ?(boost_struct.queue_create_infos |> length()),
+        enabledExtensionCount = uint(boost_struct.queue_create_infos |> length()),
         pQueueCreateInfos = array_addr_unsafe(boost_struct._vk_view_queue_create_infos),
-        enabledExtensionCount = string ?(boost_struct.enabled_layer_names |> length()),
+        enabledExtensionCount = uint(boost_struct.enabled_layer_names |> length()),
         ppEnabledLayerNames = vk_p_enabled_layer_names,
-        enabledExtensionCount = string ?(boost_struct.enabled_extension_names |> length()),
+        enabledExtensionCount = uint(boost_struct.enabled_extension_names |> length()),
         ppEnabledExtensionNames = vk_p_enabled_extension_names,
         pEnabledFeatures = addr_unsafe(boost_struct._vk_view_p_enabled_features)
     ]]
@@ -367,7 +367,7 @@ def vk_view_create_unsafe(var boost_struct : DeviceQueueCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO,
         flags = boost_struct.flags,
         queueFamilyIndex = boost_struct.queue_family_index,
-        queueCount = float ?(boost_struct.queue_priorities |> length()),
+        queueCount = uint(boost_struct.queue_priorities |> length()),
         pQueuePriorities = vk_p_queue_priorities
     ]]
 
@@ -452,9 +452,9 @@ def vk_view_create_unsafe(var boost_struct : InstanceCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
         flags = boost_struct.flags,
         pApplicationInfo = addr_unsafe(boost_struct._vk_view_p_application_info),
-        enabledExtensionCount = string ?(boost_struct.enabled_layer_names |> length()),
+        enabledExtensionCount = uint(boost_struct.enabled_layer_names |> length()),
         ppEnabledLayerNames = vk_p_enabled_layer_names,
-        enabledExtensionCount = string ?(boost_struct.enabled_extension_names |> length()),
+        enabledExtensionCount = uint(boost_struct.enabled_extension_names |> length()),
         ppEnabledExtensionNames = vk_p_enabled_extension_names
     ]]
 
@@ -904,7 +904,7 @@ def vk_view_create_unsafe(var boost_struct : ShaderModuleCreateInfo
     return <- [[ VkShaderModuleCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO,
         flags = boost_struct.flags,
-        codeSize = uint ?(boost_struct.code |> length()),
+        codeSize = uint64(boost_struct.code |> length()),
         pCode = vk_p_code
     ]]
 
