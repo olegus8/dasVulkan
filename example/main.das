@@ -333,7 +333,7 @@ def with_swapchain_independent_state(width, height, title; b : block<(
             "{get_das_root()}/modules/dasVulkan/example/frag.spv")
         defer() <| ${ delete shfrag; }
 
-        var render_pass <- create_simple_render_pass(surf_fmt)
+        var render_pass <- device |> create_simple_render_pass(surf_fmt)
         defer() <| ${ delete rpass; }
 
         surf_fmt |> with_view() <| $(vk_surf_fmt : VkSurfaceFormatKHR) {
