@@ -564,9 +564,10 @@ def main
                     render_done_sems    : array<VkSemaphore>;
                     frame_fences        : array<VkFence>
                 )
+                    let vk_device = device.device
                     print("{sc.framebuffers |> length()} " +
                         "images in swap chain\n")
-                    device |> with_draw_commands(phys_dev.physical_device,
+                    vk_device |> with_draw_commands(phys_dev.physical_device,
                         window, surface,
                         render_pass, sc.framebuffers, pipeline, cmd_pool,
                         queue, vbuf, vertices |> length()
@@ -578,7 +579,7 @@ def main
                             keep_running = (
                                 window |> glfwWindowShouldClose() == 0)
                             glfwPollEvents()
-                            let is_swapchain_good = device |> draw_frame(
+                            let is_swapchain_good = vk_device |> draw_frame(
                                 queue, sc_draw_cmds, sc.swapchain, frame,
                                 frame_fences, img_avail_sems, render_done_sems,
                                 imgs_used_by_frames
@@ -587,7 +588,7 @@ def main
                                 break
                             frame = (frame + 1) % MAX_FRAMES_IN_FLIGHT
                         delete imgs_used_by_frames
-                        device |> vkDeviceWaitIdle()
+                        vk_device |> vkDeviceWaitIdle()
 
     delete vertices
     unsafe
