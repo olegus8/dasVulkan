@@ -244,6 +244,9 @@ def add_boost_content(g):
         struct      = 'VkSamplerCreateInfo',
         boost_to_vk = True)
     g.add_gen_struct(
+        struct      = 'VkSemaphoreCreateInfo',
+        boost_to_vk = True)
+    g.add_gen_struct(
         struct      = 'VkShaderModuleCreateInfo',
         boost_to_vk = True,
         ).declare_array(

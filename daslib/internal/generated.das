@@ -1763,6 +1763,53 @@ def finalize(var sampler : Sampler explicit)
     memzero(sampler)
 
 //
+// Semaphore
+//
+
+struct Semaphore
+    semaphore : VkSemaphore
+    _device : VkDevice
+
+def boost_value_to_vk(b : Semaphore) : VkSemaphore
+    return b.semaphore
+
+def boost_value_to_vk(b : Semaphore ?) : VkSemaphore ?
+    return b?.semaphore
+
+def create_semaphore(
+    device : Device = [[ Device ]];
+    var create_info : SemaphoreCreateInfo = [[ SemaphoreCreateInfo ]];
+    var result : VkResult? = [[VkResult?]]
+) : Semaphore
+
+    var semaphore <- [[ Semaphore
+        _device = boost_value_to_vk(device)
+    ]]
+
+    var vk_create_info : VkSemaphoreCreateInfo
+    unsafe
+        vk_create_info <- create_info |> vk_view_create_unsafe()
+    defer() <| ${ create_info |> vk_view_destroy(); }
+
+    var result_ = VkResult VK_SUCCESS
+    result ?? result_ = vkCreateSemaphore(
+        boost_value_to_vk(device),
+        safe_addr(vk_create_info),
+        null,
+        safe_addr(semaphore.semaphore)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+    return <- semaphore
+
+def finalize(var semaphore : Semaphore explicit)
+    vkDestroySemaphore(
+        semaphore._device,
+        boost_value_to_vk(semaphore),
+        null
+    )
+    memzero(semaphore)
+
+//
 // ShaderModule
 //
 
