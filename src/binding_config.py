@@ -127,6 +127,9 @@ def add_boost_content(g):
         struct      = 'VkApplicationInfo',
         boost_to_vk = True)
     g.add_gen_struct(
+        struct      = 'VkAttachmentDescription',
+        boost_to_vk = True)
+    g.add_gen_struct(
         struct      = 'VkCommandPoolCreateInfo',
         boost_to_vk = True)
     g.add_gen_struct(
