@@ -233,6 +233,9 @@ def add_boost_content(g):
             count = 'dependencyCount',
             items = 'pDependencies')
     g.add_gen_struct(
+        struct      = 'VkSamplerCreateInfo',
+        boost_to_vk = True)
+    g.add_gen_struct(
         struct      = 'VkShaderModuleCreateInfo',
         boost_to_vk = True,
         ).declare_array(

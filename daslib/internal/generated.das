@@ -42,16 +42,6 @@ def addr_unsafe(v)
         return addr(v)
 
 //
-// Device
-//
-
-def finalize(var device : Device explicit)
-    let vk_device = boost_value_to_vk(device)
-    vk_device |> vkDeviceWaitIdle()
-    vk_device |> vkDestroyDevice(null)
-    memzero(device)
-
-//
 // Surface
 //
 
@@ -1353,6 +1343,13 @@ def create_device(
     assert(result_ == VkResult VK_SUCCESS)
     return <- device
 
+def finalize(var device : Device explicit)
+    vkDestroyDevice(
+        boost_value_to_vk(device),
+        null
+    )
+    memzero(device)
+
 //
 // CommandPool
 //
@@ -1621,6 +1618,53 @@ def finalize(var render_pass : RenderPass explicit)
         null
     )
     memzero(render_pass)
+
+//
+// Sampler
+//
+
+struct Sampler
+    sampler : VkSampler
+    _device : VkDevice
+
+def boost_value_to_vk(b : Sampler) : VkSampler
+    return b.sampler
+
+def boost_value_to_vk(b : Sampler ?) : VkSampler ?
+    return b?.sampler
+
+def create_sampler(
+    device : Device = [[ Device ]];
+    var create_info : SamplerCreateInfo = [[ SamplerCreateInfo ]];
+    var result : VkResult? = [[VkResult?]]
+) : Sampler
+
+    var sampler <- [[ Sampler
+        _device = boost_value_to_vk(device)
+    ]]
+
+    var vk_create_info : VkSamplerCreateInfo
+    unsafe
+        vk_create_info <- create_info |> vk_view_create_unsafe()
+    defer() <| ${ create_info |> vk_view_destroy(); }
+
+    var result_ = VkResult VK_SUCCESS
+    result ?? result_ = vkCreateSampler(
+        boost_value_to_vk(device),
+        safe_addr(vk_create_info),
+        null,
+        safe_addr(sampler.sampler)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+    return <- sampler
+
+def finalize(var sampler : Sampler explicit)
+    vkDestroySampler(
+        sampler._device,
+        boost_value_to_vk(sampler),
+        null
+    )
+    memzero(sampler)
 
 //
 // ShaderModule
