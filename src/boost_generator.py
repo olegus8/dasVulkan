@@ -559,7 +559,8 @@ class GenStruct(object):
                 lines += [
                    f'    if boost_struct.{bname} != null',
                    f'        *(boost_struct.{bname}) |> vk_view_destroy()',
-                   f'        delete boost_struct._vk_view_{bname}',
+                    '        unsafe',
+                   f'            delete boost_struct._vk_view_{bname}',
                 ]
         lines += [
             '    boost_struct._vk_view__active = false',
