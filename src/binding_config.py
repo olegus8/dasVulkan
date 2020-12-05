@@ -103,6 +103,10 @@ def add_boost_content(g):
         ctor            = 'vkCreateCommandPool',
         dtor            = 'vkDestroyCommandPool')
     g.add_gen_handle(
+        handle          = 'VkDescriptorSetLayout',
+        ctor            = 'vkCreateDescriptorSetLayout',
+        dtor            = 'vkDestroyDescriptorSetLayout')
+    g.add_gen_handle(
         handle          = 'VkInstance',
         ctor            = 'vkCreateInstance',
         dtor            = 'vkDestroyInstance')

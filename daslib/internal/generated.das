@@ -933,6 +933,45 @@ def vk_value_to_boost(vk_struct : VkPhysicalDeviceSparseProperties) : PhysicalDe
     ]]
 
 //
+// PipelineLayoutCreateInfo
+//
+
+struct PipelineLayoutCreateInfo
+    flags : uint
+    set_layouts : array<VkDescriptorSetLayout>
+    push_constant_ranges : array<PushConstantRange>
+    _vk_view_push_constant_ranges : array<VkPushConstantRange>
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : PipelineLayoutCreateInfo
+) : VkPipelineLayoutCreateInfo
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+
+    let vk_p_set_layouts = array_addr_unsafe(boost_struct.set_layouts)
+
+    boost_struct._vk_view_push_constant_ranges <- [{
+        for item in boost_struct.push_constant_ranges ;
+        item |> vk_view_create_unsafe()}]
+
+    return <- [[ VkPipelineLayoutCreateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO,
+        flags = boost_struct.flags,
+        setLayoutCount = uint(boost_struct.set_layouts |> length()),
+        pSetLayouts = vk_p_set_layouts,
+        pushConstantRangeCount = uint(boost_struct.push_constant_ranges |> length()),
+        pPushConstantRanges = array_addr_unsafe(boost_struct._vk_view_push_constant_ranges)
+    ]]
+
+def vk_view_destroy(var boost_struct : PipelineLayoutCreateInfo)
+    assert(boost_struct._vk_view__active)
+    for item in boost_struct.push_constant_ranges
+        item |> vk_view_destroy()
+    delete boost_struct._vk_view_push_constant_ranges
+    boost_struct._vk_view__active = false
+
+//
 // QueueFamilyProperties
 //
 
