@@ -500,6 +500,7 @@ class GenStruct(object):
         lines += [
            f'    return <- [[ {vstype}',
         ]
+        array_counts_added = set()
         for field in self._fields:
             if field.vk_name in ['pNext']:
                 continue
@@ -519,10 +520,10 @@ class GenStruct(object):
                 array = self.__get_array(vname)
                 vcname = array.vk_count_name
                 vctype = array.vk_count.vk_type
-                lines += [
-                   f'        {vcname} = '
-                                f'{vctype}(boost_struct.{biname} |> length()),'
-                ]
+                if not array.optional and vcname not in array_counts_added:
+                    array_counts_added.add(vcname)
+                    lines.append(f'        {vcname} = '
+                        f'{vctype}(boost_struct.{biname} |> length()),')
             elif field.is_pointer and field.needs_vk_view:
                 vk_value = f'boost_struct._vk_view_{bname}'
             else:
@@ -570,11 +571,14 @@ class GenStruct(object):
 
 class GenStructFieldArray(object):
 
-    def __init__(self, struct, count, items, force_item_type=None):
+    def __init__(self, struct, count, items,
+        force_item_type=None, optional=False,
+    ):
         self.__gen_struct = struct
         self.vk_count_name = count
         self.vk_items_name = items
         self.boost_item_type_name = force_item_type
+        self.optional = optional
 
     @property
     def vk_count(self):
