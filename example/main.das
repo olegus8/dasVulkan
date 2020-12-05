@@ -256,13 +256,14 @@ def create_simple_render_pass(
         attachments <- [{auto[] [[AttachmentDescription
             format = surf_fmt.format,
             samples = VkSampleCountFlagBits VK_SAMPLE_COUNT_1_BIT,
-            loadOp = VkAttachmentLoadOp VK_ATTACHMENT_LOAD_OP_CLEAR,
-            storeOp = VkAttachmentStoreOp VK_ATTACHMENT_STORE_OP_STORE,
-            stencilLoadOp = VkAttachmentLoadOp VK_ATTACHMENT_LOAD_OP_DONT_CARE,
-            stencilStoreOp = (VkAttachmentStoreOp
+            load_op = VkAttachmentLoadOp VK_ATTACHMENT_LOAD_OP_CLEAR,
+            store_op = VkAttachmentStoreOp VK_ATTACHMENT_STORE_OP_STORE,
+            stencil_load_op = (VkAttachmentLoadOp
+                VK_ATTACHMENT_LOAD_OP_DONT_CARE),
+            stencil_store_op = (VkAttachmentStoreOp
                 VK_ATTACHMENT_STORE_OP_DONT_CARE),
-            initialLayout = VkImageLayout VK_IMAGE_LAYOUT_UNDEFINED,
-            finalLayout = VkImageLayout VK_IMAGE_LAYOUT_PRESENT_SRC_KHR
+            initial_layout = VkImageLayout VK_IMAGE_LAYOUT_UNDEFINED,
+            final_layout = VkImageLayout VK_IMAGE_LAYOUT_PRESENT_SRC_KHR
         ]]}],
         subpasses <- [{auto[] [[SubpassDescription
             pipeline_bind_point = (VkPipelineBindPoint
