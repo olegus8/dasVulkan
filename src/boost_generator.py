@@ -557,15 +557,17 @@ class GenStruct(object):
                 continue
             bname, vname = field.boost_name, field.vk_name
             btype, vtype = field.boost_type, field.vk_type
-            if self.__is_array_items(vname) and (
-                field.needs_vk_view or field.needs_conversion
-            ):
+            if self.__is_array_items(vname):
                 biname = boost_ptr_name_to_array(field.boost_name)
-                lines += [
-                   f'    for item in boost_struct.{biname}',
-                   f'        item |> vk_view_destroy()',
-                   f'    delete boost_struct._vk_view_{biname}',
-                ]
+                if field.needs_vk_view:
+                    lines += [
+                       f'    for item in boost_struct.{biname}',
+                       f'        item |> vk_view_destroy()',
+                    ]
+                if field.needs_conversion:
+                    lines += [
+                       f'    delete boost_struct._vk_view_{biname}',
+                    ]
             elif field.is_pointer and field.needs_vk_view:
                 lines += [
                    f'    if boost_struct.{bname} != null',
@@ -1087,7 +1089,8 @@ class ParamBase(object):
     @property
     def needs_conversion(self):
         return (self.vk_value_to_boost('foo') != 'foo'
-            or self.boost_value_to_vk('foo') != 'foo')
+            or self.boost_value_to_vk('foo') != 'foo'
+            or self.needs_vk_view)
 
     @property
     def needs_vk_view(self):
