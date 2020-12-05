@@ -337,7 +337,7 @@ def with_swapchain_independent_state(width, height, title; b : block<(
         defer() <| ${ delete render_pass; }
 
         var pipeline_layout <- device |> create_pipeline_layout()
-        defer() <| ${ delete pipeline_layout;
+        defer() <| ${ delete pipeline_layout; }
 
         b |> invoke(
             instance.instance,
@@ -353,7 +353,7 @@ def with_swapchain_independent_state(width, height, title; b : block<(
             render_pass.render_pass,
             pipeline_layout.pipeline_layout,
             cmd_pool.command_pool
-        );
+        )
 
         vk_device |> vkDeviceWaitIdle()
 
