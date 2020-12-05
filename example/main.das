@@ -530,10 +530,11 @@ def main
         pipeline_layout : VkPipelineLayout;
         cmd_pool        : VkCommandPool
     )
+        let vk_device = device.device
         var props <- phys_dev |> get_physical_device_properties()
         defer() <| ${ delete props ; }
         print("Using {props.device_name}\n")
-        device |> with_baked_vertex_buffer(
+        vk_device |> with_baked_vertex_buffer(
             phys_dev.physical_device, cmd_pool, queue, vertices
         ) <| $(vbuf)
             var keep_running = true
@@ -541,7 +542,7 @@ def main
                 // waiting while window is minimized
                 while uint2(0,0) == window |> get_framebuffer_size()
                     glfwWaitEvents()
-                device |> vkDeviceWaitIdle()
+                vk_device |> vkDeviceWaitIdle()
 
                 with_swapchain_dependent_state(
                     instance,
@@ -564,7 +565,6 @@ def main
                     render_done_sems    : array<VkSemaphore>;
                     frame_fences        : array<VkFence>
                 )
-                    let vk_device = device.device
                     print("{sc.framebuffers |> length()} " +
                         "images in swap chain\n")
                     vk_device |> with_draw_commands(phys_dev.physical_device,
