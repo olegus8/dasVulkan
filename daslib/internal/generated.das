@@ -899,7 +899,7 @@ def vk_view_create_unsafe(var boost_struct : ShaderModuleCreateInfo
             sType = VkStructureType VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO,
             flags = boost_struct.flags,
             codeSize = uint(boost_struct.code |> length()),
-            pCode = reinterpret<uint8>(array_addr_unsafe(boost_struct.code))
+            pCode = reinterpret<uint ?>(array_addr_unsafe(boost_struct.code))
         ]]
 
 def vk_view_destroy(var boost_struct : ShaderModuleCreateInfo)
