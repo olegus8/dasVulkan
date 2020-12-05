@@ -108,6 +108,10 @@ def add_boost_content(g):
         ctor            = 'vkCreateDescriptorSetLayout',
         dtor            = 'vkDestroyDescriptorSetLayout')
     g.add_gen_handle(
+        handle          = 'VkFence',
+        ctor            = 'vkCreateFence',
+        dtor            = 'vkDestroyFence')
+    g.add_gen_handle(
         handle          = 'VkInstance',
         ctor            = 'vkCreateInstance',
         dtor            = 'vkDestroyInstance')
