@@ -120,6 +120,10 @@ def add_boost_content(g):
         handle          = 'VkQueue',
         ctor            = 'vkGetDeviceQueue')
     g.add_gen_handle(
+        handle          = 'VkPipelineLayout',
+        ctor            = 'vkCreatePipelineLayout',
+        dtor            = 'vkDestroyPipelineLayout')
+    g.add_gen_handle(
         handle          = 'VkRenderPass',
         ctor            = 'vkCreateRenderPass',
         dtor            = 'vkDestroyRenderPass')
