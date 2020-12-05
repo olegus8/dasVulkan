@@ -27,11 +27,11 @@ def read_file_to_array(file_path : string) : array<uint8>
     var data : array<uint8>
     fopen(file_path, "rb") <| $(f : FILE const ?)
         data |> resize(int((f |> fstat()).size))
-        f |> fmap() <| $(fdata : string implicit)
+        f |> fmap() <| $(fdata : string const #)
             data |> lock() <| $(tdata)
                 for dst, i in tdata, range(INT_MAX)
                     unsafe
-                        dst = *(reinterpret<uint8 const?>(fdata) + i)
+                        dst = *(reinterpret<uint8 const?>(addr(fdata)) + i)
     return <- data
 
 
