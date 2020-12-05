@@ -3,6 +3,7 @@ options no_aot = true
 
 require daslib/safe_addr
 require vulkan
+require fio
 
 
 def to_string(bytes : void?)
@@ -24,8 +25,8 @@ def safe_addr_val(var x : auto(T)&) : T-& ? #
 
 def read_file_to_array(file_path : string) : array<uint8>
     var data : array<uint8>
-    fopen(file_path, "rb") <| $(f : FILE ?)
-        data |> resize((f |> fstat()).size)
+    fopen(file_path, "rb") <| $(f : FILE const ?)
+        data |> resize(int((f |> fstat()).size))
         f |> fmap() <| $(fdata : string implicit)
             data |> lock() <| $(tdata)
                 for dst, i in tdata, range(INT_MAX)
