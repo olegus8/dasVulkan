@@ -132,6 +132,10 @@ def add_boost_content(g):
         ctor            = 'vkCreateSampler',
         dtor            = 'vkDestroySampler')
     g.add_gen_handle(
+        handle          = 'VkSemaphore',
+        ctor            = 'vkCreateSemaphore',
+        dtor            = 'vkDestroySemaphore')
+    g.add_gen_handle(
         handle          = 'VkShaderModule',
         ctor            = 'vkCreateShaderModule',
         dtor            = 'vkDestroyShaderModule')
