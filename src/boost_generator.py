@@ -700,6 +700,9 @@ class GenHandle(object):
             '',
            f'def boost_value_to_vk(b : {bhtype}) : {vhtype}',
            f'    return b.{attr}',
+            '',
+           f'def boost_value_to_vk(b : {bhtype} ?) : {vhtype} ?',
+           f'    return b?.{attr}',
         ]
         return lines
 
@@ -1135,11 +1138,15 @@ class ParamVkHandlePtr(ParamBase):
     def vk_unqual_type(self):
         return self.c_unqual_type
 
+    @property
+    def boost_unqual_type(self):
+        return vk_handle_type_to_boost(self.vk_unqual_type)
+
     def vk_value_to_boost(self, vk_value):
         return None
 
     def boost_value_to_vk(self, boost_value):
-        return None
+        return f'boost_value_to_vk({boost_value})'
 
 
 class ParamVkStruct(ParamBase):
