@@ -15,7 +15,7 @@ require internal/glfw        public
 require internal/instance_ex public
 require internal/memory      public
 require internal/memory_ex   public
-require internal/pipeline    public
+require internal/pipeline_ex public
 require internal/render_pass public
 require internal/swapchain   public
 
