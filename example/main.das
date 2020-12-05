@@ -337,25 +337,23 @@ def with_swapchain_independent_state(width, height, title; b : block<(
         defer() <| ${ delete render_pass; }
 
         var pipeline_layout <- device |> create_pipeline_layout()
-        defer() <| ${ delete pipeline_layout; }
+        defer() <| ${ delete pipeline_layout;
 
-        surf_fmt |> with_view() <| $(vk_surf_fmt : VkSurfaceFormatKHR) {
-            b |> invoke(
-                instance.instance,
-                window,
-                surface.surface_khr,
-                phys_dev,
-                vk_device,
-                queue.queue,
-                vk_surf_fmt,
-                present_mode,
-                shvert.shader_module,
-                shfrag.shader_module,
-                render_pass.render_pass,
-                pipeline_layout.pipeline_layout,
-                cmd_pool.command_pool
-            );
-        }
+        b |> invoke(
+            instance.instance,
+            window,
+            surface.surface_khr,
+            phys_dev,
+            vk_device,
+            queue.queue,
+            surf_fmt,
+            present_mode,
+            shvert.shader_module,
+            shfrag.shader_module,
+            render_pass.render_pass,
+            pipeline_layout.pipeline_layout,
+            cmd_pool.command_pool
+        );
 
         vk_device |> vkDeviceWaitIdle()
 
@@ -381,6 +379,7 @@ def with_swapchain_dependent_state(
         render_done_sems    : array<VkSemaphore>;
         frame_fences        : array<VkFence>
 )>)
+    surf_fmt |> with_view() <| $(vk_surf_fmt : VkSurfaceFormatKHR) {
     device |> with_semaphores(MAX_FRAMES_IN_FLIGHT)  <| $(img_avail_sems)    {
     device |> with_semaphores(MAX_FRAMES_IN_FLIGHT)  <| $(render_done_sems)  {
     device |> with_fences(MAX_FRAMES_IN_FLIGHT,
@@ -399,7 +398,7 @@ def with_swapchain_dependent_state(
             render_done_sems,
             frame_fences
         );
-    }}}}}
+    }}}}}}
 
 
 def wait_fence(device; fence : VkFence)
