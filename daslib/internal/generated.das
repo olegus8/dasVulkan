@@ -406,7 +406,8 @@ def vk_view_destroy(var boost_struct : DeviceCreateInfo)
     delete boost_struct._vk_view_queue_create_infos
     if boost_struct.p_enabled_features != null
         *(boost_struct.p_enabled_features) |> vk_view_destroy()
-        delete boost_struct._vk_view_p_enabled_features
+        unsafe
+            delete boost_struct._vk_view_p_enabled_features
     boost_struct._vk_view__active = false
 
 //
@@ -527,7 +528,8 @@ def vk_view_destroy(var boost_struct : InstanceCreateInfo)
     assert(boost_struct._vk_view__active)
     if boost_struct.p_application_info != null
         *(boost_struct.p_application_info) |> vk_view_destroy()
-        delete boost_struct._vk_view_p_application_info
+        unsafe
+            delete boost_struct._vk_view_p_application_info
     boost_struct._vk_view__active = false
 
 //
