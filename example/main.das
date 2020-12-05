@@ -247,7 +247,7 @@ def with_fences(device, count, flags; b : block<(fences:array<VkFence>)>)
     delete fences
 
 
-def create_simple_render_pass(
+def create_example_render_pass(
     device : Device;
     surf_fmt : SurfaceFormatKHR
 ) : RenderPass
@@ -333,7 +333,7 @@ def with_swapchain_independent_state(width, height, title; b : block<(
             "{get_das_root()}/modules/dasVulkan/example/frag.spv")
         defer() <| ${ delete shfrag; }
 
-        var render_pass <- device |> create_simple_render_pass(surf_fmt)
+        var render_pass <- device |> create_example_render_pass(surf_fmt)
         defer() <| ${ delete render_pass; }
 
         surf_fmt |> with_view() <| $(vk_surf_fmt : VkSurfaceFormatKHR) {
