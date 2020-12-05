@@ -899,7 +899,7 @@ def vk_view_create_unsafe(var boost_struct : ShaderModuleCreateInfo
 
     var vk_p_code : uint ?
     unsafe
-       vk_p_code = reinterpret<uint ?>(array_addr_unsafe(boost_struct.code))
+        vk_p_code = reinterpret<uint ?>(array_addr_unsafe(boost_struct.code))
 
     return <- [[ VkShaderModuleCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO,

@@ -518,7 +518,7 @@ class GenStruct(object):
                 vcname = array.vk_count_name
                 lines += [
                    f'        {vcname} = '
-                                f'uint(boost_struct.{biname} |> length()),'
+                                f'{vtype}(boost_struct.{biname} |> length()),'
                 ]
             elif field.is_pointer and field.needs_vk_view:
                 vk_value = f'addr_unsafe(boost_struct._vk_view_{bname})'
