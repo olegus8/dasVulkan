@@ -280,7 +280,7 @@ def with_swapchain_independent_state(width, height, title; b : block<(
     window          : GLFWwindow_DasHandle#;
     surface         : VkSurfaceKHR;
     phys_dev        : PhysicalDevice;
-    device          : VkDevice;
+    device          : Device;
     queue           : VkQueue;
     var surf_fmt    : SurfaceFormatKHR;
     present_mode    : VkPresentModeKHR;
@@ -330,7 +330,7 @@ def with_swapchain_independent_state(width, height, title; b : block<(
             window,
             surface.surface_khr,
             phys_dev,
-            vk_device,
+            device,
             queue.queue,
             surf_fmt,
             present_mode,
@@ -365,7 +365,7 @@ def with_swapchain_dependent_state(
         render_done_sems    : array<VkSemaphore>;
         frame_fences        : array<VkFence>
 )>)
-    surf_fmt |> with_view() <| $(vk_surf_fmt : VkSurfaceFormatKHR) {
+    let vk_device = device.device
 
     var img_avail_sems <- [{for x in range(MAX_FRAMES_IN_FLIGHT);
         device |> create_semaphore() }]
@@ -381,6 +381,7 @@ def with_swapchain_dependent_state(
     var vk_render_done_sems <- [{for sem in render_done_sems; sem.semaphore}]
     defer() <| ${ delete vk_render_done_sems; }
 
+    surf_fmt |> with_view() <| $(vk_surf_fmt : VkSurfaceFormatKHR) {
     device |> with_fences(MAX_FRAMES_IN_FLIGHT,
         uint(VkFenceCreateFlagBits
             VK_FENCE_CREATE_SIGNALED_BIT))           <| $(frame_fences)      {
@@ -520,7 +521,7 @@ def main
         window          : GLFWwindow_DasHandle;
         surface         : VkSurfaceKHR;
         phys_dev        : PhysicalDevice;
-        device          : VkDevice;
+        device          : Device;
         queue           : VkQueue;
         var surf_fmt    : SurfaceFormatKHR;
         present_mode    : VkPresentModeKHR;
