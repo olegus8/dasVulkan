@@ -394,7 +394,7 @@ class GenStruct(object):
                 boost_name = boost_ptr_name_to_array(boost_name)
                 forced_item_type = array.boost_item_type_name
                 if forced_item_type:
-                    boost_type = 'array<{forced_item_type}>'
+                    boost_type = f'array<{forced_item_type}>'
                 else:
                     boost_type = boost_ptr_type_to_array(boost_type)
             lines += [f'    {boost_name} : {boost_type}']

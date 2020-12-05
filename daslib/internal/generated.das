@@ -885,7 +885,7 @@ def vk_value_to_boost(vk_struct : VkQueueFamilyProperties) : QueueFamilyProperti
 
 struct ShaderModuleCreateInfo
     flags : uint
-    code : uint8
+    code : array<{forced_item_type}>
     _vk_view__active : bool
 
 def vk_view_create_unsafe(var boost_struct : ShaderModuleCreateInfo
