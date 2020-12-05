@@ -253,7 +253,7 @@ def create_simple_render_pass(
 ) : RenderPass
     
     var create_info <- [[RenderPassCreateInfo
-        attachments <- [{auto[] [[VkAttachmentDescription
+        attachments <- [{auto[] [[AttachmentDescription
             format = surf_fmt.format,
             samples = VkSampleCountFlagBits VK_SAMPLE_COUNT_1_BIT,
             loadOp = VkAttachmentLoadOp VK_ATTACHMENT_LOAD_OP_CLEAR,
@@ -264,15 +264,15 @@ def create_simple_render_pass(
             initialLayout = VkImageLayout VK_IMAGE_LAYOUT_UNDEFINED,
             finalLayout = VkImageLayout VK_IMAGE_LAYOUT_PRESENT_SRC_KHR
         ]]}],
-        subpasses <- [{auto[] [[VkSubpassDescription
+        subpasses <- [{auto[] [[SubpassDescription
             pipeline_bind_point = (VkPipelineBindPoint
                 VK_PIPELINE_BIND_POINT_GRAPHICS),
-            color_attachments <- [{auto[] [[VkAttachmentReference
+            color_attachments <- [{auto[] [[AttachmentReference
                 attachment = 0u,
                 layout = VkImageLayout VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL
             ]]}]
         ]]}],
-        dependencies <- [{auto[] [[VkSubpassDependency
+        dependencies <- [{auto[] [[SubpassDependency
             src_subpass = VK_SUBPASS_EXTERNAL,
             dst_subpass = 0u,
             src_stage_mask = uint(VkPipelineStageFlagBits
