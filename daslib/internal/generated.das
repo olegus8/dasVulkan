@@ -91,6 +91,21 @@ def get_physical_device_properties(
     )
     return <- vk_value_to_boost(vk_output)
 
+def get_physical_device_surface_capabilities_khr(
+    physical_device : PhysicalDevice = [[ PhysicalDevice ]];
+    surface : SurfaceKHR = [[ SurfaceKHR ]];
+    var result : VkResult? = [[VkResult?]]
+) : SurfaceCapabilitiesKHR
+    var vk_output : VkSurfaceCapabilitiesKHR
+    var result_ = VkResult VK_SUCCESS
+    result ?? result_ = vkGetPhysicalDeviceSurfaceCapabilitiesKHR(
+        boost_value_to_vk(physical_device),
+        boost_value_to_vk(surface),
+        safe_addr(vk_output)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+    return <- vk_value_to_boost(vk_output)
+
 def get_physical_device_surface_support_khr(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]];
     queue_family_index : uint = [[ uint ]];

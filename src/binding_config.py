@@ -280,6 +280,9 @@ def add_boost_content(g):
             count = 'preserveAttachmentCount',
             items = 'pPreserveAttachments')
     g.add_gen_struct(
+        struct      = 'VkSurfaceCapabilitiesKHR',
+        vk_to_boost = True)
+    g.add_gen_struct(
         struct      = 'VkSurfaceFormatKHR',
         vk_to_boost = True,
         boost_to_vk = True)
