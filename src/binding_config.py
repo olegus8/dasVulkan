@@ -114,6 +114,10 @@ def add_boost_content(g):
     g.add_gen_handle(
         handle          = 'VkQueue',
         ctor            = 'vkGetDeviceQueue')
+    g.add_gen_handle(
+        handle          = 'VkShaderModule',
+        ctor            = 'vkCreateShaderModule',
+        dtor            = 'vkDestroyShaderModule')
 
     #
     # Structs
