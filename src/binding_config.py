@@ -210,6 +210,9 @@ def add_boost_content(g):
             count = 'pushConstantRangeCount',
             items = 'pPushConstantRanges')
     g.add_gen_struct(
+        struct      = 'VkPushConstantRange',
+        boost_to_vk = True)
+    g.add_gen_struct(
         struct      = 'VkQueueFamilyProperties',
         vk_to_boost = True)
     g.add_gen_struct(
