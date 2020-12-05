@@ -519,8 +519,8 @@ class GenStruct(object):
                     vk_value = f'vk_{bname}'
                 array = self.__get_array(vname)
                 vcname = array.vk_count_name
-                if array.vk_count and not array.optional
-                and vcname not in array_counts_added:
+                if (vcname and not array.optional
+                and vcname not in array_counts_added):
                     array_counts_added.add(vcname)
                     vctype = array.vk_count.vk_type
                     lines.append(f'        {vcname} = '

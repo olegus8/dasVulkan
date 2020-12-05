@@ -355,6 +355,38 @@ def vk_view_destroy(var boost_struct : CommandPoolCreateInfo)
     boost_struct._vk_view__active = false
 
 //
+// DescriptorSetLayoutBinding
+//
+
+struct DescriptorSetLayoutBinding
+    binding : uint
+    descriptor_type : VkDescriptorType
+    descriptor_count : uint
+    stage_flags : uint
+    immutable_samplers : array<VkSampler>
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : DescriptorSetLayoutBinding
+) : VkDescriptorSetLayoutBinding
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+
+    let vk_p_immutable_samplers = array_addr_unsafe(boost_struct.immutable_samplers)
+
+    return <- [[ VkDescriptorSetLayoutBinding
+        binding = boost_struct.binding,
+        descriptorType = boost_struct.descriptor_type,
+        descriptorCount = boost_struct.descriptor_count,
+        stageFlags = boost_struct.stage_flags,
+        pImmutableSamplers = vk_p_immutable_samplers
+    ]]
+
+def vk_view_destroy(var boost_struct : DescriptorSetLayoutBinding)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+//
 // DescriptorSetLayoutCreateInfo
 //
 
