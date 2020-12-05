@@ -4,6 +4,7 @@ options no_aot = true
 require daslib/safe_addr
 require vulkan
 require fio
+require strings
 
 
 def to_string(bytes : void?)
@@ -31,7 +32,7 @@ def read_file_to_array(file_path : string) : array<uint8>
             data |> lock() <| $(tdata)
                 for dst, i in tdata, range(INT_MAX)
                     unsafe
-                        dst = *(reinterpret<uint8 ?>(fdata) + i)
+                        dst = uint8(fdata |> character_uat(i))
     return <- data
 
 
