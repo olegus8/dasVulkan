@@ -334,7 +334,7 @@ def with_swapchain_independent_state(width, height, title; b : block<(
         defer() <| ${ delete shfrag; }
 
         var render_pass <- device |> create_simple_render_pass(surf_fmt)
-        defer() <| ${ delete rpass; }
+        defer() <| ${ delete render_pass; }
 
         surf_fmt |> with_view() <| $(vk_surf_fmt : VkSurfaceFormatKHR) {
         vk_device |> with_pipeline_layout_simple() <| $(pipeline_layout) {
