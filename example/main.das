@@ -249,7 +249,7 @@ def with_fences(device, count, flags; b : block<(fences:array<VkFence>)>)
 
 def create_simple_render_pass(
     device : Device;
-    surf_fmt : SurfaceFormatKHR;
+    surf_fmt : SurfaceFormatKHR
 ) : RenderPass
     
     var create_info <- [[RenderPassCreateInfo
