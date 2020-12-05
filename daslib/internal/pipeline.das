@@ -6,6 +6,7 @@ require fio
 
 require vulkan
 require device_ex
+require core
 
 let
     ATT_BLENDING_DISABLED <- [[VkPipelineColorBlendAttachmentState
