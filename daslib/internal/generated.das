@@ -364,6 +364,7 @@ struct DescriptorSetLayoutBinding
     descriptor_count : uint
     stage_flags : uint
     immutable_samplers : array<VkSampler>
+    _vk_view_immutable_samplers : array<VkSampler>
     _vk_view__active : bool
 
 def vk_view_create_unsafe(var boost_struct : DescriptorSetLayoutBinding
@@ -1006,6 +1007,7 @@ struct PipelineLayoutCreateInfo
     flags : uint
     set_layouts : array<VkDescriptorSetLayout>
     push_constant_ranges : array<PushConstantRange>
+    _vk_view_set_layouts : array<VkDescriptorSetLayout>
     _vk_view_push_constant_ranges : array<VkPushConstantRange>
     _vk_view__active : bool
 
