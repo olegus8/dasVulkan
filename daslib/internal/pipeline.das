@@ -149,38 +149,9 @@ def create_shader_module_from_file(
     file_path : string;
     flags : uint = [[ uint ]]
 ) : ShaderModule
-    fopen(file_path, "rb") <| $(f)
-        let code_size = (f |> fstat()).size
-        f |> fmap() <| $(code)
-            //TODO
-            pass
-
-
-def with_shader_modules(device: VkDevice#; code_fpaths : auto;
-    b : block<(m:array<VkShaderModule>#)>
-)
-    var shmods : array<VkShaderModule>
-    shmods |> resize(code_fpaths |> length())
-    shmods |> lock() <| $(tshmods)
-        for code_fpath, tshmod in code_fpaths, tshmods
-            var code : string
-            var code_size : uint64
-            code_fpath |> fopen("rb") <| $(f)
-                code <- f |> fread()
-                code_size = (f |> fstat()).size
-            var code_ptr : uint?
-            unsafe
-                code_ptr = reinterpret<uint?>(code)
-            let create_info <- [[VkShaderModuleCreateInfo
-                sType = (VkStructureType
-                    VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO),
-                codeSize = code_size,
-                pCode = code_ptr
-            ]]
-            verify(VkResult VK_SUCCESS == device |> vkCreateShaderModule(
-                create_info |> safe_addr(), null, addr(tshmod)))
-        b |> invoke(tshmods)
-
-    for shmod in shmods
-        device |> vkDestroyShaderModule(shmod, null)
-    delete shmods
+    var create_info <- [[ShaderModuleCreateInfo
+        flags = flags,
+        code <- read_file_to_array(file_path)
+    ]]
+    defer() <| ${ delete create_info; }
+    return <- device |> create_shader_module(create_info)

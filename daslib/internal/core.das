@@ -22,6 +22,18 @@ def safe_addr_val(var x : auto(T)&) : T-& ? #
         return reinterpret<T-&?#>(addr(x))
 
 
+def read_file_to_array(file_path : string) : array<uint8>
+    var data : array<uint8>
+    fopen(file_path, "rb") <| $(f)
+        data.resize((f |> fstat()).size)
+        f |> fmap() <| $(fdata : string implicit)
+            data |> lock() <| $(tdata)
+                for dst, i in tdata, range(INT_MAX)
+                    unsafe
+                        dst = *(reinterpret<uint8 const?>(fdata) + i)
+    return <- data
+
+
 def with_window(width : int; height : int; title : string;
     b : block<(w:GLFWwindow_DasHandle#)>
 )

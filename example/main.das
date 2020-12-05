@@ -283,10 +283,14 @@ def with_swapchain_independent_state(width, height, title; b : block<(
         var cmd_pool <- create_command_pool([device=device, queue_family=qfam])
         defer() <| ${ delete cmd_pool; };
 
-        vk_device |> with_shader_modules([[auto[]
-            "{get_das_root()}/modules/dasVulkan/example/vert.spv";
-            "{get_das_root()}/modules/dasVulkan/example/frag.spv"
-        ]]) <| $(shmods) {
+        var shvert <- device |> create_shader_module_from_file(
+            "{get_das_root()}/modules/dasVulkan/example/vert.spv")
+        defer() <| ${ delete shvert; }
+
+        var shfrag <- device |> create_shader_module_from_file(
+            "{get_das_root()}/modules/dasVulkan/example/frag.spv")
+        defer() <| ${ delete shfrag; }
+
         surf_fmt |> with_view() <| $(vk_surf_fmt : VkSurfaceFormatKHR) {
         vk_device |> with_render_pass_simple(vk_surf_fmt) <| $(render_pass) {
         vk_device |> with_pipeline_layout_simple() <| $(pipeline_layout) {
@@ -299,13 +303,13 @@ def with_swapchain_independent_state(width, height, title; b : block<(
                 queue.queue,
                 vk_surf_fmt,
                 present_mode,
-                shmods[0],
-                shmods[1],
+                shvert.shader_module,
+                shfrag.shader_module,
                 render_pass,
                 pipeline_layout,
                 cmd_pool.command_pool
             );
-        }}}}
+        }}}
 
 
 def with_swapchain_dependent_state(
