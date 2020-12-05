@@ -24,7 +24,7 @@ def safe_addr_val(var x : auto(T)&) : T-& ? #
 
 def read_file_to_array(file_path : string) : array<uint8>
     var data : array<uint8>
-    fopen(file_path, "rb") <| $(f)
+    fopen(file_path, "rb") <| $(f : FILE ?)
         data |> resize((f |> fstat()).size)
         f |> fmap() <| $(fdata : string implicit)
             data |> lock() <| $(tdata)
