@@ -1048,17 +1048,27 @@ struct SubpassDependency
     src_access_mask : uint
     dst_access_mask : uint
     dependency_flags : uint
+    _vk_view__active : bool
 
-def vk_value_to_boost(vk_struct : VkSubpassDependency) : SubpassDependency
-    return <- [[SubpassDependency
-        src_subpass = vk_struct.srcSubpass,
-        dst_subpass = vk_struct.dstSubpass,
-        src_stage_mask = vk_struct.srcStageMask,
-        dst_stage_mask = vk_struct.dstStageMask,
-        src_access_mask = vk_struct.srcAccessMask,
-        dst_access_mask = vk_struct.dstAccessMask,
-        dependency_flags = vk_struct.dependencyFlags
+def vk_view_create_unsafe(var boost_struct : SubpassDependency
+) : VkSubpassDependency
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+
+    return <- [[ VkSubpassDependency
+        srcSubpass = boost_struct.src_subpass,
+        dstSubpass = boost_struct.dst_subpass,
+        srcStageMask = boost_struct.src_stage_mask,
+        dstStageMask = boost_struct.dst_stage_mask,
+        srcAccessMask = boost_struct.src_access_mask,
+        dstAccessMask = boost_struct.dst_access_mask,
+        dependencyFlags = boost_struct.dependency_flags
     ]]
+
+def vk_view_destroy(var boost_struct : SubpassDependency)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
 
 //
 // SubpassDescription
