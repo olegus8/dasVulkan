@@ -144,6 +144,13 @@ def add_boost_content(g):
         struct      = 'VkCommandPoolCreateInfo',
         boost_to_vk = True)
     g.add_gen_struct(
+        struct      = 'VkDescriptorSetLayoutBinding',
+        boost_to_vk = True,
+        ).declare_array(
+            count = 'pImmutableSamplers',
+            items = 'descriptorCount',
+            optional = True)
+    g.add_gen_struct(
         struct      = 'VkDescriptorSetLayoutCreateInfo',
         boost_to_vk = True,
         ).declare_array(

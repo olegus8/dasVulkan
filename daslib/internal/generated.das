@@ -355,6 +355,40 @@ def vk_view_destroy(var boost_struct : CommandPoolCreateInfo)
     boost_struct._vk_view__active = false
 
 //
+// DescriptorSetLayoutCreateInfo
+//
+
+struct DescriptorSetLayoutCreateInfo
+    flags : uint
+    bindings : array<DescriptorSetLayoutBinding>
+    _vk_view_bindings : array<VkDescriptorSetLayoutBinding>
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : DescriptorSetLayoutCreateInfo
+) : VkDescriptorSetLayoutCreateInfo
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+
+    boost_struct._vk_view_bindings <- [{
+        for item in boost_struct.bindings ;
+        item |> vk_view_create_unsafe()}]
+
+    return <- [[ VkDescriptorSetLayoutCreateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO,
+        flags = boost_struct.flags,
+        bindingCount = uint(boost_struct.bindings |> length()),
+        pBindings = array_addr_unsafe(boost_struct._vk_view_bindings)
+    ]]
+
+def vk_view_destroy(var boost_struct : DescriptorSetLayoutCreateInfo)
+    assert(boost_struct._vk_view__active)
+    for item in boost_struct.bindings
+        item |> vk_view_destroy()
+    delete boost_struct._vk_view_bindings
+    boost_struct._vk_view__active = false
+
+//
 // DeviceCreateInfo
 //
 
