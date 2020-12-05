@@ -296,7 +296,7 @@ def with_swapchain_independent_state(width, height, title; b : block<(
     phys_dev        : PhysicalDevice;
     device          : VkDevice;
     queue           : VkQueue;
-    surf_fmt        : VkSurfaceFormatKHR implicit;
+    surf_fmt        : SurfaceFormatKHR;
     present_mode    : VkPresentModeKHR;
     vert_shmod      : VkShaderModule;
     frag_shmod      : VkShaderModule;
@@ -386,7 +386,7 @@ def with_swapchain_dependent_state(
         uint(VkFenceCreateFlagBits
             VK_FENCE_CREATE_SIGNALED_BIT))           <| $(frame_fences)      {
     device |> with_swapchain_ex(phys_dev, surface,
-        window, surf_fmt, present_mode, render_pass) <| $(swapchain)         {
+        window, vk_surf_fmt, present_mode, render_pass) <| $(swapchain)      {
     device |> with_graphics_pipeline(
         pipeline_layout, render_pass, phys_dev,
         surface, window, vert_shmod, frag_shmod)     <| $(pipeline)
@@ -523,7 +523,7 @@ def main
         phys_dev        : PhysicalDevice;
         device          : VkDevice;
         queue           : VkQueue;
-        surf_fmt        : VkSurfaceFormatKHR implicit;
+        surf_fmt        : SurfaceFormatKHR;
         present_mode    : VkPresentModeKHR;
         vert_shmod      : VkShaderModule;
         frag_shmod      : VkShaderModule;
