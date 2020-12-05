@@ -31,7 +31,7 @@ def read_file_to_array(file_path : string) : array<uint8>
             data |> lock() <| $(tdata)
                 for dst, i in tdata, range(INT_MAX)
                     unsafe
-                        dst = *(reinterpret<uint8 const?>(addr(fdata)) + i)
+                        dst = *(reinterpret<uint8 ?>(fdata) + i)
     return <- data
 
 
