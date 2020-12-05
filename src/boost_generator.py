@@ -519,9 +519,10 @@ class GenStruct(object):
                     vk_value = f'vk_{bname}'
                 array = self.__get_array(vname)
                 vcname = array.vk_count_name
-                vctype = array.vk_count.vk_type
-                if not array.optional and vcname not in array_counts_added:
+                if array.vk_count and not array.optional
+                and vcname not in array_counts_added:
                     array_counts_added.add(vcname)
+                    vctype = array.vk_count.vk_type
                     lines.append(f'        {vcname} = '
                         f'{vctype}(boost_struct.{biname} |> length()),')
             elif field.is_pointer and field.needs_vk_view:

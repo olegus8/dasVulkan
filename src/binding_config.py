@@ -147,8 +147,7 @@ def add_boost_content(g):
         struct      = 'VkDescriptorSetLayoutBinding',
         boost_to_vk = True,
         ).declare_array(
-            items = 'pImmutableSamplers',
-            optional = True)
+            items = 'pImmutableSamplers')
     g.add_gen_struct(
         struct      = 'VkDescriptorSetLayoutCreateInfo',
         boost_to_vk = True,
