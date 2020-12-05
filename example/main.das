@@ -355,6 +355,8 @@ def with_swapchain_independent_state(width, height, title; b : block<(
             );
         }}
 
+        vk_device |> vkDeviceWaitIdle()
+
 
 def with_swapchain_dependent_state(
     instance,

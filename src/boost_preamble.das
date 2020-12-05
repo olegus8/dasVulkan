@@ -42,16 +42,6 @@ def addr_unsafe(v)
         return addr(v)
 
 //
-// Device
-//
-
-def finalize(var device : Device explicit)
-    let vk_device = boost_value_to_vk(device)
-    vk_device |> vkDeviceWaitIdle()
-    vk_device |> vkDestroyDevice(null)
-    memzero(device)
-
-//
 // Surface
 //
 

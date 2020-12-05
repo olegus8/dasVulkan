@@ -97,7 +97,8 @@ def add_boost_content(g):
 
     g.add_gen_handle(
         handle          = 'VkDevice',
-        ctor            = 'vkCreateDevice')
+        ctor            = 'vkCreateDevice',
+        dtor            = 'vkDestroyDevice')
     g.add_gen_handle(
         handle          = 'VkCommandPool',
         ctor            = 'vkCreateCommandPool',
