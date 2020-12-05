@@ -480,7 +480,7 @@ class GenStruct(object):
                         lines += [
                            f'    var vk_{bname} : {vtype}',
                             '    unsafe',
-                           f'       vk_{bname} = reinterpret<{vtype}>({adr})',
+                           f'        vk_{bname} = reinterpret<{vtype}>({adr})',
                         ]
                     else:
                         lines += [
