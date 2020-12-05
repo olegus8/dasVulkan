@@ -377,8 +377,6 @@ def vk_view_create_unsafe(var boost_struct : DescriptorSetLayoutBinding
 
 def vk_view_destroy(var boost_struct : DescriptorSetLayoutBinding)
     assert(boost_struct._vk_view__active)
-    for item in boost_struct.immutable_samplers
-        item |> vk_view_destroy()
     delete boost_struct._vk_view_immutable_samplers
     boost_struct._vk_view__active = false
 
@@ -1031,8 +1029,6 @@ def vk_view_create_unsafe(var boost_struct : PipelineLayoutCreateInfo
 
 def vk_view_destroy(var boost_struct : PipelineLayoutCreateInfo)
     assert(boost_struct._vk_view__active)
-    for item in boost_struct.set_layouts
-        item |> vk_view_destroy()
     delete boost_struct._vk_view_set_layouts
     for item in boost_struct.push_constant_ranges
         item |> vk_view_destroy()
