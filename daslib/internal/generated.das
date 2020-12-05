@@ -373,14 +373,16 @@ def vk_view_create_unsafe(var boost_struct : DescriptorSetLayoutBinding
     assert(!boost_struct._vk_view__active)
     boost_struct._vk_view__active = true
 
-    let vk_p_immutable_samplers = array_addr_unsafe(boost_struct.immutable_samplers)
+    boost_struct._vk_view_immutable_samplers <- [{
+        for item in boost_struct.immutable_samplers ;
+        item |> boost_value_to_vk()}]
 
     return <- [[ VkDescriptorSetLayoutBinding
         binding = boost_struct.binding,
         descriptorType = boost_struct.descriptor_type,
         descriptorCount = boost_struct.descriptor_count,
         stageFlags = boost_struct.stage_flags,
-        pImmutableSamplers = vk_p_immutable_samplers
+        pImmutableSamplers = array_addr_unsafe(boost_struct._vk_view_immutable_samplers)
     ]]
 
 def vk_view_destroy(var boost_struct : DescriptorSetLayoutBinding)
@@ -1017,7 +1019,9 @@ def vk_view_create_unsafe(var boost_struct : PipelineLayoutCreateInfo
     assert(!boost_struct._vk_view__active)
     boost_struct._vk_view__active = true
 
-    let vk_p_set_layouts = array_addr_unsafe(boost_struct.set_layouts)
+    boost_struct._vk_view_set_layouts <- [{
+        for item in boost_struct.set_layouts ;
+        item |> boost_value_to_vk()}]
 
     boost_struct._vk_view_push_constant_ranges <- [{
         for item in boost_struct.push_constant_ranges ;
@@ -1027,7 +1031,7 @@ def vk_view_create_unsafe(var boost_struct : PipelineLayoutCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO,
         flags = boost_struct.flags,
         setLayoutCount = uint(boost_struct.set_layouts |> length()),
-        pSetLayouts = vk_p_set_layouts,
+        pSetLayouts = array_addr_unsafe(boost_struct._vk_view_set_layouts),
         pushConstantRangeCount = uint(boost_struct.push_constant_ranges |> length()),
         pPushConstantRanges = array_addr_unsafe(boost_struct._vk_view_push_constant_ranges)
     ]]

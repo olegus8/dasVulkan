@@ -557,7 +557,9 @@ class GenStruct(object):
                 continue
             bname, vname = field.boost_name, field.vk_name
             btype, vtype = field.boost_type, field.vk_type
-            if self.__is_array_items(vname) and field.needs_vk_view:
+            if self.__is_array_items(vname) and (
+                field.needs_vk_view or field.needs_conversion
+            ):
                 biname = boost_ptr_name_to_array(field.boost_name)
                 lines += [
                    f'    for item in boost_struct.{biname}',
