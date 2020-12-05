@@ -503,9 +503,8 @@ class GenStruct(object):
                 else:
                     vk_value = (
                         f'array_addr_unsafe(boost_struct.{biname})')
-                    item_type = array.boost_item_type_name
-                    if item_type:
-                        vk_value = f'reinterpret<{item_type}>({vk_value})'
+                    if array.boost_item_type_name:
+                        vk_value = f'reinterpret<{vtype}>({vk_value})'
                 vcname = array.vk_count_name
                 lines += [
                    f'            {vcname} = '
