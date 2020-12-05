@@ -306,6 +306,30 @@ def vk_view_destroy(var boost_struct : AttachmentDescription)
     boost_struct._vk_view__active = false
 
 //
+// AttachmentReference
+//
+
+struct AttachmentReference
+    attachment : uint
+    layout : VkImageLayout
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : AttachmentReference
+) : VkAttachmentReference
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+
+    return <- [[ VkAttachmentReference
+        attachment = boost_struct.attachment,
+        layout = boost_struct.layout
+    ]]
+
+def vk_view_destroy(var boost_struct : AttachmentReference)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+//
 // CommandPoolCreateInfo
 //
 

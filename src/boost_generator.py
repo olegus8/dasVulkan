@@ -410,8 +410,7 @@ class GenStruct(object):
                     biname = boost_ptr_name_to_array(field.boost_name)
                     lines += [f'    _vk_view_{biname} : array<{dvtype}>']
                 elif field.is_pointer and field.needs_vk_view:
-                    dvtype = deref_das_type(vtype)
-                    lines += [f'    _vk_view_{bname} : {dvtype}']
+                    lines += [f'    _vk_view_{bname} : {vtype}']
 
             lines += [f'    _vk_view__active : bool']
         return lines
@@ -487,10 +486,12 @@ class GenStruct(object):
                            f'    let vk_{bname} = {adr}',
                         ]
             elif field.is_pointer and field.needs_vk_view:
+                dvtype = deref_das_type(vtype)
                 lines += [
                     '',
                    f'    if boost_struct.{bname} != null',
-                   f'        boost_struct._vk_view_{bname} <- (',
+                   f'        boost_struct._vk_view_{bname} = new {dvtype}',
+                   f'        *(boost_struct._vk_view_{bname}) <- (',
                    f'            *(boost_struct.{bname}) |> '
                                     f'vk_view_create_unsafe())',
                 ]
@@ -523,7 +524,7 @@ class GenStruct(object):
                                 f'{vctype}(boost_struct.{biname} |> length()),'
                 ]
             elif field.is_pointer and field.needs_vk_view:
-                vk_value = f'addr_unsafe(boost_struct._vk_view_{bname})'
+                vk_value = f'boost_struct._vk_view_{bname}'
             else:
                 vk_value = field.boost_value_to_vk(f'boost_struct.{bname}')
             lines += [f'        {vname} = {vk_value},']
@@ -558,6 +559,7 @@ class GenStruct(object):
                 lines += [
                    f'    if boost_struct.{bname} != null',
                    f'        *(boost_struct.{bname}) |> vk_view_destroy()',
+                   f'        delete boost_struct._vk_view_{bname}',
                 ]
         lines += [
             '    boost_struct._vk_view__active = false',
