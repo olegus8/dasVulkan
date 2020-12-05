@@ -981,6 +981,79 @@ def vk_view_destroy(var boost_struct : ShaderModuleCreateInfo)
     boost_struct._vk_view__active = false
 
 //
+// SubpassDescription
+//
+
+struct SubpassDescription
+    flags : uint
+    pipeline_bind_point : VkPipelineBindPoint
+    input_attachments : array<AttachmentReference>
+    color_attachments : array<AttachmentReference>
+    resolve_attachments : array<AttachmentReference>
+    p_depth_stencil_attachment : AttachmentReference ?
+    preserve_attachments : array<uint>
+    _vk_view_input_attachments : array<VkAttachmentReference>
+    _vk_view_color_attachments : array<VkAttachmentReference>
+    _vk_view_resolve_attachments : array<VkAttachmentReference>
+    _vk_view_p_depth_stencil_attachment : VkAttachmentReference ?
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : SubpassDescription
+) : VkSubpassDescription
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+
+    boost_struct._vk_view_input_attachments <- [{
+        for item in boost_struct.input_attachments ;
+        item |> vk_view_create_unsafe()}]
+
+    boost_struct._vk_view_color_attachments <- [{
+        for item in boost_struct.color_attachments ;
+        item |> vk_view_create_unsafe()}]
+
+    boost_struct._vk_view_resolve_attachments <- [{
+        for item in boost_struct.resolve_attachments ;
+        item |> vk_view_create_unsafe()}]
+
+    if boost_struct.p_depth_stencil_attachment != null
+        boost_struct._vk_view_p_depth_stencil_attachment = new VkAttachmentReference
+        *(boost_struct._vk_view_p_depth_stencil_attachment) <- (
+            *(boost_struct.p_depth_stencil_attachment) |> vk_view_create_unsafe())
+
+    let vk_p_preserve_attachments = array_addr_unsafe(boost_struct.preserve_attachments)
+
+    return <- [[ VkSubpassDescription
+        flags = boost_struct.flags,
+        pipelineBindPoint = boost_struct.pipeline_bind_point,
+        inputAttachmentCount = uint(boost_struct.input_attachments |> length()),
+        pInputAttachments = array_addr_unsafe(boost_struct._vk_view_input_attachments),
+        colorAttachmentCount = uint(boost_struct.color_attachments |> length()),
+        pColorAttachments = array_addr_unsafe(boost_struct._vk_view_color_attachments),
+        pResolveAttachments = array_addr_unsafe(boost_struct._vk_view_resolve_attachments),
+        pDepthStencilAttachment = boost_struct._vk_view_p_depth_stencil_attachment,
+        preserveAttachmentCount = uint(boost_struct.preserve_attachments |> length()),
+        pPreserveAttachments = vk_p_preserve_attachments
+    ]]
+
+def vk_view_destroy(var boost_struct : SubpassDescription)
+    assert(boost_struct._vk_view__active)
+    for item in boost_struct.input_attachments
+        item |> vk_view_destroy()
+    delete boost_struct._vk_view_input_attachments
+    for item in boost_struct.color_attachments
+        item |> vk_view_destroy()
+    delete boost_struct._vk_view_color_attachments
+    for item in boost_struct.resolve_attachments
+        item |> vk_view_destroy()
+    delete boost_struct._vk_view_resolve_attachments
+    if boost_struct.p_depth_stencil_attachment != null
+        *(boost_struct.p_depth_stencil_attachment) |> vk_view_destroy()
+        unsafe
+            delete boost_struct._vk_view_p_depth_stencil_attachment
+    boost_struct._vk_view__active = false
+
+//
 // SurfaceFormatKHR
 //
 
