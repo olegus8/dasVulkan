@@ -332,8 +332,10 @@ def with_swapchain_independent_state(width, height, title; b : block<(
             "{get_das_root()}/modules/dasVulkan/example/frag.spv")
         defer() <| ${ delete shfrag; }
 
+        var render_pass <- create_simple_render_pass(surf_fmt)
+        defer() <| ${ delete rpass; }
+
         surf_fmt |> with_view() <| $(vk_surf_fmt : VkSurfaceFormatKHR) {
-        vk_device |> with_render_pass_simple(vk_surf_fmt) <| $(render_pass) {
         vk_device |> with_pipeline_layout_simple() <| $(pipeline_layout) {
             b |> invoke(
                 instance.instance,
@@ -346,11 +348,11 @@ def with_swapchain_independent_state(width, height, title; b : block<(
                 present_mode,
                 shvert.shader_module,
                 shfrag.shader_module,
-                render_pass,
+                render_pass.render_pass,
                 pipeline_layout,
                 cmd_pool.command_pool
             );
-        }}}
+        }}
 
 
 def with_swapchain_dependent_state(
