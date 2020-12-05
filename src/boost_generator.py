@@ -1073,6 +1073,11 @@ class ParamBase(object):
         return boost_value
 
     @property
+    def needs_conversion(self):
+        return (self.vk_value_to_boost('foo') != 'foo'
+            or self.boost_value_to_vk('foo') != 'foo')
+
+    @property
     def needs_vk_view(self):
         return False
 

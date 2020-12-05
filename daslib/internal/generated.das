@@ -1038,6 +1038,32 @@ def vk_view_destroy(var boost_struct : PipelineLayoutCreateInfo)
     boost_struct._vk_view__active = false
 
 //
+// PushConstantRange
+//
+
+struct PushConstantRange
+    stage_flags : uint
+    offset : uint
+    size : uint
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : PushConstantRange
+) : VkPushConstantRange
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+
+    return <- [[ VkPushConstantRange
+        stageFlags = boost_struct.stage_flags,
+        offset = boost_struct.offset,
+        size = boost_struct.size
+    ]]
+
+def vk_view_destroy(var boost_struct : PushConstantRange)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+//
 // QueueFamilyProperties
 //
 
