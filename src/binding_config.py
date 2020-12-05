@@ -193,6 +193,9 @@ def add_boost_content(g):
         vk_to_boost = True,
         boost_to_vk = True)
     g.add_gen_struct(
+        struct      = 'VkFenceCreateInfo',
+        boost_to_vk = True)
+    g.add_gen_struct(
         struct      = 'VkInstanceCreateInfo',
         boost_to_vk = True
         ).declare_array(
