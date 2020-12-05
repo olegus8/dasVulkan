@@ -304,7 +304,6 @@ def with_swapchain_independent_state(width, height, title; b : block<(
 
         var device <- phys_dev |> create_single_queue_device(qfam)
         defer() <| ${ delete device; }
-        let vk_device = device.device
 
         let queue <- device |> get_device_queue(qfam)
 
@@ -341,7 +340,7 @@ def with_swapchain_independent_state(width, height, title; b : block<(
             cmd_pool.command_pool
         )
 
-        vk_device |> vkDeviceWaitIdle()
+        device.device |> vkDeviceWaitIdle()
 
 
 def with_swapchain_dependent_state(
