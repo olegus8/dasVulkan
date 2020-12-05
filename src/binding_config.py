@@ -186,6 +186,15 @@ def add_boost_content(g):
         struct      = 'VkPhysicalDeviceSparseProperties',
         vk_to_boost = True)
     g.add_gen_struct(
+        struct      = 'VkPipelineLayoutCreateInfo',
+        boost_to_vk = True,
+        ).declare_array(
+            count = 'setLayoutCount',
+            items = 'pSetLayouts',
+        ).declare_array(
+            count = 'pushConstantRangeCount',
+            items = 'pPushConstantRanges')
+    g.add_gen_struct(
         struct      = 'VkQueueFamilyProperties',
         vk_to_boost = True)
     g.add_gen_struct(
