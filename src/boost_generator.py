@@ -571,7 +571,7 @@ class GenStruct(object):
 
 class GenStructFieldArray(object):
 
-    def __init__(self, struct, count, items,
+    def __init__(self, struct, items, count=None,
         force_item_type=None, optional=False,
     ):
         self.__gen_struct = struct
