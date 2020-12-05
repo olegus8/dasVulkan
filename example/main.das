@@ -364,8 +364,8 @@ def with_swapchain_dependent_state(
     surface,
     phys_dev,
     device,
-    queue,
-    surf_fmt,
+    queue;
+    var surf_fmt;
     present_mode,
     vert_shmod,
     frag_shmod,
@@ -523,7 +523,7 @@ def main
         phys_dev        : PhysicalDevice;
         device          : VkDevice;
         queue           : VkQueue;
-        surf_fmt        : var SurfaceFormatKHR;
+        var surf_fmt    : SurfaceFormatKHR;
         present_mode    : VkPresentModeKHR;
         vert_shmod      : VkShaderModule;
         frag_shmod      : VkShaderModule;
