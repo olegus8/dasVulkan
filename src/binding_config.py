@@ -192,6 +192,23 @@ def add_boost_content(g):
             items = 'pCode',
             force_item_type = 'uint8')
     g.add_gen_struct(
+        struct      = 'VkSubpassDescription',
+        boost_to_vk = True
+        ).declare_array(
+            count = 'inputAttachmentCount',
+            items = 'pInputAttachments',
+        ).declare_array(
+            count = 'colorAttachmentCount',
+            items = 'pColorAttachments'
+        ).declare_array(
+            count = 'colorAttachmentCount',
+            items = 'pResolveAttachments',
+            optional = True
+        ).declare_array(
+            count = 'preserveAttachmentCount',
+            items = 'pPreserveAttachments'
+        )
+    g.add_gen_struct(
         struct      = 'VkSurfaceFormatKHR',
         vk_to_boost = True,
         boost_to_vk = True)
