@@ -1291,6 +1291,50 @@ def finalize(var command_pool : CommandPool explicit)
     memzero(command_pool)
 
 //
+// DescriptorSetLayout
+//
+
+struct DescriptorSetLayout
+    descriptor_set_layout : VkDescriptorSetLayout
+    _device : VkDevice
+
+def boost_value_to_vk(b : DescriptorSetLayout) : VkDescriptorSetLayout
+    return b.descriptor_set_layout
+
+def create_descriptor_set_layout(
+    device : Device = [[ Device ]];
+    var create_info : DescriptorSetLayoutCreateInfo = [[ DescriptorSetLayoutCreateInfo ]];
+    var result : VkResult? = [[VkResult?]]
+) : DescriptorSetLayout
+
+    var descriptor_set_layout <- [[ DescriptorSetLayout
+        _device = boost_value_to_vk(device)
+    ]]
+
+    var vk_create_info : VkDescriptorSetLayoutCreateInfo
+    unsafe
+        vk_create_info <- create_info |> vk_view_create_unsafe()
+    defer() <| ${ create_info |> vk_view_destroy(); }
+
+    var result_ = VkResult VK_SUCCESS
+    result ?? result_ = vkCreateDescriptorSetLayout(
+        boost_value_to_vk(device),
+        safe_addr(vk_create_info),
+        null,
+        safe_addr(descriptor_set_layout.descriptor_set_layout)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+    return <- descriptor_set_layout
+
+def finalize(var descriptor_set_layout : DescriptorSetLayout explicit)
+    vkDestroyDescriptorSetLayout(
+        descriptor_set_layout._device,
+        boost_value_to_vk(descriptor_set_layout),
+        null
+    )
+    memzero(descriptor_set_layout)
+
+//
 // Instance
 //
 

@@ -144,6 +144,12 @@ def add_boost_content(g):
         struct      = 'VkCommandPoolCreateInfo',
         boost_to_vk = True)
     g.add_gen_struct(
+        struct      = 'VkDescriptorSetLayoutCreateInfo',
+        boost_to_vk = True,
+        ).declare_array(
+            count = 'bindingCount',
+            items = 'pBindings')
+    g.add_gen_struct(
         struct      = 'VkDeviceCreateInfo',
         boost_to_vk = True,
         ).declare_array(
