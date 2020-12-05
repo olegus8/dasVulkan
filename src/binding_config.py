@@ -123,6 +123,10 @@ def add_boost_content(g):
         ctor            = 'vkCreateRenderPass',
         dtor            = 'vkDestroyRenderPass')
     g.add_gen_handle(
+        handle          = 'VkSampler',
+        ctor            = 'vkCreateSampler',
+        dtor            = 'vkDestroySampler')
+    g.add_gen_handle(
         handle          = 'VkShaderModule',
         ctor            = 'vkCreateShaderModule',
         dtor            = 'vkDestroyShaderModule')
