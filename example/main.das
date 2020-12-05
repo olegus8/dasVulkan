@@ -217,22 +217,6 @@ def with_baked_vertex_buffer(device, phys_dev, cmd_pool, queue;
         b |> invoke(vbuf)
 
 
-def with_fences(device, count, flags; b : block<(fences:array<VkFence>)>)
-    var fences : array<VkFence>
-    fences |> resize(count)
-    let info <- [[VkFenceCreateInfo
-        sType = VkStructureType VK_STRUCTURE_TYPE_FENCE_CREATE_INFO,
-        flags = flags
-    ]]
-    for fence in fences
-        verify(VkResult VK_SUCCESS == device |> vkCreateFence(
-            info |> safe_addr(), null, fence |> safe_addr_val()))
-    b |> invoke(fences)
-    for fence in fences
-        device |> vkDestroyFence(fence, null)
-    delete fences
-
-
 def create_example_render_pass(
     device : Device;
     surf_fmt : SurfaceFormatKHR
@@ -380,9 +364,15 @@ def with_swapchain_dependent_state(
     var vk_render_done_sems <- [{for sem in render_done_sems; sem.semaphore}]
     defer() <| ${ delete vk_render_done_sems; }
 
-    vk_device |> with_fences(MAX_FRAMES_IN_FLIGHT,
-        uint(VkFenceCreateFlagBits
-            VK_FENCE_CREATE_SIGNALED_BIT))           <| $(frame_fences)      {
+    var frame_fences <- [{for x in range(MAX_FRAMES_IN_FLIGHT);
+        device |> create_fence([[FenceCreateInfo
+            flags=uint(VkFenceCreateFlagBits VK_FENCE_CREATE_SIGNALED_BIT)
+    ]]) }]
+    defer() <| ${ delete frame_fences; }
+
+    var vk_frame_fences <- [{for fence in frame_fences; fence.fence}]
+    defer() <| ${ delete vk_frame_fences; }
+
     surf_fmt |> with_view() <| $(vk_surf_fmt : VkSurfaceFormatKHR) {
     vk_device |> with_swapchain_ex(phys_dev, surface,
         window, vk_surf_fmt, present_mode, render_pass) <| $(swapchain)      {
@@ -395,9 +385,9 @@ def with_swapchain_dependent_state(
             pipeline,
             vk_img_avail_sems,
             vk_render_done_sems,
-            frame_fences
+            vk_frame_fences
         );
-    }}}}
+    }}}
 
 
 def wait_fence(device; fence : VkFence)

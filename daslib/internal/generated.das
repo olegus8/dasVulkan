@@ -548,6 +548,29 @@ def vk_value_to_boost(vk_struct : VkExtent3D) : Extent3D
     ]]
 
 //
+// FenceCreateInfo
+//
+
+struct FenceCreateInfo
+    flags : uint
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : FenceCreateInfo
+) : VkFenceCreateInfo
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+
+    return <- [[ VkFenceCreateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_FENCE_CREATE_INFO,
+        flags = boost_struct.flags
+    ]]
+
+def vk_view_destroy(var boost_struct : FenceCreateInfo)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+//
 // InstanceCreateInfo
 //
 
@@ -1515,6 +1538,53 @@ def finalize(var descriptor_set_layout : DescriptorSetLayout explicit)
         null
     )
     memzero(descriptor_set_layout)
+
+//
+// Fence
+//
+
+struct Fence
+    fence : VkFence
+    _device : VkDevice
+
+def boost_value_to_vk(b : Fence) : VkFence
+    return b.fence
+
+def boost_value_to_vk(b : Fence ?) : VkFence ?
+    return b?.fence
+
+def create_fence(
+    device : Device = [[ Device ]];
+    var create_info : FenceCreateInfo = [[ FenceCreateInfo ]];
+    var result : VkResult? = [[VkResult?]]
+) : Fence
+
+    var fence <- [[ Fence
+        _device = boost_value_to_vk(device)
+    ]]
+
+    var vk_create_info : VkFenceCreateInfo
+    unsafe
+        vk_create_info <- create_info |> vk_view_create_unsafe()
+    defer() <| ${ create_info |> vk_view_destroy(); }
+
+    var result_ = VkResult VK_SUCCESS
+    result ?? result_ = vkCreateFence(
+        boost_value_to_vk(device),
+        safe_addr(vk_create_info),
+        null,
+        safe_addr(fence.fence)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+    return <- fence
+
+def finalize(var fence : Fence explicit)
+    vkDestroyFence(
+        fence._device,
+        boost_value_to_vk(fence),
+        null
+    )
+    memzero(fence)
 
 //
 // Instance
