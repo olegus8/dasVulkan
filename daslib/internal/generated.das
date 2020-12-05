@@ -268,6 +268,44 @@ def vk_view_destroy(var boost_struct : ApplicationInfo)
     boost_struct._vk_view__active = false
 
 //
+// AttachmentDescription
+//
+
+struct AttachmentDescription
+    flags : uint
+    format : VkFormat
+    samples : VkSampleCountFlagBits
+    load_op : VkAttachmentLoadOp
+    store_op : VkAttachmentStoreOp
+    stencil_load_op : VkAttachmentLoadOp
+    stencil_store_op : VkAttachmentStoreOp
+    initial_layout : VkImageLayout
+    final_layout : VkImageLayout
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : AttachmentDescription
+) : VkAttachmentDescription
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+
+    return <- [[ VkAttachmentDescription
+        flags = boost_struct.flags,
+        format = boost_struct.format,
+        samples = boost_struct.samples,
+        loadOp = boost_struct.load_op,
+        storeOp = boost_struct.store_op,
+        stencilLoadOp = boost_struct.stencil_load_op,
+        stencilStoreOp = boost_struct.stencil_store_op,
+        initialLayout = boost_struct.initial_layout,
+        finalLayout = boost_struct.final_layout
+    ]]
+
+def vk_view_destroy(var boost_struct : AttachmentDescription)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+//
 // CommandPoolCreateInfo
 //
 
