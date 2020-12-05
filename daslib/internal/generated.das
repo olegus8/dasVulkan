@@ -1189,6 +1189,29 @@ def vk_view_destroy(var boost_struct : SamplerCreateInfo)
     boost_struct._vk_view__active = false
 
 //
+// SemaphoreCreateInfo
+//
+
+struct SemaphoreCreateInfo
+    flags : uint
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : SemaphoreCreateInfo
+) : VkSemaphoreCreateInfo
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+
+    return <- [[ VkSemaphoreCreateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO,
+        flags = boost_struct.flags
+    ]]
+
+def vk_view_destroy(var boost_struct : SemaphoreCreateInfo)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+//
 // ShaderModuleCreateInfo
 //
 

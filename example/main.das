@@ -217,20 +217,6 @@ def with_baked_vertex_buffer(device, phys_dev, cmd_pool, queue;
         b |> invoke(vbuf)
 
 
-def with_semaphores(device, count; b : block<(sems:array<VkSemaphore>)>)
-    var sems : array<VkSemaphore>
-    sems |> resize(count)
-    let info <- [[VkSemaphoreCreateInfo
-        sType = VkStructureType VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO]]
-    for sem in sems
-        verify(VkResult VK_SUCCESS == device |> vkCreateSemaphore(
-            info |> safe_addr(), null, sem |> safe_addr_val()))
-    b |> invoke(sems)
-    for sem in sems
-        device |> vkDestroySemaphore(sem, null)
-    delete sems
-
-
 def with_fences(device, count, flags; b : block<(fences:array<VkFence>)>)
     var fences : array<VkFence>
     fences |> resize(count)
@@ -380,8 +366,21 @@ def with_swapchain_dependent_state(
         frame_fences        : array<VkFence>
 )>)
     surf_fmt |> with_view() <| $(vk_surf_fmt : VkSurfaceFormatKHR) {
-    device |> with_semaphores(MAX_FRAMES_IN_FLIGHT)  <| $(img_avail_sems)    {
-    device |> with_semaphores(MAX_FRAMES_IN_FLIGHT)  <| $(render_done_sems)  {
+
+    var img_avail_sems <- [{for x in range(MAX_FRAMES_IN_FLIGHT);
+        device |> create_semaphore() }]
+    defer() <| ${ delete img_avail_sems; }
+
+    var vk_img_avail_sems <- [{for sem in img_avail_sems; sem.semaphore}]
+    defer() <| ${ delete vk_img_avail_sems; }
+
+    var render_done_sems <- [{for x in range(MAX_FRAMES_IN_FLIGHT);
+        device |> create_semaphore() }]
+    defer() <| ${ delete render_done_sems; }
+
+    var vk_render_done_sems <- [{for sem in render_done_sems; sem.semaphore}]
+    defer() <| ${ delete vk_render_done_sems; }
+
     device |> with_fences(MAX_FRAMES_IN_FLIGHT,
         uint(VkFenceCreateFlagBits
             VK_FENCE_CREATE_SIGNALED_BIT))           <| $(frame_fences)      {
@@ -394,11 +393,11 @@ def with_swapchain_dependent_state(
         b |> invoke(
             swapchain,
             pipeline,
-            img_avail_sems,
-            render_done_sems,
+            vk_img_avail_sems,
+            vk_render_done_sems,
             frame_fences
         );
-    }}}}}}
+    }}}}
 
 
 def wait_fence(device; fence : VkFence)
