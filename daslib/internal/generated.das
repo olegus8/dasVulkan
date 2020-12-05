@@ -1138,3 +1138,47 @@ def get_device_queue(
         safe_addr(queue.queue)
     )
     return <- queue
+
+//
+// ShaderModule
+//
+
+struct ShaderModule
+    shader_module : VkShaderModule
+    _device : VkDevice
+
+def boost_value_to_vk(b : ShaderModule) : VkShaderModule
+    return b.shader_module
+
+def create_shader_module(
+    device : Device = [[ Device ]];
+    var create_info : ShaderModuleCreateInfo = [[ ShaderModuleCreateInfo ]];
+    var result : VkResult? = [[VkResult?]]
+) : ShaderModule
+
+    var shader_module <- [[ ShaderModule
+        _device = boost_value_to_vk(device)
+    ]]
+
+    var vk_create_info : VkShaderModuleCreateInfo
+    unsafe
+        vk_create_info <- create_info |> vk_view_create_unsafe()
+    defer() <| ${ create_info |> vk_view_destroy(); }
+
+    var result_ = VkResult VK_SUCCESS
+    result ?? result_ = vkCreateShaderModule(
+        boost_value_to_vk(device),
+        safe_addr(vk_create_info),
+        null,
+        safe_addr(shader_module.shader_module)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+    return <- shader_module
+
+def finalize(var shader_module : ShaderModule explicit)
+    vkDestroyShaderModule(
+        shader_module._device,
+        boost_value_to_vk(shader_module),
+        null
+    )
+    memzero(shader_module)

@@ -144,6 +144,18 @@ def with_graphics_pipeline_simple(
     device |> vkDestroyPipeline(pipe, null)
 
 
+def create_shader_module_from_file(
+    device : Device;
+    file_path : string;
+    flags : uint = [[ uint ]]
+) : ShaderModule
+    fopen(file_path, "rb") <| $(f)
+        let code_size = (f |> fstat()).size
+        f |> fmap() <| $(code)
+            //TODO
+            pass
+
+
 def with_shader_modules(device: VkDevice#; code_fpaths : auto;
     b : block<(m:array<VkShaderModule>#)>
 )
