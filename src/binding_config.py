@@ -115,6 +115,10 @@ def add_boost_content(g):
         handle          = 'VkQueue',
         ctor            = 'vkGetDeviceQueue')
     g.add_gen_handle(
+        handle          = 'VkRenderPass',
+        ctor            = 'vkCreateRenderPass',
+        dtor            = 'vkDestroyRenderPass')
+    g.add_gen_handle(
         handle          = 'VkShaderModule',
         ctor            = 'vkCreateShaderModule',
         dtor            = 'vkDestroyShaderModule')

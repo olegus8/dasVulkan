@@ -951,6 +951,62 @@ def vk_value_to_boost(vk_struct : VkQueueFamilyProperties) : QueueFamilyProperti
     ]]
 
 //
+// RenderPassCreateInfo
+//
+
+struct RenderPassCreateInfo
+    flags : uint
+    attachments : array<AttachmentDescription>
+    subpasses : array<SubpassDescription>
+    dependencies : array<SubpassDependency>
+    _vk_view_attachments : array<VkAttachmentDescription>
+    _vk_view_subpasses : array<VkSubpassDescription>
+    _vk_view_dependencies : array<VkSubpassDependency>
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : RenderPassCreateInfo
+) : VkRenderPassCreateInfo
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+
+    boost_struct._vk_view_attachments <- [{
+        for item in boost_struct.attachments ;
+        item |> vk_view_create_unsafe()}]
+
+    boost_struct._vk_view_subpasses <- [{
+        for item in boost_struct.subpasses ;
+        item |> vk_view_create_unsafe()}]
+
+    boost_struct._vk_view_dependencies <- [{
+        for item in boost_struct.dependencies ;
+        item |> vk_view_create_unsafe()}]
+
+    return <- [[ VkRenderPassCreateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO,
+        flags = boost_struct.flags,
+        attachmentCount = uint(boost_struct.attachments |> length()),
+        pAttachments = array_addr_unsafe(boost_struct._vk_view_attachments),
+        subpassCount = uint(boost_struct.subpasses |> length()),
+        pSubpasses = array_addr_unsafe(boost_struct._vk_view_subpasses),
+        dependencyCount = uint(boost_struct.dependencies |> length()),
+        pDependencies = array_addr_unsafe(boost_struct._vk_view_dependencies)
+    ]]
+
+def vk_view_destroy(var boost_struct : RenderPassCreateInfo)
+    assert(boost_struct._vk_view__active)
+    for item in boost_struct.attachments
+        item |> vk_view_destroy()
+    delete boost_struct._vk_view_attachments
+    for item in boost_struct.subpasses
+        item |> vk_view_destroy()
+    delete boost_struct._vk_view_subpasses
+    for item in boost_struct.dependencies
+        item |> vk_view_destroy()
+    delete boost_struct._vk_view_dependencies
+    boost_struct._vk_view__active = false
+
+//
 // ShaderModuleCreateInfo
 //
 
