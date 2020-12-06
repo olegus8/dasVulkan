@@ -72,14 +72,14 @@ def with_pipeline_shader_stages(
 
 
 def with_pipeline_viewport_full_window(
-    phys_dev : VkPhysicalDevice#;
-    surface : VkSurfaceKHR;
+    phys_dev : PhysicalDevice;
+    surface : SurfaceKHR;
     window : GLFWwindow_DasHandle#;
     //TODO: make it pass temporary. compilation fails currently if i do
     //b : block<(i:VkPipelineViewportStateCreateInfo#)>
     b : block<(i:VkPipelineViewportStateCreateInfo)>
 )
-    let extent <- phys_dev |> get_swap_extent(surface, window)
+    var extent <- phys_dev |> get_swap_extent(surface, window)
     let viewports <- [[auto[] [[VkViewport minDepth = 0.0f, maxDepth = 1.0f,
         width = float(extent.width), height = float(extent.height)
     ]]]]
