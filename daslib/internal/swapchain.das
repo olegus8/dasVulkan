@@ -9,6 +9,7 @@ require vulkan
 require device_ex
 require image
 require framebuffer
+require generated
 
 
 struct SwapchainEx
