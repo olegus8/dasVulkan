@@ -411,6 +411,8 @@ class GenStruct(object):
                     lines += [f'    _vk_view_{biname} : array<{dvtype}>']
                 elif field.is_pointer and field.needs_conversion:
                     lines += [f'    _vk_view_{bname} : {vtype}']
+                elif field.is_struct and field.needs_conversion:
+                    lines += [f'    _vk_view_p_{bname} : {vtype} ?']
 
             lines += [f'    _vk_view__active : bool']
         return lines

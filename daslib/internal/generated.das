@@ -1477,6 +1477,60 @@ def vk_value_to_boost(vk_struct : VkSurfaceFormatKHR) : SurfaceFormatKHR
     ]]
 
 //
+// SwapchainCreateInfoKHR
+//
+
+struct SwapchainCreateInfoKHR
+    flags : uint
+    surface : SurfaceKHR
+    min_image_count : uint
+    image_format : VkFormat
+    image_color_space : VkColorSpaceKHR
+    image_extent : Extent2D
+    image_array_layers : uint
+    image_usage : uint
+    image_sharing_mode : VkSharingMode
+    queue_family_indices : array<uint>
+    pre_transform : VkSurfaceTransformFlagBitsKHR
+    composite_alpha : VkCompositeAlphaFlagBitsKHR
+    present_mode : VkPresentModeKHR
+    clipped : uint
+    old_swapchain : SwapchainKHR
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : SwapchainCreateInfoKHR
+) : VkSwapchainCreateInfoKHR
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+
+    let vk_p_queue_family_indices = array_addr_unsafe(boost_struct.queue_family_indices)
+
+    return <- [[ VkSwapchainCreateInfoKHR
+        sType = VkStructureType VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR,
+        flags = boost_struct.flags,
+        surface = boost_value_to_vk(boost_struct.surface),
+        minImageCount = boost_struct.min_image_count,
+        imageFormat = boost_struct.image_format,
+        imageColorSpace = boost_struct.image_color_space,
+        imageExtent = None,
+        imageArrayLayers = boost_struct.image_array_layers,
+        imageUsage = boost_struct.image_usage,
+        imageSharingMode = boost_struct.image_sharing_mode,
+        queueFamilyIndexCount = uint(boost_struct.queue_family_indices |> length()),
+        pQueueFamilyIndices = vk_p_queue_family_indices,
+        preTransform = boost_struct.pre_transform,
+        compositeAlpha = boost_struct.composite_alpha,
+        presentMode = boost_struct.present_mode,
+        clipped = boost_struct.clipped,
+        oldSwapchain = boost_value_to_vk(boost_struct.old_swapchain)
+    ]]
+
+def vk_view_destroy(var boost_struct : SwapchainCreateInfoKHR)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+//
 // Device
 //
 
