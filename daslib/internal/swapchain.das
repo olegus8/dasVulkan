@@ -72,14 +72,14 @@ def with_swapchain(
     b : block<(sc:VkSwapchainKHR#)>
 )
     let caps <- phys_dev|>get_physical_device_surface_capabilities_khr(surface)
-    let extent <- phys_dev |> get_swap_extent(surface, window)
+    var extent <- phys_dev |> get_swap_extent(surface, window)
 
     // we want at least one spare image for multi-buffering
     var img_count : uint = caps.min_image_count + 1u
     if caps.max_image_count > 0u
         img_count = min(img_count, caps.max_image_count)
 
-    extent |> with_vk_view() <| $(vk_extent)
+    extent |> with_view() <| $(vk_extent : VkExtent2D const)
         let create_info = [[VkSwapchainCreateInfoKHR
             sType = (VkStructureType
                 VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR),
@@ -87,7 +87,7 @@ def with_swapchain(
             minImageCount = img_count,
             imageFormat = surf_fmt.format,
             imageColorSpace = surf_fmt.colorSpace,
-            imageExtent = extent,
+            imageExtent = vk_extent,
             imageArrayLayers = 1u, // 2 for stereoscopic
             imageUsage = uint(
                 VkImageUsageFlagBits VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT),
