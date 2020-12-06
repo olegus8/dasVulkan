@@ -1514,7 +1514,8 @@ def vk_view_create_unsafe(var boost_struct : SwapchainCreateInfoKHR
     return <- [[ VkSwapchainCreateInfoKHR
         sType = VkStructureType VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR,
         flags = boost_struct.flags,
-        surface = boost_value_to_vk(boost_struct.surface),
+        surface = boost_value_to_vk(boost_struct.surface)
+    /*
         minImageCount = boost_struct.min_image_count,
         imageFormat = boost_struct.image_format,
         imageColorSpace = boost_struct.image_color_space,
@@ -1529,6 +1530,7 @@ def vk_view_create_unsafe(var boost_struct : SwapchainCreateInfoKHR
         presentMode = boost_struct.present_mode,
         clipped = boost_struct.clipped,
         oldSwapchain = boost_value_to_vk(boost_struct.old_swapchain)
+*/
     ]]
 
 def vk_view_destroy(var boost_struct : SwapchainCreateInfoKHR)
