@@ -37,7 +37,7 @@ def with_swapchain_ex(
 
     let vk_swapchain = swapchain.swapchain_khr
 
-    surf_fmt |> with_view() <| $(vk_surf_fmt : VkSurfaceFormatKHR)
+    surf_fmt |> with_view() <| $(vk_surf_fmt : VkSurfaceFormatKHR const)
         var images <- vk_device |> get_swapchain_images(vk_swapchain)
         var views <- vk_device |> create_swapchain_image_views(
             images, vk_surf_fmt)
