@@ -380,8 +380,8 @@ def with_swapchain_dependent_state(
     vk_device |> with_swapchain_ex(phys_dev, surface,
         window, vk_surf_fmt, present_mode, render_pass) <| $(swapchain)      {
     vk_device |> with_graphics_pipeline(
-        pipeline_layout, render_pass, phys_dev.physical_device,
-        surface.surface_khr, window, vert_shmod, frag_shmod)     <| $(pipeline)
+        pipeline_layout, render_pass, phys_dev,
+        surface, window, vert_shmod, frag_shmod)     <| $(pipeline)
     {
         b |> invoke(
             swapchain,

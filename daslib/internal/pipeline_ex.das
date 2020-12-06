@@ -83,15 +83,16 @@ def with_pipeline_viewport_full_window(
     let viewports <- [[auto[] [[VkViewport minDepth = 0.0f, maxDepth = 1.0f,
         width = float(extent.width), height = float(extent.height)
     ]]]]
-    let scissors <- [[auto[] [[VkRect2D extent = extent]]]]
-    b |> invoke([[VkPipelineViewportStateCreateInfo
-        sType = (VkStructureType
-            VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO),
-        viewportCount = uint(viewports |> length()),
-        pViewports = viewports |> safe_addr(),
-        scissorCount = uint(scissors |> length()),
-        pScissors = scissors |> safe_addr()
-    ]])
+    extent |> with_view() <| $(vk_extent : VkExtent2D const)
+        let scissors <- [[auto[] [[VkRect2D extent = vk_extent]]]]
+        b |> invoke([[VkPipelineViewportStateCreateInfo
+            sType = (VkStructureType
+                VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO),
+            viewportCount = uint(viewports |> length()),
+            pViewports = viewports |> safe_addr(),
+            scissorCount = uint(scissors |> length()),
+            pScissors = scissors |> safe_addr()
+        ]])
 
 
 def with_graphics_pipeline_simple(
