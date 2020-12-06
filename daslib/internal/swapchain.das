@@ -79,29 +79,31 @@ def with_swapchain(
     if caps.max_image_count > 0u
         img_count = min(img_count, caps.max_image_count)
 
-    let create_info = [[VkSwapchainCreateInfoKHR
-        sType = VkStructureType VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR,
-        surface = surface.surface_khr,
-        minImageCount = img_count,
-        imageFormat = surf_fmt.format,
-        imageColorSpace = surf_fmt.colorSpace,
-        imageExtent = extent,
-        imageArrayLayers = 1u, // 2 for stereoscopic
-        imageUsage = uint(
-            VkImageUsageFlagBits VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT),
-        imageSharingMode = VkSharingMode VK_SHARING_MODE_EXCLUSIVE,
-        preTransform = caps.current_transform,
-        compositeAlpha = (
-            VkCompositeAlphaFlagBitsKHR VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR),
-        presentMode = present_mode,
-        clipped = uint(VK_TRUE)
-    ]]
+    extent |> with_vk_view() <| $(vk_extent)
+        let create_info = [[VkSwapchainCreateInfoKHR
+            sType = (VkStructureType
+                VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR),
+            surface = surface.surface_khr,
+            minImageCount = img_count,
+            imageFormat = surf_fmt.format,
+            imageColorSpace = surf_fmt.colorSpace,
+            imageExtent = extent,
+            imageArrayLayers = 1u, // 2 for stereoscopic
+            imageUsage = uint(
+                VkImageUsageFlagBits VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT),
+            imageSharingMode = VkSharingMode VK_SHARING_MODE_EXCLUSIVE,
+            preTransform = caps.current_transform,
+            compositeAlpha = (
+                VkCompositeAlphaFlagBitsKHR VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR),
+            presentMode = present_mode,
+            clipped = uint(VK_TRUE)
+        ]]
 
-    var swapchain : VkSwapchainKHR
-    verify(VkResult VK_SUCCESS == device |> vkCreateSwapchainKHR(
-        safe_addr(create_info), null, safe_addr(swapchain)))
-    b |> invoke(swapchain)
-    device |> vkDestroySwapchainKHR(swapchain, null)
+        var swapchain : VkSwapchainKHR
+        verify(VkResult VK_SUCCESS == device |> vkCreateSwapchainKHR(
+            safe_addr(create_info), null, safe_addr(swapchain)))
+        b |> invoke(swapchain)
+        device |> vkDestroySwapchainKHR(swapchain, null)
 
 
 [private]
