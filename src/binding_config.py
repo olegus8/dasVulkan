@@ -292,7 +292,10 @@ def add_boost_content(g):
         boost_to_vk = True)
     g.add_gen_struct(
         struct      = 'VkSwapchainCreateInfoKHR',
-        boost_to_vk = True)
+        boost_to_vk = True,
+        ).declare_array(
+            count = 'queueFamilyIndexCount',
+            items = 'pQueueFamilyIndices')
 
     #
     # Query functions
