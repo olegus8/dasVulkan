@@ -34,7 +34,7 @@ def with_swapchain_ex(
         var images <- device |> get_swapchain_images(swapchain)
         var views <- device |> create_swapchain_image_views(images, surf_fmt)
         var framebuffers <- device |> create_swapchain_framebuffers(
-            phys_dev.physical_device, surface.surface, window, views,
+            phys_dev, surface, window, views,
             render_pass)
         var sc <- [[SwapchainEx
             swapchain = swapchain,
@@ -138,8 +138,8 @@ def create_swapchain_image_views(
 [private]
 def create_swapchain_framebuffers(
     device      : VkDevice implicit;
-    phys_dev    : VkPhysicalDevice implicit;
-    surface     : VkSurfaceKHR implicit;
+    phys_dev    : PhysicalDevice;
+    surface     : SurfaceKHR;
     window      : GLFWwindow_DasHandle implicit;
     views       : array<ImageView> implicit;
     render_pass : VkRenderPass implicit
