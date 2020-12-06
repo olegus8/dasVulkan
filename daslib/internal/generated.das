@@ -2085,3 +2085,50 @@ def finalize(var shader_module : ShaderModule explicit)
         null
     )
     memzero(shader_module)
+
+//
+// SwapchainKHR
+//
+
+struct SwapchainKHR
+    swapchain_khr : VkSwapchainKHR
+    _device : VkDevice
+
+def boost_value_to_vk(b : SwapchainKHR) : VkSwapchainKHR
+    return b.swapchain_khr
+
+def boost_value_to_vk(b : SwapchainKHR ?) : VkSwapchainKHR ?
+    return b?.swapchain_khr
+
+def create_swapchain_khr(
+    device : Device = [[ Device ]];
+    var create_info : SwapchainCreateInfoKHR = [[ SwapchainCreateInfoKHR ]];
+    var result : VkResult? = [[VkResult?]]
+) : SwapchainKHR
+
+    var swapchain_khr <- [[ SwapchainKHR
+        _device = boost_value_to_vk(device)
+    ]]
+
+    var vk_create_info : VkSwapchainCreateInfoKHR
+    unsafe
+        vk_create_info <- create_info |> vk_view_create_unsafe()
+    defer() <| ${ create_info |> vk_view_destroy(); }
+
+    var result_ = VkResult VK_SUCCESS
+    result ?? result_ = vkCreateSwapchainKHR(
+        boost_value_to_vk(device),
+        safe_addr(vk_create_info),
+        null,
+        safe_addr(swapchain_khr.swapchain_khr)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+    return <- swapchain_khr
+
+def finalize(var swapchain_khr : SwapchainKHR explicit)
+    vkDestroySwapchainKHR(
+        swapchain_khr._device,
+        boost_value_to_vk(swapchain_khr),
+        null
+    )
+    memzero(swapchain_khr)
