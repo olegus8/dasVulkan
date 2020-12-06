@@ -81,7 +81,7 @@ def with_swapchain(
 
     let create_info = [[VkSwapchainCreateInfoKHR
         sType = VkStructureType VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR,
-        surface = surface.surface,
+        surface = surface.surface_khr,
         minImageCount = img_count,
         imageFormat = surf_fmt.format,
         imageColorSpace = surf_fmt.colorSpace,
