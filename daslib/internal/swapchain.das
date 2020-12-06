@@ -75,9 +75,9 @@ def with_swapchain(
     let extent <- phys_dev |> get_swap_extent(surface, window)
 
     // we want at least one spare image for multi-buffering
-    var img_count : uint = caps.minImageCount + 1u
+    var img_count : uint = caps.min_image_count + 1u
     if caps.maxImageCount > 0u
-        img_count = min(img_count, caps.maxImageCount)
+        img_count = min(img_count, caps.max_image_count)
 
     let create_info = [[VkSwapchainCreateInfoKHR
         sType = VkStructureType VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR,
@@ -90,7 +90,7 @@ def with_swapchain(
         imageUsage = uint(
             VkImageUsageFlagBits VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT),
         imageSharingMode = VkSharingMode VK_SHARING_MODE_EXCLUSIVE,
-        preTransform = caps.currentTransform,
+        preTransform = caps.current_transform,
         compositeAlpha = (
             VkCompositeAlphaFlagBitsKHR VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR),
         presentMode = present_mode,
