@@ -1496,6 +1496,7 @@ struct SwapchainCreateInfoKHR
     present_mode : VkPresentModeKHR
     clipped : uint
     old_swapchain : SwapchainKHR
+    _vk_view_p_image_extent : VkExtent2D ?
     _vk_view__active : bool
 
 def vk_view_create_unsafe(var boost_struct : SwapchainCreateInfoKHR

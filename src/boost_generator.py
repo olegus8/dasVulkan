@@ -504,6 +504,14 @@ class GenStruct(object):
                    f'            *(boost_struct.{bname}) |> '
                                     f'vk_view_create_unsafe())',
                 ]
+            elif field.is_struct and field.needs_vk_view:
+                lines += [
+                    '',
+                   f'    boost_struct._vk_view_p_{bname} = new {vtype}',
+                   f'    *(boost_struct._vk_view_p_{bname}) <- (',
+                   f'        boost_struct.{bname} |> '
+                                f'vk_view_create_unsafe())',
+                ]
         if lines[-1] != '':
             lines.append('')
         lines += [
