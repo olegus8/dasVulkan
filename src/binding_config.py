@@ -143,6 +143,10 @@ def add_boost_content(g):
         handle          = 'VkShaderModule',
         ctor            = 'vkCreateShaderModule',
         dtor            = 'vkDestroyShaderModule')
+    g.add_gen_handle(
+        handle          = 'VkSwapchainKHR',
+        ctor            = 'vkCreateSwapchainKHR',
+        dtor            = 'vkDestroySwapchainKHR')
 
     #
     # Structs

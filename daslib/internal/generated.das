@@ -1518,7 +1518,7 @@ def vk_view_create_unsafe(var boost_struct : SwapchainCreateInfoKHR
         minImageCount = boost_struct.min_image_count,
         imageFormat = boost_struct.image_format,
         imageColorSpace = boost_struct.image_color_space,
-        imageExtent = *boost_struct._vk_view_p_image_extent,
+        imageExtent = *(boost_struct._vk_view_p_image_extent),
         imageArrayLayers = boost_struct.image_array_layers,
         imageUsage = boost_struct.image_usage,
         imageSharingMode = boost_struct.image_sharing_mode,
