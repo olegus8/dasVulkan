@@ -1505,6 +1505,10 @@ def vk_view_create_unsafe(var boost_struct : SwapchainCreateInfoKHR
     assert(!boost_struct._vk_view__active)
     boost_struct._vk_view__active = true
 
+    boost_struct._vk_view_p_image_extent = new VkExtent2D
+    *(boost_struct._vk_view_p_image_extent) <- (
+        boost_struct.image_extent |> vk_view_create_unsafe())
+
     let vk_p_queue_family_indices = array_addr_unsafe(boost_struct.queue_family_indices)
 
     return <- [[ VkSwapchainCreateInfoKHR
@@ -1514,7 +1518,7 @@ def vk_view_create_unsafe(var boost_struct : SwapchainCreateInfoKHR
         minImageCount = boost_struct.min_image_count,
         imageFormat = boost_struct.image_format,
         imageColorSpace = boost_struct.image_color_space,
-        imageExtent = None,
+        imageExtent = *boost_struct._vk_view_p_image_extent,
         imageArrayLayers = boost_struct.image_array_layers,
         imageUsage = boost_struct.image_usage,
         imageSharingMode = boost_struct.image_sharing_mode,
@@ -1529,6 +1533,9 @@ def vk_view_create_unsafe(var boost_struct : SwapchainCreateInfoKHR
 
 def vk_view_destroy(var boost_struct : SwapchainCreateInfoKHR)
     assert(boost_struct._vk_view__active)
+    boost_struct.image_extent |> vk_view_destroy()
+    unsafe
+        delete boost_struct._vk_view_p_image_extent
     boost_struct._vk_view__active = false
 
 //
