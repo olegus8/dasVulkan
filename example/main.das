@@ -524,7 +524,6 @@ def main
         cmd_pool        : VkCommandPool
     )
         let vk_device = device.device
-        let vk_surface = surface.surface
         var props <- phys_dev |> get_physical_device_properties()
         defer() <| ${ delete props ; }
         print("Using {props.device_name}\n")
