@@ -76,7 +76,7 @@ def with_swapchain(
 
     // we want at least one spare image for multi-buffering
     var img_count : uint = caps.min_image_count + 1u
-    if caps.maxImageCount > 0u
+    if caps.max_image_count > 0u
         img_count = min(img_count, caps.max_image_count)
 
     let create_info = [[VkSwapchainCreateInfoKHR
