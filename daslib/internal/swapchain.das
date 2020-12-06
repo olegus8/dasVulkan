@@ -61,49 +61,37 @@ def finalize(var sc : SwapchainEx)
 //////////////////
 
 
-[private]
-def with_swapchain(
-    device          : VkDevice implicit;
+def create_multibuffered_swapchain(
+    device          : VkDevice;
     phys_dev        : PhysicalDevice;
     surface         : SurfaceKHR;
-    window          : GLFWwindow_DasHandle implicit;
-    surf_fmt        : VkSurfaceFormatKHR implicit;
-    present_mode    : VkPresentModeKHR implicit;
-    b : block<(sc:VkSwapchainKHR#)>
-)
+    window          : GLFWwindow_DasHandle;
+    surf_fmt        : SurfaceFormatKHR;
+    present_mode    : VkPresentModeKHR
+) : SwapchainKHR
     let caps <- phys_dev|>get_physical_device_surface_capabilities_khr(surface)
-    var extent <- phys_dev |> get_swap_extent(surface, window)
 
     // we want at least one spare image for multi-buffering
     var img_count : uint = caps.min_image_count + 1u
     if caps.max_image_count > 0u
         img_count = min(img_count, caps.max_image_count)
 
-    extent |> with_view() <| $(vk_extent : VkExtent2D const)
-        let create_info = [[VkSwapchainCreateInfoKHR
-            sType = (VkStructureType
-                VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR),
-            surface = surface.surface_khr,
-            minImageCount = img_count,
-            imageFormat = surf_fmt.format,
-            imageColorSpace = surf_fmt.colorSpace,
-            imageExtent = vk_extent,
-            imageArrayLayers = 1u, // 2 for stereoscopic
-            imageUsage = uint(
+    return <- device |> create_swapchain_khr([[SwapchainCreateInfoKHR
+            surface = surface,
+            min_image_count = img_count,
+            image_format = surf_fmt.format,
+            image_color_space = surf_fmt.color_space,
+            image_extent <- phys_dev |> get_swap_extent(surface, window),
+            image_array_layers = 1u, // 2 for stereoscopic
+            image_usage = uint(
                 VkImageUsageFlagBits VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT),
-            imageSharingMode = VkSharingMode VK_SHARING_MODE_EXCLUSIVE,
-            preTransform = caps.current_transform,
-            compositeAlpha = (
+            image_sharing_mode = VkSharingMode VK_SHARING_MODE_EXCLUSIVE,
+            pre_transform = caps.current_transform,
+            composite_alpha = (
                 VkCompositeAlphaFlagBitsKHR VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR),
-            presentMode = present_mode,
+            present_mode = present_mode,
             clipped = uint(VK_TRUE)
-        ]]
-
-        var swapchain : VkSwapchainKHR
-        verify(VkResult VK_SUCCESS == device |> vkCreateSwapchainKHR(
-            safe_addr(create_info), null, safe_addr(swapchain)))
-        b |> invoke(swapchain)
-        device |> vkDestroySwapchainKHR(swapchain, null)
+        ]])
 
 
 [private]
