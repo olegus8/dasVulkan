@@ -96,8 +96,8 @@ def record_render_pass(cmd_buf, phys_dev, window, surface, render_pass, fbuf;
     b : block
 )
     let vk_phys_dev = phys_dev.physical_device
-    let extent <- phys_dev |> get_swap_extent(surface, window)
-    extent |> with_view() <| $(vk_extent)
+    var extent <- phys_dev |> get_swap_extent(surface, window)
+    extent |> with_view() <| $(vk_extent : VkExtent2D const)
         cmd_buf |> record() <| $()
             let clear_values <- [[auto[] [[VkClearValue]]]]
             let info <- [[VkRenderPassBeginInfo
