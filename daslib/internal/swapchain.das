@@ -36,7 +36,6 @@ def with_swapchain_ex(
         phys_dev, surface, window, surf_fmt, present_mode)
     defer() <| ${ delete swapchain; }
 
-/*
     let vk_swapchain = swapchain.swapchain_khr
 
     var images <- vk_device |> get_swapchain_images(vk_swapchain)
@@ -53,7 +52,6 @@ def with_swapchain_ex(
     ]]
     defer() <| ${ delete sc; }
     b |> invoke(sc)
-*/
 
 
 def finalize(var sc : SwapchainEx)
