@@ -131,7 +131,7 @@ def create_single_queue_device(
 
 def get_swap_extent(
     device : PhysicalDevice;
-    surface : VkSurfaceKHR#;
+    surface : SurfaceKHR;
     window : GLFWwindow_DasHandle#
 ) : Extent2D
     var caps <- device |> get_physical_device_surface_capabilities_khr(surface)

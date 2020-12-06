@@ -511,7 +511,7 @@ def main
     with_swapchain_independent_state(800, 600, "dasVulkanExample") <| $(
         instance        : VkInstance;
         window          : GLFWwindow_DasHandle;
-        surface         : VkSurfaceKHR;
+        surface         : SurfaceKHR;
         phys_dev        : PhysicalDevice;
         device          : Device;
         queue           : VkQueue;
@@ -524,6 +524,7 @@ def main
         cmd_pool        : VkCommandPool
     )
         let vk_device = device.device
+        let vk_surface = surface.surface
         var props <- phys_dev |> get_physical_device_properties()
         defer() <| ${ delete props ; }
         print("Using {props.device_name}\n")
@@ -540,7 +541,7 @@ def main
                 with_swapchain_dependent_state(
                     instance,
                     window,
-                    surface,
+                    vk_surface,
                     phys_dev.physical_device,
                     device,
                     queue,
