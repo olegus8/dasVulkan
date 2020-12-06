@@ -544,6 +544,8 @@ class GenStruct(object):
                         f'{vctype}(boost_struct.{biname} |> length()),')
             elif field.is_pointer and field.needs_vk_view:
                 vk_value = f'boost_struct._vk_view_{bname}'
+            elif field.is_struct and field.needs_vk_view:
+                vk_value = f'*boost_struct._vk_view_p_{bname}'
             else:
                 vk_value = field.boost_value_to_vk(f'boost_struct.{bname}')
             lines += [f'        {vname} = {vk_value},']
@@ -584,6 +586,12 @@ class GenStruct(object):
                    f'        *(boost_struct.{bname}) |> vk_view_destroy()',
                     '        unsafe',
                    f'            delete boost_struct._vk_view_{bname}',
+                ]
+            elif field.is_struct and field.needs_vk_view:
+                lines += [
+                   f'    boost_struct.{bname} |> vk_view_destroy()',
+                    '    unsafe',
+                   f'        delete boost_struct._vk_view_p_{bname}',
                 ]
         lines += [
             '    boost_struct._vk_view__active = false',
