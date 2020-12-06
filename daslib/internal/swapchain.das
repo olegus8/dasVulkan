@@ -24,7 +24,7 @@ def with_swapchain_ex(
     phys_dev        : PhysicalDevice;
     surface         : SurfaceKHR;
     window          : GLFWwindow_DasHandle implicit;
-    surf_fmt        : SurfaceFormatKHR;
+    var surf_fmt    : SurfaceFormatKHR;
     present_mode    : VkPresentModeKHR implicit;
     render_pass     : VkRenderPass implicit;
     b : block<(sc:SwapchainEx implicit)>
