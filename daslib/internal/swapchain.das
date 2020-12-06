@@ -62,7 +62,7 @@ def finalize(var sc : SwapchainEx)
 
 
 def create_multibuffered_swapchain(
-    device          : VkDevice;
+    device          : Device;
     phys_dev        : PhysicalDevice;
     surface         : SurfaceKHR;
     window          : GLFWwindow_DasHandle;
