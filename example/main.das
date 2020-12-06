@@ -376,9 +376,9 @@ def with_swapchain_dependent_state(
     var vk_frame_fences <- [{for fence in frame_fences; fence.fence}]
     defer() <| ${ delete vk_frame_fences; }
 
-    surf_fmt |> with_view() <| $(vk_surf_fmt : VkSurfaceFormatKHR const) {
     device |> with_swapchain_ex(phys_dev, surface,
         window, surf_fmt, present_mode, render_pass) <| $(swapchain) {
+    surf_fmt |> with_view() <| $(vk_surf_fmt : VkSurfaceFormatKHR const) {
     vk_device |> with_graphics_pipeline(
         pipeline_layout, render_pass, phys_dev,
         surface, window, vert_shmod, frag_shmod)     <| $(pipeline)
