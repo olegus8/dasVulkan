@@ -20,25 +20,32 @@ struct SwapchainEx
 
 
 def with_swapchain_ex(
-    device          : VkDevice implicit;
+    device          : Device;
     phys_dev        : PhysicalDevice;
     surface         : SurfaceKHR;
     window          : GLFWwindow_DasHandle implicit;
-    surf_fmt        : VkSurfaceFormatKHR implicit;
+    surf_fmt        : SurfaceFormatKHR;
     present_mode    : VkPresentModeKHR implicit;
     render_pass     : VkRenderPass implicit;
     b : block<(sc:SwapchainEx implicit)>
 )
-    device |> with_swapchain(
-        phys_dev, surface, window, surf_fmt, present_mode
-    ) <| $(swapchain)
-        var images <- device |> get_swapchain_images(swapchain)
-        var views <- device |> create_swapchain_image_views(images, surf_fmt)
-        var framebuffers <- device |> create_swapchain_framebuffers(
+    var vk_device = device.device
+
+    var swapchain <- device |> create_multibuffered_swapchain(
+        phys_dev, surface, window, surf_fmt, present_mode)
+    defer() <| ${ delete swapchain; }
+
+    let vk_swapchain = swapchain.swapchain_khr
+
+    surf_fmt |> with_view() <| $(vk_surf_fmt : SurfaceFormatKHR)
+        var images <- vk_device |> get_swapchain_images(vk_swapchain)
+        var views <- vk_device |> create_swapchain_image_views(
+            images, vk_surf_fmt)
+        var framebuffers <- vk_device |> create_swapchain_framebuffers(
             phys_dev, surface, window, views,
             render_pass)
         var sc <- [[SwapchainEx
-            swapchain = swapchain,
+            swapchain = vk_swapchain,
             images <- images,
             views <- views,
             framebuffers <- framebuffers
@@ -52,13 +59,6 @@ def finalize(var sc : SwapchainEx)
     delete sc.views
     delete sc.images
     memzero(sc)
-
-
-//////////////////
-//
-// private
-//
-//////////////////
 
 
 def create_multibuffered_swapchain(
@@ -92,6 +92,13 @@ def create_multibuffered_swapchain(
             present_mode = present_mode,
             clipped = uint(VK_TRUE)
         ]])
+
+
+//////////////////
+//
+// private
+//
+//////////////////
 
 
 [private]
