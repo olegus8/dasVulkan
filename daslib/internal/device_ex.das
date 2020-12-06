@@ -142,11 +142,11 @@ def get_swap_extent(
         let fb_size = window |> get_framebuffer_size()
         return [[Extent2D
             width = clamp(fb_size[0],
-                caps.minImageExtent.width,
-                caps.maxImageExtent.width),
+                caps.min_image_extent.width,
+                caps.max_image_extent.width),
             height = clamp(fb_size[1],
-                caps.minImageExtent.height,
-                caps.maxImageExtent.height)
+                caps.min_image_extent.height,
+                caps.max_image_extent.height)
         ]]
 
 
