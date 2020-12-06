@@ -545,7 +545,7 @@ class GenStruct(object):
             elif field.is_pointer and field.needs_vk_view:
                 vk_value = f'boost_struct._vk_view_{bname}'
             elif field.is_struct and field.needs_vk_view:
-                vk_value = f'*boost_struct._vk_view_p_{bname}'
+                vk_value = f'*(boost_struct._vk_view_p_{bname})'
             else:
                 vk_value = field.boost_value_to_vk(f'boost_struct.{bname}')
             lines += [f'        {vname} = {vk_value},']
