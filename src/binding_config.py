@@ -290,6 +290,9 @@ def add_boost_content(g):
         struct      = 'VkSurfaceFormatKHR',
         vk_to_boost = True,
         boost_to_vk = True)
+    g.add_gen_struct(
+        struct      = 'VkSwapchainCreateInfoKHR',
+        boost_to_vk = True)
 
     #
     # Query functions
