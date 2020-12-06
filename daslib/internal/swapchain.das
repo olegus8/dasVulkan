@@ -24,7 +24,8 @@ def with_swapchain_ex(
     phys_dev        : PhysicalDevice;
     surface         : SurfaceKHR;
     window          : GLFWwindow_DasHandle implicit;
-    var surf_fmt    : SurfaceFormatKHR;
+    surf_fmt        : SurfaceFormatKHR;
+    vk_surf_fmt     : VkSurfaceFormatKHR; //TODO: remove
     present_mode    : VkPresentModeKHR implicit;
     render_pass     : VkRenderPass implicit;
     b : block<(sc:SwapchainEx implicit)>
@@ -37,21 +38,20 @@ def with_swapchain_ex(
 
     let vk_swapchain = swapchain.swapchain_khr
 
-    surf_fmt |> with_view() <| $(vk_surf_fmt : VkSurfaceFormatKHR const)
-        var images <- vk_device |> get_swapchain_images(vk_swapchain)
-        var views <- vk_device |> create_swapchain_image_views(
-            images, vk_surf_fmt)
-        var framebuffers <- vk_device |> create_swapchain_framebuffers(
-            phys_dev, surface, window, views,
-            render_pass)
-        var sc <- [[SwapchainEx
-            swapchain = vk_swapchain,
-            images <- images,
-            views <- views,
-            framebuffers <- framebuffers
-        ]]
-        defer() <| ${ delete sc; }
-        b |> invoke(sc)
+    var images <- vk_device |> get_swapchain_images(vk_swapchain)
+    var views <- vk_device |> create_swapchain_image_views(
+        images, vk_surf_fmt)
+    var framebuffers <- vk_device |> create_swapchain_framebuffers(
+        phys_dev, surface, window, views,
+        render_pass)
+    var sc <- [[SwapchainEx
+        swapchain = vk_swapchain,
+        images <- images,
+        views <- views,
+        framebuffers <- framebuffers
+    ]]
+    defer() <| ${ delete sc; }
+    b |> invoke(sc)
 
 
 def finalize(var sc : SwapchainEx)
