@@ -20,8 +20,8 @@ struct SwapchainEx
 
 def with_swapchain_ex(
     device          : VkDevice implicit;
-    phys_dev        : VkPhysicalDevice implicit;
-    surface         : VkSurfaceKHR implicit;
+    phys_dev        : PhysicalDevice;
+    surface         : SurfaceKHR;
     window          : GLFWwindow_DasHandle implicit;
     surf_fmt        : VkSurfaceFormatKHR implicit;
     present_mode    : VkPresentModeKHR implicit;
@@ -34,7 +34,8 @@ def with_swapchain_ex(
         var images <- device |> get_swapchain_images(swapchain)
         var views <- device |> create_swapchain_image_views(images, surf_fmt)
         var framebuffers <- device |> create_swapchain_framebuffers(
-            phys_dev, surface, window, views, render_pass)
+            phys_dev.physical_device, surface.surface, window, views,
+            render_pass)
         var sc <- [[SwapchainEx
             swapchain = swapchain,
             images <- images,
@@ -62,14 +63,14 @@ def finalize(var sc : SwapchainEx)
 [private]
 def with_swapchain(
     device          : VkDevice implicit;
-    phys_dev        : VkPhysicalDevice implicit;
-    surface         : VkSurfaceKHR implicit;
+    phys_dev        : PhysicalDevice;
+    surface         : SurfaceKHR;
     window          : GLFWwindow_DasHandle implicit;
     surf_fmt        : VkSurfaceFormatKHR implicit;
     present_mode    : VkPresentModeKHR implicit;
     b : block<(sc:VkSwapchainKHR#)>
 )
-    let caps <- phys_dev |> get_capabilities(surface)
+    let caps <- phys_dev|>get_physical_device_surface_capabilities_khr(surface)
     let extent <- phys_dev |> get_swap_extent(surface, window)
 
     // we want at least one spare image for multi-buffering
@@ -79,7 +80,7 @@ def with_swapchain(
 
     let create_info = [[VkSwapchainCreateInfoKHR
         sType = VkStructureType VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR,
-        surface = surface,
+        surface = surface.surface,
         minImageCount = img_count,
         imageFormat = surf_fmt.format,
         imageColorSpace = surf_fmt.colorSpace,
