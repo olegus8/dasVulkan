@@ -265,7 +265,7 @@ def create_example_render_pass(
 def with_swapchain_independent_state(width, height, title; b : block<(
     instance        : VkInstance#;
     window          : GLFWwindow_DasHandle#;
-    surface         : VkSurfaceKHR;
+    surface         : SurfaceKHR;
     phys_dev        : PhysicalDevice;
     device          : Device;
     queue           : VkQueue;
@@ -314,7 +314,7 @@ def with_swapchain_independent_state(width, height, title; b : block<(
         b |> invoke(
             instance.instance,
             window,
-            surface.surface_khr,
+            surface,
             phys_dev,
             device,
             queue.queue,
