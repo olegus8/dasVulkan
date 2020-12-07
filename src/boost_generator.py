@@ -786,17 +786,16 @@ class GenHandleFunc(object):
 class GenHandleCtor(GenHandleFunc):
 
     def generate(self):
-        if self.__vk_ctor_name == None:
-            return []
         bh_attr = self.__boost_handle_attr
         bh_type = self.__boost_handle_type_name
 
         lines = []
         lines += [
             '',
-           f'def {self.__boost_ctor_name}(']
+           f'def {self.boost_name}(']
 
-        for param in self.__vk_ctor_params:
+        for param in self.params:
+            lines += [f'    {line}' for line in param.generate_ctor_param()]
             if param.vk_name == 'pAllocator':
                 continue
             elif self.__is_array_count(param.vk_name):
@@ -943,6 +942,9 @@ class GenHandleFuncParam(object):
     def array(self):
         return self.func.get_array(self.vk_name)
 
+    def generate_ctor_param(self):
+        return [f'{boost_name} : {boost_type} = [[ {boost_type} ]];']
+
 
 class GenHandleFuncParamAllocator(GenHandleFuncParam):
 
@@ -958,6 +960,20 @@ class GenHandleFuncParamAllocator(GenHandleFuncParam):
     @property
     def boost_type(self):
         return None
+
+    def generate_ctor_param(self):
+        return []
+
+
+class GenHandleFuncParamArrayCounter(GenHandleFuncParam):
+
+    @classmethod
+    def maybe_create(cls, func, vk_param):
+        if func.is_array_counter(vk_param.vk_name):
+            return cls(func=func, vk_param=vk_param)
+
+    def generate_ctor_param(self):
+        return []
 
 
 class GenHandleFuncParamMainHandle(GenHandleFuncParam):
