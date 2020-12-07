@@ -56,12 +56,13 @@ def with_swapchain_ex(
     let extent <- phys_dev |> get_swap_extent(surface, window)
 
     var framebuffers <- [{ for view in views;
-        device |> create_single_view_framebuffer(
+        create_single_view_framebuffer([
+            device = device,
             render_pass = render_pass,
             view = view,
             width = extent.width,
             height = extent.height
-        )}]
+        ])}]
     defer() <| ${ delete framebuffers; }
 
     var sc <- [[SwapchainEx
