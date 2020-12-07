@@ -118,7 +118,7 @@ def create_swapchain_framebuffers(
     phys_dev    : PhysicalDevice;
     surface     : SurfaceKHR;
     window      : GLFWwindow_DasHandle implicit;
-    views       : array<ImageView> implicit;
+    views       : array<ImageView>;
     render_pass : VkRenderPass implicit
 ) : array<Framebuffer>
     let extent <- phys_dev |> get_swap_extent(surface, window)
