@@ -150,7 +150,7 @@ def with_draw_commands(device, phys_dev, window, surface, render_pass,
         delete cmd_bufs;
     for cmd_buf, fbuf in cmd_bufs.buffers, fbufs
         cmd_buf |> record_render_pass(
-            phys_dev, window, surface, render_pass, fbuf
+            phys_dev, window, surface, render_pass, fbuf.framebuffer
         ) <| $()
             cmd_buf |> vkCmdBindPipeline(
                 VkPipelineBindPoint VK_PIPELINE_BIND_POINT_GRAPHICS,
@@ -345,7 +345,7 @@ def with_swapchain_dependent_state(
     pipeline_layout,
     cmd_pool;
     b : block<(
-        swapchain           : SwapchainEx implicit;
+        swapchain           : SwapchainEx;
         pipeline            : VkPipeline;
         img_avail_sems      : array<VkSemaphore>;
         render_done_sems    : array<VkSemaphore>;
@@ -471,10 +471,11 @@ def draw_frame(device, queue, cmd_bufs, swapchain, frame,
     frame_fences, img_avail_sems, render_done_sems;
     var imgs_used_by_frames
 )
+    let vk_swapchain = swapchain.swapchain
     device |> wait_fence(frame_fences[frame])
     var img_acquired = false
     var presented = false
-    device |> with_next_image(swapchain, img_avail_sems[frame], [[VkFence]]
+    device |> with_next_image(vk_swapchain, img_avail_sems[frame], [[VkFence]]
     ) <| $(img_i)
         img_acquired = true
 
@@ -487,7 +488,7 @@ def draw_frame(device, queue, cmd_bufs, swapchain, frame,
         device |> submit_draw(queue, cmd_bufs[img_i], img_avail_sems[frame],
             render_done_sems[frame], frame_fences[frame])
 
-        device |> present(queue, swapchain, img_i, render_done_sems[frame]
+        device |> present(queue, vk_swapchain, img_i, render_done_sems[frame]
         ) <| $()
             presented = true
 
@@ -554,7 +555,7 @@ def main
                     pipeline_layout,
                     cmd_pool
                 ) <| $(
-                    sc                  : SwapchainEx implicit;
+                    sc                  : SwapchainEx;
                     pipeline            : VkPipeline;
                     img_avail_sems      : array<VkSemaphore>;
                     render_done_sems    : array<VkSemaphore>;
