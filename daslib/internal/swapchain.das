@@ -38,15 +38,20 @@ def with_swapchain_ex(
 
     let vk_swapchain = swapchain.swapchain_khr
 
-    var images <- vk_device |> get_swapchain_images(vk_swapchain)
+    var images <- device |> get_swapchain_images_khr(swapchain)
+    defer() <| ${ delete images; }
+
+    var vk_images <- [{ auto[] for image in images ; image.image }]
+    defer() <| ${ delete vk_images; }
+
     var views <- vk_device |> create_swapchain_image_views(
-        images, vk_surf_fmt)
+        vk_images, vk_surf_fmt)
     var framebuffers <- vk_device |> create_swapchain_framebuffers(
         phys_dev, surface, window, views,
         render_pass)
     var sc <- [[SwapchainEx
         swapchain = vk_swapchain,
-        images <- images,
+        vk_images <- images,
         views <- views,
         framebuffers <- framebuffers
     ]]
@@ -99,22 +104,6 @@ def create_multibuffered_swapchain(
 // private
 //
 //////////////////
-
-
-[private]
-def get_swapchain_images(
-    device : VkDevice implicit;
-    swapchain : VkSwapchainKHR implicit
-) : array<VkImage>
-    var images : array<VkImage>
-    var count : uint
-    verify(VkResult VK_SUCCESS == device |> vkGetSwapchainImagesKHR(
-        swapchain, safe_addr(count), null))
-    images |> resize(int(count))
-    images |> lock() <| $(timages)
-        verify(VkResult VK_SUCCESS == device |> vkGetSwapchainImagesKHR(
-            swapchain, safe_addr(count), addr(timages[0])))
-    return <- images
 
 
 [private]
