@@ -809,17 +809,19 @@ class GenHandle(object):
         for param in self.__vk_ctor_params:
             if param.vk_name == 'pAllocator':
                 continue
-            if param.is_struct and param.is_pointer:
+            if param.is_pointer:
                 bname = deref_boost_ptr_name(param.boost_name)
                 btype = deref_das_type(param.boost_type)
                 vdtype = deref_das_type(param.vk_type)
-                lines += [
-                    '',
-                   f'    var vk_{bname} : {vdtype}',
-                   f'    unsafe',
-                   f'        vk_{bname} <- {bname} |> vk_view_create_unsafe()',
-                   f'    defer() <| ${{ {bname} |> vk_view_destroy(); }}',
-                ]
+                if param.is_struct:
+                    lines += [
+                        '',
+                       f'    var vk_{bname} : {vdtype}',
+                       f'    unsafe',
+                       f'        vk_{bname} <- {bname} |> '
+                                        f'vk_view_create_unsafe()',
+                       f'    defer() <| ${{ {bname} |> vk_view_destroy(); }}',
+                    ]
 
         if lines[-1] != '':
             lines.append('')

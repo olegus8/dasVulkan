@@ -2412,6 +2412,62 @@ def get_device_queue(
     return <- queue
 
 //
+// Pipeline
+//
+
+struct Pipeline
+    pipeline : VkPipeline
+    _needs_delete : bool
+    _device : VkDevice
+
+def boost_value_to_vk(b : Pipeline) : VkPipeline
+    return b.pipeline
+
+def boost_value_to_vk(b : Pipeline ?) : VkPipeline ?
+    return b?.pipeline
+
+def vk_value_to_boost(v : VkPipeline) : Pipeline
+    return [[ Pipeline pipeline=v ]]
+
+def create_graphics_pipelines(
+    device : Device = [[ Device ]];
+    pipeline_cache : PipelineCache = [[ PipelineCache ]];
+    create_infos : array<GraphicsPipelineCreateInfo> = [[ array<GraphicsPipelineCreateInfo> ]];
+    var result : VkResult? = [[VkResult?]]
+) : array<Pipeline>
+
+    var pipeline <- [[ Pipeline
+        _needs_delete = true,
+        _device = boost_value_to_vk(device)
+    ]]
+
+    var vk_create_infos : VkGraphicsPipelineCreateInfo
+    unsafe
+        vk_create_infos <- create_infos |> vk_view_create_unsafe()
+    defer() <| ${ create_infos |> vk_view_destroy(); }
+
+    var result_ = VkResult VK_SUCCESS
+    result ?? result_ = vkCreateGraphicsPipelines(
+        boost_value_to_vk(device),
+        boost_value_to_vk(pipeline_cache),
+        create_info_count,
+        safe_addr(vk_create_infos),
+        null,
+        safe_addr(pipeline.pipeline)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+    return <- pipeline
+
+def finalize(var pipeline : Pipeline explicit)
+    if pipeline._needs_delete
+        vkDestroyPipeline(
+            pipeline._device,
+            boost_value_to_vk(pipeline),
+            null
+        )
+    memzero(pipeline)
+
+//
 // PipelineLayout
 //
 
