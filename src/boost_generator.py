@@ -624,6 +624,12 @@ class GenHandle(object):
         self.__vk_handle_type_name = handle
         self.__vk_ctor_name = ctor
         self.__vk_dtor_name = dtor
+        self.__arrays = []
+
+    def declare_array(self, **kwargs):
+        array = GenHandleParamArray(handle=self, **kwargs)
+        self.__arrays.append(array)
+        return self
 
     @property
     def __c_ctor(self):
@@ -666,6 +672,23 @@ class GenHandle(object):
     @property
     def __boost_ctor_name(self):
         return vk_func_name_to_boost(self.__vk_ctor_name)
+
+    def __is_array_count(self, vk_field):
+        for array in self.__arrays:
+            if vk_field == array.vk_count_name:
+                return True
+        return False
+
+    def __is_array_items(self, vk_field):
+        for array in self.__arrays:
+            if vk_field == array.vk_items_name:
+                return True
+        return False
+
+    def __get_array(self, vk_name):
+        for array in self.__arrays:
+            if vk_name in [array.vk_items_name, array.vk_count_name]:
+                return array
 
     def generate(self):
         lines = []
