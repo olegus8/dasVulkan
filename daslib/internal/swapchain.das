@@ -12,8 +12,8 @@ require framebuffer
 
 
 struct SwapchainEx
-    swapchain       : VkSwapchainKHR
-    images          : array<VkImage>
+    swapchain       : SwapchainKHR
+    images          : array<Image>
     views           : array<ImageView>
     framebuffers    : array<Framebuffer>
 
@@ -34,9 +34,6 @@ def create_swapchain_ex(
 
     var images <- device |> get_swapchain_images_khr(swapchain)
     defer() <| ${ delete images; }
-
-    var vk_images <- [{ for image in images ; image.image }]
-    defer() <| ${ delete vk_images; }
 
     var views <- [{ for image in images;
         device |> create_image_view([[ ImageViewCreateInfo
@@ -61,8 +58,8 @@ def create_swapchain_ex(
     defer() <| ${ delete framebuffers; }
 
     return <- [[SwapchainEx
-        swapchain = swapchain.swapchain_khr,
-        images <- vk_images,
+        swapchain <- swapchain,
+        images <- images,
         views <- views,
         framebuffers <- framebuffers
     ]]
