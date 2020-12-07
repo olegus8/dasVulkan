@@ -116,6 +116,10 @@ def add_boost_content(g):
         ctor            = 'vkCreateImage',
         dtor            = 'vkDestroyImage')
     g.add_gen_handle(
+        handle          = 'VkImageView',
+        ctor            = 'vkCreateImageView',
+        dtor            = 'vkDestroyImageView')
+    g.add_gen_handle(
         handle          = 'VkInstance',
         ctor            = 'vkCreateInstance',
         dtor            = 'vkDestroyInstance')
