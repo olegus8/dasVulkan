@@ -810,7 +810,7 @@ class GenHandleCtor(GenHandleFunc):
         ]
         for param in self.gen_handle.dtor.params():
             lines += [f'        {line}'
-                for line in param.generate_handle_init_field()]
+                for line in param.generate_ctor_init_field()]
         remove_last_char(lines, ',')
         lines += [
             '    ]]',
@@ -818,7 +818,7 @@ class GenHandleCtor(GenHandleFunc):
 
         for param in self.params:
             lines += [f'    {line}'
-                for line in param.generate_ctor_temp_var()]
+                for line in param.generate_ctor_temp_vars()]
         if lines[-1] != '':
             lines.append('')
 
@@ -834,12 +834,9 @@ class GenHandleCtor(GenHandleFunc):
            f'    {maybe_capture_result}{self.vk_name}(',
         ]
 
-        for param in self.__vk_ctor_params:
-            if param.vk_name == 'pAllocator':
-                vk_value = 'null'
-            elif param.is_struct and param.is_pointer:
-                bname = deref_boost_ptr_name(param.boost_name)
-                vk_value = f'safe_addr(vk_{bname})'
+        lines += [f'    {param.generate_ctor_vk_param()},'
+            for param in self.params]
+
             elif param.vk_type == f'{self.__vk_handle_type_name} ?':
                 vk_value = f'safe_addr({bh_attr}.{bh_attr})'
             else:
@@ -920,24 +917,37 @@ class GenHandleFuncParam(object):
     def generate_ctor_return_type(self):
         return None
 
-    def generate_handle_init_field(self):
+    def generate_ctor_init_field(self):
         vk_value = self.vk_param.boost_value_to_vk(self.boost_name)
         return [f'_{self.boost_name} = {vk_value},']
 
-    def generate_ctor_temp_var(self):
+    def generate_ctor_temp_vars(self):
         lines = []
         if self.vk_param.needs_view:
+            assert not self.array
             bname = self.boost_name
             btype = self.boost_type
             vutype = self.vk_param.vk_unqual_type
-            lines += [
-                '',
-               f'var vk_{bname} : {vutype}',
-               f'unsafe',
-               f'    vk_{bname} <- {bname} |> vk_view_create_unsafe()',
-               f'defer() <| ${{ {bname} |> vk_view_destroy(); }}',
-            ]
+            if self.is_array_items:
+                lines += [
+                    '',
+                    'TODO'
+                ]
+            else:
+                lines += [
+                    '',
+                   f'var vk_{bname} : {vutype}',
+                   f'unsafe',
+                   f'    vk_{bname} <- {bname} |> vk_view_create_unsafe()',
+                   f'defer() <| ${{ {bname} |> vk_view_destroy(); }}',
+                ]
         return lines
+
+    def generate_ctor_vk_param(self):
+        if self.vk_param.needs_view:
+            return f'safe_addr(vk_{self.boost_name})'
+        else:
+            return self.vk_param.boost_value_to_vk(self.boost_name)
 
 
 class GenHandleFuncParamAllocator(GenHandleFuncParam):
@@ -946,6 +956,9 @@ class GenHandleFuncParamAllocator(GenHandleFuncParam):
     def maybe_create(cls, func, vk_param):
         if vk_param.vk_name == 'pAllocator':
             return cls(func=func, vk_param=vk_param)
+
+    def generate_ctor_vk_param(self):
+        return 'null'
 
     @property
     def boost_name(self):
@@ -958,10 +971,10 @@ class GenHandleFuncParamAllocator(GenHandleFuncParam):
     def generate_ctor_boost_param(self):
         return []
 
-    def generate_handle_init_field(self):
+    def generate_ctor_init_field(self):
         return []
 
-    def generate_ctor_temp_var(self):
+    def generate_ctor_temp_vars(self):
         return []
 
 
@@ -997,7 +1010,7 @@ class GenHandleFuncParamMainHandle(GenHandleFuncParam):
     def generate_ctor_boost_param(self):
         return []
 
-    def generate_handle_init_field(self):
+    def generate_ctor_init_field(self):
         return []
 
 
