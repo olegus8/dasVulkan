@@ -53,16 +53,12 @@ def with_swapchain_ex(
         ]])}]
     defer() <| ${ delete views; }
 
-    var vk_views <- [{ for view in views ; view.image_view }]
-    defer() <| ${ delete vk_views; }
-
     var framebuffers <- vk_device |> create_swapchain_framebuffers(
-        phys_dev, surface, window, vk_views,
-        render_pass)
+        phys_dev, surface, window, views, render_pass)
     var sc <- [[SwapchainEx
         swapchain = vk_swapchain,
         images <- vk_images,
-        views <- vk_views,
+        views <- views,
         framebuffers <- framebuffers
     ]]
     defer() <| ${ delete sc; }
@@ -130,6 +126,7 @@ def create_swapchain_framebuffers(
     fbufs |> resize(views |> length())
     for fbuf, view in fbufs, views
         fbuf <- create_framebuffer([device=device, render_pass=render_pass,
-            attachment=view.view, width=extent.width, height=extent.height,
+            attachment=view.image_view, width=extent.width,
+            height=extent.height,
             layers=1u])
     return <- fbufs
