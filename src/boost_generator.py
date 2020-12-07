@@ -818,7 +818,7 @@ class GenHandleCtor(GenHandleFunc):
 
         for param in self.params:
             lines += [f'    {line}'
-                for line in param.generate_ctor_temp_vars()]
+                for line in param.generate_ctor_temp_var()]
         if lines[-1] != '':
             lines.append('')
 
@@ -924,7 +924,7 @@ class GenHandleFuncParam(object):
         vk_value = self.vk_param.boost_value_to_vk(self.boost_name)
         return [f'_{self.boost_name} = {vk_value},']
 
-    def generate_ctor_temp_vars(self):
+    def generate_ctor_temp_var(self):
         lines = []
         if self.vk_param.needs_view:
             bname = self.boost_name
@@ -961,7 +961,7 @@ class GenHandleFuncParamAllocator(GenHandleFuncParam):
     def generate_handle_init_field(self):
         return []
 
-    def generate_ctor_temp_vars(self):
+    def generate_ctor_temp_var(self):
         return []
 
 
