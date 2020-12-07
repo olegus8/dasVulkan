@@ -823,9 +823,7 @@ class GenHandleCtor(GenHandleFunc):
             lines.append('')
 
         if self.returns_vk_result:
-            lines += [
-               f'    var result_ = VkResult VK_SUCCESS',
-            ]
+            lines += [f'    var result_ = VkResult VK_SUCCESS']
             maybe_capture_result = 'result ?? result_ = '
         else:
             maybe_capture_result = ''
@@ -840,11 +838,9 @@ class GenHandleCtor(GenHandleFunc):
         ]
         if self.returns_vk_result:
             lines += [
-               f'    assert(result_ == VkResult VK_SUCCESS)',
-            ]
+               f'    assert(result_ == VkResult VK_SUCCESS)']
         lines += [
-           f'    return <- {bh_attr}',
-        ]
+           f'    return <- {bh_attr}']
         return lines
 
 
