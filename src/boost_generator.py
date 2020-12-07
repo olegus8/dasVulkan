@@ -797,18 +797,6 @@ class GenHandleCtor(GenHandleFunc):
         for param in self.params:
             lines += [f'    {line}' for line in param.generate_ctor_param()]
 
-            boost_name = param.boost_name
-            boost_type = param.boost_type
-            if self.__is_array_items(param.vk_name):
-                boost_name = boost_ptr_name_to_array(param.boost_name)
-                boost_type = boost_ptr_type_to_array(param.boost_type)
-            elif param.is_struct and param.is_pointer:
-                boost_name = deref_boost_ptr_name(param.boost_name)
-                boost_name = 'var ' + boost_name
-                boost_type = deref_das_type(param.boost_type)
-
-            lines += [f'    {boost_name} : {boost_type} = [[ {boost_type} ]];']
-
         if self.__vk_ctor_returns_vk_result:
             lines += [
                f'    var result : VkResult? = [[VkResult?]];',
