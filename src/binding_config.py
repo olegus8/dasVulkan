@@ -212,6 +212,12 @@ def add_boost_content(g):
         struct      = 'VkFenceCreateInfo',
         boost_to_vk = True)
     g.add_gen_struct(
+        struct      = 'VkImageCreateInfo',
+        boost_to_vk = True,
+        ).declare_array(
+            count = 'queueFamilyIndexCount',
+            items = 'pQueueFamilyIndices')
+    g.add_gen_struct(
         struct      = 'VkInstanceCreateInfo',
         boost_to_vk = True
         ).declare_array(
