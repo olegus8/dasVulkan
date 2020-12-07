@@ -128,10 +128,8 @@ def add_boost_content(g):
         ctor            = 'vkCreateInstance',
         dtor            = 'vkDestroyInstance')
     g.add_gen_handle(
-        handle          = 'VkPhysicalDevice',
-        enumerator      = 'vkEnumeratePhysicalDevices',
-        p_count         = 'pPhysicalDeviceCount',
-        p_handles       = 'pPhysicalDevices')
+        handle          = 'VkPhysicalDevice'
+    )
     g.add_gen_handle(
         handle          = 'VkQueue',
         ctor            = 'vkGetDeviceQueue')
@@ -360,6 +358,10 @@ def add_boost_content(g):
         func        = 'vkEnumerateDeviceExtensionProperties',
         p_count     = 'pPropertyCount',
         p_items     = 'pProperties')
+    g.add_gen_query_array_func(
+        func        = 'vkEnumeratePhysicalDevices',
+        p_count     = 'pPhysicalDeviceCount',
+        p_handles   = 'pPhysicalDevices')
     g.add_gen_query_func(
         func        = 'vkGetPhysicalDeviceProperties',
         p_output    = 'pProperties')

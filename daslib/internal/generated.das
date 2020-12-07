@@ -896,6 +896,30 @@ def vk_view_destroy(var boost_struct : InstanceCreateInfo)
     boost_struct._vk_view__active = false
 
 //
+// Offset2D
+//
+
+struct Offset2D
+    x : int
+    y : int
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : Offset2D
+) : VkOffset2D
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+
+    return <- [[ VkOffset2D
+        x = boost_struct.x,
+        y = boost_struct.y
+    ]]
+
+def vk_view_destroy(var boost_struct : Offset2D)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+//
 // PhysicalDeviceLimits
 //
 
