@@ -633,11 +633,11 @@ class GenHandle(object):
 
     @property
     def boost_handle_type_name(self):
-        return vk_handle_type_to_boost(self.__vk_handle_type_name)
+        return vk_handle_type_to_boost(self.vk_handle_type_name)
 
     @property
     def boost_handle_attr(self):
-        return boost_handle_attr_name(self.__boost_handle_type_name)
+        return boost_handle_attr_name(self.boost_handle_type_name)
 
     def generate(self):
         lines = []
@@ -814,7 +814,10 @@ class GenHandleCtor(GenHandleFunc):
            f'        _needs_delete = true,',
         ]
 
-        for param in self.__vk_dtor_params:
+        for param in self.gen_handle.dtor.params():
+            lines += [f'        {line}'
+                for line in param.generate_handle_init_field()]
+
             if param.vk_name == 'pAllocator':
                 continue
             elif param.boost_type == bh_type:
@@ -941,11 +944,15 @@ class GenHandleFuncParam(object):
 
     def generate_ctor_param(self):
         maybe_var = 'var ' if self.vk_param.needs_vk_view else ''
-        return [f'{maybe_var}{boost_name} : {boost_type} = '
-            f'[[ {boost_type} ]];']
+        return [f'{maybe_var}{self.boost_name} : {self.boost_type} = '
+            f'[[ {self.boost_type} ]];']
 
     def generate_ctor_return_type(self):
         return None
+
+    def generate_handle_init_field(self):
+        vk_value = self.vk_param.boost_value_to_vk(self.boost_name)
+        return [f'_{self.boost_name} = {vk_value},']
 
 
 class GenHandleFuncParamAllocator(GenHandleFuncParam):
@@ -964,6 +971,9 @@ class GenHandleFuncParamAllocator(GenHandleFuncParam):
         return None
 
     def generate_ctor_param(self):
+        return []
+
+    def generate_handle_init_field(self):
         return []
 
 
@@ -997,6 +1007,9 @@ class GenHandleFuncParamMainHandle(GenHandleFuncParam):
         return self.boost_type
 
     def generate_ctor_param(self):
+        return []
+
+    def generate_handle_init_field(self):
         return []
 
 
