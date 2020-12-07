@@ -41,7 +41,7 @@ def with_swapchain_ex(
     var images <- device |> get_swapchain_images_khr(swapchain)
     defer() <| ${ delete images; }
 
-    var vk_images <- [{ auto[] for image in images ; image.image }]
+    var vk_images <- [{ for image in images ; image.image }]
     defer() <| ${ delete vk_images; }
 
     var views <- vk_device |> create_swapchain_image_views(
