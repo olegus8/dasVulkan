@@ -977,6 +977,14 @@ class GenHandleFuncParamArrayCounter(GenHandleFuncParam):
         if func.is_array_counter(vk_param.vk_name):
             return cls(func=func, vk_param=vk_param)
 
+    @property
+    def boost_name(self):
+        return None
+
+    @property
+    def boost_type(self):
+        return None
+
     def generate_ctor_param(self):
         return []
 
@@ -1000,17 +1008,6 @@ class GenHandleFuncParamStruct(GenHandleFuncParam):
     def maybe_create(cls, func, vk_param):
         if vk_param.is_pointer and vk_param.is_struct:
             return cls(func=func, vk_param=vk_param)
-
-    @property
-    def boost_name(self):
-        return deref_boost_ptr_name(self.vk_param.boost_name)
-
-    @property
-    def boost_type(self):
-        btype = deref_das_type(self.vk_param.boost_type)
-        if self.array:
-            btype = f'array<{btype}>'
-        return btype
 
     def generate_ctor_param(self):
         return []
