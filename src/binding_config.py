@@ -333,6 +333,15 @@ def add_boost_content(g):
         ).declare_array(
             count = 'queueFamilyIndexCount',
             items = 'pQueueFamilyIndices')
+    g.add_gen_struct(
+        struct      = 'VkPipelineViewportStateCreateInfo',
+        boost_to_vk = True,
+        ).declare_array(
+            count = 'viewportCount',
+            items = 'pViewports',
+        ).declare_array(
+            count = 'scissorCount',
+            items = 'pScissors')
 
     #
     # Query functions
