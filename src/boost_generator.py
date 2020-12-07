@@ -749,15 +749,20 @@ class GenHandle(object):
         for param in self.__vk_ctor_params:
             if param.vk_name == 'pAllocator':
                 continue
+            elif self.__is_array_count(param.vk_name):
+                continue
             elif param.vk_type == f'{self.__vk_handle_type_name} ?':
                 continue
+            boost_name = param.boost_name
+            boost_type = param.boost_type
+            if self.__is_array_items(param.vk_name):
+                boost_name = boost_ptr_name_to_array(param.boost_name)
+                boost_type = boost_ptr_type_to_array(param.boost_type)
             elif param.is_struct and param.is_pointer:
                 boost_name = deref_boost_ptr_name(param.boost_name)
                 boost_name = 'var ' + boost_name
                 boost_type = deref_das_type(param.boost_type)
-            else:
-                boost_name = param.boost_name
-                boost_type = param.boost_type
+
             lines += [f'    {boost_name} : {boost_type} = [[ {boost_type} ]];']
 
         if self.__vk_ctor_returns_vk_result:
