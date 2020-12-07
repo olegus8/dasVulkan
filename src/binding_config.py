@@ -136,7 +136,7 @@ def add_boost_content(g):
     g.add_gen_handle(
         handle          = 'VkPipeline',
         ctor            = 'vkCreateGraphicsPipeline',
-        dtor            = 'vkDestroyGraphicsPipeline',
+        dtor            = 'vkDestroyPipeline',
         ).declare_array(
             count = 'createInfoCount',
             items = 'pCreateInfos'
