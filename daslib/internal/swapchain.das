@@ -65,7 +65,7 @@ def with_swapchain_ex(
             layers = 1u
         ]]
         defer()
-            create_info.attachments.resize(0)
+            create_info.attachments |> resize(0)
             memzero(create_info.render_pass)
             delete create_info
         fbuf <- device |> create_framebuffer(create_info)
