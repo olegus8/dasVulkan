@@ -940,7 +940,9 @@ class GenHandleFuncParam(object):
         return self.func.is_array_items(self.vk_name)
 
     def generate_ctor_param(self):
-        return [f'{boost_name} : {boost_type} = [[ {boost_type} ]];']
+        maybe_var = 'var ' if self.vk_param.needs_vk_view else ''
+        return [f'{maybe_var}{boost_name} : {boost_type} = '
+            f'[[ {boost_type} ]];']
 
     def generate_ctor_return_type(self):
         return None
@@ -988,10 +990,8 @@ class GenHandleFuncParamMainHandle(GenHandleFuncParam):
 
     @classmethod
     def maybe_create(cls, func, vk_param):
-        if vk_param.is_pointer:
-            dvtype = deref_das_type(vk_param.vk_type)
-            if dvtype == func.gen_handle.vk_handle_type_name:
-                return cls(func=func, vk_param=vk_param)
+        if vk_param.vk_unqual_type == func.gen_handle.vk_handle_type_name:
+            return cls(func=func, vk_param=vk_param)
 
     def generate_ctor_return_type(self):
         return self.boost_type
@@ -1004,11 +1004,8 @@ class GenHandleFuncParamStruct(GenHandleFuncParam):
 
     @classmethod
     def maybe_create(cls, func, vk_param):
-        if vk_param.is_pointer and vk_param.is_struct:
+        if vk_param.is_struct:
             return cls(func=func, vk_param=vk_param)
-
-    def generate_ctor_param(self):
-        return [f'var {boost_name} : {boost_type} = [[ {boost_type} ]];']
 
 
 class C_Param(object):
