@@ -934,6 +934,10 @@ class GenHandleFuncParam(object):
         else:
             return self.vk_param.boost_value_to_vk(self.boost_name)
 
+    def generate_dtor_vk_param(self):
+        bh_attr = self.func.gen_handle.boost_handle_attr
+        return f'{bh_attr}._{self.boost_name}'
+
     def generate_handle_field(self):
         return [f'_{self.boost_name} : {self.vk_type}']
 
@@ -944,9 +948,6 @@ class GenHandleFuncParamAllocator(GenHandleFuncParam):
     def maybe_create(cls, func, vk_param):
         if vk_param.vk_name == 'pAllocator':
             return cls(func=func, vk_param=vk_param)
-
-    def generate_ctor_vk_param(self):
-        return 'null'
 
     @property
     def boost_name(self):
@@ -967,6 +968,12 @@ class GenHandleFuncParamAllocator(GenHandleFuncParam):
 
     def generate_handle_field(self):
         return []
+
+    def generate_ctor_vk_param(self):
+        return 'null'
+
+    def generate_dtor_vk_param(self):
+        return 'null'
 
 
 class GenHandleFuncParamArrayCounter(GenHandleFuncParam):
