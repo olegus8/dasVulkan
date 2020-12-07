@@ -135,7 +135,7 @@ def add_boost_content(g):
         ctor            = 'vkGetDeviceQueue')
     g.add_gen_handle(
         handle          = 'VkPipeline',
-        ctor            = 'vkCreateGraphicsPipeline',
+        ctor            = 'vkCreateGraphicsPipelines',
         dtor            = 'vkDestroyPipeline',
         ).declare_array(
             count = 'createInfoCount',
