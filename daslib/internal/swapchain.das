@@ -55,7 +55,7 @@ def with_swapchain_ex(
     let extent <- phys_dev |> get_swap_extent(surface, window)
 
     var framebuffers : array<Framebuffer>
-    framebuffers.resize(views |> length)
+    framebuffers |> resize(views |> length)
     for fbuf, view in framebuffers, views:
         var create_info <- [[FramebufferCreateInfo
             render_pass = render_pass,
