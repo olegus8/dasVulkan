@@ -619,18 +619,11 @@ class GenStructFieldArray(object):
 
 class GenHandle(object):
 
-    def __init__(self, generator, handle,
-        enumerator=None, ctor=None, dtor=None,
-    ):
+    def __init__(self, generator, handle, ctor=None, dtor=None):
         self.__generator = generator
         self.__vk_handle_type_name = handle
-        self.__vk_enumerator_name = enumerator
         self.__vk_ctor_name = ctor
         self.__vk_dtor_name = dtor
-
-    @property
-    def __c_enumerator(self):
-        return self.__generator.functions[self.__vk_enumerator_name]
 
     @property
     def __c_ctor(self):
@@ -639,10 +632,6 @@ class GenHandle(object):
     @property
     def __c_dtor(self):
         return self.__generator.functions[self.__vk_dtor_name]
-
-    @property
-    def __vk_enumerator_params(self):
-        return self.__generator.get_func_params(self.__c_enumerator)
 
     @property
     def __vk_ctor_params(self):
@@ -673,10 +662,6 @@ class GenHandle(object):
     @property
     def __boost_handle_batch_attr(self):
         return self.__boost_handle_attr + '_batch'
-
-    @property
-    def __boost_enumerator_name(self):
-        return vk_func_name_to_boost(self.__vk_enumerator_name)
 
     @property
     def __boost_ctor_name(self):
