@@ -815,7 +815,6 @@ class GenHandleCtor(GenHandleFunc):
         lines += [
             '    ]]',
         ]
-
         for param in self.params:
             lines += [f'    {line}'
                 for line in param.generate_ctor_temp_vars()]
