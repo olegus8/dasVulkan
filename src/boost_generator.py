@@ -796,10 +796,7 @@ class GenHandleCtor(GenHandleFunc):
 
         for param in self.params:
             lines += [f'    {line}' for line in param.generate_ctor_param()]
-            if param.vk_name == 'pAllocator':
-                continue
-            elif self.__is_array_count(param.vk_name):
-                continue
+
             elif param.vk_type == f'{self.__vk_handle_type_name} ?':
                 continue
             boost_name = param.boost_name
@@ -995,6 +992,9 @@ class GenHandleFuncParamMainHandle(GenHandleFuncParam):
         if self.array:
             btype = f'array<{btype}>'
         return btype
+
+    def generate_ctor_param(self):
+        return []
 
 
 class C_Param(object):
