@@ -694,7 +694,7 @@ class GenHandle(object):
     def __constructs_array(self):
         for param in self.__vk_ctor_params:
             if self.__is_array_items(param.vk_name)
-                vdtype = deref_das_type(array.vk_items_param.vk_type)
+                vdtype = deref_das_type(param.vk_type)
                 if vdtype == self.__vk_handle_type_name:
                     return True
         return False
