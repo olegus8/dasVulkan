@@ -869,13 +869,18 @@ class GenHandleFunc(object):
 
     @property
     def params(self):
-        return [GenHandleFuncParam(func=self, vk_param=vk_param)
-            for vk_param in self.__vk_params]
+        return map(self.get_param, self.__vk_params)
 
-    @property
-    def param_handle(self):
-        for param in self.params:
-            if param.is_handle_pointer:
+    def get_param(self, vk_param):
+        for param_class in [
+            GenHandleFuncParamAllocator,
+            GenHandleFuncParamMainHandle,
+            GenHandleFuncParamStruct,
+            GenHandleFuncParamArrayCounter,
+            GenHandleFuncParam,
+        ]:
+            param = param_class.maybe_create(vk_param=vk_param, func=self)
+            if param:
                 return param
 
     def is_array_count(self, vk_name):
@@ -907,7 +912,7 @@ class GenHandleFuncArray(object):
 class GenHandleFuncParam(object):
 
     def __init__(self, func, vk_param):
-        self.vk_param = vk_param
+        self.__vk_param = vk_param
         self.func = func
 
     @property
@@ -915,18 +920,61 @@ class GenHandleFuncParam(object):
         return self.func.gen_handle
 
     @property
-    def is_handle_pointer(self):
-        if self.vk_param.is_pointer:
-            dvtype = deref_das_type(self.vk_param.vk_type)
-            return dvtype == self.gen_handle.vk_handle_type_name
+    def boost_name(self):
+        return self.__vk_params.boost_name
+
+    @property
+    def boost_type(self):
+        return self.__vk_params.boost_type
+
+    @property
+    def vk_name(self):
+        return self.__vk_param.vk_name
+
+    @property
+    def vk_type(self):
+        return self.__vk_param.vk_type
 
     @property
     def array(self):
-        return self.func.get_array(self.vk_param.vk_name)
+        return self.func.get_array(self.vk_name)
+
+
+class GenHandleFuncParamAllocator(GenHandleFuncParam):
+
+    @classmethod
+    def maybe_create(cls, func, vk_param):
+        if vk_param.vk_name == 'pAllocator':
+            return cls(func=func, vk_param=vk_param)
 
     @property
-    def is_array(self):
-        return self.array is not None
+    def boost_name(self):
+        return None
+
+    @property
+    def boost_type(self):
+        return None
+
+
+class GenHandleFuncParamMainHandle(GenHandleFuncParam):
+
+    @classmethod
+    def maybe_create(cls, func, vk_param):
+        if vk_param.is_pointer:
+            dvtype = deref_das_type(vk_param.vk_type)
+            if dvtype == func.gen_handle.vk_handle_type_name:
+                return cls(func=func, vk_param=vk_param)
+
+    @property
+    def boost_name(self):
+        return deref_boost_ptr_name(self.vk_param.boost_name)
+
+    @property
+    def boost_type(self):
+        btype = deref_das_type(self.vk_param.boost_type)
+        if self.array:
+            btype = f'array<{btype}>'
+        return btype
 
 
 class C_Param(object):
