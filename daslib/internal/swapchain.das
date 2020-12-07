@@ -64,7 +64,7 @@ def with_swapchain_ex(
             height = extent.height,
             layers = 1u
         ]]
-        defer()
+        defer() <|
             create_info.attachments |> resize(0)
             memzero(create_info.render_pass)
             delete create_info
