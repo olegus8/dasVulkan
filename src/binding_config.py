@@ -286,6 +286,9 @@ def add_boost_content(g):
         struct      = 'VkQueueFamilyProperties',
         vk_to_boost = True)
     g.add_gen_struct(
+        struct      = 'VkRect2D',
+        boost_to_vk = True)
+    g.add_gen_struct(
         struct      = 'VkRenderPassCreateInfo',
         boost_to_vk = True
         ).declare_array(
