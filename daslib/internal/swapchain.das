@@ -30,10 +30,8 @@ def create_swapchain_ex(
 
     var swapchain <- device |> create_multibuffered_swapchain(
         phys_dev, surface, window, surf_fmt, present_mode)
-    defer() <| ${ delete swapchain; }
 
     var images <- device |> get_swapchain_images_khr(swapchain)
-    defer() <| ${ delete images; }
 
     var views <- [{ for image in images;
         device |> create_image_view([[ ImageViewCreateInfo
@@ -43,7 +41,6 @@ def create_swapchain_ex(
             subresource_range = IMAGE_SUBRESOURCE_RANGE_SINGLE_COLOR,
             components = COMPONENT_MAPPING_IDENTITY
         ]])}]
-    defer() <| ${ delete views; }
 
     let extent <- phys_dev |> get_swap_extent(surface, window)
 
@@ -55,7 +52,6 @@ def create_swapchain_ex(
             width = extent.width,
             height = extent.height
         ])}]
-    defer() <| ${ delete framebuffers; }
 
     return <- [[SwapchainEx
         swapchain <- swapchain,
