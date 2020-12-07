@@ -61,7 +61,7 @@ def create_swapchain_ex(
     defer() <| ${ delete framebuffers; }
 
     return <- [[SwapchainEx
-        swapchain = swapchain_khr,
+        swapchain = swapchain.swapchain_khr,
         images <- vk_images,
         views <- views,
         framebuffers <- framebuffers
