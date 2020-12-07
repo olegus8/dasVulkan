@@ -644,7 +644,7 @@ class GenHandle(object):
         lines += [
             '',
             '//',
-           f'// {self.__boost_handle_type_name}',
+           f'// {self.boost_handle_type_name}',
             '//',
         ]
         lines += self.__generate_type()
