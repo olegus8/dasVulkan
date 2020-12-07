@@ -134,6 +134,16 @@ def add_boost_content(g):
         handle          = 'VkQueue',
         ctor            = 'vkGetDeviceQueue')
     g.add_gen_handle(
+        handle          = 'VkPipeline',
+        ctor            = 'vkCreateGraphicsPipeline',
+        dtor            = 'vkDestroyGraphicsPipeline')
+        ).declare_array(
+            count = 'createInfoCount',
+            items = 'pCreateInfos'
+        ).declare_array(
+            count = 'createInfoCount',
+            items = 'pPipelines')
+    g.add_gen_handle(
         handle          = 'VkPipelineLayout',
         ctor            = 'vkCreatePipelineLayout',
         dtor            = 'vkDestroyPipelineLayout')
