@@ -3,7 +3,6 @@ options no_aot = true
 
 require math
 
-require daslib/safe_addr
 require daslib/defer
 require vulkan
 require device_ex
@@ -19,7 +18,7 @@ struct SwapchainEx
     framebuffers    : array<Framebuffer>
 
 
-def with_swapchain_ex(
+def create_swapchain_ex(
     device          : Device;
     phys_dev        : PhysicalDevice;
     surface         : SurfaceKHR;
@@ -27,15 +26,11 @@ def with_swapchain_ex(
     surf_fmt        : SurfaceFormatKHR;
     present_mode    : VkPresentModeKHR;
     render_pass     : RenderPass;
-    b : block<(sc:SwapchainEx)>
-)
-    var vk_device = device.device
+) : SwapchainEx
 
     var swapchain <- device |> create_multibuffered_swapchain(
         phys_dev, surface, window, surf_fmt, present_mode)
     defer() <| ${ delete swapchain; }
-
-    let vk_swapchain = swapchain.swapchain_khr
 
     var images <- device |> get_swapchain_images_khr(swapchain)
     defer() <| ${ delete images; }
@@ -65,14 +60,12 @@ def with_swapchain_ex(
         ])}]
     defer() <| ${ delete framebuffers; }
 
-    var sc <- [[SwapchainEx
-        swapchain = vk_swapchain,
+    return <- [[SwapchainEx
+        swapchain = swapchain_khr,
         images <- vk_images,
         views <- views,
         framebuffers <- framebuffers
     ]]
-    defer() <| ${ delete sc; }
-    b |> invoke(sc)
 
 
 def finalize(var sc : SwapchainEx)

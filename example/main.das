@@ -377,21 +377,21 @@ def with_swapchain_dependent_state(
     var vk_frame_fences <- [{for fence in frame_fences; fence.fence}]
     defer() <| ${ delete vk_frame_fences; }
 
-    surf_fmt |> with_view() <| $(vk_surf_fmt : VkSurfaceFormatKHR const) {
-    device |> with_swapchain_ex(phys_dev, surface, window,
-        surf_fmt, present_mode, render_pass) <| $(swapchain) {
+    var swapchain <- device |> create_swapchain_ex(phys_dev, surface, window,
+        surf_fmt, present_mode, render_pass)
+    defer() <| ${ delete swapchain; }
+
     vk_device |> with_graphics_pipeline(
         pipeline_layout, vk_render_pass, phys_dev,
-        surface, window, vert_shmod, frag_shmod)     <| $(pipeline)
-    {
+        surface, window, vert_shmod, frag_shmod
+    ) <| $(pipeline)
         b |> invoke(
             swapchain,
             pipeline,
             vk_img_avail_sems,
             vk_render_done_sems,
             vk_frame_fences
-        );
-    }}}
+        )
 
 
 def wait_fence(device; fence : VkFence)
