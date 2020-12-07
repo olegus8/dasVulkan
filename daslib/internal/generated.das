@@ -155,6 +155,35 @@ def enumerate_device_extension_properties(
 
     return <- [{for item in vk_items ; vk_value_to_boost(item)}]
 
+def enumerate_physical_devices(
+    instance : Instance = [[ Instance ]];
+    var result : VkResult? = [[VkResult?]]
+) : array<PhysicalDevice>
+    var count : uint
+    var result_ = VkResult VK_SUCCESS
+    result ?? result_ = vkEnumeratePhysicalDevices(
+        boost_value_to_vk(instance),
+        safe_addr(count),
+        null
+    )
+
+    assert(result_ == VkResult VK_SUCCESS)
+    if result ?? result_ != VkResult VK_SUCCESS
+        return <- [[array<PhysicalDevice>]]
+
+    var vk_items : array<VkPhysicalDevice>
+    defer() <| ${ delete vk_items; }
+    vk_items |> resize(int(count))
+    vk_items |> lock_data() <| $(vk_p_items, count_)
+        result ?? result_ = vkEnumeratePhysicalDevices(
+            boost_value_to_vk(instance),
+            safe_addr(count),
+            vk_p_items
+        )
+        assert(result_ == VkResult VK_SUCCESS)
+
+    return <- [{for item in vk_items ; vk_value_to_boost(item)}]
+
 def get_physical_device_queue_family_properties(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]]
 ) : array<QueueFamilyProperties>
@@ -2346,53 +2375,6 @@ def boost_value_to_vk(b : PhysicalDevice ?) : VkPhysicalDevice ?
 
 def vk_value_to_boost(v : VkPhysicalDevice) : PhysicalDevice
     return [[ PhysicalDevice physical_device=v ]]
-
-struct PhysicalDeviceBatch
-    physical_device_batch : array<VkPhysicalDevice>
-    _needs_delete : bool
-
-def split(batch : PhysicalDeviceBatch) : array<PhysicalDevice>
-    return <- [{for h in batch.physical_device_batch ;
-        [[PhysicalDevice physical_device=h]]}]
-
-def enumerate_physical_devices(
-    instance : Instance;
-    var result : VkResult? = [[VkResult?]]
-) : PhysicalDeviceBatch
-
-    var count : uint
-    var result_ = VkResult VK_SUCCESS
-
-    result ?? result_ = vkEnumeratePhysicalDevices(
-        boost_value_to_vk(instance),
-        safe_addr(count),
-        null
-    )
-    assert(result_ == VkResult VK_SUCCESS)
-
-    var vk_handles : array<VkPhysicalDevice>
-    if result ?? result_ == VkResult VK_SUCCESS && count > 0u
-        vk_handles |> resize(int(count))
-        vk_handles |> lock() <| $(thandles)
-            result ?? result_ = vkEnumeratePhysicalDevices(
-                boost_value_to_vk(instance),
-                safe_addr(count),
-                addr(thandles[0])
-            )
-            assert(result_ == VkResult VK_SUCCESS)
-
-    return <- [[ PhysicalDeviceBatch
-        physical_device_batch <- vk_handles,
-        _needs_delete = true
-    ]]
-
-def enumerate_physical_devices_no_batch(
-    instance : Instance;
-    var result : VkResult? = [[VkResult?]]
-): array<PhysicalDevice>
-    var handles <- enumerate_physical_devices(instance, result)
-    defer() <| ${ delete handles; }
-    return <- handles |> split()
 
 //
 // Queue
