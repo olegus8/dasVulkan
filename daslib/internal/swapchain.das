@@ -26,7 +26,7 @@ def with_swapchain_ex(
     surf_fmt        : SurfaceFormatKHR;
     present_mode    : VkPresentModeKHR;
     render_pass     : RenderPass;
-    b : block<(sc:SwapchainExj>
+    b : block<(sc:SwapchainEx>
 )
     var vk_device = device.device
 
