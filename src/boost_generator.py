@@ -922,6 +922,8 @@ class GenHandleFuncParam(object):
         bname = self.vk_param.boost_name
         if self.array:
             bname = boost_ptr_name_to_array(bname)
+        elif self.vk_param.is_pointer
+            bname = deref_boost_ptr_name(bname)
         return bname
 
     @property
@@ -929,6 +931,8 @@ class GenHandleFuncParam(object):
         btype = self.vk_param.boost_type
         if self.array:
             btype = f'array<{deref_das_type(btype)}>'
+        elif self.vk_param.is_pointer
+            btype = deref_das_type(btype)
         return btype
 
     @property
