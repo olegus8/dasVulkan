@@ -322,7 +322,7 @@ def with_swapchain_independent_state(width, height, title; b : block<(
             present_mode,
             shvert.shader_module,
             shfrag.shader_module,
-            render_pass.render_pass,
+            render_pass,
             pipeline_layout.pipeline_layout,
             cmd_pool.command_pool
         )
