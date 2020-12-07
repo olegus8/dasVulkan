@@ -173,6 +173,9 @@ def add_boost_content(g):
         struct      = 'VkCommandPoolCreateInfo',
         boost_to_vk = True)
     g.add_gen_struct(
+        struct      = 'VkComponentMapping',
+        boost_to_vk = True)
+    g.add_gen_struct(
         struct      = 'VkDescriptorSetLayoutBinding',
         boost_to_vk = True,
         ).declare_array(
@@ -221,6 +224,9 @@ def add_boost_content(g):
         ).declare_array(
             count = 'queueFamilyIndexCount',
             items = 'pQueueFamilyIndices')
+    g.add_gen_struct(
+        struct      = 'VkImageSubresourceRange',
+        boost_to_vk = True)
     g.add_gen_struct(
         struct      = 'VkImageViewCreateInfo',
         boost_to_vk = True)

@@ -704,6 +704,55 @@ def vk_view_destroy(var boost_struct : ImageCreateInfo)
     boost_struct._vk_view__active = false
 
 //
+// ImageViewCreateInfo
+//
+
+struct ImageViewCreateInfo
+    flags : uint
+    image : Image
+    view_type : VkImageViewType
+    format : VkFormat
+    components : ComponentMapping
+    subresource_range : ImageSubresourceRange
+    _vk_view_p_components : VkComponentMapping ?
+    _vk_view_p_subresource_range : VkImageSubresourceRange ?
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : ImageViewCreateInfo
+) : VkImageViewCreateInfo
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+
+    boost_struct._vk_view_p_components = new VkComponentMapping
+    *(boost_struct._vk_view_p_components) <- (
+        boost_struct.components |> vk_view_create_unsafe())
+
+    boost_struct._vk_view_p_subresource_range = new VkImageSubresourceRange
+    *(boost_struct._vk_view_p_subresource_range) <- (
+        boost_struct.subresource_range |> vk_view_create_unsafe())
+
+    return <- [[ VkImageViewCreateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO,
+        flags = boost_struct.flags,
+        image = boost_value_to_vk(boost_struct.image),
+        viewType = boost_struct.view_type,
+        format = boost_struct.format,
+        components = *(boost_struct._vk_view_p_components),
+        subresourceRange = *(boost_struct._vk_view_p_subresource_range)
+    ]]
+
+def vk_view_destroy(var boost_struct : ImageViewCreateInfo)
+    assert(boost_struct._vk_view__active)
+    boost_struct.components |> vk_view_destroy()
+    unsafe
+        delete boost_struct._vk_view_p_components
+    boost_struct.subresource_range |> vk_view_destroy()
+    unsafe
+        delete boost_struct._vk_view_p_subresource_range
+    boost_struct._vk_view__active = false
+
+//
 // InstanceCreateInfo
 //
 
@@ -1887,6 +1936,59 @@ def finalize(var image : Image explicit)
             null
         )
     memzero(image)
+
+//
+// ImageView
+//
+
+struct ImageView
+    image_view : VkImageView
+    _needs_delete : bool
+    _device : VkDevice
+
+def boost_value_to_vk(b : ImageView) : VkImageView
+    return b.image_view
+
+def boost_value_to_vk(b : ImageView ?) : VkImageView ?
+    return b?.image_view
+
+def vk_value_to_boost(v : VkImageView) : ImageView
+    return [[ ImageView image_view=v ]]
+
+def create_image_view(
+    device : Device = [[ Device ]];
+    var create_info : ImageViewCreateInfo = [[ ImageViewCreateInfo ]];
+    var result : VkResult? = [[VkResult?]]
+) : ImageView
+
+    var image_view <- [[ ImageView
+        _needs_delete = true,
+        _device = boost_value_to_vk(device)
+    ]]
+
+    var vk_create_info : VkImageViewCreateInfo
+    unsafe
+        vk_create_info <- create_info |> vk_view_create_unsafe()
+    defer() <| ${ create_info |> vk_view_destroy(); }
+
+    var result_ = VkResult VK_SUCCESS
+    result ?? result_ = vkCreateImageView(
+        boost_value_to_vk(device),
+        safe_addr(vk_create_info),
+        null,
+        safe_addr(image_view.image_view)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+    return <- image_view
+
+def finalize(var image_view : ImageView explicit)
+    if image_view._needs_delete
+        vkDestroyImageView(
+            image_view._device,
+            boost_value_to_vk(image_view),
+            null
+        )
+    memzero(image_view)
 
 //
 // Instance
