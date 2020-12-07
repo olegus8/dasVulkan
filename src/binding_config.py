@@ -340,3 +340,7 @@ def add_boost_content(g):
         func        = 'vkGetPhysicalDeviceSurfacePresentModesKHR',
         p_count     = 'pPresentModeCount',
         p_items     = 'pPresentModes')
+    g.add_gen_query_array_func(
+        func        = 'vkGetSwapchainImagesKHR',
+        p_count     = 'pSwapchainImageCount',
+        p_items     = 'pSwapchainImages')
