@@ -768,6 +768,7 @@ class GenHandle(object):
         remove_last_char(lines, ';')
 
         return_type = (f'array<{bh_type}>'
+            if self.__constructs_array else bh_type)
 
         lines += [
             f') : {return_type}',
