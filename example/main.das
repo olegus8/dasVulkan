@@ -273,7 +273,7 @@ def with_swapchain_independent_state(width, height, title; b : block<(
     present_mode    : VkPresentModeKHR;
     vert_shmod      : VkShaderModule;
     frag_shmod      : VkShaderModule;
-    render_pass     : VkRenderPass;
+    render_pass     : RenderPass;
     pipeline_layout : VkPipelineLayout;
     cmd_pool        : VkCommandPool
 )>)
