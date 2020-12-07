@@ -811,7 +811,7 @@ class GenHandleCtor(GenHandleFunc):
         return lines
 
 
-class GenHandleCtor(GenHandleFunc):
+class GenHandleDtor(GenHandleFunc):
 
     def generate(self):
         bh_attr = self.gen_handle.boost_handle_attr
