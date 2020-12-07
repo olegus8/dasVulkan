@@ -815,7 +815,10 @@ class GenHandleCtor(GenHandleFunc):
             '    ]]',
         ]
 
-        for param in self.__vk_ctor_params:
+        for param in self.params:
+            lines += [f'    {line}'
+                for line in param.generate_ctor_temp_vars()]
+
             if param.vk_name == 'pAllocator':
                 continue
             if param.is_pointer:
@@ -937,6 +940,21 @@ class GenHandleFuncParam(object):
         vk_value = self.vk_param.boost_value_to_vk(self.boost_name)
         return [f'_{self.boost_name} = {vk_value},']
 
+    def generate_ctor_temp_vars(self):
+        lines = []
+        if self.vk_param.needs_view:
+            bname = self.boost_name
+            btype = self.boost_type
+            vutype = self.vk_param.vk_unqual_type
+            lines += [
+                '',
+               f'var vk_{bname} : {vutype}',
+               f'unsafe',
+               f'    vk_{bname} <- {bname} |> vk_view_create_unsafe()',
+               f'defer() <| ${{ {bname} |> vk_view_destroy(); }}',
+            ]
+        return lines
+
 
 class GenHandleFuncParamAllocator(GenHandleFuncParam):
 
@@ -957,6 +975,9 @@ class GenHandleFuncParamAllocator(GenHandleFuncParam):
         return []
 
     def generate_handle_init_field(self):
+        return []
+
+    def generate_ctor_temp_vars(self):
         return []
 
 
