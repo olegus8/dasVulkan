@@ -219,6 +219,12 @@ def add_boost_content(g):
         struct      = 'VkFenceCreateInfo',
         boost_to_vk = True)
     g.add_gen_struct(
+        struct      = 'VkFramebufferCreateInfo',
+        boost_to_vk = True
+        ).declare_array(
+            count = 'attachmentCount',
+            items = 'pAttachments')
+    g.add_gen_struct(
         struct      = 'VkImageCreateInfo',
         boost_to_vk = True,
         ).declare_array(
