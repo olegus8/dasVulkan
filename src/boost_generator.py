@@ -619,29 +619,17 @@ class GenStructFieldArray(object):
 
 class GenHandle(object):
 
-    def __init__(self, generator, handle, ctor=None, dtor=None):
-        self._generator = generator
-        self._vk_handle_type_name = handle
-        self.__vk_ctor_name = ctor
-        self.__vk_dtor_name = dtor
+    def __init__(self, generator, handle, dtor=None):
+        self.generator = generator
+        self.vk_handle_type_name = handle
+        self.dtor = None if dtor is None else GenHandleDtor(
+            handle=self, name=dtor)
+        self.ctors = []
 
-    @property
-    def __c_ctor(self):
-        return self._generator.functions[self.__vk_ctor_name]
-
-    @property
-    def __c_dtor(self):
-        return self._generator.functions[self.__vk_dtor_name]
-
-    @property
-    def __vk_ctor_params(self):
-        return (self._generator.get_func_params(self.__c_ctor)
-            if self.__vk_ctor_name else [])
-
-    @property
-    def __vk_dtor_params(self):
-        return (self._generator.get_func_params(self.__c_dtor)
-            if self.__vk_dtor_name else [])
+    def declare_ctor(self, vk_name):
+        ctor = GenHandleCtor(handle=self, name=vk_name)
+        self.ctors.append(ctor)
+        return ctor
 
     @property
     def __boost_handle_type_name(self):
@@ -885,9 +873,9 @@ class GenHandleFunc(object):
             for vk_param in self.__vk_params]
 
     @property
-    def output_param(self):
+    def param_handle(self):
         for param in self.params:
-            if param.is_handle_output:
+            if param.is_handle_pointer:
                 return param
 
     def is_array_count(self, vk_name):
@@ -930,7 +918,7 @@ class GenHandleFuncParam(object):
     def is_handle_pointer(self):
         if self.vk_param.is_pointer:
             dvtype = deref_das_type(self.vk_param.vk_type)
-            return dvtype == self._gen_handle._vk_handle_type_name
+            return dvtype == self.gen_handle.vk_handle_type_name
 
     @property
     def array(self):
