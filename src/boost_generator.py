@@ -716,6 +716,7 @@ class GenHandle(object):
             '',
            f'struct {bhtype}',
            f'    {attr} : {vhtype}',
+            '    _needs_delete : bool',
         ]
         for param in self.__vk_dtor_params:
             if param.vk_name == 'pAllocator':
@@ -732,6 +733,9 @@ class GenHandle(object):
             '',
            f'def boost_value_to_vk(b : {bhtype} ?) : {vhtype} ?',
            f'    return b?.{attr}',
+            '',
+           f'def vk_value_to_boost(v : {vhtype}) : {bhtype}',
+           f'    return [[ {bhtype} {attr}=v ]]',
         ]
         return lines
 
@@ -745,6 +749,7 @@ class GenHandle(object):
             '',
            f'struct {batch_type}',
            f'    {batch_attr} : array<{vk_type}>',
+            '    _needs_delete : bool',
             '',
            f'def split(batch : {batch_type}) : array<{single_type}>',
            f'    return <- [{{for h in batch.{batch_attr} ;',
@@ -811,7 +816,10 @@ class GenHandle(object):
            f'            )',
            f'            assert(result_ == VkResult VK_SUCCESS)',
             '',
-           f'    return <- [[{batch_type} {batch_attr} <- vk_handles]]',
+           f'    return <- [[ {batch_type}',
+           f'        {batch_attr} <- vk_handles',
+           f'        _needs_delete = true',
+           f'    ]]',
         ]
         return lines
 
@@ -884,6 +892,7 @@ class GenHandle(object):
            f') : {bh_type}',
             '',
            f'    var {bh_attr} <- [[ {bh_type}',
+           f'        _needs_delete = true,',
         ]
 
         for param in self.__vk_dtor_params:
@@ -965,7 +974,8 @@ class GenHandle(object):
         lines += [
             '',
            f'def finalize(var {bh_attr} : {bh_type} explicit)',
-           f'    {self.__vk_dtor_name}(',
+           f'    if {bh_attr}._needs_delete',
+           f'        {self.__vk_dtor_name}(',
         ]
         for param in self.__vk_dtor_params:
             if param.vk_name == 'pAllocator':
@@ -974,10 +984,10 @@ class GenHandle(object):
                 vk_value = param.boost_value_to_vk(bh_attr)
             else:
                 vk_value = f'{bh_attr}._{param.boost_name}'
-            lines.append(f'        {vk_value},')
+            lines.append(f'            {vk_value},')
         remove_last_char(lines, ',')
         lines += [
-            '    )',
+            '        )',
            f'    memzero({bh_attr})',
         ]
         return lines

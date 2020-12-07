@@ -241,6 +241,38 @@ def get_physical_device_surface_present_modes_khr(
 
     return <- [{for item in vk_items ; vk_value_to_boost(item)}]
 
+def get_swapchain_images_khr(
+    device : Device = [[ Device ]];
+    swapchain : SwapchainKHR = [[ SwapchainKHR ]];
+    var result : VkResult? = [[VkResult?]]
+) : array<Image>
+    var count : uint
+    var result_ = VkResult VK_SUCCESS
+    result ?? result_ = vkGetSwapchainImagesKHR(
+        boost_value_to_vk(device),
+        boost_value_to_vk(swapchain),
+        safe_addr(count),
+        null
+    )
+
+    assert(result_ == VkResult VK_SUCCESS)
+    if result ?? result_ != VkResult VK_SUCCESS
+        return <- [[array<Image>]]
+
+    var vk_items : array<VkImage>
+    defer() <| ${ delete vk_items; }
+    vk_items |> resize(int(count))
+    vk_items |> lock_data() <| $(vk_p_items, count_)
+        result ?? result_ = vkGetSwapchainImagesKHR(
+            boost_value_to_vk(device),
+            boost_value_to_vk(swapchain),
+            safe_addr(count),
+            vk_p_items
+        )
+        assert(result_ == VkResult VK_SUCCESS)
+
+    return <- [{for item in vk_items ; vk_value_to_boost(item)}]
+
 //
 // ApplicationInfo
 //
