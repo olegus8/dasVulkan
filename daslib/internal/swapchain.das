@@ -25,7 +25,7 @@ def create_swapchain_ex(
     window          : GLFWwindow_DasHandle;
     surf_fmt        : SurfaceFormatKHR;
     present_mode    : VkPresentModeKHR;
-    render_pass     : RenderPass;
+    render_pass     : RenderPass
 ) : SwapchainEx
 
     var swapchain <- device |> create_multibuffered_swapchain(
