@@ -621,15 +621,12 @@ class GenHandle(object):
 
     def __init__(self, generator, handle,
         enumerator=None, ctor=None, dtor=None,
-        p_count=None, p_handles=None
     ):
         self.__generator = generator
         self.__vk_handle_type_name = handle
         self.__vk_enumerator_name = enumerator
         self.__vk_ctor_name = ctor
         self.__vk_dtor_name = dtor
-        self.__vk_p_count_name = p_count
-        self.__vk_p_handles_name = p_handles
 
     @property
     def __c_enumerator(self):
@@ -660,10 +657,6 @@ class GenHandle(object):
     @property
     def __vk_ctor_returns_vk_result(self):
         return returns_vk_result(self.__c_ctor)
-
-    @property
-    def __is_batched(self):
-        return self.__vk_p_count_name is not None
 
     @property
     def __boost_handle_type_name(self):
@@ -698,13 +691,8 @@ class GenHandle(object):
             '//',
         ]
         lines += self.__generate_type()
-        if self.__is_batched:
-            lines += self.__generate_batched_type()
-            lines += self.__generate_enumerator_batched()
-            lines += self.__generate_enumerator_not_batched()
-        else:
-            lines += self.__generate_ctor()
-            lines += self.__generate_dtor()
+        lines += self.__generate_ctor()
+        lines += self.__generate_dtor()
         return lines
 
     def __generate_type(self):
@@ -736,123 +724,6 @@ class GenHandle(object):
             '',
            f'def vk_value_to_boost(v : {vhtype}) : {bhtype}',
            f'    return [[ {bhtype} {attr}=v ]]',
-        ]
-        return lines
-
-    def __generate_batched_type(self):
-        batch_attr = self.__boost_handle_batch_attr
-        batch_type = self.__boost_handle_batch_type_name
-        single_attr = self.__boost_handle_attr
-        single_type = self.__boost_handle_type_name
-        vk_type = self.__vk_handle_type_name
-        return [
-            '',
-           f'struct {batch_type}',
-           f'    {batch_attr} : array<{vk_type}>',
-            '    _needs_delete : bool',
-            '',
-           f'def split(batch : {batch_type}) : array<{single_type}>',
-           f'    return <- [{{for h in batch.{batch_attr} ;',
-           f'        [[{single_type} {single_attr}=h]]}}]',
-        ]
-
-    def __generate_enumerator_batched(self):
-        batch_attr = self.__boost_handle_batch_attr
-        batch_type = self.__boost_handle_batch_type_name
-        lines = []
-        lines += [
-            '',
-           f'def {self.__boost_enumerator_name}(']
-        for param in self.__vk_enumerator_params:
-            if param.vk_name in [
-                self.__vk_p_count_name, self.__vk_p_handles_name
-            ]:
-                continue
-            lines += [
-               f'    {param.boost_name} : {param.boost_type};',
-            ]
-        lines += [
-           f'    var result : VkResult? = [[VkResult?]]',
-           f') : {self.__boost_handle_batch_type_name}',
-            '',
-           f'    var count : uint',
-           f'    var result_ = VkResult VK_SUCCESS',
-            '',
-           f'    result ?? result_ = {self.__vk_enumerator_name}('
-        ]
-
-        for param in self.__vk_enumerator_params:
-            if param.vk_name == self.__vk_p_count_name:
-                vk_value = 'safe_addr(count)'
-            elif param.vk_name == self.__vk_p_handles_name:
-                vk_value = 'null'
-            else:
-                vk_value = param.boost_value_to_vk(param.boost_name)
-            lines.append(f'        {vk_value},')
-        remove_last_char(lines, ',')
-
-        lines += [
-            '    )',
-           f'    assert(result_ == VkResult VK_SUCCESS)',
-            '',
-           f'    var vk_handles : array<{self.__vk_handle_type_name}>',
-           f'    if result ?? result_ == VkResult VK_SUCCESS && count > 0u',
-           f'        vk_handles |> resize(int(count))',
-           f'        vk_handles |> lock() <| $(thandles)',
-           f'            result ?? result_ = {self.__vk_enumerator_name}(',
-        ]
-
-        for param in self.__vk_enumerator_params:
-            if param.vk_name == self.__vk_p_count_name:
-                vk_value = 'safe_addr(count)'
-            elif param.vk_name == self.__vk_p_handles_name:
-                vk_value = 'addr(thandles[0])'
-            else:
-                vk_value = param.boost_value_to_vk(param.boost_name)
-            lines.append(f'                {vk_value},')
-        remove_last_char(lines, ',')
-
-        lines += [
-           f'            )',
-           f'            assert(result_ == VkResult VK_SUCCESS)',
-            '',
-           f'    return <- [[ {batch_type}',
-           f'        {batch_attr} <- vk_handles,',
-           f'        _needs_delete = true',
-           f'    ]]',
-        ]
-        return lines
-
-    def __generate_enumerator_not_batched(self):
-        lines = []
-        lines += [
-            '',
-           f'def {self.__boost_enumerator_name}_no_batch(',
-        ]
-        for param in self.__vk_enumerator_params:
-            if param.vk_name in [
-                self.__vk_p_count_name, self.__vk_p_handles_name
-            ]:
-                continue
-            lines += [
-               f'    {param.boost_name} : {param.boost_type};',
-            ]
-        lines += [
-           f'    var result : VkResult? = [[VkResult?]]',
-           f'): array<{self.__boost_handle_type_name}>',
-        ]
-        params = []
-        for param in self.__vk_enumerator_params:
-            if param.vk_name in [
-                self.__vk_p_count_name, self.__vk_p_handles_name
-            ]:
-                continue
-            params.append(param.boost_name)
-        params_text = ', '.join(params + ['result'])
-        lines += [
-           f'    var handles <- {self.__boost_enumerator_name}({params_text})',
-            '    defer() <| ${ delete handles; }',
-           f'    return <- handles |> split()',
         ]
         return lines
 
