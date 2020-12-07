@@ -620,33 +620,27 @@ class GenStructFieldArray(object):
 class GenHandle(object):
 
     def __init__(self, generator, handle, ctor=None, dtor=None):
-        self.__generator = generator
-        self.__vk_handle_type_name = handle
+        self._generator = generator
+        self._vk_handle_type_name = handle
         self.__vk_ctor_name = ctor
         self.__vk_dtor_name = dtor
-        self.__arrays = []
-
-    def declare_array(self, **kwargs):
-        array = GenHandleParamArray(handle=self, **kwargs)
-        self.__arrays.append(array)
-        return self
 
     @property
     def __c_ctor(self):
-        return self.__generator.functions[self.__vk_ctor_name]
+        return self._generator.functions[self.__vk_ctor_name]
 
     @property
     def __c_dtor(self):
-        return self.__generator.functions[self.__vk_dtor_name]
+        return self._generator.functions[self.__vk_dtor_name]
 
     @property
     def __vk_ctor_params(self):
-        return (self.__generator.get_func_params(self.__c_ctor)
+        return (self._generator.get_func_params(self.__c_ctor)
             if self.__vk_ctor_name else [])
 
     @property
     def __vk_dtor_params(self):
-        return (self.__generator.get_func_params(self.__c_dtor)
+        return (self._generator.get_func_params(self.__c_dtor)
             if self.__vk_dtor_name else [])
 
     @property
@@ -672,23 +666,6 @@ class GenHandle(object):
     @property
     def __boost_ctor_name(self):
         return vk_func_name_to_boost(self.__vk_ctor_name)
-
-    def __is_array_count(self, vk_field):
-        for array in self.__arrays:
-            if vk_field == array.vk_count_name:
-                return True
-        return False
-
-    def __is_array_items(self, vk_field):
-        for array in self.__arrays:
-            if vk_field == array.vk_items_name:
-                return True
-        return False
-
-    def __get_array(self, vk_name):
-        for array in self.__arrays:
-            if vk_name in [array.vk_items_name, array.vk_count_name]:
-                return array
 
     @property
     def __constructs_array(self):
@@ -891,12 +868,90 @@ class GenHandle(object):
         return lines
 
 
-class GenHandleParamArray(object):
+class GenHandleFunc(object):
 
-    def __init__(self, handle, items, count):
-        self.__gen_handle = handle
+    def __init__(self, handle, name):
+        self.gen_handle = handle
+        self.__arrays = []
+        self.vk_name = name
+
+    @property
+    def generator(self):
+        return self._gen_handle._generator
+
+    def declare_array(self, **kwargs):
+        array = GenHandleParamArray(handle=self, **kwargs)
+        self.__arrays.append(array)
+        return self
+
+    @property
+    def __c_func(self):
+        return self._generator.functions[self.vk_name]
+
+    @property
+    def __vk_params(self):
+        return self._generator.get_func_params(self.__c_func)
+
+    @property
+    def params(self):
+        return [GenHandleFuncParam(func=self, vk_param=vk_param)
+            for vk_param in self.__vk_params]
+
+    @property
+    def output_param(self):
+        for param in self.params:
+            if param.is_handle_output:
+                return param
+
+    def is_array_count(self, vk_name):
+        for array in self.__arrays:
+            if vk_name == array.vk_count_name:
+                return True
+        return False
+
+    def is_array_items(self, vk_name):
+        for array in self.__arrays:
+            if vk_name == array.vk_items_name:
+                return True
+        return False
+
+    def get_array(self, vk_name):
+        for array in self.__arrays:
+            if vk_name in [array.vk_items_name, array.vk_count_name]:
+                return array
+
+
+class GenHandleFuncArray(object):
+
+    def __init__(self, func, items, count):
+        self.func = func
         self.vk_count_name = count
         self.vk_items_name = items
+
+
+class GenHandleFuncParam(object):
+
+    def __init__(self, func, vk_param):
+        self.vk_param = vk_param
+        self.func = func
+
+    @property
+    def gen_handle(self):
+        return self.func.gen_handle
+
+    @property
+    def is_handle_pointer(self):
+        if self.vk_param.is_pointer:
+            dvtype = deref_das_type(self.vk_param.vk_type)
+            return dvtype == self._gen_handle._vk_handle_type_name
+
+    @property
+    def array(self):
+        return self.func.get_array(self.vk_param.vk_name)
+
+    @property
+    def is_array(self):
+        return self.array is not None
 
 
 class C_Param(object):
