@@ -1014,7 +1014,7 @@ class GenHandleFuncParamStruct(GenHandleFuncParam):
             return cls(func=func, vk_param=vk_param)
 
     def generate_ctor_param(self):
-        return []
+        return [f'var {boost_name} : {boost_type} = [[ {boost_type} ]];']
 
 
 class C_Param(object):
