@@ -796,37 +796,20 @@ class GenHandleCtor(GenHandleFunc):
         lines += [
             '',
            f'def {self.boost_name}(']
-
         for param in self.params:
             lines += [f'    {line}' for line in param.generate_ctor_param()]
-
         if self.returns_vk_result:
-            lines += [
-               f'    var result : VkResult? = [[VkResult?]];',
-            ]
-
+            lines += [f'    var result : VkResult? = [[VkResult?]];']
         remove_last_char(lines, ';')
-
         lines += [
-            f') : {self.__return_type}',
+           f') : {self.__return_type}',
             '',
            f'    var {bh_attr} <- [[ {bh_type}',
            f'        _needs_delete = true,',
         ]
-
         for param in self.gen_handle.dtor.params():
             lines += [f'        {line}'
                 for line in param.generate_handle_init_field()]
-
-            if param.vk_name == 'pAllocator':
-                continue
-            elif param.boost_type == bh_type:
-                continue
-            bname = param.boost_name
-            vk_value = param.boost_value_to_vk(bname)
-            lines += [
-               f'        _{bname} = {vk_value},'
-            ]
         remove_last_char(lines, ',')
         lines += [
             '    ]]',
