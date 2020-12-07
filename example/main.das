@@ -471,7 +471,7 @@ def draw_frame(device, queue, cmd_bufs, swapchain, frame,
     frame_fences, img_avail_sems, render_done_sems;
     var imgs_used_by_frames
 )
-    let vk_swapchain = swapchain.swapchain
+    let vk_swapchain = swapchain.swapchain_khr
     device |> wait_fence(frame_fences[frame])
     var img_acquired = false
     var presented = false
