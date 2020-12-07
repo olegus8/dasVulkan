@@ -45,7 +45,8 @@ def with_swapchain_ex(
     defer() <| ${ delete vk_images; }
 
     var views <- [{ for image in images;
-        device |> create_image_view(image, [[ ImageViewCreateInfo
+        device |> create_image_view([[ ImageViewCreateInfo
+            image = image,
             format = surf_fmt.format,
             view_type = VkImageViewType VK_IMAGE_VIEW_TYPE_2D,
             subresource_range = IMAGE_SUBRESOURCE_RANGE_SINGLE_COLOR,
