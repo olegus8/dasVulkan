@@ -616,6 +616,62 @@ def vk_view_destroy(var boost_struct : FenceCreateInfo)
     boost_struct._vk_view__active = false
 
 //
+// ImageCreateInfo
+//
+
+struct ImageCreateInfo
+    flags : uint
+    image_type : VkImageType
+    format : VkFormat
+    extent : Extent3D
+    mip_levels : uint
+    array_layers : uint
+    samples : VkSampleCountFlagBits
+    tiling : VkImageTiling
+    usage : uint
+    sharing_mode : VkSharingMode
+    queue_family_indices : array<uint>
+    initial_layout : VkImageLayout
+    _vk_view_p_extent : VkExtent3D ?
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : ImageCreateInfo
+) : VkImageCreateInfo
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+
+    boost_struct._vk_view_p_extent = new VkExtent3D
+    *(boost_struct._vk_view_p_extent) <- (
+        boost_struct.extent |> vk_view_create_unsafe())
+
+    let vk_p_queue_family_indices = array_addr_unsafe(boost_struct.queue_family_indices)
+
+    return <- [[ VkImageCreateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO,
+        flags = boost_struct.flags,
+        imageType = boost_struct.image_type,
+        format = boost_struct.format,
+        extent = *(boost_struct._vk_view_p_extent),
+        mipLevels = boost_struct.mip_levels,
+        arrayLayers = boost_struct.array_layers,
+        samples = boost_struct.samples,
+        tiling = boost_struct.tiling,
+        usage = boost_struct.usage,
+        sharingMode = boost_struct.sharing_mode,
+        queueFamilyIndexCount = uint(boost_struct.queue_family_indices |> length()),
+        pQueueFamilyIndices = vk_p_queue_family_indices,
+        initialLayout = boost_struct.initial_layout
+    ]]
+
+def vk_view_destroy(var boost_struct : ImageCreateInfo)
+    assert(boost_struct._vk_view__active)
+    boost_struct.extent |> vk_view_destroy()
+    unsafe
+        delete boost_struct._vk_view_p_extent
+    boost_struct._vk_view__active = false
+
+//
 // InstanceCreateInfo
 //
 
