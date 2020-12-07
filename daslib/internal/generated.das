@@ -392,6 +392,34 @@ def vk_view_destroy(var boost_struct : CommandPoolCreateInfo)
     boost_struct._vk_view__active = false
 
 //
+// ComponentMapping
+//
+
+struct ComponentMapping
+    r : VkComponentSwizzle
+    g : VkComponentSwizzle
+    b : VkComponentSwizzle
+    a : VkComponentSwizzle
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : ComponentMapping
+) : VkComponentMapping
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+
+    return <- [[ VkComponentMapping
+        r = boost_struct.r,
+        g = boost_struct.g,
+        b = boost_struct.b,
+        a = boost_struct.a
+    ]]
+
+def vk_view_destroy(var boost_struct : ComponentMapping)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+//
 // DescriptorSetLayoutBinding
 //
 
@@ -701,6 +729,36 @@ def vk_view_destroy(var boost_struct : ImageCreateInfo)
     boost_struct.extent |> vk_view_destroy()
     unsafe
         delete boost_struct._vk_view_p_extent
+    boost_struct._vk_view__active = false
+
+//
+// ImageSubresourceRange
+//
+
+struct ImageSubresourceRange
+    aspect_mask : uint
+    base_mip_level : uint
+    level_count : uint
+    base_array_layer : uint
+    layer_count : uint
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : ImageSubresourceRange
+) : VkImageSubresourceRange
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+
+    return <- [[ VkImageSubresourceRange
+        aspectMask = boost_struct.aspect_mask,
+        baseMipLevel = boost_struct.base_mip_level,
+        levelCount = boost_struct.level_count,
+        baseArrayLayer = boost_struct.base_array_layer,
+        layerCount = boost_struct.layer_count
+    ]]
+
+def vk_view_destroy(var boost_struct : ImageSubresourceRange)
+    assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
 //

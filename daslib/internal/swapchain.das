@@ -44,15 +44,25 @@ def with_swapchain_ex(
     var vk_images <- [{ for image in images ; image.image }]
     defer() <| ${ delete vk_images; }
 
-    var views <- vk_device |> create_swapchain_image_views(
-        vk_images, vk_surf_fmt)
+    var views <- [{ for image in images; device |> create_image_view(image,
+        [[ImageViewCreateInfo
+            format = surf_fmt.format,
+            view_type = VkImageViewType VK_IMAGE_VIEW_TYPE_2D,
+            subresource_range = IMAGE_SUBRESOURCE_RANGE_SINGLE_COLOR,
+            components = COMPONENT_MAPPING_IDENTITY
+        ]])}]
+    defer() <| ${ delete views; }
+
+    var vk_views <- [{ for view in views ; view.image_view }]
+    defer() <| ${ delete vk_views; }
+
     var framebuffers <- vk_device |> create_swapchain_framebuffers(
-        phys_dev, surface, window, views,
+        phys_dev, surface, window, vk_views,
         render_pass)
     var sc <- [[SwapchainEx
         swapchain = vk_swapchain,
         images <- vk_images,
-        views <- views,
+        views <- vk_views,
         framebuffers <- framebuffers
     ]]
     defer() <| ${ delete sc; }
@@ -104,22 +114,6 @@ def create_multibuffered_swapchain(
 // private
 //
 //////////////////
-
-
-[private]
-def create_swapchain_image_views(
-    device : VkDevice implicit;
-    images : array<VkImage> implicit;
-    surf_fmt : VkSurfaceFormatKHR implicit
-)
-    var views : array<ImageView>
-    views |> resize(images |> length())
-    for image, view in images, views
-        view <- device |> create_image_view(image, surf_fmt.format,
-            VkImageViewType VK_IMAGE_VIEW_TYPE_2D,
-            IMAGE_SUBRESOURCE_RANGE_SINGLE_COLOR,
-            COMPONENT_MAPPING_IDENTITY)
-    return <- views
 
 
 [private]
