@@ -814,16 +814,19 @@ class GenHandleCtor(GenHandleFunc):
 class GenHandleCtor(GenHandleFunc):
 
     def generate(self):
-        bh_attr = self.__boost_handle_attr
-        bh_type = self.__boost_handle_type_name
+        bh_attr = self.gen_handle.boost_handle_attr
+        bh_type = self.gen_handle.boost_handle_type_name
         lines = []
         lines += [
             '',
            f'def finalize(var {bh_attr} : {bh_type} explicit)',
            f'    if {bh_attr}._needs_delete',
-           f'        {self.__vk_dtor_name}(',
+           f'        {self.vk_name}(',
         ]
-        for param in self.__vk_dtor_params:
+        lines += [
+           f'            {param.generate_dtor_vk_param()},'
+                            for param in self.params]
+        for param in self.params:
             if param.vk_name == 'pAllocator':
                 vk_value = 'null'
             elif param.boost_type == bh_type:
