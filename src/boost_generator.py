@@ -797,7 +797,7 @@ class GenHandleCtor(GenHandleFunc):
         for param in self.params:
             lines += [f'    {line}' for line in param.generate_ctor_param()]
 
-        if self.__vk_ctor_returns_vk_result:
+        if self.returns_vk_result:
             lines += [
                f'    var result : VkResult? = [[VkResult?]];',
             ]
