@@ -1339,6 +1339,51 @@ def vk_view_destroy(var boost_struct : PipelineLayoutCreateInfo)
     boost_struct._vk_view__active = false
 
 //
+// PipelineViewportStateCreateInfo
+//
+
+struct PipelineViewportStateCreateInfo
+    flags : uint
+    viewports : array<Viewport>
+    scissors : array<Rect2D>
+    _vk_view_viewports : array<VkViewport>
+    _vk_view_scissors : array<VkRect2D>
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : PipelineViewportStateCreateInfo
+) : VkPipelineViewportStateCreateInfo
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+
+    boost_struct._vk_view_viewports <- [{
+        for item in boost_struct.viewports ;
+        item |> vk_view_create_unsafe()}]
+
+    boost_struct._vk_view_scissors <- [{
+        for item in boost_struct.scissors ;
+        item |> vk_view_create_unsafe()}]
+
+    return <- [[ VkPipelineViewportStateCreateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO,
+        flags = boost_struct.flags,
+        viewportCount = uint(boost_struct.viewports |> length()),
+        pViewports = array_addr_unsafe(boost_struct._vk_view_viewports),
+        scissorCount = uint(boost_struct.scissors |> length()),
+        pScissors = array_addr_unsafe(boost_struct._vk_view_scissors)
+    ]]
+
+def vk_view_destroy(var boost_struct : PipelineViewportStateCreateInfo)
+    assert(boost_struct._vk_view__active)
+    for item in boost_struct.viewports
+        item |> vk_view_destroy()
+    delete boost_struct._vk_view_viewports
+    for item in boost_struct.scissors
+        item |> vk_view_destroy()
+    delete boost_struct._vk_view_scissors
+    boost_struct._vk_view__active = false
+
+//
 // PushConstantRange
 //
 
@@ -1381,6 +1426,46 @@ def vk_value_to_boost(vk_struct : VkQueueFamilyProperties) : QueueFamilyProperti
         timestamp_valid_bits = vk_struct.timestampValidBits,
         min_image_transfer_granularity <- vk_value_to_boost(vk_struct.minImageTransferGranularity)
     ]]
+
+//
+// Rect2D
+//
+
+struct Rect2D
+    offset : Offset2D
+    extent : Extent2D
+    _vk_view_p_offset : VkOffset2D ?
+    _vk_view_p_extent : VkExtent2D ?
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : Rect2D
+) : VkRect2D
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+
+    boost_struct._vk_view_p_offset = new VkOffset2D
+    *(boost_struct._vk_view_p_offset) <- (
+        boost_struct.offset |> vk_view_create_unsafe())
+
+    boost_struct._vk_view_p_extent = new VkExtent2D
+    *(boost_struct._vk_view_p_extent) <- (
+        boost_struct.extent |> vk_view_create_unsafe())
+
+    return <- [[ VkRect2D
+        offset = *(boost_struct._vk_view_p_offset),
+        extent = *(boost_struct._vk_view_p_extent)
+    ]]
+
+def vk_view_destroy(var boost_struct : Rect2D)
+    assert(boost_struct._vk_view__active)
+    boost_struct.offset |> vk_view_destroy()
+    unsafe
+        delete boost_struct._vk_view_p_offset
+    boost_struct.extent |> vk_view_destroy()
+    unsafe
+        delete boost_struct._vk_view_p_extent
+    boost_struct._vk_view__active = false
 
 //
 // RenderPassCreateInfo
@@ -1771,6 +1856,38 @@ def vk_view_destroy(var boost_struct : SwapchainCreateInfoKHR)
     boost_struct.image_extent |> vk_view_destroy()
     unsafe
         delete boost_struct._vk_view_p_image_extent
+    boost_struct._vk_view__active = false
+
+//
+// Viewport
+//
+
+struct Viewport
+    x : float
+    y : float
+    width : float
+    height : float
+    min_depth : float
+    max_depth : float
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : Viewport
+) : VkViewport
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+
+    return <- [[ VkViewport
+        x = boost_struct.x,
+        y = boost_struct.y,
+        width = boost_struct.width,
+        height = boost_struct.height,
+        minDepth = boost_struct.min_depth,
+        maxDepth = boost_struct.max_depth
+    ]]
+
+def vk_view_destroy(var boost_struct : Viewport)
+    assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
 //

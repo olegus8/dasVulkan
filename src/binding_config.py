@@ -250,6 +250,9 @@ def add_boost_content(g):
             count = 'enabledExtensionCount',
             items = 'ppEnabledExtensionNames')
     g.add_gen_struct(
+        struct      = 'VkOffset2D',
+        boost_to_vk = True)
+    g.add_gen_struct(
         struct      = 'VkPhysicalDeviceLimits',
         vk_to_boost = True)
     g.add_gen_struct(
