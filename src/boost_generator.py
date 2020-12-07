@@ -880,6 +880,14 @@ class GenHandle(object):
         return lines
 
 
+class GenHandleParamArray(object):
+
+    def __init__(self, handle, items, count):
+        self.__gen_handle = handle
+        self.vk_count_name = count
+        self.vk_items_name = items
+
+
 class C_Param(object):
 
     def __init__(self, c_name, c_type, generator):
