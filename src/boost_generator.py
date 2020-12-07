@@ -650,7 +650,8 @@ class GenHandle(object):
         lines += self.__generate_type()
         for ctor in self.ctors:
             lines += ctor.generate()
-        lines += self.dtor.generate()
+        if self.dtor:
+            lines += self.dtor.generate()
         return lines
 
     def __generate_type(self):
@@ -676,33 +677,6 @@ class GenHandle(object):
             '',
            f'def vk_value_to_boost(v : {vhtype}) : {bhtype}',
            f'    return [[ {bhtype} {attr}=v ]]',
-        ]
-        return lines
-
-    def __generate_dtor(self):
-        if self.__vk_dtor_name == None:
-            return []
-        bh_attr = self.__boost_handle_attr
-        bh_type = self.__boost_handle_type_name
-        lines = []
-        lines += [
-            '',
-           f'def finalize(var {bh_attr} : {bh_type} explicit)',
-           f'    if {bh_attr}._needs_delete',
-           f'        {self.__vk_dtor_name}(',
-        ]
-        for param in self.__vk_dtor_params:
-            if param.vk_name == 'pAllocator':
-                vk_value = 'null'
-            elif param.boost_type == bh_type:
-                vk_value = param.boost_value_to_vk(bh_attr)
-            else:
-                vk_value = f'{bh_attr}._{param.boost_name}'
-            lines.append(f'            {vk_value},')
-        remove_last_char(lines, ',')
-        lines += [
-            '        )',
-           f'    memzero({bh_attr})',
         ]
         return lines
 
@@ -834,6 +808,34 @@ class GenHandleCtor(GenHandleFunc):
                f'    assert(result_ == VkResult VK_SUCCESS)']
         lines += [
            f'    return <- {bh_attr}']
+        return lines
+
+
+class GenHandleCtor(GenHandleFunc):
+
+    def generate(self):
+        bh_attr = self.__boost_handle_attr
+        bh_type = self.__boost_handle_type_name
+        lines = []
+        lines += [
+            '',
+           f'def finalize(var {bh_attr} : {bh_type} explicit)',
+           f'    if {bh_attr}._needs_delete',
+           f'        {self.__vk_dtor_name}(',
+        ]
+        for param in self.__vk_dtor_params:
+            if param.vk_name == 'pAllocator':
+                vk_value = 'null'
+            elif param.boost_type == bh_type:
+                vk_value = param.boost_value_to_vk(bh_attr)
+            else:
+                vk_value = f'{bh_attr}._{param.boost_name}'
+            lines.append(f'            {vk_value},')
+        remove_last_char(lines, ',')
+        lines += [
+            '        )',
+           f'    memzero({bh_attr})',
+        ]
         return lines
 
 
