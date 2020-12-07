@@ -113,10 +113,3 @@ def create_multibuffered_swapchain(
             present_mode = present_mode,
             clipped = uint(VK_TRUE)
         ]])
-
-
-//////////////////
-//
-// private
-//
-//////////////////
