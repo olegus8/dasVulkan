@@ -676,6 +676,46 @@ def vk_view_destroy(var boost_struct : FenceCreateInfo)
     boost_struct._vk_view__active = false
 
 //
+// FramebufferCreateInfo
+//
+
+struct FramebufferCreateInfo
+    flags : uint
+    render_pass : RenderPass
+    attachments : array<ImageView>
+    width : uint
+    height : uint
+    layers : uint
+    _vk_view_attachments : array<VkImageView>
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : FramebufferCreateInfo
+) : VkFramebufferCreateInfo
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+
+    boost_struct._vk_view_attachments <- [{
+        for item in boost_struct.attachments ;
+        item |> boost_value_to_vk()}]
+
+    return <- [[ VkFramebufferCreateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO,
+        flags = boost_struct.flags,
+        renderPass = boost_value_to_vk(boost_struct.render_pass),
+        attachmentCount = uint(boost_struct.attachments |> length()),
+        pAttachments = array_addr_unsafe(boost_struct._vk_view_attachments),
+        width = boost_struct.width,
+        height = boost_struct.height,
+        layers = boost_struct.layers
+    ]]
+
+def vk_view_destroy(var boost_struct : FramebufferCreateInfo)
+    assert(boost_struct._vk_view__active)
+    delete boost_struct._vk_view_attachments
+    boost_struct._vk_view__active = false
+
+//
 // ImageCreateInfo
 //
 
@@ -1941,6 +1981,59 @@ def finalize(var fence : Fence explicit)
             null
         )
     memzero(fence)
+
+//
+// Framebuffer
+//
+
+struct Framebuffer
+    framebuffer : VkFramebuffer
+    _needs_delete : bool
+    _device : VkDevice
+
+def boost_value_to_vk(b : Framebuffer) : VkFramebuffer
+    return b.framebuffer
+
+def boost_value_to_vk(b : Framebuffer ?) : VkFramebuffer ?
+    return b?.framebuffer
+
+def vk_value_to_boost(v : VkFramebuffer) : Framebuffer
+    return [[ Framebuffer framebuffer=v ]]
+
+def create_framebuffer(
+    device : Device = [[ Device ]];
+    var create_info : FramebufferCreateInfo = [[ FramebufferCreateInfo ]];
+    var result : VkResult? = [[VkResult?]]
+) : Framebuffer
+
+    var framebuffer <- [[ Framebuffer
+        _needs_delete = true,
+        _device = boost_value_to_vk(device)
+    ]]
+
+    var vk_create_info : VkFramebufferCreateInfo
+    unsafe
+        vk_create_info <- create_info |> vk_view_create_unsafe()
+    defer() <| ${ create_info |> vk_view_destroy(); }
+
+    var result_ = VkResult VK_SUCCESS
+    result ?? result_ = vkCreateFramebuffer(
+        boost_value_to_vk(device),
+        safe_addr(vk_create_info),
+        null,
+        safe_addr(framebuffer.framebuffer)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+    return <- framebuffer
+
+def finalize(var framebuffer : Framebuffer explicit)
+    if framebuffer._needs_delete
+        vkDestroyFramebuffer(
+            framebuffer._device,
+            boost_value_to_vk(framebuffer),
+            null
+        )
+    memzero(framebuffer)
 
 //
 // Image
