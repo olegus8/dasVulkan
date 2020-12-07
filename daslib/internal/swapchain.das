@@ -51,7 +51,7 @@ def with_swapchain_ex(
         render_pass)
     var sc <- [[SwapchainEx
         swapchain = vk_swapchain,
-        vk_images <- images,
+        images <- vk_images,
         views <- views,
         framebuffers <- framebuffers
     ]]
