@@ -650,7 +650,7 @@ class GenHandle(object):
         lines += self.__generate_type()
         for ctor in self.ctors:
             lines += ctor.generate()
-        lines += self.__generate_dtor()
+        lines += self.dtor.generate()
         return lines
 
     def __generate_type(self):
