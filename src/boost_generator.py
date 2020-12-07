@@ -817,7 +817,7 @@ class GenHandle(object):
            f'            assert(result_ == VkResult VK_SUCCESS)',
             '',
            f'    return <- [[ {batch_type}',
-           f'        {batch_attr} <- vk_handles',
+           f'        {batch_attr} <- vk_handles,',
            f'        _needs_delete = true',
            f'    ]]',
         ]

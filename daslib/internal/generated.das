@@ -1632,12 +1632,16 @@ def vk_view_destroy(var boost_struct : SwapchainCreateInfoKHR)
 
 struct Device
     device : VkDevice
+    _needs_delete : bool
 
 def boost_value_to_vk(b : Device) : VkDevice
     return b.device
 
 def boost_value_to_vk(b : Device ?) : VkDevice ?
     return b?.device
+
+def vk_value_to_boost(v : VkDevice) : Device
+    return [[ Device device=v ]]
 
 def create_device(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]];
@@ -1646,6 +1650,7 @@ def create_device(
 ) : Device
 
     var device <- [[ Device
+        _needs_delete = true
     ]]
 
     var vk_create_info : VkDeviceCreateInfo
@@ -1664,10 +1669,11 @@ def create_device(
     return <- device
 
 def finalize(var device : Device explicit)
-    vkDestroyDevice(
-        boost_value_to_vk(device),
-        null
-    )
+    if device._needs_delete
+        vkDestroyDevice(
+            boost_value_to_vk(device),
+            null
+        )
     memzero(device)
 
 //
@@ -1676,6 +1682,7 @@ def finalize(var device : Device explicit)
 
 struct CommandPool
     command_pool : VkCommandPool
+    _needs_delete : bool
     _device : VkDevice
 
 def boost_value_to_vk(b : CommandPool) : VkCommandPool
@@ -1684,6 +1691,9 @@ def boost_value_to_vk(b : CommandPool) : VkCommandPool
 def boost_value_to_vk(b : CommandPool ?) : VkCommandPool ?
     return b?.command_pool
 
+def vk_value_to_boost(v : VkCommandPool) : CommandPool
+    return [[ CommandPool command_pool=v ]]
+
 def create_command_pool(
     device : Device = [[ Device ]];
     var create_info : CommandPoolCreateInfo = [[ CommandPoolCreateInfo ]];
@@ -1691,6 +1701,7 @@ def create_command_pool(
 ) : CommandPool
 
     var command_pool <- [[ CommandPool
+        _needs_delete = true,
         _device = boost_value_to_vk(device)
     ]]
 
@@ -1710,11 +1721,12 @@ def create_command_pool(
     return <- command_pool
 
 def finalize(var command_pool : CommandPool explicit)
-    vkDestroyCommandPool(
-        command_pool._device,
-        boost_value_to_vk(command_pool),
-        null
-    )
+    if command_pool._needs_delete
+        vkDestroyCommandPool(
+            command_pool._device,
+            boost_value_to_vk(command_pool),
+            null
+        )
     memzero(command_pool)
 
 //
@@ -1723,6 +1735,7 @@ def finalize(var command_pool : CommandPool explicit)
 
 struct DescriptorSetLayout
     descriptor_set_layout : VkDescriptorSetLayout
+    _needs_delete : bool
     _device : VkDevice
 
 def boost_value_to_vk(b : DescriptorSetLayout) : VkDescriptorSetLayout
@@ -1731,6 +1744,9 @@ def boost_value_to_vk(b : DescriptorSetLayout) : VkDescriptorSetLayout
 def boost_value_to_vk(b : DescriptorSetLayout ?) : VkDescriptorSetLayout ?
     return b?.descriptor_set_layout
 
+def vk_value_to_boost(v : VkDescriptorSetLayout) : DescriptorSetLayout
+    return [[ DescriptorSetLayout descriptor_set_layout=v ]]
+
 def create_descriptor_set_layout(
     device : Device = [[ Device ]];
     var create_info : DescriptorSetLayoutCreateInfo = [[ DescriptorSetLayoutCreateInfo ]];
@@ -1738,6 +1754,7 @@ def create_descriptor_set_layout(
 ) : DescriptorSetLayout
 
     var descriptor_set_layout <- [[ DescriptorSetLayout
+        _needs_delete = true,
         _device = boost_value_to_vk(device)
     ]]
 
@@ -1757,11 +1774,12 @@ def create_descriptor_set_layout(
     return <- descriptor_set_layout
 
 def finalize(var descriptor_set_layout : DescriptorSetLayout explicit)
-    vkDestroyDescriptorSetLayout(
-        descriptor_set_layout._device,
-        boost_value_to_vk(descriptor_set_layout),
-        null
-    )
+    if descriptor_set_layout._needs_delete
+        vkDestroyDescriptorSetLayout(
+            descriptor_set_layout._device,
+            boost_value_to_vk(descriptor_set_layout),
+            null
+        )
     memzero(descriptor_set_layout)
 
 //
@@ -1770,6 +1788,7 @@ def finalize(var descriptor_set_layout : DescriptorSetLayout explicit)
 
 struct Fence
     fence : VkFence
+    _needs_delete : bool
     _device : VkDevice
 
 def boost_value_to_vk(b : Fence) : VkFence
@@ -1778,6 +1797,9 @@ def boost_value_to_vk(b : Fence) : VkFence
 def boost_value_to_vk(b : Fence ?) : VkFence ?
     return b?.fence
 
+def vk_value_to_boost(v : VkFence) : Fence
+    return [[ Fence fence=v ]]
+
 def create_fence(
     device : Device = [[ Device ]];
     var create_info : FenceCreateInfo = [[ FenceCreateInfo ]];
@@ -1785,6 +1807,7 @@ def create_fence(
 ) : Fence
 
     var fence <- [[ Fence
+        _needs_delete = true,
         _device = boost_value_to_vk(device)
     ]]
 
@@ -1804,11 +1827,12 @@ def create_fence(
     return <- fence
 
 def finalize(var fence : Fence explicit)
-    vkDestroyFence(
-        fence._device,
-        boost_value_to_vk(fence),
-        null
-    )
+    if fence._needs_delete
+        vkDestroyFence(
+            fence._device,
+            boost_value_to_vk(fence),
+            null
+        )
     memzero(fence)
 
 //
@@ -1817,6 +1841,7 @@ def finalize(var fence : Fence explicit)
 
 struct Image
     image : VkImage
+    _needs_delete : bool
     _device : VkDevice
 
 def boost_value_to_vk(b : Image) : VkImage
@@ -1825,6 +1850,9 @@ def boost_value_to_vk(b : Image) : VkImage
 def boost_value_to_vk(b : Image ?) : VkImage ?
     return b?.image
 
+def vk_value_to_boost(v : VkImage) : Image
+    return [[ Image image=v ]]
+
 def create_image(
     device : Device = [[ Device ]];
     var create_info : ImageCreateInfo = [[ ImageCreateInfo ]];
@@ -1832,6 +1860,7 @@ def create_image(
 ) : Image
 
     var image <- [[ Image
+        _needs_delete = true,
         _device = boost_value_to_vk(device)
     ]]
 
@@ -1851,11 +1880,12 @@ def create_image(
     return <- image
 
 def finalize(var image : Image explicit)
-    vkDestroyImage(
-        image._device,
-        boost_value_to_vk(image),
-        null
-    )
+    if image._needs_delete
+        vkDestroyImage(
+            image._device,
+            boost_value_to_vk(image),
+            null
+        )
     memzero(image)
 
 //
@@ -1864,6 +1894,7 @@ def finalize(var image : Image explicit)
 
 struct Instance
     instance : VkInstance
+    _needs_delete : bool
 
 def boost_value_to_vk(b : Instance) : VkInstance
     return b.instance
@@ -1871,12 +1902,16 @@ def boost_value_to_vk(b : Instance) : VkInstance
 def boost_value_to_vk(b : Instance ?) : VkInstance ?
     return b?.instance
 
+def vk_value_to_boost(v : VkInstance) : Instance
+    return [[ Instance instance=v ]]
+
 def create_instance(
     var create_info : InstanceCreateInfo = [[ InstanceCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : Instance
 
     var instance <- [[ Instance
+        _needs_delete = true
     ]]
 
     var vk_create_info : VkInstanceCreateInfo
@@ -1894,10 +1929,11 @@ def create_instance(
     return <- instance
 
 def finalize(var instance : Instance explicit)
-    vkDestroyInstance(
-        boost_value_to_vk(instance),
-        null
-    )
+    if instance._needs_delete
+        vkDestroyInstance(
+            boost_value_to_vk(instance),
+            null
+        )
     memzero(instance)
 
 //
@@ -1906,6 +1942,7 @@ def finalize(var instance : Instance explicit)
 
 struct PhysicalDevice
     physical_device : VkPhysicalDevice
+    _needs_delete : bool
 
 def boost_value_to_vk(b : PhysicalDevice) : VkPhysicalDevice
     return b.physical_device
@@ -1913,8 +1950,12 @@ def boost_value_to_vk(b : PhysicalDevice) : VkPhysicalDevice
 def boost_value_to_vk(b : PhysicalDevice ?) : VkPhysicalDevice ?
     return b?.physical_device
 
+def vk_value_to_boost(v : VkPhysicalDevice) : PhysicalDevice
+    return [[ PhysicalDevice physical_device=v ]]
+
 struct PhysicalDeviceBatch
     physical_device_batch : array<VkPhysicalDevice>
+    _needs_delete : bool
 
 def split(batch : PhysicalDeviceBatch) : array<PhysicalDevice>
     return <- [{for h in batch.physical_device_batch ;
@@ -1946,7 +1987,10 @@ def enumerate_physical_devices(
             )
             assert(result_ == VkResult VK_SUCCESS)
 
-    return <- [[PhysicalDeviceBatch physical_device_batch <- vk_handles]]
+    return <- [[ PhysicalDeviceBatch
+        physical_device_batch <- vk_handles
+        _needs_delete = true
+    ]]
 
 def enumerate_physical_devices_no_batch(
     instance : Instance;
@@ -1962,12 +2006,16 @@ def enumerate_physical_devices_no_batch(
 
 struct Queue
     queue : VkQueue
+    _needs_delete : bool
 
 def boost_value_to_vk(b : Queue) : VkQueue
     return b.queue
 
 def boost_value_to_vk(b : Queue ?) : VkQueue ?
     return b?.queue
+
+def vk_value_to_boost(v : VkQueue) : Queue
+    return [[ Queue queue=v ]]
 
 def get_device_queue(
     device : Device = [[ Device ]];
@@ -1976,6 +2024,7 @@ def get_device_queue(
 ) : Queue
 
     var queue <- [[ Queue
+        _needs_delete = true
     ]]
 
     vkGetDeviceQueue(
@@ -1992,6 +2041,7 @@ def get_device_queue(
 
 struct PipelineLayout
     pipeline_layout : VkPipelineLayout
+    _needs_delete : bool
     _device : VkDevice
 
 def boost_value_to_vk(b : PipelineLayout) : VkPipelineLayout
@@ -2000,6 +2050,9 @@ def boost_value_to_vk(b : PipelineLayout) : VkPipelineLayout
 def boost_value_to_vk(b : PipelineLayout ?) : VkPipelineLayout ?
     return b?.pipeline_layout
 
+def vk_value_to_boost(v : VkPipelineLayout) : PipelineLayout
+    return [[ PipelineLayout pipeline_layout=v ]]
+
 def create_pipeline_layout(
     device : Device = [[ Device ]];
     var create_info : PipelineLayoutCreateInfo = [[ PipelineLayoutCreateInfo ]];
@@ -2007,6 +2060,7 @@ def create_pipeline_layout(
 ) : PipelineLayout
 
     var pipeline_layout <- [[ PipelineLayout
+        _needs_delete = true,
         _device = boost_value_to_vk(device)
     ]]
 
@@ -2026,11 +2080,12 @@ def create_pipeline_layout(
     return <- pipeline_layout
 
 def finalize(var pipeline_layout : PipelineLayout explicit)
-    vkDestroyPipelineLayout(
-        pipeline_layout._device,
-        boost_value_to_vk(pipeline_layout),
-        null
-    )
+    if pipeline_layout._needs_delete
+        vkDestroyPipelineLayout(
+            pipeline_layout._device,
+            boost_value_to_vk(pipeline_layout),
+            null
+        )
     memzero(pipeline_layout)
 
 //
@@ -2039,6 +2094,7 @@ def finalize(var pipeline_layout : PipelineLayout explicit)
 
 struct RenderPass
     render_pass : VkRenderPass
+    _needs_delete : bool
     _device : VkDevice
 
 def boost_value_to_vk(b : RenderPass) : VkRenderPass
@@ -2047,6 +2103,9 @@ def boost_value_to_vk(b : RenderPass) : VkRenderPass
 def boost_value_to_vk(b : RenderPass ?) : VkRenderPass ?
     return b?.render_pass
 
+def vk_value_to_boost(v : VkRenderPass) : RenderPass
+    return [[ RenderPass render_pass=v ]]
+
 def create_render_pass(
     device : Device = [[ Device ]];
     var create_info : RenderPassCreateInfo = [[ RenderPassCreateInfo ]];
@@ -2054,6 +2113,7 @@ def create_render_pass(
 ) : RenderPass
 
     var render_pass <- [[ RenderPass
+        _needs_delete = true,
         _device = boost_value_to_vk(device)
     ]]
 
@@ -2073,11 +2133,12 @@ def create_render_pass(
     return <- render_pass
 
 def finalize(var render_pass : RenderPass explicit)
-    vkDestroyRenderPass(
-        render_pass._device,
-        boost_value_to_vk(render_pass),
-        null
-    )
+    if render_pass._needs_delete
+        vkDestroyRenderPass(
+            render_pass._device,
+            boost_value_to_vk(render_pass),
+            null
+        )
     memzero(render_pass)
 
 //
@@ -2086,6 +2147,7 @@ def finalize(var render_pass : RenderPass explicit)
 
 struct Sampler
     sampler : VkSampler
+    _needs_delete : bool
     _device : VkDevice
 
 def boost_value_to_vk(b : Sampler) : VkSampler
@@ -2094,6 +2156,9 @@ def boost_value_to_vk(b : Sampler) : VkSampler
 def boost_value_to_vk(b : Sampler ?) : VkSampler ?
     return b?.sampler
 
+def vk_value_to_boost(v : VkSampler) : Sampler
+    return [[ Sampler sampler=v ]]
+
 def create_sampler(
     device : Device = [[ Device ]];
     var create_info : SamplerCreateInfo = [[ SamplerCreateInfo ]];
@@ -2101,6 +2166,7 @@ def create_sampler(
 ) : Sampler
 
     var sampler <- [[ Sampler
+        _needs_delete = true,
         _device = boost_value_to_vk(device)
     ]]
 
@@ -2120,11 +2186,12 @@ def create_sampler(
     return <- sampler
 
 def finalize(var sampler : Sampler explicit)
-    vkDestroySampler(
-        sampler._device,
-        boost_value_to_vk(sampler),
-        null
-    )
+    if sampler._needs_delete
+        vkDestroySampler(
+            sampler._device,
+            boost_value_to_vk(sampler),
+            null
+        )
     memzero(sampler)
 
 //
@@ -2133,6 +2200,7 @@ def finalize(var sampler : Sampler explicit)
 
 struct Semaphore
     semaphore : VkSemaphore
+    _needs_delete : bool
     _device : VkDevice
 
 def boost_value_to_vk(b : Semaphore) : VkSemaphore
@@ -2141,6 +2209,9 @@ def boost_value_to_vk(b : Semaphore) : VkSemaphore
 def boost_value_to_vk(b : Semaphore ?) : VkSemaphore ?
     return b?.semaphore
 
+def vk_value_to_boost(v : VkSemaphore) : Semaphore
+    return [[ Semaphore semaphore=v ]]
+
 def create_semaphore(
     device : Device = [[ Device ]];
     var create_info : SemaphoreCreateInfo = [[ SemaphoreCreateInfo ]];
@@ -2148,6 +2219,7 @@ def create_semaphore(
 ) : Semaphore
 
     var semaphore <- [[ Semaphore
+        _needs_delete = true,
         _device = boost_value_to_vk(device)
     ]]
 
@@ -2167,11 +2239,12 @@ def create_semaphore(
     return <- semaphore
 
 def finalize(var semaphore : Semaphore explicit)
-    vkDestroySemaphore(
-        semaphore._device,
-        boost_value_to_vk(semaphore),
-        null
-    )
+    if semaphore._needs_delete
+        vkDestroySemaphore(
+            semaphore._device,
+            boost_value_to_vk(semaphore),
+            null
+        )
     memzero(semaphore)
 
 //
@@ -2180,6 +2253,7 @@ def finalize(var semaphore : Semaphore explicit)
 
 struct ShaderModule
     shader_module : VkShaderModule
+    _needs_delete : bool
     _device : VkDevice
 
 def boost_value_to_vk(b : ShaderModule) : VkShaderModule
@@ -2188,6 +2262,9 @@ def boost_value_to_vk(b : ShaderModule) : VkShaderModule
 def boost_value_to_vk(b : ShaderModule ?) : VkShaderModule ?
     return b?.shader_module
 
+def vk_value_to_boost(v : VkShaderModule) : ShaderModule
+    return [[ ShaderModule shader_module=v ]]
+
 def create_shader_module(
     device : Device = [[ Device ]];
     var create_info : ShaderModuleCreateInfo = [[ ShaderModuleCreateInfo ]];
@@ -2195,6 +2272,7 @@ def create_shader_module(
 ) : ShaderModule
 
     var shader_module <- [[ ShaderModule
+        _needs_delete = true,
         _device = boost_value_to_vk(device)
     ]]
 
@@ -2214,11 +2292,12 @@ def create_shader_module(
     return <- shader_module
 
 def finalize(var shader_module : ShaderModule explicit)
-    vkDestroyShaderModule(
-        shader_module._device,
-        boost_value_to_vk(shader_module),
-        null
-    )
+    if shader_module._needs_delete
+        vkDestroyShaderModule(
+            shader_module._device,
+            boost_value_to_vk(shader_module),
+            null
+        )
     memzero(shader_module)
 
 //
@@ -2227,6 +2306,7 @@ def finalize(var shader_module : ShaderModule explicit)
 
 struct SwapchainKHR
     swapchain_khr : VkSwapchainKHR
+    _needs_delete : bool
     _device : VkDevice
 
 def boost_value_to_vk(b : SwapchainKHR) : VkSwapchainKHR
@@ -2235,6 +2315,9 @@ def boost_value_to_vk(b : SwapchainKHR) : VkSwapchainKHR
 def boost_value_to_vk(b : SwapchainKHR ?) : VkSwapchainKHR ?
     return b?.swapchain_khr
 
+def vk_value_to_boost(v : VkSwapchainKHR) : SwapchainKHR
+    return [[ SwapchainKHR swapchain_khr=v ]]
+
 def create_swapchain_khr(
     device : Device = [[ Device ]];
     var create_info : SwapchainCreateInfoKHR = [[ SwapchainCreateInfoKHR ]];
@@ -2242,6 +2325,7 @@ def create_swapchain_khr(
 ) : SwapchainKHR
 
     var swapchain_khr <- [[ SwapchainKHR
+        _needs_delete = true,
         _device = boost_value_to_vk(device)
     ]]
 
@@ -2261,9 +2345,10 @@ def create_swapchain_khr(
     return <- swapchain_khr
 
 def finalize(var swapchain_khr : SwapchainKHR explicit)
-    vkDestroySwapchainKHR(
-        swapchain_khr._device,
-        boost_value_to_vk(swapchain_khr),
-        null
-    )
+    if swapchain_khr._needs_delete
+        vkDestroySwapchainKHR(
+            swapchain_khr._device,
+            boost_value_to_vk(swapchain_khr),
+            null
+        )
     memzero(swapchain_khr)
