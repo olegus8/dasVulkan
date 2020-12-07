@@ -652,7 +652,8 @@ class GenHandle(object):
             '//',
         ]
         lines += self.__generate_type()
-        lines += self.__generate_ctor()
+        for ctor in self.ctors:
+            lines += ctor.generate()
         lines += self.__generate_dtor()
         return lines
 
@@ -688,7 +689,103 @@ class GenHandle(object):
         ]
         return lines
 
-    def __generate_ctor(self):
+    def __generate_dtor(self):
+        if self.__vk_dtor_name == None:
+            return []
+        bh_attr = self.__boost_handle_attr
+        bh_type = self.__boost_handle_type_name
+        lines = []
+        lines += [
+            '',
+           f'def finalize(var {bh_attr} : {bh_type} explicit)',
+           f'    if {bh_attr}._needs_delete',
+           f'        {self.__vk_dtor_name}(',
+        ]
+        for param in self.__vk_dtor_params:
+            if param.vk_name == 'pAllocator':
+                vk_value = 'null'
+            elif param.boost_type == bh_type:
+                vk_value = param.boost_value_to_vk(bh_attr)
+            else:
+                vk_value = f'{bh_attr}._{param.boost_name}'
+            lines.append(f'            {vk_value},')
+        remove_last_char(lines, ',')
+        lines += [
+            '        )',
+           f'    memzero({bh_attr})',
+        ]
+        return lines
+
+
+class GenHandleFunc(object):
+
+    def __init__(self, handle, name):
+        self.gen_handle = handle
+        self.__arrays = []
+        self.vk_name = name
+
+    @property
+    def generator(self):
+        return self._gen_handle._generator
+
+    def declare_array(self, **kwargs):
+        array = GenHandleParamArray(handle=self, **kwargs)
+        self.__arrays.append(array)
+        return self
+
+    @property
+    def boost_name(self):
+        return vk_func_name_to_boost(self.vk_name)
+
+    @property
+    def returns_vk_result(self):
+        return returns_vk_result(self.__c_func)
+
+    @property
+    def __c_func(self):
+        return self._generator.functions[self.vk_name]
+
+    @property
+    def __vk_params(self):
+        return self._generator.get_func_params(self.__c_func)
+
+    @property
+    def params(self):
+        return map(self.get_param, self.__vk_params)
+
+    def get_param(self, vk_param):
+        for param_class in [
+            GenHandleFuncParamAllocator,
+            GenHandleFuncParamMainHandle,
+            GenHandleFuncParamStruct,
+            GenHandleFuncParamArrayCounter,
+            GenHandleFuncParam,
+        ]:
+            param = param_class.maybe_create(vk_param=vk_param, func=self)
+            if param:
+                return param
+
+    def is_array_count(self, vk_name):
+        for array in self.__arrays:
+            if vk_name == array.vk_count_name:
+                return True
+        return False
+
+    def is_array_items(self, vk_name):
+        for array in self.__arrays:
+            if vk_name == array.vk_items_name:
+                return True
+        return False
+
+    def get_array(self, vk_name):
+        for array in self.__arrays:
+            if vk_name in [array.vk_items_name, array.vk_count_name]:
+                return array
+
+
+class GenHandleCtor(GenHandleFunc):
+
+    def generate(self):
         if self.__vk_ctor_name == None:
             return []
         bh_attr = self.__boost_handle_attr
@@ -806,99 +903,6 @@ class GenHandle(object):
            f'    return <- {bh_attr}',
         ]
         return lines
-
-    def __generate_dtor(self):
-        if self.__vk_dtor_name == None:
-            return []
-        bh_attr = self.__boost_handle_attr
-        bh_type = self.__boost_handle_type_name
-        lines = []
-        lines += [
-            '',
-           f'def finalize(var {bh_attr} : {bh_type} explicit)',
-           f'    if {bh_attr}._needs_delete',
-           f'        {self.__vk_dtor_name}(',
-        ]
-        for param in self.__vk_dtor_params:
-            if param.vk_name == 'pAllocator':
-                vk_value = 'null'
-            elif param.boost_type == bh_type:
-                vk_value = param.boost_value_to_vk(bh_attr)
-            else:
-                vk_value = f'{bh_attr}._{param.boost_name}'
-            lines.append(f'            {vk_value},')
-        remove_last_char(lines, ',')
-        lines += [
-            '        )',
-           f'    memzero({bh_attr})',
-        ]
-        return lines
-
-
-class GenHandleFunc(object):
-
-    def __init__(self, handle, name):
-        self.gen_handle = handle
-        self.__arrays = []
-        self.vk_name = name
-
-    @property
-    def generator(self):
-        return self._gen_handle._generator
-
-    def declare_array(self, **kwargs):
-        array = GenHandleParamArray(handle=self, **kwargs)
-        self.__arrays.append(array)
-        return self
-
-    @property
-    def boost_name(self):
-        return vk_func_name_to_boost(self.vk_name)
-
-    @property
-    def returns_vk_result(self):
-        return returns_vk_result(self.__c_func)
-
-    @property
-    def __c_func(self):
-        return self._generator.functions[self.vk_name]
-
-    @property
-    def __vk_params(self):
-        return self._generator.get_func_params(self.__c_func)
-
-    @property
-    def params(self):
-        return map(self.get_param, self.__vk_params)
-
-    def get_param(self, vk_param):
-        for param_class in [
-            GenHandleFuncParamAllocator,
-            GenHandleFuncParamMainHandle,
-            GenHandleFuncParamStruct,
-            GenHandleFuncParamArrayCounter,
-            GenHandleFuncParam,
-        ]:
-            param = param_class.maybe_create(vk_param=vk_param, func=self)
-            if param:
-                return param
-
-    def is_array_count(self, vk_name):
-        for array in self.__arrays:
-            if vk_name == array.vk_count_name:
-                return True
-        return False
-
-    def is_array_items(self, vk_name):
-        for array in self.__arrays:
-            if vk_name == array.vk_items_name:
-                return True
-        return False
-
-    def get_array(self, vk_name):
-        for array in self.__arrays:
-            if vk_name in [array.vk_items_name, array.vk_count_name]:
-                return array
 
 
 class GenHandleFuncArray(object):
