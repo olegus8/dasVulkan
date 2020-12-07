@@ -69,6 +69,7 @@ def finalize(var sc : SwapchainEx)
     delete sc.framebuffers
     delete sc.views
     delete sc.images
+    delete sc.swapchain
     memzero(sc)
 
 
