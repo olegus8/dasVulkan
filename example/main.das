@@ -352,6 +352,7 @@ def with_swapchain_dependent_state(
         frame_fences        : array<VkFence>
 )>)
     let vk_device = device.device
+    let vk_render_pass = render_pass.render_pass
 
     var img_avail_sems <- [{for x in range(MAX_FRAMES_IN_FLIGHT);
         device |> create_semaphore() }]
@@ -378,9 +379,9 @@ def with_swapchain_dependent_state(
 
     surf_fmt |> with_view() <| $(vk_surf_fmt : VkSurfaceFormatKHR const) {
     device |> with_swapchain_ex(phys_dev, surface, window,
-        surf_fmt, vk_surf_fmt, present_mode, render_pass) <| $(swapchain) {
+        surf_fmt, present_mode, render_pass) <| $(swapchain) {
     vk_device |> with_graphics_pipeline(
-        pipeline_layout, render_pass, phys_dev,
+        pipeline_layout, vk_render_pass, phys_dev,
         surface, window, vert_shmod, frag_shmod)     <| $(pipeline)
     {
         b |> invoke(
@@ -519,11 +520,12 @@ def main
         present_mode    : VkPresentModeKHR;
         vert_shmod      : VkShaderModule;
         frag_shmod      : VkShaderModule;
-        render_pass     : VkRenderPass;
+        render_pass     : RenderPass;
         pipeline_layout : VkPipelineLayout;
         cmd_pool        : VkCommandPool
     )
         let vk_device = device.device
+        let vk_render_pass = render_pass.render_pass
         var props <- phys_dev |> get_physical_device_properties()
         defer() <| ${ delete props ; }
         print("Using {props.device_name}\n")
@@ -561,7 +563,7 @@ def main
                     print("{sc.framebuffers |> length()} " +
                         "images in swap chain\n")
                     vk_device |> with_draw_commands(phys_dev, window, surface,
-                        render_pass, sc.framebuffers, pipeline, cmd_pool,
+                        vk_render_pass, sc.framebuffers, pipeline, cmd_pool,
                         queue, vbuf, vertices |> length()
                     ) <| $(sc_draw_cmds)
                         var frame = 0
