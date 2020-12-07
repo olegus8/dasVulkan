@@ -785,6 +785,13 @@ class GenHandleFunc(object):
 
 class GenHandleCtor(GenHandleFunc):
 
+    @property
+    def __return_type(self):
+        for param in self.params:
+            rtype = param.generate_ctor_return_type
+            if rtype is not None:
+                return rtype
+
     def generate(self):
         bh_attr = self.__boost_handle_attr
         bh_type = self.__boost_handle_type_name
@@ -804,11 +811,8 @@ class GenHandleCtor(GenHandleFunc):
 
         remove_last_char(lines, ';')
 
-        return_type = (f'array<{bh_type}>'
-            if self.__constructs_array else bh_type)
-
         lines += [
-            f') : {return_type}',
+            f') : {self.__return_type}',
             '',
            f'    var {bh_attr} <- [[ {bh_type}',
            f'        _needs_delete = true,',
@@ -942,6 +946,9 @@ class GenHandleFuncParam(object):
     def generate_ctor_param(self):
         return [f'{boost_name} : {boost_type} = [[ {boost_type} ]];']
 
+    def generate_ctor_return_type(self):
+        return None
+
 
 class GenHandleFuncParamAllocator(GenHandleFuncParam):
 
@@ -989,6 +996,9 @@ class GenHandleFuncParamMainHandle(GenHandleFuncParam):
             dvtype = deref_das_type(vk_param.vk_type)
             if dvtype == func.gen_handle.vk_handle_type_name:
                 return cls(func=func, vk_param=vk_param)
+
+    def generate_ctor_return_type(self):
+        return self.boost_type
 
     def generate_ctor_param(self):
         return []
