@@ -797,8 +797,6 @@ class GenHandleCtor(GenHandleFunc):
         for param in self.params:
             lines += [f'    {line}' for line in param.generate_ctor_param()]
 
-            elif param.vk_type == f'{self.__vk_handle_type_name} ?':
-                continue
             boost_name = param.boost_name
             boost_type = param.boost_type
             if self.__is_array_items(param.vk_name):
@@ -921,19 +919,25 @@ class GenHandleFuncParam(object):
 
     @property
     def boost_name(self):
-        return self.__vk_params.boost_name
+        bname = self.vk_param.boost_name
+        if self.array:
+            bname = boost_ptr_name_to_array(bname)
+        return bname
 
     @property
     def boost_type(self):
-        return self.__vk_params.boost_type
+        btype = self.vk_param.boost_type
+        if self.array:
+            btype = f'array<{deref_das_type(btype)}>'
+        return btype
 
     @property
     def vk_name(self):
-        return self.__vk_param.vk_name
+        return self.vk_param.vk_name
 
     @property
     def vk_type(self):
-        return self.__vk_param.vk_type
+        return self.vk_param.vk_type
 
     @property
     def array(self):
@@ -981,6 +985,17 @@ class GenHandleFuncParamMainHandle(GenHandleFuncParam):
             dvtype = deref_das_type(vk_param.vk_type)
             if dvtype == func.gen_handle.vk_handle_type_name:
                 return cls(func=func, vk_param=vk_param)
+
+    def generate_ctor_param(self):
+        return []
+
+
+class GenHandleFuncParamStruct(GenHandleFuncParam):
+
+    @classmethod
+    def maybe_create(cls, func, vk_param):
+        if vk_param.is_pointer and vk_param.is_struct:
+            return cls(func=func, vk_param=vk_param)
 
     @property
     def boost_name(self):
