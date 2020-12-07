@@ -797,7 +797,8 @@ class GenHandleCtor(GenHandleFunc):
             '',
            f'def {self.boost_name}(']
         for param in self.params:
-            lines += [f'    {line}' for line in param.generate_ctor_param()]
+            lines += [f'    {line}'
+                for line in param.generate_ctor_boost_param()]
         if self.returns_vk_result:
             lines += [f'    var result : VkResult? = [[VkResult?]];']
         remove_last_char(lines, ';')
@@ -911,7 +912,7 @@ class GenHandleFuncParam(object):
     def is_array_items(self):
         return self.func.is_array_items(self.vk_name)
 
-    def generate_ctor_param(self):
+    def generate_ctor_boost_param(self):
         maybe_var = 'var ' if self.vk_param.needs_vk_view else ''
         return [f'{maybe_var}{self.boost_name} : {self.boost_type} = '
             f'[[ {self.boost_type} ]];']
@@ -954,7 +955,7 @@ class GenHandleFuncParamAllocator(GenHandleFuncParam):
     def boost_type(self):
         return None
 
-    def generate_ctor_param(self):
+    def generate_ctor_boost_param(self):
         return []
 
     def generate_handle_init_field(self):
@@ -979,7 +980,7 @@ class GenHandleFuncParamArrayCounter(GenHandleFuncParam):
     def boost_type(self):
         return None
 
-    def generate_ctor_param(self):
+    def generate_ctor_boost_param(self):
         return []
 
 
@@ -993,7 +994,7 @@ class GenHandleFuncParamMainHandle(GenHandleFuncParam):
     def generate_ctor_return_type(self):
         return self.boost_type
 
-    def generate_ctor_param(self):
+    def generate_ctor_boost_param(self):
         return []
 
     def generate_handle_init_field(self):
