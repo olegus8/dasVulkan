@@ -644,24 +644,12 @@ class GenHandle(object):
             if self.__vk_dtor_name else [])
 
     @property
-    def __vk_ctor_returns_vk_result(self):
-        return returns_vk_result(self.__c_ctor)
-
-    @property
     def __boost_handle_type_name(self):
         return vk_handle_type_to_boost(self.__vk_handle_type_name)
 
     @property
     def __boost_handle_attr(self):
         return boost_handle_attr_name(self.__boost_handle_type_name)
-
-    @property
-    def __boost_handle_batch_type_name(self):
-        return self.__boost_handle_type_name + 'Batch'
-
-    @property
-    def __boost_handle_batch_attr(self):
-        return self.__boost_handle_attr + '_batch'
 
     @property
     def __constructs_array(self):
@@ -878,6 +866,10 @@ class GenHandleFunc(object):
     @property
     def boost_name(self):
         return vk_func_name_to_boost(self.vk_name)
+
+    @property
+    def returns_vk_result(self):
+        return returns_vk_result(self.__c_func)
 
     @property
     def __c_func(self):
