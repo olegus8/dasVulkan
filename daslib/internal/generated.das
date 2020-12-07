@@ -1988,7 +1988,7 @@ def enumerate_physical_devices(
             assert(result_ == VkResult VK_SUCCESS)
 
     return <- [[ PhysicalDeviceBatch
-        physical_device_batch <- vk_handles
+        physical_device_batch <- vk_handles,
         _needs_delete = true
     ]]
 
