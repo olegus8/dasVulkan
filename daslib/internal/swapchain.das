@@ -54,24 +54,16 @@ def with_swapchain_ex(
 
     let extent <- phys_dev |> get_swap_extent(surface, window)
 
-    var framebuffers : array<Framebuffer>
+    var framebuffers <- [{ for view in views;
+        device |> create_single_view_framebuffer(
+            render_pass = render_pass,
+            view = view,
+            width = extent.width,
+            height = extent.height)
     defer() <| ${ delete framebuffers; }
 
     framebuffers |> resize(views |> length())
     for fbuf, view in framebuffers, views
-        var create_info <- [[FramebufferCreateInfo
-            render_pass = render_pass,
-            attachments <- [{auto[] view}],
-            width = extent.width,
-            height = extent.height,
-            layers = 1u
-        ]]
-        defer() <|
-            create_info.attachments |> resize(0)
-            memzero(create_info.render_pass)
-            delete create_info
-
-        fbuf <- device |> create_framebuffer(create_info)
 
     var sc <- [[SwapchainEx
         swapchain = vk_swapchain,
