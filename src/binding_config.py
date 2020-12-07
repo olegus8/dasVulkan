@@ -218,6 +218,9 @@ def add_boost_content(g):
             count = 'queueFamilyIndexCount',
             items = 'pQueueFamilyIndices')
     g.add_gen_struct(
+        struct      = 'VkImageViewCreateInfo',
+        boost_to_vk = True)
+    g.add_gen_struct(
         struct      = 'VkInstanceCreateInfo',
         boost_to_vk = True
         ).declare_array(
