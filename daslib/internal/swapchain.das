@@ -27,7 +27,7 @@ def with_swapchain_ex(
     surf_fmt        : SurfaceFormatKHR;
     present_mode    : VkPresentModeKHR;
     render_pass     : RenderPass;
-    b : block<(sc:SwapchainEx)>
+    b : block<(sc:SwapchainExj>
 )
     var vk_device = device.device
 
@@ -70,6 +70,15 @@ def with_swapchain_ex(
             memzero(create_info.render_pass)
             delete create_info
         fbuf <- device |> create_framebuffer(create_info)
+
+    var sc <- [[SwapchainEx
+        swapchain = vk_swapchain,
+        images <- vk_images,
+        views <- views,
+        framebuffers <- framebuffers
+    ]]
+    defer() <| ${ delete sc; }
+    b |> invoke(sc)
 
 
 def finalize(var sc : SwapchainEx)
