@@ -632,16 +632,12 @@ class GenHandle(object):
         return ctor
 
     @property
-    def __boost_handle_type_name(self):
+    def boost_handle_type_name(self):
         return vk_handle_type_to_boost(self.__vk_handle_type_name)
 
     @property
-    def __boost_handle_attr(self):
+    def boost_handle_attr(self):
         return boost_handle_attr_name(self.__boost_handle_type_name)
-
-    @property
-    def __constructs_array(self):
-        return self.ctor.output_param.is_array
 
     def generate(self):
         lines = []
@@ -793,8 +789,8 @@ class GenHandleCtor(GenHandleFunc):
                 return rtype
 
     def generate(self):
-        bh_attr = self.__boost_handle_attr
-        bh_type = self.__boost_handle_type_name
+        bh_attr = self.gen_handle.boost_handle_attr
+        bh_type = self.gen_handle.boost_handle_type_name
 
         lines = []
         lines += [
