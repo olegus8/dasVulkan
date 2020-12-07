@@ -690,6 +690,15 @@ class GenHandle(object):
             if vk_name in [array.vk_items_name, array.vk_count_name]:
                 return array
 
+    @property
+    def __constructs_array(self):
+        for param in self.__vk_ctor_params:
+            if self.__is_array_items(param.vk_name)
+                vdtype = deref_das_type(array.vk_items_param.vk_type)
+                if vdtype == self.__vk_handle_type_name:
+                    return True
+        return False
+
     def generate(self):
         lines = []
         lines += [
