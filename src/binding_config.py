@@ -271,6 +271,15 @@ def add_boost_content(g):
             count = 'pushConstantRangeCount',
             items = 'pPushConstantRanges')
     g.add_gen_struct(
+        struct      = 'VkPipelineViewportStateCreateInfo',
+        boost_to_vk = True,
+        ).declare_array(
+            count = 'viewportCount',
+            items = 'pViewports',
+        ).declare_array(
+            count = 'scissorCount',
+            items = 'pScissors')
+    g.add_gen_struct(
         struct      = 'VkPushConstantRange',
         boost_to_vk = True)
     g.add_gen_struct(
@@ -334,14 +343,8 @@ def add_boost_content(g):
             count = 'queueFamilyIndexCount',
             items = 'pQueueFamilyIndices')
     g.add_gen_struct(
-        struct      = 'VkPipelineViewportStateCreateInfo',
-        boost_to_vk = True,
-        ).declare_array(
-            count = 'viewportCount',
-            items = 'pViewports',
-        ).declare_array(
-            count = 'scissorCount',
-            items = 'pScissors')
+        struct      = 'VkViewport',
+        boost_to_vk = True)
 
     #
     # Query functions
