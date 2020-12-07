@@ -767,8 +767,10 @@ class GenHandle(object):
 
         remove_last_char(lines, ';')
 
+        return_type = (f'array<{bh_type}>'
+
         lines += [
-           f') : {bh_type}',
+            f') : {return_type}',
             '',
            f'    var {bh_attr} <- [[ {bh_type}',
            f'        _needs_delete = true,',
