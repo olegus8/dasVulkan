@@ -56,7 +56,7 @@ def with_swapchain_ex(
 
     var framebuffers : array<Framebuffer>
     framebuffers |> resize(views |> length)
-    for fbuf, view in framebuffers, views:
+    for fbuf, view in framebuffers, views
         var create_info <- [[FramebufferCreateInfo
             render_pass = render_pass,
             attachments <- [{auto[] view}],
