@@ -23,12 +23,11 @@ def with_swapchain_ex(
     device          : Device;
     phys_dev        : PhysicalDevice;
     surface         : SurfaceKHR;
-    window          : GLFWwindow_DasHandle implicit;
+    window          : GLFWwindow_DasHandle;
     surf_fmt        : SurfaceFormatKHR;
-    vk_surf_fmt     : VkSurfaceFormatKHR; //TODO: remove
-    present_mode    : VkPresentModeKHR implicit;
-    render_pass     : VkRenderPass implicit;
-    b : block<(sc:SwapchainEx implicit)>
+    present_mode    : VkPresentModeKHR;
+    render_pass     : RenderPass;
+    b : block<(sc:SwapchainEx)>
 )
     var vk_device = device.device
 
@@ -54,16 +53,23 @@ def with_swapchain_ex(
         ]])}]
     defer() <| ${ delete views; }
 
-    var framebuffers <- vk_device |> create_swapchain_framebuffers(
-        phys_dev, surface, window, views, render_pass)
-    var sc <- [[SwapchainEx
-        swapchain = vk_swapchain,
-        images <- vk_images,
-        views <- views,
-        framebuffers <- framebuffers
-    ]]
-    defer() <| ${ delete sc; }
-    b |> invoke(sc)
+    let extent <- phys_dev |> get_swap_extent(surface, window)
+
+    var framebuffers : array<Framebuffer>
+    framebuffers.resize(views |> length)
+    for fbuf, view in framebuffers, views:
+        var create_info <- [[FramebufferCreateInfo
+            render_pass = render_pass,
+            attachments <- [{auto[] view}],
+            width = extent.width,
+            height = extent.height,
+            layers = 1u
+        ]]
+        defer()
+            create_info.attachments.resize(0)
+            memzero(create_info.render_pass)
+            delete create_info
+        fbuf <- device |> create_framebuffer(create_info)
 
 
 def finalize(var sc : SwapchainEx)
@@ -111,23 +117,3 @@ def create_multibuffered_swapchain(
 // private
 //
 //////////////////
-
-
-[private]
-def create_swapchain_framebuffers(
-    device      : VkDevice implicit;
-    phys_dev    : PhysicalDevice;
-    surface     : SurfaceKHR;
-    window      : GLFWwindow_DasHandle implicit;
-    views       : array<ImageView>;
-    render_pass : VkRenderPass implicit
-) : array<Framebuffer>
-    let extent <- phys_dev |> get_swap_extent(surface, window)
-    var fbufs : array<Framebuffer>
-    fbufs |> resize(views |> length())
-    for fbuf, view in fbufs, views
-        fbuf <- create_framebuffer([device=device, render_pass=render_pass,
-            attachment=view.image_view, width=extent.width,
-            height=extent.height,
-            layers=1u])
-    return <- fbufs
