@@ -655,23 +655,18 @@ class GenHandle(object):
 
     def __generate_type(self):
         lines = []
-        bhtype = self.__boost_handle_type_name
-        vhtype = self.__vk_handle_type_name
-        attr = self.__boost_handle_attr
+        bhtype = self.boost_handle_type_name
+        vhtype = self.vk_handle_type_name
+        attr = self.boost_handle_attr
         lines += [
             '',
            f'struct {bhtype}',
            f'    {attr} : {vhtype}',
             '    _needs_delete : bool',
         ]
-        for param in self.__vk_dtor_params:
-            if param.vk_name == 'pAllocator':
-                continue
-            elif param.boost_type == bhtype:
-                continue
-            lines += [
-               f'    _{param.boost_name} : {param.vk_type}'
-            ]
+        for param in self.dtor.params:
+            lines += [f'    {line}' for line in param.generate_handle_field()]
+
         lines += [
             '',
            f'def boost_value_to_vk(b : {bhtype}) : {vhtype}',
@@ -935,6 +930,9 @@ class GenHandleFuncParam(object):
         else:
             return self.vk_param.boost_value_to_vk(self.boost_name)
 
+    def generate_handle_field(self):
+        return [f'_{self.boost_name} : {self.vk_type}']
+
 
 class GenHandleFuncParamAllocator(GenHandleFuncParam):
 
@@ -961,6 +959,9 @@ class GenHandleFuncParamAllocator(GenHandleFuncParam):
         return []
 
     def generate_ctor_temp_vars(self):
+        return []
+
+    def generate_handle_field(self):
         return []
 
 
@@ -1003,6 +1004,9 @@ class GenHandleFuncParamMainHandle(GenHandleFuncParam):
         bh_attr = self.func.gen_handle.boost_handle_attr
         bh_type = self.func.gen_handle.boost_handle_type_name
         return f'safe_addr({bh_attr}.{bh_attr})'
+
+    def generate_handle_field(self):
+        return []
 
 
 class GenHandleFuncParamStruct(GenHandleFuncParam):
