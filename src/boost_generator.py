@@ -831,23 +831,14 @@ class GenHandleCtor(GenHandleFunc):
             maybe_capture_result = ''
 
         lines += [
-           f'    {maybe_capture_result}{self.vk_name}(',
-        ]
-
+           f'    {maybe_capture_result}{self.vk_name}(']
         lines += [f'    {param.generate_ctor_vk_param()},'
             for param in self.params]
-
-            elif param.vk_type == f'{self.__vk_handle_type_name} ?':
-                vk_value = f'safe_addr({bh_attr}.{bh_attr})'
-            else:
-                vk_value = param.boost_value_to_vk(param.boost_name)
-            lines.append(f'        {vk_value},')
         remove_last_char(lines, ',')
-
         lines += [
            f'    )',
         ]
-        if self.__vk_ctor_returns_vk_result:
+        if self.returns_vk_result:
             lines += [
                f'    assert(result_ == VkResult VK_SUCCESS)',
             ]
@@ -868,7 +859,7 @@ class GenHandleFuncArray(object):
 class GenHandleFuncParam(object):
 
     def __init__(self, func, vk_param):
-        self.__vk_param = vk_param
+        self.vk_param = vk_param
         self.func = func
 
     @property
@@ -1012,6 +1003,11 @@ class GenHandleFuncParamMainHandle(GenHandleFuncParam):
 
     def generate_ctor_init_field(self):
         return []
+
+    def generate_ctor_vk_param(self):
+        bh_attr = self.func.gen_handle.boost_handle_attr
+        bh_type = self.func.gen_handle.boost_handle_type_name
+        return f'safe_addr({bh_attr}.{bh_attr})'
 
 
 class GenHandleFuncParamStruct(GenHandleFuncParam):
