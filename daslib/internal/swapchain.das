@@ -9,6 +9,7 @@ require vulkan
 require device_ex
 require image
 require generated
+require framebuffer
 
 
 struct SwapchainEx
@@ -59,11 +60,9 @@ def with_swapchain_ex(
             render_pass = render_pass,
             view = view,
             width = extent.width,
-            height = extent.height)
+            height = extent.height
+        )}]
     defer() <| ${ delete framebuffers; }
-
-    framebuffers |> resize(views |> length())
-    for fbuf, view in framebuffers, views
 
     var sc <- [[SwapchainEx
         swapchain = vk_swapchain,

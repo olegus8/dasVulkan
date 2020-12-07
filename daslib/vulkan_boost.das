@@ -11,6 +11,7 @@ require internal/command        public
 require internal/command_ex     public
 require internal/core           public
 require internal/device_ex      public
+require internal/framebuffer    public
 require internal/glfw           public
 require internal/instance_ex    public
 require internal/memory         public
