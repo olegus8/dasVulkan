@@ -150,7 +150,7 @@ def with_draw_commands(device, phys_dev, window, surface, render_pass,
         delete cmd_bufs;
     for cmd_buf, fbuf in cmd_bufs.buffers, fbufs
         cmd_buf |> record_render_pass(
-            phys_dev, window, surface, render_pass, fbuf.framebuffer
+            phys_dev, window, surface, render_pass, fbuf
         ) <| $()
             cmd_buf |> vkCmdBindPipeline(
                 VkPipelineBindPoint VK_PIPELINE_BIND_POINT_GRAPHICS,
