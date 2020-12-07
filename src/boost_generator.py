@@ -822,18 +822,9 @@ class GenHandleCtor(GenHandleFunc):
            f'def finalize(var {bh_attr} : {bh_type} explicit)',
            f'    if {bh_attr}._needs_delete',
            f'        {self.vk_name}(',
-        ]
-        lines += [
+        ] + [
            f'            {param.generate_dtor_vk_param()},'
                             for param in self.params]
-        for param in self.params:
-            if param.vk_name == 'pAllocator':
-                vk_value = 'null'
-            elif param.boost_type == bh_type:
-                vk_value = param.boost_value_to_vk(bh_attr)
-            else:
-                vk_value = f'{bh_attr}._{param.boost_name}'
-            lines.append(f'            {vk_value},')
         remove_last_char(lines, ',')
         lines += [
             '        )',
@@ -1015,6 +1006,10 @@ class GenHandleFuncParamMainHandle(GenHandleFuncParam):
         bh_attr = self.func.gen_handle.boost_handle_attr
         bh_type = self.func.gen_handle.boost_handle_type_name
         return f'safe_addr({bh_attr}.{bh_attr})'
+
+    def generate_dtor_vk_param(self):
+        bh_attr = self.func.gen_handle.boost_handle_attr
+        return self.vk_param.boost_value_to_vk(bh_attr)
 
     def generate_handle_field(self):
         return []
