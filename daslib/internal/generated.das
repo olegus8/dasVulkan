@@ -1724,6 +1724,53 @@ def finalize(var fence : Fence explicit)
     memzero(fence)
 
 //
+// Image
+//
+
+struct Image
+    image : VkImage
+    _device : VkDevice
+
+def boost_value_to_vk(b : Image) : VkImage
+    return b.image
+
+def boost_value_to_vk(b : Image ?) : VkImage ?
+    return b?.image
+
+def create_image(
+    device : Device = [[ Device ]];
+    var create_info : ImageCreateInfo = [[ ImageCreateInfo ]];
+    var result : VkResult? = [[VkResult?]]
+) : Image
+
+    var image <- [[ Image
+        _device = boost_value_to_vk(device)
+    ]]
+
+    var vk_create_info : VkImageCreateInfo
+    unsafe
+        vk_create_info <- create_info |> vk_view_create_unsafe()
+    defer() <| ${ create_info |> vk_view_destroy(); }
+
+    var result_ = VkResult VK_SUCCESS
+    result ?? result_ = vkCreateImage(
+        boost_value_to_vk(device),
+        safe_addr(vk_create_info),
+        null,
+        safe_addr(image.image)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+    return <- image
+
+def finalize(var image : Image explicit)
+    vkDestroyImage(
+        image._device,
+        boost_value_to_vk(image),
+        null
+    )
+    memzero(image)
+
+//
 // Instance
 //
 

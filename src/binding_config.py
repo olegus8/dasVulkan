@@ -112,6 +112,10 @@ def add_boost_content(g):
         ctor            = 'vkCreateFence',
         dtor            = 'vkDestroyFence')
     g.add_gen_handle(
+        handle          = 'VkImage',
+        ctor            = 'vkCreateImage',
+        dtor            = 'vkDestroyImage')
+    g.add_gen_handle(
         handle          = 'VkInstance',
         ctor            = 'vkCreateInstance',
         dtor            = 'vkDestroyInstance')
