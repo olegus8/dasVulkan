@@ -920,7 +920,7 @@ class GenHandleFuncParam(object):
     @property
     def boost_name(self):
         bname = self.vk_param.boost_name
-        if self.array:
+        if self.is_array_items:
             bname = boost_ptr_name_to_array(bname)
         elif self.vk_param.is_pointer
             bname = deref_boost_ptr_name(bname)
@@ -929,7 +929,7 @@ class GenHandleFuncParam(object):
     @property
     def boost_type(self):
         btype = self.vk_param.boost_type
-        if self.array:
+        if self.is_array_items:
             btype = f'array<{deref_das_type(btype)}>'
         elif self.vk_param.is_pointer
             btype = deref_das_type(btype)
@@ -946,6 +946,10 @@ class GenHandleFuncParam(object):
     @property
     def array(self):
         return self.func.get_array(self.vk_name)
+
+    @property
+    def is_array_items(self):
+        return self.func.is_array_items(self.vk_name)
 
     def generate_ctor_param(self):
         return [f'{boost_name} : {boost_type} = [[ {boost_type} ]];']
