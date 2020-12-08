@@ -120,16 +120,17 @@ def add_boost_content(g):
         ctor            = 'vkCreateImage',
         dtor            = 'vkDestroyImage')
     g.add_gen_handle(
-        handle          = 'VkImageView',
-        ctor            = 'vkCreateImageView',
-        dtor            = 'vkDestroyImageView')
+        handle = 'VkImageView',
+        ).declare_ctor(GenHandleCtor(
+            name = 'vkCreateImageView')
+        ).declare_dtor(GenHandleDtor(
+            name = 'vkDestroyImageView'))
     g.add_gen_handle(
         handle = 'VkInstance',
         ).declare_ctor(GenHandleCtor(
             name = 'vkCreateInstance')
         ).declare_dtor(GenHandleDtor(
             name = 'vkDestroyInstance'))
-
     g.add_gen_handle(
         handle = 'VkPhysicalDevice')
     g.add_gen_handle(
