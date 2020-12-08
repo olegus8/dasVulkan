@@ -153,7 +153,7 @@ def add_boost_content(g):
                 items = 'pPipelines')
         ).declare_dtor(GenHandleDtor(
             name = 'vkDestroyPipeline',
-        ))
+    ))
     g.add_gen_handle(
         handle          = 'VkPipelineLayout',
         ctor            = 'vkCreatePipelineLayout',
@@ -372,13 +372,16 @@ def add_boost_content(g):
         boost_to_vk = True)
 
     #
-    # Query functions
+    # Functions
     #
 
     g.add_gen_func(
         name = 'vkEnumerateDeviceExtensionProperties',
-        p_count     = 'pPropertyCount',
-        p_items     = 'pProperties')
+        p_output = 'pProperties',
+        ).declare_array(
+            count = 'pPropertyCount',
+            items = 'pProperties',
+    )
     g.add_gen_query_array_func(
         func        = 'vkEnumeratePhysicalDevices',
         p_count     = 'pPhysicalDeviceCount',
