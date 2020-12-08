@@ -95,32 +95,14 @@ def add_boost_content(g):
     # Handles
     #
 
-    g.add_gen_handle(
-        name          = 'VkDevice',
-        ctor            = 'vkCreateDevice',
-        dtor            = 'vkDestroyDevice')
-    g.add_gen_handle(
-        name          = 'VkCommandPool',
-        ctor            = 'vkCreateCommandPool',
-        dtor            = 'vkDestroyCommandPool')
-    g.add_gen_handle(name = 'VkDescriptorSetLayout',
-        ).declare_ctor(GenHandleCtor(name = 'vkCreateDescriptorSetLayout')
-        ).declare_dtor(GenHandleDtor(name = 'vkDestroyDescriptorSetLayout'))
-    g.add_gen_handle(name = 'VkFence',
-        ).declare_ctor(GenHandleCtor(name = 'vkCreateFence')
-        ).declare_dtor(GenHandleDtor(name = 'vkDestroyFence'))
-    g.add_gen_handle(name = 'VkFramebuffer',
-        ).declare_ctor(GenHandleCtor(name = 'vkCreateFramebuffer')
-        ).declare_dtor(GenHandleDtor(name = 'vkDestroyFramebuffer'))
-    g.add_gen_handle(name = 'VkImage',
-        ).declare_ctor(GenHandleCtor(name = 'vkCreateImage')
-        ).declare_dtor(GenHandleDtor(name = 'vkDestroyImage'))
-    g.add_gen_handle(name = 'VkImageView',
-        ).declare_ctor(GenHandleCtor(name = 'vkCreateImageView')
-        ).declare_dtor(GenHandleDtor(name = 'vkDestroyImageView'))
-    g.add_gen_handle(name = 'VkInstance',
-        ).declare_ctor(GenHandleCtor(name = 'vkCreateInstance')
-        ).declare_dtor(GenHandleDtor(name = 'vkDestroyInstance'))
+    g.add_gen_handle(name = 'VkDevice')
+    g.add_gen_handle(name = 'VkCommandPool')
+    g.add_gen_handle(name = 'VkDescriptorSetLayout')
+    g.add_gen_handle(name = 'VkFence')
+    g.add_gen_handle(name = 'VkFramebuffer')
+    g.add_gen_handle(name = 'VkImage')
+    g.add_gen_handle(name = 'VkImageView')
+    g.add_gen_handle(name = 'VkInstance')
     g.add_gen_handle(name = 'VkPhysicalDevice')
     g.add_gen_handle(name = 'VkQueue')
     g.add_gen_handle(name = 'VkPipeline'
@@ -129,33 +111,13 @@ def add_boost_content(g):
             ).declare_array(count = 'createInfoCount', items = 'pPipelines')
         ).declare_ctor(GenHandleCtor(name = 'vkCreateComputePipelines',
             ).declare_array(count = 'createInfoCount', items = 'pCreateInfos'
-            ).declare_array(count = 'createInfoCount', items = 'pPipelines')
-        ).declare_dtor(GenHandleDtor(name = 'vkDestroyPipeline'))
-
-    g.add_gen_handle(
-        name          = 'VkPipelineLayout',
-        ctor            = 'vkCreatePipelineLayout',
-        dtor            = 'vkDestroyPipelineLayout')
-    g.add_gen_handle(
-        name          = 'VkRenderPass',
-        ctor            = 'vkCreateRenderPass',
-        dtor            = 'vkDestroyRenderPass')
-    g.add_gen_handle(
-        name          = 'VkSampler',
-        ctor            = 'vkCreateSampler',
-        dtor            = 'vkDestroySampler')
-    g.add_gen_handle(
-        name          = 'VkSemaphore',
-        ctor            = 'vkCreateSemaphore',
-        dtor            = 'vkDestroySemaphore')
-    g.add_gen_handle(
-        name          = 'VkShaderModule',
-        ctor            = 'vkCreateShaderModule',
-        dtor            = 'vkDestroyShaderModule')
-    g.add_gen_handle(
-        name          = 'VkSwapchainKHR',
-        ctor            = 'vkCreateSwapchainKHR',
-        dtor            = 'vkDestroySwapchainKHR')
+            ).declare_array(count = 'createInfoCount', items = 'pPipelines'))
+    g.add_gen_handle(name = 'VkPipelineLayout')
+    g.add_gen_handle(name = 'VkRenderPass')
+    g.add_gen_handle(name = 'VkSampler')
+    g.add_gen_handle(name = 'VkSemaphore')
+    g.add_gen_handle(name = 'VkShaderModule')
+    g.add_gen_handle(name = 'VkSwapchainKHR')
 
     #
     # Structs
