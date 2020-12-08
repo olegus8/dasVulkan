@@ -133,9 +133,10 @@ def add_boost_content(g):
     g.add_gen_handle(
         handle          = 'VkQueue',
         ctor            = 'vkGetDeviceQueue')
-    g.add_gen_handle(handle = 'VkPipeline'
+    g.add_gen_handle(
+        handle = 'VkPipeline'
         ).declare_ctor(GenHandleCtor(
-            name='vkCreateGraphicsPipelines',
+            name = 'vkCreateGraphicsPipelines',
             ).declare_array(
                 count = 'createInfoCount',
                 items = 'pCreateInfos'
@@ -143,7 +144,7 @@ def add_boost_content(g):
                 count = 'createInfoCount',
                 items = 'pPipelines')
         ).declare_ctor(GenHandleCtor(
-            name='vkCreateComputePipelines',
+            name = 'vkCreateComputePipelines',
             ).declare_array(
                 count = 'createInfoCount',
                 items = 'pCreateInfos'
@@ -374,8 +375,8 @@ def add_boost_content(g):
     # Query functions
     #
 
-    g.add_gen_query_array_func(
-        func        = 'vkEnumerateDeviceExtensionProperties',
+    g.add_gen_func(
+        name = 'vkEnumerateDeviceExtensionProperties',
         p_count     = 'pPropertyCount',
         p_items     = 'pProperties')
     g.add_gen_query_array_func(
