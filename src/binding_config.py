@@ -135,26 +135,14 @@ def add_boost_content(g):
         handle = 'VkPhysicalDevice')
     g.add_gen_handle(
         handle = 'VkQueue')
-    g.add_gen_handle(
-        handle = 'VkPipeline'
-        ).declare_ctor(GenHandleCtor(
-            name = 'vkCreateGraphicsPipelines',
-            ).declare_array(
-                count = 'createInfoCount',
-                items = 'pCreateInfos'
-            ).declare_array(
-                count = 'createInfoCount',
-                items = 'pPipelines')
-        ).declare_ctor(GenHandleCtor(
-            name = 'vkCreateComputePipelines',
-            ).declare_array(
-                count = 'createInfoCount',
-                items = 'pCreateInfos'
-            ).declare_array(
-                count = 'createInfoCount',
-                items = 'pPipelines')
-        ).declare_dtor(GenHandleDtor(
-            name = 'vkDestroyPipeline'))
+    g.add_gen_handle(handle = 'VkPipeline'
+        ).declare_ctor(GenHandleCtor(name = 'vkCreateGraphicsPipelines',
+            ).declare_array(count = 'createInfoCount', items = 'pCreateInfos'
+            ).declare_array(count = 'createInfoCount', items = 'pPipelines')
+        ).declare_ctor(GenHandleCtor(name = 'vkCreateComputePipelines',
+            ).declare_array(count = 'createInfoCount', items = 'pCreateInfos'
+            ).declare_array(count = 'createInfoCount', items = 'pPipelines')
+        ).declare_dtor(GenHandleDtor(name = 'vkDestroyPipeline'))
 
     g.add_gen_handle(
         handle          = 'VkPipelineLayout',
