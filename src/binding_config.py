@@ -185,33 +185,33 @@ def add_boost_content(g):
     #
 
     g.add_gen_struct(
-        struct      = 'VkApplicationInfo',
+        struct = 'VkApplicationInfo',
         boost_to_vk = True)
     g.add_gen_struct(
-        struct      = 'VkAttachmentDescription',
+        struct = 'VkAttachmentDescription',
         boost_to_vk = True)
     g.add_gen_struct(
-        struct      = 'VkAttachmentReference',
+        struct = 'VkAttachmentReference',
         boost_to_vk = True)
     g.add_gen_struct(
-        struct      = 'VkCommandPoolCreateInfo',
+        struct = 'VkCommandPoolCreateInfo',
         boost_to_vk = True)
     g.add_gen_struct(
-        struct      = 'VkComponentMapping',
+        struct = 'VkComponentMapping',
         boost_to_vk = True)
     g.add_gen_struct(
-        struct      = 'VkDescriptorSetLayoutBinding',
+        struct = 'VkDescriptorSetLayoutBinding',
         boost_to_vk = True,
         ).declare_array(
             items = 'pImmutableSamplers')
     g.add_gen_struct(
-        struct      = 'VkDescriptorSetLayoutCreateInfo',
+        struct = 'VkDescriptorSetLayoutCreateInfo',
         boost_to_vk = True,
         ).declare_array(
             count = 'bindingCount',
             items = 'pBindings')
     g.add_gen_struct(
-        struct      = 'VkDeviceCreateInfo',
+        struct = 'VkDeviceCreateInfo',
         boost_to_vk = True,
         ).declare_array(
             count = 'queueCreateInfoCount',
@@ -223,45 +223,45 @@ def add_boost_content(g):
             count = 'enabledExtensionCount',
             items = 'ppEnabledExtensionNames')
     g.add_gen_struct(
-        struct      = 'VkDeviceQueueCreateInfo',
+        struct = 'VkDeviceQueueCreateInfo',
         boost_to_vk = True
         ).declare_array(
             count = 'queueCount',
             items = 'pQueuePriorities')
     g.add_gen_struct(
-        struct      = 'VkExtensionProperties',
+        struct = 'VkExtensionProperties',
         vk_to_boost = True)
     g.add_gen_struct(
-        struct      = 'VkExtent2D',
+        struct = 'VkExtent2D',
         vk_to_boost = True,
         boost_to_vk = True)
     g.add_gen_struct(
-        struct      = 'VkExtent3D',
+        struct = 'VkExtent3D',
         vk_to_boost = True,
         boost_to_vk = True)
     g.add_gen_struct(
-        struct      = 'VkFenceCreateInfo',
+        struct = 'VkFenceCreateInfo',
         boost_to_vk = True)
     g.add_gen_struct(
-        struct      = 'VkFramebufferCreateInfo',
+        struct = 'VkFramebufferCreateInfo',
         boost_to_vk = True
         ).declare_array(
             count = 'attachmentCount',
             items = 'pAttachments')
     g.add_gen_struct(
-        struct      = 'VkImageCreateInfo',
+        struct = 'VkImageCreateInfo',
         boost_to_vk = True,
         ).declare_array(
             count = 'queueFamilyIndexCount',
             items = 'pQueueFamilyIndices')
     g.add_gen_struct(
-        struct      = 'VkImageSubresourceRange',
+        struct = 'VkImageSubresourceRange',
         boost_to_vk = True)
     g.add_gen_struct(
-        struct      = 'VkImageViewCreateInfo',
+        struct = 'VkImageViewCreateInfo',
         boost_to_vk = True)
     g.add_gen_struct(
-        struct      = 'VkInstanceCreateInfo',
+        struct = 'VkInstanceCreateInfo',
         boost_to_vk = True
         ).declare_array(
             count = 'enabledLayerCount',
@@ -270,22 +270,22 @@ def add_boost_content(g):
             count = 'enabledExtensionCount',
             items = 'ppEnabledExtensionNames')
     g.add_gen_struct(
-        struct      = 'VkOffset2D',
+        struct = 'VkOffset2D',
         boost_to_vk = True)
     g.add_gen_struct(
-        struct      = 'VkPhysicalDeviceLimits',
+        struct = 'VkPhysicalDeviceLimits',
         vk_to_boost = True)
     g.add_gen_struct(
-        struct      = 'VkPhysicalDeviceProperties',
+        struct = 'VkPhysicalDeviceProperties',
         vk_to_boost = True)
     g.add_gen_struct(
-        struct      = 'VkPhysicalDeviceFeatures',
+        struct = 'VkPhysicalDeviceFeatures',
         boost_to_vk = True)
     g.add_gen_struct(
-        struct      = 'VkPhysicalDeviceSparseProperties',
+        struct = 'VkPhysicalDeviceSparseProperties',
         vk_to_boost = True)
     g.add_gen_struct(
-        struct      = 'VkPipelineLayoutCreateInfo',
+        struct = 'VkPipelineLayoutCreateInfo',
         boost_to_vk = True,
         ).declare_array(
             count = 'setLayoutCount',
@@ -294,7 +294,7 @@ def add_boost_content(g):
             count = 'pushConstantRangeCount',
             items = 'pPushConstantRanges')
     g.add_gen_struct(
-        struct      = 'VkPipelineViewportStateCreateInfo',
+        struct = 'VkPipelineViewportStateCreateInfo',
         boost_to_vk = True,
         ).declare_array(
             count = 'viewportCount',
@@ -303,16 +303,16 @@ def add_boost_content(g):
             count = 'scissorCount',
             items = 'pScissors')
     g.add_gen_struct(
-        struct      = 'VkPushConstantRange',
+        struct = 'VkPushConstantRange',
         boost_to_vk = True)
     g.add_gen_struct(
-        struct      = 'VkQueueFamilyProperties',
+        struct = 'VkQueueFamilyProperties',
         vk_to_boost = True)
     g.add_gen_struct(
-        struct      = 'VkRect2D',
+        struct = 'VkRect2D',
         boost_to_vk = True)
     g.add_gen_struct(
-        struct      = 'VkRenderPassCreateInfo',
+        struct = 'VkRenderPassCreateInfo',
         boost_to_vk = True
         ).declare_array(
             count = 'attachmentCount',
@@ -324,23 +324,23 @@ def add_boost_content(g):
             count = 'dependencyCount',
             items = 'pDependencies')
     g.add_gen_struct(
-        struct      = 'VkSamplerCreateInfo',
+        struct = 'VkSamplerCreateInfo',
         boost_to_vk = True)
     g.add_gen_struct(
-        struct      = 'VkSemaphoreCreateInfo',
+        struct = 'VkSemaphoreCreateInfo',
         boost_to_vk = True)
     g.add_gen_struct(
-        struct      = 'VkShaderModuleCreateInfo',
+        struct = 'VkShaderModuleCreateInfo',
         boost_to_vk = True,
         ).declare_array(
             count = 'codeSize',
             items = 'pCode',
             force_item_type = 'uint8')
     g.add_gen_struct(
-        struct      = 'VkSubpassDependency',
+        struct = 'VkSubpassDependency',
         boost_to_vk = True)
     g.add_gen_struct(
-        struct      = 'VkSubpassDescription',
+        struct = 'VkSubpassDescription',
         boost_to_vk = True
         ).declare_array(
             count = 'inputAttachmentCount',
@@ -357,20 +357,20 @@ def add_boost_content(g):
             count = 'preserveAttachmentCount',
             items = 'pPreserveAttachments')
     g.add_gen_struct(
-        struct      = 'VkSurfaceCapabilitiesKHR',
+        struct = 'VkSurfaceCapabilitiesKHR',
         vk_to_boost = True)
     g.add_gen_struct(
-        struct      = 'VkSurfaceFormatKHR',
+        struct = 'VkSurfaceFormatKHR',
         vk_to_boost = True,
         boost_to_vk = True)
     g.add_gen_struct(
-        struct      = 'VkSwapchainCreateInfoKHR',
+        struct = 'VkSwapchainCreateInfoKHR',
         boost_to_vk = True,
         ).declare_array(
             count = 'queueFamilyIndexCount',
             items = 'pQueueFamilyIndices')
     g.add_gen_struct(
-        struct      = 'VkViewport',
+        struct = 'VkViewport',
         boost_to_vk = True)
 
     #
