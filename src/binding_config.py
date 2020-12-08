@@ -351,7 +351,8 @@ def add_boost_content(g):
         ).declare_array(
             count = 'colorAttachmentCount',
             items = 'pResolveAttachments',
-            optional = True
+        ).declare_can_be_null(
+            name = 'pResolveAttachments',
         ).declare_array(
             count = 'preserveAttachmentCount',
             items = 'pPreserveAttachments')
