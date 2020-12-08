@@ -222,22 +222,11 @@ def add_boost_content(g):
         ).declare_array(count = 'colorAttachmentCount', items = 'pResolveAttachments',
         ).declare_can_be_null(name = 'pResolveAttachments',
         ).declare_array(count = 'preserveAttachmentCount', items = 'pPreserveAttachments')
-    g.add_gen_struct(
-        struct = 'VkSurfaceCapabilitiesKHR',
-        v2b = True)
-    g.add_gen_struct(
-        struct = 'VkSurfaceFormatKHR',
-        v2b = True,
-        b2v = True)
-    g.add_gen_struct(
-        struct = 'VkSwapchainCreateInfoKHR',
-        b2v = True,
-        ).declare_array(
-            count = 'queueFamilyIndexCount',
-            items = 'pQueueFamilyIndices')
-    g.add_gen_struct(
-        struct = 'VkViewport',
-        b2v = True)
+    g.add_gen_struct(struct = 'VkSurfaceCapabilitiesKHR', v2b = True)
+    g.add_gen_struct(struct = 'VkSurfaceFormatKHR', v2b = True, b2v = True)
+    g.add_gen_struct(struct = 'VkSwapchainCreateInfoKHR', b2v = True,
+        ).declare_array(count = 'queueFamilyIndexCount', items = 'pQueueFamilyIndices')
+    g.add_gen_struct(struct = 'VkViewport', b2v = True)
 
     #
     # Functions
