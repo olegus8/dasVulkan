@@ -391,20 +391,26 @@ def add_boost_content(g):
             items = 'pPhysicalDevices'.
         ).declare_output(
             name = 'pPhysicalDevices')
-    g.add_gen_query_func(
-        func        = 'vkGetPhysicalDeviceProperties',
-        p_output    = 'pProperties')
-    g.add_gen_query_func(
-        func        = 'vkGetPhysicalDeviceSurfaceCapabilitiesKHR',
-        p_output    = 'pSurfaceCapabilities')
-    g.add_gen_query_func(
-        func        = 'vkGetPhysicalDeviceSurfaceSupportKHR',
-        p_output    = 'pSupported')
-    g.add_gen_query_array_func(
-        func        = 'vkGetPhysicalDeviceQueueFamilyProperties',
-        p_count     = 'pQueueFamilyPropertyCount',
-        p_items     = 'pQueueFamilyProperties')
-    g.add_gen_query_array_func(
+    g.add_gen_func(
+        func = 'vkGetPhysicalDeviceProperties',
+        ).declare_output(
+            name = 'pProperties')
+    g.add_gen_func(
+        func = 'vkGetPhysicalDeviceSurfaceCapabilitiesKHR',
+        ).declare_output(
+            name = 'pSurfaceCapabilities')
+    g.add_gen_func(
+        func = 'vkGetPhysicalDeviceSurfaceSupportKHR',
+        ).declare_output(
+            name = 'pSupported')
+    g.add_gen_func(
+        func = 'vkGetPhysicalDeviceQueueFamilyProperties',
+        ).declare_array(
+            count = 'pQueueFamilyPropertyCount',
+            items = 'pQueueFamilyProperties',
+        ).declare_output(
+            name = 'pQueueFamilyProperties')
+    g.add_gen_func(
         func        = 'vkGetPhysicalDeviceSurfaceFormatsKHR',
         p_count     = 'pSurfaceFormatCount',
         p_items     = 'pSurfaceFormats')
