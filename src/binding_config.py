@@ -193,33 +193,15 @@ def add_boost_content(g):
     g.add_gen_struct(struct = 'VkInstanceCreateInfo', b2v = True
         ).declare_array(count = 'enabledLayerCount', items = 'ppEnabledLayerNames',
         ).declare_array(count = 'enabledExtensionCount', items = 'ppEnabledExtensionNames')
-    g.add_gen_struct(
-        struct = 'VkOffset2D',
-        boost_to_vk = True)
-    g.add_gen_struct(
-        struct = 'VkPhysicalDeviceLimits',
-        vk_to_boost = True)
-    g.add_gen_struct(
-        struct = 'VkPhysicalDeviceProperties',
-        vk_to_boost = True)
-    g.add_gen_struct(
-        struct = 'VkPhysicalDeviceFeatures',
-        boost_to_vk = True)
-    g.add_gen_struct(
-        struct = 'VkPhysicalDeviceSparseProperties',
-        vk_to_boost = True)
-    g.add_gen_struct(
-        struct = 'VkPipelineLayoutCreateInfo',
-        boost_to_vk = True,
-        ).declare_array(
-            count = 'setLayoutCount',
-            items = 'pSetLayouts',
-        ).declare_array(
-            count = 'pushConstantRangeCount',
-            items = 'pPushConstantRanges')
-    g.add_gen_struct(
-        struct = 'VkPipelineViewportStateCreateInfo',
-        boost_to_vk = True,
+    g.add_gen_struct(struct = 'VkOffset2D', b2v = True)
+    g.add_gen_struct(struct = 'VkPhysicalDeviceLimits', v2b = True)
+    g.add_gen_struct(struct = 'VkPhysicalDeviceProperties', v2b = True)
+    g.add_gen_struct(struct = 'VkPhysicalDeviceFeatures', b2v = True)
+    g.add_gen_struct(struct = 'VkPhysicalDeviceSparseProperties', v2b = True)
+    g.add_gen_struct(struct = 'VkPipelineLayoutCreateInfo', b2v = True,
+        ).declare_array(count = 'setLayoutCount', items = 'pSetLayouts',
+        ).declare_array(count = 'pushConstantRangeCount', items = 'pPushConstantRanges')
+    g.add_gen_struct(struct = 'VkPipelineViewportStateCreateInfo', b2v = True,
         ).declare_array(
             count = 'viewportCount',
             items = 'pViewports',
@@ -228,16 +210,16 @@ def add_boost_content(g):
             items = 'pScissors')
     g.add_gen_struct(
         struct = 'VkPushConstantRange',
-        boost_to_vk = True)
+        b2v = True)
     g.add_gen_struct(
         struct = 'VkQueueFamilyProperties',
-        vk_to_boost = True)
+        v2b = True)
     g.add_gen_struct(
         struct = 'VkRect2D',
-        boost_to_vk = True)
+        b2v = True)
     g.add_gen_struct(
         struct = 'VkRenderPassCreateInfo',
-        boost_to_vk = True
+        b2v = True
         ).declare_array(
             count = 'attachmentCount',
             items = 'pAttachments',
@@ -249,23 +231,23 @@ def add_boost_content(g):
             items = 'pDependencies')
     g.add_gen_struct(
         struct = 'VkSamplerCreateInfo',
-        boost_to_vk = True)
+        b2v = True)
     g.add_gen_struct(
         struct = 'VkSemaphoreCreateInfo',
-        boost_to_vk = True)
+        b2v = True)
     g.add_gen_struct(
         struct = 'VkShaderModuleCreateInfo',
-        boost_to_vk = True,
+        b2v = True,
         ).declare_array(
             count = 'codeSize',
             items = 'pCode',
             force_item_type = 'uint8')
     g.add_gen_struct(
         struct = 'VkSubpassDependency',
-        boost_to_vk = True)
+        b2v = True)
     g.add_gen_struct(
         struct = 'VkSubpassDescription',
-        boost_to_vk = True
+        b2v = True
         ).declare_array(
             count = 'inputAttachmentCount',
             items = 'pInputAttachments',
@@ -282,20 +264,20 @@ def add_boost_content(g):
             items = 'pPreserveAttachments')
     g.add_gen_struct(
         struct = 'VkSurfaceCapabilitiesKHR',
-        vk_to_boost = True)
+        v2b = True)
     g.add_gen_struct(
         struct = 'VkSurfaceFormatKHR',
-        vk_to_boost = True,
-        boost_to_vk = True)
+        v2b = True,
+        b2v = True)
     g.add_gen_struct(
         struct = 'VkSwapchainCreateInfoKHR',
-        boost_to_vk = True,
+        b2v = True,
         ).declare_array(
             count = 'queueFamilyIndexCount',
             items = 'pQueueFamilyIndices')
     g.add_gen_struct(
         struct = 'VkViewport',
-        boost_to_vk = True)
+        b2v = True)
 
     #
     # Functions
