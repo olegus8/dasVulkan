@@ -411,9 +411,12 @@ def add_boost_content(g):
         ).declare_output(
             name = 'pQueueFamilyProperties')
     g.add_gen_func(
-        func        = 'vkGetPhysicalDeviceSurfaceFormatsKHR',
-        p_count     = 'pSurfaceFormatCount',
-        p_items     = 'pSurfaceFormats')
+        func = 'vkGetPhysicalDeviceSurfaceFormatsKHR',
+        ).declare_array(
+            count = 'pSurfaceFormatCount',
+            items = 'pSurfaceFormats',
+        ).declare_output(
+            output = 'pSurfaceFormats')
     g.add_gen_query_array_func(
         func        = 'vkGetPhysicalDeviceSurfacePresentModesKHR',
         p_count     = 'pPresentModeCount',
