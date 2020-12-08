@@ -186,27 +186,13 @@ def add_boost_content(g):
     g.add_gen_struct(struct = 'VkFenceCreateInfo', b2v = True)
     g.add_gen_struct(struct = 'VkFramebufferCreateInfo', b2v = True
         ).declare_array(count = 'attachmentCount', items = 'pAttachments')
-    g.add_gen_struct(
-        struct = 'VkImageCreateInfo',
-        boost_to_vk = True,
-        ).declare_array(
-            count = 'queueFamilyIndexCount',
-            items = 'pQueueFamilyIndices')
-    g.add_gen_struct(
-        struct = 'VkImageSubresourceRange',
-        boost_to_vk = True)
-    g.add_gen_struct(
-        struct = 'VkImageViewCreateInfo',
-        boost_to_vk = True)
-    g.add_gen_struct(
-        struct = 'VkInstanceCreateInfo',
-        boost_to_vk = True
-        ).declare_array(
-            count = 'enabledLayerCount',
-            items = 'ppEnabledLayerNames',
-        ).declare_array(
-            count = 'enabledExtensionCount',
-            items = 'ppEnabledExtensionNames')
+    g.add_gen_struct(struct = 'VkImageCreateInfo', b2v = True,
+        ).declare_array(count = 'queueFamilyIndexCount', items = 'pQueueFamilyIndices')
+    g.add_gen_struct(struct = 'VkImageSubresourceRange', b2v = True)
+    g.add_gen_struct(struct = 'VkImageViewCreateInfo', b2v = True)
+    g.add_gen_struct(struct = 'VkInstanceCreateInfo', b2v = True
+        ).declare_array(count = 'enabledLayerCount', items = 'ppEnabledLayerNames',
+        ).declare_array(count = 'enabledExtensionCount', items = 'ppEnabledExtensionNames')
     g.add_gen_struct(
         struct = 'VkOffset2D',
         boost_to_vk = True)
