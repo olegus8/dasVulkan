@@ -183,15 +183,9 @@ def add_boost_content(g):
     g.add_gen_struct(struct = 'VkExtensionProperties', v2b = True)
     g.add_gen_struct(struct = 'VkExtent2D', v2b = True, b2v = True)
     g.add_gen_struct(struct = 'VkExtent3D', v2b = True, b2v = True)
-    g.add_gen_struct(
-        struct = 'VkFenceCreateInfo',
-        boost_to_vk = True)
-    g.add_gen_struct(
-        struct = 'VkFramebufferCreateInfo',
-        boost_to_vk = True
-        ).declare_array(
-            count = 'attachmentCount',
-            items = 'pAttachments')
+    g.add_gen_struct(struct = 'VkFenceCreateInfo', b2v = True)
+    g.add_gen_struct(struct = 'VkFramebufferCreateInfo', b2v = True
+        ).declare_array(count = 'attachmentCount', items = 'pAttachments')
     g.add_gen_struct(
         struct = 'VkImageCreateInfo',
         boost_to_vk = True,
