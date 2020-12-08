@@ -127,13 +127,13 @@ def add_boost_content(g):
         handle          = 'VkInstance',
         ctor            = 'vkCreateInstance',
         dtor            = 'vkDestroyInstance')
-    g.add_gen_handle(
-        handle          = 'VkPhysicalDevice'
-    )
-    g.add_gen_handle(
-        handle          = 'VkQueue',
-        ctor            = 'vkGetDeviceQueue')
 
+    g.add_gen_handle(
+        handle = 'VkPhysicalDevice')
+    g.add_gen_handle(
+        handle = 'VkQueue',
+        ).declare_ctor(GenHandleCtor(
+            name = 'vkGetDeviceQueue'))
     g.add_gen_handle(
         handle = 'VkPipeline'
         ).declare_ctor(GenHandleCtor(
