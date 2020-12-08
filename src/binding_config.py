@@ -417,11 +417,17 @@ def add_boost_content(g):
             items = 'pSurfaceFormats',
         ).declare_output(
             output = 'pSurfaceFormats')
-    g.add_gen_query_array_func(
-        func        = 'vkGetPhysicalDeviceSurfacePresentModesKHR',
-        p_count     = 'pPresentModeCount',
-        p_items     = 'pPresentModes')
-    g.add_gen_query_array_func(
-        func        = 'vkGetSwapchainImagesKHR',
-        p_count     = 'pSwapchainImageCount',
-        p_items     = 'pSwapchainImages')
+    g.add_gen_func(
+        func = 'vkGetPhysicalDeviceSurfacePresentModesKHR',
+        ).declare_array(
+            count = 'pPresentModeCount',
+            items = 'pPresentModes',
+        ).declare_output(
+            output = 'pPresentModes')
+    g.add_gen_func(
+        func = 'vkGetSwapchainImagesKHR',
+        ).declare_array(
+            count = 'pSwapchainImageCount',
+            items = 'pSwapchainImages',
+        ).declare_output(
+            name = 'pSwapchainImages')
