@@ -165,32 +165,15 @@ def add_boost_content(g):
     # Structs
     #
 
-    g.add_gen_struct(
-        struct = 'VkApplicationInfo',
-        boost_to_vk = True)
-    g.add_gen_struct(
-        struct = 'VkAttachmentDescription',
-        boost_to_vk = True)
-    g.add_gen_struct(
-        struct = 'VkAttachmentReference',
-        boost_to_vk = True)
-    g.add_gen_struct(
-        struct = 'VkCommandPoolCreateInfo',
-        boost_to_vk = True)
-    g.add_gen_struct(
-        struct = 'VkComponentMapping',
-        boost_to_vk = True)
-    g.add_gen_struct(
-        struct = 'VkDescriptorSetLayoutBinding',
-        boost_to_vk = True,
-        ).declare_array(
-            items = 'pImmutableSamplers')
-    g.add_gen_struct(
-        struct = 'VkDescriptorSetLayoutCreateInfo',
-        boost_to_vk = True,
-        ).declare_array(
-            count = 'bindingCount',
-            items = 'pBindings')
+    g.add_gen_struct(struct = 'VkApplicationInfo', b2v = True)
+    g.add_gen_struct(struct = 'VkAttachmentDescription', b2v = True)
+    g.add_gen_struct(struct = 'VkAttachmentReference', b2v = True)
+    g.add_gen_struct(struct = 'VkCommandPoolCreateInfo', b2v = True)
+    g.add_gen_struct(struct = 'VkComponentMapping', b2v = True)
+    g.add_gen_struct(struct = 'VkDescriptorSetLayoutBinding', b2v = True,
+        ).declare_array(items = 'pImmutableSamplers')
+    g.add_gen_struct(struct = 'VkDescriptorSetLayoutCreateInfo', b2v = True,
+        ).declare_array(count = 'bindingCount', items = 'pBindings')
     g.add_gen_struct(
         struct = 'VkDeviceCreateInfo',
         boost_to_vk = True,
