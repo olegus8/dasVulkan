@@ -119,22 +119,14 @@ def add_boost_content(g):
         handle          = 'VkImage',
         ctor            = 'vkCreateImage',
         dtor            = 'vkDestroyImage')
-    g.add_gen_handle(
-        handle = 'VkImageView',
-        ).declare_ctor(GenHandleCtor(
-            name = 'vkCreateImageView')
-        ).declare_dtor(GenHandleDtor(
-            name = 'vkDestroyImageView'))
-    g.add_gen_handle(
-        handle = 'VkInstance',
-        ).declare_ctor(GenHandleCtor(
-            name = 'vkCreateInstance')
-        ).declare_dtor(GenHandleDtor(
-            name = 'vkDestroyInstance'))
-    g.add_gen_handle(
-        handle = 'VkPhysicalDevice')
-    g.add_gen_handle(
-        handle = 'VkQueue')
+    g.add_gen_handle(handle = 'VkImageView',
+        ).declare_ctor(GenHandleCtor(name = 'vkCreateImageView')
+        ).declare_dtor(GenHandleDtor(name = 'vkDestroyImageView'))
+    g.add_gen_handle(handle = 'VkInstance',
+        ).declare_ctor(GenHandleCtor(name = 'vkCreateInstance')
+        ).declare_dtor(GenHandleDtor(name = 'vkDestroyInstance'))
+    g.add_gen_handle(handle = 'VkPhysicalDevice')
+    g.add_gen_handle(handle = 'VkQueue')
     g.add_gen_handle(handle = 'VkPipeline'
         ).declare_ctor(GenHandleCtor(name = 'vkCreateGraphicsPipelines',
             ).declare_array(count = 'createInfoCount', items = 'pCreateInfos'
