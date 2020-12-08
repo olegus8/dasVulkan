@@ -174,24 +174,12 @@ def add_boost_content(g):
         ).declare_array(items = 'pImmutableSamplers')
     g.add_gen_struct(struct = 'VkDescriptorSetLayoutCreateInfo', b2v = True,
         ).declare_array(count = 'bindingCount', items = 'pBindings')
-    g.add_gen_struct(
-        struct = 'VkDeviceCreateInfo',
-        boost_to_vk = True,
-        ).declare_array(
-            count = 'queueCreateInfoCount',
-            items = 'pQueueCreateInfos',
-        ).declare_array(
-            count = 'enabledLayerCount',
-            items = 'ppEnabledLayerNames',
-        ).declare_array(
-            count = 'enabledExtensionCount',
-            items = 'ppEnabledExtensionNames')
-    g.add_gen_struct(
-        struct = 'VkDeviceQueueCreateInfo',
-        boost_to_vk = True
-        ).declare_array(
-            count = 'queueCount',
-            items = 'pQueuePriorities')
+    g.add_gen_struct(struct = 'VkDeviceCreateInfo', b2v = True,
+        ).declare_array(count = 'queueCreateInfoCount', items = 'pQueueCreateInfos',
+        ).declare_array(count = 'enabledLayerCount', items = 'ppEnabledLayerNames',
+        ).declare_array(count = 'enabledExtensionCount', items = 'ppEnabledExtensionNames')
+    g.add_gen_struct(struct = 'VkDeviceQueueCreateInfo', b2v = True
+        ).declare_array(count = 'queueCount', items = 'pQueuePriorities')
     g.add_gen_struct(
         struct = 'VkExtensionProperties',
         vk_to_boost = True)
