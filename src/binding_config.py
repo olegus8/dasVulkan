@@ -232,61 +232,29 @@ def add_boost_content(g):
     # Functions
     #
 
-    g.add_gen_func(
-        func = 'vkEnumerateDeviceExtensionProperties',
-        ).declare_array(
-            count = 'pPropertyCount',
-            items = 'pProperties',
-        ).declare_output(
-            name = 'pProperties')
-    g.add_gen_func(
-        func = 'vkEnumeratePhysicalDevices',
-        ).declare_array(
-            count = 'pPhysicalDeviceCount',
-            items = 'pPhysicalDevices'.
-        ).declare_output(
-            name = 'pPhysicalDevices')
-    g.add_gen_func(
-        func = 'vkGetDeviceQueue'
-        ).declare_output(
-            name = 'pQueue')
-    g.add_gen_func(
-        func = 'vkGetPhysicalDeviceProperties',
-        ).declare_output(
-            name = 'pProperties')
-    g.add_gen_func(
-        func = 'vkGetPhysicalDeviceSurfaceCapabilitiesKHR',
-        ).declare_output(
-            name = 'pSurfaceCapabilities')
-    g.add_gen_func(
-        func = 'vkGetPhysicalDeviceSurfaceSupportKHR',
-        ).declare_output(
-            name = 'pSupported')
-    g.add_gen_func(
-        func = 'vkGetPhysicalDeviceQueueFamilyProperties',
-        ).declare_array(
-            count = 'pQueueFamilyPropertyCount',
-            items = 'pQueueFamilyProperties',
-        ).declare_output(
-            name = 'pQueueFamilyProperties')
-    g.add_gen_func(
-        func = 'vkGetPhysicalDeviceSurfaceFormatsKHR',
-        ).declare_array(
-            count = 'pSurfaceFormatCount',
-            items = 'pSurfaceFormats',
-        ).declare_output(
-            output = 'pSurfaceFormats')
-    g.add_gen_func(
-        func = 'vkGetPhysicalDeviceSurfacePresentModesKHR',
-        ).declare_array(
-            count = 'pPresentModeCount',
-            items = 'pPresentModes',
-        ).declare_output(
-            output = 'pPresentModes')
-    g.add_gen_func(
-        func = 'vkGetSwapchainImagesKHR',
-        ).declare_array(
-            count = 'pSwapchainImageCount',
-            items = 'pSwapchainImages',
-        ).declare_output(
-            name = 'pSwapchainImages')
+    g.add_gen_func(func = 'vkEnumerateDeviceExtensionProperties',
+        ).declare_array(count = 'pPropertyCount', items = 'pProperties',
+        ).declare_output(name = 'pProperties')
+    g.add_gen_func(func = 'vkEnumeratePhysicalDevices',
+        ).declare_array(count = 'pPhysicalDeviceCount', items = 'pPhysicalDevices'.
+        ).declare_output(name = 'pPhysicalDevices')
+    g.add_gen_func(func = 'vkGetDeviceQueue'
+        ).declare_output(name = 'pQueue')
+    g.add_gen_func(func = 'vkGetPhysicalDeviceProperties',
+        ).declare_output(name = 'pProperties')
+    g.add_gen_func(func = 'vkGetPhysicalDeviceSurfaceCapabilitiesKHR',
+        ).declare_output(name = 'pSurfaceCapabilities')
+    g.add_gen_func(func = 'vkGetPhysicalDeviceSurfaceSupportKHR',
+        ).declare_output(name = 'pSupported')
+    g.add_gen_func(func = 'vkGetPhysicalDeviceQueueFamilyProperties',
+        ).declare_array(count = 'pQueueFamilyPropertyCount', items = 'pQueueFamilyProperties',
+        ).declare_output(name = 'pQueueFamilyProperties')
+    g.add_gen_func(func = 'vkGetPhysicalDeviceSurfaceFormatsKHR',
+        ).declare_array(count = 'pSurfaceFormatCount', items = 'pSurfaceFormats',
+        ).declare_output(name = 'pSurfaceFormats')
+    g.add_gen_func(func = 'vkGetPhysicalDeviceSurfacePresentModesKHR',
+        ).declare_array(count = 'pPresentModeCount', items = 'pPresentModes',
+        ).declare_output(output = 'pPresentModes')
+    g.add_gen_func(func = 'vkGetSwapchainImagesKHR',
+        ).declare_array(count = 'pSwapchainImageCount', items = 'pSwapchainImages',
+        ).declare_output(name = 'pSwapchainImages')
