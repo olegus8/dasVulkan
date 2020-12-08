@@ -213,25 +213,12 @@ def add_boost_content(g):
         ).declare_array(count = 'dependencyCount', items = 'pDependencies')
     g.add_gen_struct(struct = 'VkSamplerCreateInfo', b2v = True)
     g.add_gen_struct(struct = 'VkSemaphoreCreateInfo', b2v = True)
-    g.add_gen_struct(
-        struct = 'VkShaderModuleCreateInfo',
-        b2v = True,
-        ).declare_array(
-            count = 'codeSize',
-            items = 'pCode',
-            force_item_type = 'uint8')
-    g.add_gen_struct(
-        struct = 'VkSubpassDependency',
-        b2v = True)
-    g.add_gen_struct(
-        struct = 'VkSubpassDescription',
-        b2v = True
-        ).declare_array(
-            count = 'inputAttachmentCount',
-            items = 'pInputAttachments',
-        ).declare_array(
-            count = 'colorAttachmentCount',
-            items = 'pColorAttachments'
+    g.add_gen_struct(struct = 'VkShaderModuleCreateInfo', b2v = True,
+        ).declare_array(count = 'codeSize', items = 'pCode', force_item_type = 'uint8')
+    g.add_gen_struct(struct = 'VkSubpassDependency', b2v = True)
+    g.add_gen_struct(struct = 'VkSubpassDescription', b2v = True
+        ).declare_array(count = 'inputAttachmentCount', items = 'pInputAttachments',
+        ).declare_array(count = 'colorAttachmentCount', items = 'pColorAttachments'
         ).declare_array(
             count = 'colorAttachmentCount',
             items = 'pResolveAttachments',
