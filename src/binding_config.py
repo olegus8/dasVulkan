@@ -180,17 +180,9 @@ def add_boost_content(g):
         ).declare_array(count = 'enabledExtensionCount', items = 'ppEnabledExtensionNames')
     g.add_gen_struct(struct = 'VkDeviceQueueCreateInfo', b2v = True
         ).declare_array(count = 'queueCount', items = 'pQueuePriorities')
-    g.add_gen_struct(
-        struct = 'VkExtensionProperties',
-        vk_to_boost = True)
-    g.add_gen_struct(
-        struct = 'VkExtent2D',
-        vk_to_boost = True,
-        boost_to_vk = True)
-    g.add_gen_struct(
-        struct = 'VkExtent3D',
-        vk_to_boost = True,
-        boost_to_vk = True)
+    g.add_gen_struct(struct = 'VkExtensionProperties', v2b = True)
+    g.add_gen_struct(struct = 'VkExtent2D', v2b = True, b2v = True)
+    g.add_gen_struct(struct = 'VkExtent3D', v2b = True, b2v = True)
     g.add_gen_struct(
         struct = 'VkFenceCreateInfo',
         boost_to_vk = True)
