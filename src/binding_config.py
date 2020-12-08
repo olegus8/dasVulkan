@@ -131,9 +131,7 @@ def add_boost_content(g):
     g.add_gen_handle(
         handle = 'VkPhysicalDevice')
     g.add_gen_handle(
-        handle = 'VkQueue',
-        ).declare_ctor(GenHandleCtor(
-            name = 'vkGetDeviceQueue'))
+        handle = 'VkQueue')
     g.add_gen_handle(
         handle = 'VkPipeline'
         ).declare_ctor(GenHandleCtor(
@@ -391,6 +389,10 @@ def add_boost_content(g):
             items = 'pPhysicalDevices'.
         ).declare_output(
             name = 'pPhysicalDevices')
+    g.add_gen_func(
+        func = 'vkGetDeviceQueue'
+        ).declare_output(
+            name = 'pQueue')
     g.add_gen_func(
         func = 'vkGetPhysicalDeviceProperties',
         ).declare_output(
