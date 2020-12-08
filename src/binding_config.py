@@ -202,39 +202,17 @@ def add_boost_content(g):
         ).declare_array(count = 'setLayoutCount', items = 'pSetLayouts',
         ).declare_array(count = 'pushConstantRangeCount', items = 'pPushConstantRanges')
     g.add_gen_struct(struct = 'VkPipelineViewportStateCreateInfo', b2v = True,
-        ).declare_array(
-            count = 'viewportCount',
-            items = 'pViewports',
-        ).declare_array(
-            count = 'scissorCount',
-            items = 'pScissors')
-    g.add_gen_struct(
-        struct = 'VkPushConstantRange',
-        b2v = True)
-    g.add_gen_struct(
-        struct = 'VkQueueFamilyProperties',
-        v2b = True)
-    g.add_gen_struct(
-        struct = 'VkRect2D',
-        b2v = True)
-    g.add_gen_struct(
-        struct = 'VkRenderPassCreateInfo',
-        b2v = True
-        ).declare_array(
-            count = 'attachmentCount',
-            items = 'pAttachments',
-        ).declare_array(
-            count = 'subpassCount',
-            items = 'pSubpasses',
-        ).declare_array(
-            count = 'dependencyCount',
-            items = 'pDependencies')
-    g.add_gen_struct(
-        struct = 'VkSamplerCreateInfo',
-        b2v = True)
-    g.add_gen_struct(
-        struct = 'VkSemaphoreCreateInfo',
-        b2v = True)
+        ).declare_array(count = 'viewportCount', items = 'pViewports',
+        ).declare_array(count = 'scissorCount', items = 'pScissors')
+    g.add_gen_struct(struct = 'VkPushConstantRange', b2v = True)
+    g.add_gen_struct(struct = 'VkQueueFamilyProperties', v2b = True)
+    g.add_gen_struct(struct = 'VkRect2D', b2v = True)
+    g.add_gen_struct(struct = 'VkRenderPassCreateInfo', b2v = True
+        ).declare_array(count = 'attachmentCount', items = 'pAttachments',
+        ).declare_array(count = 'subpassCount', items = 'pSubpasses',
+        ).declare_array(count = 'dependencyCount', items = 'pDependencies')
+    g.add_gen_struct(struct = 'VkSamplerCreateInfo', b2v = True)
+    g.add_gen_struct(struct = 'VkSemaphoreCreateInfo', b2v = True)
     g.add_gen_struct(
         struct = 'VkShaderModuleCreateInfo',
         b2v = True,
