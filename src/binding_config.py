@@ -219,14 +219,9 @@ def add_boost_content(g):
     g.add_gen_struct(struct = 'VkSubpassDescription', b2v = True
         ).declare_array(count = 'inputAttachmentCount', items = 'pInputAttachments',
         ).declare_array(count = 'colorAttachmentCount', items = 'pColorAttachments'
-        ).declare_array(
-            count = 'colorAttachmentCount',
-            items = 'pResolveAttachments',
-        ).declare_can_be_null(
-            name = 'pResolveAttachments',
-        ).declare_array(
-            count = 'preserveAttachmentCount',
-            items = 'pPreserveAttachments')
+        ).declare_array(count = 'colorAttachmentCount', items = 'pResolveAttachments',
+        ).declare_can_be_null(name = 'pResolveAttachments',
+        ).declare_array(count = 'preserveAttachmentCount', items = 'pPreserveAttachments')
     g.add_gen_struct(
         struct = 'VkSurfaceCapabilitiesKHR',
         v2b = True)
