@@ -1164,10 +1164,7 @@ class ParamBase(object):
                 return f'uint({bname} |> length())'
         elif self._vk_is_dyn_array_items:
             bname = self._boost_func_param_name
-            if self._is_boost_func_output:
-                return f'array_addr_unsafe(vk_{bname})'
-            else:
-                return f'array_addr_unsafe({bname})'
+            return f'array_addr_unsafe(vk_{bname})'
         elif self._vk_is_pointer:
             bname = self._boost_func_param_name
             return f'safe_addr(vk_{bname})'
