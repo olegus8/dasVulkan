@@ -1185,10 +1185,7 @@ class ParamVkAllocator(ParamBase):
     def generate_boost_func_param(self):
         return []
 
-    def generate_boost_func_temp_vars_setup(self):
-        return []
-
-    def generate_boost_func_temp_vars_update(self):
+    def generate_boost_func_temp_vars_init(self):
         return []
 
     @property
