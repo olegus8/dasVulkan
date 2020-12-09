@@ -1156,19 +1156,17 @@ class ParamBase(object):
 
     @property
     def boost_func_call_vk_param(self):
+        bname = self._boost_func_param_name
         if self._vk_is_dyn_array_count:
             if self._dyn_array_items._is_boost_func_output:
                 return f'safe_addr(vk_{self._vk_name})'
             else:
-                bname = self._boost_func_param_name
                 return f'uint({bname} |> length())'
         elif self._vk_is_dyn_array_items:
-            bname = self._boost_func_param_name
             return f'array_addr_unsafe(vk_{bname})'
         elif self._vk_is_pointer:
-            bname = self._boost_func_param_name
             return f'safe_addr(vk_{bname})'
-        return self._boost_func_param_name
+        return f'boost_value_to_vk({bname})'
 
 
 class ParamVkAllocator(ParamBase):
