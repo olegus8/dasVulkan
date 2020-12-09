@@ -109,7 +109,6 @@ class GenFunc(object):
     def __init__(self, generator, name):
         self.__generator = generator
         self.__vk_func_name = name
-        self.__vk_output_name = None
 
         self.__params = self.__generator.create_func_params(self.__c_func)
 
@@ -131,14 +130,9 @@ class GenFunc(object):
                 param.set_dyn_array(count=count, items=items)
 
     def declare_output(self, name):
-        assert_equal(self.__vk_output_name, None)
-        self.__vk_output_name = name
-
-    @property
-    def __output_param(self):
         for param in self.__params:
-            if param.vk_name == self.__vk_output_name:
-                return param
+            if param.vk_name == name:
+                param.set_func_output()
 
     def generate(self):
         lines = []
