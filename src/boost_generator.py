@@ -141,8 +141,6 @@ class GenFunc(object):
            f'def {self.__boost_func_name}('
         ]
         for param in self.__params:
-            if param.vk_name == self.__vk_output_name:
-                continue
             lines += [f'    {line}'
                 for line in param.generate_boost_func_param()]
         if self.__returns_vk_result:
@@ -1150,11 +1148,17 @@ class ParamBase(object):
 
     @property
     def _boost_func_param_name(self):
-        return self._boost_base_name
+        bname = self._boost_base_name
+        if self._vk_is_pointer and not self._vk_is_dyn_array_items:
+            bname = deref_boost_ptr_name(bname)
+        return bname
 
     @property
     def _boost_func_param_type(self):
-        return self._boost_base_type
+        btype = self._boost_base_type
+        if self._vk_is_pointer and not self._vk_is_dyn_array_items:
+            btype = deref_das_type(btype)
+        return btype
 
     def generate_boost_func_param(self):
         if self._vk_is_dyn_array_count or self._is_boost_func_output:
