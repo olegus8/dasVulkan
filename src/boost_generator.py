@@ -1095,23 +1095,23 @@ class ParamBase(object):
         self._vk_array_count_name = None
 
     @property
-    def c_unqual_type(self):
+    def _c_unqual_type(self):
         return self._c_param.type.unqual_name
 
     @property
-    def vk_is_pointer(self):
+    def _vk_is_pointer(self):
         return self._c_param.type.is_pointer
 
     @property
-    def vk_is_fixed_array(self):
+    def _vk_is_fixed_array(self):
         return self._c_param.type.is_fixed_array
 
     @property
-    def vk_is_struct(self):
+    def _vk_is_struct(self):
         return self._c_param.type.is_struct
 
     @property
-    def vk_unqual_type(self):
+    def _vk_unqual_type(self):
         raise NotImplementedError()
 
     def set_dyn_array(self, count, items):
@@ -1119,15 +1119,15 @@ class ParamBase(object):
         self._vk_array_count_name = count
 
     @property
-    def vk_is_dyn_array_count(self):
+    def _vk_is_dyn_array_count(self):
         return self.vk_name == self._vk_array_count_name
 
     @property
-    def vk_is_dyn_array_items(self):
+    def _vk_is_dyn_array_items(self):
         return self.vk_name == self._vk_array_items_name
 
     @property
-    def vk_type(self):
+    def _vk_type(self):
         t = self.vk_unqual_type
         if self.vk_is_pointer:
             t += ' ?'
@@ -1140,20 +1140,20 @@ class ParamBase(object):
         return self._c_param.name
 
     @property
-    def boost_name(self):
+    def _boost_base_name(self):
         bname = vk_param_name_to_boost(self.vk_name)
-        if self.vk_is_dyn_array_items:
+        if self._vk_is_dyn_array_items:
             bname = deref_boost_ptr_name(bname)
         return bname
 
     @property
-    def boost_func_param_name(self):
-        return self.boost_name
+    def _boost_func_param_name(self):
+        return self.boost_base_name
 
     def generate_boost_func_param(self):
         lines = []
-        if not self.vk_is_dyn_array_count:
-            bname = self.boost_func_para_name
+        if not self._vk_is_dyn_array_count:
+            bname = self._boost_func_param_name
             lines.append(f'    {bname} : {btype} = [[ {btype} ]];')
         return lines
 
@@ -1168,8 +1168,8 @@ class ParamVkAllocator(ParamBase):
             return cls(c_param=c_param, **kwargs)
 
     @property
-    def vk_unqual_type(self):
-        return self.c_unqual_type
+    def _vk_unqual_type(self):
+        return self._c_unqual_type
 
     def generate_boost_func_param(self):
         return []
@@ -1186,12 +1186,12 @@ class ParamVkHandle(ParamBase):
             return cls(c_param=c_param, **kwargs)
 
     @property
-    def vk_is_pointer(self):
+    def _vk_is_pointer(self):
         return False
 
     @property
-    def vk_unqual_type(self):
-        ct = self.c_unqual_type
+    def _vk_unqual_type(self):
+        ct = self._c_unqual_type
         assert_ends_with(ct, '_T')
         return ct[:-2]
 
@@ -1207,8 +1207,8 @@ class ParamVkHandlePtr(ParamBase):
             return cls(c_param=c_param, **kwargs)
 
     @property
-    def vk_unqual_type(self):
-        return self.c_unqual_type
+    def _vk_unqual_type(self):
+        return self._c_unqual_type
 
 
 class ParamVkStruct(ParamBase):
@@ -1220,8 +1220,8 @@ class ParamVkStruct(ParamBase):
             return cls(c_param=c_param, **kwargs)
 
     @property
-    def vk_unqual_type(self):
-        return self.c_unqual_type
+    def _vk_unqual_type(self):
+        return self._c_unqual_type
 
 
 class ParamVkEnum(ParamBase):
@@ -1233,8 +1233,8 @@ class ParamVkEnum(ParamBase):
             return cls(c_param=c_param, **kwargs)
 
     @property
-    def vk_unqual_type(self):
-        return self.c_unqual_type
+    def _vk_unqual_type(self):
+        return self._c_unqual_type
 
 
 class ParamFixedString(ParamBase):
@@ -1246,11 +1246,11 @@ class ParamFixedString(ParamBase):
             return cls(c_param=c_param, **kwargs)
 
     @property
-    def is_fixed_array(self):
+    def _vk_is_fixed_array(self):
         return False
 
     @property
-    def vk_unqual_type(self):
+    def _vk_unqual_type(self):
         return 'string'
 
 
@@ -1262,15 +1262,15 @@ class ParamString(ParamBase):
             return cls(c_param=c_param, **kwargs)
 
     @property
-    def is_pointer(self):
+    def _vk_is_pointer(self):
         return False
 
     @property
-    def vk_unqual_type(self):
+    def _vk_unqual_type(self):
         return 'string'
 
     @property
-    def boost_name(self):
+    def _boost_base_name(self):
         name = vk_param_name_to_boost(self.vk_name)
         if name.startswith('p_'):
             name = name[2:]
@@ -1285,11 +1285,11 @@ class ParamStringPtr(ParamBase):
             return cls(c_param=c_param, **kwargs)
 
     @property
-    def vk_unqual_type(self):
+    def _vk_unqual_type(self):
         return 'string'
 
     @property
-    def boost_name(self):
+    def _boost_base_name(self):
         name = vk_param_name_to_boost(self.vk_name)
         if name.startswith('pp_'):
             name = name[1:]
@@ -1304,7 +1304,7 @@ class ParamFloat(ParamBase):
             return cls(c_param=c_param, **kwargs)
 
     @property
-    def vk_unqual_type(self):
+    def _vk_unqual_type(self):
         return 'float'
 
 
@@ -1316,7 +1316,7 @@ class ParamInt32(ParamBase):
             return cls(c_param=c_param, **kwargs)
 
     @property
-    def vk_unqual_type(self):
+    def _vk_unqual_type(self):
         return 'int'
 
 
@@ -1328,7 +1328,7 @@ class ParamUInt8(ParamBase):
             return cls(c_param=c_param, **kwargs)
 
     @property
-    def vk_unqual_type(self):
+    def _vk_unqual_type(self):
         return 'uint8'
 
 
@@ -1342,7 +1342,7 @@ class ParamUInt32(ParamBase):
             return cls(c_param=c_param, **kwargs)
 
     @property
-    def vk_unqual_type(self):
+    def _vk_unqual_type(self):
         return 'uint'
 
 
@@ -1356,7 +1356,7 @@ class ParamUInt64(ParamBase):
             return cls(c_param=c_param, **kwargs)
 
     @property
-    def vk_unqual_type(self):
+    def _vk_unqual_type(self):
         return 'uint64'
 
 
@@ -1368,7 +1368,7 @@ class ParamVkBool32(ParamBase):
             return cls(c_param=c_param, **kwargs)
 
     @property
-    def vk_unqual_type(self):
+    def _vk_unqual_type(self):
         return 'uint'
 
 
@@ -1379,15 +1379,15 @@ class ParamUnknown(ParamBase):
         return cls(**kwargs)
 
     @property
-    def c_unqual_type(self):
+    def _c_unqual_type(self):
         raise self.__unknown_param_error
 
     @property
-    def vk_unqual_type(self):
+    def _vk_unqual_type(self):
         raise self.__unknown_param_error
 
     @property
-    def vk_type(self):
+    def _vk_type(self):
         raise self.__unknown_param_error
 
     @property
