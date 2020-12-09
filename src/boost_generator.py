@@ -218,10 +218,6 @@ class GenFunc(object):
         if self.__returns_vk_result:
             lines.append('    assert(result_ == VkResult VK_SUCCESS)')
 
-        for param in self.__params:
-            lines += [f'    {line}'
-                for line in param.generate_boost_func_temp_vars_finalize()]
-
         if self.__return_type != 'void':
             lines.append(f'    return {self.__return_value}')
         return lines
@@ -1148,9 +1144,6 @@ class ParamBase(object):
             return [f'vk_{bname} |> resize(int(vk_{self._vk_name}))']
         return []
 
-    def generate_boost_func_temp_vars_finalize(self):
-        return []
-
     @property
     def boost_func_query_array_size_param(self):
         bname = self._boost_func_param_name
@@ -1196,9 +1189,6 @@ class ParamVkAllocator(ParamBase):
         return []
 
     def generate_boost_func_temp_vars_update(self):
-        return []
-
-    def generate_boost_func_temp_vars_finalize(self):
         return []
 
     @property
