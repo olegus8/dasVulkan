@@ -1107,8 +1107,8 @@ class ParamBase(object):
 
     def __init__(self, c_param):
         self._c_param = c_param
-        self._vk_array_items = None
-        self._vk_array_count = None
+        self._dyn_array_items = None
+        self._dyn_array_count = None
         self._is_boost_func_output = False
 
     @property
@@ -1132,19 +1132,19 @@ class ParamBase(object):
         raise NotImplementedError()
 
     def set_dyn_array(self, count, items):
-        self._vk_array_items = items
-        self._vk_array_count = count
+        self._dyn_array_items = items
+        self._dyn_array_count = count
 
     def set_boost_func_output(self):
         self._is_boost_func_output = True
 
     @property
     def _vk_is_dyn_array_count(self):
-        return self.vk_name == self._vk_array_count.vk_name
+        return self.vk_name == self._dyn_array_count.vk_name
 
     @property
     def _vk_is_dyn_array_items(self):
-        return self.vk_name == self._vk_array_items.vk_name
+        return self.vk_name == self._dyn_array_items.vk_name
 
     @property
     def _vk_type(self):
@@ -1228,7 +1228,7 @@ class ParamBase(object):
     @property
     def boost_func_query_array_size_param(self):
         if self._vk_is_dyn_array_count:
-            if self._vk_array_items._is_boost_func_output:
+            if self._dyn_array_items._is_boost_func_output:
                 return f'safe_addr(vk_{self._vk_name})'
             else:
                 bname = self._boost_func_param_name
