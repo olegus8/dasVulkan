@@ -148,6 +148,14 @@ class GenFunc(object):
             raise Exception('TODO: add multiple outputs support if needed')
         return (rtypes or ['void'])[0]
 
+    @property
+    def __return_value(self):
+        rvalues = [t for param in self.__params
+            for t in param.generate_boost_func_return_values]
+        if len(rvalues) > 1:
+            raise Exception('TODO: add multiple outputs support if needed')
+        return (rvalues or [None])[0]
+
     def generate(self):
         lines = []
         lines += [
@@ -213,7 +221,9 @@ class GenFunc(object):
         for param in self.__params:
             lines += [f'    {line}'
                 for line in param.generate_boost_func_temp_vars_finalize()]
-        
+
+        if self.__return_type != 'void':
+            lines.append(f'    return {self.__return_value}')
         ret_op = '<- ' if self.__output_param.is_struct else ''
         lines += [
            f'    return {ret_op}vk_value_to_boost(vk_output)',
@@ -1206,10 +1216,19 @@ class ParamBase(object):
         return [f'{bname} : {btype} = [[ {btype} ]];']
 
     def generate_boost_func_return_types(self):
-        rtypes = []
         if self._is_boost_func_output:
-            rtypes.append(self._boost_func_param_type)
-        return rtypes
+            return [self._boost_func_param_type]
+        return []
+
+    def generate_boost_func_return_values(self):
+        if self._is_boost_func_output:
+            bname = self._boost_func_param_name
+            if self._vk_is_dyn_array_items:
+                return [f'<- [{{ for x in vk_{bname}__items ;'
+                    f'vk_value_to_boost(x) }}]']
+            if self._vk_is_pointer:
+                return [f'<- vk_{bname}']
+        return []
 
     def generate_boost_func_temp_vars_init(self):
         if self._vk_is_dyn_array_count:
