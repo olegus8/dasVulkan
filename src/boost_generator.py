@@ -1186,12 +1186,16 @@ class ParamBase(object):
     def generate_boost_func_temp_vars_setup(self):
         if self._vk_is_dyn_array_count:
             return []
-        elif self._vk_is_dyn_array_items:
+        if self._vk_is_dyn_array_items:
             return ['TODO']
-        elif self._vk_is_pointer:
-            return ['TODO']
-        else:
-            return ['TODO']
+        if self._vk_is_pointer:
+            bname = self._boost_func_param_name
+            vtype = deref_das_type(self._vk_type)
+            if self._is_boost_func_output:
+                return [f'var vk_{bname} : {vtype}']
+            else:
+                return [f'var vk_{bname} : {vtype} = {bname}']
+        return []
 
 
 class ParamVkAllocator(ParamBase):
