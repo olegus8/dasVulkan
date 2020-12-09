@@ -18,8 +18,7 @@ class BoostGenerator(LoggingObject):
         self.__context = context
         self.__gen_handles = []
         self.__gen_structs = []
-        self.__gen_query_funcs = []
-        self.__gen_query_array_funcs = []
+        self.__gen_funcs = []
 
         self.enums = dict((x.name, x)
             for x in self.__context.main_c_header.enums)
@@ -40,14 +39,9 @@ class BoostGenerator(LoggingObject):
         self.__gen_structs.append(struct)
         return struct
 
-    def add_gen_query_func(self, **kwargs):
-        func = GenQueryFunc(generator=self, **kwargs)
-        self.__gen_query_funcs.append(func)
-        return func
-
-    def add_gen_query_array_func(self, **kwargs):
-        func = GenQueryArrayFunc(generator=self, **kwargs)
-        self.__gen_query_array_funcs.append(func)
+    def add_gen_func(self, **kwargs):
+        func = GenFunc(generator=self, **kwargs)
+        self.__gen_funcs.append(func)
         return func
 
     def create_func_params(self, c_func):
@@ -97,8 +91,7 @@ class BoostGenerator(LoggingObject):
             '//',
         ] + [
             line for items in [
-                self.__gen_query_funcs,
-                self.__gen_query_array_funcs,
+                self.__gen_funcs,
                 self.__gen_structs,
                 self.__gen_handles,
             ] for item in items for line in item.generate()
