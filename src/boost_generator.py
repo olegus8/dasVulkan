@@ -1112,16 +1112,14 @@ class ParamBase(object):
         if self._vk_is_dyn_array_items:
             bname = self._boost_func_param_name
             vtype = self._vk_unqual_type
-            if self._is_boost_func_output:
-                return [
-                    f'var vk_{bname} : array<{vtype}>',
-                    f'defer() <| ${{ delete vk_{bname}; }}',
-                ]
-            else:
-                return [
-                    f'var vk_{bname} : array<{vtype}> <- [{{',
-                    f'    for item in {bname} ; boost_value_to_vk({bname})}}]',
-                    f'defer() <| ${{ delete vk_{bname}; }}',
+            lines = [
+                f'var vk_{bname} : array<{vtype}>',
+                f'defer() <| ${{ delete vk_{bname}; }}',
+            ]
+            if not self._is_boost_func_output:
+                lines += [
+                    f'vk_{bname} <- [{{ '
+                        f'for item in {bname} ; boost_value_to_vk({bname}) }}]'
                 ]
         if self._vk_is_pointer:
             #TODO: add null support if needed via declare_can_be_null
