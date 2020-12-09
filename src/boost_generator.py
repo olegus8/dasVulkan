@@ -124,10 +124,16 @@ class GenFunc(object):
     def __returns_vk_result(self):
         return returns_vk_result(self.__c_func)
 
-    def declare_array(self, count, items):
+    def __get_param(self, vk_name):
         for param in self.__params:
-            if param.vk_name in [count, items]:
-                param.set_dyn_array(count=count, items=items)
+            if param.vk_name == vk_name:
+                return param
+
+    def declare_array(self, count, items):
+        p_count = self.__get_param(count)
+        p_items = self.__get_param(items)
+        p_count.set_dyn_array(count=p_count, items=p_items)
+        p_items.set_dyn_array(count=p_count, items=p_items)
 
     def declare_output(self, name):
         for param in self.__params:
@@ -1101,9 +1107,9 @@ class ParamBase(object):
 
     def __init__(self, c_param):
         self._c_param = c_param
-        self._vk_array_items_name = None
-        self._vk_array_count_name = None
-        self.__boost_func_output = False
+        self._vk_array_items = None
+        self._vk_array_count = None
+        self._is_boost_func_output = False
 
     @property
     def _c_unqual_type(self):
@@ -1126,24 +1132,19 @@ class ParamBase(object):
         raise NotImplementedError()
 
     def set_dyn_array(self, count, items):
-        self._vk_array_items_name = items
-        self._vk_array_count_name = count
+        self._vk_array_items = items
+        self._vk_array_count = count
 
     def set_boost_func_output(self):
-        self.__boost_func_output = True
-
-    @property
-    def _is_boost_func_output(self):
-        return (self._dyn_array_items._is_boost_func_output
-            if self._vk_is_dyn_array_count else self.__boost_func_output)
+        self._is_boost_func_output = True
 
     @property
     def _vk_is_dyn_array_count(self):
-        return self.vk_name == self._vk_array_count_name
+        return self.vk_name == self._vk_array_count.vk_name
 
     @property
     def _vk_is_dyn_array_items(self):
-        return self.vk_name == self._vk_array_items_name
+        return self.vk_name == self._vk_array_items.vk_name
 
     @property
     def _vk_type(self):
@@ -1225,9 +1226,19 @@ class ParamBase(object):
 
     @property
     def boost_func_query_array_size_param(self):
-        if self._vk_is_dyn_array_count and self._is_boost_func_output:
-            return f'safe_addr(vk_{self._vk_name})'
-        if self._
+        if self._vk_is_dyn_array_count:
+            if self._vk_array_items._is_boost_func_output:
+                return f'safe_addr(vk_{self._vk_name})'
+            else:
+                bname = self._boost_func_param_name
+                return f'uint({bname} |> length())'
+        elif self._vk_is_dyn_array_items:
+            if self._is_boost_func_output:
+                return f'[[ {self._vk_unqual_type} ? ]]',
+            else:
+                bname = self._boost_func_param_name
+                return f'array_addr_unsafe({bname})',
+        #TODO
         return self._boost_func_param_name
 
 
