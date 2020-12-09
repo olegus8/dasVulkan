@@ -1123,8 +1123,8 @@ class ParamBase(object):
         return self._c_param.name
 
     @property
-    def needs_vk_view(self):
-        return False
+    def boost_name(self):
+        return vk_param_name_to_boost(self.vk_name)
 
 
 class ParamVkHandle(ParamBase):
@@ -1220,6 +1220,13 @@ class ParamString(ParamBase):
     @property
     def vk_unqual_type(self):
         return 'string'
+
+    @property
+    def boost_name(self):
+        name = vk_param_name_to_boost(self.vk_name)
+        if name.startswith('p_'):
+            name = name[2:]
+        return name
 
 
 class ParamStringPtr(ParamBase):
