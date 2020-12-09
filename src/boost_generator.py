@@ -133,6 +133,12 @@ class GenFunc(object):
         assert_equal(self.__vk_output_name, None)
         self.__vk_output_name = name
 
+    @property
+    def __output_param(self):
+        for param in self.__params:
+            if param.vk_name == self.__vk_output_name:
+                return param
+
     def generate(self):
         lines = []
         lines += [
