@@ -531,12 +531,18 @@ class GenStructFieldArray(object):
 
 class GenHandle(object):
 
-    def __init__(self, generator, handle, dtor=None):
-        self.generator = generator
-        self.vk_handle_type_name = handle
-        self.dtor = None if dtor is None else GenHandleDtor(
-            handle=self, name=dtor)
+    def __init__(self, generator, name):
+        self.__generator = generator
+        self.__vk_handle_type_name = name
+        self.__dtor = self.__maybe_create_default_dtor()
+        self.__ctors = None
         self.ctors = []
+
+    def __maybe_create_default_dtor(self):
+        vk_dtor_name = vk_handle_type_to_vk_dtor(self.__vk_handle_type_name)
+        c_dtor = self.__generator.functions.get(
+            self.__default_vk_dtor_name)
+        
 
     def declare_ctor(self, vk_name):
         ctor = GenHandleCtor(handle=self, name=vk_name)
@@ -1491,6 +1497,16 @@ def vk_struct_type_to_boost(vk_type):
 
 def vk_handle_type_to_boost(vk_type):
     return vk_struct_type_to_boost(vk_type)
+
+def vk_handle_type_to_vk_dtor(vk_type):
+    assert_starts_with(vk_type, 'Vk')
+    handle = vk_type[2:]
+    return f'vkDestroy{handle}'
+
+def vk_handle_type_to_vk_ctor(vk_type):
+    assert_starts_with(vk_type, 'Vk')
+    handle = vk_type[2:]
+    return f'vkCreate{handle}'
 
 def boost_handle_attr_name(boost_handle_type_name):
     return boost_camel_to_lower(boost_handle_type_name)
