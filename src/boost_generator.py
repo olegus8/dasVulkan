@@ -132,7 +132,7 @@ class GenFunc(object):
     def declare_output(self, name):
         for param in self.__params:
             if param.vk_name == name:
-                param.set_func_output()
+                param.set_boost_func_output()
 
     def generate(self):
         lines = []
@@ -1084,6 +1084,7 @@ class ParamBase(object):
         self._c_param = c_param
         self._vk_array_items_name = None
         self._vk_array_count_name = None
+        self._is_boost_func_output = False
 
     @property
     def _c_unqual_type(self):
@@ -1108,6 +1109,9 @@ class ParamBase(object):
     def set_dyn_array(self, count, items):
         self._vk_array_items_name = items
         self._vk_array_count_name = count
+
+    def set_boost_func_output(self):
+        self._is_boost_func_output = True
 
     @property
     def _vk_is_dyn_array_count(self):
@@ -1153,12 +1157,11 @@ class ParamBase(object):
         return self._boost_base_type
 
     def generate_boost_func_param(self):
-        lines = []
-        if not self._vk_is_dyn_array_count:
-            bname = self._boost_func_param_name
-            bname = self._boost_func_param_type
-            lines.append(f'    {bname} : {btype} = [[ {btype} ]];')
-        return lines
+        if self._vk_is_dyn_array_count or self._is_boost_func_output:
+            return []
+        bname = self._boost_func_param_name
+        bname = self._boost_func_param_type
+        return [f'{bname} : {btype} = [[ {btype} ]];']
 
 
 class ParamVkAllocator(ParamBase):
