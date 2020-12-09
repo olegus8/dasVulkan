@@ -841,9 +841,6 @@ class GenHandleFuncParam(object):
         bh_attr = self.func.gen_handle.boost_handle_attr
         return f'{bh_attr}._{self.boost_name}'
 
-    def generate_handle_field(self):
-        return [f'_{self.boost_name} : {self.vk_type}']
-
 
 class GenHandleFuncParamAllocator(GenHandleFuncParam):
 
@@ -1144,6 +1141,9 @@ class ParamBase(object):
             return [f'vk_{bname} |> resize(int(vk_{self._vk_name}))']
         return []
 
+    def generate_boost_handle_field(self):
+        return []
+
     @property
     def boost_func_query_array_size_param(self):
         bname = self._boost_func_param_name
@@ -1188,9 +1188,15 @@ class ParamVkAllocator(ParamBase):
     def generate_boost_func_temp_vars_init(self):
         return []
 
+    def generate_boost_handle_field(self):
+        return [f'_{self.boost_name} : {self.vk_type}']
+
     @property
     def boost_func_call_vk_param(self):
         return 'null'
+
+    def generate_boost_handle_field(self):
+        return []
 
 
 class ParamVkHandleBase(ParamBase):
@@ -1198,6 +1204,9 @@ class ParamVkHandleBase(ParamBase):
     @property
     def _boost_unqual_type(self):
         return vk_handle_type_to_boost(self._vk_unqual_type)
+
+    def generate_boost_handle_field(self):
+        return [f'_{self._boost_func_param_name} : {self._vk_unqual_type}']
 
 
 class ParamVkHandle(ParamVkHandleBase):
