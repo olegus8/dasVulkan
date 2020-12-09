@@ -1205,6 +1205,13 @@ class ParamVkAllocator(ParamBase):
         return 'null'
 
 
+class ParamVkHandleBase(ParamBase):
+
+    @property
+    def _boost_unqual_type(self):
+        return vk_handle_type_to_boost(self._vk_unqual_type)
+
+
 class ParamVkHandle(ParamVkHandleBase):
 
     @classmethod
