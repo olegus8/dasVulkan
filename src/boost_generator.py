@@ -134,6 +134,13 @@ class GenFunc(object):
             if param.vk_name == name:
                 param.set_boost_func_output()
 
+    @property
+    def __return_type(self):
+        rtypes = [t for param in self.__params
+            for t in param.generate_boost_func_return_types]
+        assert_less(len(rtypes), 2)
+        return (rtypes or ['void'])[0]
+
     def generate(self):
         lines = []
         lines += [
@@ -1167,9 +1174,11 @@ class ParamBase(object):
         bname = self._boost_func_param_type
         return [f'{bname} : {btype} = [[ {btype} ]];']
 
-    def generate_boost_func_return_type(self):
+    def generate_boost_func_return_types(self):
+        rtypes = []
         if self._is_boost_func_output:
-            return self._boost_func_param_type
+            rtypes.append(self._boost_func_param_type)
+        return rtypes
 
 
 class ParamVkAllocator(ParamBase):
