@@ -618,9 +618,7 @@ class GenHandleCtor(GenFunc):
             generator=handle._generator, name=name, private=True)
         self.__handle = handle
 
-        for param in self._params:
-            if param.vk_unqual_type == self.__handle.vk_handle_type_name:
-                param.set_boost_func_output()
+        self.__handle_param.set_boost_func_output()
 
     @property
     def _boost_func_name(self):
@@ -635,11 +633,28 @@ class GenHandleCtor(GenFunc):
         return vk_func_name_to_boost(self._vk_func_name)
 
     @property
-    def __ctor_return_var(self):
-        rvars = [v for param in self._params
-            for v in param.generate_boost_ctor_return_vars]
-        assert_equal(len(rvars), 1)
-        return rvars[0]
+    def __handle_param(self):
+        for param in self._params:
+            if param.vk_unqual_type == self.__handle.vk_handle_type_name:
+                return param
+
+    @property
+    def __returns_array(self):
+        return self.__handle_param._vk_is_dyn_array_items
+
+    def __generate_handle_init_fields(self):
+        lines = []
+        lines += [
+           f'handle._needs_delete = true',
+        ]
+        for param in self.__handle.dtor._params:
+            lines += [f'{line}'
+                for line in param.generate_boost_ctor_init_field()]
+        return lines
+
+    @property
+    def __return_var(self):
+        return 'handles' if self.__returns_array else 'handle'
 
     def generate(self):
         bh_attr = self.__handle._boost_handle_attr
@@ -661,7 +676,7 @@ class GenHandleCtor(GenFunc):
         lines += [
            f') : {self._return_type}',
             '',
-           f'    var {self.__ctor_return_var} <- {inner_ctor}(',
+           f'    var {self.__return_var} <- {inner_ctor}(',
         ]
         #TODO: ^^^ handle arrays here too
         for param in self._params:
@@ -672,13 +687,16 @@ class GenHandleCtor(GenFunc):
         remove_last_char(lines, ',')
         lines += [
            f'    )',
-           f'    handle._needs_delete = true',
         ]
-        for param in self.__handle.dtor._params:
+        if self.__returns_array:
+            lines += [f'    for handle in handles']
+            lines += [f'        {line}'
+                for line in self.__generate_handle_init_fields()]
+        else:
             lines += [f'    {line}'
-                for line in param.generate_boost_ctor_init_field()]
+                for line in self.__generate_handle_init_fields()]
         lines += [
-           f'    return <- handle',
+           f'    return <- {self.__return_var}',
         ]
         return lines
 
