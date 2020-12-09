@@ -52,6 +52,7 @@ class BoostGenerator(LoggingObject):
 
     def create_param(self, c_name, c_type):
         for param_class in [
+            ParamVkAllocator,
             ParamVkHandle,
             ParamVkHandlePtr,
             ParamVkStruct,
@@ -146,8 +147,10 @@ class GenFunc(object):
            f'def {self.__boost_func_name}('
         ]
         for param in self.__params:
-            if param.vk_name == self.__p_output:
+            if param.vk_name == self.__vk_output_name:
                 continue
+            lines += [f'    {line}'
+                for line in param.generate_boost_func_param()]
             bname = param.boost_name
             btype = param.boost_type
             lines.append(f'    {bname} : {btype} = [[ {btype} ]];')
@@ -1088,6 +1091,8 @@ class ParamBase(object):
 
     def __init__(self, c_param):
         self._c_param = c_param
+        self._vk_array_items_name = None
+        self._vk_array_count_name = None
 
     @property
     def c_unqual_type(self):
@@ -1109,6 +1114,18 @@ class ParamBase(object):
     def vk_unqual_type(self):
         raise NotImplementedError()
 
+    def set_dyn_array(self, count, items):
+        self._vk_array_items_name = items
+        self._vk_array_count_name = count
+
+    @property
+    def vk_is_dyn_array_count(self):
+        return self.vk_name == self._vk_array_count_name
+
+    @property
+    def vk_is_dyn_array_items(self):
+        return self.vk_name == self._vk_array_items_name
+
     @property
     def vk_type(self):
         t = self.vk_unqual_type
@@ -1124,7 +1141,34 @@ class ParamBase(object):
 
     @property
     def boost_name(self):
-        return vk_param_name_to_boost(self.vk_name)
+        bname = vk_param_name_to_boost(self.vk_name)
+        if self.vk_is_dyn_array_items:
+            bname = deref_boost_ptr_name(bname)
+        return bname
+
+    def generate_boost_func_param(self):
+        lines = []
+        if not self.vk_is_dyn_array_count:
+            bname = self.boost_name
+            lines.append(f'    {bname} : {btype} = [[ {btype} ]];')
+        return lines
+
+
+class ParamVkAllocator(ParamBase):
+
+    @classmethod
+    def maybe_create(cls, c_param, **kwargs):
+        if (c_param.name == 'pAllocator'
+        and c_param.type == 'VkAllocationCallbacks *'
+        ):
+            return cls(c_param=c_param, **kwargs)
+
+    @property
+    def vk_unqual_type(self):
+        return self.c_unqual_type
+
+    def generate_boost_func_param(self):
+        return []
 
 
 class ParamVkHandle(ParamBase):
