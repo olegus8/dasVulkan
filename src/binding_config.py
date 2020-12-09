@@ -115,13 +115,13 @@ def add_boost_content(g):
     ]:
         g.add_gen_handle(name = name)
 
-    g.add_gen_handle(name = 'VkPipeline'
-        ).declare_ctor(GenHandleCtor(name = 'vkCreateGraphicsPipelines',
-            ).declare_array(count = 'createInfoCount', items = 'pCreateInfos'
-            ).declare_array(count = 'createInfoCount', items = 'pPipelines')
-        ).declare_ctor(GenHandleCtor(name = 'vkCreateComputePipelines',
-            ).declare_array(count = 'createInfoCount', items = 'pCreateInfos'
-            ).declare_array(count = 'createInfoCount', items = 'pPipelines'))
+    h = g.add_gen_handle(name = 'VkPipeline')
+    h.declare_ctor(name = 'vkCreateGraphicsPipelines'
+        ).declare_array(count = 'createInfoCount', items = 'pCreateInfos'
+        ).declare_array(count = 'createInfoCount', items = 'pPipelines')
+    h.declare_ctor(name = 'vkCreateComputePipelines',
+        ).declare_array(count = 'createInfoCount', items = 'pCreateInfos'
+        ).declare_array(count = 'createInfoCount', items = 'pPipelines')
 
     #
     # Structs
