@@ -1144,12 +1144,12 @@ class ParamBase(object):
 
     @property
     def boost_func_query_array_size_param(self):
+        bname = self._boost_func_param_name
         if self._vk_is_dyn_array_items:
             if self._is_boost_func_output:
                 return f'[[ {self._vk_unqual_type} ? ]]'
             else:
-                bname = self._boost_func_param_name
-                return f'array_addr_unsafe({bname})'
+                return f'array_addr_unsafe(vk_{bname})'
         return self.boost_func_call_vk_param
 
     @property
@@ -1159,7 +1159,7 @@ class ParamBase(object):
             if self._dyn_array_items._is_boost_func_output:
                 return f'safe_addr(vk_{self._vk_name})'
             else:
-                return f'uint({bname} |> length())'
+                return f'uint(vk_{bname} |> length())'
         elif self._vk_is_dyn_array_items:
             return f'array_addr_unsafe(vk_{bname})'
         elif self._vk_is_pointer:
