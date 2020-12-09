@@ -1295,6 +1295,9 @@ class ParamVkAllocator(ParamBase):
     def generate_boost_func_temp_vars_delete(self):
         return []
 
+    def generate_boost_func_temp_vars_update(self):
+        return []
+
     @property
     def boost_func_call_vk_param(self):
         return 'null'
