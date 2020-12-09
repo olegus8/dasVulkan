@@ -1121,15 +1121,15 @@ class ParamBase(object):
                     f'vk_{bname} <- [{{ '
                         f'for item in {bname} ; boost_value_to_vk({bname}) }}]'
                 ]
+            return lines
         if self._vk_is_pointer:
             #TODO: add null support if needed via declare_can_be_null
             bname = self._boost_func_param_name
             vtype = self._vk_unqual_type
-            if self._is_boost_func_output:
-                return [f'var vk_{bname} : {vtype}']
-            else:
-                return [
-                    f'var vk_{bname} : {vtype} = boost_value_to_vk({bname})']
+            lines = [f'var vk_{bname} : {vtype}']
+            if not self._is_boost_func_output:
+                lines += [f'vk_{bname} <- boost_value_to_vk({bname})']
+            return lines
         return []
 
     def generate_boost_func_temp_vars_update(self):
