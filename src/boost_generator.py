@@ -652,7 +652,7 @@ class GenHandleCtor(GenFunc):
         ]
         for param in self.__handle.dtor._params:
             lines += [f'{line}'
-                for line in param.generate_boost_ctor_init_field()]
+                for line in param.generate_boost_handle_ctor_init_field()]
         return lines
 
     @property
