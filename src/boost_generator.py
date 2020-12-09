@@ -212,7 +212,7 @@ class GenFunc(object):
 
         for param in self.__params:
             lines += [f'    {line}'
-                for line in param.generate_boost_func_temp_vars_delete()]
+                for line in param.generate_boost_func_temp_vars_finalize()]
         
         ret_op = '<- ' if self.__output_param.is_struct else ''
         lines += [
@@ -1240,7 +1240,7 @@ class ParamBase(object):
             return [f'vk_{bname}__items |> resize(int(vk_{self._vk_name}))']
         return []
 
-    def generate_boost_func_temp_vars_delete(self):
+    def generate_boost_func_temp_vars_finalize(self):
         return []
 
     @property
@@ -1292,10 +1292,10 @@ class ParamVkAllocator(ParamBase):
     def generate_boost_func_temp_vars_setup(self):
         return []
 
-    def generate_boost_func_temp_vars_delete(self):
+    def generate_boost_func_temp_vars_update(self):
         return []
 
-    def generate_boost_func_temp_vars_update(self):
+    def generate_boost_func_temp_vars_finalize(self):
         return []
 
     @property
