@@ -167,9 +167,17 @@ class GenFunc(object):
             lines.append(f'    var result_ = VkResult VK_SUCCESS')
         maybe_capture_result = ('result ?? result_ = '
             if self.__returns_vk_result else '')
+        if lines[-1] != ['']:
+            lines.append('')
+
         lines += [
            f'    {maybe_capture_result}{self.__vk_func_name}(',
         ]
+        for param in self.__params:
+            lines += [f'        {},'.format(
+                param.boost_func_query_array_size_param)]
+        remove_last_char(lines, ',')
+
 
         for param in self.__params:
             if param.vk_name == self.__p_output:
@@ -1095,7 +1103,7 @@ class ParamBase(object):
         self._c_param = c_param
         self._vk_array_items_name = None
         self._vk_array_count_name = None
-        self._is_boost_func_output = False
+        self.__boost_func_output = False
 
     @property
     def _c_unqual_type(self):
@@ -1122,7 +1130,12 @@ class ParamBase(object):
         self._vk_array_count_name = count
 
     def set_boost_func_output(self):
-        self._is_boost_func_output = True
+        self.__boost_func_output = True
+
+    @property
+    def _is_boost_func_output(self):
+        return (self._dyn_array_items._is_boost_func_output
+            if self._vk_is_dyn_array_count else self.__boost_func_output)
 
     @property
     def _vk_is_dyn_array_count(self):
@@ -1188,13 +1201,12 @@ class ParamBase(object):
 
     def generate_boost_func_temp_vars_init(self):
         if self._vk_is_dyn_array_count:
-            return []
+            return [f'var vk_{self._vk_name} : uint']
         if self._vk_is_dyn_array_items:
             bname = self._boost_func_param_name
             vtype = self._vk_unqual_type
             if self._is_boost_func_output:
                 return [
-                    f'var vk_{bname}__count : uint',
                     f'var vk_{bname}__items : array<{vtype}>',
                     f'defer() <| ${{ delete vk_{bname}__items; }}',
                 ]
@@ -1210,6 +1222,13 @@ class ParamBase(object):
 
     def generate_boost_func_temp_vars_delete(self):
         return []
+
+    @property
+    def boost_func_query_array_size_param(self):
+        if self._vk_is_dyn_array_count and self._is_boost_func_output:
+            return f'safe_addr(vk_{self._vk_name})'
+        if self._
+        return self._boost_func_param_name
 
 
 class ParamVkAllocator(ParamBase):
@@ -1230,6 +1249,13 @@ class ParamVkAllocator(ParamBase):
 
     def generate_boost_func_temp_vars_setup(self):
         return []
+
+    def generate_boost_func_temp_vars_delete(self):
+        return []
+
+    @property
+    def boost_func_query_array_size_param(self):
+        return 'null'
 
 
 class ParamVkHandle(ParamBase):
