@@ -1203,18 +1203,7 @@ class ParamFixedString(ParamBase):
 
     @property
     def vk_unqual_type(self):
-        #TODO: add if needed
-        return None
-
-    @property
-    def boost_unqual_type(self):
         return 'string'
-
-    def boost_value_to_vk(self, boost_value):
-        return None
-
-    def vk_value_to_boost(self, vk_value):
-        return f'vk_value_to_boost({vk_value})'
 
 
 class ParamString(ParamBase):
