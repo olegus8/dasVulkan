@@ -160,6 +160,10 @@ class GenFunc(object):
            f'    var vk_output : {vk_type_deref}',
         ]
 
+        for param in self.__params:
+            lines += [f'    {line}'
+                for line in param.generate_boost_func_temp_vars_setup()]
+
         if self.__returns_vk_result:
             lines.append(f'    var result_ = VkResult VK_SUCCESS')
         maybe_capture_result = ('result ?? result_ = '
@@ -1178,6 +1182,16 @@ class ParamBase(object):
         if self._is_boost_func_output:
             rtypes.append(self._boost_func_param_type)
         return rtypes
+
+    def generate_boost_func_temp_vars_setup(self):
+        if self._vk_is_dyn_array_count:
+            return []
+        elif self._vk_is_dyn_array_items:
+            return ['TODO']
+        elif self._vk_is_pointer:
+            return ['TODO']
+        else:
+            return ['TODO']
 
 
 class ParamVkAllocator(ParamBase):
