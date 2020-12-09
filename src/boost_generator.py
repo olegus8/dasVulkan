@@ -659,35 +659,9 @@ class GenHandleCtor(GenFunc):
         for param in self.__handle.dtor._params:
             lines += [f'    {line}'
                 for line in param.generate_ctor_init_field()]
-        remove_last_char(lines, ',')
         lines += [
-            '    ]]',
+           f'    return <- handle',
         ]
-        for param in self.params:
-            lines += [f'    {line}'
-                for line in param.generate_ctor_temp_vars()]
-        if lines[-1] != '':
-            lines.append('')
-
-        if self.returns_vk_result:
-            lines += [f'    var result_ = VkResult VK_SUCCESS']
-            maybe_capture_result = 'result ?? result_ = '
-        else:
-            maybe_capture_result = ''
-
-        lines += [
-           f'    {maybe_capture_result}{self.vk_name}(']
-        lines += [f'    {param.generate_ctor_vk_param()},'
-            for param in self.params]
-        remove_last_char(lines, ',')
-        lines += [
-           f'    )',
-        ]
-        if self.returns_vk_result:
-            lines += [
-               f'    assert(result_ == VkResult VK_SUCCESS)']
-        lines += [
-           f'    return <- {bh_attr}']
         return lines
 
 
