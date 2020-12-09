@@ -1212,6 +1212,7 @@ class ParamBase(object):
                     f'defer() <| ${{ delete vk_{bname}__items; }}',
                 ]
         if self._vk_is_pointer:
+            #TODO: add null support if needed
             bname = self._boost_func_param_name
             vtype = self._vk_unqual_type
             if self._is_boost_func_output:
