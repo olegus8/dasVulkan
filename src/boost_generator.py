@@ -564,11 +564,11 @@ class GenHandle(object):
         return ctor
 
     @property
-    def _boost_handle_type_name(self):
+    def boost_handle_type_name(self):
         return vk_handle_type_to_boost(self.vk_handle_type_name)
 
     @property
-    def _boost_handle_attr(self):
+    def boost_handle_attr(self):
         return boost_handle_attr_name(self.boost_handle_type_name)
 
     def generate(self):
@@ -588,9 +588,9 @@ class GenHandle(object):
 
     def __generate_type(self):
         lines = []
-        bhtype = self._boost_handle_type_name
+        bhtype = self.boost_handle_type_name
         vhtype = self._vk_handle_type_name
-        attr = self._boost_handle_attr
+        attr = self.boost_handle_attr
         lines += [
             '',
            f'struct {bhtype}',
@@ -656,8 +656,8 @@ class GenHandleCtor(GenFunc):
         return 'handles' if self.__returns_array else 'handle'
 
     def generate(self):
-        bh_attr = self.__handle._boost_handle_attr
-        bh_type = self.__handle._boost_handle_type_name
+        bh_attr = self.__handle.boost_handle_attr
+        bh_type = self.__handle.boost_handle_type_name
 
         assert_equal(self._return_type, bh_type)
         assert_equal(len(self._output_params), 1)
@@ -708,8 +708,8 @@ class GenHandleDtor(GenFunc):
         self.__handle = handle
 
     def generate(self):
-        bh_attr = self.__handle._boost_handle_attr
-        bh_type = self.__handle._boost_handle_type_name
+        bh_attr = self.__handle.boost_handle_attr
+        bh_type = self.__handle.boost_handle_type_name
         lines = []
         lines += [
             '',
