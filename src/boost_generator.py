@@ -1221,13 +1221,6 @@ class ParamString(ParamBase):
     def vk_unqual_type(self):
         return 'string'
 
-    @property
-    def boost_name(self):
-        name = vk_param_name_to_boost(self.vk_name)
-        if name.startswith('p_'):
-            name = name[2:]
-        return name
-
 
 class ParamStringPtr(ParamBase):
 
