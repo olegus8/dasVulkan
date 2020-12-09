@@ -682,7 +682,6 @@ class GenHandleCtor(GenFunc):
             '',
            f'    var {self.__return_var} <- {inner_ctor}(',
         ]
-        #TODO: ^^^ handle arrays here too
         for param in self._params:
             lines += [f'        {line}'
                 for line in param.generate_boost_func_param_call()]
