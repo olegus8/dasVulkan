@@ -103,26 +103,17 @@ class BoostGenerator(LoggingObject):
             return f.read()
 
 
-class GenQueryFunc(object):
+class GenFunc(object):
 
-    def __init__(self, generator, func, p_output):
+    def __init__(self, generator, name):
         self.__generator = generator
-        self.__vk_func_name = func
-        self.__p_output = p_output
+        self.__vk_func_name = name
+
+        self.__params = self.__generator.create_func_params(self.__c_func)
 
     @property
     def __boost_func_name(self):
         return vk_func_name_to_boost(self.__vk_func_name)
-
-    @property
-    def __params(self):
-        return self.__generator.get_func_params(self.__c_func)
-
-    @property
-    def __output_param(self):
-        for param in self.__params:
-            if param.vk_name == self.__p_output:
-                return param
 
     @property
     def __c_func(self):
