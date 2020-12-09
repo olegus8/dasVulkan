@@ -160,11 +160,9 @@ class GenFunc(object):
         if self.__returns_vk_result:
             lines.append(f'    var result : VkResult? = [[VkResult?]];')
         remove_last_char(lines, ';')
-
         lines += [
            f') : {self.__return_type}',
         ]
-
         for param in self.__params:
             lines += [f'    {line}'
                 for line in param.generate_boost_func_temp_vars_init()]
@@ -173,26 +171,35 @@ class GenFunc(object):
             lines.append(f'    var result_ = VkResult VK_SUCCESS')
         maybe_capture_result = ('result ?? result_ = '
             if self.__returns_vk_result else '')
+
         if lines[-1] != ['']:
             lines.append('')
+        if self.__have_array_outputs:
+            lines += [
+               f'    {maybe_capture_result}{self.__vk_func_name}(',
+            ]
+            for param in self.__params:
+                lines += [f'        {},'.format(
+                    param.boost_func_query_array_size_param)]
+            remove_last_char(lines, ',')
+            lines += [
+               f'    )',
+            ]
+            if self.__returns_vk_result:
+                lines.append('    assert(result_ == VkResult VK_SUCCESS)')
+            maybe_null_output = f' <- [[ self.__return_type ]]'
+                if self.__return_type != 'void' else ''
+            lines += [
+               f'    if result_ != VkResult VK_SUCCESS',
+               f'        return{maybe_null_output}',
+            ]
 
         lines += [
            f'    {maybe_capture_result}{self.__vk_func_name}(',
         ]
         for param in self.__params:
-            lines += [f'        {},'.format(
-                param.boost_func_query_array_size_param)]
+            lines += [f'        {},'.format(param.boost_func_call_vk)]
         remove_last_char(lines, ',')
-
-
-        for param in self.__params:
-            if param.vk_name == self.__p_output:
-                vk_value = 'safe_addr(vk_output)'
-            else:
-                vk_value = param.boost_value_to_vk(param.boost_name)
-            lines.append(f'        {vk_value},')
-        remove_last_char(lines, ',')
-
         lines += [
            f'    )',
         ]
