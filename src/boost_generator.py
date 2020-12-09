@@ -700,11 +700,16 @@ class GenHandleCtor(GenFunc):
         return lines
 
 
-class GenHandleDtor(GenHandleFunc):
+class GenHandleDtor(GenFunc):
+
+    def __init__(self, handle, name):
+        super(GenHandleDtor, self).__init__(
+            generator=handle._generator, name=name, private=True)
+        self.__handle = handle
 
     def generate(self):
-        bh_attr = self.gen_handle.boost_handle_attr
-        bh_type = self.gen_handle.boost_handle_type_name
+        bh_attr = self.__handle._boost_handle_attr
+        bh_type = self.__handle._boost_handle_type_name
         lines = []
         lines += [
             '',
