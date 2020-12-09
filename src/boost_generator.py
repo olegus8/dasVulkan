@@ -708,21 +708,20 @@ class GenHandleDtor(GenFunc):
         self.__handle = handle
 
     def generate(self):
-        bh_attr = self.__handle.boost_handle_attr
         bh_type = self.__handle.boost_handle_type_name
         lines = []
         lines += [
             '',
-           f'def finalize(var {bh_attr} : {bh_type} explicit)',
-           f'    if {bh_attr}._needs_delete',
-           f'        {self.vk_name}(',
+           f'def finalize(var handle : {bh_type} explicit)',
+           f'    if handle._needs_delete',
+           f'        {self._boost_func_name}(',
         ] + [
-           f'            {param.generate_dtor_vk_param()},'
-                            for param in self.params]
+           f'            {param.boost_dtor_call_from_handle},'
+                            for param in self._params]
         remove_last_char(lines, ',')
         lines += [
             '        )',
-           f'    memzero({bh_attr})',
+           f'    memzero(handle)',
         ]
         return lines
 
@@ -940,6 +939,9 @@ class ParamBase(object):
         return []
 
     def generate_boost_handle_ctor_init_field(self):
+        return []
+
+    def generate_boost_dtor_call_from_handle(self):
         return []
 
     @property
