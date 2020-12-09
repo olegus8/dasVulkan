@@ -155,10 +155,8 @@ class GenFunc(object):
             lines.append(f'    var result : VkResult? = [[VkResult?]];')
         remove_last_char(lines, ';')
 
-        boost_type_deref = deref_das_type(self.__output_param.boost_type)
-        vk_type_deref = deref_das_type(self.__output_param.vk_type)
         lines += [
-           f') : {boost_type_deref}',
+           f') : {self.__return_type}',
            f'    var vk_output : {vk_type_deref}',
         ]
 
