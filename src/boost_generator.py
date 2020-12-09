@@ -1238,6 +1238,9 @@ class ParamBase(object):
             else:
                 bname = self._boost_func_param_name
                 return f'array_addr_unsafe({bname})',
+        elif self._vk_is_pointer:
+            bname = self._boost_func_param_name
+            return f'safe_addr(vk_{bname})'
         #TODO
         return self._boost_func_param_name
 
