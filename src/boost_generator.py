@@ -110,7 +110,7 @@ class GenFunc(object):
         self.__generator = generator
         self._vk_func_name = name
 
-        self.__params = self.__generator.create_func_params(self.__c_func)
+        self._params = self.__generator.create_func_params(self.__c_func)
 
     @property
     def _boost_func_name(self):
@@ -121,11 +121,11 @@ class GenFunc(object):
         return self.__generator.functions[self._vk_func_name]
 
     @property
-    def __returns_vk_result(self):
+    def _returns_vk_result(self):
         return returns_vk_result(self.__c_func)
 
     def __get_param(self, vk_name):
-        for param in self.__params:
+        for param in self._params:
             if param.vk_name == vk_name:
                 return param
 
@@ -136,13 +136,13 @@ class GenFunc(object):
         p_items.set_dyn_array(count=p_count, items=p_items)
 
     def declare_output(self, name):
-        for param in self.__params:
+        for param in self._params:
             if param.vk_name == name:
                 param.set_boost_func_output()
 
     @property
     def _return_type(self):
-        rtypes = [t for param in self.__params
+        rtypes = [t for param in self._params
             for t in param.generate_boost_func_return_types]
         if len(rtypes) > 1:
             raise Exception('TODO: add multiple outputs support if needed')
@@ -150,7 +150,7 @@ class GenFunc(object):
 
     @property
     def __return_value(self):
-        rvalues = [t for param in self.__params
+        rvalues = [t for param in self._params
             for t in param.generate_boost_func_return_values]
         if len(rvalues) > 1:
             raise Exception('TODO: add multiple outputs support if needed')
@@ -162,23 +162,23 @@ class GenFunc(object):
             '',
            f'def {self._boost_func_name}('
         ]
-        for param in self.__params:
+        for param in self._params:
             lines += [f'    {line}'
-                for line in param.generate_boost_func_param()]
-        if self.__returns_vk_result:
+                for line in param.generate_boost_func_param_decl()]
+        if self._returns_vk_result:
             lines.append(f'    var result : VkResult? = [[VkResult?]];')
         remove_last_char(lines, ';')
         lines += [
            f') : {self._return_type}',
         ]
-        for param in self.__params:
+        for param in self._params:
             lines += [f'    {line}'
                 for line in param.generate_boost_func_temp_vars_init()]
 
-        if self.__returns_vk_result:
+        if self._returns_vk_result:
             lines.append(f'    var result_ = VkResult VK_SUCCESS')
         maybe_capture_result = ('result ?? result_ = '
-            if self.__returns_vk_result else '')
+            if self._returns_vk_result else '')
 
         if lines[-1] != ['']:
             lines.append('')
@@ -186,14 +186,14 @@ class GenFunc(object):
             lines += [
                f'    {maybe_capture_result}{self._vk_func_name}(',
             ]
-            for param in self.__params:
+            for param in self._params:
                 lines += [f'        {},'.format(
                     param.boost_func_query_array_size_param)]
             remove_last_char(lines, ',')
             lines += [
                f'    )',
             ]
-            if self.__returns_vk_result:
+            if self._returns_vk_result:
                 lines.append('    assert(result_ == VkResult VK_SUCCESS)')
             maybe_null_output = f' <- [[ self._return_type ]]'
                 if self._return_type != 'void' else ''
@@ -202,20 +202,20 @@ class GenFunc(object):
                f'        return{maybe_null_output}',
             ]
 
-        for param in self.__params:
+        for param in self._params:
             lines += [f'    {line}'
                 for line in param.generate_boost_func_temp_vars_update()]
 
         lines += [
            f'    {maybe_capture_result}{self._vk_func_name}(',
         ]
-        for param in self.__params:
+        for param in self._params:
             lines += [f'        {},'.format(param.boost_func_call_vk_param)]
         remove_last_char(lines, ',')
         lines += [
            f'    )',
         ]
-        if self.__returns_vk_result:
+        if self._returns_vk_result:
             lines.append('    assert(result_ == VkResult VK_SUCCESS)')
 
         if self._return_type != 'void':
@@ -613,29 +613,51 @@ class GenHandleCtor(GenFunc):
             generator=handle._generator, name=name)
         self.__handle = handle
 
-    def generate(self):
-        assert_equal(self._return_type, self.__handle._boost_handle_type_name)
-        bh_attr = self.gen_handle.boost_handle_attr
-        bh_type = self.gen_handle.boost_handle_type_name
+    @property
+    def _boost_func_name(self):
+        return self.__boost_inner_ctor_func_name
 
-        lines = []
+    @property
+    def __boost_inner_ctor_func_name(self):
+        return vk_func_name_to_boost(self._vk_func_name) + '__inner'
+
+    @property
+    def __boost_outer_ctor_func_name(self):
+        return vk_func_name_to_boost(self._vk_func_name)
+
+    def generate(self):
+        bh_attr = self.__handle._boost_handle_attr
+        bh_type = self.__handle._boost_handle_type_name
+
+        assert_equal(self._return_type, bh_type)
+
+        lines = super(GenHandleCtor, self).generate()
         lines += [
             '',
-           f'def {self.boost_name}(']
-        for param in self.params:
+           f'def {self.__boost_outer_ctor_func_name}(']
+        for param in self._params:
             lines += [f'    {line}'
-                for line in param.generate_ctor_boost_param()]
-        if self.returns_vk_result:
-            lines += [f'    var result : VkResult? = [[VkResult?]];']
+                for line in param.generate_boost_func_param_decl()]
+        if self._returns_vk_result:
+            lines.append(f'    var result : VkResult? = [[VkResult?]];')
         remove_last_char(lines, ';')
         lines += [
-           f') : {self.__return_type}',
+           f') : {self._return_type}',
             '',
-           f'    var {bh_attr} <- [[ {bh_type}',
-           f'        _needs_delete = true,',
+           f'    var handle <- {self.__boost_inner_ctor_func_name}(',
         ]
-        for param in self.gen_handle.dtor.params():
+        for param in self._params:
             lines += [f'        {line}'
+                for line in param.generate_boost_func_param_call()]
+        if self._returns_vk_result:
+            lines.append(f'        result,')
+        remove_last_char(lines, ',')
+        lines += [
+           f'    )',
+           f'    handle._needs_delete = true',
+        ]
+        for param in self.__handle.dtor._params:
+            lines += [f'    {line}'
                 for line in param.generate_ctor_init_field()]
         remove_last_char(lines, ',')
         lines += [
@@ -1032,12 +1054,17 @@ class ParamBase(object):
             btype = deref_das_type(btype)
         return btype
 
-    def generate_boost_func_param(self):
+    def generate_boost_func_param_decl(self):
         if self._vk_is_dyn_array_count or self._is_boost_func_output:
             return []
         bname = self._boost_func_param_name
-        bname = self._boost_func_param_type
+        btype = self._boost_func_param_type
         return [f'{bname} : {btype} = [[ {btype} ]];']
+
+    def generate_boost_func_param_call(self):
+        if self._vk_is_dyn_array_count or self._is_boost_func_output:
+            return []
+        return [f'{self._boost_func_param_name},']
 
     def generate_boost_func_return_types(self):
         if self._is_boost_func_output:
@@ -1090,6 +1117,9 @@ class ParamBase(object):
     def generate_boost_handle_field(self):
         return []
 
+    def generate_boost_handle_ctor_init_field(self):
+        return []
+
     @property
     def boost_func_query_array_size_param(self):
         bname = self._boost_func_param_name
@@ -1128,14 +1158,20 @@ class ParamVkAllocator(ParamBase):
     def _vk_unqual_type(self):
         return self._c_unqual_type
 
-    def generate_boost_func_param(self):
+    def generate_boost_func_param_decl(self):
+        return []
+
+    def generate_boost_func_param_call(self):
         return []
 
     def generate_boost_func_temp_vars_init(self):
         return []
 
     def generate_boost_handle_field(self):
-        return [f'_{self.boost_name} : {self.vk_type}']
+        return []
+
+    def generate_boost_handle_ctor_init_field(self):
+        return []
 
     @property
     def boost_func_call_vk_param(self):
@@ -1150,6 +1186,10 @@ class ParamVkHandleBase(ParamBase):
 
     def generate_boost_handle_field(self):
         return [f'_{self._boost_func_param_name} : {self._vk_unqual_type}']
+
+    def generate_boost_handle_ctor_init_field(self):
+        bname = self._boost_func_param_name
+        return [f'handle._{bname} := boost_value_to_vk({bname})']
 
 
 class ParamVkHandle(ParamVkHandleBase):
