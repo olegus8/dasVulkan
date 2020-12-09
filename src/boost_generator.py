@@ -1195,9 +1195,6 @@ class ParamVkAllocator(ParamBase):
     def boost_func_call_vk_param(self):
         return 'null'
 
-    def generate_boost_handle_field(self):
-        return []
-
 
 class ParamVkHandleBase(ParamBase):
 
