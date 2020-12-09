@@ -1260,6 +1260,10 @@ class ParamVkStruct(ParamBase):
     def _vk_unqual_type(self):
         return self._c_unqual_type
 
+    @property
+    def _boost_unqual_type(self):
+        return vk_struct_type_to_boost(self._vk_unqual_type)
+
     def generate_boost_func_param(self):
         raise Exception('TODO')
 
