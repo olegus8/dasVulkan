@@ -1101,8 +1101,7 @@ class ParamBase(object):
         if self._is_boost_func_output:
             bname = self._boost_func_param_name
             if self._vk_is_dyn_array_items:
-                return [f'<- [{{ for x in vk_{bname}__items ;'
-                    f'vk_value_to_boost(x) }}]']
+                return [f'<- [{{for x in vk_{bname}; vk_value_to_boost(x)}}]']
             if self._vk_is_pointer:
                 return [f'<- vk_{bname}']
         return []
@@ -1115,8 +1114,8 @@ class ParamBase(object):
             vtype = self._vk_unqual_type
             if self._is_boost_func_output:
                 return [
-                    f'var vk_{bname}__items : array<{vtype}>',
-                    f'defer() <| ${{ delete vk_{bname}__items; }}',
+                    f'var vk_{bname} : array<{vtype}>',
+                    f'defer() <| ${{ delete vk_{bname}; }}',
                 ]
         if self._vk_is_pointer:
             #TODO: add null support if needed via declare_can_be_null
@@ -1133,7 +1132,7 @@ class ParamBase(object):
         if self._vk_is_dyn_array_items and self._is_boost_func_output:
             bname = self._boost_func_param_name
             vtype = self._vk_unqual_type
-            return [f'vk_{bname}__items |> resize(int(vk_{self._vk_name}))']
+            return [f'vk_{bname} |> resize(int(vk_{self._vk_name}))']
         return []
 
     def generate_boost_func_temp_vars_finalize(self):
@@ -1160,7 +1159,7 @@ class ParamBase(object):
         elif self._vk_is_dyn_array_items:
             bname = self._boost_func_param_name
             if self._is_boost_func_output:
-                return f'array_addr_unsafe(vk_{bname}__items)'
+                return f'array_addr_unsafe(vk_{bname})'
             else:
                 return f'array_addr_unsafe({bname})'
         elif self._vk_is_pointer:
