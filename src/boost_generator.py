@@ -194,11 +194,15 @@ class GenFunc(object):
                f'        return{maybe_null_output}',
             ]
 
+        for param in self.__params:
+            lines += [f'    {line}'
+                for line in param.generate_boost_func_temp_vars_update()]
+
         lines += [
            f'    {maybe_capture_result}{self.__vk_func_name}(',
         ]
         for param in self.__params:
-            lines += [f'        {},'.format(param.boost_func_call_vk)]
+            lines += [f'        {},'.format(param.boost_func_call_vk_param)]
         remove_last_char(lines, ',')
         lines += [
            f'    )',
@@ -1229,6 +1233,13 @@ class ParamBase(object):
                     f'var vk_{bname} : {vtype} = boost_value_to_vk({bname})']
         return []
 
+    def generate_boost_func_temp_vars_update(self):
+        if self._vk_is_dyn_array_items and self._is_boost_func_output:
+            bname = self._boost_func_param_name
+            vtype = self._vk_unqual_type
+            return [f'vk_{bname}__items |> resize(int(vk_{self._vk_name}))']
+        return []
+
     def generate_boost_func_temp_vars_delete(self):
         return []
 
@@ -1242,10 +1253,29 @@ class ParamBase(object):
                 return f'uint({bname} |> length())'
         elif self._vk_is_dyn_array_items:
             if self._is_boost_func_output:
-                return f'[[ {self._vk_unqual_type} ? ]]',
+                return f'[[ {self._vk_unqual_type} ? ]]'
             else:
                 bname = self._boost_func_param_name
-                return f'array_addr_unsafe({bname})',
+                return f'array_addr_unsafe({bname})'
+        elif self._vk_is_pointer:
+            bname = self._boost_func_param_name
+            return f'safe_addr(vk_{bname})'
+        return self._boost_func_param_name
+
+    @property
+    def boost_func_call_vk_param(self):
+        if self._vk_is_dyn_array_count:
+            if self._dyn_array_items._is_boost_func_output:
+                return f'safe_addr(vk_{self._vk_name})'
+            else:
+                bname = self._boost_func_param_name
+                return f'uint({bname} |> length())'
+        elif self._vk_is_dyn_array_items:
+            bname = self._boost_func_param_name
+            if self._is_boost_func_output:
+                return f'array_addr_unsafe(vk_{bname}__items)'
+            else:
+                return f'array_addr_unsafe({bname})'
         elif self._vk_is_pointer:
             bname = self._boost_func_param_name
             return f'safe_addr(vk_{bname})'
