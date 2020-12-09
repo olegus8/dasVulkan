@@ -547,8 +547,7 @@ class GenHandle(object):
         ctors = []
         name = vk_handle_type_to_vk_ctor(self.__vk_handle_type_name)
         if name in self.__generator.functions.get(name):
-            ctors.append(GenHandleCtor(
-                generator=self.__generator, name=name, handle=self))
+            ctors.append(GenHandleCtor(handle=self, name=name))
         return ctors
 
     def declare_ctor(self, vk_name):
