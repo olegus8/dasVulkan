@@ -157,12 +157,11 @@ class GenFunc(object):
 
         lines += [
            f') : {self.__return_type}',
-           f'    var vk_output : {vk_type_deref}',
         ]
 
         for param in self.__params:
             lines += [f'    {line}'
-                for line in param.generate_boost_func_temp_vars_setup()]
+                for line in param.generate_boost_func_temp_vars_init()]
 
         if self.__returns_vk_result:
             lines.append(f'    var result_ = VkResult VK_SUCCESS')
@@ -185,6 +184,10 @@ class GenFunc(object):
         ]
         if self.__returns_vk_result:
             lines.append('    assert(result_ == VkResult VK_SUCCESS)')
+
+        for param in self.__params:
+            lines += [f'    {line}'
+                for line in param.generate_boost_func_temp_vars_delete()]
         
         ret_op = '<- ' if self.__output_param.is_struct else ''
         lines += [
@@ -1183,18 +1186,29 @@ class ParamBase(object):
             rtypes.append(self._boost_func_param_type)
         return rtypes
 
-    def generate_boost_func_temp_vars_setup(self):
+    def generate_boost_func_temp_vars_init(self):
         if self._vk_is_dyn_array_count:
             return []
         if self._vk_is_dyn_array_items:
-            return ['TODO']
+            bname = self._boost_func_param_name
+            vtype = self._vk_unqual_type
+            if self._is_boost_func_output:
+                return [
+                    f'var vk_{bname}__count : uint',
+                    f'var vk_{bname}__items : array<{vtype}>',
+                    f'defer() <| ${{ delete vk_{bname}__items; }}',
+                ]
         if self._vk_is_pointer:
             bname = self._boost_func_param_name
-            vtype = deref_das_type(self._vk_type)
+            vtype = self._vk_unqual_type
             if self._is_boost_func_output:
                 return [f'var vk_{bname} : {vtype}']
             else:
-                return [f'var vk_{bname} : {vtype} = {bname}']
+                return [
+                    f'var vk_{bname} : {vtype} = boost_value_to_vk({bname})']
+        return []
+
+    def generate_boost_func_temp_vars_delete(self):
         return []
 
 
@@ -1212,6 +1226,9 @@ class ParamVkAllocator(ParamBase):
         return self._c_unqual_type
 
     def generate_boost_func_param(self):
+        return []
+
+    def generate_boost_func_temp_vars_setup(self):
         return []
 
 
