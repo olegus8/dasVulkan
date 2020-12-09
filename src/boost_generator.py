@@ -1167,6 +1167,10 @@ class ParamBase(object):
         bname = self._boost_func_param_type
         return [f'{bname} : {btype} = [[ {btype} ]];']
 
+    def generate_boost_func_return_type(self):
+        if self._is_boost_func_output:
+            return self._boost_func_param_type
+
 
 class ParamVkAllocator(ParamBase):
 
