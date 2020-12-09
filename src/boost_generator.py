@@ -1242,7 +1242,6 @@ class ParamBase(object):
         elif self._vk_is_pointer:
             bname = self._boost_func_param_name
             return f'safe_addr(vk_{bname})'
-        #TODO
         return self._boost_func_param_name
 
 
