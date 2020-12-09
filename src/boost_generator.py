@@ -713,10 +713,10 @@ class GenHandleDtor(GenFunc):
         lines += [
             '',
            f'def finalize(var handle : {bh_type} explicit)',
-           f'    if handle._needs_delete',
+           f'    if handle._needs_delete:',
            f'        {self._boost_func_name}(',
         ] + [
-           f'            {param.boost_dtor_call_from_handle},'
+           f'            {param.get_boost_dtor_call_param({bh_type})},'
                             for param in self._params]
         remove_last_char(lines, ',')
         lines += [
@@ -941,8 +941,9 @@ class ParamBase(object):
     def generate_boost_handle_ctor_init_field(self):
         return []
 
-    def generate_boost_dtor_call_from_handle(self):
-        return []
+    @property
+    def get_boost_dtor_call_param(self, boost_handle_type_name):
+        raise Exception('Should not be here.')
 
     @property
     def boost_func_query_array_size_param(self):
@@ -1001,6 +1002,10 @@ class ParamVkAllocator(ParamBase):
     def boost_func_call_vk_param(self):
         return 'null'
 
+    @property
+    def get_boost_dtor_call_param(self, boost_handle_type_name):
+        return 'null'
+
 
 class ParamVkHandleBase(ParamBase):
 
@@ -1014,6 +1019,13 @@ class ParamVkHandleBase(ParamBase):
     def generate_boost_handle_ctor_init_field(self):
         bname = self._boost_func_param_name
         return [f'handle._{bname} := boost_value_to_vk({bname})']
+
+    @property
+    def get_boost_dtor_call_param(self, boost_handle_type_name):
+        field = self._boost_func_param_name
+        if self._boost_unqual_type != boost_handle_type_name:
+            field = '_' + field
+        return f'handle.{field}'
 
 
 class ParamVkHandle(ParamVkHandleBase):
