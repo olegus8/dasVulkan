@@ -637,10 +637,9 @@ class GenHandleCtor(GenFunc):
     @property
     def __ctor_return_var(self):
         rvars = [v for param in self._params
-            for v in param.generate_boost_ctor_func_return_types]
-        if len(rtypes) > 1:
-            raise Exception('TODO: add multiple outputs support if needed')
-        return (rtypes or ['void'])[0]
+            for v in param.generate_boost_ctor_return_vars]
+        assert_equal(len(rvars), 1)
+        return rvars[0]
 
     def generate(self):
         bh_attr = self.__handle._boost_handle_attr
