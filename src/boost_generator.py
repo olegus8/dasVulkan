@@ -532,11 +532,11 @@ class GenStructFieldArray(object):
 class GenHandle(object):
 
     def __init__(self, generator, name):
-        self.__generator = generator
-        self.__vk_handle_type_name = name
+        self._generator = generator
+        self._vk_handle_type_name = name
 
-        self.__dtor = self.__maybe_create_default_dtor()
-        self.__ctors = self.__create_default_ctors()
+        self._dtor = self.__maybe_create_default_dtor()
+        self._ctors = self.__create_default_ctors()
 
     def __maybe_create_default_dtor(self):
         name = vk_handle_type_to_vk_dtor(self.__vk_handle_type_name)
@@ -547,20 +547,21 @@ class GenHandle(object):
         ctors = []
         name = vk_handle_type_to_vk_ctor(self.__vk_handle_type_name)
         if name in self.__generator.functions.get(name):
-            ctors.append(GenHandleCtor(generator=self.__generator, name=name))
+            ctors.append(GenHandleCtor(
+                generator=self.__generator, name=name, handle=self))
         return ctors
 
     def declare_ctor(self, vk_name):
         ctor = GenHandleCtor(handle=self, name=vk_name)
-        self.__ctors.append(ctor)
+        self._ctors.append(ctor)
         return ctor
 
     @property
-    def boost_handle_type_name(self):
+    def _boost_handle_type_name(self):
         return vk_handle_type_to_boost(self.vk_handle_type_name)
 
     @property
-    def boost_handle_attr(self):
+    def _boost_handle_attr(self):
         return boost_handle_attr_name(self.boost_handle_type_name)
 
     def generate(self):
@@ -572,9 +573,9 @@ class GenHandle(object):
             '//',
         ]
         lines += self.__generate_type()
-        for ctor in self.ctors:
+        for ctor in self.__ctors:
             lines += ctor.generate()
-        if self.dtor:
+        if self.__dtor:
             lines += self.dtor.generate()
         return lines
 
