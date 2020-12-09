@@ -1029,6 +1029,10 @@ class ParamBase(object):
     def _vk_unqual_type(self):
         raise NotImplementedError()
 
+    @property
+    def _boost_unqual_type(self):
+        return self._vk_unqual_type
+
     def set_dyn_array(self, count, items):
         self._dyn_array_items = items
         self._dyn_array_count = count
@@ -1047,9 +1051,9 @@ class ParamBase(object):
     @property
     def _vk_type(self):
         t = self.vk_unqual_type
-        if self.vk_is_pointer:
+        if self._vk_is_pointer:
             t += ' ?'
-        if self.vk_is_fixed_array:
+        elif self.vk_is_fixed_array:
             t += f' [{self._c_param.type.fixed_array_size}]'
         return t
 
@@ -1066,10 +1070,14 @@ class ParamBase(object):
 
     @property
     def _boost_base_type(self):
-        if self._vk_is_dyn_array_items:
-            return f'array<{self._vk_unqual_type}>'
-        else:
-            return self._vk_type
+        t = self.boost_unqual_type
+        if self._vk_is_pointer:
+            t += ' ?'
+        elif self._vk_is_fixed_array:
+            t += f' [{self._c_param.type.fixed_array_size}]'
+        elif self._vk_is_dyn_array_items:
+            t = f'array<{t}>'
+        return t
 
     @property
     def _boost_func_param_name(self):
@@ -1195,10 +1203,6 @@ class ParamVkAllocator(ParamBase):
     @property
     def boost_func_call_vk_param(self):
         return 'null'
-
-
-class ParamVkHandleBase(ParamBase):
-    pass
 
 
 class ParamVkHandle(ParamVkHandleBase):
