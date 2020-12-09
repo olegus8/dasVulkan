@@ -1266,30 +1266,23 @@ class ParamVkStruct(ParamBase):
         return vk_struct_type_to_boost(self._vk_unqual_type)
 
     def generate_boost_func_temp_vars_init(self):
-        if self._vk_is_dyn_array_count:
-            return [f'var vk_{self._vk_name} : uint']
-        if self._vk_is_dyn_array_items:
-            bname = self._boost_func_param_name
-            vtype = self._vk_unqual_type
-            lines = [
-                f'var vk_{bname} : array<{vtype}>',
-                f'defer() <| ${{ delete vk_{bname}; }}',
-            ]
-            if not self._is_boost_func_output:
-                lines += [
-                    f'vk_{bname} <- [{{ '
-                        f'for item in {bname} ; boost_value_to_vk({bname}) }}]'
+        bname = self._boost_func_param_name
+        if not self._is_boost_func_output:
+            if self._vk_is_dyn_array_items:
+                return [
+                    f'var vk_{bname} <- [{{ for item in {bname} ;',
+                    f'    {bname} |> vk_view_create_unsafe() }}]',
+                    f'defer() <|',
+                    f'    for item in {bname}'
+                    f'        item |> bk_view_destroy()',
+                    f'    delete vk_{bname}',
                 ]
-            return lines
-        if self._vk_is_pointer:
-            #TODO: add null support if needed via declare_can_be_null
-            bname = self._boost_func_param_name
-            vtype = self._vk_unqual_type
-            lines = [f'var vk_{bname} : {vtype}']
-            if not self._is_boost_func_output:
-                lines += [f'vk_{bname} <- boost_value_to_vk({bname})']
-            return lines
-        return []
+            elif self._vk_is_pointer:
+                return [
+                    f'var vk_{bname} <- {bname} |> vk_view_create_unsafe()',
+                    f'defer() <| ${{ {bname} |> bk_view_destroy() }}',
+                ]
+        return super(ParamVsStruct, self).generate_boost_func_temp_vars_init()
 
 
 class ParamVkEnum(ParamBase):
