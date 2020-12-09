@@ -647,8 +647,8 @@ class GenHandleCtor(GenFunc):
 
     def __generate_handle_init_fields(self):
         lines = [f'handle._needs_delete = true']
-        for param in self.__handle.dtor._params:
-            lines += param.generate_boost_handle_ctor_init_field()
+        lines += [line for param in self.__handle.dtor._params
+            for line in param.generate_boost_handle_ctor_init_field()]
         return lines
 
     @property
