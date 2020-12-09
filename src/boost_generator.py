@@ -580,17 +580,18 @@ class GenHandle(object):
 
     def __generate_type(self):
         lines = []
-        bhtype = self.boost_handle_type_name
-        vhtype = self.vk_handle_type_name
-        attr = self.boost_handle_attr
+        bhtype = self._boost_handle_type_name
+        vhtype = self._vk_handle_type_name
+        attr = self._boost_handle_attr
         lines += [
             '',
            f'struct {bhtype}',
            f'    {attr} : {vhtype}',
             '    _needs_delete : bool',
         ]
-        for param in self.dtor.params:
-            lines += [f'    {line}' for line in param.generate_handle_field()]
+        if self._dtor:
+            lines += [f'    {line}'
+                for line in self._dtor.generate_handle_fields()]
         lines += [
             '',
            f'def boost_value_to_vk(b : {bhtype}) : {vhtype}',
