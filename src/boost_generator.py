@@ -1339,14 +1339,6 @@ class ParamUnknown(ParamBase):
         raise self.__unknown_param_error
 
     @property
-    def boost_unqual_type(self):
-        raise self.__unknown_param_error
-
-    @property
-    def boost_type(self):
-        raise self.__unknown_param_error
-
-    @property
     def vk_type(self):
         raise self.__unknown_param_error
 
