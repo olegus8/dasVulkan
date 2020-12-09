@@ -572,10 +572,10 @@ class GenHandle(object):
             '//',
         ]
         lines += self.__generate_type()
-        for ctor in self.__ctors:
+        for ctor in self._ctors:
             lines += ctor.generate()
-        if self.__dtor:
-            lines += self.dtor.generate()
+        if self._dtor:
+            lines += self._dtor.generate()
         return lines
 
     def __generate_type(self):
