@@ -1103,7 +1103,7 @@ class ParamBase(object):
             if self._vk_is_dyn_array_items:
                 return [f'<- [{{for x in vk_{bname}; vk_value_to_boost(x)}}]']
             if self._vk_is_pointer:
-                return [f'<- vk_{bname}']
+                return [f'<- vk_value_to_boost(vk_{bname})']
         return []
 
     def generate_boost_func_temp_vars_init(self):
@@ -1115,6 +1115,12 @@ class ParamBase(object):
             if self._is_boost_func_output:
                 return [
                     f'var vk_{bname} : array<{vtype}>',
+                    f'defer() <| ${{ delete vk_{bname}; }}',
+                ]
+            else:
+                return [
+                    f'var vk_{bname} : array<{vtype}> <- [{{',
+                    f'    for item in {bname} ; boost_value_to_vk({bname})}}]',
                     f'defer() <| ${{ delete vk_{bname}; }}',
                 ]
         if self._vk_is_pointer:
@@ -1198,7 +1204,11 @@ class ParamVkAllocator(ParamBase):
         return 'null'
 
 
-class ParamVkHandle(ParamBase):
+class ParamVkHandleBase(ParamBase):
+    pass
+
+
+class ParamVkHandle(ParamVkHandleBase):
 
     @classmethod
     def maybe_create(cls, c_param, **kwargs):
@@ -1219,7 +1229,7 @@ class ParamVkHandle(ParamBase):
         return ct[:-2]
 
 
-class ParamVkHandlePtr(ParamBase):
+class ParamVkHandlePtr(ParamVkHandleBase):
 
     @classmethod
     def maybe_create(cls, c_param, **kwargs):
