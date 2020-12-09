@@ -534,19 +534,25 @@ class GenHandle(object):
     def __init__(self, generator, name):
         self.__generator = generator
         self.__vk_handle_type_name = name
+
         self.__dtor = self.__maybe_create_default_dtor()
-        self.__ctors = None
-        self.ctors = []
+        self.__ctors = self.__create_default_ctors()
 
     def __maybe_create_default_dtor(self):
-        vk_dtor_name = vk_handle_type_to_vk_dtor(self.__vk_handle_type_name)
-        c_dtor = self.__generator.functions.get(
-            self.__default_vk_dtor_name)
-        
+        name = vk_handle_type_to_vk_dtor(self.__vk_handle_type_name)
+        if name in self.__generator.functions.get(name):
+            return GenHandleDtor(generator=self.__generator, name=name)
+
+    def __create_default_ctors(self):
+        ctors = []
+        name = vk_handle_type_to_vk_ctor(self.__vk_handle_type_name)
+        if name in self.__generator.functions.get(name):
+            ctors.append(GenHandleCtor(generator=self.__generator, name=name))
+        return ctors
 
     def declare_ctor(self, vk_name):
         ctor = GenHandleCtor(handle=self, name=vk_name)
-        self.ctors.append(ctor)
+        self.__ctors.append(ctor)
         return ctor
 
     @property
