@@ -1115,7 +1115,8 @@ class ParamBase(object):
         return []
 
     def generate_boost_func_temp_vars_init(self):
-        if self._vk_is_dyn_array_count:
+        if (self._vk_is_dyn_array_count
+        and self._dyn_array_items._is_boost_func_output):
             return [f'var vk_{self._vk_name} : uint']
         if self._vk_is_dyn_array_items:
             bname = self._boost_func_param_name
@@ -1264,21 +1265,31 @@ class ParamVkStruct(ParamBase):
     def _boost_unqual_type(self):
         return vk_struct_type_to_boost(self._vk_unqual_type)
 
-    def generate_boost_func_param(self):
-        raise Exception('TODO')
-
-    def generate_boost_func_temp_vars_setup(self):
-        raise Exception('TODO')
-
-    def generate_boost_func_temp_vars_update(self):
-        raise Exception('TODO')
-
-    def generate_boost_func_temp_vars_finalize(self):
-        raise Exception('TODO')
-
-    @property
-    def boost_func_call_vk_param(self):
-        raise Exception('TODO')
+    def generate_boost_func_temp_vars_init(self):
+        if self._vk_is_dyn_array_count:
+            return [f'var vk_{self._vk_name} : uint']
+        if self._vk_is_dyn_array_items:
+            bname = self._boost_func_param_name
+            vtype = self._vk_unqual_type
+            lines = [
+                f'var vk_{bname} : array<{vtype}>',
+                f'defer() <| ${{ delete vk_{bname}; }}',
+            ]
+            if not self._is_boost_func_output:
+                lines += [
+                    f'vk_{bname} <- [{{ '
+                        f'for item in {bname} ; boost_value_to_vk({bname}) }}]'
+                ]
+            return lines
+        if self._vk_is_pointer:
+            #TODO: add null support if needed via declare_can_be_null
+            bname = self._boost_func_param_name
+            vtype = self._vk_unqual_type
+            lines = [f'var vk_{bname} : {vtype}']
+            if not self._is_boost_func_output:
+                lines += [f'vk_{bname} <- boost_value_to_vk({bname})']
+            return lines
+        return []
 
 
 class ParamVkEnum(ParamBase):
