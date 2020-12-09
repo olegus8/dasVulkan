@@ -50,18 +50,17 @@ class BoostGenerator(LoggingObject):
         self.__gen_query_array_funcs.append(func)
         return func
 
-    def get_func_params(self, c_func):
-        return map(self.get_param_from_node, c_func.params)
+    def create_func_params(self, c_func):
+        return map(self.create_param_from_node, c_func.params)
 
-    def get_struct_fields(self, c_struct):
-        return map(self.get_param_from_node, c_struct.fields)
+    def create_struct_fields(self, c_struct):
+        return map(self.create_param_from_node, c_struct.fields)
 
-    def get_param(self, c_name, c_type):
+    def create_param(self, c_name, c_type):
         for param_class in [
             ParamVkHandle,
             ParamVkHandlePtr,
             ParamVkStruct,
-            ParamVkStructPtr,
             ParamVkEnum,
             ParamString,
             ParamFixedString,
@@ -80,8 +79,8 @@ class BoostGenerator(LoggingObject):
             if param:
                 return param
 
-    def get_param_from_node(self, c_node):
-        return self.get_param(c_node.name, c_node.type)
+    def create_param_from_node(self, c_node):
+        return self.create_param(c_node.name, c_node.type)
 
     def write(self):
         fpath = full_path(path.join(path.dirname(__file__),
@@ -1095,15 +1094,15 @@ class ParamBase(object):
         return self._c_param.type.unqual_name
 
     @property
-    def is_pointer(self):
+    def vk_is_pointer(self):
         return self._c_param.type.is_pointer
 
     @property
-    def is_fixed_array(self):
+    def vk_is_fixed_array(self):
         return self._c_param.type.is_fixed_array
 
     @property
-    def is_struct(self):
+    def vk_is_struct(self):
         return self._c_param.type.is_struct
 
     @property
@@ -1111,56 +1110,21 @@ class ParamBase(object):
         raise NotImplementedError()
 
     @property
-    def boost_unqual_type(self):
-        return self.vk_unqual_type
-
-    @property
     def vk_type(self):
-        return self.__make_qual_das_type(self.vk_unqual_type)
-
-    @property
-    def boost_type(self):
-        return self.__make_qual_das_type(self.boost_unqual_type)
+        t = self.vk_unqual_type
+        if self.vk_is_pointer:
+            t += ' ?'
+        if self.vk_is_fixed_array:
+            t += f' [{self._c_param.type.fixed_array_size}]'
+        return t
 
     @property
     def vk_name(self):
         return self._c_param.name
 
     @property
-    def boost_name(self):
-        return vk_param_name_to_boost(self.vk_name)
-
-    @property
-    def vk_to_boost_assign_op(self):
-        return '='
-
-    @property
-    def boost_to_vk_assign_op(self):
-        return '='
-
-    def vk_value_to_boost(self, vk_value):
-        return vk_value
-
-    def boost_value_to_vk(self, boost_value):
-        return boost_value
-
-    @property
-    def needs_conversion(self):
-        return (self.vk_value_to_boost('foo') != 'foo'
-            or self.boost_value_to_vk('foo') != 'foo'
-            or self.needs_vk_view)
-
-    @property
     def needs_vk_view(self):
         return False
-
-    def __make_qual_das_type(self, type_name):
-        t = type_name
-        if self.is_pointer:
-            t += ' ?'
-        if self.is_fixed_array:
-            t += f' [{self._c_param.type.fixed_array_size}]'
-        return t
 
 
 class ParamVkHandle(ParamBase):
@@ -1174,7 +1138,7 @@ class ParamVkHandle(ParamBase):
             return cls(c_param=c_param, **kwargs)
 
     @property
-    def is_pointer(self):
+    def vk_is_pointer(self):
         return False
 
     @property
@@ -1182,16 +1146,6 @@ class ParamVkHandle(ParamBase):
         ct = self.c_unqual_type
         assert_ends_with(ct, '_T')
         return ct[:-2]
-
-    @property
-    def boost_unqual_type(self):
-        return vk_handle_type_to_boost(self.vk_unqual_type)
-
-    def boost_value_to_vk(self, boost_value):
-        return f'boost_value_to_vk({boost_value})'
-
-    def vk_value_to_boost(self, vk_value):
-        return None
 
 
 class ParamVkHandlePtr(ParamBase):
@@ -1208,75 +1162,18 @@ class ParamVkHandlePtr(ParamBase):
     def vk_unqual_type(self):
         return self.c_unqual_type
 
-    @property
-    def boost_unqual_type(self):
-        return vk_handle_type_to_boost(self.vk_unqual_type)
-
-    def vk_value_to_boost(self, vk_value):
-        return None
-
-    def boost_value_to_vk(self, boost_value):
-        return f'boost_value_to_vk({boost_value})'
-
 
 class ParamVkStruct(ParamBase):
 
     @classmethod
     def maybe_create(cls, c_param, **kwargs):
         c_type = c_param.type
-        if (c_type.is_struct and not c_type.is_pointer
-        and c_type.unqual_name.startswith('Vk')):
+        if (c_type.is_struct and c_type.unqual_name.startswith('Vk')):
             return cls(c_param=c_param, **kwargs)
 
     @property
     def vk_unqual_type(self):
         return self.c_unqual_type
-
-    @property
-    def boost_unqual_type(self):
-        return vk_struct_type_to_boost(self.vk_unqual_type)
-
-    def boost_value_to_vk(self, boost_value):
-        return None
-
-    def vk_value_to_boost(self, vk_value):
-        return f'vk_value_to_boost({vk_value})'
-
-    @property
-    def vk_to_boost_assign_op(self):
-        return '<-'
-
-    @property
-    def needs_vk_view(self):
-        return True
-
-
-class ParamVkStructPtr(ParamBase):
-
-    @classmethod
-    def maybe_create(cls, c_param, **kwargs):
-        c_type = c_param.type
-        if (c_type.is_struct and c_type.is_pointer
-        and c_type.unqual_name.startswith('Vk')):
-            return cls(c_param=c_param, **kwargs)
-
-    @property
-    def vk_unqual_type(self):
-        return self.c_unqual_type
-
-    @property
-    def boost_unqual_type(self):
-        return vk_struct_type_to_boost(self.vk_unqual_type)
-
-    def boost_value_to_vk(self, boost_value):
-        return None
-
-    def vk_value_to_boost(self, vk_value):
-        return None
-
-    @property
-    def needs_vk_view(self):
-        return True
 
 
 class ParamVkEnum(ParamBase):
