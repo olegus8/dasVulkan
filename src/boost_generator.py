@@ -106,9 +106,10 @@ class BoostGenerator(LoggingObject):
 
 class GenFunc(object):
 
-    def __init__(self, generator, name):
+    def __init__(self, generator, name, private=False):
         self.__generator = generator
         self._vk_func_name = name
+        self._private = private
 
         self._params = self.__generator.create_func_params(self.__c_func)
 
@@ -160,6 +161,10 @@ class GenFunc(object):
         lines = []
         lines += [
             '',
+        ]
+        if self._private:
+            lines += ['[private]']
+        lines += [
            f'def {self._boost_func_name}('
         ]
         for param in self._params:
@@ -610,7 +615,7 @@ class GenHandleCtor(GenFunc):
 
     def __init__(self, handle, name):
         super(GenHandleCtor, self).__init__(
-            generator=handle._generator, name=name)
+            generator=handle._generator, name=name, private=True)
         self.__handle = handle
 
     @property
