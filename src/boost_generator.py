@@ -122,6 +122,10 @@ class GenFunc(object):
         return self.__generator.functions[self._vk_func_name]
 
     @property
+    def _output_params(self):
+        return [p for p in self._params if p._is_boost_func_output]
+
+    @property
     def _returns_vk_result(self):
         return returns_vk_result(self.__c_func)
 
@@ -661,6 +665,7 @@ class GenHandleCtor(GenFunc):
         bh_type = self.__handle._boost_handle_type_name
 
         assert_equal(self._return_type, bh_type)
+        assert_equal(len(self._output_params), 1)
 
         lines = super(GenHandleCtor, self).generate()
         lines += [
