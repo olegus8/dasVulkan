@@ -138,7 +138,8 @@ class GenFunc(object):
     def __return_type(self):
         rtypes = [t for param in self.__params
             for t in param.generate_boost_func_return_types]
-        assert_less(len(rtypes), 2)
+        if len(rtypes) > 1:
+            raise Exception('TODO: add multiple outputs support if needed')
         return (rtypes or ['void'])[0]
 
     def generate(self):
