@@ -151,9 +151,6 @@ class GenFunc(object):
                 continue
             lines += [f'    {line}'
                 for line in param.generate_boost_func_param()]
-            bname = param.boost_name
-            btype = param.boost_type
-            lines.append(f'    {bname} : {btype} = [[ {btype} ]];')
         if self.__returns_vk_result:
             lines.append(f'    var result : VkResult? = [[VkResult?]];')
         remove_last_char(lines, ';')
@@ -1155,11 +1152,11 @@ class ParamBase(object):
 
     @property
     def _boost_func_param_name(self):
-        return self.boost_base_name
+        return self._boost_base_name
 
     @property
     def _boost_func_param_type(self):
-        pass
+        return self._boost_base_type
 
     def generate_boost_func_param(self):
         lines = []
