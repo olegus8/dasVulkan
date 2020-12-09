@@ -1146,10 +1146,14 @@ class ParamBase(object):
             bname = deref_boost_ptr_name(bname)
         return bname
 
+    @property
+    def boost_func_param_name(self):
+        return self.boost_name
+
     def generate_boost_func_param(self):
         lines = []
         if not self.vk_is_dyn_array_count:
-            bname = self.boost_name
+            bname = self.boost_func_para_name
             lines.append(f'    {bname} : {btype} = [[ {btype} ]];')
         return lines
 
