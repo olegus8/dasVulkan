@@ -1247,6 +1247,22 @@ class ParamVkStruct(ParamBase):
     def _vk_unqual_type(self):
         return self._c_unqual_type
 
+    def generate_boost_func_param(self):
+        raise Exception('TODO')
+
+    def generate_boost_func_temp_vars_setup(self):
+        raise Exception('TODO')
+
+    def generate_boost_func_temp_vars_update(self):
+        raise Exception('TODO')
+
+    def generate_boost_func_temp_vars_finalize(self):
+        raise Exception('TODO')
+
+    @property
+    def boost_func_call_vk_param(self):
+        raise Exception('TODO')
+
 
 class ParamVkEnum(ParamBase):
 
