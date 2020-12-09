@@ -187,9 +187,8 @@ def add_boost_content(g):
         ).declare_array(count = 'codeSize', items = 'pCode', force_item_type = 'uint8')
     g.add_gen_struct(name = 'VkSubpassDescription',
         ).declare_array(count = 'inputAttachmentCount', items = 'pInputAttachments',
-        ).declare_array(count = 'colorAttachmentCount', items = 'pColorAttachments'
-        ).declare_array(count = 'colorAttachmentCount', items = 'pResolveAttachments',
-        ).declare_can_be_null(name = 'pResolveAttachments',
+        ).declare_array(count = 'colorAttachmentCount', items = 'pColorAttachments',
+        ).declare_array(count = 'colorAttachmentCount', items = 'pResolveAttachments', optional=True,
         ).declare_array(count = 'preserveAttachmentCount', items = 'pPreserveAttachments')
     g.add_gen_struct(name = 'VkSwapchainCreateInfoKHR',
         ).declare_array(count = 'queueFamilyIndexCount', items = 'pQueueFamilyIndices')
