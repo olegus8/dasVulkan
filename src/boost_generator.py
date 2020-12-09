@@ -1147,13 +1147,25 @@ class ParamBase(object):
         return bname
 
     @property
+    def _boost_base_type(self):
+        if self._vk_is_dyn_array_items:
+            return f'array<{self._vk_unqual_type}>'
+        else:
+            return self._vk_type
+
+    @property
     def _boost_func_param_name(self):
         return self.boost_base_name
+
+    @property
+    def _boost_func_param_type(self):
+        pass
 
     def generate_boost_func_param(self):
         lines = []
         if not self._vk_is_dyn_array_count:
             bname = self._boost_func_param_name
+            bname = self._boost_func_param_type
             lines.append(f'    {bname} : {btype} = [[ {btype} ]];')
         return lines
 
