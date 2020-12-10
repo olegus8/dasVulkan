@@ -825,6 +825,12 @@ class ParamBase(object):
         assert_not_in(items, self._dyn_arrays_items)
         self._dyn_arrays_items.append(items)
 
+    def set_dyn_array_optional(self, optional):
+        self._dyn_array_optional = optional
+
+    def set_dyn_array_item_boost_type(self, force_item_type):
+        self._dyn_array_item_boost_type = force_item_type
+
     def set_boost_func_output(self):
         self._is_boost_func_output = True
 
