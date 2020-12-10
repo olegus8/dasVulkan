@@ -794,7 +794,7 @@ class ParamBase(object):
 
     def __init__(self, c_param):
         self._c_param = c_param
-        self._dyn_array_items = None
+        self._dyn_arrays_items = []
         self._dyn_array_count = None
         self._is_boost_func_output = False
 
@@ -823,19 +823,24 @@ class ParamBase(object):
         return self.vk_unqual_type
 
     def set_dyn_array(self, count, items):
-        self._dyn_array_items = items
-        self._dyn_array_count = count
+        if self._dyn_array_count is not None:
+            assert self._dyn_array_count is count
+        else:
+            self._dyn_array_count = count
+
+        assert_not_in(items, self._dyn_arrays_items)
+        self._dyn_arrays_items.append(items)
 
     def set_boost_func_output(self):
         self._is_boost_func_output = True
 
     @property
     def _vk_is_dyn_array_count(self):
-        return self.vk_name == self._dyn_array_count.vk_name
+        return self is self._dyn_array_count
 
     @property
     def _vk_is_dyn_array_items(self):
-        return self.vk_name == self._dyn_array_items.vk_name
+        return self in self._dyn_arrays_items
 
     @property
     def _vk_type(self):
