@@ -269,8 +269,9 @@ class GenStruct(object):
         p_count = self.__get_field(count)
         p_items = self.__get_field(items)
         for p in [p_count, p_items]:
-            p.set_dyn_array(count=p_count, items=p_items,
-                optional=optional, force_item_type=force_item_type)
+            p.set_dyn_array(count=p_count, items=p_items)
+        p_items.set_dyn_array_optional(optional)
+        p_items.set_dyn_array_item_boost_type(force_item_type)
 
     def generate(self):
         lines = []
@@ -787,7 +788,9 @@ class ParamBase(object):
         self._c_param = c_param
         self._dyn_arrays_items = []
         self._dyn_array_count = None
+        self._dyn_array_force_item_boost_type
         self._is_boost_func_output = False
+        self._gen_struct = None
 
     @property
     def _c_unqual_type(self):
@@ -823,6 +826,9 @@ class ParamBase(object):
 
     def set_boost_func_output(self):
         self._is_boost_func_output = True
+
+    def set_gen_struct(self, struct):
+        self._gen_struct = struct
 
     @property
     def _vk_is_dyn_array_count(self):
