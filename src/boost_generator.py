@@ -53,6 +53,8 @@ class BoostGenerator(LoggingObject):
     def create_param(self, c_name, c_type):
         for param_class in [
             ParamVkAllocator,
+            ParamVk_pNext,
+            ParamVk_sType,
             ParamVkHandle,
             ParamVkHandlePtr,
             ParamVkStruct,
@@ -137,8 +139,8 @@ class GenFunc(object):
     def declare_array(self, count, items):
         p_count = self.__get_param(count)
         p_items = self.__get_param(items)
-        p_count.set_dyn_array(count=p_count, items=p_items, optional=False)
-        p_items.set_dyn_array(count=p_count, items=p_items, optional=False)
+        p_count.set_dyn_array(count=p_count, items=p_items)
+        p_items.set_dyn_array(count=p_count, items=p_items)
 
     def declare_output(self, name):
         for param in self._params:
@@ -240,11 +242,8 @@ class GenStruct(object):
         self.__vk_to_boost = vk_to_boost
 
         self.__fields = self.__generator.create_struct_fields(self.__c_struct)
-
-    def declare_array(self, **kwargs):
-        array = GenStructFieldArray(struct=self, **kwargs)
-        self.__arrays.append(array)
-        return self
+        for field in self.__fields:
+            field.set_gen_struct(self)
 
     @property
     def __c_struct(self):
@@ -264,11 +263,14 @@ class GenStruct(object):
             if param.vk_name == vk_name:
                 return param
 
-    def declare_array(self, count, items, optional=False):
+    def declare_array(self, count, items,
+        optional=False, force_item_type=None
+    ):
         p_count = self.__get_field(count)
         p_items = self.__get_field(items)
-        p_count.set_dyn_array(count=p_count, items=p_items, optional=optional)
-        p_items.set_dyn_array(count=p_count, items=p_items, optional=optional)
+        for p in [p_count, p_items]:
+            p.set_dyn_array(count=p_count, items=p_items,
+                optional=optional, force_item_type=force_item_type)
 
     def generate(self):
         lines = []
@@ -1020,6 +1022,22 @@ class ParamVkAllocator(ParamBase):
     @property
     def get_boost_dtor_call_param(self, boost_handle_type_name):
         return 'null'
+
+
+class ParamVk_pNext(ParamBase):
+
+    @classmethod
+    def maybe_create(cls, c_param, **kwargs):
+        if c_param.name == 'pNext':
+            return cls(c_param=c_param, **kwargs)
+
+
+class ParamVk_sType(ParamBase):
+
+    @classmethod
+    def maybe_create(cls, c_param, **kwargs):
+        if c_param.name == 'sType':
+            return cls(c_param=c_param, **kwargs)
 
 
 class ParamVkHandleBase(ParamBase):
