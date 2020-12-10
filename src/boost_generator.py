@@ -788,7 +788,8 @@ class ParamBase(object):
         self._c_param = c_param
         self._dyn_arrays_items = []
         self._dyn_array_count = None
-        self._dyn_array_force_item_boost_type
+        self._dyn_array_item_boost_type = None
+        self._dyn_array_optional = False
         self._is_boost_func_output = False
         self._gen_struct = None
 
