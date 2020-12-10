@@ -926,10 +926,11 @@ class ParamBase(object):
             if self._is_dyn_array_output:
                 return [f'var vk_{self._vk_name} : uint']
             lines = []
+            first = self._dyn_arrays_items[0]._boost_func_param_name
             for ar_items in self._dyn_arrays_items[1:]:
-                first = self._dyn_arrays_items[0]._boost_func_param_name
                 cur = ar_items._boost_func_param_name
                 lines += [f'assert(length({first}) == length({cur}))']
+            lines += [f'let vk_{self._vk_name} = uint({first} |> length())']
             return lines
         if self._vk_is_dyn_array_items:
             bname = self._boost_func_param_name
