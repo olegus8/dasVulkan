@@ -271,7 +271,7 @@ class GenStruct(object):
         for p in [p_count, p_items]:
             p.set_dyn_array(count=p_count, items=p_items)
         p_items.set_dyn_array_optional(optional)
-        p_items.set_dyn_array_item_boost_type(force_item_type)
+        p_items.force_boost_unqual_type(force_item_type)
 
     def generate(self):
         lines = []
@@ -790,8 +790,8 @@ class ParamBase(object):
         self._c_param = c_param
         self._dyn_arrays_items = []
         self._dyn_array_count = None
-        self._dyn_array_item_boost_type = None
         self._dyn_array_optional = False
+        self._forced_unqual_boost_type = None
         self._is_boost_func_output = False
         self._gen_struct = None
 
@@ -817,7 +817,7 @@ class ParamBase(object):
 
     @property
     def _boost_unqual_type(self):
-        return self.vk_unqual_type
+        return self._forced_boost_unqual_type or self.vk_unqual_type
 
     def set_dyn_array(self, count, items):
         if self._dyn_array_count is not None:
@@ -830,8 +830,8 @@ class ParamBase(object):
     def set_dyn_array_optional(self, optional):
         self._dyn_array_optional = optional
 
-    def set_dyn_array_item_boost_type(self, force_item_type):
-        self._dyn_array_item_boost_type = force_item_type
+    def force_unqual_boost_type(self, type_name):
+        self._forced_unqual_boost_type = type_name
 
     def set_boost_func_output(self):
         self._is_boost_func_output = True
@@ -869,7 +869,7 @@ class ParamBase(object):
 
     @property
     def _boost_base_type(self):
-        t = self.boost_unqual_type
+        t = self._boost_unqual_type
         if self._vk_is_pointer:
             t += ' ?'
         elif self._vk_is_fixed_array:
