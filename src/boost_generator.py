@@ -907,17 +907,17 @@ class ParamBase(object):
         btype = self._boost_func_param_type
         return [f'{bname} : {btype} = [[ {btype} ]];']
 
-    def generate_boost_func_param_call(self):
-        if self._vk_is_dyn_array_count or self._is_boost_func_output:
-            return []
-        return [f'{self._boost_func_param_name},']
-
     def generate_boost_struct_field_decl(self):
         if self._vk_is_dyn_array_count:
             return []
         bname = self._boost_struct_field_name
         btype = self._boost_struct_field_type
         return [f'{bname} : {btype}']
+
+    def generate_boost_func_param_call(self):
+        if self._vk_is_dyn_array_count or self._is_boost_func_output:
+            return []
+        return [f'{self._boost_func_param_name},']
 
     @property
     def _is_dyn_array_output(self):
