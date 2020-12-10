@@ -296,22 +296,6 @@ class GenStruct(object):
         ]
         lines += [f'    {line}' for field in self._fields
             for line in field.generate_boost_struct_field_decl()]
-        for field in self._fields:
-            if self.__is_array_count(field.vk_name):
-                continue
-            if field.vk_name in ['sType', 'pNext']:
-                continue
-            boost_name = field.boost_name
-            boost_type = field.boost_type
-            if self.__is_array_items(field.vk_name):
-                array = self.__get_array(field.vk_name)
-                boost_name = boost_ptr_name_to_array(boost_name)
-                forced_item_type = array.boost_item_type_name
-                if forced_item_type:
-                    boost_type = f'array<{forced_item_type}>'
-                else:
-                    boost_type = boost_ptr_type_to_array(boost_type)
-            lines += [f'    {boost_name} : {boost_type}']
 
         if self.__boost_to_vk:
             for field in self._fields:
