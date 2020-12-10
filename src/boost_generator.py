@@ -900,6 +900,19 @@ class ParamBase(object):
         return [f'{self._boost_func_param_name},']
 
     @property
+    def _is_dyn_array_output(self):
+        if self._vk_is_dyn_array_items:
+            assert_is(self._dyn_array_items, self)
+            return self._is_boost_func_output
+        if self._vk_is_dyn_array_count:
+            is_outputs = [x._is_boost_func_output
+                for x in self._dyn_arrays_items]
+            assert_greater(len(is_outputs), 0)
+            assert_equal(all(outputs), any(outputs)) # must be all or none
+            return all(outputs)
+        return False
+
+    @property
     def boost_func_return_value(self):
         bname = self._boost_func_param_name
         if self._vk_is_dyn_array_items:
@@ -909,9 +922,15 @@ class ParamBase(object):
         raise Exception('Return type not supported: {self.vk_name}')
 
     def generate_boost_func_temp_vars_init(self):
-        if (self._vk_is_dyn_array_count
-        and self._dyn_array_items._is_boost_func_output):
-            return [f'var vk_{self._vk_name} : uint']
+        if self._vk_is_dyn_array_count:
+            if self._is_dyn_array_output:
+                return [f'var vk_{self._vk_name} : uint']
+            lines = []
+            for ar_items in self._dyn_arrays_items[1:]:
+                first = self._dyn_arrays_items[0]._boost_func_param_name
+                cur = ar_items._boost_func_param_name
+                lines += [f'assert(length({first}) == length({cur}))']
+            return lines
         if self._vk_is_dyn_array_items:
             bname = self._boost_func_param_name
             vtype = self.vk_unqual_type
