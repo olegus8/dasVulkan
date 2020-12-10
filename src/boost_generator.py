@@ -985,10 +985,10 @@ class ParamBase(object):
     def boost_func_call_vk_param(self):
         bname = self._boost_func_param_name
         if self._vk_is_dyn_array_count:
-            if self._dyn_array_items._is_boost_func_output:
+            if self._is_dyn_array_output:
                 return f'safe_addr(vk_{self._vk_name})'
             else:
-                return f'uint(vk_{bname} |> length())'
+                return f'vk_{self._vk_name}'
         elif self._vk_is_dyn_array_items:
             return f'array_addr_unsafe(vk_{bname})'
         elif self._vk_is_pointer:
