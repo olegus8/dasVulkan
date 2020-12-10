@@ -827,7 +827,6 @@ class ParamBase(object):
             assert self._dyn_array_count is count
         else:
             self._dyn_array_count = count
-
         assert_not_in(items, self._dyn_arrays_items)
         self._dyn_arrays_items.append(items)
 
@@ -902,7 +901,8 @@ class ParamBase(object):
     @property
     def _is_dyn_array_output(self):
         if self._vk_is_dyn_array_items:
-            assert_is(self._dyn_array_items, self)
+            assert_equal(len(self._dyn_arrays_items), 1)
+            assert_is(self._dyn_arrays_items[0], self)
             return self._is_boost_func_output
         if self._vk_is_dyn_array_count:
             is_outputs = [x._is_boost_func_output
