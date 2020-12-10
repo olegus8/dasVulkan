@@ -905,9 +905,8 @@ class ParamBase(object):
             assert_is(self._dyn_arrays_items[0], self)
             return self._is_boost_func_output
         if self._vk_is_dyn_array_count:
-            is_outputs = [x._is_boost_func_output
-                for x in self._dyn_arrays_items]
-            assert_greater(len(is_outputs), 0)
+            outputs = [x._is_boost_func_output for x in self._dyn_arrays_items]
+            assert_greater(len(outputs), 0)
             assert_equal(all(outputs), any(outputs)) # must be all or none
             return all(outputs)
         return False
