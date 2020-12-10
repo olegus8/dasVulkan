@@ -233,14 +233,13 @@ class GenFunc(object):
 
 class GenStruct(object):
 
-    def __init__(self, generator, struct,
-        boost_to_vk=False, vk_to_boost=False,
-    ):
+    def __init__(self, generator, name, boost_to_vk=True, vk_to_boost=True):
         self.__generator = generator
         self.__vk_type_name = struct
         self.__boost_to_vk = boost_to_vk
         self.__vk_to_boost = vk_to_boost
-        self.__arrays = []
+
+        self.__fields = self.__generator.create_struct_fields(self.__c_struct)
 
     def declare_array(self, **kwargs):
         array = GenStructFieldArray(struct=self, **kwargs)
@@ -250,10 +249,6 @@ class GenStruct(object):
     @property
     def __c_struct(self):
         return self.__generator.structs[self.__vk_type_name]
-
-    @property
-    def _fields(self):
-        return self.__generator.get_struct_fields(self.__c_struct)
 
     @property
     def __boost_type_name(self):
