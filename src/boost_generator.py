@@ -294,6 +294,8 @@ class GenStruct(object):
             '',
            f'struct {self.__boost_type_name}',
         ]
+        lines += [f'    {line}' for field in self._fields
+            for line in field.generate_boost_struct_field_decl()]
         for field in self._fields:
             if self.__is_array_count(field.vk_name):
                 continue
@@ -958,6 +960,10 @@ class ParamBase(object):
             return lines
         return []
 
+    def generate_boost_struct_field_decl(self):
+        if self._vk_is_dyn_array_count:
+            return []
+
     def generate_boost_func_temp_vars_update(self):
         if self._vk_is_dyn_array_items and self._is_boost_func_output:
             bname = self._boost_func_param_name
@@ -1044,6 +1050,9 @@ class ParamVk_pNext(ParamBase):
         if c_param.name == 'pNext':
             return cls(c_param=c_param, **kwargs)
 
+    def generate_boost_struct_field_decl(self):
+        return []
+
 
 class ParamVk_sType(ParamBase):
 
@@ -1051,6 +1060,9 @@ class ParamVk_sType(ParamBase):
     def maybe_create(cls, c_param, **kwargs):
         if c_param.name == 'sType':
             return cls(c_param=c_param, **kwargs)
+
+    def generate_boost_struct_field_decl(self):
+        return []
 
 
 class ParamVkHandleBase(ParamBase):
