@@ -886,6 +886,10 @@ class ParamBase(object):
         return bname
 
     @property
+    def _boost_struct_field_name(self):
+        return self._boost_base_name
+
+    @property
     def _boost_func_param_type(self):
         btype = self._boost_base_type
         if self._vk_is_pointer and not self._vk_is_dyn_array_items:
@@ -963,6 +967,9 @@ class ParamBase(object):
     def generate_boost_struct_field_decl(self):
         if self._vk_is_dyn_array_count:
             return []
+        if self._vk_is_dyn_array_items:
+            bname = self._boost_struct_field_name
+            vtype = self.vk_unqual_type
 
     def generate_boost_func_temp_vars_update(self):
         if self._vk_is_dyn_array_items and self._is_boost_func_output:
