@@ -137,8 +137,8 @@ class GenFunc(object):
     def declare_array(self, count, items):
         p_count = self.__get_param(count)
         p_items = self.__get_param(items)
-        p_count.set_dyn_array(count=p_count, items=p_items)
-        p_items.set_dyn_array(count=p_count, items=p_items)
+        p_count.set_dyn_array(count=p_count, items=p_items, optional=False)
+        p_items.set_dyn_array(count=p_count, items=p_items, optional=False)
 
     def declare_output(self, name):
         for param in self._params:
@@ -254,27 +254,21 @@ class GenStruct(object):
     def __boost_type_name(self):
         return vk_struct_type_to_boost(self.__vk_type_name)
 
-    def __is_array_count(self, vk_field):
-        for array in self.__arrays:
-            if vk_field == array.vk_count_name:
-                return True
-        return False
-
-    def __is_array_items(self, vk_field):
-        for array in self.__arrays:
-            if vk_field == array.vk_items_name:
-                return True
-        return False
-
     @property
     def __vk_structure_type(self):
         return 'VK_STRUCTURE_TYPE_' + (
             boost_camel_to_lower(self.__boost_type_name).upper())
 
-    def __get_array(self, vk_name):
-        for array in self.__arrays:
-            if vk_name in [array.vk_items_name, array.vk_count_name]:
-                return array
+    def __get_field(self, vk_name):
+        for field in self.__fields:
+            if param.vk_name == vk_name:
+                return param
+
+    def declare_array(self, count, items, optional=False):
+        p_count = self.__get_field(count)
+        p_items = self.__get_field(items)
+        p_count.set_dyn_array(count=p_count, items=p_items, optional=optional)
+        p_items.set_dyn_array(count=p_count, items=p_items, optional=optional)
 
     def generate(self):
         lines = []
