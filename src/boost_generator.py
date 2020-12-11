@@ -318,14 +318,6 @@ class GenStruct(object):
            f'        {line}' for field in fields for line in
                      field.generate_boost_struct_v2b_field()
         ]
-        for field in self._fields:
-            if field.vk_name in ['sType', 'pNext']:
-                continue
-            assign_op = field.vk_to_boost_assign_op
-            boost_name = field.boost_name
-            boost_value = field.vk_value_to_boost(
-                f'vk_struct.{field.vk_name}')
-            lines += [f'        {boost_name} {assign_op} {boost_value},']
         remove_last_char(lines, ',')
         lines += [
             '    ]]'
