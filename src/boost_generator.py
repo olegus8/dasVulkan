@@ -310,6 +310,9 @@ class GenStruct(object):
            f'def vk_value_to_boost(vk_struct : {self.__vk_type_name}) '
                 f': {self.__boost_type_name}',
            f'    return <- [[{self.__boost_type_name}'
+        ] + [
+           f'        {line}' for field in fields for line in
+                     field.generate_boost_struct_field_vk_to_boost()
         ]
         for field in self._fields:
             if field.vk_name in ['sType', 'pNext']:
@@ -891,6 +894,13 @@ class ParamBase(object):
     def generate_boost_struct_field_view_decl(self):
         return []
 
+    def generate_boost_struct_field_vk_to_boost(self):
+        if self._vk_is_dyn_array_count:
+            return []
+        bname = self._boost_struct_field_name
+        vname = self.vk_name
+        return [f'{bname} = vk_value_to_boost(vk_struct.{vname}),']
+
     def generate_boost_func_param_call(self):
         if self._vk_is_dyn_array_count or self._is_boost_func_output:
             return []
@@ -1041,6 +1051,9 @@ class ParamVk_pNext(ParamBase):
     def generate_boost_struct_field_decl(self):
         return []
 
+    def generate_boost_struct_field_vk_to_boost(self):
+        return []
+
 
 class ParamVk_sType(ParamBase):
 
@@ -1050,6 +1063,9 @@ class ParamVk_sType(ParamBase):
             return cls(c_param=c_param, **kwargs)
 
     def generate_boost_struct_field_decl(self):
+        return []
+
+    def generate_boost_struct_field_vk_to_boost(self):
         return []
 
 
