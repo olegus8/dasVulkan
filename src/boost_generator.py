@@ -270,7 +270,7 @@ class GenStruct(object):
         p_items = self.__get_field(items)
         for p in [p_count, p_items]:
             p.set_dyn_array(count=p_count, items=p_items)
-        p_items.set_dyn_array_optional(optional)
+        p_items.set_optional(optional)
         p_items.force_boost_unqual_type(force_item_type)
 
     def generate(self):
@@ -762,7 +762,7 @@ class ParamBase(object):
         self._c_param = c_param
         self._dyn_arrays_items = []
         self._dyn_array_count = None
-        self._dyn_array_optional = False
+        self._optional = False
         self._forced_unqual_boost_type = None
         self._is_boost_func_output = False
         self._gen_struct = None
@@ -799,8 +799,8 @@ class ParamBase(object):
         assert_not_in(items, self._dyn_arrays_items)
         self._dyn_arrays_items.append(items)
 
-    def set_dyn_array_optional(self, optional):
-        self._dyn_array_optional = optional
+    def set_optional(self, optional):
+        self._optional = optional
 
     def force_unqual_boost_type(self, type_name):
         self._forced_unqual_boost_type = type_name
@@ -854,6 +854,7 @@ class ParamBase(object):
     def _boost_func_param_name(self):
         bname = self._boost_base_name
         if self._vk_is_pointer and not self._vk_is_dyn_array_items:
+            assert not self._optional
             bname = deref_boost_ptr_name(bname)
         return bname
 
@@ -861,6 +862,7 @@ class ParamBase(object):
     def _boost_func_param_type(self):
         btype = self._boost_base_type
         if self._vk_is_pointer and not self._vk_is_dyn_array_items:
+            assert not self._optional
             btype = deref_das_type(btype)
         return btype
 
