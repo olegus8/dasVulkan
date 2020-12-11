@@ -298,20 +298,8 @@ class GenStruct(object):
             for line in field.generate_boost_struct_field_decl()]
 
         if self.__boost_to_vk:
-            for field in self._fields:
-                if field.vk_name in ['pNext', 'sType']:
-                    continue
-                bname, vname = field.boost_name, field.vk_name
-                btype, vtype = field.boost_type, field.vk_type
-                if self.__is_array_items(vname) and field.needs_conversion:
-                    dvtype = deref_das_type(vtype)
-                    biname = boost_ptr_name_to_array(field.boost_name)
-                    lines += [f'    _vk_view_{biname} : array<{dvtype}>']
-                elif field.is_pointer and field.needs_conversion:
-                    lines += [f'    _vk_view_{bname} : {vtype}']
-                elif field.is_struct and field.needs_conversion:
-                    lines += [f'    _vk_view_p_{bname} : {vtype} ?']
-
+            lines += [f'    {line}' for field in self._fields
+                for line in field.generate_boost_struct_field_view_decl()]
             lines += [f'    _vk_view__active : bool']
         return lines
 
