@@ -898,12 +898,34 @@ class ParamBase(object):
     def generate_boost_struct_field_view_decl(self):
         return []
 
+    def generate_boost_struct_v2b_vars(self):
+        bname = self._boost_struct_field_name
+        btype = self._boost_struct_field_type
+        vname = self.vk_name
+        if self._vk_is_dyn_array_items:
+            vk_count = self._dyn_array_count
+            return [
+                f'var b_{bname} : {btype}',
+                f'if vk_struct.{vname} != null',
+                f'    b_{name} |> resize(vk_struct.{vk_count})',
+                f'    for b, i in b_{name}, range(INT_MAX)',
+                f'        unsafe',
+                f'            b <- vk_value_to_boost(*(vk_struct.{vname}+i))',
+            ]
+        if self._vk_is_pointer:
+            raise Exception('TODO')
+        return []
+
     def generate_boost_struct_v2b_field(self):
-        if self._vk_is_dyn_array_count:
-            return []
         bname = self._boost_struct_field_name
         vname = self.vk_name
-        return [f'{bname} = vk_value_to_boost(vk_struct.{vname}),']
+        if self._vk_is_dyn_array_count:
+            return []
+        if self._vk_is_dyn_array_items:
+            raise Exception('TODO')
+        if self._vk_is_pointer:
+            raise Exception('TODO')
+        return [f'{bname} <- vk_value_to_boost(vk_struct.{vname}),']
 
     def generate_boost_func_param_call(self):
         if self._vk_is_dyn_array_count or self._is_boost_func_output:
