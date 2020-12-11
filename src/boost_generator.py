@@ -898,6 +898,9 @@ class ParamBase(object):
         btype = self._boost_struct_field_type
         return [f'{bname} : {btype}']
 
+    def generate_boost_struct_field_view_decl(self):
+        return []
+
     def generate_boost_func_param_call(self):
         if self._vk_is_dyn_array_count or self._is_boost_func_output:
             return []
@@ -1080,6 +1083,15 @@ class ParamVkHandleBase(ParamBase):
             field = '_' + field
         return f'handle.{field}'
 
+    def generate_boost_struct_field_view_decl(self):
+        bname = self._boost_struct_field_name
+        vutype = self.vk_unqual_type
+        if self._vk_is_dyn_array_items:
+            return [f'_vk_view_{bname} : array<{vutype}>']
+        if self._vk_is_pointer:
+            return [f'_vk_view_{bname} : {vutype} ?']
+        return []
+
 
 class ParamVkHandle(ParamVkHandleBase):
 
@@ -1151,6 +1163,15 @@ class ParamVkStruct(ParamBase):
                     f'defer() <| ${{ {bname} |> bk_view_destroy() }}',
                 ]
         return super(ParamVsStruct, self).generate_boost_func_temp_vars_init()
+
+    def generate_boost_struct_field_view_decl(self):
+        bname = self._boost_struct_field_name
+        vutype = self.vk_unqual_type
+        if self._vk_is_dyn_array_items:
+            return [f'_vk_view_{bname} : array<{vutype}>']
+        if self._vk_is_pointer:
+            return [f'_vk_view_{bname} : {vutype} ?']
+        return [f'_vk_view_p_{bname} : {vutype} ?']
 
 
 class ParamVkEnum(ParamBase):
