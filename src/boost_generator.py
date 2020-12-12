@@ -244,7 +244,7 @@ class GenStruct(object):
 
     def __init__(self, generator, name, boost_to_vk=True, vk_to_boost=True):
         self.__generator = generator
-        self.__vk_type_name = struct
+        self.__vk_type_name = name
         self.__boost_to_vk = boost_to_vk
         self.__vk_to_boost = vk_to_boost
 
