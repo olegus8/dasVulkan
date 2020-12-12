@@ -34,6 +34,9 @@ def vk_value_to_boost(v : auto(T)[]) : T[]
 def vk_value_to_boost(v : auto(T)) : T
     return v
 
+def vk_var_to_boost(var v : auto(T)) : T
+    return v
+
 def vk_value_to_boost(v : int8[]) : string
     unsafe
         let s := reinterpret<string>(addr(v[0]))
@@ -206,7 +209,7 @@ def get_physical_device_surface_support_khr(
         safe_addr(vk_supported)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return <- vk_value_to_boost(vk_supported)
+    return <- vk_var_to_boost(vk_supported)
 
 def get_physical_device_queue_family_properties(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]]
