@@ -7,6 +7,12 @@ from os import path
 import re
 
 
+#TODO: move to shared
+def assert_is(a, b):
+    if a is not b:
+        raise Exception(f'{r!a} is not {r!b}')
+
+
 #TODO: add pAllocator support
 
 
