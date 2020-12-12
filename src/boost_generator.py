@@ -1,6 +1,7 @@
 from das_shared.object_base import LoggingObject
 from das_shared.op_sys import full_path, write_to_file
-from das_shared.assertions import assert_starts_with, assert_ends_with
+from das_shared.assertions import (assert_starts_with, assert_ends_with,
+    assert_not_in)
 from das_shared.diag import log_on_exception
 from os import path
 import re
