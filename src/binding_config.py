@@ -106,6 +106,7 @@ def add_boost_content(g):
         'VkInstance',
         'VkPhysicalDevice',
         'VkQueue',
+        'VkPipelineCache',
         'VkPipelineLayout',
         'VkRenderPass',
         'VkSampler',
