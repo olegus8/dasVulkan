@@ -76,6 +76,7 @@ class BoostGenerator(LoggingObject):
             ParamUInt32,
             ParamUInt64,
             ParamVkBool32,
+            ParamVoidPtr,
             ParamUnknown,
         ]:
             param = param_class.maybe_create(
@@ -1418,6 +1419,18 @@ class ParamVkBool32(ParamBase):
     @property
     def vk_unqual_type(self):
         return 'uint'
+
+
+class ParamVoidPtr(ParamBase):
+
+    @classmethod
+    def maybe_create(cls, c_param, **kwargs):
+        if c_param.type.name == 'const void *':
+            return cls(c_param=c_param, **kwargs)
+
+    @property
+    def vk_unqual_type(self):
+        return 'void'
 
 
 class ParamUnknown(ParamBase):
