@@ -250,13 +250,8 @@ class GenStruct(object):
         return self.__generator.structs[self.__vk_type_name]
 
     @property
-    def __boost_type_name(self):
+    def boost_type_name(self):
         return vk_struct_type_to_boost(self.__vk_type_name)
-
-    @property
-    def __vk_structure_type(self):
-        return 'VK_STRUCTURE_TYPE_' + (
-            boost_camel_to_lower(self.__boost_type_name).upper())
 
     def __get_field(self, vk_name):
         for field in self.__fields:
@@ -278,7 +273,7 @@ class GenStruct(object):
         lines += [
             '',
             '//',
-           f'// {self.__boost_type_name}',
+           f'// {self.boost_type_name}',
             '//',
         ]
         lines += self.__generate_type()
@@ -292,7 +287,7 @@ class GenStruct(object):
         lines = []
         lines += [
             '',
-           f'struct {self.__boost_type_name}',
+           f'struct {self.boost_type_name}',
         ]
         lines += [f'    {line}' for field in self._fields
             for line in field.generate_boost_struct_field_decl()]
@@ -308,12 +303,12 @@ class GenStruct(object):
         lines += [
             '',
            f'def vk_value_to_boost(vk_struct : {self.__vk_type_name}) '
-                f': {self.__boost_type_name}',
+                f': {self.boost_type_name}',
         ] + [
            f'    {line}' for field in fields for line in
                  field.generate_boost_struct_v2b_vars()
         ] + [
-           f'    return <- [[{self.__boost_type_name}'
+           f'    return <- [[{self.boost_type_name}'
         ] + [
            f'        {line}' for field in fields for line in
                      field.generate_boost_struct_v2b_field()
@@ -325,7 +320,7 @@ class GenStruct(object):
         return lines
 
     def __generate_boost_to_vk(self):
-        bstype = self.__boost_type_name
+        bstype = self.boost_type_name
         vstype = self.__vk_type_name
         lines = []
         lines += self.__generate_vk_view_create()
@@ -333,7 +328,7 @@ class GenStruct(object):
         return lines
 
     def __generate_vk_view_create(self):
-        bstype = self.__boost_type_name
+        bstype = self.boost_type_name
         vstype = self.__vk_type_name
         lines = []
         lines += [
@@ -354,13 +349,9 @@ class GenStruct(object):
         ]
         array_counts_added = set()
         for field in self._fields:
-            if field.vk_name in ['pNext']:
-                continue
             bname, vname = field.boost_name, field.vk_name
             btype, vtype = field.boost_type, field.vk_type
-            if vname == 'sType':
-                vk_value = f'VkStructureType {self.__vk_structure_type}'
-            elif self.__is_array_count(vname):
+            if self.__is_array_count(vname):
                 continue
             elif self.__is_array_items(vname):
                 biname = boost_ptr_name_to_array(field.boost_name)
@@ -391,7 +382,7 @@ class GenStruct(object):
         return lines
 
     def __generate_vk_view_destroy(self):
-        bstype = self.__boost_type_name
+        bstype = self.boost_type_name
         vstype = self.__vk_type_name
         lines = []
         lines += [
@@ -837,6 +828,9 @@ class ParamBase(object):
                 ]
         return []
 
+    def generate_boost_struct_view_create_field(self):
+        return []
+
     def generate_boost_struct_v2b_vars(self):
         bname = self._boost_struct_field_name
         btype = self._boost_struct_field_type
@@ -1030,6 +1024,9 @@ class ParamVk_pNext(ParamBase):
     def generate_boost_struct_view_create_init(self):
         return []
 
+    def generate_boost_struct_view_create_field(self):
+        return []
+
 
 class ParamVk_sType(ParamBase):
 
@@ -1046,6 +1043,11 @@ class ParamVk_sType(ParamBase):
 
     def generate_boost_struct_view_create_init(self):
         return []
+
+    def generate_boost_struct_view_create_field(self):
+        stype = 'VK_STRUCTURE_TYPE_' + (
+            boost_camel_to_lower(self._gen_struct.boost_type_name).upper())
+        return [f'VkStructureType {stype}']
 
 
 class ParamVkHandleBase(ParamBase):
