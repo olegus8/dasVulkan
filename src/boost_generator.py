@@ -364,37 +364,7 @@ class GenStruct(object):
         ] + [
            f'    {line}' for field in self._fields for line in
                  field.generate_boost_struct_view_destroy()
-        ]
-        for field in self._fields:
-            if field.vk_name in ['pNext', 'sType']:
-                continue
-            bname, vname = field.boost_name, field.vk_name
-            btype, vtype = field.boost_type, field.vk_type
-            if self.__is_array_items(vname):
-                biname = boost_ptr_name_to_array(field.boost_name)
-                if field.needs_vk_view:
-                    lines += [
-                       f'    for item in boost_struct.{biname}',
-                       f'        item |> vk_view_destroy()',
-                    ]
-                if field.needs_conversion:
-                    lines += [
-                       f'    delete boost_struct._vk_view_{biname}',
-                    ]
-            elif field.is_pointer and field.needs_vk_view:
-                lines += [
-                   f'    if boost_struct.{bname} != null',
-                   f'        *(boost_struct.{bname}) |> vk_view_destroy()',
-                    '        unsafe',
-                   f'            delete boost_struct._vk_view_{bname}',
-                ]
-            elif field.is_struct and field.needs_vk_view:
-                lines += [
-                   f'    boost_struct.{bname} |> vk_view_destroy()',
-                    '    unsafe',
-                   f'        delete boost_struct._vk_view_p_{bname}',
-                ]
-        lines += [
+        ] + [
             '    boost_struct._vk_view__active = false',
         ]
         return lines
