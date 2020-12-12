@@ -2013,6 +2013,35 @@ def vk_view_destroy(var boost_struct : InstanceCreateInfo)
     boost_struct._vk_view__active = false
 
 //
+// PipelineCacheCreateInfo
+//
+
+struct PipelineCacheCreateInfo
+    flags : uint
+    initial_data : array<uint8>
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : PipelineCacheCreateInfo
+) : VkPipelineCacheCreateInfo
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    let vk_initial_data_size = uint64(boost_struct.initial_data |> length())
+    var vk_p_initial_data : void ?
+    unsafe
+        vk_p_initial_data = reinterpret<void ?>(array_addr_unsafe(boost_struct.initial_data))
+    return <- [[ VkPipelineCacheCreateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_PIPELINE_CACHE_CREATE_INFO,
+        flags = boost_value_to_vk(boost_struct.flags),
+        initialDataSize = vk_initial_data_size,
+        pInitialData = vk_p_initial_data
+    ]]
+
+def vk_view_destroy(var boost_struct : PipelineCacheCreateInfo)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+//
 // PipelineLayoutCreateInfo
 //
 

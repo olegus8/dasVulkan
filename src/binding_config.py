@@ -173,6 +173,25 @@ def add_boost_content(g):
         ).declare_array(count = 'queueCount', items = 'pQueuePriorities')
     g.add_gen_struct(name = 'VkFramebufferCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'attachmentCount', items = 'pAttachments')
+    g.add_gen_struct(name = 'VkGraphicsPipelineCreateInfo', vk_to_boost=False,
+        ).declare_array(count = 'stageCount', items = 'pStages')
+
+    const VkPipelineVertexInputStateCreateInfo*      pVertexInputState;
+    const VkPipelineInputAssemblyStateCreateInfo*    pInputAssemblyState;
+    const VkPipelineTessellationStateCreateInfo*     pTessellationState;
+    const VkPipelineViewportStateCreateInfo*         pViewportState;
+    const VkPipelineRasterizationStateCreateInfo*    pRasterizationState;
+    const VkPipelineMultisampleStateCreateInfo*      pMultisampleState;
+    const VkPipelineDepthStencilStateCreateInfo*     pDepthStencilState;
+    const VkPipelineColorBlendStateCreateInfo*       pColorBlendState;
+    const VkPipelineDynamicStateCreateInfo*          pDynamicState;
+    VkPipelineLayout                                 layout;
+    VkRenderPass                                     renderPass;
+    uint32_t                                         subpass;
+    VkPipeline                                       basePipelineHandle;
+    int32_t                                          basePipelineIndex;
+} VkGraphicsPipelineCreateInfo;
+
     g.add_gen_struct(name = 'VkImageCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'queueFamilyIndexCount', items = 'pQueueFamilyIndices')
     g.add_gen_struct(name = 'VkInstanceCreateInfo', vk_to_boost=False,
