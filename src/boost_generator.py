@@ -792,13 +792,14 @@ class ParamBase(object):
         bname = self._boost_struct_field_name
         vtype = self._vk_type
         if self.vk_is_dyn_array_count:
-            first = self.__dyn_array_items_mandatory[0]._boost_func_param_name
+            first = ('boost_struct.' +
+                self.__dyn_array_items_mandatory[0]._boost_func_param_name)
             lines = []
             for ar_items in self.__dyn_array_items_mandatory[1:]:
-                cur = ar_items._boost_func_param_name
+                cur = 'boost_struct.' + ar_items._boost_func_param_name
                 lines += [f'assert(length({cur}) == length({first}))']
             for ar_items in self.__dyn_array_items_optional:
-                cur = ar_items._boost_func_param_name
+                cur = 'boost_struct.' + ar_items._boost_func_param_name
                 lines += [f'assert(length({cur}) == 0 || '
                     f'length({cur}) == length({first}))']
             lines += [f'let vk_{bname} = uint({first} |> length())']

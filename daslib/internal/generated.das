@@ -1733,6 +1733,7 @@ def vk_value_to_boost(vk_struct : VkPhysicalDeviceProperties) : PhysicalDevicePr
 struct DescriptorSetLayoutBinding
     binding : uint
     descriptor_type : VkDescriptorType
+    descriptor_count : uint
     stage_flags : uint
     immutable_samplers : array<Sampler>
     _vk_view_immutable_samplers : array<VkSampler>
@@ -1743,14 +1744,13 @@ def vk_view_create_unsafe(var boost_struct : DescriptorSetLayoutBinding
 
     assert(!boost_struct._vk_view__active)
     boost_struct._vk_view__active = true
-    let vk_descriptor_count = uint(immutable_samplers |> length())
     boost_struct._vk_view_immutable_samplers <- [{
         for item in boost_struct.immutable_samplers ;
         item |> boost_value_to_vk()}]
     return <- [[ VkDescriptorSetLayoutBinding
         binding = boost_value_to_vk(boost_struct.binding),
         descriptorType = boost_value_to_vk(boost_struct.descriptor_type),
-        descriptorCount = vk_descriptor_count,
+        descriptorCount = boost_value_to_vk(boost_struct.descriptor_count),
         stageFlags = boost_value_to_vk(boost_struct.stage_flags),
         pImmutableSamplers = array_addr_unsafe(boost_struct._vk_view_immutable_samplers)
     ]]
@@ -1759,20 +1759,6 @@ def vk_view_destroy(var boost_struct : DescriptorSetLayoutBinding)
     assert(boost_struct._vk_view__active)
     delete boost_struct._vk_view_immutable_samplers
     boost_struct._vk_view__active = false
-
-def vk_value_to_boost(vk_struct : VkDescriptorSetLayoutBinding) : DescriptorSetLayoutBinding
-    var b_immutable_samplers : array<Sampler>
-    if vk_struct.pImmutableSamplers != null
-        b_immutable_samplers |> resize(vk_struct.descriptorCount)
-        for b, i in b_immutable_samplers, range(INT_MAX)
-            unsafe
-                b <- vk_value_to_boost(*(vk_struct.pImmutableSamplers+i))
-    return <- [[DescriptorSetLayoutBinding
-        binding = vk_value_to_boost(vk_struct.binding),
-        descriptor_type = vk_value_to_boost(vk_struct.descriptorType),
-        stage_flags = vk_value_to_boost(vk_struct.stageFlags),
-        immutable_samplers <- b_immutable_samplers
-    ]]
 
 //
 // DescriptorSetLayoutCreateInfo
