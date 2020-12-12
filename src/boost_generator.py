@@ -565,7 +565,7 @@ class GenHandleDtor(GenFunc):
 
     def generate(self):
         bh_type = self.__handle.boost_handle_type_name
-        lines = []
+        lines = super(GenHandleDtor, self).generate()
         lines += [
             '',
            f'def finalize(var handle : {bh_type} explicit)',
