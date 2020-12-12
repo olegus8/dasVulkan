@@ -86,6 +86,7 @@ def enumerate_device_extension_properties(
     layer_name : string = [[ string ]];
     var result : VkResult? = [[VkResult?]]
 ) : array<ExtensionProperties>
+
     var vk_pPropertyCount : uint
     var vk_properties : array<VkExtensionProperties>
     defer() <| ${ delete vk_properties; }
@@ -108,12 +109,13 @@ def enumerate_device_extension_properties(
         array_addr_unsafe(vk_properties)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return ['<- [{for x in vk_properties; vk_value_to_boost(x)}]']
+    return <- [{for x in vk_properties; vk_value_to_boost(x)}]
 
 def enumerate_physical_devices(
     instance : Instance = [[ Instance ]];
     var result : VkResult? = [[VkResult?]]
 ) : array<PhysicalDevice>
+
     var vk_pPhysicalDeviceCount : uint
     var vk_physical_devices : array<VkPhysicalDevice>
     defer() <| ${ delete vk_physical_devices; }
@@ -134,13 +136,14 @@ def enumerate_physical_devices(
         array_addr_unsafe(vk_physical_devices)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return ['<- [{for x in vk_physical_devices; vk_value_to_boost(x)}]']
+    return <- [{for x in vk_physical_devices; vk_value_to_boost(x)}]
 
 def get_device_queue(
     device : Device = [[ Device ]];
     queue_family_index : uint = [[ uint ]];
     queue_index : uint = [[ uint ]]
 ) : Queue
+
     var vk_queue : VkQueue
 
     vkGetDeviceQueue(
@@ -149,24 +152,26 @@ def get_device_queue(
         boost_value_to_vk(queue_index),
         safe_addr(vk_queue)
     )
-    return ['<- vk_value_to_boost(vk_queue)']
+    return <- vk_value_to_boost(vk_queue)
 
 def get_physical_device_properties(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]]
 ) : PhysicalDeviceProperties
+
     var vk_properties : VkPhysicalDeviceProperties
 
     vkGetPhysicalDeviceProperties(
         boost_value_to_vk(physical_device),
         safe_addr(vk_properties)
     )
-    return ['<- vk_value_to_boost(vk_properties)']
+    return <- vk_value_to_boost(vk_properties)
 
 def get_physical_device_surface_capabilities_khr(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]];
     surface : SurfaceKHR = [[ SurfaceKHR ]];
     var result : VkResult? = [[VkResult?]]
 ) : SurfaceCapabilitiesKHR
+
     var vk_surface_capabilities : VkSurfaceCapabilitiesKHR
     var result_ = VkResult VK_SUCCESS
 
@@ -176,7 +181,7 @@ def get_physical_device_surface_capabilities_khr(
         safe_addr(vk_surface_capabilities)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return ['<- vk_value_to_boost(vk_surface_capabilities)']
+    return <- vk_value_to_boost(vk_surface_capabilities)
 
 def get_physical_device_surface_support_khr(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]];
@@ -184,6 +189,7 @@ def get_physical_device_surface_support_khr(
     surface : SurfaceKHR = [[ SurfaceKHR ]];
     var result : VkResult? = [[VkResult?]]
 ) : uint
+
     var vk_supported : uint
     var result_ = VkResult VK_SUCCESS
 
@@ -194,11 +200,12 @@ def get_physical_device_surface_support_khr(
         safe_addr(vk_supported)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return ['<- vk_value_to_boost(vk_supported)']
+    return <- vk_value_to_boost(vk_supported)
 
 def get_physical_device_queue_family_properties(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]]
 ) : array<QueueFamilyProperties>
+
     var vk_pQueueFamilyPropertyCount : uint
     var vk_queue_family_properties : array<VkQueueFamilyProperties>
     defer() <| ${ delete vk_queue_family_properties; }
@@ -216,13 +223,14 @@ def get_physical_device_queue_family_properties(
         safe_addr(vk_pQueueFamilyPropertyCount),
         array_addr_unsafe(vk_queue_family_properties)
     )
-    return ['<- [{for x in vk_queue_family_properties; vk_value_to_boost(x)}]']
+    return <- [{for x in vk_queue_family_properties; vk_value_to_boost(x)}]
 
 def get_physical_device_surface_formats_khr(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]];
     surface : SurfaceKHR = [[ SurfaceKHR ]];
     var result : VkResult? = [[VkResult?]]
 ) : array<SurfaceFormatKHR>
+
     var vk_pSurfaceFormatCount : uint
     var vk_surface_formats : array<VkSurfaceFormatKHR>
     defer() <| ${ delete vk_surface_formats; }
@@ -245,13 +253,14 @@ def get_physical_device_surface_formats_khr(
         array_addr_unsafe(vk_surface_formats)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return ['<- [{for x in vk_surface_formats; vk_value_to_boost(x)}]']
+    return <- [{for x in vk_surface_formats; vk_value_to_boost(x)}]
 
 def get_physical_device_surface_present_modes_khr(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]];
     surface : SurfaceKHR = [[ SurfaceKHR ]];
     var result : VkResult? = [[VkResult?]]
 ) : array<VkPresentModeKHR>
+
     var vk_pPresentModeCount : uint
     var vk_present_modes : array<VkPresentModeKHR>
     defer() <| ${ delete vk_present_modes; }
@@ -274,13 +283,14 @@ def get_physical_device_surface_present_modes_khr(
         array_addr_unsafe(vk_present_modes)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return ['<- [{for x in vk_present_modes; vk_value_to_boost(x)}]']
+    return <- [{for x in vk_present_modes; vk_value_to_boost(x)}]
 
 def get_swapchain_images_khr(
     device : Device = [[ Device ]];
     swapchain : SwapchainKHR = [[ SwapchainKHR ]];
     var result : VkResult? = [[VkResult?]]
 ) : array<Image>
+
     var vk_pSwapchainImageCount : uint
     var vk_swapchain_images : array<VkImage>
     defer() <| ${ delete vk_swapchain_images; }
@@ -303,7 +313,7 @@ def get_swapchain_images_khr(
         array_addr_unsafe(vk_swapchain_images)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return ['<- [{for x in vk_swapchain_images; vk_value_to_boost(x)}]']
+    return <- [{for x in vk_swapchain_images; vk_value_to_boost(x)}]
 
 //
 // ApplicationInfo
@@ -2694,6 +2704,7 @@ def create_device__inner(
     create_info : DeviceCreateInfo = [[ DeviceCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : Device
+
     var vk_create_info <- create_info |> vk_view_create_unsafe()
     defer() <| ${ create_info |> bk_view_destroy() }
     var vk_device : VkDevice
@@ -2706,7 +2717,7 @@ def create_device__inner(
         safe_addr(vk_device)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return ['<- vk_value_to_boost(vk_device)']
+    return <- vk_value_to_boost(vk_device)
 
 def create_device(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]];
@@ -2756,6 +2767,7 @@ def create_command_pool__inner(
     create_info : CommandPoolCreateInfo = [[ CommandPoolCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : CommandPool
+
     var vk_create_info <- create_info |> vk_view_create_unsafe()
     defer() <| ${ create_info |> bk_view_destroy() }
     var vk_command_pool : VkCommandPool
@@ -2768,7 +2780,7 @@ def create_command_pool__inner(
         safe_addr(vk_command_pool)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return ['<- vk_value_to_boost(vk_command_pool)']
+    return <- vk_value_to_boost(vk_command_pool)
 
 def create_command_pool(
     device : Device = [[ Device ]];
@@ -2820,6 +2832,7 @@ def create_descriptor_set_layout__inner(
     create_info : DescriptorSetLayoutCreateInfo = [[ DescriptorSetLayoutCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : DescriptorSetLayout
+
     var vk_create_info <- create_info |> vk_view_create_unsafe()
     defer() <| ${ create_info |> bk_view_destroy() }
     var vk_set_layout : VkDescriptorSetLayout
@@ -2832,7 +2845,7 @@ def create_descriptor_set_layout__inner(
         safe_addr(vk_set_layout)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return ['<- vk_value_to_boost(vk_set_layout)']
+    return <- vk_value_to_boost(vk_set_layout)
 
 def create_descriptor_set_layout(
     device : Device = [[ Device ]];
@@ -2884,6 +2897,7 @@ def create_fence__inner(
     create_info : FenceCreateInfo = [[ FenceCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : Fence
+
     var vk_create_info <- create_info |> vk_view_create_unsafe()
     defer() <| ${ create_info |> bk_view_destroy() }
     var vk_fence : VkFence
@@ -2896,7 +2910,7 @@ def create_fence__inner(
         safe_addr(vk_fence)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return ['<- vk_value_to_boost(vk_fence)']
+    return <- vk_value_to_boost(vk_fence)
 
 def create_fence(
     device : Device = [[ Device ]];
@@ -2948,6 +2962,7 @@ def create_framebuffer__inner(
     create_info : FramebufferCreateInfo = [[ FramebufferCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : Framebuffer
+
     var vk_create_info <- create_info |> vk_view_create_unsafe()
     defer() <| ${ create_info |> bk_view_destroy() }
     var vk_framebuffer : VkFramebuffer
@@ -2960,7 +2975,7 @@ def create_framebuffer__inner(
         safe_addr(vk_framebuffer)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return ['<- vk_value_to_boost(vk_framebuffer)']
+    return <- vk_value_to_boost(vk_framebuffer)
 
 def create_framebuffer(
     device : Device = [[ Device ]];
@@ -3012,6 +3027,7 @@ def create_image__inner(
     create_info : ImageCreateInfo = [[ ImageCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : Image
+
     var vk_create_info <- create_info |> vk_view_create_unsafe()
     defer() <| ${ create_info |> bk_view_destroy() }
     var vk_image : VkImage
@@ -3024,7 +3040,7 @@ def create_image__inner(
         safe_addr(vk_image)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return ['<- vk_value_to_boost(vk_image)']
+    return <- vk_value_to_boost(vk_image)
 
 def create_image(
     device : Device = [[ Device ]];
@@ -3076,6 +3092,7 @@ def create_image_view__inner(
     create_info : ImageViewCreateInfo = [[ ImageViewCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : ImageView
+
     var vk_create_info <- create_info |> vk_view_create_unsafe()
     defer() <| ${ create_info |> bk_view_destroy() }
     var vk_view : VkImageView
@@ -3088,7 +3105,7 @@ def create_image_view__inner(
         safe_addr(vk_view)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return ['<- vk_value_to_boost(vk_view)']
+    return <- vk_value_to_boost(vk_view)
 
 def create_image_view(
     device : Device = [[ Device ]];
@@ -3138,6 +3155,7 @@ def create_instance__inner(
     create_info : InstanceCreateInfo = [[ InstanceCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : Instance
+
     var vk_create_info <- create_info |> vk_view_create_unsafe()
     defer() <| ${ create_info |> bk_view_destroy() }
     var vk_instance : VkInstance
@@ -3149,7 +3167,7 @@ def create_instance__inner(
         safe_addr(vk_instance)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return ['<- vk_value_to_boost(vk_instance)']
+    return <- vk_value_to_boost(vk_instance)
 
 def create_instance(
     create_info : InstanceCreateInfo = [[ InstanceCreateInfo ]];
@@ -3231,6 +3249,7 @@ def create_pipeline_layout__inner(
     create_info : PipelineLayoutCreateInfo = [[ PipelineLayoutCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : PipelineLayout
+
     var vk_create_info <- create_info |> vk_view_create_unsafe()
     defer() <| ${ create_info |> bk_view_destroy() }
     var vk_pipeline_layout : VkPipelineLayout
@@ -3243,7 +3262,7 @@ def create_pipeline_layout__inner(
         safe_addr(vk_pipeline_layout)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return ['<- vk_value_to_boost(vk_pipeline_layout)']
+    return <- vk_value_to_boost(vk_pipeline_layout)
 
 def create_pipeline_layout(
     device : Device = [[ Device ]];
@@ -3295,6 +3314,7 @@ def create_render_pass__inner(
     create_info : RenderPassCreateInfo = [[ RenderPassCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : RenderPass
+
     var vk_create_info <- create_info |> vk_view_create_unsafe()
     defer() <| ${ create_info |> bk_view_destroy() }
     var vk_render_pass : VkRenderPass
@@ -3307,7 +3327,7 @@ def create_render_pass__inner(
         safe_addr(vk_render_pass)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return ['<- vk_value_to_boost(vk_render_pass)']
+    return <- vk_value_to_boost(vk_render_pass)
 
 def create_render_pass(
     device : Device = [[ Device ]];
@@ -3359,6 +3379,7 @@ def create_sampler__inner(
     create_info : SamplerCreateInfo = [[ SamplerCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : Sampler
+
     var vk_create_info <- create_info |> vk_view_create_unsafe()
     defer() <| ${ create_info |> bk_view_destroy() }
     var vk_sampler : VkSampler
@@ -3371,7 +3392,7 @@ def create_sampler__inner(
         safe_addr(vk_sampler)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return ['<- vk_value_to_boost(vk_sampler)']
+    return <- vk_value_to_boost(vk_sampler)
 
 def create_sampler(
     device : Device = [[ Device ]];
@@ -3423,6 +3444,7 @@ def create_semaphore__inner(
     create_info : SemaphoreCreateInfo = [[ SemaphoreCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : Semaphore
+
     var vk_create_info <- create_info |> vk_view_create_unsafe()
     defer() <| ${ create_info |> bk_view_destroy() }
     var vk_semaphore : VkSemaphore
@@ -3435,7 +3457,7 @@ def create_semaphore__inner(
         safe_addr(vk_semaphore)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return ['<- vk_value_to_boost(vk_semaphore)']
+    return <- vk_value_to_boost(vk_semaphore)
 
 def create_semaphore(
     device : Device = [[ Device ]];
@@ -3487,6 +3509,7 @@ def create_shader_module__inner(
     create_info : ShaderModuleCreateInfo = [[ ShaderModuleCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : ShaderModule
+
     var vk_create_info <- create_info |> vk_view_create_unsafe()
     defer() <| ${ create_info |> bk_view_destroy() }
     var vk_shader_module : VkShaderModule
@@ -3499,7 +3522,7 @@ def create_shader_module__inner(
         safe_addr(vk_shader_module)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return ['<- vk_value_to_boost(vk_shader_module)']
+    return <- vk_value_to_boost(vk_shader_module)
 
 def create_shader_module(
     device : Device = [[ Device ]];
@@ -3551,6 +3574,7 @@ def create_swapchain_khr__inner(
     create_info : SwapchainCreateInfoKHR = [[ SwapchainCreateInfoKHR ]];
     var result : VkResult? = [[VkResult?]]
 ) : SwapchainKHR
+
     var vk_create_info <- create_info |> vk_view_create_unsafe()
     defer() <| ${ create_info |> bk_view_destroy() }
     var vk_swapchain : VkSwapchainKHR
@@ -3563,7 +3587,7 @@ def create_swapchain_khr__inner(
         safe_addr(vk_swapchain)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return ['<- vk_value_to_boost(vk_swapchain)']
+    return <- vk_value_to_boost(vk_swapchain)
 
 def create_swapchain_khr(
     device : Device = [[ Device ]];
@@ -3616,6 +3640,7 @@ def create_graphics_pipelines__inner(
     create_infos : array<GraphicsPipelineCreateInfo> = [[ array<GraphicsPipelineCreateInfo> ]];
     var result : VkResult? = [[VkResult?]]
 ) : array<Pipeline>
+
     assert(length(create_infos) == length(pipelines))
     let vk_createInfoCount = uint(create_infos |> length())
     var vk_create_infos <- [{ for item in create_infos ;
@@ -3648,7 +3673,7 @@ def create_graphics_pipelines__inner(
         array_addr_unsafe(vk_pipelines)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return ['<- [{for x in vk_pipelines; vk_value_to_boost(x)}]']
+    return <- [{for x in vk_pipelines; vk_value_to_boost(x)}]
 
 def create_graphics_pipelines(
     device : Device = [[ Device ]];
@@ -3676,6 +3701,7 @@ def create_compute_pipelines__inner(
     create_infos : array<ComputePipelineCreateInfo> = [[ array<ComputePipelineCreateInfo> ]];
     var result : VkResult? = [[VkResult?]]
 ) : array<Pipeline>
+
     assert(length(create_infos) == length(pipelines))
     let vk_createInfoCount = uint(create_infos |> length())
     var vk_create_infos <- [{ for item in create_infos ;
@@ -3708,7 +3734,7 @@ def create_compute_pipelines__inner(
         array_addr_unsafe(vk_pipelines)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return ['<- [{for x in vk_pipelines; vk_value_to_boost(x)}]']
+    return <- [{for x in vk_pipelines; vk_value_to_boost(x)}]
 
 def create_compute_pipelines(
     device : Device = [[ Device ]];

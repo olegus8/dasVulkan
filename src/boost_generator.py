@@ -194,6 +194,7 @@ class GenFunc(object):
         remove_last_char(lines, ';')
         lines += [
            f') : {self._return_type}',
+            '',
         ]
         for param in self._params:
             lines += [f'    {line}'
