@@ -2379,7 +2379,7 @@ def destroy_device(
 def finalize(var handle : Device explicit)
     if handle._needs_delete
         destroy_device(
-            handle.device,
+            vk_value_to_boost(handle.device),
             null
         )
     memzero(handle)
@@ -2454,8 +2454,8 @@ def destroy_command_pool(
 def finalize(var handle : CommandPool explicit)
     if handle._needs_delete
         destroy_command_pool(
-            handle._device,
-            handle.command_pool,
+            vk_value_to_boost(handle._device),
+            vk_value_to_boost(handle.command_pool),
             null
         )
     memzero(handle)
@@ -2530,8 +2530,8 @@ def destroy_descriptor_set_layout(
 def finalize(var handle : DescriptorSetLayout explicit)
     if handle._needs_delete
         destroy_descriptor_set_layout(
-            handle._device,
-            handle.descriptor_set_layout,
+            vk_value_to_boost(handle._device),
+            vk_value_to_boost(handle.descriptor_set_layout),
             null
         )
     memzero(handle)
@@ -2606,8 +2606,8 @@ def destroy_fence(
 def finalize(var handle : Fence explicit)
     if handle._needs_delete
         destroy_fence(
-            handle._device,
-            handle.fence,
+            vk_value_to_boost(handle._device),
+            vk_value_to_boost(handle.fence),
             null
         )
     memzero(handle)
@@ -2682,8 +2682,8 @@ def destroy_framebuffer(
 def finalize(var handle : Framebuffer explicit)
     if handle._needs_delete
         destroy_framebuffer(
-            handle._device,
-            handle.framebuffer,
+            vk_value_to_boost(handle._device),
+            vk_value_to_boost(handle.framebuffer),
             null
         )
     memzero(handle)
@@ -2758,8 +2758,8 @@ def destroy_image(
 def finalize(var handle : Image explicit)
     if handle._needs_delete
         destroy_image(
-            handle._device,
-            handle.image,
+            vk_value_to_boost(handle._device),
+            vk_value_to_boost(handle.image),
             null
         )
     memzero(handle)
@@ -2834,8 +2834,8 @@ def destroy_image_view(
 def finalize(var handle : ImageView explicit)
     if handle._needs_delete
         destroy_image_view(
-            handle._device,
-            handle.image_view,
+            vk_value_to_boost(handle._device),
+            vk_value_to_boost(handle.image_view),
             null
         )
     memzero(handle)
@@ -2902,7 +2902,7 @@ def destroy_instance(
 def finalize(var handle : Instance explicit)
     if handle._needs_delete
         destroy_instance(
-            handle.instance,
+            vk_value_to_boost(handle.instance),
             null
         )
     memzero(handle)
@@ -3011,8 +3011,8 @@ def destroy_pipeline_layout(
 def finalize(var handle : PipelineLayout explicit)
     if handle._needs_delete
         destroy_pipeline_layout(
-            handle._device,
-            handle.pipeline_layout,
+            vk_value_to_boost(handle._device),
+            vk_value_to_boost(handle.pipeline_layout),
             null
         )
     memzero(handle)
@@ -3087,8 +3087,8 @@ def destroy_render_pass(
 def finalize(var handle : RenderPass explicit)
     if handle._needs_delete
         destroy_render_pass(
-            handle._device,
-            handle.render_pass,
+            vk_value_to_boost(handle._device),
+            vk_value_to_boost(handle.render_pass),
             null
         )
     memzero(handle)
@@ -3163,8 +3163,8 @@ def destroy_sampler(
 def finalize(var handle : Sampler explicit)
     if handle._needs_delete
         destroy_sampler(
-            handle._device,
-            handle.sampler,
+            vk_value_to_boost(handle._device),
+            vk_value_to_boost(handle.sampler),
             null
         )
     memzero(handle)
@@ -3239,8 +3239,8 @@ def destroy_semaphore(
 def finalize(var handle : Semaphore explicit)
     if handle._needs_delete
         destroy_semaphore(
-            handle._device,
-            handle.semaphore,
+            vk_value_to_boost(handle._device),
+            vk_value_to_boost(handle.semaphore),
             null
         )
     memzero(handle)
@@ -3315,8 +3315,8 @@ def destroy_shader_module(
 def finalize(var handle : ShaderModule explicit)
     if handle._needs_delete
         destroy_shader_module(
-            handle._device,
-            handle.shader_module,
+            vk_value_to_boost(handle._device),
+            vk_value_to_boost(handle.shader_module),
             null
         )
     memzero(handle)
@@ -3391,8 +3391,8 @@ def destroy_swapchain_khr(
 def finalize(var handle : SwapchainKHR explicit)
     if handle._needs_delete
         destroy_swapchain_khr(
-            handle._device,
-            handle.swapchain,
+            vk_value_to_boost(handle._device),
+            vk_value_to_boost(handle.swapchain),
             null
         )
     memzero(handle)
@@ -3531,8 +3531,8 @@ def destroy_pipeline(
 def finalize(var handle : Pipeline explicit)
     if handle._needs_delete
         destroy_pipeline(
-            handle._device,
-            handle.pipeline,
+            vk_value_to_boost(handle._device),
+            vk_value_to_boost(handle.pipeline),
             null
         )
     memzero(handle)

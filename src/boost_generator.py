@@ -572,8 +572,8 @@ class GenHandleDtor(GenFunc):
            f'    if handle._needs_delete',
            f'        {self._boost_func_name}(',
         ] + [
-           f'            {param.get_boost_dtor_call_param(bh_type)},'
-                            for param in self._params]
+           f'            {line}' for param in self._params for line in
+                         param.get_boost_dtor_call_param(bh_type)]
         remove_last_char(lines, ',')
         lines += [
             '        )',
@@ -1005,7 +1005,7 @@ class ParamVk_pAllocator(ParamBase):
         return 'null'
 
     def get_boost_dtor_call_param(self, boost_handle_type_name):
-        return 'null'
+        return []
 
 
 class ParamVk_pNext(ParamBase):
@@ -1078,7 +1078,7 @@ class ParamVkHandleBase(ParamBase):
         field = self._boost_func_param_name
         if self._boost_unqual_type != boost_handle_type_name:
             field = '_' + field
-        return f'vk_value_to_boost(handle.{field})'
+        return [f'vk_value_to_boost(handle.{field}),']
 
     def generate_boost_struct_field_view_decl(self):
         bname = self._boost_struct_field_name
