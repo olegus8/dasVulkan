@@ -92,6 +92,15 @@ def enumerate_device_extension_properties(
     defer() <| ${ delete vk_properties; }
     var result_ = VkResult VK_SUCCESS
 
+    result ?? result_ = vkEnumerateDeviceExtensionProperties(
+        boost_value_to_vk(physical_device),
+        boost_value_to_vk(layer_name),
+        safe_addr(vk_pPropertyCount),
+        [[ VkExtensionProperties ? ]]
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+    if result_ != VkResult VK_SUCCESS
+        return <- [[ array<ExtensionProperties> ]]
     vk_properties |> resize(int(vk_pPropertyCount))
     result ?? result_ = vkEnumerateDeviceExtensionProperties(
         boost_value_to_vk(physical_device),
@@ -112,6 +121,14 @@ def enumerate_physical_devices(
     defer() <| ${ delete vk_physical_devices; }
     var result_ = VkResult VK_SUCCESS
 
+    result ?? result_ = vkEnumeratePhysicalDevices(
+        boost_value_to_vk(instance),
+        safe_addr(vk_pPhysicalDeviceCount),
+        [[ VkPhysicalDevice ? ]]
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+    if result_ != VkResult VK_SUCCESS
+        return <- [[ array<PhysicalDevice> ]]
     vk_physical_devices |> resize(int(vk_pPhysicalDeviceCount))
     result ?? result_ = vkEnumeratePhysicalDevices(
         boost_value_to_vk(instance),
@@ -193,6 +210,13 @@ def get_physical_device_queue_family_properties(
     var vk_queue_family_properties : array<VkQueueFamilyProperties>
     defer() <| ${ delete vk_queue_family_properties; }
 
+    vkGetPhysicalDeviceQueueFamilyProperties(
+        boost_value_to_vk(physical_device),
+        safe_addr(vk_pQueueFamilyPropertyCount),
+        [[ VkQueueFamilyProperties ? ]]
+    )
+    if result_ != VkResult VK_SUCCESS
+        return <- [[ array<QueueFamilyProperties> ]]
     vk_queue_family_properties |> resize(int(vk_pQueueFamilyPropertyCount))
     vkGetPhysicalDeviceQueueFamilyProperties(
         boost_value_to_vk(physical_device),
@@ -212,6 +236,15 @@ def get_physical_device_surface_formats_khr(
     defer() <| ${ delete vk_surface_formats; }
     var result_ = VkResult VK_SUCCESS
 
+    result ?? result_ = vkGetPhysicalDeviceSurfaceFormatsKHR(
+        boost_value_to_vk(physical_device),
+        boost_value_to_vk(surface),
+        safe_addr(vk_pSurfaceFormatCount),
+        [[ VkSurfaceFormatKHR ? ]]
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+    if result_ != VkResult VK_SUCCESS
+        return <- [[ array<SurfaceFormatKHR> ]]
     vk_surface_formats |> resize(int(vk_pSurfaceFormatCount))
     result ?? result_ = vkGetPhysicalDeviceSurfaceFormatsKHR(
         boost_value_to_vk(physical_device),
@@ -233,6 +266,15 @@ def get_physical_device_surface_present_modes_khr(
     defer() <| ${ delete vk_present_modes; }
     var result_ = VkResult VK_SUCCESS
 
+    result ?? result_ = vkGetPhysicalDeviceSurfacePresentModesKHR(
+        boost_value_to_vk(physical_device),
+        boost_value_to_vk(surface),
+        safe_addr(vk_pPresentModeCount),
+        [[ VkPresentModeKHR ? ]]
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+    if result_ != VkResult VK_SUCCESS
+        return <- [[ array<VkPresentModeKHR> ]]
     vk_present_modes |> resize(int(vk_pPresentModeCount))
     result ?? result_ = vkGetPhysicalDeviceSurfacePresentModesKHR(
         boost_value_to_vk(physical_device),
@@ -254,6 +296,15 @@ def get_swapchain_images_khr(
     defer() <| ${ delete vk_swapchain_images; }
     var result_ = VkResult VK_SUCCESS
 
+    result ?? result_ = vkGetSwapchainImagesKHR(
+        boost_value_to_vk(device),
+        boost_value_to_vk(swapchain),
+        safe_addr(vk_pSwapchainImageCount),
+        [[ VkImage ? ]]
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+    if result_ != VkResult VK_SUCCESS
+        return <- [[ array<Image> ]]
     vk_swapchain_images |> resize(int(vk_pSwapchainImageCount))
     result ?? result_ = vkGetSwapchainImagesKHR(
         boost_value_to_vk(device),
