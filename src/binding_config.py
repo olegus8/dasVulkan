@@ -157,7 +157,7 @@ def add_boost_content(g):
         g.add_gen_struct(name = name)
 
     g.add_gen_struct(name = 'VkDescriptorSetLayoutBinding',
-        ).declare_array(items = 'pImmutableSamplers')
+        ).declare_array(count = 'descriptorCount', items = 'pImmutableSamplers')
     g.add_gen_struct(name = 'VkDescriptorSetLayoutCreateInfo',
         ).declare_array(count = 'bindingCount', items = 'pBindings')
     g.add_gen_struct(name = 'VkDeviceCreateInfo',
