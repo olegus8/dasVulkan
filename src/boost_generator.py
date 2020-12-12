@@ -1138,7 +1138,7 @@ class ParamVkStruct(ParamBase):
                     f'var vk_{bname} <- {bname} |> vk_view_create_unsafe()',
                     f'defer() <| ${{ {bname} |> bk_view_destroy() }}',
                 ]
-        return super(ParamVsStruct, self).generate_boost_func_temp_vars_init()
+        return super(ParamVkStruct, self).generate_boost_func_temp_vars_init()
 
     def generate_boost_struct_field_view_decl(self):
         bname = self._boost_struct_field_name
