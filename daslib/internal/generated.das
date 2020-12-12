@@ -1562,7 +1562,7 @@ def vk_view_create_unsafe(var boost_struct : ComputePipelineCreateInfo
     return <- [[ VkComputePipelineCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_COMPUTE_PIPELINE_CREATE_INFO,
         flags = boost_value_to_vk(boost_struct.flags),
-        //stage = *(boost_struct._vk_view_p_stage),
+        stage = *(boost_struct._vk_view_p_stage),
         layout = boost_value_to_vk(boost_struct.layout),
         basePipelineHandle = boost_value_to_vk(boost_struct.base_pipeline_handle),
         basePipelineIndex = boost_value_to_vk(boost_struct.base_pipeline_index)
@@ -2155,8 +2155,8 @@ def vk_view_destroy(var boost_struct : DescriptorSetLayoutCreateInfo)
 struct DeviceCreateInfo
     flags : uint
     queue_create_infos : array<DeviceQueueCreateInfo>
-    p_enabled_layer_names : array<string>
-    p_enabled_extension_names : array<string>
+    enabled_layer_names : array<string>
+    enabled_extension_names : array<string>
     p_enabled_features : PhysicalDeviceFeatures ?
     _vk_view_queue_create_infos : array<VkDeviceQueueCreateInfo>
     _vk_view_p_enabled_features : VkPhysicalDeviceFeatures ?
@@ -2171,10 +2171,10 @@ def vk_view_create_unsafe(var boost_struct : DeviceCreateInfo
     boost_struct._vk_view_queue_create_infos <- [{
         for item in boost_struct.queue_create_infos ;
         item |> vk_view_create_unsafe()}]
-    let vk_enabled_layer_count = uint(boost_struct.p_enabled_layer_names |> length())
-    let vk_p_p_enabled_layer_names = array_addr_unsafe(boost_struct.p_enabled_layer_names)
-    let vk_enabled_extension_count = uint(boost_struct.p_enabled_extension_names |> length())
-    let vk_p_p_enabled_extension_names = array_addr_unsafe(boost_struct.p_enabled_extension_names)
+    let vk_enabled_layer_count = uint(boost_struct.enabled_layer_names |> length())
+    let vk_p_enabled_layer_names = array_addr_unsafe(boost_struct.enabled_layer_names)
+    let vk_enabled_extension_count = uint(boost_struct.enabled_extension_names |> length())
+    let vk_p_enabled_extension_names = array_addr_unsafe(boost_struct.enabled_extension_names)
     if boost_struct.p_enabled_features != null
         boost_struct._vk_view_p_enabled_features = new VkPhysicalDeviceFeatures
         *(boost_struct._vk_view_p_enabled_features) <- (
@@ -2185,9 +2185,9 @@ def vk_view_create_unsafe(var boost_struct : DeviceCreateInfo
         queueCreateInfoCount = vk_queue_create_info_count,
         pQueueCreateInfos = array_addr_unsafe(boost_struct._vk_view_queue_create_infos),
         enabledLayerCount = vk_enabled_layer_count,
-        ppEnabledLayerNames = vk_p_p_enabled_layer_names,
+        ppEnabledLayerNames = vk_p_enabled_layer_names,
         enabledExtensionCount = vk_enabled_extension_count,
-        ppEnabledExtensionNames = vk_p_p_enabled_extension_names,
+        ppEnabledExtensionNames = vk_p_enabled_extension_names,
         pEnabledFeatures = boost_struct._vk_view_p_enabled_features
     ]]
 
@@ -2473,8 +2473,8 @@ def vk_view_destroy(var boost_struct : ImageCreateInfo)
 struct InstanceCreateInfo
     flags : uint
     p_application_info : ApplicationInfo ?
-    p_enabled_layer_names : array<string>
-    p_enabled_extension_names : array<string>
+    enabled_layer_names : array<string>
+    enabled_extension_names : array<string>
     _vk_view_p_application_info : VkApplicationInfo ?
     _vk_view__active : bool
 
@@ -2487,18 +2487,18 @@ def vk_view_create_unsafe(var boost_struct : InstanceCreateInfo
         boost_struct._vk_view_p_application_info = new VkApplicationInfo
         *(boost_struct._vk_view_p_application_info) <- (
             *(boost_struct.p_application_info) |> vk_view_create_unsafe())
-    let vk_enabled_layer_count = uint(boost_struct.p_enabled_layer_names |> length())
-    let vk_p_p_enabled_layer_names = array_addr_unsafe(boost_struct.p_enabled_layer_names)
-    let vk_enabled_extension_count = uint(boost_struct.p_enabled_extension_names |> length())
-    let vk_p_p_enabled_extension_names = array_addr_unsafe(boost_struct.p_enabled_extension_names)
+    let vk_enabled_layer_count = uint(boost_struct.enabled_layer_names |> length())
+    let vk_p_enabled_layer_names = array_addr_unsafe(boost_struct.enabled_layer_names)
+    let vk_enabled_extension_count = uint(boost_struct.enabled_extension_names |> length())
+    let vk_p_enabled_extension_names = array_addr_unsafe(boost_struct.enabled_extension_names)
     return <- [[ VkInstanceCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
         flags = boost_value_to_vk(boost_struct.flags),
         pApplicationInfo = boost_struct._vk_view_p_application_info,
         enabledLayerCount = vk_enabled_layer_count,
-        ppEnabledLayerNames = vk_p_p_enabled_layer_names,
+        ppEnabledLayerNames = vk_p_enabled_layer_names,
         enabledExtensionCount = vk_enabled_extension_count,
-        ppEnabledExtensionNames = vk_p_p_enabled_extension_names
+        ppEnabledExtensionNames = vk_p_enabled_extension_names
     ]]
 
 def vk_view_destroy(var boost_struct : InstanceCreateInfo)
