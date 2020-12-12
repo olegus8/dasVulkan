@@ -338,11 +338,11 @@ def vk_view_create_unsafe(var boost_struct : ApplicationInfo
     boost_struct._vk_view__active = true
     return <- [[ VkApplicationInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_APPLICATION_INFO,
-        pApplicationName <- boost_value_to_vk(boost_struct.application_name),
-        applicationVersion <- boost_value_to_vk(boost_struct.application_version),
-        pEngineName <- boost_value_to_vk(boost_struct.engine_name),
-        engineVersion <- boost_value_to_vk(boost_struct.engine_version),
-        apiVersion <- boost_value_to_vk(boost_struct.api_version)
+        pApplicationName = boost_value_to_vk(boost_struct.application_name),
+        applicationVersion = boost_value_to_vk(boost_struct.application_version),
+        pEngineName = boost_value_to_vk(boost_struct.engine_name),
+        engineVersion = boost_value_to_vk(boost_struct.engine_version),
+        apiVersion = boost_value_to_vk(boost_struct.api_version)
     ]]
 
 def vk_view_destroy(var boost_struct : ApplicationInfo)
@@ -380,15 +380,15 @@ def vk_view_create_unsafe(var boost_struct : AttachmentDescription
     assert(!boost_struct._vk_view__active)
     boost_struct._vk_view__active = true
     return <- [[ VkAttachmentDescription
-        flags <- boost_value_to_vk(boost_struct.flags),
-        format <- boost_value_to_vk(boost_struct.format),
-        samples <- boost_value_to_vk(boost_struct.samples),
-        loadOp <- boost_value_to_vk(boost_struct.load_op),
-        storeOp <- boost_value_to_vk(boost_struct.store_op),
-        stencilLoadOp <- boost_value_to_vk(boost_struct.stencil_load_op),
-        stencilStoreOp <- boost_value_to_vk(boost_struct.stencil_store_op),
-        initialLayout <- boost_value_to_vk(boost_struct.initial_layout),
-        finalLayout <- boost_value_to_vk(boost_struct.final_layout)
+        flags = boost_value_to_vk(boost_struct.flags),
+        format = boost_value_to_vk(boost_struct.format),
+        samples = boost_value_to_vk(boost_struct.samples),
+        loadOp = boost_value_to_vk(boost_struct.load_op),
+        storeOp = boost_value_to_vk(boost_struct.store_op),
+        stencilLoadOp = boost_value_to_vk(boost_struct.stencil_load_op),
+        stencilStoreOp = boost_value_to_vk(boost_struct.stencil_store_op),
+        initialLayout = boost_value_to_vk(boost_struct.initial_layout),
+        finalLayout = boost_value_to_vk(boost_struct.final_layout)
     ]]
 
 def vk_view_destroy(var boost_struct : AttachmentDescription)
@@ -423,8 +423,8 @@ def vk_view_create_unsafe(var boost_struct : AttachmentReference
     assert(!boost_struct._vk_view__active)
     boost_struct._vk_view__active = true
     return <- [[ VkAttachmentReference
-        attachment <- boost_value_to_vk(boost_struct.attachment),
-        layout <- boost_value_to_vk(boost_struct.layout)
+        attachment = boost_value_to_vk(boost_struct.attachment),
+        layout = boost_value_to_vk(boost_struct.layout)
     ]]
 
 def vk_view_destroy(var boost_struct : AttachmentReference)
@@ -453,8 +453,8 @@ def vk_view_create_unsafe(var boost_struct : CommandPoolCreateInfo
     boost_struct._vk_view__active = true
     return <- [[ VkCommandPoolCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO,
-        flags <- boost_value_to_vk(boost_struct.flags),
-        queueFamilyIndex <- boost_value_to_vk(boost_struct.queue_family_index)
+        flags = boost_value_to_vk(boost_struct.flags),
+        queueFamilyIndex = boost_value_to_vk(boost_struct.queue_family_index)
     ]]
 
 def vk_view_destroy(var boost_struct : CommandPoolCreateInfo)
@@ -484,10 +484,10 @@ def vk_view_create_unsafe(var boost_struct : ComponentMapping
     assert(!boost_struct._vk_view__active)
     boost_struct._vk_view__active = true
     return <- [[ VkComponentMapping
-        r <- boost_value_to_vk(boost_struct.r),
-        g <- boost_value_to_vk(boost_struct.g),
-        b <- boost_value_to_vk(boost_struct.b),
-        a <- boost_value_to_vk(boost_struct.a)
+        r = boost_value_to_vk(boost_struct.r),
+        g = boost_value_to_vk(boost_struct.g),
+        b = boost_value_to_vk(boost_struct.b),
+        a = boost_value_to_vk(boost_struct.a)
     ]]
 
 def vk_view_destroy(var boost_struct : ComponentMapping)
@@ -517,8 +517,8 @@ def vk_view_create_unsafe(var boost_struct : ExtensionProperties
     assert(!boost_struct._vk_view__active)
     boost_struct._vk_view__active = true
     return <- [[ VkExtensionProperties
-        extensionName <- boost_value_to_vk(boost_struct.extension_name),
-        specVersion <- boost_value_to_vk(boost_struct.spec_version)
+        extensionName = boost_value_to_vk(boost_struct.extension_name),
+        specVersion = boost_value_to_vk(boost_struct.spec_version)
     ]]
 
 def vk_view_destroy(var boost_struct : ExtensionProperties)
@@ -546,8 +546,8 @@ def vk_view_create_unsafe(var boost_struct : Extent2D
     assert(!boost_struct._vk_view__active)
     boost_struct._vk_view__active = true
     return <- [[ VkExtent2D
-        width <- boost_value_to_vk(boost_struct.width),
-        height <- boost_value_to_vk(boost_struct.height)
+        width = boost_value_to_vk(boost_struct.width),
+        height = boost_value_to_vk(boost_struct.height)
     ]]
 
 def vk_view_destroy(var boost_struct : Extent2D)
@@ -576,9 +576,9 @@ def vk_view_create_unsafe(var boost_struct : Extent3D
     assert(!boost_struct._vk_view__active)
     boost_struct._vk_view__active = true
     return <- [[ VkExtent3D
-        width <- boost_value_to_vk(boost_struct.width),
-        height <- boost_value_to_vk(boost_struct.height),
-        depth <- boost_value_to_vk(boost_struct.depth)
+        width = boost_value_to_vk(boost_struct.width),
+        height = boost_value_to_vk(boost_struct.height),
+        depth = boost_value_to_vk(boost_struct.depth)
     ]]
 
 def vk_view_destroy(var boost_struct : Extent3D)
@@ -607,7 +607,7 @@ def vk_view_create_unsafe(var boost_struct : FenceCreateInfo
     boost_struct._vk_view__active = true
     return <- [[ VkFenceCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_FENCE_CREATE_INFO,
-        flags <- boost_value_to_vk(boost_struct.flags)
+        flags = boost_value_to_vk(boost_struct.flags)
     ]]
 
 def vk_view_destroy(var boost_struct : FenceCreateInfo)
@@ -637,11 +637,11 @@ def vk_view_create_unsafe(var boost_struct : ImageSubresourceRange
     assert(!boost_struct._vk_view__active)
     boost_struct._vk_view__active = true
     return <- [[ VkImageSubresourceRange
-        aspectMask <- boost_value_to_vk(boost_struct.aspect_mask),
-        baseMipLevel <- boost_value_to_vk(boost_struct.base_mip_level),
-        levelCount <- boost_value_to_vk(boost_struct.level_count),
-        baseArrayLayer <- boost_value_to_vk(boost_struct.base_array_layer),
-        layerCount <- boost_value_to_vk(boost_struct.layer_count)
+        aspectMask = boost_value_to_vk(boost_struct.aspect_mask),
+        baseMipLevel = boost_value_to_vk(boost_struct.base_mip_level),
+        levelCount = boost_value_to_vk(boost_struct.level_count),
+        baseArrayLayer = boost_value_to_vk(boost_struct.base_array_layer),
+        layerCount = boost_value_to_vk(boost_struct.layer_count)
     ]]
 
 def vk_view_destroy(var boost_struct : ImageSubresourceRange)
@@ -685,10 +685,10 @@ def vk_view_create_unsafe(var boost_struct : ImageViewCreateInfo
         boost_struct.subresource_range |> vk_view_create_unsafe())
     return <- [[ VkImageViewCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO,
-        flags <- boost_value_to_vk(boost_struct.flags),
-        image <- boost_value_to_vk(boost_struct.image),
-        viewType <- boost_value_to_vk(boost_struct.view_type),
-        format <- boost_value_to_vk(boost_struct.format),
+        flags = boost_value_to_vk(boost_struct.flags),
+        image = boost_value_to_vk(boost_struct.image),
+        viewType = boost_value_to_vk(boost_struct.view_type),
+        format = boost_value_to_vk(boost_struct.format),
         components = *(boost_struct._vk_view_p_components),
         subresourceRange = *(boost_struct._vk_view_p_subresource_range)
     ]]
@@ -728,8 +728,8 @@ def vk_view_create_unsafe(var boost_struct : Offset2D
     assert(!boost_struct._vk_view__active)
     boost_struct._vk_view__active = true
     return <- [[ VkOffset2D
-        x <- boost_value_to_vk(boost_struct.x),
-        y <- boost_value_to_vk(boost_struct.y)
+        x = boost_value_to_vk(boost_struct.x),
+        y = boost_value_to_vk(boost_struct.y)
     ]]
 
 def vk_view_destroy(var boost_struct : Offset2D)
@@ -861,112 +861,112 @@ def vk_view_create_unsafe(var boost_struct : PhysicalDeviceLimits
     assert(!boost_struct._vk_view__active)
     boost_struct._vk_view__active = true
     return <- [[ VkPhysicalDeviceLimits
-        maxImageDimension1D <- boost_value_to_vk(boost_struct.max_image_dimension_1d),
-        maxImageDimension2D <- boost_value_to_vk(boost_struct.max_image_dimension_2d),
-        maxImageDimension3D <- boost_value_to_vk(boost_struct.max_image_dimension_3d),
-        maxImageDimensionCube <- boost_value_to_vk(boost_struct.max_image_dimension_cube),
-        maxImageArrayLayers <- boost_value_to_vk(boost_struct.max_image_array_layers),
-        maxTexelBufferElements <- boost_value_to_vk(boost_struct.max_texel_buffer_elements),
-        maxUniformBufferRange <- boost_value_to_vk(boost_struct.max_uniform_buffer_range),
-        maxStorageBufferRange <- boost_value_to_vk(boost_struct.max_storage_buffer_range),
-        maxPushConstantsSize <- boost_value_to_vk(boost_struct.max_push_constants_size),
-        maxMemoryAllocationCount <- boost_value_to_vk(boost_struct.max_memory_allocation_count),
-        maxSamplerAllocationCount <- boost_value_to_vk(boost_struct.max_sampler_allocation_count),
-        bufferImageGranularity <- boost_value_to_vk(boost_struct.buffer_image_granularity),
-        sparseAddressSpaceSize <- boost_value_to_vk(boost_struct.sparse_address_space_size),
-        maxBoundDescriptorSets <- boost_value_to_vk(boost_struct.max_bound_descriptor_sets),
-        maxPerStageDescriptorSamplers <- boost_value_to_vk(boost_struct.max_per_stage_descriptor_samplers),
-        maxPerStageDescriptorUniformBuffers <- boost_value_to_vk(boost_struct.max_per_stage_descriptor_uniform_buffers),
-        maxPerStageDescriptorStorageBuffers <- boost_value_to_vk(boost_struct.max_per_stage_descriptor_storage_buffers),
-        maxPerStageDescriptorSampledImages <- boost_value_to_vk(boost_struct.max_per_stage_descriptor_sampled_images),
-        maxPerStageDescriptorStorageImages <- boost_value_to_vk(boost_struct.max_per_stage_descriptor_storage_images),
-        maxPerStageDescriptorInputAttachments <- boost_value_to_vk(boost_struct.max_per_stage_descriptor_input_attachments),
-        maxPerStageResources <- boost_value_to_vk(boost_struct.max_per_stage_resources),
-        maxDescriptorSetSamplers <- boost_value_to_vk(boost_struct.max_descriptor_set_samplers),
-        maxDescriptorSetUniformBuffers <- boost_value_to_vk(boost_struct.max_descriptor_set_uniform_buffers),
-        maxDescriptorSetUniformBuffersDynamic <- boost_value_to_vk(boost_struct.max_descriptor_set_uniform_buffers_dynamic),
-        maxDescriptorSetStorageBuffers <- boost_value_to_vk(boost_struct.max_descriptor_set_storage_buffers),
-        maxDescriptorSetStorageBuffersDynamic <- boost_value_to_vk(boost_struct.max_descriptor_set_storage_buffers_dynamic),
-        maxDescriptorSetSampledImages <- boost_value_to_vk(boost_struct.max_descriptor_set_sampled_images),
-        maxDescriptorSetStorageImages <- boost_value_to_vk(boost_struct.max_descriptor_set_storage_images),
-        maxDescriptorSetInputAttachments <- boost_value_to_vk(boost_struct.max_descriptor_set_input_attachments),
-        maxVertexInputAttributes <- boost_value_to_vk(boost_struct.max_vertex_input_attributes),
-        maxVertexInputBindings <- boost_value_to_vk(boost_struct.max_vertex_input_bindings),
-        maxVertexInputAttributeOffset <- boost_value_to_vk(boost_struct.max_vertex_input_attribute_offset),
-        maxVertexInputBindingStride <- boost_value_to_vk(boost_struct.max_vertex_input_binding_stride),
-        maxVertexOutputComponents <- boost_value_to_vk(boost_struct.max_vertex_output_components),
-        maxTessellationGenerationLevel <- boost_value_to_vk(boost_struct.max_tessellation_generation_level),
-        maxTessellationPatchSize <- boost_value_to_vk(boost_struct.max_tessellation_patch_size),
-        maxTessellationControlPerVertexInputComponents <- boost_value_to_vk(boost_struct.max_tessellation_control_per_vertex_input_components),
-        maxTessellationControlPerVertexOutputComponents <- boost_value_to_vk(boost_struct.max_tessellation_control_per_vertex_output_components),
-        maxTessellationControlPerPatchOutputComponents <- boost_value_to_vk(boost_struct.max_tessellation_control_per_patch_output_components),
-        maxTessellationControlTotalOutputComponents <- boost_value_to_vk(boost_struct.max_tessellation_control_total_output_components),
-        maxTessellationEvaluationInputComponents <- boost_value_to_vk(boost_struct.max_tessellation_evaluation_input_components),
-        maxTessellationEvaluationOutputComponents <- boost_value_to_vk(boost_struct.max_tessellation_evaluation_output_components),
-        maxGeometryShaderInvocations <- boost_value_to_vk(boost_struct.max_geometry_shader_invocations),
-        maxGeometryInputComponents <- boost_value_to_vk(boost_struct.max_geometry_input_components),
-        maxGeometryOutputComponents <- boost_value_to_vk(boost_struct.max_geometry_output_components),
-        maxGeometryOutputVertices <- boost_value_to_vk(boost_struct.max_geometry_output_vertices),
-        maxGeometryTotalOutputComponents <- boost_value_to_vk(boost_struct.max_geometry_total_output_components),
-        maxFragmentInputComponents <- boost_value_to_vk(boost_struct.max_fragment_input_components),
-        maxFragmentOutputAttachments <- boost_value_to_vk(boost_struct.max_fragment_output_attachments),
-        maxFragmentDualSrcAttachments <- boost_value_to_vk(boost_struct.max_fragment_dual_src_attachments),
-        maxFragmentCombinedOutputResources <- boost_value_to_vk(boost_struct.max_fragment_combined_output_resources),
-        maxComputeSharedMemorySize <- boost_value_to_vk(boost_struct.max_compute_shared_memory_size),
-        maxComputeWorkGroupCount <- boost_value_to_vk(boost_struct.max_compute_work_group_count),
-        maxComputeWorkGroupInvocations <- boost_value_to_vk(boost_struct.max_compute_work_group_invocations),
-        maxComputeWorkGroupSize <- boost_value_to_vk(boost_struct.max_compute_work_group_size),
-        subPixelPrecisionBits <- boost_value_to_vk(boost_struct.sub_pixel_precision_bits),
-        subTexelPrecisionBits <- boost_value_to_vk(boost_struct.sub_texel_precision_bits),
-        mipmapPrecisionBits <- boost_value_to_vk(boost_struct.mipmap_precision_bits),
-        maxDrawIndexedIndexValue <- boost_value_to_vk(boost_struct.max_draw_indexed_index_value),
-        maxDrawIndirectCount <- boost_value_to_vk(boost_struct.max_draw_indirect_count),
-        maxSamplerLodBias <- boost_value_to_vk(boost_struct.max_sampler_lod_bias),
-        maxSamplerAnisotropy <- boost_value_to_vk(boost_struct.max_sampler_anisotropy),
-        maxViewports <- boost_value_to_vk(boost_struct.max_viewports),
-        maxViewportDimensions <- boost_value_to_vk(boost_struct.max_viewport_dimensions),
-        viewportBoundsRange <- boost_value_to_vk(boost_struct.viewport_bounds_range),
-        viewportSubPixelBits <- boost_value_to_vk(boost_struct.viewport_sub_pixel_bits),
-        minMemoryMapAlignment <- boost_value_to_vk(boost_struct.min_memory_map_alignment),
-        minTexelBufferOffsetAlignment <- boost_value_to_vk(boost_struct.min_texel_buffer_offset_alignment),
-        minUniformBufferOffsetAlignment <- boost_value_to_vk(boost_struct.min_uniform_buffer_offset_alignment),
-        minStorageBufferOffsetAlignment <- boost_value_to_vk(boost_struct.min_storage_buffer_offset_alignment),
-        minTexelOffset <- boost_value_to_vk(boost_struct.min_texel_offset),
-        maxTexelOffset <- boost_value_to_vk(boost_struct.max_texel_offset),
-        minTexelGatherOffset <- boost_value_to_vk(boost_struct.min_texel_gather_offset),
-        maxTexelGatherOffset <- boost_value_to_vk(boost_struct.max_texel_gather_offset),
-        minInterpolationOffset <- boost_value_to_vk(boost_struct.min_interpolation_offset),
-        maxInterpolationOffset <- boost_value_to_vk(boost_struct.max_interpolation_offset),
-        subPixelInterpolationOffsetBits <- boost_value_to_vk(boost_struct.sub_pixel_interpolation_offset_bits),
-        maxFramebufferWidth <- boost_value_to_vk(boost_struct.max_framebuffer_width),
-        maxFramebufferHeight <- boost_value_to_vk(boost_struct.max_framebuffer_height),
-        maxFramebufferLayers <- boost_value_to_vk(boost_struct.max_framebuffer_layers),
-        framebufferColorSampleCounts <- boost_value_to_vk(boost_struct.framebuffer_color_sample_counts),
-        framebufferDepthSampleCounts <- boost_value_to_vk(boost_struct.framebuffer_depth_sample_counts),
-        framebufferStencilSampleCounts <- boost_value_to_vk(boost_struct.framebuffer_stencil_sample_counts),
-        framebufferNoAttachmentsSampleCounts <- boost_value_to_vk(boost_struct.framebuffer_no_attachments_sample_counts),
-        maxColorAttachments <- boost_value_to_vk(boost_struct.max_color_attachments),
-        sampledImageColorSampleCounts <- boost_value_to_vk(boost_struct.sampled_image_color_sample_counts),
-        sampledImageIntegerSampleCounts <- boost_value_to_vk(boost_struct.sampled_image_integer_sample_counts),
-        sampledImageDepthSampleCounts <- boost_value_to_vk(boost_struct.sampled_image_depth_sample_counts),
-        sampledImageStencilSampleCounts <- boost_value_to_vk(boost_struct.sampled_image_stencil_sample_counts),
-        storageImageSampleCounts <- boost_value_to_vk(boost_struct.storage_image_sample_counts),
-        maxSampleMaskWords <- boost_value_to_vk(boost_struct.max_sample_mask_words),
-        timestampComputeAndGraphics <- boost_value_to_vk(boost_struct.timestamp_compute_and_graphics),
-        timestampPeriod <- boost_value_to_vk(boost_struct.timestamp_period),
-        maxClipDistances <- boost_value_to_vk(boost_struct.max_clip_distances),
-        maxCullDistances <- boost_value_to_vk(boost_struct.max_cull_distances),
-        maxCombinedClipAndCullDistances <- boost_value_to_vk(boost_struct.max_combined_clip_and_cull_distances),
-        discreteQueuePriorities <- boost_value_to_vk(boost_struct.discrete_queue_priorities),
-        pointSizeRange <- boost_value_to_vk(boost_struct.point_size_range),
-        lineWidthRange <- boost_value_to_vk(boost_struct.line_width_range),
-        pointSizeGranularity <- boost_value_to_vk(boost_struct.point_size_granularity),
-        lineWidthGranularity <- boost_value_to_vk(boost_struct.line_width_granularity),
-        strictLines <- boost_value_to_vk(boost_struct.strict_lines),
-        standardSampleLocations <- boost_value_to_vk(boost_struct.standard_sample_locations),
-        optimalBufferCopyOffsetAlignment <- boost_value_to_vk(boost_struct.optimal_buffer_copy_offset_alignment),
-        optimalBufferCopyRowPitchAlignment <- boost_value_to_vk(boost_struct.optimal_buffer_copy_row_pitch_alignment),
-        nonCoherentAtomSize <- boost_value_to_vk(boost_struct.non_coherent_atom_size)
+        maxImageDimension1D = boost_value_to_vk(boost_struct.max_image_dimension_1d),
+        maxImageDimension2D = boost_value_to_vk(boost_struct.max_image_dimension_2d),
+        maxImageDimension3D = boost_value_to_vk(boost_struct.max_image_dimension_3d),
+        maxImageDimensionCube = boost_value_to_vk(boost_struct.max_image_dimension_cube),
+        maxImageArrayLayers = boost_value_to_vk(boost_struct.max_image_array_layers),
+        maxTexelBufferElements = boost_value_to_vk(boost_struct.max_texel_buffer_elements),
+        maxUniformBufferRange = boost_value_to_vk(boost_struct.max_uniform_buffer_range),
+        maxStorageBufferRange = boost_value_to_vk(boost_struct.max_storage_buffer_range),
+        maxPushConstantsSize = boost_value_to_vk(boost_struct.max_push_constants_size),
+        maxMemoryAllocationCount = boost_value_to_vk(boost_struct.max_memory_allocation_count),
+        maxSamplerAllocationCount = boost_value_to_vk(boost_struct.max_sampler_allocation_count),
+        bufferImageGranularity = boost_value_to_vk(boost_struct.buffer_image_granularity),
+        sparseAddressSpaceSize = boost_value_to_vk(boost_struct.sparse_address_space_size),
+        maxBoundDescriptorSets = boost_value_to_vk(boost_struct.max_bound_descriptor_sets),
+        maxPerStageDescriptorSamplers = boost_value_to_vk(boost_struct.max_per_stage_descriptor_samplers),
+        maxPerStageDescriptorUniformBuffers = boost_value_to_vk(boost_struct.max_per_stage_descriptor_uniform_buffers),
+        maxPerStageDescriptorStorageBuffers = boost_value_to_vk(boost_struct.max_per_stage_descriptor_storage_buffers),
+        maxPerStageDescriptorSampledImages = boost_value_to_vk(boost_struct.max_per_stage_descriptor_sampled_images),
+        maxPerStageDescriptorStorageImages = boost_value_to_vk(boost_struct.max_per_stage_descriptor_storage_images),
+        maxPerStageDescriptorInputAttachments = boost_value_to_vk(boost_struct.max_per_stage_descriptor_input_attachments),
+        maxPerStageResources = boost_value_to_vk(boost_struct.max_per_stage_resources),
+        maxDescriptorSetSamplers = boost_value_to_vk(boost_struct.max_descriptor_set_samplers),
+        maxDescriptorSetUniformBuffers = boost_value_to_vk(boost_struct.max_descriptor_set_uniform_buffers),
+        maxDescriptorSetUniformBuffersDynamic = boost_value_to_vk(boost_struct.max_descriptor_set_uniform_buffers_dynamic),
+        maxDescriptorSetStorageBuffers = boost_value_to_vk(boost_struct.max_descriptor_set_storage_buffers),
+        maxDescriptorSetStorageBuffersDynamic = boost_value_to_vk(boost_struct.max_descriptor_set_storage_buffers_dynamic),
+        maxDescriptorSetSampledImages = boost_value_to_vk(boost_struct.max_descriptor_set_sampled_images),
+        maxDescriptorSetStorageImages = boost_value_to_vk(boost_struct.max_descriptor_set_storage_images),
+        maxDescriptorSetInputAttachments = boost_value_to_vk(boost_struct.max_descriptor_set_input_attachments),
+        maxVertexInputAttributes = boost_value_to_vk(boost_struct.max_vertex_input_attributes),
+        maxVertexInputBindings = boost_value_to_vk(boost_struct.max_vertex_input_bindings),
+        maxVertexInputAttributeOffset = boost_value_to_vk(boost_struct.max_vertex_input_attribute_offset),
+        maxVertexInputBindingStride = boost_value_to_vk(boost_struct.max_vertex_input_binding_stride),
+        maxVertexOutputComponents = boost_value_to_vk(boost_struct.max_vertex_output_components),
+        maxTessellationGenerationLevel = boost_value_to_vk(boost_struct.max_tessellation_generation_level),
+        maxTessellationPatchSize = boost_value_to_vk(boost_struct.max_tessellation_patch_size),
+        maxTessellationControlPerVertexInputComponents = boost_value_to_vk(boost_struct.max_tessellation_control_per_vertex_input_components),
+        maxTessellationControlPerVertexOutputComponents = boost_value_to_vk(boost_struct.max_tessellation_control_per_vertex_output_components),
+        maxTessellationControlPerPatchOutputComponents = boost_value_to_vk(boost_struct.max_tessellation_control_per_patch_output_components),
+        maxTessellationControlTotalOutputComponents = boost_value_to_vk(boost_struct.max_tessellation_control_total_output_components),
+        maxTessellationEvaluationInputComponents = boost_value_to_vk(boost_struct.max_tessellation_evaluation_input_components),
+        maxTessellationEvaluationOutputComponents = boost_value_to_vk(boost_struct.max_tessellation_evaluation_output_components),
+        maxGeometryShaderInvocations = boost_value_to_vk(boost_struct.max_geometry_shader_invocations),
+        maxGeometryInputComponents = boost_value_to_vk(boost_struct.max_geometry_input_components),
+        maxGeometryOutputComponents = boost_value_to_vk(boost_struct.max_geometry_output_components),
+        maxGeometryOutputVertices = boost_value_to_vk(boost_struct.max_geometry_output_vertices),
+        maxGeometryTotalOutputComponents = boost_value_to_vk(boost_struct.max_geometry_total_output_components),
+        maxFragmentInputComponents = boost_value_to_vk(boost_struct.max_fragment_input_components),
+        maxFragmentOutputAttachments = boost_value_to_vk(boost_struct.max_fragment_output_attachments),
+        maxFragmentDualSrcAttachments = boost_value_to_vk(boost_struct.max_fragment_dual_src_attachments),
+        maxFragmentCombinedOutputResources = boost_value_to_vk(boost_struct.max_fragment_combined_output_resources),
+        maxComputeSharedMemorySize = boost_value_to_vk(boost_struct.max_compute_shared_memory_size),
+        maxComputeWorkGroupCount = boost_value_to_vk(boost_struct.max_compute_work_group_count),
+        maxComputeWorkGroupInvocations = boost_value_to_vk(boost_struct.max_compute_work_group_invocations),
+        maxComputeWorkGroupSize = boost_value_to_vk(boost_struct.max_compute_work_group_size),
+        subPixelPrecisionBits = boost_value_to_vk(boost_struct.sub_pixel_precision_bits),
+        subTexelPrecisionBits = boost_value_to_vk(boost_struct.sub_texel_precision_bits),
+        mipmapPrecisionBits = boost_value_to_vk(boost_struct.mipmap_precision_bits),
+        maxDrawIndexedIndexValue = boost_value_to_vk(boost_struct.max_draw_indexed_index_value),
+        maxDrawIndirectCount = boost_value_to_vk(boost_struct.max_draw_indirect_count),
+        maxSamplerLodBias = boost_value_to_vk(boost_struct.max_sampler_lod_bias),
+        maxSamplerAnisotropy = boost_value_to_vk(boost_struct.max_sampler_anisotropy),
+        maxViewports = boost_value_to_vk(boost_struct.max_viewports),
+        maxViewportDimensions = boost_value_to_vk(boost_struct.max_viewport_dimensions),
+        viewportBoundsRange = boost_value_to_vk(boost_struct.viewport_bounds_range),
+        viewportSubPixelBits = boost_value_to_vk(boost_struct.viewport_sub_pixel_bits),
+        minMemoryMapAlignment = boost_value_to_vk(boost_struct.min_memory_map_alignment),
+        minTexelBufferOffsetAlignment = boost_value_to_vk(boost_struct.min_texel_buffer_offset_alignment),
+        minUniformBufferOffsetAlignment = boost_value_to_vk(boost_struct.min_uniform_buffer_offset_alignment),
+        minStorageBufferOffsetAlignment = boost_value_to_vk(boost_struct.min_storage_buffer_offset_alignment),
+        minTexelOffset = boost_value_to_vk(boost_struct.min_texel_offset),
+        maxTexelOffset = boost_value_to_vk(boost_struct.max_texel_offset),
+        minTexelGatherOffset = boost_value_to_vk(boost_struct.min_texel_gather_offset),
+        maxTexelGatherOffset = boost_value_to_vk(boost_struct.max_texel_gather_offset),
+        minInterpolationOffset = boost_value_to_vk(boost_struct.min_interpolation_offset),
+        maxInterpolationOffset = boost_value_to_vk(boost_struct.max_interpolation_offset),
+        subPixelInterpolationOffsetBits = boost_value_to_vk(boost_struct.sub_pixel_interpolation_offset_bits),
+        maxFramebufferWidth = boost_value_to_vk(boost_struct.max_framebuffer_width),
+        maxFramebufferHeight = boost_value_to_vk(boost_struct.max_framebuffer_height),
+        maxFramebufferLayers = boost_value_to_vk(boost_struct.max_framebuffer_layers),
+        framebufferColorSampleCounts = boost_value_to_vk(boost_struct.framebuffer_color_sample_counts),
+        framebufferDepthSampleCounts = boost_value_to_vk(boost_struct.framebuffer_depth_sample_counts),
+        framebufferStencilSampleCounts = boost_value_to_vk(boost_struct.framebuffer_stencil_sample_counts),
+        framebufferNoAttachmentsSampleCounts = boost_value_to_vk(boost_struct.framebuffer_no_attachments_sample_counts),
+        maxColorAttachments = boost_value_to_vk(boost_struct.max_color_attachments),
+        sampledImageColorSampleCounts = boost_value_to_vk(boost_struct.sampled_image_color_sample_counts),
+        sampledImageIntegerSampleCounts = boost_value_to_vk(boost_struct.sampled_image_integer_sample_counts),
+        sampledImageDepthSampleCounts = boost_value_to_vk(boost_struct.sampled_image_depth_sample_counts),
+        sampledImageStencilSampleCounts = boost_value_to_vk(boost_struct.sampled_image_stencil_sample_counts),
+        storageImageSampleCounts = boost_value_to_vk(boost_struct.storage_image_sample_counts),
+        maxSampleMaskWords = boost_value_to_vk(boost_struct.max_sample_mask_words),
+        timestampComputeAndGraphics = boost_value_to_vk(boost_struct.timestamp_compute_and_graphics),
+        timestampPeriod = boost_value_to_vk(boost_struct.timestamp_period),
+        maxClipDistances = boost_value_to_vk(boost_struct.max_clip_distances),
+        maxCullDistances = boost_value_to_vk(boost_struct.max_cull_distances),
+        maxCombinedClipAndCullDistances = boost_value_to_vk(boost_struct.max_combined_clip_and_cull_distances),
+        discreteQueuePriorities = boost_value_to_vk(boost_struct.discrete_queue_priorities),
+        pointSizeRange = boost_value_to_vk(boost_struct.point_size_range),
+        lineWidthRange = boost_value_to_vk(boost_struct.line_width_range),
+        pointSizeGranularity = boost_value_to_vk(boost_struct.point_size_granularity),
+        lineWidthGranularity = boost_value_to_vk(boost_struct.line_width_granularity),
+        strictLines = boost_value_to_vk(boost_struct.strict_lines),
+        standardSampleLocations = boost_value_to_vk(boost_struct.standard_sample_locations),
+        optimalBufferCopyOffsetAlignment = boost_value_to_vk(boost_struct.optimal_buffer_copy_offset_alignment),
+        optimalBufferCopyRowPitchAlignment = boost_value_to_vk(boost_struct.optimal_buffer_copy_row_pitch_alignment),
+        nonCoherentAtomSize = boost_value_to_vk(boost_struct.non_coherent_atom_size)
     ]]
 
 def vk_view_destroy(var boost_struct : PhysicalDeviceLimits)
@@ -1113,13 +1113,13 @@ def vk_view_create_unsafe(var boost_struct : PhysicalDeviceProperties
     *(boost_struct._vk_view_p_sparse_properties) <- (
         boost_struct.sparse_properties |> vk_view_create_unsafe())
     return <- [[ VkPhysicalDeviceProperties
-        apiVersion <- boost_value_to_vk(boost_struct.api_version),
-        driverVersion <- boost_value_to_vk(boost_struct.driver_version),
-        vendorID <- boost_value_to_vk(boost_struct.vendor_id),
-        deviceID <- boost_value_to_vk(boost_struct.device_id),
-        deviceType <- boost_value_to_vk(boost_struct.device_type),
-        deviceName <- boost_value_to_vk(boost_struct.device_name),
-        pipelineCacheUUID <- boost_value_to_vk(boost_struct.pipeline_cache_uuid),
+        apiVersion = boost_value_to_vk(boost_struct.api_version),
+        driverVersion = boost_value_to_vk(boost_struct.driver_version),
+        vendorID = boost_value_to_vk(boost_struct.vendor_id),
+        deviceID = boost_value_to_vk(boost_struct.device_id),
+        deviceType = boost_value_to_vk(boost_struct.device_type),
+        deviceName = boost_value_to_vk(boost_struct.device_name),
+        pipelineCacheUUID = boost_value_to_vk(boost_struct.pipeline_cache_uuid),
         limits = *(boost_struct._vk_view_p_limits),
         sparseProperties = *(boost_struct._vk_view_p_sparse_properties)
     ]]
@@ -1215,61 +1215,61 @@ def vk_view_create_unsafe(var boost_struct : PhysicalDeviceFeatures
     assert(!boost_struct._vk_view__active)
     boost_struct._vk_view__active = true
     return <- [[ VkPhysicalDeviceFeatures
-        robustBufferAccess <- boost_value_to_vk(boost_struct.robust_buffer_access),
-        fullDrawIndexUint32 <- boost_value_to_vk(boost_struct.full_draw_index_uint_32),
-        imageCubeArray <- boost_value_to_vk(boost_struct.image_cube_array),
-        independentBlend <- boost_value_to_vk(boost_struct.independent_blend),
-        geometryShader <- boost_value_to_vk(boost_struct.geometry_shader),
-        tessellationShader <- boost_value_to_vk(boost_struct.tessellation_shader),
-        sampleRateShading <- boost_value_to_vk(boost_struct.sample_rate_shading),
-        dualSrcBlend <- boost_value_to_vk(boost_struct.dual_src_blend),
-        logicOp <- boost_value_to_vk(boost_struct.logic_op),
-        multiDrawIndirect <- boost_value_to_vk(boost_struct.multi_draw_indirect),
-        drawIndirectFirstInstance <- boost_value_to_vk(boost_struct.draw_indirect_first_instance),
-        depthClamp <- boost_value_to_vk(boost_struct.depth_clamp),
-        depthBiasClamp <- boost_value_to_vk(boost_struct.depth_bias_clamp),
-        fillModeNonSolid <- boost_value_to_vk(boost_struct.fill_mode_non_solid),
-        depthBounds <- boost_value_to_vk(boost_struct.depth_bounds),
-        wideLines <- boost_value_to_vk(boost_struct.wide_lines),
-        largePoints <- boost_value_to_vk(boost_struct.large_points),
-        alphaToOne <- boost_value_to_vk(boost_struct.alpha_to_one),
-        multiViewport <- boost_value_to_vk(boost_struct.multi_viewport),
-        samplerAnisotropy <- boost_value_to_vk(boost_struct.sampler_anisotropy),
-        textureCompressionETC2 <- boost_value_to_vk(boost_struct.texture_compression_etc2),
-        textureCompressionASTC_LDR <- boost_value_to_vk(boost_struct.texture_compression_astc_ldr),
-        textureCompressionBC <- boost_value_to_vk(boost_struct.texture_compression_bc),
-        occlusionQueryPrecise <- boost_value_to_vk(boost_struct.occlusion_query_precise),
-        pipelineStatisticsQuery <- boost_value_to_vk(boost_struct.pipeline_statistics_query),
-        vertexPipelineStoresAndAtomics <- boost_value_to_vk(boost_struct.vertex_pipeline_stores_and_atomics),
-        fragmentStoresAndAtomics <- boost_value_to_vk(boost_struct.fragment_stores_and_atomics),
-        shaderTessellationAndGeometryPointSize <- boost_value_to_vk(boost_struct.shader_tessellation_and_geometry_point_size),
-        shaderImageGatherExtended <- boost_value_to_vk(boost_struct.shader_image_gather_extended),
-        shaderStorageImageExtendedFormats <- boost_value_to_vk(boost_struct.shader_storage_image_extended_formats),
-        shaderStorageImageMultisample <- boost_value_to_vk(boost_struct.shader_storage_image_multisample),
-        shaderStorageImageReadWithoutFormat <- boost_value_to_vk(boost_struct.shader_storage_image_read_without_format),
-        shaderStorageImageWriteWithoutFormat <- boost_value_to_vk(boost_struct.shader_storage_image_write_without_format),
-        shaderUniformBufferArrayDynamicIndexing <- boost_value_to_vk(boost_struct.shader_uniform_buffer_array_dynamic_indexing),
-        shaderSampledImageArrayDynamicIndexing <- boost_value_to_vk(boost_struct.shader_sampled_image_array_dynamic_indexing),
-        shaderStorageBufferArrayDynamicIndexing <- boost_value_to_vk(boost_struct.shader_storage_buffer_array_dynamic_indexing),
-        shaderStorageImageArrayDynamicIndexing <- boost_value_to_vk(boost_struct.shader_storage_image_array_dynamic_indexing),
-        shaderClipDistance <- boost_value_to_vk(boost_struct.shader_clip_distance),
-        shaderCullDistance <- boost_value_to_vk(boost_struct.shader_cull_distance),
-        shaderFloat64 <- boost_value_to_vk(boost_struct.shader_float_64),
-        shaderInt64 <- boost_value_to_vk(boost_struct.shader_int_64),
-        shaderInt16 <- boost_value_to_vk(boost_struct.shader_int_16),
-        shaderResourceResidency <- boost_value_to_vk(boost_struct.shader_resource_residency),
-        shaderResourceMinLod <- boost_value_to_vk(boost_struct.shader_resource_min_lod),
-        sparseBinding <- boost_value_to_vk(boost_struct.sparse_binding),
-        sparseResidencyBuffer <- boost_value_to_vk(boost_struct.sparse_residency_buffer),
-        sparseResidencyImage2D <- boost_value_to_vk(boost_struct.sparse_residency_image_2d),
-        sparseResidencyImage3D <- boost_value_to_vk(boost_struct.sparse_residency_image_3d),
-        sparseResidency2Samples <- boost_value_to_vk(boost_struct.sparse_residency_2samples),
-        sparseResidency4Samples <- boost_value_to_vk(boost_struct.sparse_residency_4samples),
-        sparseResidency8Samples <- boost_value_to_vk(boost_struct.sparse_residency_8samples),
-        sparseResidency16Samples <- boost_value_to_vk(boost_struct.sparse_residency_16samples),
-        sparseResidencyAliased <- boost_value_to_vk(boost_struct.sparse_residency_aliased),
-        variableMultisampleRate <- boost_value_to_vk(boost_struct.variable_multisample_rate),
-        inheritedQueries <- boost_value_to_vk(boost_struct.inherited_queries)
+        robustBufferAccess = boost_value_to_vk(boost_struct.robust_buffer_access),
+        fullDrawIndexUint32 = boost_value_to_vk(boost_struct.full_draw_index_uint_32),
+        imageCubeArray = boost_value_to_vk(boost_struct.image_cube_array),
+        independentBlend = boost_value_to_vk(boost_struct.independent_blend),
+        geometryShader = boost_value_to_vk(boost_struct.geometry_shader),
+        tessellationShader = boost_value_to_vk(boost_struct.tessellation_shader),
+        sampleRateShading = boost_value_to_vk(boost_struct.sample_rate_shading),
+        dualSrcBlend = boost_value_to_vk(boost_struct.dual_src_blend),
+        logicOp = boost_value_to_vk(boost_struct.logic_op),
+        multiDrawIndirect = boost_value_to_vk(boost_struct.multi_draw_indirect),
+        drawIndirectFirstInstance = boost_value_to_vk(boost_struct.draw_indirect_first_instance),
+        depthClamp = boost_value_to_vk(boost_struct.depth_clamp),
+        depthBiasClamp = boost_value_to_vk(boost_struct.depth_bias_clamp),
+        fillModeNonSolid = boost_value_to_vk(boost_struct.fill_mode_non_solid),
+        depthBounds = boost_value_to_vk(boost_struct.depth_bounds),
+        wideLines = boost_value_to_vk(boost_struct.wide_lines),
+        largePoints = boost_value_to_vk(boost_struct.large_points),
+        alphaToOne = boost_value_to_vk(boost_struct.alpha_to_one),
+        multiViewport = boost_value_to_vk(boost_struct.multi_viewport),
+        samplerAnisotropy = boost_value_to_vk(boost_struct.sampler_anisotropy),
+        textureCompressionETC2 = boost_value_to_vk(boost_struct.texture_compression_etc2),
+        textureCompressionASTC_LDR = boost_value_to_vk(boost_struct.texture_compression_astc_ldr),
+        textureCompressionBC = boost_value_to_vk(boost_struct.texture_compression_bc),
+        occlusionQueryPrecise = boost_value_to_vk(boost_struct.occlusion_query_precise),
+        pipelineStatisticsQuery = boost_value_to_vk(boost_struct.pipeline_statistics_query),
+        vertexPipelineStoresAndAtomics = boost_value_to_vk(boost_struct.vertex_pipeline_stores_and_atomics),
+        fragmentStoresAndAtomics = boost_value_to_vk(boost_struct.fragment_stores_and_atomics),
+        shaderTessellationAndGeometryPointSize = boost_value_to_vk(boost_struct.shader_tessellation_and_geometry_point_size),
+        shaderImageGatherExtended = boost_value_to_vk(boost_struct.shader_image_gather_extended),
+        shaderStorageImageExtendedFormats = boost_value_to_vk(boost_struct.shader_storage_image_extended_formats),
+        shaderStorageImageMultisample = boost_value_to_vk(boost_struct.shader_storage_image_multisample),
+        shaderStorageImageReadWithoutFormat = boost_value_to_vk(boost_struct.shader_storage_image_read_without_format),
+        shaderStorageImageWriteWithoutFormat = boost_value_to_vk(boost_struct.shader_storage_image_write_without_format),
+        shaderUniformBufferArrayDynamicIndexing = boost_value_to_vk(boost_struct.shader_uniform_buffer_array_dynamic_indexing),
+        shaderSampledImageArrayDynamicIndexing = boost_value_to_vk(boost_struct.shader_sampled_image_array_dynamic_indexing),
+        shaderStorageBufferArrayDynamicIndexing = boost_value_to_vk(boost_struct.shader_storage_buffer_array_dynamic_indexing),
+        shaderStorageImageArrayDynamicIndexing = boost_value_to_vk(boost_struct.shader_storage_image_array_dynamic_indexing),
+        shaderClipDistance = boost_value_to_vk(boost_struct.shader_clip_distance),
+        shaderCullDistance = boost_value_to_vk(boost_struct.shader_cull_distance),
+        shaderFloat64 = boost_value_to_vk(boost_struct.shader_float_64),
+        shaderInt64 = boost_value_to_vk(boost_struct.shader_int_64),
+        shaderInt16 = boost_value_to_vk(boost_struct.shader_int_16),
+        shaderResourceResidency = boost_value_to_vk(boost_struct.shader_resource_residency),
+        shaderResourceMinLod = boost_value_to_vk(boost_struct.shader_resource_min_lod),
+        sparseBinding = boost_value_to_vk(boost_struct.sparse_binding),
+        sparseResidencyBuffer = boost_value_to_vk(boost_struct.sparse_residency_buffer),
+        sparseResidencyImage2D = boost_value_to_vk(boost_struct.sparse_residency_image_2d),
+        sparseResidencyImage3D = boost_value_to_vk(boost_struct.sparse_residency_image_3d),
+        sparseResidency2Samples = boost_value_to_vk(boost_struct.sparse_residency_2samples),
+        sparseResidency4Samples = boost_value_to_vk(boost_struct.sparse_residency_4samples),
+        sparseResidency8Samples = boost_value_to_vk(boost_struct.sparse_residency_8samples),
+        sparseResidency16Samples = boost_value_to_vk(boost_struct.sparse_residency_16samples),
+        sparseResidencyAliased = boost_value_to_vk(boost_struct.sparse_residency_aliased),
+        variableMultisampleRate = boost_value_to_vk(boost_struct.variable_multisample_rate),
+        inheritedQueries = boost_value_to_vk(boost_struct.inherited_queries)
     ]]
 
 def vk_view_destroy(var boost_struct : PhysicalDeviceFeatures)
@@ -1353,11 +1353,11 @@ def vk_view_create_unsafe(var boost_struct : PhysicalDeviceSparseProperties
     assert(!boost_struct._vk_view__active)
     boost_struct._vk_view__active = true
     return <- [[ VkPhysicalDeviceSparseProperties
-        residencyStandard2DBlockShape <- boost_value_to_vk(boost_struct.residency_standard_2d_block_shape),
-        residencyStandard2DMultisampleBlockShape <- boost_value_to_vk(boost_struct.residency_standard_2d_multisample_block_shape),
-        residencyStandard3DBlockShape <- boost_value_to_vk(boost_struct.residency_standard_3d_block_shape),
-        residencyAlignedMipSize <- boost_value_to_vk(boost_struct.residency_aligned_mip_size),
-        residencyNonResidentStrict <- boost_value_to_vk(boost_struct.residency_non_resident_strict)
+        residencyStandard2DBlockShape = boost_value_to_vk(boost_struct.residency_standard_2d_block_shape),
+        residencyStandard2DMultisampleBlockShape = boost_value_to_vk(boost_struct.residency_standard_2d_multisample_block_shape),
+        residencyStandard3DBlockShape = boost_value_to_vk(boost_struct.residency_standard_3d_block_shape),
+        residencyAlignedMipSize = boost_value_to_vk(boost_struct.residency_aligned_mip_size),
+        residencyNonResidentStrict = boost_value_to_vk(boost_struct.residency_non_resident_strict)
     ]]
 
 def vk_view_destroy(var boost_struct : PhysicalDeviceSparseProperties)
@@ -1389,9 +1389,9 @@ def vk_view_create_unsafe(var boost_struct : PushConstantRange
     assert(!boost_struct._vk_view__active)
     boost_struct._vk_view__active = true
     return <- [[ VkPushConstantRange
-        stageFlags <- boost_value_to_vk(boost_struct.stage_flags),
-        offset <- boost_value_to_vk(boost_struct.offset),
-        size <- boost_value_to_vk(boost_struct.size)
+        stageFlags = boost_value_to_vk(boost_struct.stage_flags),
+        offset = boost_value_to_vk(boost_struct.offset),
+        size = boost_value_to_vk(boost_struct.size)
     ]]
 
 def vk_view_destroy(var boost_struct : PushConstantRange)
@@ -1426,9 +1426,9 @@ def vk_view_create_unsafe(var boost_struct : QueueFamilyProperties
     *(boost_struct._vk_view_p_min_image_transfer_granularity) <- (
         boost_struct.min_image_transfer_granularity |> vk_view_create_unsafe())
     return <- [[ VkQueueFamilyProperties
-        queueFlags <- boost_value_to_vk(boost_struct.queue_flags),
-        queueCount <- boost_value_to_vk(boost_struct.queue_count),
-        timestampValidBits <- boost_value_to_vk(boost_struct.timestamp_valid_bits),
+        queueFlags = boost_value_to_vk(boost_struct.queue_flags),
+        queueCount = boost_value_to_vk(boost_struct.queue_count),
+        timestampValidBits = boost_value_to_vk(boost_struct.timestamp_valid_bits),
         minImageTransferGranularity = *(boost_struct._vk_view_p_min_image_transfer_granularity)
     ]]
 
@@ -1520,22 +1520,22 @@ def vk_view_create_unsafe(var boost_struct : SamplerCreateInfo
     boost_struct._vk_view__active = true
     return <- [[ VkSamplerCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO,
-        flags <- boost_value_to_vk(boost_struct.flags),
-        magFilter <- boost_value_to_vk(boost_struct.mag_filter),
-        minFilter <- boost_value_to_vk(boost_struct.min_filter),
-        mipmapMode <- boost_value_to_vk(boost_struct.mipmap_mode),
-        addressModeU <- boost_value_to_vk(boost_struct.address_mode_u),
-        addressModeV <- boost_value_to_vk(boost_struct.address_mode_v),
-        addressModeW <- boost_value_to_vk(boost_struct.address_mode_w),
-        mipLodBias <- boost_value_to_vk(boost_struct.mip_lod_bias),
-        anisotropyEnable <- boost_value_to_vk(boost_struct.anisotropy_enable),
-        maxAnisotropy <- boost_value_to_vk(boost_struct.max_anisotropy),
-        compareEnable <- boost_value_to_vk(boost_struct.compare_enable),
-        compareOp <- boost_value_to_vk(boost_struct.compare_op),
-        minLod <- boost_value_to_vk(boost_struct.min_lod),
-        maxLod <- boost_value_to_vk(boost_struct.max_lod),
-        borderColor <- boost_value_to_vk(boost_struct.border_color),
-        unnormalizedCoordinates <- boost_value_to_vk(boost_struct.unnormalized_coordinates)
+        flags = boost_value_to_vk(boost_struct.flags),
+        magFilter = boost_value_to_vk(boost_struct.mag_filter),
+        minFilter = boost_value_to_vk(boost_struct.min_filter),
+        mipmapMode = boost_value_to_vk(boost_struct.mipmap_mode),
+        addressModeU = boost_value_to_vk(boost_struct.address_mode_u),
+        addressModeV = boost_value_to_vk(boost_struct.address_mode_v),
+        addressModeW = boost_value_to_vk(boost_struct.address_mode_w),
+        mipLodBias = boost_value_to_vk(boost_struct.mip_lod_bias),
+        anisotropyEnable = boost_value_to_vk(boost_struct.anisotropy_enable),
+        maxAnisotropy = boost_value_to_vk(boost_struct.max_anisotropy),
+        compareEnable = boost_value_to_vk(boost_struct.compare_enable),
+        compareOp = boost_value_to_vk(boost_struct.compare_op),
+        minLod = boost_value_to_vk(boost_struct.min_lod),
+        maxLod = boost_value_to_vk(boost_struct.max_lod),
+        borderColor = boost_value_to_vk(boost_struct.border_color),
+        unnormalizedCoordinates = boost_value_to_vk(boost_struct.unnormalized_coordinates)
     ]]
 
 def vk_view_destroy(var boost_struct : SamplerCreateInfo)
@@ -1577,7 +1577,7 @@ def vk_view_create_unsafe(var boost_struct : SemaphoreCreateInfo
     boost_struct._vk_view__active = true
     return <- [[ VkSemaphoreCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO,
-        flags <- boost_value_to_vk(boost_struct.flags)
+        flags = boost_value_to_vk(boost_struct.flags)
     ]]
 
 def vk_view_destroy(var boost_struct : SemaphoreCreateInfo)
@@ -1609,13 +1609,13 @@ def vk_view_create_unsafe(var boost_struct : SubpassDependency
     assert(!boost_struct._vk_view__active)
     boost_struct._vk_view__active = true
     return <- [[ VkSubpassDependency
-        srcSubpass <- boost_value_to_vk(boost_struct.src_subpass),
-        dstSubpass <- boost_value_to_vk(boost_struct.dst_subpass),
-        srcStageMask <- boost_value_to_vk(boost_struct.src_stage_mask),
-        dstStageMask <- boost_value_to_vk(boost_struct.dst_stage_mask),
-        srcAccessMask <- boost_value_to_vk(boost_struct.src_access_mask),
-        dstAccessMask <- boost_value_to_vk(boost_struct.dst_access_mask),
-        dependencyFlags <- boost_value_to_vk(boost_struct.dependency_flags)
+        srcSubpass = boost_value_to_vk(boost_struct.src_subpass),
+        dstSubpass = boost_value_to_vk(boost_struct.dst_subpass),
+        srcStageMask = boost_value_to_vk(boost_struct.src_stage_mask),
+        dstStageMask = boost_value_to_vk(boost_struct.dst_stage_mask),
+        srcAccessMask = boost_value_to_vk(boost_struct.src_access_mask),
+        dstAccessMask = boost_value_to_vk(boost_struct.dst_access_mask),
+        dependencyFlags = boost_value_to_vk(boost_struct.dependency_flags)
     ]]
 
 def vk_view_destroy(var boost_struct : SubpassDependency)
@@ -1668,16 +1668,16 @@ def vk_view_create_unsafe(var boost_struct : SurfaceCapabilitiesKHR
     *(boost_struct._vk_view_p_max_image_extent) <- (
         boost_struct.max_image_extent |> vk_view_create_unsafe())
     return <- [[ VkSurfaceCapabilitiesKHR
-        minImageCount <- boost_value_to_vk(boost_struct.min_image_count),
-        maxImageCount <- boost_value_to_vk(boost_struct.max_image_count),
+        minImageCount = boost_value_to_vk(boost_struct.min_image_count),
+        maxImageCount = boost_value_to_vk(boost_struct.max_image_count),
         currentExtent = *(boost_struct._vk_view_p_current_extent),
         minImageExtent = *(boost_struct._vk_view_p_min_image_extent),
         maxImageExtent = *(boost_struct._vk_view_p_max_image_extent),
-        maxImageArrayLayers <- boost_value_to_vk(boost_struct.max_image_array_layers),
-        supportedTransforms <- boost_value_to_vk(boost_struct.supported_transforms),
-        currentTransform <- boost_value_to_vk(boost_struct.current_transform),
-        supportedCompositeAlpha <- boost_value_to_vk(boost_struct.supported_composite_alpha),
-        supportedUsageFlags <- boost_value_to_vk(boost_struct.supported_usage_flags)
+        maxImageArrayLayers = boost_value_to_vk(boost_struct.max_image_array_layers),
+        supportedTransforms = boost_value_to_vk(boost_struct.supported_transforms),
+        currentTransform = boost_value_to_vk(boost_struct.current_transform),
+        supportedCompositeAlpha = boost_value_to_vk(boost_struct.supported_composite_alpha),
+        supportedUsageFlags = boost_value_to_vk(boost_struct.supported_usage_flags)
     ]]
 
 def vk_view_destroy(var boost_struct : SurfaceCapabilitiesKHR)
@@ -1722,8 +1722,8 @@ def vk_view_create_unsafe(var boost_struct : SurfaceFormatKHR
     assert(!boost_struct._vk_view__active)
     boost_struct._vk_view__active = true
     return <- [[ VkSurfaceFormatKHR
-        format <- boost_value_to_vk(boost_struct.format),
-        colorSpace <- boost_value_to_vk(boost_struct.color_space)
+        format = boost_value_to_vk(boost_struct.format),
+        colorSpace = boost_value_to_vk(boost_struct.color_space)
     ]]
 
 def vk_view_destroy(var boost_struct : SurfaceFormatKHR)
@@ -1755,12 +1755,12 @@ def vk_view_create_unsafe(var boost_struct : Viewport
     assert(!boost_struct._vk_view__active)
     boost_struct._vk_view__active = true
     return <- [[ VkViewport
-        x <- boost_value_to_vk(boost_struct.x),
-        y <- boost_value_to_vk(boost_struct.y),
-        width <- boost_value_to_vk(boost_struct.width),
-        height <- boost_value_to_vk(boost_struct.height),
-        minDepth <- boost_value_to_vk(boost_struct.min_depth),
-        maxDepth <- boost_value_to_vk(boost_struct.max_depth)
+        x = boost_value_to_vk(boost_struct.x),
+        y = boost_value_to_vk(boost_struct.y),
+        width = boost_value_to_vk(boost_struct.width),
+        height = boost_value_to_vk(boost_struct.height),
+        minDepth = boost_value_to_vk(boost_struct.min_depth),
+        maxDepth = boost_value_to_vk(boost_struct.max_depth)
     ]]
 
 def vk_view_destroy(var boost_struct : Viewport)
@@ -1799,10 +1799,10 @@ def vk_view_create_unsafe(var boost_struct : DescriptorSetLayoutBinding
         for item in boost_struct.immutable_samplers ;
         item |> boost_value_to_vk()}]
     return <- [[ VkDescriptorSetLayoutBinding
-        binding <- boost_value_to_vk(boost_struct.binding),
-        descriptorType <- boost_value_to_vk(boost_struct.descriptor_type),
+        binding = boost_value_to_vk(boost_struct.binding),
+        descriptorType = boost_value_to_vk(boost_struct.descriptor_type),
         descriptorCount = vk_descriptor_count,
-        stageFlags <- boost_value_to_vk(boost_struct.stage_flags),
+        stageFlags = boost_value_to_vk(boost_struct.stage_flags),
         pImmutableSamplers = array_addr_unsafe(boost_struct._vk_view_immutable_samplers)
     ]]
 
@@ -1846,7 +1846,7 @@ def vk_view_create_unsafe(var boost_struct : DescriptorSetLayoutCreateInfo
         item |> vk_view_create_unsafe()}]
     return <- [[ VkDescriptorSetLayoutCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO,
-        flags <- boost_value_to_vk(boost_struct.flags),
+        flags = boost_value_to_vk(boost_struct.flags),
         bindingCount = vk_binding_count,
         pBindings = array_addr_unsafe(boost_struct._vk_view_bindings)
     ]]
@@ -1903,7 +1903,7 @@ def vk_view_create_unsafe(var boost_struct : DeviceCreateInfo
             *(boost_struct.p_enabled_features) |> vk_view_create_unsafe())
     return <- [[ VkDeviceCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO,
-        flags <- boost_value_to_vk(boost_struct.flags),
+        flags = boost_value_to_vk(boost_struct.flags),
         queueCreateInfoCount = vk_queue_create_info_count,
         pQueueCreateInfos = array_addr_unsafe(boost_struct._vk_view_queue_create_infos),
         enabledLayerCount = vk_enabled_layer_count,
@@ -1973,8 +1973,8 @@ def vk_view_create_unsafe(var boost_struct : DeviceQueueCreateInfo
     let vk_p_queue_priorities = array_addr_unsafe(boost_struct.queue_priorities)
     return <- [[ VkDeviceQueueCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO,
-        flags <- boost_value_to_vk(boost_struct.flags),
-        queueFamilyIndex <- boost_value_to_vk(boost_struct.queue_family_index),
+        flags = boost_value_to_vk(boost_struct.flags),
+        queueFamilyIndex = boost_value_to_vk(boost_struct.queue_family_index),
         queueCount = vk_queue_count,
         pQueuePriorities = vk_p_queue_priorities
     ]]
@@ -2021,13 +2021,13 @@ def vk_view_create_unsafe(var boost_struct : FramebufferCreateInfo
         item |> boost_value_to_vk()}]
     return <- [[ VkFramebufferCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO,
-        flags <- boost_value_to_vk(boost_struct.flags),
-        renderPass <- boost_value_to_vk(boost_struct.render_pass),
+        flags = boost_value_to_vk(boost_struct.flags),
+        renderPass = boost_value_to_vk(boost_struct.render_pass),
         attachmentCount = vk_attachment_count,
         pAttachments = array_addr_unsafe(boost_struct._vk_view_attachments),
-        width <- boost_value_to_vk(boost_struct.width),
-        height <- boost_value_to_vk(boost_struct.height),
-        layers <- boost_value_to_vk(boost_struct.layers)
+        width = boost_value_to_vk(boost_struct.width),
+        height = boost_value_to_vk(boost_struct.height),
+        layers = boost_value_to_vk(boost_struct.layers)
     ]]
 
 def vk_view_destroy(var boost_struct : FramebufferCreateInfo)
@@ -2083,19 +2083,19 @@ def vk_view_create_unsafe(var boost_struct : ImageCreateInfo
     let vk_p_queue_family_indices = array_addr_unsafe(boost_struct.queue_family_indices)
     return <- [[ VkImageCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO,
-        flags <- boost_value_to_vk(boost_struct.flags),
-        imageType <- boost_value_to_vk(boost_struct.image_type),
-        format <- boost_value_to_vk(boost_struct.format),
+        flags = boost_value_to_vk(boost_struct.flags),
+        imageType = boost_value_to_vk(boost_struct.image_type),
+        format = boost_value_to_vk(boost_struct.format),
         extent = *(boost_struct._vk_view_p_extent),
-        mipLevels <- boost_value_to_vk(boost_struct.mip_levels),
-        arrayLayers <- boost_value_to_vk(boost_struct.array_layers),
-        samples <- boost_value_to_vk(boost_struct.samples),
-        tiling <- boost_value_to_vk(boost_struct.tiling),
-        usage <- boost_value_to_vk(boost_struct.usage),
-        sharingMode <- boost_value_to_vk(boost_struct.sharing_mode),
+        mipLevels = boost_value_to_vk(boost_struct.mip_levels),
+        arrayLayers = boost_value_to_vk(boost_struct.array_layers),
+        samples = boost_value_to_vk(boost_struct.samples),
+        tiling = boost_value_to_vk(boost_struct.tiling),
+        usage = boost_value_to_vk(boost_struct.usage),
+        sharingMode = boost_value_to_vk(boost_struct.sharing_mode),
         queueFamilyIndexCount = vk_queue_family_index_count,
         pQueueFamilyIndices = vk_p_queue_family_indices,
-        initialLayout <- boost_value_to_vk(boost_struct.initial_layout)
+        initialLayout = boost_value_to_vk(boost_struct.initial_layout)
     ]]
 
 def vk_view_destroy(var boost_struct : ImageCreateInfo)
@@ -2154,7 +2154,7 @@ def vk_view_create_unsafe(var boost_struct : InstanceCreateInfo
     let vk_p_p_enabled_extension_names = array_addr_unsafe(boost_struct.p_enabled_extension_names)
     return <- [[ VkInstanceCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
-        flags <- boost_value_to_vk(boost_struct.flags),
+        flags = boost_value_to_vk(boost_struct.flags),
         pApplicationInfo = boost_struct._vk_view_p_application_info,
         enabledLayerCount = vk_enabled_layer_count,
         ppEnabledLayerNames = vk_p_p_enabled_layer_names,
@@ -2220,7 +2220,7 @@ def vk_view_create_unsafe(var boost_struct : PipelineLayoutCreateInfo
         item |> vk_view_create_unsafe()}]
     return <- [[ VkPipelineLayoutCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO,
-        flags <- boost_value_to_vk(boost_struct.flags),
+        flags = boost_value_to_vk(boost_struct.flags),
         setLayoutCount = vk_set_layout_count,
         pSetLayouts = array_addr_unsafe(boost_struct._vk_view_set_layouts),
         pushConstantRangeCount = vk_push_constant_range_count,
@@ -2281,7 +2281,7 @@ def vk_view_create_unsafe(var boost_struct : PipelineViewportStateCreateInfo
         item |> vk_view_create_unsafe()}]
     return <- [[ VkPipelineViewportStateCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO,
-        flags <- boost_value_to_vk(boost_struct.flags),
+        flags = boost_value_to_vk(boost_struct.flags),
         viewportCount = vk_viewport_count,
         pViewports = array_addr_unsafe(boost_struct._vk_view_viewports),
         scissorCount = vk_scissor_count,
@@ -2350,7 +2350,7 @@ def vk_view_create_unsafe(var boost_struct : RenderPassCreateInfo
         item |> vk_view_create_unsafe()}]
     return <- [[ VkRenderPassCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO,
-        flags <- boost_value_to_vk(boost_struct.flags),
+        flags = boost_value_to_vk(boost_struct.flags),
         attachmentCount = vk_attachment_count,
         pAttachments = array_addr_unsafe(boost_struct._vk_view_attachments),
         subpassCount = vk_subpass_count,
@@ -2418,7 +2418,7 @@ def vk_view_create_unsafe(var boost_struct : ShaderModuleCreateInfo
         vk_p_code = reinterpret<uint ?>(array_addr_unsafe(boost_struct.code))
     return <- [[ VkShaderModuleCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO,
-        flags <- boost_value_to_vk(boost_struct.flags),
+        flags = boost_value_to_vk(boost_struct.flags),
         codeSize = vk_code_size,
         pCode = vk_p_code
     ]]
@@ -2481,8 +2481,8 @@ def vk_view_create_unsafe(var boost_struct : SubpassDescription
     let vk_preserve_attachment_count = uint(preserve_attachments |> length())
     let vk_p_preserve_attachments = array_addr_unsafe(boost_struct.preserve_attachments)
     return <- [[ VkSubpassDescription
-        flags <- boost_value_to_vk(boost_struct.flags),
-        pipelineBindPoint <- boost_value_to_vk(boost_struct.pipeline_bind_point),
+        flags = boost_value_to_vk(boost_struct.flags),
+        pipelineBindPoint = boost_value_to_vk(boost_struct.pipeline_bind_point),
         inputAttachmentCount = vk_input_attachment_count,
         pInputAttachments = array_addr_unsafe(boost_struct._vk_view_input_attachments),
         colorAttachmentCount = vk_color_attachment_count,
@@ -2583,22 +2583,22 @@ def vk_view_create_unsafe(var boost_struct : SwapchainCreateInfoKHR
     let vk_p_queue_family_indices = array_addr_unsafe(boost_struct.queue_family_indices)
     return <- [[ VkSwapchainCreateInfoKHR
         sType = VkStructureType VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR,
-        flags <- boost_value_to_vk(boost_struct.flags),
-        surface <- boost_value_to_vk(boost_struct.surface),
-        minImageCount <- boost_value_to_vk(boost_struct.min_image_count),
-        imageFormat <- boost_value_to_vk(boost_struct.image_format),
-        imageColorSpace <- boost_value_to_vk(boost_struct.image_color_space),
+        flags = boost_value_to_vk(boost_struct.flags),
+        surface = boost_value_to_vk(boost_struct.surface),
+        minImageCount = boost_value_to_vk(boost_struct.min_image_count),
+        imageFormat = boost_value_to_vk(boost_struct.image_format),
+        imageColorSpace = boost_value_to_vk(boost_struct.image_color_space),
         imageExtent = *(boost_struct._vk_view_p_image_extent),
-        imageArrayLayers <- boost_value_to_vk(boost_struct.image_array_layers),
-        imageUsage <- boost_value_to_vk(boost_struct.image_usage),
-        imageSharingMode <- boost_value_to_vk(boost_struct.image_sharing_mode),
+        imageArrayLayers = boost_value_to_vk(boost_struct.image_array_layers),
+        imageUsage = boost_value_to_vk(boost_struct.image_usage),
+        imageSharingMode = boost_value_to_vk(boost_struct.image_sharing_mode),
         queueFamilyIndexCount = vk_queue_family_index_count,
         pQueueFamilyIndices = vk_p_queue_family_indices,
-        preTransform <- boost_value_to_vk(boost_struct.pre_transform),
-        compositeAlpha <- boost_value_to_vk(boost_struct.composite_alpha),
-        presentMode <- boost_value_to_vk(boost_struct.present_mode),
-        clipped <- boost_value_to_vk(boost_struct.clipped),
-        oldSwapchain <- boost_value_to_vk(boost_struct.old_swapchain)
+        preTransform = boost_value_to_vk(boost_struct.pre_transform),
+        compositeAlpha = boost_value_to_vk(boost_struct.composite_alpha),
+        presentMode = boost_value_to_vk(boost_struct.present_mode),
+        clipped = boost_value_to_vk(boost_struct.clipped),
+        oldSwapchain = boost_value_to_vk(boost_struct.old_swapchain)
     ]]
 
 def vk_view_destroy(var boost_struct : SwapchainCreateInfoKHR)

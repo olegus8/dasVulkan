@@ -861,7 +861,7 @@ class ParamBase(object):
             return [f'{bname} <- b_{bname},']
         if self._vk_is_pointer:
             return [f'{bname} = b_{bname},']
-        return [f'{bname} <- vk_value_to_boost(vk_struct.{vname}),']
+        return [f'{bname} = vk_value_to_boost(vk_struct.{vname}),']
 
     def generate_boost_func_param_call(self):
         if self.vk_is_dyn_array_count or self._is_boost_func_output:
@@ -1249,6 +1249,14 @@ class ParamVkStruct(ParamBase):
            f'unsafe',
            f'    delete boost_struct._vk_view_p_{bname}',
         ]
+
+    def generate_boost_struct_v2b_field(self):
+        bname = self._boost_struct_field_name
+        vname = self.vk_name
+        if (not self.vk_is_dyn_array_items and not self.vk_is_array_count
+        and not self._vk_is_pointer):
+            return [f'{bname} <- vk_value_to_boost(vk_struct.{vname}),']
+        return super(ParamVkStruct, self).generate_boost_struct_v2b_field
 
 
 class ParamVkEnum(ParamBase):
