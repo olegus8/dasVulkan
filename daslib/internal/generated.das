@@ -100,7 +100,7 @@ def enumerate_device_extension_properties(
     assert(result_ == VkResult VK_SUCCESS)
     if result_ != VkResult VK_SUCCESS
         return <- [[ self._return_type ]]
-    vk_properties |> resize(int(vk_pProperties))
+    vk_properties |> resize(int(vk_pPropertyCount))
     result ?? result_ = vkEnumerateDeviceExtensionProperties(
         boost_value_to_vk(physical_device),
         boost_value_to_vk(layer_name),
@@ -127,7 +127,7 @@ def enumerate_physical_devices(
     assert(result_ == VkResult VK_SUCCESS)
     if result_ != VkResult VK_SUCCESS
         return <- [[ self._return_type ]]
-    vk_physical_devices |> resize(int(vk_pPhysicalDevices))
+    vk_physical_devices |> resize(int(vk_pPhysicalDeviceCount))
     result ?? result_ = vkEnumeratePhysicalDevices(
         boost_value_to_vk(instance),
         safe_addr(vk_pPhysicalDeviceCount),
@@ -210,7 +210,7 @@ def get_physical_device_queue_family_properties(
     )
     if result_ != VkResult VK_SUCCESS
         return <- [[ self._return_type ]]
-    vk_queue_family_properties |> resize(int(vk_pQueueFamilyProperties))
+    vk_queue_family_properties |> resize(int(vk_pQueueFamilyPropertyCount))
     vkGetPhysicalDeviceQueueFamilyProperties(
         boost_value_to_vk(physical_device),
         safe_addr(vk_pQueueFamilyPropertyCount),
@@ -237,7 +237,7 @@ def get_physical_device_surface_formats_khr(
     assert(result_ == VkResult VK_SUCCESS)
     if result_ != VkResult VK_SUCCESS
         return <- [[ self._return_type ]]
-    vk_surface_formats |> resize(int(vk_pSurfaceFormats))
+    vk_surface_formats |> resize(int(vk_pSurfaceFormatCount))
     result ?? result_ = vkGetPhysicalDeviceSurfaceFormatsKHR(
         boost_value_to_vk(physical_device),
         boost_value_to_vk(surface),
@@ -266,7 +266,7 @@ def get_physical_device_surface_present_modes_khr(
     assert(result_ == VkResult VK_SUCCESS)
     if result_ != VkResult VK_SUCCESS
         return <- [[ self._return_type ]]
-    vk_present_modes |> resize(int(vk_pPresentModes))
+    vk_present_modes |> resize(int(vk_pPresentModeCount))
     result ?? result_ = vkGetPhysicalDeviceSurfacePresentModesKHR(
         boost_value_to_vk(physical_device),
         boost_value_to_vk(surface),
@@ -295,7 +295,7 @@ def get_swapchain_images_khr(
     assert(result_ == VkResult VK_SUCCESS)
     if result_ != VkResult VK_SUCCESS
         return <- [[ self._return_type ]]
-    vk_swapchain_images |> resize(int(vk_pSwapchainImages))
+    vk_swapchain_images |> resize(int(vk_pSwapchainImageCount))
     result ?? result_ = vkGetSwapchainImagesKHR(
         boost_value_to_vk(device),
         boost_value_to_vk(swapchain),
@@ -3638,7 +3638,7 @@ def create_graphics_pipelines__inner(
     assert(result_ == VkResult VK_SUCCESS)
     if result_ != VkResult VK_SUCCESS
         return <- [[ self._return_type ]]
-    vk_pipelines |> resize(int(vk_pPipelines))
+    vk_pipelines |> resize(int(vk_createInfoCount))
     result ?? result_ = vkCreateGraphicsPipelines(
         boost_value_to_vk(device),
         boost_value_to_vk(pipeline_cache),
@@ -3698,7 +3698,7 @@ def create_compute_pipelines__inner(
     assert(result_ == VkResult VK_SUCCESS)
     if result_ != VkResult VK_SUCCESS
         return <- [[ self._return_type ]]
-    vk_pipelines |> resize(int(vk_pPipelines))
+    vk_pipelines |> resize(int(vk_createInfoCount))
     result ?? result_ = vkCreateComputePipelines(
         boost_value_to_vk(device),
         boost_value_to_vk(pipeline_cache),
