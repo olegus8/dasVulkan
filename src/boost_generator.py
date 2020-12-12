@@ -1218,7 +1218,7 @@ class ParamVkStruct(ParamBase):
             return [f'{vname} = array_addr_unsafe('
                 f'boost_struct._vk_view_{bname}),']
         if self._vk_is_pointer:
-            return [f'{vname} = boost_struct._vk_view_{bname}),']
+            return [f'{vname} = boost_struct._vk_view_{bname},']
         return [f'{vname} = *(boost_struct._vk_view_p_{bname}),']
 
     def generate_boost_struct_view_destroy(self):

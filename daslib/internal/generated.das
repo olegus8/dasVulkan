@@ -1906,7 +1906,7 @@ def vk_view_create_unsafe(var boost_struct : DeviceCreateInfo
         ppEnabledLayerNames = vk_p_p_enabled_layer_names,
         enabledExtensionCount = vk_enabled_extension_count,
         ppEnabledExtensionNames = vk_p_p_enabled_extension_names,
-        pEnabledFeatures = boost_struct._vk_view_p_enabled_features)
+        pEnabledFeatures = boost_struct._vk_view_p_enabled_features
     ]]
 
 def vk_view_destroy(var boost_struct : DeviceCreateInfo)
@@ -2151,7 +2151,7 @@ def vk_view_create_unsafe(var boost_struct : InstanceCreateInfo
     return <- [[ VkInstanceCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
         flags <- boost_value_to_vk(boost_struct.flags),
-        pApplicationInfo = boost_struct._vk_view_p_application_info),
+        pApplicationInfo = boost_struct._vk_view_p_application_info,
         enabledLayerCount = vk_enabled_layer_count,
         ppEnabledLayerNames = vk_p_p_enabled_layer_names,
         enabledExtensionCount = vk_enabled_extension_count,
@@ -2484,7 +2484,7 @@ def vk_view_create_unsafe(var boost_struct : SubpassDescription
         colorAttachmentCount = vk_color_attachment_count,
         pColorAttachments = array_addr_unsafe(boost_struct._vk_view_color_attachments),
         pResolveAttachments = array_addr_unsafe(boost_struct._vk_view_resolve_attachments),
-        pDepthStencilAttachment = boost_struct._vk_view_p_depth_stencil_attachment),
+        pDepthStencilAttachment = boost_struct._vk_view_p_depth_stencil_attachment,
         preserveAttachmentCount = vk_preserve_attachment_count,
         pPreserveAttachments = vk_p_preserve_attachments
     ]]
