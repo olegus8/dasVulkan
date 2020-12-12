@@ -1079,7 +1079,7 @@ class ParamVkHandleBase(ParamBase):
 
     def generate_boost_handle_ctor_init_field(self):
         bname = self._boost_func_param_name
-        return [f'handle._{bname} <- boost_value_to_vk({bname})']
+        return [f'handle._{bname} = boost_value_to_vk({bname})']
 
     def get_boost_dtor_call_param(self, boost_handle_type_name):
         field = self._boost_func_param_name
