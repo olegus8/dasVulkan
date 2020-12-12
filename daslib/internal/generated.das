@@ -158,7 +158,7 @@ def get_device_queue(
         boost_value_to_vk(queue_index),
         safe_addr(vk_queue)
     )
-    return <- vk_value_to_boost(vk_queue)
+    return vk_value_to_boost(vk_queue)
 
 def get_physical_device_properties(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]]
@@ -206,7 +206,7 @@ def get_physical_device_surface_support_khr(
         safe_addr(vk_supported)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return <- vk_value_to_boost(vk_supported)
+    return vk_value_to_boost(vk_supported)
 
 def get_physical_device_queue_family_properties(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]]
@@ -2671,7 +2671,7 @@ def create_device__inner(
         safe_addr(vk_device)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return <- vk_value_to_boost(vk_device)
+    return vk_value_to_boost(vk_device)
 
 def create_device(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]];
@@ -2732,7 +2732,7 @@ def create_command_pool__inner(
         safe_addr(vk_command_pool)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return <- vk_value_to_boost(vk_command_pool)
+    return vk_value_to_boost(vk_command_pool)
 
 def create_command_pool(
     device : Device = [[ Device ]];
@@ -2795,7 +2795,7 @@ def create_descriptor_set_layout__inner(
         safe_addr(vk_set_layout)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return <- vk_value_to_boost(vk_set_layout)
+    return vk_value_to_boost(vk_set_layout)
 
 def create_descriptor_set_layout(
     device : Device = [[ Device ]];
@@ -2858,7 +2858,7 @@ def create_fence__inner(
         safe_addr(vk_fence)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return <- vk_value_to_boost(vk_fence)
+    return vk_value_to_boost(vk_fence)
 
 def create_fence(
     device : Device = [[ Device ]];
@@ -2921,7 +2921,7 @@ def create_framebuffer__inner(
         safe_addr(vk_framebuffer)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return <- vk_value_to_boost(vk_framebuffer)
+    return vk_value_to_boost(vk_framebuffer)
 
 def create_framebuffer(
     device : Device = [[ Device ]];
@@ -2984,7 +2984,7 @@ def create_image__inner(
         safe_addr(vk_image)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return <- vk_value_to_boost(vk_image)
+    return vk_value_to_boost(vk_image)
 
 def create_image(
     device : Device = [[ Device ]];
@@ -3047,7 +3047,7 @@ def create_image_view__inner(
         safe_addr(vk_view)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return <- vk_value_to_boost(vk_view)
+    return vk_value_to_boost(vk_view)
 
 def create_image_view(
     device : Device = [[ Device ]];
@@ -3107,7 +3107,7 @@ def create_instance__inner(
         safe_addr(vk_instance)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return <- vk_value_to_boost(vk_instance)
+    return vk_value_to_boost(vk_instance)
 
 def create_instance(
     create_info : InstanceCreateInfo = [[ InstanceCreateInfo ]];
@@ -3200,7 +3200,7 @@ def create_pipeline_layout__inner(
         safe_addr(vk_pipeline_layout)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return <- vk_value_to_boost(vk_pipeline_layout)
+    return vk_value_to_boost(vk_pipeline_layout)
 
 def create_pipeline_layout(
     device : Device = [[ Device ]];
@@ -3263,7 +3263,7 @@ def create_render_pass__inner(
         safe_addr(vk_render_pass)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return <- vk_value_to_boost(vk_render_pass)
+    return vk_value_to_boost(vk_render_pass)
 
 def create_render_pass(
     device : Device = [[ Device ]];
@@ -3326,7 +3326,7 @@ def create_sampler__inner(
         safe_addr(vk_sampler)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return <- vk_value_to_boost(vk_sampler)
+    return vk_value_to_boost(vk_sampler)
 
 def create_sampler(
     device : Device = [[ Device ]];
@@ -3389,7 +3389,7 @@ def create_semaphore__inner(
         safe_addr(vk_semaphore)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return <- vk_value_to_boost(vk_semaphore)
+    return vk_value_to_boost(vk_semaphore)
 
 def create_semaphore(
     device : Device = [[ Device ]];
@@ -3452,7 +3452,7 @@ def create_shader_module__inner(
         safe_addr(vk_shader_module)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return <- vk_value_to_boost(vk_shader_module)
+    return vk_value_to_boost(vk_shader_module)
 
 def create_shader_module(
     device : Device = [[ Device ]];
@@ -3515,7 +3515,7 @@ def create_swapchain_khr__inner(
         safe_addr(vk_swapchain)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return <- vk_value_to_boost(vk_swapchain)
+    return vk_value_to_boost(vk_swapchain)
 
 def create_swapchain_khr(
     device : Device = [[ Device ]];
