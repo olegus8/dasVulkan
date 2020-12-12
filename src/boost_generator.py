@@ -1047,7 +1047,7 @@ class ParamVk_sType(ParamBase):
     def generate_boost_struct_view_create_field(self):
         stype = 'VK_STRUCTURE_TYPE_' + (
             boost_camel_to_lower(self._gen_struct.boost_type_name).upper())
-        return [f'VkStructureType {stype}']
+        return [f'{self.vk_name} = VkStructureType {stype},']
 
 
 class ParamVkHandleBase(ParamBase):
