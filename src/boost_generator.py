@@ -847,7 +847,7 @@ class ParamBase(object):
             return [f'{vname} = vk_{bname},']
         if self._vk_is_dyn_array_items:
             return [f'{vname} = vk_p_{bname},']
-        return [f'{vname} <- boost_value_to_vk(boost_struct.{bname})']
+        return [f'{vname} <- boost_value_to_vk(boost_struct.{bname}),']
 
     def generate_boost_struct_v2b_vars(self):
         bname = self._boost_struct_field_name
@@ -1093,8 +1093,6 @@ class ParamVkHandleBase(ParamBase):
         vutype = self.vk_unqual_type
         if self._vk_is_dyn_array_items:
             return [f'_vk_view_{bname} : array<{vutype}>']
-        if self._vk_is_pointer:
-            return [f'_vk_view_{bname} : {vutype} ?']
         return []
 
     def generate_boost_struct_view_create_init(self):
@@ -1106,6 +1104,15 @@ class ParamVkHandleBase(ParamBase):
                f'    item |> boost_value_to_vk()}}]',
             ]
         return []
+
+    def generate_boost_struct_view_create_field(self):
+        bname = self._boost_struct_field_name
+        vname = self.vk_name
+        if self._vk_is_dyn_array_items:
+            return [f'{vname} = array_addr_unsafe('
+                f'boost_struct._vk_view_{bname}),']
+        return super(ParamVkHandleBase, self
+            ).generate_boost_struct_view_create_field()
 
 
 class ParamVkHandle(ParamVkHandleBase):
