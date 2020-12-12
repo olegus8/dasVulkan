@@ -343,6 +343,9 @@ class GenStruct(object):
             '',
             '    assert(!boost_struct._vk_view__active)',
             '    boost_struct._vk_view__active = true',
+        ] + [
+           f'    {line}' for field in self._fields for line in
+                 field.generate_boost_struct_view_create_vars(),
         ]
         for field in self._fields:
             if field.vk_name in ['pNext', 'sType']:
@@ -890,6 +893,9 @@ class ParamBase(object):
     def generate_boost_struct_field_view_decl(self):
         return []
 
+    def generate_boost_struct_view_create_vars(self):
+        return []
+
     def generate_boost_struct_v2b_vars(self):
         bname = self._boost_struct_field_name
         btype = self._boost_struct_field_type
@@ -1080,6 +1086,9 @@ class ParamVk_pNext(ParamBase):
     def generate_boost_struct_v2b_field(self):
         return []
 
+    def generate_boost_struct_view_create_vars(self):
+        return []
+
 
 class ParamVk_sType(ParamBase):
 
@@ -1092,6 +1101,9 @@ class ParamVk_sType(ParamBase):
         return []
 
     def generate_boost_struct_v2b_field(self):
+        return []
+
+    def generate_boost_struct_view_create_vars(self):
         return []
 
 
