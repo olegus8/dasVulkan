@@ -162,7 +162,7 @@ def add_boost_content(g):
 
     g.add_gen_struct(name = 'VkDescriptorSetLayoutBinding', vk_to_boost=False,
         ).declare_array(items = 'pImmutableSamplers')
-    g.add_gen_struct(name = 'VkDescriptorSetLayoutCreateInfo',
+    g.add_gen_struct(name = 'VkDescriptorSetLayoutCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'bindingCount', items = 'pBindings')
     g.add_gen_struct(name = 'VkDeviceCreateInfo',
         ).declare_array(count = 'queueCreateInfoCount', items = 'pQueueCreateInfos',
