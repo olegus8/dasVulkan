@@ -873,9 +873,9 @@ class ParamBase(object):
     def boost_func_return_value(self):
         bname = self._boost_func_param_name
         if self._vk_is_dyn_array_items:
-            return [f'<- [{{for x in vk_{bname}; vk_value_to_boost(x)}}]']
+            return f'<- [{{for x in vk_{bname}; vk_value_to_boost(x)}}]'
         if self._vk_is_pointer:
-            return [f'<- vk_value_to_boost(vk_{bname})']
+            return f'<- vk_value_to_boost(vk_{bname})'
         raise Exception('Return type not supported: {self.vk_name}')
 
     def generate_boost_func_temp_vars_init(self):
