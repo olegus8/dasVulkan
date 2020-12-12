@@ -439,7 +439,7 @@ class GenHandle(object):
         ]
         if self._dtor:
             lines += [f'    {line}'
-                for line in self._dtor.generate_boost_handle_field()]
+                for line in self._dtor.generate_handle_fields()]
         lines += [
             '',
            f'def boost_value_to_vk(b : {bhtype}) : {vhtype}',
@@ -566,6 +566,10 @@ class GenHandleDtor(GenFunc):
            f'    memzero(handle)',
         ]
         return lines
+
+    def generate_handle_fields(self):
+        return [line for param in self._params for line in
+            param.generate_boost_handle_field()]
 
 
 class C_Param(object):
