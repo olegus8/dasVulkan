@@ -1916,6 +1916,148 @@ def vk_view_destroy(var boost_struct : FramebufferCreateInfo)
     boost_struct._vk_view__active = false
 
 //
+// GraphicsPipelineCreateInfo
+//
+
+struct GraphicsPipelineCreateInfo
+    flags : uint
+    stages : array<PipelineShaderStageCreateInfo>
+    p_vertex_input_state : PipelineVertexInputStateCreateInfo ?
+    p_input_assembly_state : PipelineInputAssemblyStateCreateInfo ?
+    p_tessellation_state : PipelineTessellationStateCreateInfo ?
+    p_viewport_state : PipelineViewportStateCreateInfo ?
+    p_rasterization_state : PipelineRasterizationStateCreateInfo ?
+    p_multisample_state : PipelineMultisampleStateCreateInfo ?
+    p_depth_stencil_state : PipelineDepthStencilStateCreateInfo ?
+    p_color_blend_state : PipelineColorBlendStateCreateInfo ?
+    p_dynamic_state : PipelineDynamicStateCreateInfo ?
+    layout : PipelineLayout
+    render_pass : RenderPass
+    subpass : uint
+    base_pipeline_handle : Pipeline
+    base_pipeline_index : int
+    _vk_view_stages : array<VkPipelineShaderStageCreateInfo>
+    _vk_view_p_vertex_input_state : VkPipelineVertexInputStateCreateInfo ?
+    _vk_view_p_input_assembly_state : VkPipelineInputAssemblyStateCreateInfo ?
+    _vk_view_p_tessellation_state : VkPipelineTessellationStateCreateInfo ?
+    _vk_view_p_viewport_state : VkPipelineViewportStateCreateInfo ?
+    _vk_view_p_rasterization_state : VkPipelineRasterizationStateCreateInfo ?
+    _vk_view_p_multisample_state : VkPipelineMultisampleStateCreateInfo ?
+    _vk_view_p_depth_stencil_state : VkPipelineDepthStencilStateCreateInfo ?
+    _vk_view_p_color_blend_state : VkPipelineColorBlendStateCreateInfo ?
+    _vk_view_p_dynamic_state : VkPipelineDynamicStateCreateInfo ?
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : GraphicsPipelineCreateInfo
+) : VkGraphicsPipelineCreateInfo
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    let vk_stage_count = uint(boost_struct.stages |> length())
+    boost_struct._vk_view_stages <- [{
+        for item in boost_struct.stages ;
+        item |> vk_view_create_unsafe()}]
+    if boost_struct.p_vertex_input_state != null
+        boost_struct._vk_view_p_vertex_input_state = new VkPipelineVertexInputStateCreateInfo
+        *(boost_struct._vk_view_p_vertex_input_state) <- (
+            *(boost_struct.p_vertex_input_state) |> vk_view_create_unsafe())
+    if boost_struct.p_input_assembly_state != null
+        boost_struct._vk_view_p_input_assembly_state = new VkPipelineInputAssemblyStateCreateInfo
+        *(boost_struct._vk_view_p_input_assembly_state) <- (
+            *(boost_struct.p_input_assembly_state) |> vk_view_create_unsafe())
+    if boost_struct.p_tessellation_state != null
+        boost_struct._vk_view_p_tessellation_state = new VkPipelineTessellationStateCreateInfo
+        *(boost_struct._vk_view_p_tessellation_state) <- (
+            *(boost_struct.p_tessellation_state) |> vk_view_create_unsafe())
+    if boost_struct.p_viewport_state != null
+        boost_struct._vk_view_p_viewport_state = new VkPipelineViewportStateCreateInfo
+        *(boost_struct._vk_view_p_viewport_state) <- (
+            *(boost_struct.p_viewport_state) |> vk_view_create_unsafe())
+    if boost_struct.p_rasterization_state != null
+        boost_struct._vk_view_p_rasterization_state = new VkPipelineRasterizationStateCreateInfo
+        *(boost_struct._vk_view_p_rasterization_state) <- (
+            *(boost_struct.p_rasterization_state) |> vk_view_create_unsafe())
+    if boost_struct.p_multisample_state != null
+        boost_struct._vk_view_p_multisample_state = new VkPipelineMultisampleStateCreateInfo
+        *(boost_struct._vk_view_p_multisample_state) <- (
+            *(boost_struct.p_multisample_state) |> vk_view_create_unsafe())
+    if boost_struct.p_depth_stencil_state != null
+        boost_struct._vk_view_p_depth_stencil_state = new VkPipelineDepthStencilStateCreateInfo
+        *(boost_struct._vk_view_p_depth_stencil_state) <- (
+            *(boost_struct.p_depth_stencil_state) |> vk_view_create_unsafe())
+    if boost_struct.p_color_blend_state != null
+        boost_struct._vk_view_p_color_blend_state = new VkPipelineColorBlendStateCreateInfo
+        *(boost_struct._vk_view_p_color_blend_state) <- (
+            *(boost_struct.p_color_blend_state) |> vk_view_create_unsafe())
+    if boost_struct.p_dynamic_state != null
+        boost_struct._vk_view_p_dynamic_state = new VkPipelineDynamicStateCreateInfo
+        *(boost_struct._vk_view_p_dynamic_state) <- (
+            *(boost_struct.p_dynamic_state) |> vk_view_create_unsafe())
+    return <- [[ VkGraphicsPipelineCreateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO,
+        flags = boost_value_to_vk(boost_struct.flags),
+        stageCount = vk_stage_count,
+        pStages = array_addr_unsafe(boost_struct._vk_view_stages),
+        pVertexInputState = boost_struct._vk_view_p_vertex_input_state,
+        pInputAssemblyState = boost_struct._vk_view_p_input_assembly_state,
+        pTessellationState = boost_struct._vk_view_p_tessellation_state,
+        pViewportState = boost_struct._vk_view_p_viewport_state,
+        pRasterizationState = boost_struct._vk_view_p_rasterization_state,
+        pMultisampleState = boost_struct._vk_view_p_multisample_state,
+        pDepthStencilState = boost_struct._vk_view_p_depth_stencil_state,
+        pColorBlendState = boost_struct._vk_view_p_color_blend_state,
+        pDynamicState = boost_struct._vk_view_p_dynamic_state,
+        layout = boost_value_to_vk(boost_struct.layout),
+        renderPass = boost_value_to_vk(boost_struct.render_pass),
+        subpass = boost_value_to_vk(boost_struct.subpass),
+        basePipelineHandle = boost_value_to_vk(boost_struct.base_pipeline_handle),
+        basePipelineIndex = boost_value_to_vk(boost_struct.base_pipeline_index)
+    ]]
+
+def vk_view_destroy(var boost_struct : GraphicsPipelineCreateInfo)
+    assert(boost_struct._vk_view__active)
+    for item in boost_struct.stages
+        item |> vk_view_destroy()
+    delete boost_struct._vk_view_stages
+    if boost_struct.p_vertex_input_state != null
+        *(boost_struct.p_vertex_input_state) |> vk_view_destroy()
+        unsafe
+            delete boost_struct._vk_view_p_vertex_input_state
+    if boost_struct.p_input_assembly_state != null
+        *(boost_struct.p_input_assembly_state) |> vk_view_destroy()
+        unsafe
+            delete boost_struct._vk_view_p_input_assembly_state
+    if boost_struct.p_tessellation_state != null
+        *(boost_struct.p_tessellation_state) |> vk_view_destroy()
+        unsafe
+            delete boost_struct._vk_view_p_tessellation_state
+    if boost_struct.p_viewport_state != null
+        *(boost_struct.p_viewport_state) |> vk_view_destroy()
+        unsafe
+            delete boost_struct._vk_view_p_viewport_state
+    if boost_struct.p_rasterization_state != null
+        *(boost_struct.p_rasterization_state) |> vk_view_destroy()
+        unsafe
+            delete boost_struct._vk_view_p_rasterization_state
+    if boost_struct.p_multisample_state != null
+        *(boost_struct.p_multisample_state) |> vk_view_destroy()
+        unsafe
+            delete boost_struct._vk_view_p_multisample_state
+    if boost_struct.p_depth_stencil_state != null
+        *(boost_struct.p_depth_stencil_state) |> vk_view_destroy()
+        unsafe
+            delete boost_struct._vk_view_p_depth_stencil_state
+    if boost_struct.p_color_blend_state != null
+        *(boost_struct.p_color_blend_state) |> vk_view_destroy()
+        unsafe
+            delete boost_struct._vk_view_p_color_blend_state
+    if boost_struct.p_dynamic_state != null
+        *(boost_struct.p_dynamic_state) |> vk_view_destroy()
+        unsafe
+            delete boost_struct._vk_view_p_dynamic_state
+    boost_struct._vk_view__active = false
+
+//
 // ImageCreateInfo
 //
 

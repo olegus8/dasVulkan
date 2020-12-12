@@ -132,13 +132,10 @@ def add_boost_content(g):
         'VkApplicationInfo',
         'VkAttachmentDescription',
         'VkAttachmentReference',
-        'VkCommandPoolCreateInfo',
         'VkComponentMapping',
         'VkExtent2D',
         'VkExtent3D',
-        'VkFenceCreateInfo',
         'VkImageSubresourceRange',
-        'VkImageViewCreateInfo',
         'VkOffset2D',
         'VkPhysicalDeviceLimits',
         'VkPhysicalDeviceFeatures',
@@ -146,8 +143,6 @@ def add_boost_content(g):
         'VkPushConstantRange',
         'VkQueueFamilyProperties',
         'VkRect2D',
-        'VkSamplerCreateInfo',
-        'VkSemaphoreCreateInfo',
         'VkSubpassDependency',
         'VkSurfaceCapabilitiesKHR',
         'VkSurfaceFormatKHR',
@@ -160,6 +155,16 @@ def add_boost_content(g):
         'VkPhysicalDeviceProperties',
     ]:
         g.add_gen_struct(name=name, boost_to_vk=False)
+
+    for name in [
+        'VkCommandPoolCreateInfo',
+        'VkFenceCreateInfo',
+        'VkImageViewCreateInfo',
+        'VkPipelineShaderStageCreateInfo',
+        'VkSamplerCreateInfo',
+        'VkSemaphoreCreateInfo',
+    ]:
+        g.add_gen_struct(name=name, vk_to_boost=False)
 
     g.add_gen_struct(name = 'VkDescriptorSetLayoutBinding', vk_to_boost=False,
         ).declare_array(items = 'pImmutableSamplers')
