@@ -719,6 +719,11 @@ class ParamBase(object):
         return [p for p in self._dyn_arrays_items if p._optional]
 
     @property
+    def __dyn_array_items_inputs(self):
+        return [p for p in self._dyn_arrays_items
+            if not p._is_boost_func_output]
+
+    @property
     def _vk_type(self):
         t = self.vk_unqual_type
         if self._vk_is_fixed_array:
@@ -902,11 +907,9 @@ class ParamBase(object):
             if self.is_dyn_array_output:
                 return [f'var vk_{self.vk_name} : {vtype}']
             lines = []
-            first = self._dyn_arrays_items[0]._boost_func_param_name
-            for ar_items in self._dyn_arrays_items[1:]:
+            first = self.__dyn_array_items_inputs[0]._boost_func_param_name
+            for ar_items in self.__dyn_array_items_inputs[1:]:
                 cur = ar_items._boost_func_param_name
-                if ar_items._is_boost_func_output:
-                    continue
                 lines += [f'assert(length({first}) == length({cur}))']
             lines += [f'let vk_{self.vk_name} = {vtype}({first} |> length())']
             return lines
