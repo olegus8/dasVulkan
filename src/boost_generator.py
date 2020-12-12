@@ -383,7 +383,7 @@ class GenHandle(object):
         self._generator = generator
         self.vk_handle_type_name = name
 
-        self._dtor = self.__maybe_create_default_dtor()
+        self.dtor = self.__maybe_create_default_dtor()
         self._ctors = self.__create_default_ctors()
 
     def __maybe_create_default_dtor(self):
@@ -422,8 +422,8 @@ class GenHandle(object):
         lines += self.__generate_type()
         for ctor in self._ctors:
             lines += ctor.generate()
-        if self._dtor:
-            lines += self._dtor.generate()
+        if self.dtor:
+            lines += self.dtor.generate()
         return lines
 
     def __generate_type(self):
@@ -437,9 +437,9 @@ class GenHandle(object):
            f'    {attr} : {vhtype}',
             '    _needs_delete : bool',
         ]
-        if self._dtor:
+        if self.dtor:
             lines += [f'    {line}'
-                for line in self._dtor.generate_handle_fields()]
+                for line in self.dtor.generate_handle_fields()]
         lines += [
             '',
            f'def boost_value_to_vk(b : {bhtype}) : {vhtype}',
