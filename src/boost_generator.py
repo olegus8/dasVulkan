@@ -1345,10 +1345,12 @@ class ParamStringPtr(ParamBase):
 
     @property
     def _boost_base_name(self):
-        name = vk_param_name_to_boost(self.vk_name)
-        if name.startswith('pp_'):
-            name = name[1:]
-        return name
+        bname = vk_param_name_to_boost(self.vk_name)
+        if bname.startswith('pp_'):
+            bname = bname[1:]
+        if self.vk_is_dyn_array_items:
+            bname = deref_boost_ptr_name(bname)
+        return bname
 
 
 class ParamFloat(ParamBase):

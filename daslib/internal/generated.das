@@ -1544,7 +1544,7 @@ def vk_view_destroy(var boost_struct : CommandPoolCreateInfo)
 
 struct ComputePipelineCreateInfo
     flags : uint
-    stage : PipelineShaderStageCreateInfo
+    //stage : PipelineShaderStageCreateInfo
     layout : PipelineLayout
     base_pipeline_handle : Pipeline
     base_pipeline_index : int
@@ -1557,12 +1557,12 @@ def vk_view_create_unsafe(var boost_struct : ComputePipelineCreateInfo
     assert(!boost_struct._vk_view__active)
     boost_struct._vk_view__active = true
     boost_struct._vk_view_p_stage = new VkPipelineShaderStageCreateInfo
-    *(boost_struct._vk_view_p_stage) <- (
-        boost_struct.stage |> vk_view_create_unsafe())
+    //*(boost_struct._vk_view_p_stage) <- (
+    //    boost_struct.stage |> vk_view_create_unsafe())
     return <- [[ VkComputePipelineCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_COMPUTE_PIPELINE_CREATE_INFO,
         flags = boost_value_to_vk(boost_struct.flags),
-        stage = *(boost_struct._vk_view_p_stage),
+        //stage = *(boost_struct._vk_view_p_stage),
         layout = boost_value_to_vk(boost_struct.layout),
         basePipelineHandle = boost_value_to_vk(boost_struct.base_pipeline_handle),
         basePipelineIndex = boost_value_to_vk(boost_struct.base_pipeline_index)
@@ -1570,7 +1570,7 @@ def vk_view_create_unsafe(var boost_struct : ComputePipelineCreateInfo
 
 def vk_view_destroy(var boost_struct : ComputePipelineCreateInfo)
     assert(boost_struct._vk_view__active)
-    boost_struct.stage |> vk_view_destroy()
+    //boost_struct.stage |> vk_view_destroy()
     unsafe
         delete boost_struct._vk_view_p_stage
     boost_struct._vk_view__active = false
