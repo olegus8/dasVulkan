@@ -262,7 +262,7 @@ class GenStruct(object):
 
     def __get_field(self, vk_name):
         for field in self.__fields:
-            if param.vk_name == vk_name:
+            if field.vk_name == vk_name:
                 return param
 
     def declare_array(self, count, items,
