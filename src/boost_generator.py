@@ -345,12 +345,12 @@ class GenStruct(object):
             '    boost_struct._vk_view__active = true',
         ] + [
            f'    {line}' for field in self._fields for line in
-                 field.generate_boost_struct_view_create_init(),
-        ]
-        if lines[-1] != '':
-            lines.append('')
-        lines += [
+                 field.generate_boost_struct_view_create_init()
+        ] + [
            f'    return <- [[ {vstype}',
+        ] + [
+           f'        {line}' for field in self._fields for line in
+                     field.generate_boost_struct_view_create_field()
         ]
         array_counts_added = set()
         for field in self._fields:
