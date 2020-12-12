@@ -133,7 +133,6 @@ def add_boost_content(g):
         'VkAttachmentReference',
         'VkCommandPoolCreateInfo',
         'VkComponentMapping',
-        'VkExtensionProperties',
         'VkExtent2D',
         'VkExtent3D',
         'VkFenceCreateInfo',
@@ -155,6 +154,11 @@ def add_boost_content(g):
         'VkViewport',
     ]:
         g.add_gen_struct(name = name)
+
+    for name in [
+        'VkExtensionProperties',
+    ]:
+        g.add_gen_struct(name=name, boost_to_vk=False)
 
     g.add_gen_struct(name = 'VkDescriptorSetLayoutBinding',
         ).declare_array(count = 'descriptorCount', items = 'pImmutableSamplers')
