@@ -847,7 +847,8 @@ class ParamBase(object):
             return [
                f'var b_p_{bname} = new {bdtype}',
                f'if vk_struct.{vname} != null',
-               f'   (*b_p_{bname}) <- vk_value_to_boost(*(vk_struct.{vname}))',
+               f'    (*b_p_{bname}) <- '
+                     f'vk_value_to_boost(*(vk_struct.{vname}))',
             ]
         return []
 
