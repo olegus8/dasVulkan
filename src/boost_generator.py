@@ -320,20 +320,16 @@ class GenStruct(object):
         return lines
 
     def __generate_boost_to_vk(self):
-        bstype = self.boost_type_name
-        vstype = self.__vk_type_name
-        lines = []
-        lines += self.__generate_vk_view_create()
-        lines += self.__generate_vk_view_destroy()
-        return lines
+        return (self.__generate_vk_view_create()
+            + self.__generate_vk_view_destroy())
 
     def __generate_vk_view_create(self):
-        bstype = self.boost_type_name
+        btype = self.boost_type_name
         vtype = self.__vk_type_name
         lines = []
         lines += [
             '',
-           f'def vk_view_create_unsafe(var boost_struct : {bstype}',
+           f'def vk_view_create_unsafe(var boost_struct : {btype}',
            f') : {vtype}',
             '',
             '    assert(!boost_struct._vk_view__active)',
