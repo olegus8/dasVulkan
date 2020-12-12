@@ -177,7 +177,7 @@ def add_boost_content(g):
         g.add_gen_struct(name=name, vk_to_boost=False)
 
     g.add_gen_struct(name='VkComputePipelineCreateInfo', vk_to_boost=False,
-        ).ignore_field('stage')
+        ).ignore_field('stage') #TODO: this crashes interpreter during simulation
     g.add_gen_struct(name = 'VkDescriptorSetLayoutBinding', vk_to_boost=False,
         ).declare_array(items = 'pImmutableSamplers')
     g.add_gen_struct(name = 'VkDescriptorSetLayoutCreateInfo', vk_to_boost=False,
