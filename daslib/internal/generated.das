@@ -1562,7 +1562,7 @@ def vk_view_create_unsafe(var boost_struct : ComputePipelineCreateInfo
     return <- [[ VkComputePipelineCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_COMPUTE_PIPELINE_CREATE_INFO,
         flags = boost_value_to_vk(boost_struct.flags),
-        stage = *(boost_struct._vk_view_p_stage),
+        //stage = *(boost_struct._vk_view_p_stage),
         layout = boost_value_to_vk(boost_struct.layout),
         basePipelineHandle = boost_value_to_vk(boost_struct.base_pipeline_handle),
         basePipelineIndex = boost_value_to_vk(boost_struct.base_pipeline_index)
@@ -3106,7 +3106,7 @@ def create_command_pool(
         result
     )
     handle._needs_delete = true
-    handle._device <- boost_value_to_vk(device)
+    handle._device = boost_value_to_vk(device)
     return <- handle
 
 [private]
@@ -3180,7 +3180,7 @@ def create_descriptor_set_layout(
         result
     )
     handle._needs_delete = true
-    handle._device <- boost_value_to_vk(device)
+    handle._device = boost_value_to_vk(device)
     return <- handle
 
 [private]
@@ -3254,7 +3254,7 @@ def create_fence(
         result
     )
     handle._needs_delete = true
-    handle._device <- boost_value_to_vk(device)
+    handle._device = boost_value_to_vk(device)
     return <- handle
 
 [private]
@@ -3328,7 +3328,7 @@ def create_framebuffer(
         result
     )
     handle._needs_delete = true
-    handle._device <- boost_value_to_vk(device)
+    handle._device = boost_value_to_vk(device)
     return <- handle
 
 [private]
@@ -3402,7 +3402,7 @@ def create_image(
         result
     )
     handle._needs_delete = true
-    handle._device <- boost_value_to_vk(device)
+    handle._device = boost_value_to_vk(device)
     return <- handle
 
 [private]
@@ -3476,7 +3476,7 @@ def create_image_view(
         result
     )
     handle._needs_delete = true
-    handle._device <- boost_value_to_vk(device)
+    handle._device = boost_value_to_vk(device)
     return <- handle
 
 [private]
@@ -3649,7 +3649,7 @@ def create_pipeline_cache(
         result
     )
     handle._needs_delete = true
-    handle._device <- boost_value_to_vk(device)
+    handle._device = boost_value_to_vk(device)
     return <- handle
 
 [private]
@@ -3723,7 +3723,7 @@ def create_pipeline_layout(
         result
     )
     handle._needs_delete = true
-    handle._device <- boost_value_to_vk(device)
+    handle._device = boost_value_to_vk(device)
     return <- handle
 
 [private]
@@ -3797,7 +3797,7 @@ def create_render_pass(
         result
     )
     handle._needs_delete = true
-    handle._device <- boost_value_to_vk(device)
+    handle._device = boost_value_to_vk(device)
     return <- handle
 
 [private]
@@ -3871,7 +3871,7 @@ def create_sampler(
         result
     )
     handle._needs_delete = true
-    handle._device <- boost_value_to_vk(device)
+    handle._device = boost_value_to_vk(device)
     return <- handle
 
 [private]
@@ -3945,7 +3945,7 @@ def create_semaphore(
         result
     )
     handle._needs_delete = true
-    handle._device <- boost_value_to_vk(device)
+    handle._device = boost_value_to_vk(device)
     return <- handle
 
 [private]
@@ -4019,7 +4019,7 @@ def create_shader_module(
         result
     )
     handle._needs_delete = true
-    handle._device <- boost_value_to_vk(device)
+    handle._device = boost_value_to_vk(device)
     return <- handle
 
 [private]
@@ -4093,7 +4093,7 @@ def create_swapchain_khr(
         result
     )
     handle._needs_delete = true
-    handle._device <- boost_value_to_vk(device)
+    handle._device = boost_value_to_vk(device)
     return <- handle
 
 [private]
@@ -4180,7 +4180,7 @@ def create_graphics_pipelines(
     )
     for handle in handles
         handle._needs_delete = true
-        handle._device <- boost_value_to_vk(device)
+        handle._device = boost_value_to_vk(device)
     return <- handles
 
 [private]
@@ -4229,7 +4229,7 @@ def create_compute_pipelines(
     )
     for handle in handles
         handle._needs_delete = true
-        handle._device <- boost_value_to_vk(device)
+        handle._device = boost_value_to_vk(device)
     return <- handles
 
 [private]
