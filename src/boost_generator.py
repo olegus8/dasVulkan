@@ -212,7 +212,7 @@ class GenFunc(object):
         maybe_capture_result = ('result ?? result_ = '
             if self._returns_vk_result else '')
 
-        if lines[-1] != ['']:
+        if lines[-1] != '':
             lines.append('')
         if self.__have_array_outputs_of_unknown_size:
             lines += [
