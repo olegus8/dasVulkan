@@ -848,7 +848,7 @@ class ParamBase(object):
         bdtype = deref_das_type(self._boost_struct_field_type)
         vname = self.vk_name
         if self._vk_is_dyn_array_items:
-            vk_count = self._dyn_array_count
+            vk_count = self._dyn_array_count.vk_name
             return [
                f'var b_{bname} : {btype}',
                # for optional arrays vk pointer can be null, but
