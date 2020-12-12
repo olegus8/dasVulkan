@@ -820,7 +820,7 @@ class ParamBase(object):
             return [f'{vname} = vk_{bname},']
         if self.vk_is_dyn_array_items:
             return [f'{vname} = vk_p_{bname},']
-        return [f'{vname} <- boost_value_to_vk(boost_struct.{bname}),']
+        return [f'{vname} = boost_value_to_vk(boost_struct.{bname}),']
 
     def generate_boost_struct_view_destroy(self):
         return []

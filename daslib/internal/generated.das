@@ -221,8 +221,6 @@ def get_physical_device_queue_family_properties(
         safe_addr(vk_pQueueFamilyPropertyCount),
         [[ VkQueueFamilyProperties ? ]]
     )
-    if result_ != VkResult VK_SUCCESS
-        return <- [[ array<QueueFamilyProperties> ]]
     vk_queue_family_properties |> resize(int(vk_pQueueFamilyPropertyCount))
     vkGetPhysicalDeviceQueueFamilyProperties(
         boost_value_to_vk(physical_device),
