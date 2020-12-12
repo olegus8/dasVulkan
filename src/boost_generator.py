@@ -1224,7 +1224,7 @@ class ParamVkStruct(ParamBase):
                 f'boost_struct._vk_view_{bname}),']
         if self._vk_is_pointer:
             return [f'{vname} = boost_struct._vk_view_{bname}),']
-        return [f'{vname} = *(boost_struct._vk_view_p_{bname})']
+        return [f'{vname} = *(boost_struct._vk_view_p_{bname}),']
 
 
 class ParamVkEnum(ParamBase):
