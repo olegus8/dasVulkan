@@ -1745,6 +1745,58 @@ def vk_view_destroy(var boost_struct : SpecializationMapEntry)
     boost_struct._vk_view__active = false
 
 //
+// VertexInputAttributeDescription
+//
+
+struct VertexInputAttributeDescription
+    location : uint
+    binding : uint
+    format : VkFormat
+    offset : uint
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : VertexInputAttributeDescription
+) : VkVertexInputAttributeDescription
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    return <- [[ VkVertexInputAttributeDescription
+        location = boost_value_to_vk(boost_struct.location),
+        binding = boost_value_to_vk(boost_struct.binding),
+        format = boost_value_to_vk(boost_struct.format),
+        offset = boost_value_to_vk(boost_struct.offset)
+    ]]
+
+def vk_view_destroy(var boost_struct : VertexInputAttributeDescription)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+//
+// VertexInputBindingDescription
+//
+
+struct VertexInputBindingDescription
+    binding : uint
+    stride : uint
+    input_rate : VkVertexInputRate
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : VertexInputBindingDescription
+) : VkVertexInputBindingDescription
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    return <- [[ VkVertexInputBindingDescription
+        binding = boost_value_to_vk(boost_struct.binding),
+        stride = boost_value_to_vk(boost_struct.stride),
+        inputRate = boost_value_to_vk(boost_struct.input_rate)
+    ]]
+
+def vk_view_destroy(var boost_struct : VertexInputBindingDescription)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+//
 // DescriptorSetLayoutBinding
 //
 
