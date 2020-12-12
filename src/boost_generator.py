@@ -817,8 +817,17 @@ class ParamBase(object):
         bname = self._boost_struct_field_name
         vtype = self._vk_type
         if self._vk_is_dyn_array_count:
-            raise Exception('TODO: setup count var same as for funcs, '
-                'taking "optional" into account.')
+            first = self.__dyn_array_items_mandatory[0]._boost_func_param_name
+            lines = []
+            for ar_items in self.__dyn_array_items_mandatory[1:]:
+                cur = ar_items._boost_func_param_name
+                lines += [f'assert(length({cur}) == length({first}))']
+            for ar_items in self.__dyn_array_items_optional:
+                cur = ar_items._boost_func_param_name
+                lines += [f'assert(length({cur}) == 0 || '
+                    f'length({cur}) == length({first}))']
+            lines += [f'let vk_{bname} = uint({first} |> length())']
+            return lines
         if self._vk_is_dyn_array_items:
             adr = f'array_addr_unsafe(boost_struct.{bname})'
             if self._boost_unqual_type == self.vk_unqual_type:
@@ -829,18 +838,16 @@ class ParamBase(object):
                    f'unsafe',
                    f'    vk_p_{bname} = reinterpret<{vtype}>({adr})',
                 ]
-        if self._vk_is_pointer:
-            raise Exception('TODO')
         return []
 
     def generate_boost_struct_view_create_field(self):
+        bname = self._boost_struct_field_name
+        vname = self.vk_name
         if self._vk_is_dyn_array_count:
-            raise Exception('TODO')
+            return [f'{vname} = vk_{bname},']
         if self._vk_is_dyn_array_items:
-            raise Exception('TODO')
-        if self._vk_is_pointer:
-            raise Exception('TODO')
-        return []
+            return [f'{vname} = vk_p_{bname},']
+        return [f'{vname} <- boost_value_to_vk(boost_struct.{bname})']
 
     def generate_boost_struct_v2b_vars(self):
         bname = self._boost_struct_field_name
@@ -909,13 +916,13 @@ class ParamBase(object):
     def generate_boost_func_temp_vars_init(self):
         if self._vk_is_dyn_array_count:
             if self._is_dyn_array_output:
-                return [f'var vk_{self._vk_name} : uint']
+                return [f'var vk_{self.vk_name} : uint']
             lines = []
             first = self._dyn_arrays_items[0]._boost_func_param_name
             for ar_items in self._dyn_arrays_items[1:]:
                 cur = ar_items._boost_func_param_name
                 lines += [f'assert(length({first}) == length({cur}))']
-            lines += [f'let vk_{self._vk_name} = uint({first} |> length())']
+            lines += [f'let vk_{self.vk_name} = uint({first} |> length())']
             return lines
         if self._vk_is_dyn_array_items:
             bname = self._boost_func_param_name
@@ -944,7 +951,7 @@ class ParamBase(object):
         if self._vk_is_dyn_array_items and self._is_boost_func_output:
             bname = self._boost_func_param_name
             vtype = self.vk_unqual_type
-            return [f'vk_{bname} |> resize(int(vk_{self._vk_name}))']
+            return [f'vk_{bname} |> resize(int(vk_{self.vk_name}))']
         return []
 
     def generate_boost_handle_field(self):
@@ -972,9 +979,9 @@ class ParamBase(object):
         bname = self._boost_func_param_name
         if self._vk_is_dyn_array_count:
             if self._is_dyn_array_output:
-                return f'safe_addr(vk_{self._vk_name})'
+                return f'safe_addr(vk_{self.vk_name})'
             else:
-                return f'vk_{self._vk_name}'
+                return f'vk_{self.vk_name}'
         elif self._vk_is_dyn_array_items:
             return f'array_addr_unsafe(vk_{bname})'
         elif self._vk_is_pointer:
