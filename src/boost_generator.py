@@ -146,11 +146,13 @@ class GenFunc(object):
             p_items = self.__get_param(items)
             p_count.set_dyn_array(count=p_count, items=p_items)
             p_items.set_dyn_array(count=p_count, items=p_items)
+        return self
 
     def declare_output(self, name):
         for param in self._params:
             if param.vk_name == name:
                 param.set_boost_func_output()
+        return self
 
     @property
     def _return_type(self):
@@ -272,6 +274,7 @@ class GenStruct(object):
             p.set_dyn_array(count=p_count, items=p_items)
         p_items.set_optional(optional)
         p_items.force_boost_unqual_type(force_item_type)
+        return self
 
     def generate(self):
         lines = []
