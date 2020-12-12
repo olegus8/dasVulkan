@@ -46,10 +46,10 @@ class BoostGenerator(LoggingObject):
         return func
 
     def create_func_params(self, c_func):
-        return map(self.create_param_from_node, c_func.params)
+        return list(map(self.create_param_from_node, c_func.params))
 
     def create_struct_fields(self, c_struct):
-        return map(self.create_param_from_node, c_struct.fields)
+        return list(map(self.create_param_from_node, c_struct.fields))
 
     def create_param(self, c_name, c_type):
         for param_class in [
