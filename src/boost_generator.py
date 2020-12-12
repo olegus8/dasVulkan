@@ -418,6 +418,14 @@ class GenHandle(object):
     def boost_handle_attr(self):
         return boost_handle_attr_name(self.boost_handle_type_name)
 
+    def __generate_handle_fields(self):
+        lines = []
+        if self.dtor:
+            lines += [line for param in self.dtor._params
+                for line in param.generate_boost_handle_field()
+                if param.vk_unqual_type != self.vk_handle_type_name]
+        return lines
+
     def generate(self):
         lines = []
         lines += [
@@ -446,7 +454,7 @@ class GenHandle(object):
         ]
         if self.dtor:
             lines += [f'    {line}'
-                for line in self.dtor.generate_handle_fields()]
+                for line in self.__generate_handle_fields()]
         lines += [
             '',
            f'def boost_value_to_vk(b : {bhtype}) : {vhtype}',
@@ -570,10 +578,6 @@ class GenHandleDtor(GenFunc):
            f'    memzero(handle)',
         ]
         return lines
-
-    def generate_handle_fields(self):
-        return [line for param in self._params for line in
-            param.generate_boost_handle_field()]
 
 
 class C_Param(object):
