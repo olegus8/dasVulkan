@@ -497,7 +497,8 @@ class GenHandleCtor(GenFunc):
         if self.__handle.dtor:
             lines += [f'handle._needs_delete = true']
             lines += [line for param in self.__handle.dtor._params
-                for line in param.generate_boost_handle_ctor_init_field()]
+                for line in param.generate_boost_handle_ctor_init_field()
+                if param.vk_unqual_type != self.__handle.vk_handle_type_name]
         return lines
 
     @property

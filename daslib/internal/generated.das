@@ -2684,7 +2684,7 @@ def create_device(
     return <- handle
 
 def finalize(var handle : Device explicit)
-    if handle._needs_delete:
+    if handle._needs_delete
         destroy_device(
             handle.device,
             null
@@ -2748,7 +2748,7 @@ def create_command_pool(
     return <- handle
 
 def finalize(var handle : CommandPool explicit)
-    if handle._needs_delete:
+    if handle._needs_delete
         destroy_command_pool(
             handle._device,
             handle.command_pool,
@@ -2813,7 +2813,7 @@ def create_descriptor_set_layout(
     return <- handle
 
 def finalize(var handle : DescriptorSetLayout explicit)
-    if handle._needs_delete:
+    if handle._needs_delete
         destroy_descriptor_set_layout(
             handle._device,
             handle.descriptor_set_layout,
@@ -2878,7 +2878,7 @@ def create_fence(
     return <- handle
 
 def finalize(var handle : Fence explicit)
-    if handle._needs_delete:
+    if handle._needs_delete
         destroy_fence(
             handle._device,
             handle.fence,
@@ -2943,7 +2943,7 @@ def create_framebuffer(
     return <- handle
 
 def finalize(var handle : Framebuffer explicit)
-    if handle._needs_delete:
+    if handle._needs_delete
         destroy_framebuffer(
             handle._device,
             handle.framebuffer,
@@ -3008,7 +3008,7 @@ def create_image(
     return <- handle
 
 def finalize(var handle : Image explicit)
-    if handle._needs_delete:
+    if handle._needs_delete
         destroy_image(
             handle._device,
             handle.image,
@@ -3073,7 +3073,7 @@ def create_image_view(
     return <- handle
 
 def finalize(var handle : ImageView explicit)
-    if handle._needs_delete:
+    if handle._needs_delete
         destroy_image_view(
             handle._device,
             handle.image_view,
@@ -3132,7 +3132,7 @@ def create_instance(
     return <- handle
 
 def finalize(var handle : Instance explicit)
-    if handle._needs_delete:
+    if handle._needs_delete
         destroy_instance(
             handle.instance,
             null
@@ -3230,7 +3230,7 @@ def create_pipeline_layout(
     return <- handle
 
 def finalize(var handle : PipelineLayout explicit)
-    if handle._needs_delete:
+    if handle._needs_delete
         destroy_pipeline_layout(
             handle._device,
             handle.pipeline_layout,
@@ -3295,7 +3295,7 @@ def create_render_pass(
     return <- handle
 
 def finalize(var handle : RenderPass explicit)
-    if handle._needs_delete:
+    if handle._needs_delete
         destroy_render_pass(
             handle._device,
             handle.render_pass,
@@ -3360,7 +3360,7 @@ def create_sampler(
     return <- handle
 
 def finalize(var handle : Sampler explicit)
-    if handle._needs_delete:
+    if handle._needs_delete
         destroy_sampler(
             handle._device,
             handle.sampler,
@@ -3425,7 +3425,7 @@ def create_semaphore(
     return <- handle
 
 def finalize(var handle : Semaphore explicit)
-    if handle._needs_delete:
+    if handle._needs_delete
         destroy_semaphore(
             handle._device,
             handle.semaphore,
@@ -3490,7 +3490,7 @@ def create_shader_module(
     return <- handle
 
 def finalize(var handle : ShaderModule explicit)
-    if handle._needs_delete:
+    if handle._needs_delete
         destroy_shader_module(
             handle._device,
             handle.shader_module,
@@ -3555,7 +3555,7 @@ def create_swapchain_khr(
     return <- handle
 
 def finalize(var handle : SwapchainKHR explicit)
-    if handle._needs_delete:
+    if handle._needs_delete
         destroy_swapchain_khr(
             handle._device,
             handle.swapchain,
@@ -3683,7 +3683,7 @@ def create_compute_pipelines(
     return <- handles
 
 def finalize(var handle : Pipeline explicit)
-    if handle._needs_delete:
+    if handle._needs_delete
         destroy_pipeline(
             handle._device,
             handle.pipeline,
