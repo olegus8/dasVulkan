@@ -896,7 +896,7 @@ class ParamBase(object):
 
     def generate_boost_func_temp_vars_init(self):
         if self.vk_is_dyn_array_count:
-            vtype = self.vk_type
+            vtype = self._vk_type
             if self.is_dyn_array_output:
                 return [f'var vk_{self.vk_name} : {vtype}']
             lines = []
