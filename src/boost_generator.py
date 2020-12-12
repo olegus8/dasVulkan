@@ -630,7 +630,7 @@ class ParamBase(object):
         self._dyn_arrays_items = []
         self._dyn_array_count = None
         self._optional = False
-        self._forced_unqual_boost_type = None
+        self._forced_boost_unqual_type = None
         self._is_boost_func_output = False
         self._gen_struct = None
 
@@ -670,7 +670,7 @@ class ParamBase(object):
         self._optional = optional
 
     def force_boost_unqual_type(self, type_name):
-        self._forced_unqual_boost_type = type_name
+        self._forced_boost_unqual_type = type_name
 
     def set_boost_func_output(self):
         self._is_boost_func_output = True
