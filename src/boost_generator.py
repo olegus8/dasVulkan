@@ -54,7 +54,7 @@ class BoostGenerator(LoggingObject):
 
     def create_param(self, c_name, c_type):
         for param_class in [
-            ParamVkAllocator,
+            ParamVk_pAllocator,
             ParamVk_pNext,
             ParamVk_sType,
             ParamVkHandle,
@@ -957,12 +957,12 @@ class ParamBase(object):
         return f'boost_value_to_vk({bname})'
 
 
-class ParamVkAllocator(ParamBase):
+class ParamVk_pAllocator(ParamBase):
 
     @classmethod
     def maybe_create(cls, c_param, **kwargs):
         if (c_param.name == 'pAllocator'
-        and c_param.type == 'const VkAllocationCallbacks *'
+        and c_param.type.name == 'const VkAllocationCallbacks *'
         ):
             return cls(c_param=c_param, **kwargs)
 
