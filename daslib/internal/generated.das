@@ -1775,7 +1775,7 @@ def vk_view_create_unsafe(var boost_struct : DescriptorSetLayoutCreateInfo
 
     assert(!boost_struct._vk_view__active)
     boost_struct._vk_view__active = true
-    let vk_binding_count = uint(bindings |> length())
+    let vk_binding_count = uint(boost_struct.bindings |> length())
     boost_struct._vk_view_bindings <- [{
         for item in boost_struct.bindings ;
         item |> vk_view_create_unsafe()}]
@@ -1824,13 +1824,13 @@ def vk_view_create_unsafe(var boost_struct : DeviceCreateInfo
 
     assert(!boost_struct._vk_view__active)
     boost_struct._vk_view__active = true
-    let vk_queue_create_info_count = uint(queue_create_infos |> length())
+    let vk_queue_create_info_count = uint(boost_struct.queue_create_infos |> length())
     boost_struct._vk_view_queue_create_infos <- [{
         for item in boost_struct.queue_create_infos ;
         item |> vk_view_create_unsafe()}]
-    let vk_enabled_layer_count = uint(p_enabled_layer_names |> length())
+    let vk_enabled_layer_count = uint(boost_struct.p_enabled_layer_names |> length())
     let vk_p_p_enabled_layer_names = array_addr_unsafe(boost_struct.p_enabled_layer_names)
-    let vk_enabled_extension_count = uint(p_enabled_extension_names |> length())
+    let vk_enabled_extension_count = uint(boost_struct.p_enabled_extension_names |> length())
     let vk_p_p_enabled_extension_names = array_addr_unsafe(boost_struct.p_enabled_extension_names)
     if boost_struct.p_enabled_features != null
         boost_struct._vk_view_p_enabled_features = new VkPhysicalDeviceFeatures
@@ -1904,7 +1904,7 @@ def vk_view_create_unsafe(var boost_struct : DeviceQueueCreateInfo
 
     assert(!boost_struct._vk_view__active)
     boost_struct._vk_view__active = true
-    let vk_queue_count = uint(queue_priorities |> length())
+    let vk_queue_count = uint(boost_struct.queue_priorities |> length())
     let vk_p_queue_priorities = array_addr_unsafe(boost_struct.queue_priorities)
     return <- [[ VkDeviceQueueCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO,
@@ -1950,7 +1950,7 @@ def vk_view_create_unsafe(var boost_struct : FramebufferCreateInfo
 
     assert(!boost_struct._vk_view__active)
     boost_struct._vk_view__active = true
-    let vk_attachment_count = uint(attachments |> length())
+    let vk_attachment_count = uint(boost_struct.attachments |> length())
     boost_struct._vk_view_attachments <- [{
         for item in boost_struct.attachments ;
         item |> boost_value_to_vk()}]
@@ -2014,7 +2014,7 @@ def vk_view_create_unsafe(var boost_struct : ImageCreateInfo
     boost_struct._vk_view_p_extent = new VkExtent3D
     *(boost_struct._vk_view_p_extent) <- (
         boost_struct.extent |> vk_view_create_unsafe())
-    let vk_queue_family_index_count = uint(queue_family_indices |> length())
+    let vk_queue_family_index_count = uint(boost_struct.queue_family_indices |> length())
     let vk_p_queue_family_indices = array_addr_unsafe(boost_struct.queue_family_indices)
     return <- [[ VkImageCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO,
@@ -2083,9 +2083,9 @@ def vk_view_create_unsafe(var boost_struct : InstanceCreateInfo
         boost_struct._vk_view_p_application_info = new VkApplicationInfo
         *(boost_struct._vk_view_p_application_info) <- (
             *(boost_struct.p_application_info) |> vk_view_create_unsafe())
-    let vk_enabled_layer_count = uint(p_enabled_layer_names |> length())
+    let vk_enabled_layer_count = uint(boost_struct.p_enabled_layer_names |> length())
     let vk_p_p_enabled_layer_names = array_addr_unsafe(boost_struct.p_enabled_layer_names)
-    let vk_enabled_extension_count = uint(p_enabled_extension_names |> length())
+    let vk_enabled_extension_count = uint(boost_struct.p_enabled_extension_names |> length())
     let vk_p_p_enabled_extension_names = array_addr_unsafe(boost_struct.p_enabled_extension_names)
     return <- [[ VkInstanceCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
@@ -2145,11 +2145,11 @@ def vk_view_create_unsafe(var boost_struct : PipelineLayoutCreateInfo
 
     assert(!boost_struct._vk_view__active)
     boost_struct._vk_view__active = true
-    let vk_set_layout_count = uint(set_layouts |> length())
+    let vk_set_layout_count = uint(boost_struct.set_layouts |> length())
     boost_struct._vk_view_set_layouts <- [{
         for item in boost_struct.set_layouts ;
         item |> boost_value_to_vk()}]
-    let vk_push_constant_range_count = uint(push_constant_ranges |> length())
+    let vk_push_constant_range_count = uint(boost_struct.push_constant_ranges |> length())
     boost_struct._vk_view_push_constant_ranges <- [{
         for item in boost_struct.push_constant_ranges ;
         item |> vk_view_create_unsafe()}]
@@ -2206,11 +2206,11 @@ def vk_view_create_unsafe(var boost_struct : PipelineViewportStateCreateInfo
 
     assert(!boost_struct._vk_view__active)
     boost_struct._vk_view__active = true
-    let vk_viewport_count = uint(viewports |> length())
+    let vk_viewport_count = uint(boost_struct.viewports |> length())
     boost_struct._vk_view_viewports <- [{
         for item in boost_struct.viewports ;
         item |> vk_view_create_unsafe()}]
-    let vk_scissor_count = uint(scissors |> length())
+    let vk_scissor_count = uint(boost_struct.scissors |> length())
     boost_struct._vk_view_scissors <- [{
         for item in boost_struct.scissors ;
         item |> vk_view_create_unsafe()}]
@@ -2271,15 +2271,15 @@ def vk_view_create_unsafe(var boost_struct : RenderPassCreateInfo
 
     assert(!boost_struct._vk_view__active)
     boost_struct._vk_view__active = true
-    let vk_attachment_count = uint(attachments |> length())
+    let vk_attachment_count = uint(boost_struct.attachments |> length())
     boost_struct._vk_view_attachments <- [{
         for item in boost_struct.attachments ;
         item |> vk_view_create_unsafe()}]
-    let vk_subpass_count = uint(subpasses |> length())
+    let vk_subpass_count = uint(boost_struct.subpasses |> length())
     boost_struct._vk_view_subpasses <- [{
         for item in boost_struct.subpasses ;
         item |> vk_view_create_unsafe()}]
-    let vk_dependency_count = uint(dependencies |> length())
+    let vk_dependency_count = uint(boost_struct.dependencies |> length())
     boost_struct._vk_view_dependencies <- [{
         for item in boost_struct.dependencies ;
         item |> vk_view_create_unsafe()}]
@@ -2347,7 +2347,7 @@ def vk_view_create_unsafe(var boost_struct : ShaderModuleCreateInfo
 
     assert(!boost_struct._vk_view__active)
     boost_struct._vk_view__active = true
-    let vk_code_size = uint(code |> length())
+    let vk_code_size = uint(boost_struct.code |> length())
     var vk_p_code : uint ?
     unsafe
         vk_p_code = reinterpret<uint ?>(array_addr_unsafe(boost_struct.code))
@@ -2397,12 +2397,12 @@ def vk_view_create_unsafe(var boost_struct : SubpassDescription
 
     assert(!boost_struct._vk_view__active)
     boost_struct._vk_view__active = true
-    let vk_input_attachment_count = uint(input_attachments |> length())
+    let vk_input_attachment_count = uint(boost_struct.input_attachments |> length())
     boost_struct._vk_view_input_attachments <- [{
         for item in boost_struct.input_attachments ;
         item |> vk_view_create_unsafe()}]
-    assert(length(resolve_attachments) == 0 || length(resolve_attachments) == length(color_attachments))
-    let vk_color_attachment_count = uint(color_attachments |> length())
+    assert(length(boost_struct.resolve_attachments) == 0 || length(boost_struct.resolve_attachments) == length(boost_struct.color_attachments))
+    let vk_color_attachment_count = uint(boost_struct.color_attachments |> length())
     boost_struct._vk_view_color_attachments <- [{
         for item in boost_struct.color_attachments ;
         item |> vk_view_create_unsafe()}]
@@ -2413,7 +2413,7 @@ def vk_view_create_unsafe(var boost_struct : SubpassDescription
         boost_struct._vk_view_p_depth_stencil_attachment = new VkAttachmentReference
         *(boost_struct._vk_view_p_depth_stencil_attachment) <- (
             *(boost_struct.p_depth_stencil_attachment) |> vk_view_create_unsafe())
-    let vk_preserve_attachment_count = uint(preserve_attachments |> length())
+    let vk_preserve_attachment_count = uint(boost_struct.preserve_attachments |> length())
     let vk_p_preserve_attachments = array_addr_unsafe(boost_struct.preserve_attachments)
     return <- [[ VkSubpassDescription
         flags = boost_value_to_vk(boost_struct.flags),
@@ -2514,7 +2514,7 @@ def vk_view_create_unsafe(var boost_struct : SwapchainCreateInfoKHR
     boost_struct._vk_view_p_image_extent = new VkExtent2D
     *(boost_struct._vk_view_p_image_extent) <- (
         boost_struct.image_extent |> vk_view_create_unsafe())
-    let vk_queue_family_index_count = uint(queue_family_indices |> length())
+    let vk_queue_family_index_count = uint(boost_struct.queue_family_indices |> length())
     let vk_p_queue_family_indices = array_addr_unsafe(boost_struct.queue_family_indices)
     return <- [[ VkSwapchainCreateInfoKHR
         sType = VkStructureType VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR,
