@@ -220,7 +220,7 @@ class GenFunc(object):
            f'    {maybe_capture_result}{self._vk_func_name}(',
         ]
         for param in self._params:
-            lines += [f'        {},'.format(param.boost_func_call_vk_param)]
+            lines += ['        {},'.format(param.boost_func_call_vk_param)]
         remove_last_char(lines, ',')
         lines += [
            f'    )',
