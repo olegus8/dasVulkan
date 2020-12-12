@@ -929,8 +929,8 @@ class ParamBase(object):
         return []
 
     def get_boost_dtor_call_param(self, boost_handle_type_name):
-        raise Exception(f'Should not be here. {self._c_param.type.name} '
-            f'{self._c_param.name}')
+        raise Exception(f'Should not be here. {self.__class__.__name__}, '
+            f'{self._c_param.type.name} {self._c_param.name}')
 
     @property
     def boost_func_query_array_size_param(self):
