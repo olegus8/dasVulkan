@@ -498,10 +498,6 @@ class GenHandleCtor(GenFunc):
         return 'handles' if self.__returns_array else 'handle'
 
     def generate(self):
-        bh_attr = self.__handle.boost_handle_attr
-        bh_type = self.__handle.boost_handle_type_name
-
-        assert_equal(self._return_type, bh_type)
         assert_equal(len(self._output_params), 1)
 
         lines = super(GenHandleCtor, self).generate()
