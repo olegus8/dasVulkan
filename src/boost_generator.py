@@ -130,6 +130,13 @@ class GenFunc(object):
         return [p for p in self._params if p._is_boost_func_output]
 
     @property
+    def __have_array_outputs(self):
+        for param in self._output_params:
+            if param._vk_is_dyn_array_items:
+                return True
+        return False
+
+    @property
     def _returns_vk_result(self):
         return returns_vk_result(self.__c_func)
 
