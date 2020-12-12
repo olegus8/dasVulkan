@@ -361,6 +361,9 @@ class GenStruct(object):
             '',
            f'def vk_view_destroy(var boost_struct : {bstype})',
             '    assert(boost_struct._vk_view__active)',
+        ] + [
+           f'    {line}' for field in self._fields for line in
+                 field.generate_boost_struct_view_destroy()
         ]
         for field in self._fields:
             if field.vk_name in ['pNext', 'sType']:
@@ -820,6 +823,9 @@ class ParamBase(object):
         if self._vk_is_dyn_array_items:
             return [f'{vname} = vk_p_{bname},']
         return [f'{vname} <- boost_value_to_vk(boost_struct.{bname}),']
+
+    def generate_boost_struct_view_destroy(self):
+        return []
 
     def generate_boost_struct_v2b_vars(self):
         bname = self._boost_struct_field_name
