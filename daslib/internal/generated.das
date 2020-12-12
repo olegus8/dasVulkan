@@ -606,8 +606,8 @@ def vk_value_to_boost(vk_struct : VkOffset2D) : Offset2D
 
 struct PhysicalDeviceLimits
     max_image_dimension_1d : uint
-    max_image_dimension_2d : uint
-    max_image_dimension_3d : uint
+    max_image_dimension_2d_ : uint
+    max_image_dimension_3d_ : uint
     max_image_dimension_cube : uint
     max_image_array_layers : uint
     max_texel_buffer_elements : uint
@@ -720,8 +720,8 @@ def vk_view_create_unsafe(var boost_struct : PhysicalDeviceLimits
     boost_struct._vk_view__active = true
     return <- [[ VkPhysicalDeviceLimits
         maxImageDimension1D = boost_value_to_vk(boost_struct.max_image_dimension_1d),
-        maxImageDimension2D = boost_value_to_vk(boost_struct.max_image_dimension_2d),
-        maxImageDimension3D = boost_value_to_vk(boost_struct.max_image_dimension_3d),
+        maxImageDimension2D = boost_value_to_vk(boost_struct.max_image_dimension_2d_),
+        maxImageDimension3D = boost_value_to_vk(boost_struct.max_image_dimension_3d_),
         maxImageDimensionCube = boost_value_to_vk(boost_struct.max_image_dimension_cube),
         maxImageArrayLayers = boost_value_to_vk(boost_struct.max_image_array_layers),
         maxTexelBufferElements = boost_value_to_vk(boost_struct.max_texel_buffer_elements),
@@ -834,8 +834,8 @@ def vk_view_destroy(var boost_struct : PhysicalDeviceLimits)
 def vk_value_to_boost(vk_struct : VkPhysicalDeviceLimits) : PhysicalDeviceLimits
     return <- [[PhysicalDeviceLimits
         max_image_dimension_1d = vk_value_to_boost(vk_struct.maxImageDimension1D),
-        max_image_dimension_2d = vk_value_to_boost(vk_struct.maxImageDimension2D),
-        max_image_dimension_3d = vk_value_to_boost(vk_struct.maxImageDimension3D),
+        max_image_dimension_2d_ = vk_value_to_boost(vk_struct.maxImageDimension2D),
+        max_image_dimension_3d_ = vk_value_to_boost(vk_struct.maxImageDimension3D),
         max_image_dimension_cube = vk_value_to_boost(vk_struct.maxImageDimensionCube),
         max_image_array_layers = vk_value_to_boost(vk_struct.maxImageArrayLayers),
         max_texel_buffer_elements = vk_value_to_boost(vk_struct.maxTexelBufferElements),
@@ -992,8 +992,8 @@ struct PhysicalDeviceFeatures
     shader_resource_min_lod : uint
     sparse_binding : uint
     sparse_residency_buffer : uint
-    sparse_residency_image_2d : uint
-    sparse_residency_image_3d : uint
+    sparse_residency_image_2d_ : uint
+    sparse_residency_image_3d_ : uint
     sparse_residency_2samples : uint
     sparse_residency_4samples : uint
     sparse_residency_8samples : uint
@@ -1055,8 +1055,8 @@ def vk_view_create_unsafe(var boost_struct : PhysicalDeviceFeatures
         shaderResourceMinLod = boost_value_to_vk(boost_struct.shader_resource_min_lod),
         sparseBinding = boost_value_to_vk(boost_struct.sparse_binding),
         sparseResidencyBuffer = boost_value_to_vk(boost_struct.sparse_residency_buffer),
-        sparseResidencyImage2D = boost_value_to_vk(boost_struct.sparse_residency_image_2d),
-        sparseResidencyImage3D = boost_value_to_vk(boost_struct.sparse_residency_image_3d),
+        sparseResidencyImage2D = boost_value_to_vk(boost_struct.sparse_residency_image_2d_),
+        sparseResidencyImage3D = boost_value_to_vk(boost_struct.sparse_residency_image_3d_),
         sparseResidency2Samples = boost_value_to_vk(boost_struct.sparse_residency_2samples),
         sparseResidency4Samples = boost_value_to_vk(boost_struct.sparse_residency_4samples),
         sparseResidency8Samples = boost_value_to_vk(boost_struct.sparse_residency_8samples),
@@ -1118,8 +1118,8 @@ def vk_value_to_boost(vk_struct : VkPhysicalDeviceFeatures) : PhysicalDeviceFeat
         shader_resource_min_lod = vk_value_to_boost(vk_struct.shaderResourceMinLod),
         sparse_binding = vk_value_to_boost(vk_struct.sparseBinding),
         sparse_residency_buffer = vk_value_to_boost(vk_struct.sparseResidencyBuffer),
-        sparse_residency_image_2d = vk_value_to_boost(vk_struct.sparseResidencyImage2D),
-        sparse_residency_image_3d = vk_value_to_boost(vk_struct.sparseResidencyImage3D),
+        sparse_residency_image_2d_ = vk_value_to_boost(vk_struct.sparseResidencyImage2D),
+        sparse_residency_image_3d_ = vk_value_to_boost(vk_struct.sparseResidencyImage3D),
         sparse_residency_2samples = vk_value_to_boost(vk_struct.sparseResidency2Samples),
         sparse_residency_4samples = vk_value_to_boost(vk_struct.sparseResidency4Samples),
         sparse_residency_8samples = vk_value_to_boost(vk_struct.sparseResidency8Samples),
@@ -1613,7 +1613,7 @@ def vk_view_destroy(var boost_struct : ImageViewCreateInfo)
 struct PipelineShaderStageCreateInfo
     flags : uint
     stage : VkShaderStageFlagBits
-    module : ShaderModule
+    module_ : ShaderModule
     name : string
     p_specialization_info : SpecializationInfo ?
     _vk_view_p_specialization_info : VkSpecializationInfo ?
@@ -1632,7 +1632,7 @@ def vk_view_create_unsafe(var boost_struct : PipelineShaderStageCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO,
         flags = boost_value_to_vk(boost_struct.flags),
         stage = boost_value_to_vk(boost_struct.stage),
-        module_ = boost_value_to_vk(boost_struct.module),
+        module_ = boost_value_to_vk(boost_struct.module_),
         pName = boost_value_to_vk(boost_struct.name),
         pSpecializationInfo = boost_struct._vk_view_p_specialization_info
     ]]

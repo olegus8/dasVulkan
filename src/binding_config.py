@@ -163,6 +163,7 @@ def add_boost_content(g):
         'VkPipelineShaderStageCreateInfo',
         'VkSamplerCreateInfo',
         'VkSemaphoreCreateInfo',
+        'VkSpecializationMapEntry',
     ]:
         g.add_gen_struct(name=name, vk_to_boost=False)
 
@@ -199,6 +200,9 @@ def add_boost_content(g):
         ).declare_array(count = 'dependencyCount', items = 'pDependencies')
     g.add_gen_struct(name = 'VkShaderModuleCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'codeSize', items = 'pCode', force_item_type = 'uint8')
+    g.add_gen_struct(name = 'VkSpecializationInfo', vk_to_boost=False,
+        ).declare_array(count = 'mapEntryCount', items = 'pMapEntries',
+        ).declare_array(count = 'dataSize', items = 'pData', force_item_type = 'uint8')
     g.add_gen_struct(name = 'VkSubpassDescription', vk_to_boost=False,
         ).declare_array(count = 'inputAttachmentCount', items = 'pInputAttachments',
         ).declare_array(count = 'colorAttachmentCount', items = 'pColorAttachments',
