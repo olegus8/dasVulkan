@@ -130,9 +130,9 @@ class GenFunc(object):
         return [p for p in self._params if p._is_boost_func_output]
 
     @property
-    def __have_array_outputs(self):
+    def __have_array_outputs_with_unknown_size(self):
         for param in self._output_params:
-            if param._vk_is_dyn_array_items:
+            if param.vk_is_dyn_array_count and param.is_dyn_array_output:
                 return True
         return False
 
@@ -207,7 +207,7 @@ class GenFunc(object):
 
         if lines[-1] != ['']:
             lines.append('')
-        if self.__have_array_outputs:
+        if self.__have_array_outputs_with_unknown_size:
             lines += [
                f'    {maybe_capture_result}{self._vk_func_name}(',
             ]
@@ -484,7 +484,7 @@ class GenHandleCtor(GenFunc):
 
     @property
     def __returns_array(self):
-        return self.__handle_param._vk_is_dyn_array_items
+        return self.__handle_param.vk_is_dyn_array_items
 
     def __generate_handle_init_fields(self):
         lines = []
@@ -688,11 +688,11 @@ class ParamBase(object):
         self._gen_struct = struct
 
     @property
-    def _vk_is_dyn_array_count(self):
+    def vk_is_dyn_array_count(self):
         return self is self._dyn_array_count
 
     @property
-    def _vk_is_dyn_array_items(self):
+    def vk_is_dyn_array_items(self):
         return self in self._dyn_arrays_items
 
     @property
@@ -719,14 +719,14 @@ class ParamBase(object):
     @property
     def _boost_base_name(self):
         bname = vk_param_name_to_boost(self.vk_name)
-        if self._vk_is_dyn_array_items:
+        if self.vk_is_dyn_array_items:
             bname = deref_boost_ptr_name(bname)
         return bname
 
     @property
     def _boost_base_type(self):
         t = self._boost_unqual_type
-        if self._vk_is_dyn_array_items:
+        if self.vk_is_dyn_array_items:
             t = f'array<{t}>'
         elif self._vk_is_fixed_array:
             t += f' [{self._c_param.type.fixed_array_size}]'
@@ -737,7 +737,7 @@ class ParamBase(object):
     @property
     def _boost_func_param_name(self):
         bname = self._boost_base_name
-        if self._vk_is_pointer and not self._vk_is_dyn_array_items:
+        if self._vk_is_pointer and not self.vk_is_dyn_array_items:
             assert not self._optional
             bname = deref_boost_ptr_name(bname)
         return bname
@@ -745,7 +745,7 @@ class ParamBase(object):
     @property
     def _boost_func_param_type(self):
         btype = self._boost_base_type
-        if self._vk_is_pointer and not self._vk_is_dyn_array_items:
+        if self._vk_is_pointer and not self.vk_is_dyn_array_items:
             assert not self._optional
             btype = deref_das_type(btype)
         return btype
@@ -759,14 +759,14 @@ class ParamBase(object):
         return self._boost_base_type
 
     def generate_boost_func_param_decl(self):
-        if self._vk_is_dyn_array_count or self._is_boost_func_output:
+        if self.vk_is_dyn_array_count or self._is_boost_func_output:
             return []
         bname = self._boost_func_param_name
         btype = self._boost_func_param_type
         return [f'{bname} : {btype} = [[ {btype} ]];']
 
     def generate_boost_struct_field_decl(self):
-        if self._vk_is_dyn_array_count:
+        if self.vk_is_dyn_array_count:
             return []
         bname = self._boost_struct_field_name
         btype = self._boost_struct_field_type
@@ -778,7 +778,7 @@ class ParamBase(object):
     def generate_boost_struct_view_create_init(self):
         bname = self._boost_struct_field_name
         vtype = self._vk_type
-        if self._vk_is_dyn_array_count:
+        if self.vk_is_dyn_array_count:
             first = self.__dyn_array_items_mandatory[0]._boost_func_param_name
             lines = []
             for ar_items in self.__dyn_array_items_mandatory[1:]:
@@ -790,7 +790,7 @@ class ParamBase(object):
                     f'length({cur}) == length({first}))']
             lines += [f'let vk_{bname} = uint({first} |> length())']
             return lines
-        if self._vk_is_dyn_array_items:
+        if self.vk_is_dyn_array_items:
             adr = f'array_addr_unsafe(boost_struct.{bname})'
             if self._boost_unqual_type == self.vk_unqual_type:
                 return [f'let vk_p_{bname} = {adr}']
@@ -805,9 +805,9 @@ class ParamBase(object):
     def generate_boost_struct_view_create_field(self):
         bname = self._boost_struct_field_name
         vname = self.vk_name
-        if self._vk_is_dyn_array_count:
+        if self.vk_is_dyn_array_count:
             return [f'{vname} = vk_{bname},']
-        if self._vk_is_dyn_array_items:
+        if self.vk_is_dyn_array_items:
             return [f'{vname} = vk_p_{bname},']
         return [f'{vname} <- boost_value_to_vk(boost_struct.{bname}),']
 
@@ -818,7 +818,7 @@ class ParamBase(object):
         bname = self._boost_struct_field_name
         btype = self._boost_struct_field_type
         vname = self.vk_name
-        if self._vk_is_dyn_array_items:
+        if self.vk_is_dyn_array_items:
             vk_count = self._dyn_array_count.vk_name
             return [
                f'var b_{bname} : {btype}',
@@ -843,26 +843,26 @@ class ParamBase(object):
     def generate_boost_struct_v2b_field(self):
         bname = self._boost_struct_field_name
         vname = self.vk_name
-        if self._vk_is_dyn_array_count:
+        if self.vk_is_dyn_array_count:
             return []
-        if self._vk_is_dyn_array_items:
+        if self.vk_is_dyn_array_items:
             return [f'{bname} <- b_{bname},']
         if self._vk_is_pointer:
             return [f'{bname} = b_p_{bname},']
         return [f'{bname} <- vk_value_to_boost(vk_struct.{vname}),']
 
     def generate_boost_func_param_call(self):
-        if self._vk_is_dyn_array_count or self._is_boost_func_output:
+        if self.vk_is_dyn_array_count or self._is_boost_func_output:
             return []
         return [f'{self._boost_func_param_name},']
 
     @property
-    def _is_dyn_array_output(self):
-        if self._vk_is_dyn_array_items:
+    def is_dyn_array_output(self):
+        if self.vk_is_dyn_array_items:
             assert_equal(len(self._dyn_arrays_items), 1)
             assert_is(self._dyn_arrays_items[0], self)
             return self._is_boost_func_output
-        if self._vk_is_dyn_array_count:
+        if self.vk_is_dyn_array_count:
             # There are cases when the count is shared between
             # output and non-output arrays, and hence must not be queried.
             # E.g. vkCreateGraphicsPipelines
@@ -873,15 +873,15 @@ class ParamBase(object):
     @property
     def boost_func_return_value(self):
         bname = self._boost_func_param_name
-        if self._vk_is_dyn_array_items:
+        if self.vk_is_dyn_array_items:
             return f'<- [{{for x in vk_{bname}; vk_value_to_boost(x)}}]'
         if self._vk_is_pointer:
             return f'<- vk_value_to_boost(vk_{bname})'
         raise Exception('Return type not supported: {self.vk_name}')
 
     def generate_boost_func_temp_vars_init(self):
-        if self._vk_is_dyn_array_count:
-            if self._is_dyn_array_output:
+        if self.vk_is_dyn_array_count:
+            if self.is_dyn_array_output:
                 return [f'var vk_{self.vk_name} : uint']
             lines = []
             first = self._dyn_arrays_items[0]._boost_func_param_name
@@ -890,7 +890,7 @@ class ParamBase(object):
                 lines += [f'assert(length({first}) == length({cur}))']
             lines += [f'let vk_{self.vk_name} = uint({first} |> length())']
             return lines
-        if self._vk_is_dyn_array_items:
+        if self.vk_is_dyn_array_items:
             bname = self._boost_func_param_name
             vtype = self.vk_unqual_type
             lines = [
@@ -914,7 +914,7 @@ class ParamBase(object):
         return []
 
     def generate_boost_func_temp_vars_update(self):
-        if self._vk_is_dyn_array_items and self._is_boost_func_output:
+        if self.vk_is_dyn_array_items and self._is_boost_func_output:
             bname = self._boost_func_param_name
             vtype = self.vk_unqual_type
             vcname = self._dyn_array_count.vk_name
@@ -934,7 +934,7 @@ class ParamBase(object):
     @property
     def boost_func_query_array_size_param(self):
         bname = self._boost_func_param_name
-        if self._vk_is_dyn_array_items:
+        if self.vk_is_dyn_array_items:
             if self._is_boost_func_output:
                 return f'[[ {self.vk_unqual_type} ? ]]'
             else:
@@ -944,12 +944,12 @@ class ParamBase(object):
     @property
     def boost_func_call_vk_param(self):
         bname = self._boost_func_param_name
-        if self._vk_is_dyn_array_count:
-            if self._is_dyn_array_output:
+        if self.vk_is_dyn_array_count:
+            if self.is_dyn_array_output:
                 return f'safe_addr(vk_{self.vk_name})'
             else:
                 return f'vk_{self.vk_name}'
-        elif self._vk_is_dyn_array_items:
+        elif self.vk_is_dyn_array_items:
             return f'array_addr_unsafe(vk_{bname})'
         elif self._vk_is_pointer:
             return f'safe_addr(vk_{bname})'
@@ -1064,13 +1064,13 @@ class ParamVkHandleBase(ParamBase):
     def generate_boost_struct_field_view_decl(self):
         bname = self._boost_struct_field_name
         vutype = self.vk_unqual_type
-        if self._vk_is_dyn_array_items:
+        if self.vk_is_dyn_array_items:
             return [f'_vk_view_{bname} : array<{vutype}>']
         return []
 
     def generate_boost_struct_view_create_init(self):
         bname = self._boost_struct_field_name
-        if self._vk_is_dyn_array_items:
+        if self.vk_is_dyn_array_items:
             return [
                f'boost_struct._vk_view_{bname} <- [{{',
                f'    for item in boost_struct.{bname} ;',
@@ -1081,7 +1081,7 @@ class ParamVkHandleBase(ParamBase):
     def generate_boost_struct_view_create_field(self):
         bname = self._boost_struct_field_name
         vname = self.vk_name
-        if self._vk_is_dyn_array_items:
+        if self.vk_is_dyn_array_items:
             return [f'{vname} = array_addr_unsafe('
                 f'boost_struct._vk_view_{bname}),']
         return super(ParamVkHandleBase, self
@@ -1089,7 +1089,7 @@ class ParamVkHandleBase(ParamBase):
 
     def generate_boost_struct_view_destroy(self):
         bname = self._boost_struct_field_name
-        if self._vk_is_dyn_array_items:
+        if self.vk_is_dyn_array_items:
             return [f'delete boost_struct._vk_view_{bname}']
         return []
 
@@ -1149,7 +1149,7 @@ class ParamVkStruct(ParamBase):
     def generate_boost_func_temp_vars_init(self):
         bname = self._boost_func_param_name
         if not self._is_boost_func_output:
-            if self._vk_is_dyn_array_items:
+            if self.vk_is_dyn_array_items:
                 return [
                     f'var vk_{bname} <- [{{ for item in {bname} ;',
                     f'    {bname} |> vk_view_create_unsafe() }}]',
@@ -1168,7 +1168,7 @@ class ParamVkStruct(ParamBase):
     def generate_boost_struct_field_view_decl(self):
         bname = self._boost_struct_field_name
         vutype = self.vk_unqual_type
-        if self._vk_is_dyn_array_items:
+        if self.vk_is_dyn_array_items:
             return [f'_vk_view_{bname} : array<{vutype}>']
         if self._vk_is_pointer:
             return [f'_vk_view_{bname} : {vutype} ?']
@@ -1177,7 +1177,7 @@ class ParamVkStruct(ParamBase):
     def generate_boost_struct_view_create_init(self):
         bname = self._boost_struct_field_name
         vutype = self.vk_unqual_type
-        if self._vk_is_dyn_array_items:
+        if self.vk_is_dyn_array_items:
             return [
                f'boost_struct._vk_view_{bname} <- [{{',
                f'    for item in boost_struct.{bname} ;',
@@ -1200,7 +1200,7 @@ class ParamVkStruct(ParamBase):
     def generate_boost_struct_view_create_field(self):
         bname = self._boost_struct_field_name
         vname = self.vk_name
-        if self._vk_is_dyn_array_items:
+        if self.vk_is_dyn_array_items:
             return [f'{vname} = array_addr_unsafe('
                 f'boost_struct._vk_view_{bname}),']
         if self._vk_is_pointer:
@@ -1209,7 +1209,7 @@ class ParamVkStruct(ParamBase):
 
     def generate_boost_struct_view_destroy(self):
         bname = self._boost_struct_field_name
-        if self._vk_is_dyn_array_items:
+        if self.vk_is_dyn_array_items:
             return [
                f'for item in boost_struct.{bname}',
                f'    item |> vk_view_destroy()',
