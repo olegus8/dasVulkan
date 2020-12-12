@@ -845,9 +845,9 @@ class ParamBase(object):
         if self._vk_is_pointer:
             bdtype = deref_das_type(self._boost_struct_field_type)
             return [
-               f'var b_p_{bname} = new {bdtype}',
+               f'var b_{bname} = new {bdtype}',
                f'if vk_struct.{vname} != null',
-               f'    (*b_p_{bname}) <- '
+               f'    (*b_{bname}) <- '
                      f'vk_value_to_boost(*(vk_struct.{vname}))',
             ]
         return []
@@ -860,7 +860,7 @@ class ParamBase(object):
         if self.vk_is_dyn_array_items:
             return [f'{bname} <- b_{bname},']
         if self._vk_is_pointer:
-            return [f'{bname} = b_p_{bname},']
+            return [f'{bname} = b_{bname},']
         return [f'{bname} <- vk_value_to_boost(vk_struct.{vname}),']
 
     def generate_boost_func_param_call(self):

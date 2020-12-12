@@ -1941,7 +1941,7 @@ def vk_value_to_boost(vk_struct : VkDeviceCreateInfo) : DeviceCreateInfo
                 b <- vk_value_to_boost(*(vk_struct.ppEnabledExtensionNames+i))
     var b_p_p_enabled_features = new PhysicalDeviceFeatures
     if vk_struct.pEnabledFeatures != null
-       (*b_p_p_enabled_features) <- vk_value_to_boost(*(vk_struct.pEnabledFeatures))
+        (*b_p_p_enabled_features) <- vk_value_to_boost(*(vk_struct.pEnabledFeatures))
     return <- [[DeviceCreateInfo
         flags <- vk_value_to_boost(vk_struct.flags),
         queue_create_infos <- b_queue_create_infos,
@@ -2169,7 +2169,7 @@ def vk_view_destroy(var boost_struct : InstanceCreateInfo)
 def vk_value_to_boost(vk_struct : VkInstanceCreateInfo) : InstanceCreateInfo
     var b_p_p_application_info = new ApplicationInfo
     if vk_struct.pApplicationInfo != null
-       (*b_p_p_application_info) <- vk_value_to_boost(*(vk_struct.pApplicationInfo))
+        (*b_p_p_application_info) <- vk_value_to_boost(*(vk_struct.pApplicationInfo))
     var b_p_enabled_layer_names : array<string>
     if vk_struct.ppEnabledLayerNames != null
         b_p_enabled_layer_names |> resize(vk_struct.enabledLayerCount)
@@ -2527,7 +2527,7 @@ def vk_value_to_boost(vk_struct : VkSubpassDescription) : SubpassDescription
                 b <- vk_value_to_boost(*(vk_struct.pResolveAttachments+i))
     var b_p_p_depth_stencil_attachment = new AttachmentReference
     if vk_struct.pDepthStencilAttachment != null
-       (*b_p_p_depth_stencil_attachment) <- vk_value_to_boost(*(vk_struct.pDepthStencilAttachment))
+        (*b_p_p_depth_stencil_attachment) <- vk_value_to_boost(*(vk_struct.pDepthStencilAttachment))
     var b_preserve_attachments : array<uint>
     if vk_struct.pPreserveAttachments != null
         b_preserve_attachments |> resize(vk_struct.preserveAttachmentCount)
