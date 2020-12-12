@@ -1241,6 +1241,7 @@ class ParamVkStruct(ParamBase):
 
     def generate_boost_struct_view_create_init(self):
         bname = self._boost_struct_field_name
+        vutype = self.vk_unqual_type
         if self._vk_is_dyn_array_items:
             return [
                f'boost_struct._vk_view_{bname} <- [{{',
@@ -1248,6 +1249,13 @@ class ParamVkStruct(ParamBase):
                f'    item |> vk_view_create_unsafe()}}]',
             ]
         if self._vk_is_pointer:
+            return [
+               f'if boost_struct.{bname} != null',
+               f'    boost_struct._vk_view_{bname} = new {vutype}',
+               f'        *(boost_struct._vk_view_{bname}) <- (',
+               f'            *(boost_struct.{bname}) |> '
+                                f'vk_view_create_unsafe())',
+            ]
         return []
 
 
