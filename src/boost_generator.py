@@ -138,7 +138,7 @@ class GenFunc(object):
                 return param
 
     def declare_array(self, count, items):
-        with log_on_exception(func=self._vk_func_name
+        with log_on_exception(func=self._vk_func_name,
              count=count, items=items
         ):
             p_count = self.__get_param(count)
