@@ -434,24 +434,6 @@ class GenStruct(object):
         return lines
 
 
-class GenStructFieldArray(object):
-
-    def __init__(self, struct, items, count=None,
-        force_item_type=None, optional=False,
-    ):
-        self.__gen_struct = struct
-        self.vk_count_name = count
-        self.vk_items_name = items
-        self.boost_item_type_name = force_item_type
-        self.optional = optional
-
-    @property
-    def vk_count(self):
-        for field in self.__gen_struct._fields:
-            if field.vk_name == self.vk_count_name:
-                return field
-
-
 class GenHandle(object):
 
     def __init__(self, generator, name):
