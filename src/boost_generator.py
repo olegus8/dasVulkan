@@ -924,7 +924,7 @@ class ParamBase(object):
         if self._vk_is_dyn_array_items:
             return [f'{bname} <- b_{bname},']
         if self._vk_is_pointer:
-            raise Exception('TODO')
+            return [f'{bname} = b_p_{bname},']
         return [f'{bname} <- vk_value_to_boost(vk_struct.{vname}),']
 
     def generate_boost_func_param_call(self):
