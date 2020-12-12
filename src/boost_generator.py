@@ -1092,6 +1092,12 @@ class ParamVkHandleBase(ParamBase):
         return super(ParamVkHandleBase, self
             ).generate_boost_struct_view_create_field()
 
+    def generate_boost_struct_view_destroy(self):
+        bname = self._boost_struct_field_name
+        if self._vk_is_dyn_array_items:
+            return [f'delete boost_struct._vk_view_{bname}']
+        return []
+
 
 class ParamVkHandle(ParamVkHandleBase):
 
@@ -1205,6 +1211,27 @@ class ParamVkStruct(ParamBase):
         if self._vk_is_pointer:
             return [f'{vname} = boost_struct._vk_view_{bname}),']
         return [f'{vname} = *(boost_struct._vk_view_p_{bname}),']
+
+    def generate_boost_struct_view_destroy(self):
+        bname = self._boost_struct_field_name
+        if self._vk_is_dyn_array_items:
+            return [
+               f'for item in boost_struct.{bname}',
+               f'    item |> vk_view_destroy()',
+               f'delete boost_struct._vk_view_{bname}',
+            ]
+        if self._vk_is_pointer:
+            return [
+               f'if boost_struct.{bname} != null',
+               f'    *(boost_struct.{bname}) |> vk_view_destroy()',
+               f'    unsafe',
+               f'        delete boost_struct._vk_view_{bname}',
+            ]
+        return [
+           f'boost_struct.{bname} |> vk_view_destroy()',
+           f'unsafe',
+           f'    delete boost_struct._vk_view_p_{bname}',
+        ]
 
 
 class ParamVkEnum(ParamBase):
