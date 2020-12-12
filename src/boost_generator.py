@@ -156,17 +156,17 @@ class GenFunc(object):
 
     @property
     def _return_type(self):
-        if len(self.__output_params) > 1:
+        if len(self._output_params) > 1:
             raise Exception('TODO: add multiple outputs support if needed')
-        for output in self.__output_params:
+        for output in self._output_params:
             return output._boost_func_param_type
         return 'void'
 
     @property
     def __return_value(self):
-        if len(self.__output_params) > 1:
+        if len(self._output_params) > 1:
             raise Exception('TODO: add multiple outputs support if needed')
-        for output in self.__output_params:
+        for output in self._output_params:
             return output.boost_func_return_value
 
     def generate(self):
