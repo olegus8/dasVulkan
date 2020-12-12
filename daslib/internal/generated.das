@@ -2654,7 +2654,7 @@ def create_device__inner(
 ) : Device
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
-    defer() <| ${ create_info |> bk_view_destroy() }
+    defer() <| ${ create_info |> bk_view_destroy(); }
     var vk_device : VkDevice
     var result_ = VkResult VK_SUCCESS
 
@@ -2715,7 +2715,7 @@ def create_command_pool__inner(
 ) : CommandPool
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
-    defer() <| ${ create_info |> bk_view_destroy() }
+    defer() <| ${ create_info |> bk_view_destroy(); }
     var vk_command_pool : VkCommandPool
     var result_ = VkResult VK_SUCCESS
 
@@ -2778,7 +2778,7 @@ def create_descriptor_set_layout__inner(
 ) : DescriptorSetLayout
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
-    defer() <| ${ create_info |> bk_view_destroy() }
+    defer() <| ${ create_info |> bk_view_destroy(); }
     var vk_set_layout : VkDescriptorSetLayout
     var result_ = VkResult VK_SUCCESS
 
@@ -2841,7 +2841,7 @@ def create_fence__inner(
 ) : Fence
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
-    defer() <| ${ create_info |> bk_view_destroy() }
+    defer() <| ${ create_info |> bk_view_destroy(); }
     var vk_fence : VkFence
     var result_ = VkResult VK_SUCCESS
 
@@ -2904,7 +2904,7 @@ def create_framebuffer__inner(
 ) : Framebuffer
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
-    defer() <| ${ create_info |> bk_view_destroy() }
+    defer() <| ${ create_info |> bk_view_destroy(); }
     var vk_framebuffer : VkFramebuffer
     var result_ = VkResult VK_SUCCESS
 
@@ -2967,7 +2967,7 @@ def create_image__inner(
 ) : Image
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
-    defer() <| ${ create_info |> bk_view_destroy() }
+    defer() <| ${ create_info |> bk_view_destroy(); }
     var vk_image : VkImage
     var result_ = VkResult VK_SUCCESS
 
@@ -3030,7 +3030,7 @@ def create_image_view__inner(
 ) : ImageView
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
-    defer() <| ${ create_info |> bk_view_destroy() }
+    defer() <| ${ create_info |> bk_view_destroy(); }
     var vk_view : VkImageView
     var result_ = VkResult VK_SUCCESS
 
@@ -3091,7 +3091,7 @@ def create_instance__inner(
 ) : Instance
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
-    defer() <| ${ create_info |> bk_view_destroy() }
+    defer() <| ${ create_info |> bk_view_destroy(); }
     var vk_instance : VkInstance
     var result_ = VkResult VK_SUCCESS
 
@@ -3183,7 +3183,7 @@ def create_pipeline_layout__inner(
 ) : PipelineLayout
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
-    defer() <| ${ create_info |> bk_view_destroy() }
+    defer() <| ${ create_info |> bk_view_destroy(); }
     var vk_pipeline_layout : VkPipelineLayout
     var result_ = VkResult VK_SUCCESS
 
@@ -3246,7 +3246,7 @@ def create_render_pass__inner(
 ) : RenderPass
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
-    defer() <| ${ create_info |> bk_view_destroy() }
+    defer() <| ${ create_info |> bk_view_destroy(); }
     var vk_render_pass : VkRenderPass
     var result_ = VkResult VK_SUCCESS
 
@@ -3309,7 +3309,7 @@ def create_sampler__inner(
 ) : Sampler
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
-    defer() <| ${ create_info |> bk_view_destroy() }
+    defer() <| ${ create_info |> bk_view_destroy(); }
     var vk_sampler : VkSampler
     var result_ = VkResult VK_SUCCESS
 
@@ -3372,7 +3372,7 @@ def create_semaphore__inner(
 ) : Semaphore
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
-    defer() <| ${ create_info |> bk_view_destroy() }
+    defer() <| ${ create_info |> bk_view_destroy(); }
     var vk_semaphore : VkSemaphore
     var result_ = VkResult VK_SUCCESS
 
@@ -3435,7 +3435,7 @@ def create_shader_module__inner(
 ) : ShaderModule
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
-    defer() <| ${ create_info |> bk_view_destroy() }
+    defer() <| ${ create_info |> bk_view_destroy(); }
     var vk_shader_module : VkShaderModule
     var result_ = VkResult VK_SUCCESS
 
@@ -3498,7 +3498,7 @@ def create_swapchain_khr__inner(
 ) : SwapchainKHR
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
-    defer() <| ${ create_info |> bk_view_destroy() }
+    defer() <| ${ create_info |> bk_view_destroy(); }
     var vk_swapchain : VkSwapchainKHR
     var result_ = VkResult VK_SUCCESS
 
