@@ -4105,7 +4105,6 @@ def create_graphics_pipelines__inner(
     var result : VkResult? = [[VkResult?]]
 ) : array<Pipeline>
 
-    assert(length(create_infos) == length(pipelines))
     let vk_createInfoCount = uint(create_infos |> length())
     var vk_create_infos <- [{ for item in create_infos ;
         item |> vk_view_create_unsafe() }]
@@ -4155,7 +4154,6 @@ def create_compute_pipelines__inner(
     var result : VkResult? = [[VkResult?]]
 ) : array<Pipeline>
 
-    assert(length(create_infos) == length(pipelines))
     let vk_createInfoCount = uint(create_infos |> length())
     var vk_create_infos <- [{ for item in create_infos ;
         item |> vk_view_create_unsafe() }]

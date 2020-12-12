@@ -158,6 +158,7 @@ def add_boost_content(g):
 
     for name in [
         'VkCommandPoolCreateInfo',
+        'VkComputePipelineCreateInfo',
         'VkFenceCreateInfo',
         'VkImageViewCreateInfo',
         'VkPipelineColorBlendAttachmentState',
