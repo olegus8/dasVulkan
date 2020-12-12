@@ -2370,7 +2370,6 @@ def destroy_device(
     device : Device = [[ Device ]]
 ) : void
 
-
     vkDestroyDevice(
         boost_value_to_vk(device),
         null
@@ -2442,7 +2441,6 @@ def destroy_command_pool(
     device : Device = [[ Device ]];
     command_pool : CommandPool = [[ CommandPool ]]
 ) : void
-
 
     vkDestroyCommandPool(
         boost_value_to_vk(device),
@@ -2518,7 +2516,6 @@ def destroy_descriptor_set_layout(
     descriptor_set_layout : DescriptorSetLayout = [[ DescriptorSetLayout ]]
 ) : void
 
-
     vkDestroyDescriptorSetLayout(
         boost_value_to_vk(device),
         boost_value_to_vk(descriptor_set_layout),
@@ -2592,7 +2589,6 @@ def destroy_fence(
     device : Device = [[ Device ]];
     fence : Fence = [[ Fence ]]
 ) : void
-
 
     vkDestroyFence(
         boost_value_to_vk(device),
@@ -2668,7 +2664,6 @@ def destroy_framebuffer(
     framebuffer : Framebuffer = [[ Framebuffer ]]
 ) : void
 
-
     vkDestroyFramebuffer(
         boost_value_to_vk(device),
         boost_value_to_vk(framebuffer),
@@ -2742,7 +2737,6 @@ def destroy_image(
     device : Device = [[ Device ]];
     image : Image = [[ Image ]]
 ) : void
-
 
     vkDestroyImage(
         boost_value_to_vk(device),
@@ -2818,7 +2812,6 @@ def destroy_image_view(
     image_view : ImageView = [[ ImageView ]]
 ) : void
 
-
     vkDestroyImageView(
         boost_value_to_vk(device),
         boost_value_to_vk(image_view),
@@ -2885,7 +2878,6 @@ def create_instance(
 def destroy_instance(
     instance : Instance = [[ Instance ]]
 ) : void
-
 
     vkDestroyInstance(
         boost_value_to_vk(instance),
@@ -2993,7 +2985,6 @@ def destroy_pipeline_layout(
     pipeline_layout : PipelineLayout = [[ PipelineLayout ]]
 ) : void
 
-
     vkDestroyPipelineLayout(
         boost_value_to_vk(device),
         boost_value_to_vk(pipeline_layout),
@@ -3067,7 +3058,6 @@ def destroy_render_pass(
     device : Device = [[ Device ]];
     render_pass : RenderPass = [[ RenderPass ]]
 ) : void
-
 
     vkDestroyRenderPass(
         boost_value_to_vk(device),
@@ -3143,7 +3133,6 @@ def destroy_sampler(
     sampler : Sampler = [[ Sampler ]]
 ) : void
 
-
     vkDestroySampler(
         boost_value_to_vk(device),
         boost_value_to_vk(sampler),
@@ -3217,7 +3206,6 @@ def destroy_semaphore(
     device : Device = [[ Device ]];
     semaphore : Semaphore = [[ Semaphore ]]
 ) : void
-
 
     vkDestroySemaphore(
         boost_value_to_vk(device),
@@ -3293,7 +3281,6 @@ def destroy_shader_module(
     shader_module : ShaderModule = [[ ShaderModule ]]
 ) : void
 
-
     vkDestroyShaderModule(
         boost_value_to_vk(device),
         boost_value_to_vk(shader_module),
@@ -3367,7 +3354,6 @@ def destroy_swapchain_khr(
     device : Device = [[ Device ]];
     swapchain : SwapchainKHR = [[ SwapchainKHR ]]
 ) : void
-
 
     vkDestroySwapchainKHR(
         boost_value_to_vk(device),
@@ -3506,7 +3492,6 @@ def destroy_pipeline(
     device : Device = [[ Device ]];
     pipeline : Pipeline = [[ Pipeline ]]
 ) : void
-
 
     vkDestroyPipeline(
         boost_value_to_vk(device),
