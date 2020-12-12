@@ -747,7 +747,7 @@ class ParamBase(object):
 
     @property
     def _boost_struct_field_type(self):
-        btype = self._boost_base_type
+        return self._boost_base_type
 
     def generate_boost_func_param_decl(self):
         if self._vk_is_dyn_array_count or self._is_boost_func_output:
