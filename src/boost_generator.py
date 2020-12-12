@@ -1076,7 +1076,9 @@ class ParamVkHandleBase(ParamBase):
 
     def get_boost_dtor_call_param(self, boost_handle_type_name):
         field = self._boost_func_param_name
-        if self._boost_unqual_type != boost_handle_type_name:
+        if self._boost_unqual_type == boost_handle_type_name:
+            field = boost_handle_attr_name(boost_handle_type_name)
+        else:
             field = '_' + field
         return [f'vk_value_to_boost(handle.{field}),']
 
