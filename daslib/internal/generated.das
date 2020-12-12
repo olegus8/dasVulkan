@@ -503,36 +503,6 @@ def vk_value_to_boost(vk_struct : VkComponentMapping) : ComponentMapping
     ]]
 
 //
-// ExtensionProperties
-//
-
-struct ExtensionProperties
-    extension_name : string
-    spec_version : uint
-    _vk_view__active : bool
-
-def vk_view_create_unsafe(var boost_struct : ExtensionProperties
-) : VkExtensionProperties
-
-    assert(!boost_struct._vk_view__active)
-    boost_struct._vk_view__active = true
-    unsafe
-        return <- [[ VkExtensionProperties
-            extensionName = reinterpret<int8[256]>(boost_struct.extension_name),
-            specVersion = boost_value_to_vk(boost_struct.spec_version)
-        ]]
-
-def vk_view_destroy(var boost_struct : ExtensionProperties)
-    assert(boost_struct._vk_view__active)
-    boost_struct._vk_view__active = false
-
-def vk_value_to_boost(vk_struct : VkExtensionProperties) : ExtensionProperties
-    return <- [[ExtensionProperties
-        extension_name = vk_value_to_boost(vk_struct.extensionName),
-        spec_version = vk_value_to_boost(vk_struct.specVersion)
-    ]]
-
-//
 // Extent2D
 //
 
@@ -1119,7 +1089,7 @@ def vk_view_create_unsafe(var boost_struct : PhysicalDeviceProperties
         vendorID = boost_value_to_vk(boost_struct.vendor_id),
         deviceID = boost_value_to_vk(boost_struct.device_id),
         deviceType = boost_value_to_vk(boost_struct.device_type),
-        deviceName = reinterpret<int8[256]>(boost_struct.device_name),
+        deviceName = boost_value_to_vk(boost_struct.device_name),
         pipelineCacheUUID = boost_value_to_vk(boost_struct.pipeline_cache_uuid),
         limits = *(boost_struct._vk_view_p_limits),
         sparseProperties = *(boost_struct._vk_view_p_sparse_properties)
@@ -1776,6 +1746,20 @@ def vk_value_to_boost(vk_struct : VkViewport) : Viewport
         height = vk_value_to_boost(vk_struct.height),
         min_depth = vk_value_to_boost(vk_struct.minDepth),
         max_depth = vk_value_to_boost(vk_struct.maxDepth)
+    ]]
+
+//
+// ExtensionProperties
+//
+
+struct ExtensionProperties
+    extension_name : string
+    spec_version : uint
+
+def vk_value_to_boost(vk_struct : VkExtensionProperties) : ExtensionProperties
+    return <- [[ExtensionProperties
+        extension_name = vk_value_to_boost(vk_struct.extensionName),
+        spec_version = vk_value_to_boost(vk_struct.specVersion)
     ]]
 
 //

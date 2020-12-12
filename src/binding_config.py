@@ -140,7 +140,6 @@ def add_boost_content(g):
         'VkImageViewCreateInfo',
         'VkOffset2D',
         'VkPhysicalDeviceLimits',
-        'VkPhysicalDeviceProperties',
         'VkPhysicalDeviceFeatures',
         'VkPhysicalDeviceSparseProperties',
         'VkPushConstantRange',
@@ -157,6 +156,7 @@ def add_boost_content(g):
 
     for name in [
         'VkExtensionProperties',
+        'VkPhysicalDeviceProperties',
     ]:
         g.add_gen_struct(name=name, boost_to_vk=False)
 
