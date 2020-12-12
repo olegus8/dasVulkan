@@ -1,6 +1,7 @@
 from das_shared.object_base import LoggingObject
 from das_shared.op_sys import full_path, write_to_file
 from das_shared.assertions import assert_starts_with, assert_ends_with
+from das_shared.diag import log_on_exception
 from os import path
 import re
 
@@ -137,10 +138,13 @@ class GenFunc(object):
                 return param
 
     def declare_array(self, count, items):
-        p_count = self.__get_param(count)
-        p_items = self.__get_param(items)
-        p_count.set_dyn_array(count=p_count, items=p_items)
-        p_items.set_dyn_array(count=p_count, items=p_items)
+        with log_on_exception(func=self._vk_func_name
+             count=count, items=items
+        ):
+            p_count = self.__get_param(count)
+            p_items = self.__get_param(items)
+            p_count.set_dyn_array(count=p_count, items=p_items)
+            p_items.set_dyn_array(count=p_count, items=p_items)
 
     def declare_output(self, name):
         for param in self._params:
