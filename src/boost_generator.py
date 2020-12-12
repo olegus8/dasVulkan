@@ -320,12 +320,12 @@ class GenStruct(object):
            f'def vk_value_to_boost(vk_struct : {self.__vk_type_name}) '
                 f': {self.boost_type_name}',
         ] + [
-           f'    {line}' for field in fields for line in
+           f'    {line}' for field in self.__fields for line in
                  field.generate_boost_struct_v2b_vars()
         ] + [
            f'    return <- [[{self.boost_type_name}'
         ] + [
-           f'        {line}' for field in fields for line in
+           f'        {line}' for field in self.__fields for line in
                      field.generate_boost_struct_v2b_field()
         ]
         remove_last_char(lines, ',')
