@@ -372,13 +372,13 @@ class GenHandle(object):
         self._ctors = self.__create_default_ctors()
 
     def __maybe_create_default_dtor(self):
-        name = vk_handle_type_to_vk_dtor(self.__vk_handle_type_name)
+        name = vk_handle_type_to_vk_dtor(self._vk_handle_type_name)
         if name in self.__generator.functions.get(name):
             return GenHandleDtor(handle=self, name=name)
 
     def __create_default_ctors(self):
         ctors = []
-        name = vk_handle_type_to_vk_ctor(self.__vk_handle_type_name)
+        name = vk_handle_type_to_vk_ctor(self._vk_handle_type_name)
         if name in self.__generator.functions.get(name):
             ctors.append(GenHandleCtor(handle=self, name=name))
         return ctors
