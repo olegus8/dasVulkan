@@ -517,7 +517,7 @@ def vk_view_create_unsafe(var boost_struct : ExtensionProperties
     assert(!boost_struct._vk_view__active)
     boost_struct._vk_view__active = true
     return <- [[ VkExtensionProperties
-        extensionName = boost_value_to_vk(boost_struct.extension_name),
+        extensionName = reinterpret<int8[]>(boost_struct.extension_name),
         specVersion = boost_value_to_vk(boost_struct.spec_version)
     ]]
 
@@ -1118,7 +1118,7 @@ def vk_view_create_unsafe(var boost_struct : PhysicalDeviceProperties
         vendorID = boost_value_to_vk(boost_struct.vendor_id),
         deviceID = boost_value_to_vk(boost_struct.device_id),
         deviceType = boost_value_to_vk(boost_struct.device_type),
-        deviceName = boost_value_to_vk(boost_struct.device_name),
+        deviceName = reinterpret<int8[]>(boost_struct.device_name),
         pipelineCacheUUID = boost_value_to_vk(boost_struct.pipeline_cache_uuid),
         limits = *(boost_struct._vk_view_p_limits),
         sparseProperties = *(boost_struct._vk_view_p_sparse_properties)

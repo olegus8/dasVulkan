@@ -1293,7 +1293,8 @@ class ParamFixedString(ParamBase):
         vname = self.vk_name
         if (not self.vk_is_dyn_array_count and not self.vk_is_dyn_array_items
         and not self._vk_is_pointer):
-            return [f'{vname} = reinterpret<int8[]>(boost_struct.{bname}),']
+            n = self._c_param.fixed_array_size
+            return [f'{vname} = reinterpret<int8[{n}]>(boost_struct.{bname}),']
         return super(ParamFixedString, self
             ).generate_boost_struct_view_create_field()
 
