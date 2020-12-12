@@ -928,7 +928,6 @@ class ParamBase(object):
     def generate_boost_handle_ctor_init_field(self):
         return []
 
-    @property
     def get_boost_dtor_call_param(self, boost_handle_type_name):
         raise Exception('Should not be here.')
 
@@ -989,7 +988,6 @@ class ParamVkAllocator(ParamBase):
     def boost_func_call_vk_param(self):
         return 'null'
 
-    @property
     def get_boost_dtor_call_param(self, boost_handle_type_name):
         return 'null'
 
@@ -1057,7 +1055,6 @@ class ParamVkHandleBase(ParamBase):
         bname = self._boost_func_param_name
         return [f'handle._{bname} := boost_value_to_vk({bname})']
 
-    @property
     def get_boost_dtor_call_param(self, boost_handle_type_name):
         field = self._boost_func_param_name
         if self._boost_unqual_type != boost_handle_type_name:
