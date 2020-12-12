@@ -329,12 +329,12 @@ class GenStruct(object):
 
     def __generate_vk_view_create(self):
         bstype = self.boost_type_name
-        vstype = self.__vk_type_name
+        vtype = self.__vk_type_name
         lines = []
         lines += [
             '',
            f'def vk_view_create_unsafe(var boost_struct : {bstype}',
-           f') : {vstype}',
+           f') : {vtype}',
             '',
             '    assert(!boost_struct._vk_view__active)',
             '    boost_struct._vk_view__active = true',
@@ -342,7 +342,7 @@ class GenStruct(object):
            f'    {line}' for field in self._fields for line in
                  field.generate_boost_struct_view_create_init()
         ] + [
-           f'    return <- [[ {vstype}',
+           f'    return <- [[ {vtype}',
         ] + [
            f'        {line}' for field in self._fields for line in
                      field.generate_boost_struct_view_create_field()
@@ -354,12 +354,9 @@ class GenStruct(object):
         return lines
 
     def __generate_vk_view_destroy(self):
-        bstype = self.boost_type_name
-        vstype = self.__vk_type_name
-        lines = []
-        lines += [
+        return [
             '',
-           f'def vk_view_destroy(var boost_struct : {bstype})',
+           f'def vk_view_destroy(var boost_struct : {self.boost_type_name})',
             '    assert(boost_struct._vk_view__active)',
         ] + [
            f'    {line}' for field in self._fields for line in
@@ -367,7 +364,6 @@ class GenStruct(object):
         ] + [
             '    boost_struct._vk_view__active = false',
         ]
-        return lines
 
 
 class GenHandle(object):
