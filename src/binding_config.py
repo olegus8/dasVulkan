@@ -164,37 +164,37 @@ def add_boost_content(g):
         ).declare_array(items = 'pImmutableSamplers')
     g.add_gen_struct(name = 'VkDescriptorSetLayoutCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'bindingCount', items = 'pBindings')
-    g.add_gen_struct(name = 'VkDeviceCreateInfo',
+    g.add_gen_struct(name = 'VkDeviceCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'queueCreateInfoCount', items = 'pQueueCreateInfos',
         ).declare_array(count = 'enabledLayerCount', items = 'ppEnabledLayerNames',
         ).declare_array(count = 'enabledExtensionCount', items = 'ppEnabledExtensionNames')
-    g.add_gen_struct(name = 'VkDeviceQueueCreateInfo',
+    g.add_gen_struct(name = 'VkDeviceQueueCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'queueCount', items = 'pQueuePriorities')
-    g.add_gen_struct(name = 'VkFramebufferCreateInfo',
+    g.add_gen_struct(name = 'VkFramebufferCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'attachmentCount', items = 'pAttachments')
-    g.add_gen_struct(name = 'VkImageCreateInfo',
+    g.add_gen_struct(name = 'VkImageCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'queueFamilyIndexCount', items = 'pQueueFamilyIndices')
-    g.add_gen_struct(name = 'VkInstanceCreateInfo',
+    g.add_gen_struct(name = 'VkInstanceCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'enabledLayerCount', items = 'ppEnabledLayerNames',
         ).declare_array(count = 'enabledExtensionCount', items = 'ppEnabledExtensionNames')
-    g.add_gen_struct(name = 'VkPipelineLayoutCreateInfo',
+    g.add_gen_struct(name = 'VkPipelineLayoutCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'setLayoutCount', items = 'pSetLayouts',
         ).declare_array(count = 'pushConstantRangeCount', items = 'pPushConstantRanges')
-    g.add_gen_struct(name = 'VkPipelineViewportStateCreateInfo',
+    g.add_gen_struct(name = 'VkPipelineViewportStateCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'viewportCount', items = 'pViewports',
         ).declare_array(count = 'scissorCount', items = 'pScissors')
-    g.add_gen_struct(name = 'VkRenderPassCreateInfo',
+    g.add_gen_struct(name = 'VkRenderPassCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'attachmentCount', items = 'pAttachments',
         ).declare_array(count = 'subpassCount', items = 'pSubpasses',
         ).declare_array(count = 'dependencyCount', items = 'pDependencies')
-    g.add_gen_struct(name = 'VkShaderModuleCreateInfo',
+    g.add_gen_struct(name = 'VkShaderModuleCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'codeSize', items = 'pCode', force_item_type = 'uint8')
-    g.add_gen_struct(name = 'VkSubpassDescription',
+    g.add_gen_struct(name = 'VkSubpassDescription', vk_to_boost=False,
         ).declare_array(count = 'inputAttachmentCount', items = 'pInputAttachments',
         ).declare_array(count = 'colorAttachmentCount', items = 'pColorAttachments',
         ).declare_array(count = 'colorAttachmentCount', items = 'pResolveAttachments', optional=True,
         ).declare_array(count = 'preserveAttachmentCount', items = 'pPreserveAttachments')
-    g.add_gen_struct(name = 'VkSwapchainCreateInfoKHR',
+    g.add_gen_struct(name = 'VkSwapchainCreateInfoKHR', vk_to_boost=False,
         ).declare_array(count = 'queueFamilyIndexCount', items = 'pQueueFamilyIndices')
 
     #

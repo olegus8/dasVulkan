@@ -1793,18 +1793,6 @@ def vk_view_destroy(var boost_struct : DescriptorSetLayoutCreateInfo)
     delete boost_struct._vk_view_bindings
     boost_struct._vk_view__active = false
 
-def vk_value_to_boost(vk_struct : VkDescriptorSetLayoutCreateInfo) : DescriptorSetLayoutCreateInfo
-    var b_bindings : array<DescriptorSetLayoutBinding>
-    if vk_struct.pBindings != null
-        b_bindings |> resize(int(vk_struct.bindingCount))
-        for b, i in b_bindings, range(INT_MAX)
-            unsafe
-                b <- vk_value_to_boost(*(vk_struct.pBindings+i))
-    return <- [[DescriptorSetLayoutCreateInfo
-        flags = vk_value_to_boost(vk_struct.flags),
-        bindings <- b_bindings
-    ]]
-
 //
 // DeviceCreateInfo
 //
