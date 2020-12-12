@@ -888,7 +888,7 @@ class ParamBase(object):
         if self.vk_is_dyn_array_items:
             return f'<- [{{for x in vk_{bname}; vk_value_to_boost(x)}}]'
         if self._vk_is_pointer:
-            return f'<- vk_value_to_boost(vk_{bname})'
+            return f'vk_value_to_boost(vk_{bname})'
         raise Exception('Return type not supported: {self.vk_name}')
 
     def generate_boost_func_temp_vars_init(self):
@@ -1160,6 +1160,13 @@ class ParamVkStruct(ParamBase):
     @property
     def _boost_unqual_type(self):
         return vk_struct_type_to_boost(self.vk_unqual_type)
+
+    @property
+    def boost_func_return_value(self):
+        bname = self._boost_func_param_name
+        if self._vk_is_pointer and not self.vk_is_dyn_array_items:
+            return f'<- vk_value_to_boost(vk_{bname})'
+        return super(ParamVkStruct, self).boost_func_return_value
 
     def generate_boost_func_temp_vars_init(self):
         bname = self._boost_func_param_name
