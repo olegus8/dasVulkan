@@ -1253,7 +1253,7 @@ class ParamVkStruct(ParamBase):
     def generate_boost_struct_v2b_field(self):
         bname = self._boost_struct_field_name
         vname = self.vk_name
-        if (not self.vk_is_dyn_array_items and not self.vk_is_array_count
+        if (not self.vk_is_dyn_array_items and not self.vk_is_dyn_array_count
         and not self._vk_is_pointer):
             return [f'{bname} <- vk_value_to_boost(vk_struct.{vname}),']
         return super(ParamVkStruct, self).generate_boost_struct_v2b_field
