@@ -259,13 +259,18 @@ class GenFunc(object):
 
 class GenStruct(object):
 
-    def __init__(self, generator, name, boost_to_vk=True, vk_to_boost=True):
+    def __init__(self, generator, name, boost_to_vk=True, vk_to_boost=True,
+        ignore_fields=None
+    ):
+        ignore_fields = ignore_fields or []
         self.__generator = generator
         self.__vk_type_name = name
         self.__boost_to_vk = boost_to_vk
         self.__vk_to_boost = vk_to_boost
 
-        self.__fields = self.__generator.create_struct_fields(self.__c_struct)
+        self.__fields = [field for field in
+            self.__generator.create_struct_fields(self.__c_struct)
+            if field.vk_name not in ignore_fields]
         for field in self.__fields:
             field.set_gen_struct(self)
 
