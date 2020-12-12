@@ -1256,7 +1256,11 @@ class ParamVkStruct(ParamBase):
                f'            *(boost_struct.{bname}) |> '
                                 f'vk_view_create_unsafe())',
             ]
-        return []
+        return [
+           f'boost_struct._vk_view_p_{bname} = new {vutype}',
+           f'*(boost_struct._vk_view_p_{bname}) <- (',
+           f'    boost_struct.{bname} |> vk_view_create_unsafe())',
+        ]
 
 
 class ParamVkEnum(ParamBase):
