@@ -3566,7 +3566,8 @@ def create_graphics_pipelines__inner(
     var vk_create_infos <- [{ for item in create_infos ;
         create_infos |> vk_view_create_unsafe() }]
     defer() <|
-        for item in create_infos        item |> bk_view_destroy()
+        for item in create_infos
+            item |> bk_view_destroy()
         delete vk_create_infos
     var vk_pipelines : array<VkPipeline>
     defer() <| ${ delete vk_pipelines; }
@@ -3615,7 +3616,8 @@ def create_compute_pipelines__inner(
     var vk_create_infos <- [{ for item in create_infos ;
         create_infos |> vk_view_create_unsafe() }]
     defer() <|
-        for item in create_infos        item |> bk_view_destroy()
+        for item in create_infos
+            item |> bk_view_destroy()
         delete vk_create_infos
     var vk_pipelines : array<VkPipeline>
     defer() <| ${ delete vk_pipelines; }

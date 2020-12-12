@@ -1166,7 +1166,7 @@ class ParamVkStruct(ParamBase):
             if self.vk_is_dyn_array_items:
                 return [
                     f'var vk_{bname} <- [{{ for item in {bname} ;',
-                    f'    {bname} |> vk_view_create_unsafe() }}]',
+                    f'    item |> vk_view_create_unsafe() }}]',
                     f'defer() <|',
                     f'    for item in {bname}',
                     f'        item |> bk_view_destroy()',
