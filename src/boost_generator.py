@@ -1288,6 +1288,15 @@ class ParamFixedString(ParamBase):
     def vk_unqual_type(self):
         return 'string'
 
+    def generate_boost_struct_view_create_field(self):
+        bname = self._boost_struct_field_name
+        vname = self.vk_name
+        if (not self.vk_is_dyn_array_count and not self.vk_is_dyn_array_items
+        and not self._vk_is_pointer):
+            return [f'{vname} = reinterpret<int8[]>(boost_struct.{bname}),']
+        return super(ParamFixedString, self
+            ).generate_boost_struct_view_create_field()
+
 
 class ParamString(ParamBase):
 
