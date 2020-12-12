@@ -1201,8 +1201,8 @@ class ParamVkStruct(ParamBase):
             return [
                f'if boost_struct.{bname} != null',
                f'    boost_struct._vk_view_{bname} = new {vutype}',
-               f'        *(boost_struct._vk_view_{bname}) <- (',
-               f'            *(boost_struct.{bname}) |> '
+               f'    *(boost_struct._vk_view_{bname}) <- (',
+               f'        *(boost_struct.{bname}) |> '
                                 f'vk_view_create_unsafe())',
             ]
         return [
