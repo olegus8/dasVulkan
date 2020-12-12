@@ -366,19 +366,19 @@ class GenHandle(object):
 
     def __init__(self, generator, name):
         self._generator = generator
-        self._vk_handle_type_name = name
+        self.vk_handle_type_name = name
 
         self._dtor = self.__maybe_create_default_dtor()
         self._ctors = self.__create_default_ctors()
 
     def __maybe_create_default_dtor(self):
-        name = vk_handle_type_to_vk_dtor(self._vk_handle_type_name)
+        name = vk_handle_type_to_vk_dtor(self.vk_handle_type_name)
         if name in self._generator.functions:
             return GenHandleDtor(handle=self, name=name)
 
     def __create_default_ctors(self):
         ctors = []
-        name = vk_handle_type_to_vk_ctor(self._vk_handle_type_name)
+        name = vk_handle_type_to_vk_ctor(self.vk_handle_type_name)
         if name in self._generator.functions:
             ctors.append(GenHandleCtor(handle=self, name=name))
         return ctors
@@ -414,7 +414,7 @@ class GenHandle(object):
     def __generate_type(self):
         lines = []
         bhtype = self.boost_handle_type_name
-        vhtype = self._vk_handle_type_name
+        vhtype = self.vk_handle_type_name
         attr = self.boost_handle_attr
         lines += [
             '',
