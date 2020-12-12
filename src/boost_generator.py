@@ -962,7 +962,7 @@ class ParamVkAllocator(ParamBase):
     @classmethod
     def maybe_create(cls, c_param, **kwargs):
         if (c_param.name == 'pAllocator'
-        and c_param.type == 'VkAllocationCallbacks *'
+        and c_param.type == 'const VkAllocationCallbacks *'
         ):
             return cls(c_param=c_param, **kwargs)
 
