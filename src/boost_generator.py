@@ -695,6 +695,14 @@ class ParamBase(object):
         return self in self._dyn_arrays_items
 
     @property
+    def __dyn_array_items_mandatory(self):
+        return [p for p in self._dyn_arrays_items if not p._optional]
+
+    @property
+    def __dyn_array_items_optional(self):
+        return [p for p in self._dyn_arrays_items if p._optional]
+
+    @property
     def _vk_type(self):
         t = self.vk_unqual_type
         if self._vk_is_pointer:
