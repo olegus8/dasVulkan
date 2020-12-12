@@ -917,6 +917,7 @@ class ParamBase(object):
         if self._vk_is_dyn_array_count:
             return []
         if self._vk_is_dyn_array_items:
+            return [f'{bname} <- b_{bname},']
             raise Exception('TODO')
         if self._vk_is_pointer:
             raise Exception('TODO')
