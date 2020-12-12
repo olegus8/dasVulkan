@@ -698,7 +698,7 @@ class ParamBase(object):
         t = self.vk_unqual_type
         if self._vk_is_pointer:
             t += ' ?'
-        elif self.vk_is_fixed_array:
+        elif self._vk_is_fixed_array:
             t += f' [{self._c_param.type.fixed_array_size}]'
         return t
 
