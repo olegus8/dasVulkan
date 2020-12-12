@@ -829,6 +829,7 @@ class ParamBase(object):
         return []
 
     def generate_boost_struct_view_create_field(self):
+        raise Exception('TODO')
         return []
 
     def generate_boost_struct_v2b_vars(self):
