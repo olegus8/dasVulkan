@@ -659,7 +659,8 @@ class ParamBase(object):
 
     @property
     def vk_unqual_type(self):
-        raise NotImplementedError()
+        raise VulkanBoostError(f'Not implemented for '
+            f'{self._c_param.type.name} {self._c_param.name}')
 
     @property
     def _boost_unqual_type(self):
