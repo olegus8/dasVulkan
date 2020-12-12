@@ -161,6 +161,7 @@ def add_boost_content(g):
         'VkFenceCreateInfo',
         'VkImageViewCreateInfo',
         'VkPipelineInputAssemblyStateCreateInfo',
+        'VkPipelineMultisampleStateCreateInfo',
         'VkPipelineRasterizationStateCreateInfo',
         'VkPipelineShaderStageCreateInfo',
         'VkPipelineTessellationStateCreateInfo',
