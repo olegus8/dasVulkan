@@ -160,6 +160,7 @@ def add_boost_content(g):
         'VkCommandPoolCreateInfo',
         'VkFenceCreateInfo',
         'VkImageViewCreateInfo',
+        'VkPipelineDepthStencilStateCreateInfo',
         'VkPipelineInputAssemblyStateCreateInfo',
         'VkPipelineMultisampleStateCreateInfo',
         'VkPipelineRasterizationStateCreateInfo',
