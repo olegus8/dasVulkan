@@ -178,6 +178,8 @@ def add_boost_content(g):
         ).declare_array(items = 'pImmutableSamplers')
     g.add_gen_struct(name = 'VkDescriptorSetLayoutCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'bindingCount', items = 'pBindings')
+    g.add_gen_struct(name = 'VkPipelineColorBlendStateCreateInfo', vk_to_boost=False,
+        ).declare_array(count = 'attachmentCount', items = 'pAttachments')
     g.add_gen_struct(name = 'VkDeviceCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'queueCreateInfoCount', items = 'pQueueCreateInfos',
         ).declare_array(count = 'enabledLayerCount', items = 'ppEnabledLayerNames',
