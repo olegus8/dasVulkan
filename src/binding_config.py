@@ -179,8 +179,6 @@ def add_boost_content(g):
         ).declare_array(items = 'pImmutableSamplers')
     g.add_gen_struct(name = 'VkDescriptorSetLayoutCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'bindingCount', items = 'pBindings')
-    g.add_gen_struct(name = 'VkPipelineColorBlendStateCreateInfo', vk_to_boost=False,
-        ).declare_array(count = 'attachmentCount', items = 'pAttachments')
     g.add_gen_struct(name = 'VkDeviceCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'queueCreateInfoCount', items = 'pQueueCreateInfos',
         ).declare_array(count = 'enabledLayerCount', items = 'ppEnabledLayerNames',
@@ -198,6 +196,10 @@ def add_boost_content(g):
         ).declare_array(count = 'enabledExtensionCount', items = 'ppEnabledExtensionNames')
     g.add_gen_struct(name = 'VkPipelineCacheCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'initialDataSize', items = 'pInitialData', force_item_type = 'uint8')
+    g.add_gen_struct(name = 'VkPipelineColorBlendStateCreateInfo', vk_to_boost=False,
+        ).declare_array(count = 'attachmentCount', items = 'pAttachments')
+    g.add_gen_struct(name = 'VkPipelineDynamicStateCreateInfo', vk_to_boost=False,
+        ).declare_array(count = 'dynamicStateCount', items = 'pDynamicStates')
     g.add_gen_struct(name = 'VkPipelineLayoutCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'setLayoutCount', items = 'pSetLayouts',
         ).declare_array(count = 'pushConstantRangeCount', items = 'pPushConstantRanges')
