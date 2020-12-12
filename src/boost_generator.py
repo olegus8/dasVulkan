@@ -916,7 +916,8 @@ class ParamBase(object):
         if self._vk_is_dyn_array_items and self._is_boost_func_output:
             bname = self._boost_func_param_name
             vtype = self.vk_unqual_type
-            return [f'vk_{bname} |> resize(int(vk_{self.vk_name}))']
+            vcname = self._dyn_array_count.vk_name
+            return [f'vk_{bname} |> resize(int(vk_{vcname}))']
         return []
 
     def generate_boost_handle_field(self):
