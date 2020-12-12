@@ -862,10 +862,11 @@ class ParamBase(object):
             assert_is(self._dyn_arrays_items[0], self)
             return self._is_boost_func_output
         if self._vk_is_dyn_array_count:
+            # There are cases when the count is shared between
+            # output and non-output arrays, and hence must not be queried.
+            # E.g. vkCreateGraphicsPipelines
             outputs = [x._is_boost_func_output for x in self._dyn_arrays_items]
-            assert_greater(len(outputs), 0)
-            assert_equal(all(outputs), any(outputs)) # must be all or none
-            return all(outputs)
+            return self._is_boost_func_output or all(outputs)
         return False
 
     @property
