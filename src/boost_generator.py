@@ -669,7 +669,7 @@ class ParamBase(object):
     def set_optional(self, optional):
         self._optional = optional
 
-    def force_unqual_boost_type(self, type_name):
+    def force_boost_unqual_type(self, type_name):
         self._forced_unqual_boost_type = type_name
 
     def set_boost_func_output(self):
