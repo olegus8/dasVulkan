@@ -93,7 +93,7 @@ def enumerate_device_extension_properties(
     var result : VkResult? = [[VkResult?]]
 ) : array<ExtensionProperties>
 
-    var vk_pPropertyCount : uint ?
+    var vk_pPropertyCount : uint
     var vk_properties : array<VkExtensionProperties>
     defer() <| ${ delete vk_properties; }
     var result_ = VkResult VK_SUCCESS
@@ -122,7 +122,7 @@ def enumerate_physical_devices(
     var result : VkResult? = [[VkResult?]]
 ) : array<PhysicalDevice>
 
-    var vk_pPhysicalDeviceCount : uint ?
+    var vk_pPhysicalDeviceCount : uint
     var vk_physical_devices : array<VkPhysicalDevice>
     defer() <| ${ delete vk_physical_devices; }
     var result_ = VkResult VK_SUCCESS
@@ -212,7 +212,7 @@ def get_physical_device_queue_family_properties(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]]
 ) : array<QueueFamilyProperties>
 
-    var vk_pQueueFamilyPropertyCount : uint ?
+    var vk_pQueueFamilyPropertyCount : uint
     var vk_queue_family_properties : array<VkQueueFamilyProperties>
     defer() <| ${ delete vk_queue_family_properties; }
 
@@ -235,7 +235,7 @@ def get_physical_device_surface_formats_khr(
     var result : VkResult? = [[VkResult?]]
 ) : array<SurfaceFormatKHR>
 
-    var vk_pSurfaceFormatCount : uint ?
+    var vk_pSurfaceFormatCount : uint
     var vk_surface_formats : array<VkSurfaceFormatKHR>
     defer() <| ${ delete vk_surface_formats; }
     var result_ = VkResult VK_SUCCESS
@@ -265,7 +265,7 @@ def get_physical_device_surface_present_modes_khr(
     var result : VkResult? = [[VkResult?]]
 ) : array<VkPresentModeKHR>
 
-    var vk_pPresentModeCount : uint ?
+    var vk_pPresentModeCount : uint
     var vk_present_modes : array<VkPresentModeKHR>
     defer() <| ${ delete vk_present_modes; }
     var result_ = VkResult VK_SUCCESS
@@ -295,7 +295,7 @@ def get_swapchain_images_khr(
     var result : VkResult? = [[VkResult?]]
 ) : array<Image>
 
-    var vk_pSwapchainImageCount : uint ?
+    var vk_pSwapchainImageCount : uint
     var vk_swapchain_images : array<VkImage>
     defer() <| ${ delete vk_swapchain_images; }
     var result_ = VkResult VK_SUCCESS

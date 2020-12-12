@@ -1172,6 +1172,13 @@ class ParamVkStruct(ParamBase):
             return f'<- vk_value_to_boost(vk_{bname})'
         return super(ParamVkStruct, self).boost_func_return_value
 
+    def generate_boost_func_param_decl(self):
+        if self.vk_is_dyn_array_count or self._is_boost_func_output:
+            return []
+        bname = self._boost_func_param_name
+        btype = self._boost_func_param_type
+        return [f'var {bname} : {btype} = [[ {btype} ]];']
+
     def generate_boost_func_temp_vars_init(self):
         bname = self._boost_func_param_name
         if not self._is_boost_func_output:
