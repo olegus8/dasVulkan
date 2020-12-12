@@ -438,36 +438,6 @@ def vk_value_to_boost(vk_struct : VkAttachmentReference) : AttachmentReference
     ]]
 
 //
-// CommandPoolCreateInfo
-//
-
-struct CommandPoolCreateInfo
-    flags : uint
-    queue_family_index : uint
-    _vk_view__active : bool
-
-def vk_view_create_unsafe(var boost_struct : CommandPoolCreateInfo
-) : VkCommandPoolCreateInfo
-
-    assert(!boost_struct._vk_view__active)
-    boost_struct._vk_view__active = true
-    return <- [[ VkCommandPoolCreateInfo
-        sType = VkStructureType VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO,
-        flags = boost_value_to_vk(boost_struct.flags),
-        queueFamilyIndex = boost_value_to_vk(boost_struct.queue_family_index)
-    ]]
-
-def vk_view_destroy(var boost_struct : CommandPoolCreateInfo)
-    assert(boost_struct._vk_view__active)
-    boost_struct._vk_view__active = false
-
-def vk_value_to_boost(vk_struct : VkCommandPoolCreateInfo) : CommandPoolCreateInfo
-    return <- [[CommandPoolCreateInfo
-        flags = vk_value_to_boost(vk_struct.flags),
-        queue_family_index = vk_value_to_boost(vk_struct.queueFamilyIndex)
-    ]]
-
-//
 // ComponentMapping
 //
 
@@ -564,33 +534,6 @@ def vk_value_to_boost(vk_struct : VkExtent3D) : Extent3D
     ]]
 
 //
-// FenceCreateInfo
-//
-
-struct FenceCreateInfo
-    flags : uint
-    _vk_view__active : bool
-
-def vk_view_create_unsafe(var boost_struct : FenceCreateInfo
-) : VkFenceCreateInfo
-
-    assert(!boost_struct._vk_view__active)
-    boost_struct._vk_view__active = true
-    return <- [[ VkFenceCreateInfo
-        sType = VkStructureType VK_STRUCTURE_TYPE_FENCE_CREATE_INFO,
-        flags = boost_value_to_vk(boost_struct.flags)
-    ]]
-
-def vk_view_destroy(var boost_struct : FenceCreateInfo)
-    assert(boost_struct._vk_view__active)
-    boost_struct._vk_view__active = false
-
-def vk_value_to_boost(vk_struct : VkFenceCreateInfo) : FenceCreateInfo
-    return <- [[FenceCreateInfo
-        flags = vk_value_to_boost(vk_struct.flags)
-    ]]
-
-//
 // ImageSubresourceRange
 //
 
@@ -626,62 +569,6 @@ def vk_value_to_boost(vk_struct : VkImageSubresourceRange) : ImageSubresourceRan
         level_count = vk_value_to_boost(vk_struct.levelCount),
         base_array_layer = vk_value_to_boost(vk_struct.baseArrayLayer),
         layer_count = vk_value_to_boost(vk_struct.layerCount)
-    ]]
-
-//
-// ImageViewCreateInfo
-//
-
-struct ImageViewCreateInfo
-    flags : uint
-    image : Image
-    view_type : VkImageViewType
-    format : VkFormat
-    components : ComponentMapping
-    subresource_range : ImageSubresourceRange
-    _vk_view_p_components : VkComponentMapping ?
-    _vk_view_p_subresource_range : VkImageSubresourceRange ?
-    _vk_view__active : bool
-
-def vk_view_create_unsafe(var boost_struct : ImageViewCreateInfo
-) : VkImageViewCreateInfo
-
-    assert(!boost_struct._vk_view__active)
-    boost_struct._vk_view__active = true
-    boost_struct._vk_view_p_components = new VkComponentMapping
-    *(boost_struct._vk_view_p_components) <- (
-        boost_struct.components |> vk_view_create_unsafe())
-    boost_struct._vk_view_p_subresource_range = new VkImageSubresourceRange
-    *(boost_struct._vk_view_p_subresource_range) <- (
-        boost_struct.subresource_range |> vk_view_create_unsafe())
-    return <- [[ VkImageViewCreateInfo
-        sType = VkStructureType VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO,
-        flags = boost_value_to_vk(boost_struct.flags),
-        image = boost_value_to_vk(boost_struct.image),
-        viewType = boost_value_to_vk(boost_struct.view_type),
-        format = boost_value_to_vk(boost_struct.format),
-        components = *(boost_struct._vk_view_p_components),
-        subresourceRange = *(boost_struct._vk_view_p_subresource_range)
-    ]]
-
-def vk_view_destroy(var boost_struct : ImageViewCreateInfo)
-    assert(boost_struct._vk_view__active)
-    boost_struct.components |> vk_view_destroy()
-    unsafe
-        delete boost_struct._vk_view_p_components
-    boost_struct.subresource_range |> vk_view_destroy()
-    unsafe
-        delete boost_struct._vk_view_p_subresource_range
-    boost_struct._vk_view__active = false
-
-def vk_value_to_boost(vk_struct : VkImageViewCreateInfo) : ImageViewCreateInfo
-    return <- [[ImageViewCreateInfo
-        flags = vk_value_to_boost(vk_struct.flags),
-        image = vk_value_to_boost(vk_struct.image),
-        view_type = vk_value_to_boost(vk_struct.viewType),
-        format = vk_value_to_boost(vk_struct.format),
-        components <- vk_value_to_boost(vk_struct.components),
-        subresource_range <- vk_value_to_boost(vk_struct.subresourceRange)
     ]]
 
 //
@@ -1398,105 +1285,6 @@ def vk_value_to_boost(vk_struct : VkRect2D) : Rect2D
     ]]
 
 //
-// SamplerCreateInfo
-//
-
-struct SamplerCreateInfo
-    flags : uint
-    mag_filter : VkFilter
-    min_filter : VkFilter
-    mipmap_mode : VkSamplerMipmapMode
-    address_mode_u : VkSamplerAddressMode
-    address_mode_v : VkSamplerAddressMode
-    address_mode_w : VkSamplerAddressMode
-    mip_lod_bias : float
-    anisotropy_enable : uint
-    max_anisotropy : float
-    compare_enable : uint
-    compare_op : VkCompareOp
-    min_lod : float
-    max_lod : float
-    border_color : VkBorderColor
-    unnormalized_coordinates : uint
-    _vk_view__active : bool
-
-def vk_view_create_unsafe(var boost_struct : SamplerCreateInfo
-) : VkSamplerCreateInfo
-
-    assert(!boost_struct._vk_view__active)
-    boost_struct._vk_view__active = true
-    return <- [[ VkSamplerCreateInfo
-        sType = VkStructureType VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO,
-        flags = boost_value_to_vk(boost_struct.flags),
-        magFilter = boost_value_to_vk(boost_struct.mag_filter),
-        minFilter = boost_value_to_vk(boost_struct.min_filter),
-        mipmapMode = boost_value_to_vk(boost_struct.mipmap_mode),
-        addressModeU = boost_value_to_vk(boost_struct.address_mode_u),
-        addressModeV = boost_value_to_vk(boost_struct.address_mode_v),
-        addressModeW = boost_value_to_vk(boost_struct.address_mode_w),
-        mipLodBias = boost_value_to_vk(boost_struct.mip_lod_bias),
-        anisotropyEnable = boost_value_to_vk(boost_struct.anisotropy_enable),
-        maxAnisotropy = boost_value_to_vk(boost_struct.max_anisotropy),
-        compareEnable = boost_value_to_vk(boost_struct.compare_enable),
-        compareOp = boost_value_to_vk(boost_struct.compare_op),
-        minLod = boost_value_to_vk(boost_struct.min_lod),
-        maxLod = boost_value_to_vk(boost_struct.max_lod),
-        borderColor = boost_value_to_vk(boost_struct.border_color),
-        unnormalizedCoordinates = boost_value_to_vk(boost_struct.unnormalized_coordinates)
-    ]]
-
-def vk_view_destroy(var boost_struct : SamplerCreateInfo)
-    assert(boost_struct._vk_view__active)
-    boost_struct._vk_view__active = false
-
-def vk_value_to_boost(vk_struct : VkSamplerCreateInfo) : SamplerCreateInfo
-    return <- [[SamplerCreateInfo
-        flags = vk_value_to_boost(vk_struct.flags),
-        mag_filter = vk_value_to_boost(vk_struct.magFilter),
-        min_filter = vk_value_to_boost(vk_struct.minFilter),
-        mipmap_mode = vk_value_to_boost(vk_struct.mipmapMode),
-        address_mode_u = vk_value_to_boost(vk_struct.addressModeU),
-        address_mode_v = vk_value_to_boost(vk_struct.addressModeV),
-        address_mode_w = vk_value_to_boost(vk_struct.addressModeW),
-        mip_lod_bias = vk_value_to_boost(vk_struct.mipLodBias),
-        anisotropy_enable = vk_value_to_boost(vk_struct.anisotropyEnable),
-        max_anisotropy = vk_value_to_boost(vk_struct.maxAnisotropy),
-        compare_enable = vk_value_to_boost(vk_struct.compareEnable),
-        compare_op = vk_value_to_boost(vk_struct.compareOp),
-        min_lod = vk_value_to_boost(vk_struct.minLod),
-        max_lod = vk_value_to_boost(vk_struct.maxLod),
-        border_color = vk_value_to_boost(vk_struct.borderColor),
-        unnormalized_coordinates = vk_value_to_boost(vk_struct.unnormalizedCoordinates)
-    ]]
-
-//
-// SemaphoreCreateInfo
-//
-
-struct SemaphoreCreateInfo
-    flags : uint
-    _vk_view__active : bool
-
-def vk_view_create_unsafe(var boost_struct : SemaphoreCreateInfo
-) : VkSemaphoreCreateInfo
-
-    assert(!boost_struct._vk_view__active)
-    boost_struct._vk_view__active = true
-    return <- [[ VkSemaphoreCreateInfo
-        sType = VkStructureType VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO,
-        flags = boost_value_to_vk(boost_struct.flags)
-    ]]
-
-def vk_view_destroy(var boost_struct : SemaphoreCreateInfo)
-    assert(boost_struct._vk_view__active)
-    boost_struct._vk_view__active = false
-
-def vk_value_to_boost(vk_struct : VkSemaphoreCreateInfo) : SemaphoreCreateInfo
-    return <- [[SemaphoreCreateInfo
-        flags = vk_value_to_boost(vk_struct.flags)
-    ]]
-
-//
 // SubpassDependency
 //
 
@@ -1725,6 +1513,211 @@ def vk_value_to_boost(vk_struct : VkPhysicalDeviceProperties) : PhysicalDevicePr
         limits <- vk_value_to_boost(vk_struct.limits),
         sparse_properties <- vk_value_to_boost(vk_struct.sparseProperties)
     ]]
+
+//
+// CommandPoolCreateInfo
+//
+
+struct CommandPoolCreateInfo
+    flags : uint
+    queue_family_index : uint
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : CommandPoolCreateInfo
+) : VkCommandPoolCreateInfo
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    return <- [[ VkCommandPoolCreateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO,
+        flags = boost_value_to_vk(boost_struct.flags),
+        queueFamilyIndex = boost_value_to_vk(boost_struct.queue_family_index)
+    ]]
+
+def vk_view_destroy(var boost_struct : CommandPoolCreateInfo)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+//
+// FenceCreateInfo
+//
+
+struct FenceCreateInfo
+    flags : uint
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : FenceCreateInfo
+) : VkFenceCreateInfo
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    return <- [[ VkFenceCreateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_FENCE_CREATE_INFO,
+        flags = boost_value_to_vk(boost_struct.flags)
+    ]]
+
+def vk_view_destroy(var boost_struct : FenceCreateInfo)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+//
+// ImageViewCreateInfo
+//
+
+struct ImageViewCreateInfo
+    flags : uint
+    image : Image
+    view_type : VkImageViewType
+    format : VkFormat
+    components : ComponentMapping
+    subresource_range : ImageSubresourceRange
+    _vk_view_p_components : VkComponentMapping ?
+    _vk_view_p_subresource_range : VkImageSubresourceRange ?
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : ImageViewCreateInfo
+) : VkImageViewCreateInfo
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    boost_struct._vk_view_p_components = new VkComponentMapping
+    *(boost_struct._vk_view_p_components) <- (
+        boost_struct.components |> vk_view_create_unsafe())
+    boost_struct._vk_view_p_subresource_range = new VkImageSubresourceRange
+    *(boost_struct._vk_view_p_subresource_range) <- (
+        boost_struct.subresource_range |> vk_view_create_unsafe())
+    return <- [[ VkImageViewCreateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO,
+        flags = boost_value_to_vk(boost_struct.flags),
+        image = boost_value_to_vk(boost_struct.image),
+        viewType = boost_value_to_vk(boost_struct.view_type),
+        format = boost_value_to_vk(boost_struct.format),
+        components = *(boost_struct._vk_view_p_components),
+        subresourceRange = *(boost_struct._vk_view_p_subresource_range)
+    ]]
+
+def vk_view_destroy(var boost_struct : ImageViewCreateInfo)
+    assert(boost_struct._vk_view__active)
+    boost_struct.components |> vk_view_destroy()
+    unsafe
+        delete boost_struct._vk_view_p_components
+    boost_struct.subresource_range |> vk_view_destroy()
+    unsafe
+        delete boost_struct._vk_view_p_subresource_range
+    boost_struct._vk_view__active = false
+
+//
+// PipelineShaderStageCreateInfo
+//
+
+struct PipelineShaderStageCreateInfo
+    flags : uint
+    stage : VkShaderStageFlagBits
+    module : ShaderModule
+    name : string
+    p_specialization_info : SpecializationInfo ?
+    _vk_view_p_specialization_info : VkSpecializationInfo ?
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : PipelineShaderStageCreateInfo
+) : VkPipelineShaderStageCreateInfo
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    if boost_struct.p_specialization_info != null
+        boost_struct._vk_view_p_specialization_info = new VkSpecializationInfo
+        *(boost_struct._vk_view_p_specialization_info) <- (
+            *(boost_struct.p_specialization_info) |> vk_view_create_unsafe())
+    return <- [[ VkPipelineShaderStageCreateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO,
+        flags = boost_value_to_vk(boost_struct.flags),
+        stage = boost_value_to_vk(boost_struct.stage),
+        module_ = boost_value_to_vk(boost_struct.module),
+        pName = boost_value_to_vk(boost_struct.name),
+        pSpecializationInfo = boost_struct._vk_view_p_specialization_info
+    ]]
+
+def vk_view_destroy(var boost_struct : PipelineShaderStageCreateInfo)
+    assert(boost_struct._vk_view__active)
+    if boost_struct.p_specialization_info != null
+        *(boost_struct.p_specialization_info) |> vk_view_destroy()
+        unsafe
+            delete boost_struct._vk_view_p_specialization_info
+    boost_struct._vk_view__active = false
+
+//
+// SamplerCreateInfo
+//
+
+struct SamplerCreateInfo
+    flags : uint
+    mag_filter : VkFilter
+    min_filter : VkFilter
+    mipmap_mode : VkSamplerMipmapMode
+    address_mode_u : VkSamplerAddressMode
+    address_mode_v : VkSamplerAddressMode
+    address_mode_w : VkSamplerAddressMode
+    mip_lod_bias : float
+    anisotropy_enable : uint
+    max_anisotropy : float
+    compare_enable : uint
+    compare_op : VkCompareOp
+    min_lod : float
+    max_lod : float
+    border_color : VkBorderColor
+    unnormalized_coordinates : uint
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : SamplerCreateInfo
+) : VkSamplerCreateInfo
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    return <- [[ VkSamplerCreateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO,
+        flags = boost_value_to_vk(boost_struct.flags),
+        magFilter = boost_value_to_vk(boost_struct.mag_filter),
+        minFilter = boost_value_to_vk(boost_struct.min_filter),
+        mipmapMode = boost_value_to_vk(boost_struct.mipmap_mode),
+        addressModeU = boost_value_to_vk(boost_struct.address_mode_u),
+        addressModeV = boost_value_to_vk(boost_struct.address_mode_v),
+        addressModeW = boost_value_to_vk(boost_struct.address_mode_w),
+        mipLodBias = boost_value_to_vk(boost_struct.mip_lod_bias),
+        anisotropyEnable = boost_value_to_vk(boost_struct.anisotropy_enable),
+        maxAnisotropy = boost_value_to_vk(boost_struct.max_anisotropy),
+        compareEnable = boost_value_to_vk(boost_struct.compare_enable),
+        compareOp = boost_value_to_vk(boost_struct.compare_op),
+        minLod = boost_value_to_vk(boost_struct.min_lod),
+        maxLod = boost_value_to_vk(boost_struct.max_lod),
+        borderColor = boost_value_to_vk(boost_struct.border_color),
+        unnormalizedCoordinates = boost_value_to_vk(boost_struct.unnormalized_coordinates)
+    ]]
+
+def vk_view_destroy(var boost_struct : SamplerCreateInfo)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+//
+// SemaphoreCreateInfo
+//
+
+struct SemaphoreCreateInfo
+    flags : uint
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : SemaphoreCreateInfo
+) : VkSemaphoreCreateInfo
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    return <- [[ VkSemaphoreCreateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO,
+        flags = boost_value_to_vk(boost_struct.flags)
+    ]]
+
+def vk_view_destroy(var boost_struct : SemaphoreCreateInfo)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
 
 //
 // DescriptorSetLayoutBinding

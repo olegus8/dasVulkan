@@ -86,7 +86,7 @@ class BoostGenerator(LoggingObject):
                 return param
 
     def create_param_from_node(self, c_node):
-        return self.create_param(c_node.name, c_node.type)
+        return self.create_param(c_node.das_name, c_node.type)
 
     def write(self):
         fpath = full_path(path.join(path.dirname(__file__),
@@ -1474,8 +1474,6 @@ def boost_camel_to_lower(camel):
             if result and result[-1] != '_':
                 result += '_'
         result += c.lower()
-    while result[-1] == '_':
-        result = result[:-1]
     return result
 
 def returns_vk_result(func):
