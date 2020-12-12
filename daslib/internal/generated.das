@@ -2680,7 +2680,6 @@ def create_device(
         result
     )
     handle._needs_delete = true
-    handle._device := boost_value_to_vk(device)
     return <- handle
 
 def finalize(var handle : Device explicit)
@@ -2744,7 +2743,6 @@ def create_command_pool(
     )
     handle._needs_delete = true
     handle._device := boost_value_to_vk(device)
-    handle._command_pool := boost_value_to_vk(command_pool)
     return <- handle
 
 def finalize(var handle : CommandPool explicit)
@@ -2809,7 +2807,6 @@ def create_descriptor_set_layout(
     )
     handle._needs_delete = true
     handle._device := boost_value_to_vk(device)
-    handle._descriptor_set_layout := boost_value_to_vk(descriptor_set_layout)
     return <- handle
 
 def finalize(var handle : DescriptorSetLayout explicit)
@@ -2874,7 +2871,6 @@ def create_fence(
     )
     handle._needs_delete = true
     handle._device := boost_value_to_vk(device)
-    handle._fence := boost_value_to_vk(fence)
     return <- handle
 
 def finalize(var handle : Fence explicit)
@@ -2939,7 +2935,6 @@ def create_framebuffer(
     )
     handle._needs_delete = true
     handle._device := boost_value_to_vk(device)
-    handle._framebuffer := boost_value_to_vk(framebuffer)
     return <- handle
 
 def finalize(var handle : Framebuffer explicit)
@@ -3004,7 +2999,6 @@ def create_image(
     )
     handle._needs_delete = true
     handle._device := boost_value_to_vk(device)
-    handle._image := boost_value_to_vk(image)
     return <- handle
 
 def finalize(var handle : Image explicit)
@@ -3069,7 +3063,6 @@ def create_image_view(
     )
     handle._needs_delete = true
     handle._device := boost_value_to_vk(device)
-    handle._image_view := boost_value_to_vk(image_view)
     return <- handle
 
 def finalize(var handle : ImageView explicit)
@@ -3128,7 +3121,6 @@ def create_instance(
         result
     )
     handle._needs_delete = true
-    handle._instance := boost_value_to_vk(instance)
     return <- handle
 
 def finalize(var handle : Instance explicit)
@@ -3226,7 +3218,6 @@ def create_pipeline_layout(
     )
     handle._needs_delete = true
     handle._device := boost_value_to_vk(device)
-    handle._pipeline_layout := boost_value_to_vk(pipeline_layout)
     return <- handle
 
 def finalize(var handle : PipelineLayout explicit)
@@ -3291,7 +3282,6 @@ def create_render_pass(
     )
     handle._needs_delete = true
     handle._device := boost_value_to_vk(device)
-    handle._render_pass := boost_value_to_vk(render_pass)
     return <- handle
 
 def finalize(var handle : RenderPass explicit)
@@ -3356,7 +3346,6 @@ def create_sampler(
     )
     handle._needs_delete = true
     handle._device := boost_value_to_vk(device)
-    handle._sampler := boost_value_to_vk(sampler)
     return <- handle
 
 def finalize(var handle : Sampler explicit)
@@ -3421,7 +3410,6 @@ def create_semaphore(
     )
     handle._needs_delete = true
     handle._device := boost_value_to_vk(device)
-    handle._semaphore := boost_value_to_vk(semaphore)
     return <- handle
 
 def finalize(var handle : Semaphore explicit)
@@ -3486,7 +3474,6 @@ def create_shader_module(
     )
     handle._needs_delete = true
     handle._device := boost_value_to_vk(device)
-    handle._shader_module := boost_value_to_vk(shader_module)
     return <- handle
 
 def finalize(var handle : ShaderModule explicit)
@@ -3551,7 +3538,6 @@ def create_swapchain_khr(
     )
     handle._needs_delete = true
     handle._device := boost_value_to_vk(device)
-    handle._swapchain := boost_value_to_vk(swapchain)
     return <- handle
 
 def finalize(var handle : SwapchainKHR explicit)
@@ -3629,7 +3615,6 @@ def create_graphics_pipelines(
     for handle in handles
         handle._needs_delete = true
         handle._device := boost_value_to_vk(device)
-        handle._pipeline := boost_value_to_vk(pipeline)
     return <- handles
 
 [private]
@@ -3679,7 +3664,6 @@ def create_compute_pipelines(
     for handle in handles
         handle._needs_delete = true
         handle._device := boost_value_to_vk(device)
-        handle._pipeline := boost_value_to_vk(pipeline)
     return <- handles
 
 def finalize(var handle : Pipeline explicit)
