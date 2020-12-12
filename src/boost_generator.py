@@ -558,7 +558,7 @@ class GenHandleDtor(GenFunc):
         lines += [
             '',
            f'def finalize(var handle : {bh_type} explicit)',
-           f'    if handle._needs_delete:',
+           f'    if handle._needs_delete',
            f'        {self._boost_func_name}(',
         ] + [
            f'            {param.get_boost_dtor_call_param(bh_type)},'

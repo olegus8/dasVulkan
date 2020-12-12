@@ -346,9 +346,6 @@ def vk_view_destroy(var boost_struct : ApplicationInfo)
     boost_struct._vk_view__active = false
 
 def vk_value_to_boost(vk_struct : VkApplicationInfo) : ApplicationInfo
-    var b_p_p_next = new void
-    if vk_struct.pNext != null
-       (*b_p_p_next) <- vk_value_to_boost(*(vk_struct.pNext))
     return <- [[ApplicationInfo
         application_name <- vk_value_to_boost(vk_struct.pApplicationName),
         application_version <- vk_value_to_boost(vk_struct.applicationVersion),
@@ -461,9 +458,6 @@ def vk_view_destroy(var boost_struct : CommandPoolCreateInfo)
     boost_struct._vk_view__active = false
 
 def vk_value_to_boost(vk_struct : VkCommandPoolCreateInfo) : CommandPoolCreateInfo
-    var b_p_p_next = new void
-    if vk_struct.pNext != null
-       (*b_p_p_next) <- vk_value_to_boost(*(vk_struct.pNext))
     return <- [[CommandPoolCreateInfo
         flags <- vk_value_to_boost(vk_struct.flags),
         queue_family_index <- vk_value_to_boost(vk_struct.queueFamilyIndex)
@@ -617,9 +611,6 @@ def vk_view_destroy(var boost_struct : FenceCreateInfo)
     boost_struct._vk_view__active = false
 
 def vk_value_to_boost(vk_struct : VkFenceCreateInfo) : FenceCreateInfo
-    var b_p_p_next = new void
-    if vk_struct.pNext != null
-       (*b_p_p_next) <- vk_value_to_boost(*(vk_struct.pNext))
     return <- [[FenceCreateInfo
         flags <- vk_value_to_boost(vk_struct.flags)
     ]]
@@ -709,9 +700,6 @@ def vk_view_destroy(var boost_struct : ImageViewCreateInfo)
     boost_struct._vk_view__active = false
 
 def vk_value_to_boost(vk_struct : VkImageViewCreateInfo) : ImageViewCreateInfo
-    var b_p_p_next = new void
-    if vk_struct.pNext != null
-       (*b_p_p_next) <- vk_value_to_boost(*(vk_struct.pNext))
     return <- [[ImageViewCreateInfo
         flags <- vk_value_to_boost(vk_struct.flags),
         image <- vk_value_to_boost(vk_struct.image),
@@ -1551,9 +1539,6 @@ def vk_view_destroy(var boost_struct : SamplerCreateInfo)
     boost_struct._vk_view__active = false
 
 def vk_value_to_boost(vk_struct : VkSamplerCreateInfo) : SamplerCreateInfo
-    var b_p_p_next = new void
-    if vk_struct.pNext != null
-       (*b_p_p_next) <- vk_value_to_boost(*(vk_struct.pNext))
     return <- [[SamplerCreateInfo
         flags <- vk_value_to_boost(vk_struct.flags),
         mag_filter <- vk_value_to_boost(vk_struct.magFilter),
@@ -1596,9 +1581,6 @@ def vk_view_destroy(var boost_struct : SemaphoreCreateInfo)
     boost_struct._vk_view__active = false
 
 def vk_value_to_boost(vk_struct : VkSemaphoreCreateInfo) : SemaphoreCreateInfo
-    var b_p_p_next = new void
-    if vk_struct.pNext != null
-       (*b_p_p_next) <- vk_value_to_boost(*(vk_struct.pNext))
     return <- [[SemaphoreCreateInfo
         flags <- vk_value_to_boost(vk_struct.flags)
     ]]
@@ -1873,9 +1855,6 @@ def vk_view_destroy(var boost_struct : DescriptorSetLayoutCreateInfo)
     boost_struct._vk_view__active = false
 
 def vk_value_to_boost(vk_struct : VkDescriptorSetLayoutCreateInfo) : DescriptorSetLayoutCreateInfo
-    var b_p_p_next = new void
-    if vk_struct.pNext != null
-       (*b_p_p_next) <- vk_value_to_boost(*(vk_struct.pNext))
     var b_bindings : array<DescriptorSetLayoutBinding>
     if vk_struct.pBindings != null
         b_bindings |> resize(vk_struct.bindingCount)
@@ -1942,9 +1921,6 @@ def vk_view_destroy(var boost_struct : DeviceCreateInfo)
     boost_struct._vk_view__active = false
 
 def vk_value_to_boost(vk_struct : VkDeviceCreateInfo) : DeviceCreateInfo
-    var b_p_p_next = new void
-    if vk_struct.pNext != null
-       (*b_p_p_next) <- vk_value_to_boost(*(vk_struct.pNext))
     var b_queue_create_infos : array<DeviceQueueCreateInfo>
     if vk_struct.pQueueCreateInfos != null
         b_queue_create_infos |> resize(vk_struct.queueCreateInfoCount)
@@ -2004,9 +1980,6 @@ def vk_view_destroy(var boost_struct : DeviceQueueCreateInfo)
     boost_struct._vk_view__active = false
 
 def vk_value_to_boost(vk_struct : VkDeviceQueueCreateInfo) : DeviceQueueCreateInfo
-    var b_p_p_next = new void
-    if vk_struct.pNext != null
-       (*b_p_p_next) <- vk_value_to_boost(*(vk_struct.pNext))
     var b_queue_priorities : array<float>
     if vk_struct.pQueuePriorities != null
         b_queue_priorities |> resize(vk_struct.queueCount)
@@ -2059,9 +2032,6 @@ def vk_view_destroy(var boost_struct : FramebufferCreateInfo)
     boost_struct._vk_view__active = false
 
 def vk_value_to_boost(vk_struct : VkFramebufferCreateInfo) : FramebufferCreateInfo
-    var b_p_p_next = new void
-    if vk_struct.pNext != null
-       (*b_p_p_next) <- vk_value_to_boost(*(vk_struct.pNext))
     var b_attachments : array<ImageView>
     if vk_struct.pAttachments != null
         b_attachments |> resize(vk_struct.attachmentCount)
@@ -2132,9 +2102,6 @@ def vk_view_destroy(var boost_struct : ImageCreateInfo)
     boost_struct._vk_view__active = false
 
 def vk_value_to_boost(vk_struct : VkImageCreateInfo) : ImageCreateInfo
-    var b_p_p_next = new void
-    if vk_struct.pNext != null
-       (*b_p_p_next) <- vk_value_to_boost(*(vk_struct.pNext))
     var b_queue_family_indices : array<uint>
     if vk_struct.pQueueFamilyIndices != null
         b_queue_family_indices |> resize(vk_struct.queueFamilyIndexCount)
@@ -2200,9 +2167,6 @@ def vk_view_destroy(var boost_struct : InstanceCreateInfo)
     boost_struct._vk_view__active = false
 
 def vk_value_to_boost(vk_struct : VkInstanceCreateInfo) : InstanceCreateInfo
-    var b_p_p_next = new void
-    if vk_struct.pNext != null
-       (*b_p_p_next) <- vk_value_to_boost(*(vk_struct.pNext))
     var b_p_p_application_info = new ApplicationInfo
     if vk_struct.pApplicationInfo != null
        (*b_p_p_application_info) <- vk_value_to_boost(*(vk_struct.pApplicationInfo))
@@ -2268,9 +2232,6 @@ def vk_view_destroy(var boost_struct : PipelineLayoutCreateInfo)
     boost_struct._vk_view__active = false
 
 def vk_value_to_boost(vk_struct : VkPipelineLayoutCreateInfo) : PipelineLayoutCreateInfo
-    var b_p_p_next = new void
-    if vk_struct.pNext != null
-       (*b_p_p_next) <- vk_value_to_boost(*(vk_struct.pNext))
     var b_set_layouts : array<DescriptorSetLayout>
     if vk_struct.pSetLayouts != null
         b_set_layouts |> resize(vk_struct.setLayoutCount)
@@ -2334,9 +2295,6 @@ def vk_view_destroy(var boost_struct : PipelineViewportStateCreateInfo)
     boost_struct._vk_view__active = false
 
 def vk_value_to_boost(vk_struct : VkPipelineViewportStateCreateInfo) : PipelineViewportStateCreateInfo
-    var b_p_p_next = new void
-    if vk_struct.pNext != null
-       (*b_p_p_next) <- vk_value_to_boost(*(vk_struct.pNext))
     var b_viewports : array<Viewport>
     if vk_struct.pViewports != null
         b_viewports |> resize(vk_struct.viewportCount)
@@ -2411,9 +2369,6 @@ def vk_view_destroy(var boost_struct : RenderPassCreateInfo)
     boost_struct._vk_view__active = false
 
 def vk_value_to_boost(vk_struct : VkRenderPassCreateInfo) : RenderPassCreateInfo
-    var b_p_p_next = new void
-    if vk_struct.pNext != null
-       (*b_p_p_next) <- vk_value_to_boost(*(vk_struct.pNext))
     var b_attachments : array<AttachmentDescription>
     if vk_struct.pAttachments != null
         b_attachments |> resize(vk_struct.attachmentCount)
@@ -2469,9 +2424,6 @@ def vk_view_destroy(var boost_struct : ShaderModuleCreateInfo)
     boost_struct._vk_view__active = false
 
 def vk_value_to_boost(vk_struct : VkShaderModuleCreateInfo) : ShaderModuleCreateInfo
-    var b_p_p_next = new void
-    if vk_struct.pNext != null
-       (*b_p_p_next) <- vk_value_to_boost(*(vk_struct.pNext))
     var b_code : array<uint8>
     if vk_struct.pCode != null
         b_code |> resize(vk_struct.codeSize)
@@ -2653,9 +2605,6 @@ def vk_view_destroy(var boost_struct : SwapchainCreateInfoKHR)
     boost_struct._vk_view__active = false
 
 def vk_value_to_boost(vk_struct : VkSwapchainCreateInfoKHR) : SwapchainCreateInfoKHR
-    var b_p_p_next = new void
-    if vk_struct.pNext != null
-       (*b_p_p_next) <- vk_value_to_boost(*(vk_struct.pNext))
     var b_queue_family_indices : array<uint>
     if vk_struct.pQueueFamilyIndices != null
         b_queue_family_indices |> resize(vk_struct.queueFamilyIndexCount)
