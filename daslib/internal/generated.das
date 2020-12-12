@@ -2636,7 +2636,6 @@ def vk_value_to_boost(vk_struct : VkSwapchainCreateInfoKHR) : SwapchainCreateInf
 struct Device
     device : VkDevice
     _needs_delete : bool
-    _device : VkDevice
 
 def boost_value_to_vk(b : Device) : VkDevice
     return b.device
@@ -2698,7 +2697,6 @@ struct CommandPool
     command_pool : VkCommandPool
     _needs_delete : bool
     _device : VkDevice
-    _command_pool : VkCommandPool
 
 def boost_value_to_vk(b : CommandPool) : VkCommandPool
     return b.command_pool
@@ -2762,7 +2760,6 @@ struct DescriptorSetLayout
     descriptor_set_layout : VkDescriptorSetLayout
     _needs_delete : bool
     _device : VkDevice
-    _descriptor_set_layout : VkDescriptorSetLayout
 
 def boost_value_to_vk(b : DescriptorSetLayout) : VkDescriptorSetLayout
     return b.descriptor_set_layout
@@ -2826,7 +2823,6 @@ struct Fence
     fence : VkFence
     _needs_delete : bool
     _device : VkDevice
-    _fence : VkFence
 
 def boost_value_to_vk(b : Fence) : VkFence
     return b.fence
@@ -2890,7 +2886,6 @@ struct Framebuffer
     framebuffer : VkFramebuffer
     _needs_delete : bool
     _device : VkDevice
-    _framebuffer : VkFramebuffer
 
 def boost_value_to_vk(b : Framebuffer) : VkFramebuffer
     return b.framebuffer
@@ -2954,7 +2949,6 @@ struct Image
     image : VkImage
     _needs_delete : bool
     _device : VkDevice
-    _image : VkImage
 
 def boost_value_to_vk(b : Image) : VkImage
     return b.image
@@ -3018,7 +3012,6 @@ struct ImageView
     image_view : VkImageView
     _needs_delete : bool
     _device : VkDevice
-    _image_view : VkImageView
 
 def boost_value_to_vk(b : ImageView) : VkImageView
     return b.image_view
@@ -3081,7 +3074,6 @@ def finalize(var handle : ImageView explicit)
 struct Instance
     instance : VkInstance
     _needs_delete : bool
-    _instance : VkInstance
 
 def boost_value_to_vk(b : Instance) : VkInstance
     return b.instance
@@ -3173,7 +3165,6 @@ struct PipelineLayout
     pipeline_layout : VkPipelineLayout
     _needs_delete : bool
     _device : VkDevice
-    _pipeline_layout : VkPipelineLayout
 
 def boost_value_to_vk(b : PipelineLayout) : VkPipelineLayout
     return b.pipeline_layout
@@ -3237,7 +3228,6 @@ struct RenderPass
     render_pass : VkRenderPass
     _needs_delete : bool
     _device : VkDevice
-    _render_pass : VkRenderPass
 
 def boost_value_to_vk(b : RenderPass) : VkRenderPass
     return b.render_pass
@@ -3301,7 +3291,6 @@ struct Sampler
     sampler : VkSampler
     _needs_delete : bool
     _device : VkDevice
-    _sampler : VkSampler
 
 def boost_value_to_vk(b : Sampler) : VkSampler
     return b.sampler
@@ -3365,7 +3354,6 @@ struct Semaphore
     semaphore : VkSemaphore
     _needs_delete : bool
     _device : VkDevice
-    _semaphore : VkSemaphore
 
 def boost_value_to_vk(b : Semaphore) : VkSemaphore
     return b.semaphore
@@ -3429,7 +3417,6 @@ struct ShaderModule
     shader_module : VkShaderModule
     _needs_delete : bool
     _device : VkDevice
-    _shader_module : VkShaderModule
 
 def boost_value_to_vk(b : ShaderModule) : VkShaderModule
     return b.shader_module
@@ -3493,7 +3480,6 @@ struct SwapchainKHR
     swapchain_khr : VkSwapchainKHR
     _needs_delete : bool
     _device : VkDevice
-    _swapchain : VkSwapchainKHR
 
 def boost_value_to_vk(b : SwapchainKHR) : VkSwapchainKHR
     return b.swapchain_khr
@@ -3557,7 +3543,6 @@ struct Pipeline
     pipeline : VkPipeline
     _needs_delete : bool
     _device : VkDevice
-    _pipeline : VkPipeline
 
 def boost_value_to_vk(b : Pipeline) : VkPipeline
     return b.pipeline
