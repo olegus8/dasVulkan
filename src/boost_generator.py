@@ -304,11 +304,11 @@ class GenStruct(object):
             '',
            f'struct {self.boost_type_name}',
         ]
-        lines += [f'    {line}' for field in self._fields
+        lines += [f'    {line}' for field in self.__fields
             for line in field.generate_boost_struct_field_decl()]
 
         if self.__boost_to_vk:
-            lines += [f'    {line}' for field in self._fields
+            lines += [f'    {line}' for field in self.__fields
                 for line in field.generate_boost_struct_field_view_decl()]
             lines += [f'    _vk_view__active : bool']
         return lines
@@ -350,12 +350,12 @@ class GenStruct(object):
             '    assert(!boost_struct._vk_view__active)',
             '    boost_struct._vk_view__active = true',
         ] + [
-           f'    {line}' for field in self._fields for line in
+           f'    {line}' for field in self.__fields for line in
                  field.generate_boost_struct_view_create_init()
         ] + [
            f'    return <- [[ {vtype}',
         ] + [
-           f'        {line}' for field in self._fields for line in
+           f'        {line}' for field in self.__fields for line in
                      field.generate_boost_struct_view_create_field()
         ]
         remove_last_char(lines, ',')
@@ -370,7 +370,7 @@ class GenStruct(object):
            f'def vk_view_destroy(var boost_struct : {self.boost_type_name})',
             '    assert(boost_struct._vk_view__active)',
         ] + [
-           f'    {line}' for field in self._fields for line in
+           f'    {line}' for field in self.__fields for line in
                  field.generate_boost_struct_view_destroy()
         ] + [
             '    boost_struct._vk_view__active = false',
