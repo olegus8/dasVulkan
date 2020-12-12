@@ -1607,6 +1607,197 @@ def vk_view_destroy(var boost_struct : ImageViewCreateInfo)
     boost_struct._vk_view__active = false
 
 //
+// PipelineColorBlendAttachmentState
+//
+
+struct PipelineColorBlendAttachmentState
+    blend_enable : uint
+    src_color_blend_factor : VkBlendFactor
+    dst_color_blend_factor : VkBlendFactor
+    color_blend_op : VkBlendOp
+    src_alpha_blend_factor : VkBlendFactor
+    dst_alpha_blend_factor : VkBlendFactor
+    alpha_blend_op : VkBlendOp
+    color_write_mask : uint
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : PipelineColorBlendAttachmentState
+) : VkPipelineColorBlendAttachmentState
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    return <- [[ VkPipelineColorBlendAttachmentState
+        blendEnable = boost_value_to_vk(boost_struct.blend_enable),
+        srcColorBlendFactor = boost_value_to_vk(boost_struct.src_color_blend_factor),
+        dstColorBlendFactor = boost_value_to_vk(boost_struct.dst_color_blend_factor),
+        colorBlendOp = boost_value_to_vk(boost_struct.color_blend_op),
+        srcAlphaBlendFactor = boost_value_to_vk(boost_struct.src_alpha_blend_factor),
+        dstAlphaBlendFactor = boost_value_to_vk(boost_struct.dst_alpha_blend_factor),
+        alphaBlendOp = boost_value_to_vk(boost_struct.alpha_blend_op),
+        colorWriteMask = boost_value_to_vk(boost_struct.color_write_mask)
+    ]]
+
+def vk_view_destroy(var boost_struct : PipelineColorBlendAttachmentState)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+//
+// PipelineDepthStencilStateCreateInfo
+//
+
+struct PipelineDepthStencilStateCreateInfo
+    flags : uint
+    depth_test_enable : uint
+    depth_write_enable : uint
+    depth_compare_op : VkCompareOp
+    depth_bounds_test_enable : uint
+    stencil_test_enable : uint
+    front : StencilOpState
+    back : StencilOpState
+    min_depth_bounds : float
+    max_depth_bounds : float
+    _vk_view_p_front : VkStencilOpState ?
+    _vk_view_p_back : VkStencilOpState ?
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : PipelineDepthStencilStateCreateInfo
+) : VkPipelineDepthStencilStateCreateInfo
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    boost_struct._vk_view_p_front = new VkStencilOpState
+    *(boost_struct._vk_view_p_front) <- (
+        boost_struct.front |> vk_view_create_unsafe())
+    boost_struct._vk_view_p_back = new VkStencilOpState
+    *(boost_struct._vk_view_p_back) <- (
+        boost_struct.back |> vk_view_create_unsafe())
+    return <- [[ VkPipelineDepthStencilStateCreateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO,
+        flags = boost_value_to_vk(boost_struct.flags),
+        depthTestEnable = boost_value_to_vk(boost_struct.depth_test_enable),
+        depthWriteEnable = boost_value_to_vk(boost_struct.depth_write_enable),
+        depthCompareOp = boost_value_to_vk(boost_struct.depth_compare_op),
+        depthBoundsTestEnable = boost_value_to_vk(boost_struct.depth_bounds_test_enable),
+        stencilTestEnable = boost_value_to_vk(boost_struct.stencil_test_enable),
+        front = *(boost_struct._vk_view_p_front),
+        back = *(boost_struct._vk_view_p_back),
+        minDepthBounds = boost_value_to_vk(boost_struct.min_depth_bounds),
+        maxDepthBounds = boost_value_to_vk(boost_struct.max_depth_bounds)
+    ]]
+
+def vk_view_destroy(var boost_struct : PipelineDepthStencilStateCreateInfo)
+    assert(boost_struct._vk_view__active)
+    boost_struct.front |> vk_view_destroy()
+    unsafe
+        delete boost_struct._vk_view_p_front
+    boost_struct.back |> vk_view_destroy()
+    unsafe
+        delete boost_struct._vk_view_p_back
+    boost_struct._vk_view__active = false
+
+//
+// PipelineInputAssemblyStateCreateInfo
+//
+
+struct PipelineInputAssemblyStateCreateInfo
+    flags : uint
+    topology : VkPrimitiveTopology
+    primitive_restart_enable : uint
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : PipelineInputAssemblyStateCreateInfo
+) : VkPipelineInputAssemblyStateCreateInfo
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    return <- [[ VkPipelineInputAssemblyStateCreateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO,
+        flags = boost_value_to_vk(boost_struct.flags),
+        topology = boost_value_to_vk(boost_struct.topology),
+        primitiveRestartEnable = boost_value_to_vk(boost_struct.primitive_restart_enable)
+    ]]
+
+def vk_view_destroy(var boost_struct : PipelineInputAssemblyStateCreateInfo)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+//
+// PipelineMultisampleStateCreateInfo
+//
+
+struct PipelineMultisampleStateCreateInfo
+    flags : uint
+    rasterization_samples : VkSampleCountFlagBits
+    sample_shading_enable : uint
+    min_sample_shading : float
+    p_sample_mask : uint ?
+    alpha_to_coverage_enable : uint
+    alpha_to_one_enable : uint
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : PipelineMultisampleStateCreateInfo
+) : VkPipelineMultisampleStateCreateInfo
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    return <- [[ VkPipelineMultisampleStateCreateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO,
+        flags = boost_value_to_vk(boost_struct.flags),
+        rasterizationSamples = boost_value_to_vk(boost_struct.rasterization_samples),
+        sampleShadingEnable = boost_value_to_vk(boost_struct.sample_shading_enable),
+        minSampleShading = boost_value_to_vk(boost_struct.min_sample_shading),
+        pSampleMask = boost_value_to_vk(boost_struct.p_sample_mask),
+        alphaToCoverageEnable = boost_value_to_vk(boost_struct.alpha_to_coverage_enable),
+        alphaToOneEnable = boost_value_to_vk(boost_struct.alpha_to_one_enable)
+    ]]
+
+def vk_view_destroy(var boost_struct : PipelineMultisampleStateCreateInfo)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+//
+// PipelineRasterizationStateCreateInfo
+//
+
+struct PipelineRasterizationStateCreateInfo
+    flags : uint
+    depth_clamp_enable : uint
+    rasterizer_discard_enable : uint
+    polygon_mode : VkPolygonMode
+    cull_mode : uint
+    front_face : VkFrontFace
+    depth_bias_enable : uint
+    depth_bias_constant_factor : float
+    depth_bias_clamp : float
+    depth_bias_slope_factor : float
+    line_width : float
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : PipelineRasterizationStateCreateInfo
+) : VkPipelineRasterizationStateCreateInfo
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    return <- [[ VkPipelineRasterizationStateCreateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO,
+        flags = boost_value_to_vk(boost_struct.flags),
+        depthClampEnable = boost_value_to_vk(boost_struct.depth_clamp_enable),
+        rasterizerDiscardEnable = boost_value_to_vk(boost_struct.rasterizer_discard_enable),
+        polygonMode = boost_value_to_vk(boost_struct.polygon_mode),
+        cullMode = boost_value_to_vk(boost_struct.cull_mode),
+        frontFace = boost_value_to_vk(boost_struct.front_face),
+        depthBiasEnable = boost_value_to_vk(boost_struct.depth_bias_enable),
+        depthBiasConstantFactor = boost_value_to_vk(boost_struct.depth_bias_constant_factor),
+        depthBiasClamp = boost_value_to_vk(boost_struct.depth_bias_clamp),
+        depthBiasSlopeFactor = boost_value_to_vk(boost_struct.depth_bias_slope_factor),
+        lineWidth = boost_value_to_vk(boost_struct.line_width)
+    ]]
+
+def vk_view_destroy(var boost_struct : PipelineRasterizationStateCreateInfo)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+//
 // PipelineShaderStageCreateInfo
 //
 
@@ -1643,6 +1834,30 @@ def vk_view_destroy(var boost_struct : PipelineShaderStageCreateInfo)
         *(boost_struct.p_specialization_info) |> vk_view_destroy()
         unsafe
             delete boost_struct._vk_view_p_specialization_info
+    boost_struct._vk_view__active = false
+
+//
+// PipelineTessellationStateCreateInfo
+//
+
+struct PipelineTessellationStateCreateInfo
+    flags : uint
+    patch_control_points : uint
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : PipelineTessellationStateCreateInfo
+) : VkPipelineTessellationStateCreateInfo
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    return <- [[ VkPipelineTessellationStateCreateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_PIPELINE_TESSELLATION_STATE_CREATE_INFO,
+        flags = boost_value_to_vk(boost_struct.flags),
+        patchControlPoints = boost_value_to_vk(boost_struct.patch_control_points)
+    ]]
+
+def vk_view_destroy(var boost_struct : PipelineTessellationStateCreateInfo)
+    assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
 //
@@ -2250,6 +2465,72 @@ def vk_view_create_unsafe(var boost_struct : PipelineCacheCreateInfo
     ]]
 
 def vk_view_destroy(var boost_struct : PipelineCacheCreateInfo)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+//
+// PipelineColorBlendStateCreateInfo
+//
+
+struct PipelineColorBlendStateCreateInfo
+    flags : uint
+    logic_op_enable : uint
+    logic_op : VkLogicOp
+    attachments : array<PipelineColorBlendAttachmentState>
+    blend_constants : float [4]
+    _vk_view_attachments : array<VkPipelineColorBlendAttachmentState>
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : PipelineColorBlendStateCreateInfo
+) : VkPipelineColorBlendStateCreateInfo
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    let vk_attachment_count = uint(boost_struct.attachments |> length())
+    boost_struct._vk_view_attachments <- [{
+        for item in boost_struct.attachments ;
+        item |> vk_view_create_unsafe()}]
+    return <- [[ VkPipelineColorBlendStateCreateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO,
+        flags = boost_value_to_vk(boost_struct.flags),
+        logicOpEnable = boost_value_to_vk(boost_struct.logic_op_enable),
+        logicOp = boost_value_to_vk(boost_struct.logic_op),
+        attachmentCount = vk_attachment_count,
+        pAttachments = array_addr_unsafe(boost_struct._vk_view_attachments),
+        blendConstants = boost_value_to_vk(boost_struct.blend_constants)
+    ]]
+
+def vk_view_destroy(var boost_struct : PipelineColorBlendStateCreateInfo)
+    assert(boost_struct._vk_view__active)
+    for item in boost_struct.attachments
+        item |> vk_view_destroy()
+    delete boost_struct._vk_view_attachments
+    boost_struct._vk_view__active = false
+
+//
+// PipelineDynamicStateCreateInfo
+//
+
+struct PipelineDynamicStateCreateInfo
+    flags : uint
+    dynamic_states : array<VkDynamicState>
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : PipelineDynamicStateCreateInfo
+) : VkPipelineDynamicStateCreateInfo
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    let vk_dynamic_state_count = uint(boost_struct.dynamic_states |> length())
+    let vk_p_dynamic_states = array_addr_unsafe(boost_struct.dynamic_states)
+    return <- [[ VkPipelineDynamicStateCreateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO,
+        flags = boost_value_to_vk(boost_struct.flags),
+        dynamicStateCount = vk_dynamic_state_count,
+        pDynamicStates = vk_p_dynamic_states
+    ]]
+
+def vk_view_destroy(var boost_struct : PipelineDynamicStateCreateInfo)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 

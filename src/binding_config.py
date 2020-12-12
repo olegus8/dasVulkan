@@ -170,6 +170,7 @@ def add_boost_content(g):
         'VkSamplerCreateInfo',
         'VkSemaphoreCreateInfo',
         'VkSpecializationMapEntry',
+        'VkStencilOpState',
         'VkVertexInputAttributeDescription',
         'VkVertexInputBindingDescription',
     ]:
