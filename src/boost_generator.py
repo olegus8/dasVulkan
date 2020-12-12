@@ -351,8 +351,6 @@ class GenStruct(object):
         for field in self._fields:
             bname, vname = field.boost_name, field.vk_name
             btype, vtype = field.boost_type, field.vk_type
-            if self.__is_array_count(vname):
-                continue
             elif self.__is_array_items(vname):
                 biname = boost_ptr_name_to_array(field.boost_name)
                 if field.needs_vk_view or field.needs_conversion:
@@ -1217,6 +1215,16 @@ class ParamVkStruct(ParamBase):
            f'*(boost_struct._vk_view_p_{bname}) <- (',
            f'    boost_struct.{bname} |> vk_view_create_unsafe())',
         ]
+
+    def generate_boost_struct_view_create_field(self):
+        bname = self._boost_struct_field_name
+        vname = self.vk_name
+        if self._vk_is_dyn_array_items:
+            return [f'{vname} = array_addr_unsafe('
+                f'boost_struct._vk_view_{bname}),']
+        if self._vk_is_pointer:
+            return [f'{vname} = boost_struct._vk_view_{bname}),']
+        return [f'{vname} = *(boost_struct._vk_view_p_{bname})']
 
 
 class ParamVkEnum(ParamBase):
