@@ -22,31 +22,19 @@ def with_view(
     b |> invoke(vk_struct)
     boost_struct |> vk_view_destroy()
 
-def boost_const_to_vk(b : auto(T)[]) : T[]
+def boost_value_to_vk(b : auto(T)[]) : T[]
     return b
 
-def boost_const_to_vk(b : auto(T)) : T
+def boost_value_to_vk(b : auto(T)) : T
     return b
 
-def boost_var_to_vk(var b : auto(T)[]) : T[]
-    return <- b
-
-def boost_var_to_vk(var b : auto(T)) : T
-    return <- b
-
-def vk_const_to_boost(v : auto(T)[]) : T[]
+def vk_value_to_boost(v : auto(T)[]) : T[]
     return v
 
-def vk_const_to_boost(v : auto(T)) : T
+def vk_value_to_boost(v : auto(T)) : T
     return v
 
-def vk_var_to_boost(var v : auto(T)[]) : T[]
-    return v
-
-def vk_var_to_boost(var v : auto(T)) : T
-    return v
-
-def vk_const_to_boost(v : int8[]) : string
+def vk_value_to_boost(v : int8[]) : string
     unsafe
         let s := reinterpret<string>(addr(v[0]))
         return s
