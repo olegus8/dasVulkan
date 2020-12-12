@@ -205,8 +205,8 @@ class GenFunc(object):
             ]
             if self._returns_vk_result:
                 lines.append('    assert(result_ == VkResult VK_SUCCESS)')
-            maybe_null_output = f' <- [[ self._return_type ]]'
-                if self._return_type != 'void' else ''
+            maybe_null_output = (f' <- [[ self._return_type ]]'
+                if self._return_type != 'void' else '')
             lines += [
                f'    if result_ != VkResult VK_SUCCESS',
                f'        return{maybe_null_output}',
