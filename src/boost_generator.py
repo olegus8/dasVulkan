@@ -802,7 +802,7 @@ class ParamBase(object):
                 cur = 'boost_struct.' + ar_items._boost_func_param_name
                 lines += [f'assert(length({cur}) == 0 || '
                     f'length({cur}) == length({first}))']
-            lines += [f'let vk_{bname} = uint({first} |> length())']
+            lines += [f'let vk_{bname} = {vtype}({first} |> length())']
             return lines
         if self.vk_is_dyn_array_items:
             adr = f'array_addr_unsafe(boost_struct.{bname})'

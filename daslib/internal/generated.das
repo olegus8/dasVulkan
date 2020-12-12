@@ -1847,36 +1847,6 @@ def vk_view_destroy(var boost_struct : DeviceCreateInfo)
             delete boost_struct._vk_view_p_enabled_features
     boost_struct._vk_view__active = false
 
-def vk_value_to_boost(vk_struct : VkDeviceCreateInfo) : DeviceCreateInfo
-    var b_queue_create_infos : array<DeviceQueueCreateInfo>
-    if vk_struct.pQueueCreateInfos != null
-        b_queue_create_infos |> resize(int(vk_struct.queueCreateInfoCount))
-        for b, i in b_queue_create_infos, range(INT_MAX)
-            unsafe
-                b <- vk_value_to_boost(*(vk_struct.pQueueCreateInfos+i))
-    var b_p_enabled_layer_names : array<string>
-    if vk_struct.ppEnabledLayerNames != null
-        b_p_enabled_layer_names |> resize(int(vk_struct.enabledLayerCount))
-        for b, i in b_p_enabled_layer_names, range(INT_MAX)
-            unsafe
-                b <- vk_value_to_boost(*(vk_struct.ppEnabledLayerNames+i))
-    var b_p_enabled_extension_names : array<string>
-    if vk_struct.ppEnabledExtensionNames != null
-        b_p_enabled_extension_names |> resize(int(vk_struct.enabledExtensionCount))
-        for b, i in b_p_enabled_extension_names, range(INT_MAX)
-            unsafe
-                b <- vk_value_to_boost(*(vk_struct.ppEnabledExtensionNames+i))
-    var b_p_enabled_features = new PhysicalDeviceFeatures
-    if vk_struct.pEnabledFeatures != null
-        (*b_p_enabled_features) <- vk_value_to_boost(*(vk_struct.pEnabledFeatures))
-    return <- [[DeviceCreateInfo
-        flags = vk_value_to_boost(vk_struct.flags),
-        queue_create_infos <- b_queue_create_infos,
-        p_enabled_layer_names <- b_p_enabled_layer_names,
-        p_enabled_extension_names <- b_p_enabled_extension_names,
-        p_enabled_features = b_p_enabled_features
-    ]]
-
 //
 // DeviceQueueCreateInfo
 //
@@ -1905,19 +1875,6 @@ def vk_view_create_unsafe(var boost_struct : DeviceQueueCreateInfo
 def vk_view_destroy(var boost_struct : DeviceQueueCreateInfo)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
-
-def vk_value_to_boost(vk_struct : VkDeviceQueueCreateInfo) : DeviceQueueCreateInfo
-    var b_queue_priorities : array<float>
-    if vk_struct.pQueuePriorities != null
-        b_queue_priorities |> resize(int(vk_struct.queueCount))
-        for b, i in b_queue_priorities, range(INT_MAX)
-            unsafe
-                b <- vk_value_to_boost(*(vk_struct.pQueuePriorities+i))
-    return <- [[DeviceQueueCreateInfo
-        flags = vk_value_to_boost(vk_struct.flags),
-        queue_family_index = vk_value_to_boost(vk_struct.queueFamilyIndex),
-        queue_priorities <- b_queue_priorities
-    ]]
 
 //
 // FramebufferCreateInfo
@@ -1957,22 +1914,6 @@ def vk_view_destroy(var boost_struct : FramebufferCreateInfo)
     assert(boost_struct._vk_view__active)
     delete boost_struct._vk_view_attachments
     boost_struct._vk_view__active = false
-
-def vk_value_to_boost(vk_struct : VkFramebufferCreateInfo) : FramebufferCreateInfo
-    var b_attachments : array<ImageView>
-    if vk_struct.pAttachments != null
-        b_attachments |> resize(int(vk_struct.attachmentCount))
-        for b, i in b_attachments, range(INT_MAX)
-            unsafe
-                b <- vk_value_to_boost(*(vk_struct.pAttachments+i))
-    return <- [[FramebufferCreateInfo
-        flags = vk_value_to_boost(vk_struct.flags),
-        render_pass = vk_value_to_boost(vk_struct.renderPass),
-        attachments <- b_attachments,
-        width = vk_value_to_boost(vk_struct.width),
-        height = vk_value_to_boost(vk_struct.height),
-        layers = vk_value_to_boost(vk_struct.layers)
-    ]]
 
 //
 // ImageCreateInfo
@@ -2028,28 +1969,6 @@ def vk_view_destroy(var boost_struct : ImageCreateInfo)
         delete boost_struct._vk_view_p_extent
     boost_struct._vk_view__active = false
 
-def vk_value_to_boost(vk_struct : VkImageCreateInfo) : ImageCreateInfo
-    var b_queue_family_indices : array<uint>
-    if vk_struct.pQueueFamilyIndices != null
-        b_queue_family_indices |> resize(int(vk_struct.queueFamilyIndexCount))
-        for b, i in b_queue_family_indices, range(INT_MAX)
-            unsafe
-                b <- vk_value_to_boost(*(vk_struct.pQueueFamilyIndices+i))
-    return <- [[ImageCreateInfo
-        flags = vk_value_to_boost(vk_struct.flags),
-        image_type = vk_value_to_boost(vk_struct.imageType),
-        format = vk_value_to_boost(vk_struct.format),
-        extent <- vk_value_to_boost(vk_struct.extent),
-        mip_levels = vk_value_to_boost(vk_struct.mipLevels),
-        array_layers = vk_value_to_boost(vk_struct.arrayLayers),
-        samples = vk_value_to_boost(vk_struct.samples),
-        tiling = vk_value_to_boost(vk_struct.tiling),
-        usage = vk_value_to_boost(vk_struct.usage),
-        sharing_mode = vk_value_to_boost(vk_struct.sharingMode),
-        queue_family_indices <- b_queue_family_indices,
-        initial_layout = vk_value_to_boost(vk_struct.initialLayout)
-    ]]
-
 //
 // InstanceCreateInfo
 //
@@ -2093,29 +2012,6 @@ def vk_view_destroy(var boost_struct : InstanceCreateInfo)
             delete boost_struct._vk_view_p_application_info
     boost_struct._vk_view__active = false
 
-def vk_value_to_boost(vk_struct : VkInstanceCreateInfo) : InstanceCreateInfo
-    var b_p_application_info = new ApplicationInfo
-    if vk_struct.pApplicationInfo != null
-        (*b_p_application_info) <- vk_value_to_boost(*(vk_struct.pApplicationInfo))
-    var b_p_enabled_layer_names : array<string>
-    if vk_struct.ppEnabledLayerNames != null
-        b_p_enabled_layer_names |> resize(int(vk_struct.enabledLayerCount))
-        for b, i in b_p_enabled_layer_names, range(INT_MAX)
-            unsafe
-                b <- vk_value_to_boost(*(vk_struct.ppEnabledLayerNames+i))
-    var b_p_enabled_extension_names : array<string>
-    if vk_struct.ppEnabledExtensionNames != null
-        b_p_enabled_extension_names |> resize(int(vk_struct.enabledExtensionCount))
-        for b, i in b_p_enabled_extension_names, range(INT_MAX)
-            unsafe
-                b <- vk_value_to_boost(*(vk_struct.ppEnabledExtensionNames+i))
-    return <- [[InstanceCreateInfo
-        flags = vk_value_to_boost(vk_struct.flags),
-        p_application_info = b_p_application_info,
-        p_enabled_layer_names <- b_p_enabled_layer_names,
-        p_enabled_extension_names <- b_p_enabled_extension_names
-    ]]
-
 //
 // PipelineLayoutCreateInfo
 //
@@ -2157,25 +2053,6 @@ def vk_view_destroy(var boost_struct : PipelineLayoutCreateInfo)
         item |> vk_view_destroy()
     delete boost_struct._vk_view_push_constant_ranges
     boost_struct._vk_view__active = false
-
-def vk_value_to_boost(vk_struct : VkPipelineLayoutCreateInfo) : PipelineLayoutCreateInfo
-    var b_set_layouts : array<DescriptorSetLayout>
-    if vk_struct.pSetLayouts != null
-        b_set_layouts |> resize(int(vk_struct.setLayoutCount))
-        for b, i in b_set_layouts, range(INT_MAX)
-            unsafe
-                b <- vk_value_to_boost(*(vk_struct.pSetLayouts+i))
-    var b_push_constant_ranges : array<PushConstantRange>
-    if vk_struct.pPushConstantRanges != null
-        b_push_constant_ranges |> resize(int(vk_struct.pushConstantRangeCount))
-        for b, i in b_push_constant_ranges, range(INT_MAX)
-            unsafe
-                b <- vk_value_to_boost(*(vk_struct.pPushConstantRanges+i))
-    return <- [[PipelineLayoutCreateInfo
-        flags = vk_value_to_boost(vk_struct.flags),
-        set_layouts <- b_set_layouts,
-        push_constant_ranges <- b_push_constant_ranges
-    ]]
 
 //
 // PipelineViewportStateCreateInfo
@@ -2220,25 +2097,6 @@ def vk_view_destroy(var boost_struct : PipelineViewportStateCreateInfo)
         item |> vk_view_destroy()
     delete boost_struct._vk_view_scissors
     boost_struct._vk_view__active = false
-
-def vk_value_to_boost(vk_struct : VkPipelineViewportStateCreateInfo) : PipelineViewportStateCreateInfo
-    var b_viewports : array<Viewport>
-    if vk_struct.pViewports != null
-        b_viewports |> resize(int(vk_struct.viewportCount))
-        for b, i in b_viewports, range(INT_MAX)
-            unsafe
-                b <- vk_value_to_boost(*(vk_struct.pViewports+i))
-    var b_scissors : array<Rect2D>
-    if vk_struct.pScissors != null
-        b_scissors |> resize(int(vk_struct.scissorCount))
-        for b, i in b_scissors, range(INT_MAX)
-            unsafe
-                b <- vk_value_to_boost(*(vk_struct.pScissors+i))
-    return <- [[PipelineViewportStateCreateInfo
-        flags = vk_value_to_boost(vk_struct.flags),
-        viewports <- b_viewports,
-        scissors <- b_scissors
-    ]]
 
 //
 // RenderPassCreateInfo
@@ -2295,32 +2153,6 @@ def vk_view_destroy(var boost_struct : RenderPassCreateInfo)
     delete boost_struct._vk_view_dependencies
     boost_struct._vk_view__active = false
 
-def vk_value_to_boost(vk_struct : VkRenderPassCreateInfo) : RenderPassCreateInfo
-    var b_attachments : array<AttachmentDescription>
-    if vk_struct.pAttachments != null
-        b_attachments |> resize(int(vk_struct.attachmentCount))
-        for b, i in b_attachments, range(INT_MAX)
-            unsafe
-                b <- vk_value_to_boost(*(vk_struct.pAttachments+i))
-    var b_subpasses : array<SubpassDescription>
-    if vk_struct.pSubpasses != null
-        b_subpasses |> resize(int(vk_struct.subpassCount))
-        for b, i in b_subpasses, range(INT_MAX)
-            unsafe
-                b <- vk_value_to_boost(*(vk_struct.pSubpasses+i))
-    var b_dependencies : array<SubpassDependency>
-    if vk_struct.pDependencies != null
-        b_dependencies |> resize(int(vk_struct.dependencyCount))
-        for b, i in b_dependencies, range(INT_MAX)
-            unsafe
-                b <- vk_value_to_boost(*(vk_struct.pDependencies+i))
-    return <- [[RenderPassCreateInfo
-        flags = vk_value_to_boost(vk_struct.flags),
-        attachments <- b_attachments,
-        subpasses <- b_subpasses,
-        dependencies <- b_dependencies
-    ]]
-
 //
 // ShaderModuleCreateInfo
 //
@@ -2349,18 +2181,6 @@ def vk_view_create_unsafe(var boost_struct : ShaderModuleCreateInfo
 def vk_view_destroy(var boost_struct : ShaderModuleCreateInfo)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
-
-def vk_value_to_boost(vk_struct : VkShaderModuleCreateInfo) : ShaderModuleCreateInfo
-    var b_code : array<uint8>
-    if vk_struct.pCode != null
-        b_code |> resize(int(vk_struct.codeSize))
-        for b, i in b_code, range(INT_MAX)
-            unsafe
-                b <- vk_value_to_boost(*(vk_struct.pCode+i))
-    return <- [[ShaderModuleCreateInfo
-        flags = vk_value_to_boost(vk_struct.flags),
-        code <- b_code
-    ]]
 
 //
 // SubpassDescription
@@ -2433,44 +2253,6 @@ def vk_view_destroy(var boost_struct : SubpassDescription)
             delete boost_struct._vk_view_p_depth_stencil_attachment
     boost_struct._vk_view__active = false
 
-def vk_value_to_boost(vk_struct : VkSubpassDescription) : SubpassDescription
-    var b_input_attachments : array<AttachmentReference>
-    if vk_struct.pInputAttachments != null
-        b_input_attachments |> resize(int(vk_struct.inputAttachmentCount))
-        for b, i in b_input_attachments, range(INT_MAX)
-            unsafe
-                b <- vk_value_to_boost(*(vk_struct.pInputAttachments+i))
-    var b_color_attachments : array<AttachmentReference>
-    if vk_struct.pColorAttachments != null
-        b_color_attachments |> resize(int(vk_struct.colorAttachmentCount))
-        for b, i in b_color_attachments, range(INT_MAX)
-            unsafe
-                b <- vk_value_to_boost(*(vk_struct.pColorAttachments+i))
-    var b_resolve_attachments : array<AttachmentReference>
-    if vk_struct.pResolveAttachments != null
-        b_resolve_attachments |> resize(int(vk_struct.colorAttachmentCount))
-        for b, i in b_resolve_attachments, range(INT_MAX)
-            unsafe
-                b <- vk_value_to_boost(*(vk_struct.pResolveAttachments+i))
-    var b_p_depth_stencil_attachment = new AttachmentReference
-    if vk_struct.pDepthStencilAttachment != null
-        (*b_p_depth_stencil_attachment) <- vk_value_to_boost(*(vk_struct.pDepthStencilAttachment))
-    var b_preserve_attachments : array<uint>
-    if vk_struct.pPreserveAttachments != null
-        b_preserve_attachments |> resize(int(vk_struct.preserveAttachmentCount))
-        for b, i in b_preserve_attachments, range(INT_MAX)
-            unsafe
-                b <- vk_value_to_boost(*(vk_struct.pPreserveAttachments+i))
-    return <- [[SubpassDescription
-        flags = vk_value_to_boost(vk_struct.flags),
-        pipeline_bind_point = vk_value_to_boost(vk_struct.pipelineBindPoint),
-        input_attachments <- b_input_attachments,
-        color_attachments <- b_color_attachments,
-        resolve_attachments <- b_resolve_attachments,
-        p_depth_stencil_attachment = b_p_depth_stencil_attachment,
-        preserve_attachments <- b_preserve_attachments
-    ]]
-
 //
 // SwapchainCreateInfoKHR
 //
@@ -2530,31 +2312,6 @@ def vk_view_destroy(var boost_struct : SwapchainCreateInfoKHR)
     unsafe
         delete boost_struct._vk_view_p_image_extent
     boost_struct._vk_view__active = false
-
-def vk_value_to_boost(vk_struct : VkSwapchainCreateInfoKHR) : SwapchainCreateInfoKHR
-    var b_queue_family_indices : array<uint>
-    if vk_struct.pQueueFamilyIndices != null
-        b_queue_family_indices |> resize(int(vk_struct.queueFamilyIndexCount))
-        for b, i in b_queue_family_indices, range(INT_MAX)
-            unsafe
-                b <- vk_value_to_boost(*(vk_struct.pQueueFamilyIndices+i))
-    return <- [[SwapchainCreateInfoKHR
-        flags = vk_value_to_boost(vk_struct.flags),
-        surface = vk_value_to_boost(vk_struct.surface),
-        min_image_count = vk_value_to_boost(vk_struct.minImageCount),
-        image_format = vk_value_to_boost(vk_struct.imageFormat),
-        image_color_space = vk_value_to_boost(vk_struct.imageColorSpace),
-        image_extent <- vk_value_to_boost(vk_struct.imageExtent),
-        image_array_layers = vk_value_to_boost(vk_struct.imageArrayLayers),
-        image_usage = vk_value_to_boost(vk_struct.imageUsage),
-        image_sharing_mode = vk_value_to_boost(vk_struct.imageSharingMode),
-        queue_family_indices <- b_queue_family_indices,
-        pre_transform = vk_value_to_boost(vk_struct.preTransform),
-        composite_alpha = vk_value_to_boost(vk_struct.compositeAlpha),
-        present_mode = vk_value_to_boost(vk_struct.presentMode),
-        clipped = vk_value_to_boost(vk_struct.clipped),
-        old_swapchain = vk_value_to_boost(vk_struct.oldSwapchain)
-    ]]
 
 //
 // Device
