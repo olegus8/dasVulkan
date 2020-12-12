@@ -345,7 +345,7 @@ class GenStruct(object):
             '    boost_struct._vk_view__active = true',
         ] + [
            f'    {line}' for field in self._fields for line in
-                 field.generate_boost_struct_view_create_vars(),
+                 field.generate_boost_struct_view_create_init(),
         ]
         for field in self._fields:
             if field.vk_name in ['pNext', 'sType']:
@@ -893,7 +893,19 @@ class ParamBase(object):
     def generate_boost_struct_field_view_decl(self):
         return []
 
-    def generate_boost_struct_view_create_vars(self):
+    def generate_boost_struct_view_create_init(self):
+        bname = self._boost_struct_field_name
+        vtype = self._vk_type
+        if self._vk_is_dyn_array_items:
+            adr = f'array_addr_unsafe(boost_struct.{bname})'
+            if self._boost_unqual_type == self.vk_unqual_type:
+                return [f'let vk_{bname} = {adr}']
+            else:
+                return [
+                   f'var vk_{bname} : {vtype}',
+                   f'unsafe',
+                   f'    vk_{bname} = reinterpret<{vtype}>({adr})',
+                ]
         return []
 
     def generate_boost_struct_v2b_vars(self):
@@ -1086,7 +1098,7 @@ class ParamVk_pNext(ParamBase):
     def generate_boost_struct_v2b_field(self):
         return []
 
-    def generate_boost_struct_view_create_vars(self):
+    def generate_boost_struct_view_create_init(self):
         return []
 
 
@@ -1103,7 +1115,7 @@ class ParamVk_sType(ParamBase):
     def generate_boost_struct_v2b_field(self):
         return []
 
-    def generate_boost_struct_view_create_vars(self):
+    def generate_boost_struct_view_create_init(self):
         return []
 
 
@@ -1134,6 +1146,16 @@ class ParamVkHandleBase(ParamBase):
             return [f'_vk_view_{bname} : array<{vutype}>']
         if self._vk_is_pointer:
             return [f'_vk_view_{bname} : {vutype} ?']
+        return []
+
+    def generate_boost_struct_view_create_init(self):
+        bname = self._boost_struct_field_name
+        if self._vk_is_dyn_array_items:
+            return [
+               f'boost_struct._vk_view_{bname} <- [{{',
+               f'    for item in boost_struct.{bname} ;',
+               f'    item |> boost_value_to_vk()}}]',
+            ]
         return []
 
 
