@@ -1239,6 +1239,17 @@ class ParamVkStruct(ParamBase):
             return [f'_vk_view_{bname} : {vutype} ?']
         return [f'_vk_view_p_{bname} : {vutype} ?']
 
+    def generate_boost_struct_view_create_init(self):
+        bname = self._boost_struct_field_name
+        if self._vk_is_dyn_array_items:
+            return [
+               f'boost_struct._vk_view_{bname} <- [{{',
+               f'    for item in boost_struct.{bname} ;',
+               f'    item |> vk_view_create_unsafe()}}]',
+            ]
+        if self._vk_is_pointer:
+        return []
+
 
 class ParamVkEnum(ParamBase):
 
