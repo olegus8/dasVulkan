@@ -558,7 +558,7 @@ class GenHandleDtor(GenFunc):
            f'    if handle._needs_delete:',
            f'        {self._boost_func_name}(',
         ] + [
-           f'            {param.get_boost_dtor_call_param({bh_type})},'
+           f'            {param.get_boost_dtor_call_param(bh_type)},'
                             for param in self._params]
         remove_last_char(lines, ',')
         lines += [
