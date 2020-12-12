@@ -825,7 +825,7 @@ class ParamBase(object):
                # counter can be non-zero because it is shared with other
                # array(s).
                f'if vk_struct.{vname} != null',
-               f'    b_{name} |> resize(vk_struct.{vk_count})',
+               f'    b_{bname} |> resize(vk_struct.{vk_count})',
                f'    for b, i in b_{bname}, range(INT_MAX)',
                f'        unsafe',
                f'            b <- vk_value_to_boost(*(vk_struct.{vname}+i))',
