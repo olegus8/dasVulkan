@@ -130,7 +130,7 @@ class GenFunc(object):
         return [p for p in self._params if p._is_boost_func_output]
 
     @property
-    def __have_array_outputs_with_unknown_size(self):
+    def __have_array_outputs_of_unknown_size(self):
         for param in self._output_params:
             if param.vk_is_dyn_array_count and param.is_dyn_array_output:
                 return True
@@ -207,7 +207,7 @@ class GenFunc(object):
 
         if lines[-1] != ['']:
             lines.append('')
-        if self.__have_array_outputs_with_unknown_size:
+        if self.__have_array_outputs_of_unknown_size:
             lines += [
                f'    {maybe_capture_result}{self._vk_func_name}(',
             ]
