@@ -1175,7 +1175,7 @@ class ParamVkStruct(ParamBase):
             elif self._vk_is_pointer:
                 return [
                     f'var vk_{bname} <- {bname} |> vk_view_create_unsafe()',
-                    f'defer() <| ${{ {bname} |> bk_view_destroy() }}',
+                    f'defer() <| ${{ {bname} |> bk_view_destroy(); }}',
                 ]
         return super(ParamVkStruct, self).generate_boost_func_temp_vars_init()
 
