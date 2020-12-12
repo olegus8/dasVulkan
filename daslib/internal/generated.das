@@ -2926,6 +2926,80 @@ def vk_value_to_boost(v : VkQueue) : Queue
     return [[ Queue queue=v ]]
 
 //
+// PipelineCache
+//
+
+struct PipelineCache
+    pipeline_cache : VkPipelineCache
+    _needs_delete : bool
+    _device : VkDevice
+
+def boost_value_to_vk(b : PipelineCache) : VkPipelineCache
+    return b.pipeline_cache
+
+def boost_value_to_vk(b : PipelineCache ?) : VkPipelineCache ?
+    return b?.pipeline_cache
+
+def vk_value_to_boost(v : VkPipelineCache) : PipelineCache
+    return [[ PipelineCache pipeline_cache=v ]]
+
+[private]
+def create_pipeline_cache__inner(
+    device : Device = [[ Device ]];
+    var create_info : PipelineCacheCreateInfo = [[ PipelineCacheCreateInfo ]];
+    var result : VkResult? = [[VkResult?]]
+) : PipelineCache
+
+    var vk_create_info <- create_info |> vk_view_create_unsafe()
+    defer() <| ${ create_info |> vk_view_destroy(); }
+    var vk_pipeline_cache : VkPipelineCache
+    var result_ = VkResult VK_SUCCESS
+
+    result ?? result_ = vkCreatePipelineCache(
+        boost_value_to_vk(device),
+        safe_addr(vk_create_info),
+        null,
+        safe_addr(vk_pipeline_cache)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+    return vk_value_to_boost(vk_pipeline_cache)
+
+def create_pipeline_cache(
+    device : Device = [[ Device ]];
+    var create_info : PipelineCacheCreateInfo = [[ PipelineCacheCreateInfo ]];
+    var result : VkResult? = [[VkResult?]]
+) : PipelineCache
+
+    var handle <- create_pipeline_cache__inner(
+        device,
+        create_info,
+        result
+    )
+    handle._needs_delete = true
+    handle._device <- boost_value_to_vk(device)
+    return <- handle
+
+[private]
+def destroy_pipeline_cache(
+    device : Device = [[ Device ]];
+    pipeline_cache : PipelineCache = [[ PipelineCache ]]
+) : void
+
+    vkDestroyPipelineCache(
+        boost_value_to_vk(device),
+        boost_value_to_vk(pipeline_cache),
+        null
+    )
+
+def finalize(var handle : PipelineCache explicit)
+    if handle._needs_delete
+        destroy_pipeline_cache(
+            vk_value_to_boost(handle._device),
+            vk_value_to_boost(handle.pipeline_cache)
+        )
+    memzero(handle)
+
+//
 // PipelineLayout
 //
 

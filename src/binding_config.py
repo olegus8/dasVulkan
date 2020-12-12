@@ -161,6 +161,8 @@ def add_boost_content(g):
     ]:
         g.add_gen_struct(name=name, boost_to_vk=False)
 
+    g.add_gen_struct(name = 'VkPipelineCacheCreateInfo', vk_to_boost=False,
+        ).declare_array(count = 'initialDataSize', items = 'pInitialData', force_item_type = 'uint8')
     g.add_gen_struct(name = 'VkDescriptorSetLayoutBinding', vk_to_boost=False,
         ).declare_array(items = 'pImmutableSamplers')
     g.add_gen_struct(name = 'VkDescriptorSetLayoutCreateInfo', vk_to_boost=False,
