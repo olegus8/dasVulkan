@@ -22,8 +22,14 @@ def with_view(
     b |> invoke(vk_struct)
     boost_struct |> vk_view_destroy()
 
+def boost_value_to_vk(b : auto(T)[]) : T[]
+    return b
+
 def boost_value_to_vk(b : auto(T)) : T
     return b
+
+def vk_value_to_boost(v : auto(T)[]) : T[]
+    return v
 
 def vk_value_to_boost(v : auto(T)) : T
     return v
