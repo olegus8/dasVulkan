@@ -1960,6 +1960,39 @@ def vk_view_destroy(var boost_struct : SpecializationMapEntry)
     boost_struct._vk_view__active = false
 
 //
+// StencilOpState
+//
+
+struct StencilOpState
+    fail_op : VkStencilOp
+    pass_op : VkStencilOp
+    depth_fail_op : VkStencilOp
+    compare_op : VkCompareOp
+    compare_mask : uint
+    write_mask : uint
+    reference : uint
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : StencilOpState
+) : VkStencilOpState
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    return <- [[ VkStencilOpState
+        failOp = boost_value_to_vk(boost_struct.fail_op),
+        passOp = boost_value_to_vk(boost_struct.pass_op),
+        depthFailOp = boost_value_to_vk(boost_struct.depth_fail_op),
+        compareOp = boost_value_to_vk(boost_struct.compare_op),
+        compareMask = boost_value_to_vk(boost_struct.compare_mask),
+        writeMask = boost_value_to_vk(boost_struct.write_mask),
+        reference = boost_value_to_vk(boost_struct.reference)
+    ]]
+
+def vk_view_destroy(var boost_struct : StencilOpState)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+//
 // VertexInputAttributeDescription
 //
 

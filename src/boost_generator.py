@@ -905,6 +905,8 @@ class ParamBase(object):
             first = self._dyn_arrays_items[0]._boost_func_param_name
             for ar_items in self._dyn_arrays_items[1:]:
                 cur = ar_items._boost_func_param_name
+                if ar_items._is_boost_func_output:
+                    continue
                 lines += [f'assert(length({first}) == length({cur}))']
             lines += [f'let vk_{self.vk_name} = {vtype}({first} |> length())']
             return lines
