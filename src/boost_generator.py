@@ -10,7 +10,7 @@ import re
 #TODO: move to shared
 def assert_is(a, b):
     if a is not b:
-        raise Exception(f'{r!a} is not {r!b}')
+        raise Exception(f'{a} is not {b}')
 
 
 #TODO: add pAllocator support
@@ -137,7 +137,7 @@ class GenFunc(object):
 
     @property
     def __have_array_outputs_of_unknown_size(self):
-        for param in self._output_params:
+        for param in self._params:
             print(f'func {self._vk_func_name} {param.vk_name} '
                 f'count={param.vk_is_dyn_array_count} '
                 f'output={param.is_dyn_array_output}')
