@@ -1015,6 +1015,9 @@ class ParamVk_pNext(ParamBase):
     def generate_boost_struct_v2b_field(self):
         return []
 
+    def generate_boost_struct_v2b_vars(self):
+        return []
+
     def generate_boost_struct_view_create_init(self):
         return []
 
