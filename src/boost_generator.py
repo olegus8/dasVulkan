@@ -709,10 +709,10 @@ class ParamBase(object):
     @property
     def _vk_type(self):
         t = self.vk_unqual_type
-        if self._vk_is_pointer:
-            t += ' ?'
-        elif self._vk_is_fixed_array:
+        if self._vk_is_fixed_array:
             t += f' [{self._c_param.type.fixed_array_size}]'
+        elif self._vk_is_pointer:
+            t += ' ?'
         return t
 
     @property
@@ -729,12 +729,12 @@ class ParamBase(object):
     @property
     def _boost_base_type(self):
         t = self._boost_unqual_type
-        if self._vk_is_pointer:
-            t += ' ?'
+        if self._vk_is_dyn_array_items:
+            t = f'array<{t}>'
         elif self._vk_is_fixed_array:
             t += f' [{self._c_param.type.fixed_array_size}]'
-        elif self._vk_is_dyn_array_items:
-            t = f'array<{t}>'
+        elif self._vk_is_pointer:
+            t += ' ?'
         return t
 
     @property
