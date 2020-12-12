@@ -132,6 +132,9 @@ class GenFunc(object):
     @property
     def __have_array_outputs_of_unknown_size(self):
         for param in self._output_params:
+            print(f'func {self._vk_func_name} {param.vk_name} '
+                f'count={param.vk_is_dyn_array_count} '
+                f'output={param.is_dyn_array_output}')
             if param.vk_is_dyn_array_count and param.is_dyn_array_output:
                 return True
         return False
