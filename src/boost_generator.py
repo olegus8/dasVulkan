@@ -347,32 +347,6 @@ class GenStruct(object):
            f'        {line}' for field in self._fields for line in
                      field.generate_boost_struct_view_create_field()
         ]
-        array_counts_added = set()
-        for field in self._fields:
-            bname, vname = field.boost_name, field.vk_name
-            btype, vtype = field.boost_type, field.vk_type
-            elif self.__is_array_items(vname):
-                biname = boost_ptr_name_to_array(field.boost_name)
-                if field.needs_vk_view or field.needs_conversion:
-                    vk_value = (
-                        f'array_addr_unsafe(boost_struct._vk_view_{biname})')
-                else:
-                    vk_value = f'vk_{bname}'
-                array = self.__get_array(vname)
-                vcname = array.vk_count_name
-                if (vcname and not array.optional
-                and vcname not in array_counts_added):
-                    array_counts_added.add(vcname)
-                    vctype = array.vk_count.vk_type
-                    lines.append(f'        {vcname} = '
-                        f'{vctype}(boost_struct.{biname} |> length()),')
-            elif field.is_pointer and field.needs_vk_view:
-                vk_value = f'boost_struct._vk_view_{bname}'
-            elif field.is_struct and field.needs_vk_view:
-                vk_value = f'*(boost_struct._vk_view_p_{bname})'
-            else:
-                vk_value = field.boost_value_to_vk(f'boost_struct.{bname}')
-            lines += [f'        {vname} = {vk_value},']
         remove_last_char(lines, ',')
         lines += [
            f'    ]]',
