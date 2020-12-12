@@ -816,6 +816,9 @@ class ParamBase(object):
     def generate_boost_struct_view_create_init(self):
         bname = self._boost_struct_field_name
         vtype = self._vk_type
+        if self._vk_is_dyn_array_count:
+            raise Exception('TODO: setup count var same as for funcs, '
+                'taking "optional" into account.')
         if self._vk_is_dyn_array_items:
             adr = f'array_addr_unsafe(boost_struct.{bname})'
             if self._boost_unqual_type == self.vk_unqual_type:
@@ -826,11 +829,13 @@ class ParamBase(object):
                    f'unsafe',
                    f'    vk_p_{bname} = reinterpret<{vtype}>({adr})',
                 ]
+        if self._vk_is_pointer:
+            raise Exception('TODO')
         return []
 
     def generate_boost_struct_view_create_field(self):
         if self._vk_is_dyn_array_count:
-            return []
+            raise Exception('TODO')
         if self._vk_is_dyn_array_items:
             raise Exception('TODO')
         if self._vk_is_pointer:
