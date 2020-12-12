@@ -383,8 +383,8 @@ class GenHandle(object):
             ctors.append(GenHandleCtor(handle=self, name=name))
         return ctors
 
-    def declare_ctor(self, vk_name):
-        ctor = GenHandleCtor(handle=self, name=vk_name)
+    def declare_ctor(self, name):
+        ctor = GenHandleCtor(handle=self, name=name)
         self._ctors.append(ctor)
         return ctor
 
