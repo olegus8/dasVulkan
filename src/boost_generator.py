@@ -1078,7 +1078,7 @@ class ParamVkHandleBase(ParamBase):
         field = self._boost_func_param_name
         if self._boost_unqual_type != boost_handle_type_name:
             field = '_' + field
-        return f'handle.{field}'
+        return f'vk_value_to_boost(handle.{field})'
 
     def generate_boost_struct_field_view_decl(self):
         bname = self._boost_struct_field_name

@@ -2365,6 +2365,17 @@ def create_device(
     handle._needs_delete = true
     return <- handle
 
+[private]
+def destroy_device(
+    device : Device = [[ Device ]]
+) : void
+
+
+    vkDestroyDevice(
+        boost_value_to_vk(device),
+        null
+    )
+
 def finalize(var handle : Device explicit)
     if handle._needs_delete
         destroy_device(
@@ -2426,6 +2437,19 @@ def create_command_pool(
     handle._needs_delete = true
     handle._device <- boost_value_to_vk(device)
     return <- handle
+
+[private]
+def destroy_command_pool(
+    device : Device = [[ Device ]];
+    command_pool : CommandPool = [[ CommandPool ]]
+) : void
+
+
+    vkDestroyCommandPool(
+        boost_value_to_vk(device),
+        boost_value_to_vk(command_pool),
+        null
+    )
 
 def finalize(var handle : CommandPool explicit)
     if handle._needs_delete
@@ -2490,6 +2514,19 @@ def create_descriptor_set_layout(
     handle._device <- boost_value_to_vk(device)
     return <- handle
 
+[private]
+def destroy_descriptor_set_layout(
+    device : Device = [[ Device ]];
+    descriptor_set_layout : DescriptorSetLayout = [[ DescriptorSetLayout ]]
+) : void
+
+
+    vkDestroyDescriptorSetLayout(
+        boost_value_to_vk(device),
+        boost_value_to_vk(descriptor_set_layout),
+        null
+    )
+
 def finalize(var handle : DescriptorSetLayout explicit)
     if handle._needs_delete
         destroy_descriptor_set_layout(
@@ -2552,6 +2589,19 @@ def create_fence(
     handle._needs_delete = true
     handle._device <- boost_value_to_vk(device)
     return <- handle
+
+[private]
+def destroy_fence(
+    device : Device = [[ Device ]];
+    fence : Fence = [[ Fence ]]
+) : void
+
+
+    vkDestroyFence(
+        boost_value_to_vk(device),
+        boost_value_to_vk(fence),
+        null
+    )
 
 def finalize(var handle : Fence explicit)
     if handle._needs_delete
@@ -2616,6 +2666,19 @@ def create_framebuffer(
     handle._device <- boost_value_to_vk(device)
     return <- handle
 
+[private]
+def destroy_framebuffer(
+    device : Device = [[ Device ]];
+    framebuffer : Framebuffer = [[ Framebuffer ]]
+) : void
+
+
+    vkDestroyFramebuffer(
+        boost_value_to_vk(device),
+        boost_value_to_vk(framebuffer),
+        null
+    )
+
 def finalize(var handle : Framebuffer explicit)
     if handle._needs_delete
         destroy_framebuffer(
@@ -2678,6 +2741,19 @@ def create_image(
     handle._needs_delete = true
     handle._device <- boost_value_to_vk(device)
     return <- handle
+
+[private]
+def destroy_image(
+    device : Device = [[ Device ]];
+    image : Image = [[ Image ]]
+) : void
+
+
+    vkDestroyImage(
+        boost_value_to_vk(device),
+        boost_value_to_vk(image),
+        null
+    )
 
 def finalize(var handle : Image explicit)
     if handle._needs_delete
@@ -2742,6 +2818,19 @@ def create_image_view(
     handle._device <- boost_value_to_vk(device)
     return <- handle
 
+[private]
+def destroy_image_view(
+    device : Device = [[ Device ]];
+    image_view : ImageView = [[ ImageView ]]
+) : void
+
+
+    vkDestroyImageView(
+        boost_value_to_vk(device),
+        boost_value_to_vk(image_view),
+        null
+    )
+
 def finalize(var handle : ImageView explicit)
     if handle._needs_delete
         destroy_image_view(
@@ -2798,6 +2887,17 @@ def create_instance(
     )
     handle._needs_delete = true
     return <- handle
+
+[private]
+def destroy_instance(
+    instance : Instance = [[ Instance ]]
+) : void
+
+
+    vkDestroyInstance(
+        boost_value_to_vk(instance),
+        null
+    )
 
 def finalize(var handle : Instance explicit)
     if handle._needs_delete
@@ -2895,6 +2995,19 @@ def create_pipeline_layout(
     handle._device <- boost_value_to_vk(device)
     return <- handle
 
+[private]
+def destroy_pipeline_layout(
+    device : Device = [[ Device ]];
+    pipeline_layout : PipelineLayout = [[ PipelineLayout ]]
+) : void
+
+
+    vkDestroyPipelineLayout(
+        boost_value_to_vk(device),
+        boost_value_to_vk(pipeline_layout),
+        null
+    )
+
 def finalize(var handle : PipelineLayout explicit)
     if handle._needs_delete
         destroy_pipeline_layout(
@@ -2957,6 +3070,19 @@ def create_render_pass(
     handle._needs_delete = true
     handle._device <- boost_value_to_vk(device)
     return <- handle
+
+[private]
+def destroy_render_pass(
+    device : Device = [[ Device ]];
+    render_pass : RenderPass = [[ RenderPass ]]
+) : void
+
+
+    vkDestroyRenderPass(
+        boost_value_to_vk(device),
+        boost_value_to_vk(render_pass),
+        null
+    )
 
 def finalize(var handle : RenderPass explicit)
     if handle._needs_delete
@@ -3021,6 +3147,19 @@ def create_sampler(
     handle._device <- boost_value_to_vk(device)
     return <- handle
 
+[private]
+def destroy_sampler(
+    device : Device = [[ Device ]];
+    sampler : Sampler = [[ Sampler ]]
+) : void
+
+
+    vkDestroySampler(
+        boost_value_to_vk(device),
+        boost_value_to_vk(sampler),
+        null
+    )
+
 def finalize(var handle : Sampler explicit)
     if handle._needs_delete
         destroy_sampler(
@@ -3083,6 +3222,19 @@ def create_semaphore(
     handle._needs_delete = true
     handle._device <- boost_value_to_vk(device)
     return <- handle
+
+[private]
+def destroy_semaphore(
+    device : Device = [[ Device ]];
+    semaphore : Semaphore = [[ Semaphore ]]
+) : void
+
+
+    vkDestroySemaphore(
+        boost_value_to_vk(device),
+        boost_value_to_vk(semaphore),
+        null
+    )
 
 def finalize(var handle : Semaphore explicit)
     if handle._needs_delete
@@ -3147,6 +3299,19 @@ def create_shader_module(
     handle._device <- boost_value_to_vk(device)
     return <- handle
 
+[private]
+def destroy_shader_module(
+    device : Device = [[ Device ]];
+    shader_module : ShaderModule = [[ ShaderModule ]]
+) : void
+
+
+    vkDestroyShaderModule(
+        boost_value_to_vk(device),
+        boost_value_to_vk(shader_module),
+        null
+    )
+
 def finalize(var handle : ShaderModule explicit)
     if handle._needs_delete
         destroy_shader_module(
@@ -3209,6 +3374,19 @@ def create_swapchain_khr(
     handle._needs_delete = true
     handle._device <- boost_value_to_vk(device)
     return <- handle
+
+[private]
+def destroy_swapchain_khr(
+    device : Device = [[ Device ]];
+    swapchain : SwapchainKHR = [[ SwapchainKHR ]]
+) : void
+
+
+    vkDestroySwapchainKHR(
+        boost_value_to_vk(device),
+        boost_value_to_vk(swapchain),
+        null
+    )
 
 def finalize(var handle : SwapchainKHR explicit)
     if handle._needs_delete
@@ -3336,6 +3514,19 @@ def create_compute_pipelines(
         handle._needs_delete = true
         handle._device <- boost_value_to_vk(device)
     return <- handles
+
+[private]
+def destroy_pipeline(
+    device : Device = [[ Device ]];
+    pipeline : Pipeline = [[ Pipeline ]]
+) : void
+
+
+    vkDestroyPipeline(
+        boost_value_to_vk(device),
+        boost_value_to_vk(pipeline),
+        null
+    )
 
 def finalize(var handle : Pipeline explicit)
     if handle._needs_delete
