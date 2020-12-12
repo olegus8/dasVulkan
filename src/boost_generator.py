@@ -151,13 +151,14 @@ class GenFunc(object):
             if param.vk_name == vk_name:
                 return param
 
-    def declare_array(self, count, items):
+    def declare_array(self, items, count=None):
         with log_on_exception(func=self._vk_func_name,
              count=count, items=items
         ):
-            p_count = self.__get_param(count)
+            p_count = self.__get_param(count) if count else None
             p_items = self.__get_param(items)
-            p_count.set_dyn_array(count=p_count, items=p_items)
+            if p_count:
+                p_count.set_dyn_array(count=p_count, items=p_items)
             p_items.set_dyn_array(count=p_count, items=p_items)
         return self
 
@@ -279,13 +280,14 @@ class GenStruct(object):
             if field.vk_name == vk_name:
                 return field
 
-    def declare_array(self, count, items,
+    def declare_array(self, items, count=None,
         optional=False, force_item_type=None
     ):
-        p_count = self.__get_field(count)
+        p_count = self.__get_field(count) if count else None
         p_items = self.__get_field(items)
-        for p in [p_count, p_items]:
-            p.set_dyn_array(count=p_count, items=p_items)
+        if p_count:
+            p_count.set_dyn_array(count=p_count, items=p_items)
+        p_items.set_dyn_array(count=p_count, items=p_items)
         p_items.set_optional(optional)
         p_items.force_boost_unqual_type(force_item_type)
         return self
