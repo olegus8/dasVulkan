@@ -1720,6 +1720,31 @@ def vk_view_destroy(var boost_struct : SemaphoreCreateInfo)
     boost_struct._vk_view__active = false
 
 //
+// SpecializationMapEntry
+//
+
+struct SpecializationMapEntry
+    constant_id : uint
+    offset : uint
+    size : uint64
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : SpecializationMapEntry
+) : VkSpecializationMapEntry
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    return <- [[ VkSpecializationMapEntry
+        constantID = boost_value_to_vk(boost_struct.constant_id),
+        offset = boost_value_to_vk(boost_struct.offset),
+        size = boost_value_to_vk(boost_struct.size)
+    ]]
+
+def vk_view_destroy(var boost_struct : SpecializationMapEntry)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+//
 // DescriptorSetLayoutBinding
 //
 
@@ -2344,6 +2369,43 @@ def vk_view_create_unsafe(var boost_struct : ShaderModuleCreateInfo
 
 def vk_view_destroy(var boost_struct : ShaderModuleCreateInfo)
     assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+//
+// SpecializationInfo
+//
+
+struct SpecializationInfo
+    map_entries : array<SpecializationMapEntry>
+    data : array<uint8>
+    _vk_view_map_entries : array<VkSpecializationMapEntry>
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : SpecializationInfo
+) : VkSpecializationInfo
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    let vk_map_entry_count = uint(boost_struct.map_entries |> length())
+    boost_struct._vk_view_map_entries <- [{
+        for item in boost_struct.map_entries ;
+        item |> vk_view_create_unsafe()}]
+    let vk_data_size = uint64(boost_struct.data |> length())
+    var vk_p_data : void ?
+    unsafe
+        vk_p_data = reinterpret<void ?>(array_addr_unsafe(boost_struct.data))
+    return <- [[ VkSpecializationInfo
+        mapEntryCount = vk_map_entry_count,
+        pMapEntries = array_addr_unsafe(boost_struct._vk_view_map_entries),
+        dataSize = vk_data_size,
+        pData = vk_p_data
+    ]]
+
+def vk_view_destroy(var boost_struct : SpecializationInfo)
+    assert(boost_struct._vk_view__active)
+    for item in boost_struct.map_entries
+        item |> vk_view_destroy()
+    delete boost_struct._vk_view_map_entries
     boost_struct._vk_view__active = false
 
 //

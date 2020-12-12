@@ -191,6 +191,9 @@ def add_boost_content(g):
     g.add_gen_struct(name = 'VkPipelineLayoutCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'setLayoutCount', items = 'pSetLayouts',
         ).declare_array(count = 'pushConstantRangeCount', items = 'pPushConstantRanges')
+    g.add_gen_struct(name = 'VkPipelineVertexInputStateCreateInfo', vk_to_boost=False,
+        ).declare_array(count = 'vertexBindingDescriptionCount', items = 'pVertexBindingDescriptions',
+        ).declare_array(count = 'vertexAttributeDescriptionCount', items = 'pVertexAttributeDescriptions')
     g.add_gen_struct(name = 'VkPipelineViewportStateCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'viewportCount', items = 'pViewports',
         ).declare_array(count = 'scissorCount', items = 'pScissors')
