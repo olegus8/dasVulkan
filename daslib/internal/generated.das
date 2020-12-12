@@ -3379,7 +3379,7 @@ def finalize(var handle : SwapchainKHR explicit)
     if handle._needs_delete
         destroy_swapchain_khr(
             vk_value_to_boost(handle._device),
-            vk_value_to_boost(handle.swapchain)
+            vk_value_to_boost(handle.swapchain_khr)
         )
     memzero(handle)
 
