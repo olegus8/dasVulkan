@@ -201,7 +201,7 @@ def add_boost_content(g):
         ).declare_array(count = 'pPropertyCount', items = 'pProperties',
         ).declare_output(name = 'pProperties')
     g.add_gen_func(name = 'vkEnumeratePhysicalDevices',
-        ).declare_array(count = 'pPhysicalDeviceCount', items = 'pPhysicalDevices'.
+        ).declare_array(count = 'pPhysicalDeviceCount', items = 'pPhysicalDevices',
         ).declare_output(name = 'pPhysicalDevices')
     g.add_gen_func(name = 'vkGetDeviceQueue'
         ).declare_output(name = 'pQueue')
