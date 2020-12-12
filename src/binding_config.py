@@ -162,6 +162,7 @@ def add_boost_content(g):
         'VkImageViewCreateInfo',
         'VkPipelineInputAssemblyStateCreateInfo',
         'VkPipelineShaderStageCreateInfo',
+        'VkPipelineTessellationStateCreateInfo',
         'VkSamplerCreateInfo',
         'VkSemaphoreCreateInfo',
         'VkSpecializationMapEntry',
