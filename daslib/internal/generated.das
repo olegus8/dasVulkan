@@ -2333,7 +2333,7 @@ def vk_value_to_boost(v : VkDevice) : Device
 [private]
 def create_device__inner(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]];
-    create_info : DeviceCreateInfo = [[ DeviceCreateInfo ]];
+    var create_info : DeviceCreateInfo = [[ DeviceCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : Device
 
@@ -2353,7 +2353,7 @@ def create_device__inner(
 
 def create_device(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]];
-    create_info : DeviceCreateInfo = [[ DeviceCreateInfo ]];
+    var create_info : DeviceCreateInfo = [[ DeviceCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : Device
 
@@ -2394,7 +2394,7 @@ def vk_value_to_boost(v : VkCommandPool) : CommandPool
 [private]
 def create_command_pool__inner(
     device : Device = [[ Device ]];
-    create_info : CommandPoolCreateInfo = [[ CommandPoolCreateInfo ]];
+    var create_info : CommandPoolCreateInfo = [[ CommandPoolCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : CommandPool
 
@@ -2414,7 +2414,7 @@ def create_command_pool__inner(
 
 def create_command_pool(
     device : Device = [[ Device ]];
-    create_info : CommandPoolCreateInfo = [[ CommandPoolCreateInfo ]];
+    var create_info : CommandPoolCreateInfo = [[ CommandPoolCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : CommandPool
 
@@ -2457,7 +2457,7 @@ def vk_value_to_boost(v : VkDescriptorSetLayout) : DescriptorSetLayout
 [private]
 def create_descriptor_set_layout__inner(
     device : Device = [[ Device ]];
-    create_info : DescriptorSetLayoutCreateInfo = [[ DescriptorSetLayoutCreateInfo ]];
+    var create_info : DescriptorSetLayoutCreateInfo = [[ DescriptorSetLayoutCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : DescriptorSetLayout
 
@@ -2477,7 +2477,7 @@ def create_descriptor_set_layout__inner(
 
 def create_descriptor_set_layout(
     device : Device = [[ Device ]];
-    create_info : DescriptorSetLayoutCreateInfo = [[ DescriptorSetLayoutCreateInfo ]];
+    var create_info : DescriptorSetLayoutCreateInfo = [[ DescriptorSetLayoutCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : DescriptorSetLayout
 
@@ -2520,7 +2520,7 @@ def vk_value_to_boost(v : VkFence) : Fence
 [private]
 def create_fence__inner(
     device : Device = [[ Device ]];
-    create_info : FenceCreateInfo = [[ FenceCreateInfo ]];
+    var create_info : FenceCreateInfo = [[ FenceCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : Fence
 
@@ -2540,7 +2540,7 @@ def create_fence__inner(
 
 def create_fence(
     device : Device = [[ Device ]];
-    create_info : FenceCreateInfo = [[ FenceCreateInfo ]];
+    var create_info : FenceCreateInfo = [[ FenceCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : Fence
 
@@ -2583,7 +2583,7 @@ def vk_value_to_boost(v : VkFramebuffer) : Framebuffer
 [private]
 def create_framebuffer__inner(
     device : Device = [[ Device ]];
-    create_info : FramebufferCreateInfo = [[ FramebufferCreateInfo ]];
+    var create_info : FramebufferCreateInfo = [[ FramebufferCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : Framebuffer
 
@@ -2603,7 +2603,7 @@ def create_framebuffer__inner(
 
 def create_framebuffer(
     device : Device = [[ Device ]];
-    create_info : FramebufferCreateInfo = [[ FramebufferCreateInfo ]];
+    var create_info : FramebufferCreateInfo = [[ FramebufferCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : Framebuffer
 
@@ -2646,7 +2646,7 @@ def vk_value_to_boost(v : VkImage) : Image
 [private]
 def create_image__inner(
     device : Device = [[ Device ]];
-    create_info : ImageCreateInfo = [[ ImageCreateInfo ]];
+    var create_info : ImageCreateInfo = [[ ImageCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : Image
 
@@ -2666,7 +2666,7 @@ def create_image__inner(
 
 def create_image(
     device : Device = [[ Device ]];
-    create_info : ImageCreateInfo = [[ ImageCreateInfo ]];
+    var create_info : ImageCreateInfo = [[ ImageCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : Image
 
@@ -2709,7 +2709,7 @@ def vk_value_to_boost(v : VkImageView) : ImageView
 [private]
 def create_image_view__inner(
     device : Device = [[ Device ]];
-    create_info : ImageViewCreateInfo = [[ ImageViewCreateInfo ]];
+    var create_info : ImageViewCreateInfo = [[ ImageViewCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : ImageView
 
@@ -2729,7 +2729,7 @@ def create_image_view__inner(
 
 def create_image_view(
     device : Device = [[ Device ]];
-    create_info : ImageViewCreateInfo = [[ ImageViewCreateInfo ]];
+    var create_info : ImageViewCreateInfo = [[ ImageViewCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : ImageView
 
@@ -2770,7 +2770,7 @@ def vk_value_to_boost(v : VkInstance) : Instance
 
 [private]
 def create_instance__inner(
-    create_info : InstanceCreateInfo = [[ InstanceCreateInfo ]];
+    var create_info : InstanceCreateInfo = [[ InstanceCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : Instance
 
@@ -2788,7 +2788,7 @@ def create_instance__inner(
     return vk_value_to_boost(vk_instance)
 
 def create_instance(
-    create_info : InstanceCreateInfo = [[ InstanceCreateInfo ]];
+    var create_info : InstanceCreateInfo = [[ InstanceCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : Instance
 
@@ -2862,7 +2862,7 @@ def vk_value_to_boost(v : VkPipelineLayout) : PipelineLayout
 [private]
 def create_pipeline_layout__inner(
     device : Device = [[ Device ]];
-    create_info : PipelineLayoutCreateInfo = [[ PipelineLayoutCreateInfo ]];
+    var create_info : PipelineLayoutCreateInfo = [[ PipelineLayoutCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : PipelineLayout
 
@@ -2882,7 +2882,7 @@ def create_pipeline_layout__inner(
 
 def create_pipeline_layout(
     device : Device = [[ Device ]];
-    create_info : PipelineLayoutCreateInfo = [[ PipelineLayoutCreateInfo ]];
+    var create_info : PipelineLayoutCreateInfo = [[ PipelineLayoutCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : PipelineLayout
 
@@ -2925,7 +2925,7 @@ def vk_value_to_boost(v : VkRenderPass) : RenderPass
 [private]
 def create_render_pass__inner(
     device : Device = [[ Device ]];
-    create_info : RenderPassCreateInfo = [[ RenderPassCreateInfo ]];
+    var create_info : RenderPassCreateInfo = [[ RenderPassCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : RenderPass
 
@@ -2945,7 +2945,7 @@ def create_render_pass__inner(
 
 def create_render_pass(
     device : Device = [[ Device ]];
-    create_info : RenderPassCreateInfo = [[ RenderPassCreateInfo ]];
+    var create_info : RenderPassCreateInfo = [[ RenderPassCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : RenderPass
 
@@ -2988,7 +2988,7 @@ def vk_value_to_boost(v : VkSampler) : Sampler
 [private]
 def create_sampler__inner(
     device : Device = [[ Device ]];
-    create_info : SamplerCreateInfo = [[ SamplerCreateInfo ]];
+    var create_info : SamplerCreateInfo = [[ SamplerCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : Sampler
 
@@ -3008,7 +3008,7 @@ def create_sampler__inner(
 
 def create_sampler(
     device : Device = [[ Device ]];
-    create_info : SamplerCreateInfo = [[ SamplerCreateInfo ]];
+    var create_info : SamplerCreateInfo = [[ SamplerCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : Sampler
 
@@ -3051,7 +3051,7 @@ def vk_value_to_boost(v : VkSemaphore) : Semaphore
 [private]
 def create_semaphore__inner(
     device : Device = [[ Device ]];
-    create_info : SemaphoreCreateInfo = [[ SemaphoreCreateInfo ]];
+    var create_info : SemaphoreCreateInfo = [[ SemaphoreCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : Semaphore
 
@@ -3071,7 +3071,7 @@ def create_semaphore__inner(
 
 def create_semaphore(
     device : Device = [[ Device ]];
-    create_info : SemaphoreCreateInfo = [[ SemaphoreCreateInfo ]];
+    var create_info : SemaphoreCreateInfo = [[ SemaphoreCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : Semaphore
 
@@ -3114,7 +3114,7 @@ def vk_value_to_boost(v : VkShaderModule) : ShaderModule
 [private]
 def create_shader_module__inner(
     device : Device = [[ Device ]];
-    create_info : ShaderModuleCreateInfo = [[ ShaderModuleCreateInfo ]];
+    var create_info : ShaderModuleCreateInfo = [[ ShaderModuleCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : ShaderModule
 
@@ -3134,7 +3134,7 @@ def create_shader_module__inner(
 
 def create_shader_module(
     device : Device = [[ Device ]];
-    create_info : ShaderModuleCreateInfo = [[ ShaderModuleCreateInfo ]];
+    var create_info : ShaderModuleCreateInfo = [[ ShaderModuleCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : ShaderModule
 
@@ -3177,7 +3177,7 @@ def vk_value_to_boost(v : VkSwapchainKHR) : SwapchainKHR
 [private]
 def create_swapchain_khr__inner(
     device : Device = [[ Device ]];
-    create_info : SwapchainCreateInfoKHR = [[ SwapchainCreateInfoKHR ]];
+    var create_info : SwapchainCreateInfoKHR = [[ SwapchainCreateInfoKHR ]];
     var result : VkResult? = [[VkResult?]]
 ) : SwapchainKHR
 
@@ -3197,7 +3197,7 @@ def create_swapchain_khr__inner(
 
 def create_swapchain_khr(
     device : Device = [[ Device ]];
-    create_info : SwapchainCreateInfoKHR = [[ SwapchainCreateInfoKHR ]];
+    var create_info : SwapchainCreateInfoKHR = [[ SwapchainCreateInfoKHR ]];
     var result : VkResult? = [[VkResult?]]
 ) : SwapchainKHR
 
@@ -3241,7 +3241,7 @@ def vk_value_to_boost(v : VkPipeline) : Pipeline
 def create_graphics_pipelines__inner(
     device : Device = [[ Device ]];
     pipeline_cache : PipelineCache = [[ PipelineCache ]];
-    create_infos : array<GraphicsPipelineCreateInfo> = [[ array<GraphicsPipelineCreateInfo> ]];
+    var create_infos : array<GraphicsPipelineCreateInfo> = [[ array<GraphicsPipelineCreateInfo> ]];
     var result : VkResult? = [[VkResult?]]
 ) : array<Pipeline>
 
@@ -3272,7 +3272,7 @@ def create_graphics_pipelines__inner(
 def create_graphics_pipelines(
     device : Device = [[ Device ]];
     pipeline_cache : PipelineCache = [[ PipelineCache ]];
-    create_infos : array<GraphicsPipelineCreateInfo> = [[ array<GraphicsPipelineCreateInfo> ]];
+    var create_infos : array<GraphicsPipelineCreateInfo> = [[ array<GraphicsPipelineCreateInfo> ]];
     var result : VkResult? = [[VkResult?]]
 ) : array<Pipeline>
 
@@ -3291,7 +3291,7 @@ def create_graphics_pipelines(
 def create_compute_pipelines__inner(
     device : Device = [[ Device ]];
     pipeline_cache : PipelineCache = [[ PipelineCache ]];
-    create_infos : array<ComputePipelineCreateInfo> = [[ array<ComputePipelineCreateInfo> ]];
+    var create_infos : array<ComputePipelineCreateInfo> = [[ array<ComputePipelineCreateInfo> ]];
     var result : VkResult? = [[VkResult?]]
 ) : array<Pipeline>
 
@@ -3322,7 +3322,7 @@ def create_compute_pipelines__inner(
 def create_compute_pipelines(
     device : Device = [[ Device ]];
     pipeline_cache : PipelineCache = [[ PipelineCache ]];
-    create_infos : array<ComputePipelineCreateInfo> = [[ array<ComputePipelineCreateInfo> ]];
+    var create_infos : array<ComputePipelineCreateInfo> = [[ array<ComputePipelineCreateInfo> ]];
     var result : VkResult? = [[VkResult?]]
 ) : array<Pipeline>
 

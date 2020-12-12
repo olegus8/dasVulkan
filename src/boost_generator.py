@@ -1188,13 +1188,13 @@ class ParamVkStruct(ParamBase):
                     f'    item |> vk_view_create_unsafe() }}]',
                     f'defer() <|',
                     f'    for item in {bname}',
-                    f'        item |> bk_view_destroy()',
+                    f'        item |> vk_view_destroy()',
                     f'    delete vk_{bname}',
                 ]
             elif self._vk_is_pointer:
                 return [
                     f'var vk_{bname} <- {bname} |> vk_view_create_unsafe()',
-                    f'defer() <| ${{ {bname} |> bk_view_destroy(); }}',
+                    f'defer() <| ${{ {bname} |> vk_view_destroy(); }}',
                 ]
         return super(ParamVkStruct, self).generate_boost_func_temp_vars_init()
 
