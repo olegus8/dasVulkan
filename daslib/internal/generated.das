@@ -2244,6 +2244,50 @@ def vk_view_destroy(var boost_struct : PipelineLayoutCreateInfo)
     boost_struct._vk_view__active = false
 
 //
+// PipelineVertexInputStateCreateInfo
+//
+
+struct PipelineVertexInputStateCreateInfo
+    flags : uint
+    vertex_binding_descriptions : array<VertexInputBindingDescription>
+    vertex_attribute_descriptions : array<VertexInputAttributeDescription>
+    _vk_view_vertex_binding_descriptions : array<VkVertexInputBindingDescription>
+    _vk_view_vertex_attribute_descriptions : array<VkVertexInputAttributeDescription>
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : PipelineVertexInputStateCreateInfo
+) : VkPipelineVertexInputStateCreateInfo
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    let vk_vertex_binding_description_count = uint(boost_struct.vertex_binding_descriptions |> length())
+    boost_struct._vk_view_vertex_binding_descriptions <- [{
+        for item in boost_struct.vertex_binding_descriptions ;
+        item |> vk_view_create_unsafe()}]
+    let vk_vertex_attribute_description_count = uint(boost_struct.vertex_attribute_descriptions |> length())
+    boost_struct._vk_view_vertex_attribute_descriptions <- [{
+        for item in boost_struct.vertex_attribute_descriptions ;
+        item |> vk_view_create_unsafe()}]
+    return <- [[ VkPipelineVertexInputStateCreateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO,
+        flags = boost_value_to_vk(boost_struct.flags),
+        vertexBindingDescriptionCount = vk_vertex_binding_description_count,
+        pVertexBindingDescriptions = array_addr_unsafe(boost_struct._vk_view_vertex_binding_descriptions),
+        vertexAttributeDescriptionCount = vk_vertex_attribute_description_count,
+        pVertexAttributeDescriptions = array_addr_unsafe(boost_struct._vk_view_vertex_attribute_descriptions)
+    ]]
+
+def vk_view_destroy(var boost_struct : PipelineVertexInputStateCreateInfo)
+    assert(boost_struct._vk_view__active)
+    for item in boost_struct.vertex_binding_descriptions
+        item |> vk_view_destroy()
+    delete boost_struct._vk_view_vertex_binding_descriptions
+    for item in boost_struct.vertex_attribute_descriptions
+        item |> vk_view_destroy()
+    delete boost_struct._vk_view_vertex_attribute_descriptions
+    boost_struct._vk_view__active = false
+
+//
 // PipelineViewportStateCreateInfo
 //
 

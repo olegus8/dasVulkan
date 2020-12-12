@@ -164,6 +164,8 @@ def add_boost_content(g):
         'VkSamplerCreateInfo',
         'VkSemaphoreCreateInfo',
         'VkSpecializationMapEntry',
+        'VkVertexInputAttributeDescription',
+        'VkVertexInputBindingDescription',
     ]:
         g.add_gen_struct(name=name, vk_to_boost=False)
 
