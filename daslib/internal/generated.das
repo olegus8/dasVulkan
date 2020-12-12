@@ -1895,8 +1895,8 @@ def vk_view_create_unsafe(var boost_struct : DeviceCreateInfo
     let vk_p_p_enabled_extension_names = array_addr_unsafe(boost_struct.p_enabled_extension_names)
     if boost_struct.p_enabled_features != null
         boost_struct._vk_view_p_enabled_features = new VkPhysicalDeviceFeatures
-            *(boost_struct._vk_view_p_enabled_features) <- (
-                *(boost_struct.p_enabled_features) |> vk_view_create_unsafe())
+        *(boost_struct._vk_view_p_enabled_features) <- (
+            *(boost_struct.p_enabled_features) |> vk_view_create_unsafe())
     return <- [[ VkDeviceCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO,
         flags <- boost_value_to_vk(boost_struct.flags),
@@ -2142,8 +2142,8 @@ def vk_view_create_unsafe(var boost_struct : InstanceCreateInfo
     boost_struct._vk_view__active = true
     if boost_struct.p_application_info != null
         boost_struct._vk_view_p_application_info = new VkApplicationInfo
-            *(boost_struct._vk_view_p_application_info) <- (
-                *(boost_struct.p_application_info) |> vk_view_create_unsafe())
+        *(boost_struct._vk_view_p_application_info) <- (
+            *(boost_struct.p_application_info) |> vk_view_create_unsafe())
     let vk_enabled_layer_count = uint(p_enabled_layer_names |> length())
     let vk_p_p_enabled_layer_names = array_addr_unsafe(boost_struct.p_enabled_layer_names)
     let vk_enabled_extension_count = uint(p_enabled_extension_names |> length())
@@ -2472,8 +2472,8 @@ def vk_view_create_unsafe(var boost_struct : SubpassDescription
         item |> vk_view_create_unsafe()}]
     if boost_struct.p_depth_stencil_attachment != null
         boost_struct._vk_view_p_depth_stencil_attachment = new VkAttachmentReference
-            *(boost_struct._vk_view_p_depth_stencil_attachment) <- (
-                *(boost_struct.p_depth_stencil_attachment) |> vk_view_create_unsafe())
+        *(boost_struct._vk_view_p_depth_stencil_attachment) <- (
+            *(boost_struct.p_depth_stencil_attachment) |> vk_view_create_unsafe())
     let vk_preserve_attachment_count = uint(preserve_attachments |> length())
     let vk_p_preserve_attachments = array_addr_unsafe(boost_struct.preserve_attachments)
     return <- [[ VkSubpassDescription
