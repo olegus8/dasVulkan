@@ -2167,7 +2167,7 @@ def vk_view_create_unsafe(var boost_struct : ShaderModuleCreateInfo
 
     assert(!boost_struct._vk_view__active)
     boost_struct._vk_view__active = true
-    let vk_code_size = uint(boost_struct.code |> length())
+    let vk_code_size = uint64(boost_struct.code |> length())
     var vk_p_code : uint ?
     unsafe
         vk_p_code = reinterpret<uint ?>(array_addr_unsafe(boost_struct.code))

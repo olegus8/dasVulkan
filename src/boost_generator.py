@@ -896,14 +896,15 @@ class ParamBase(object):
 
     def generate_boost_func_temp_vars_init(self):
         if self.vk_is_dyn_array_count:
+            vtype = self.vk_type
             if self.is_dyn_array_output:
-                return [f'var vk_{self.vk_name} : uint']
+                return [f'var vk_{self.vk_name} : {vtype}']
             lines = []
             first = self._dyn_arrays_items[0]._boost_func_param_name
             for ar_items in self._dyn_arrays_items[1:]:
                 cur = ar_items._boost_func_param_name
                 lines += [f'assert(length({first}) == length({cur}))']
-            lines += [f'let vk_{self.vk_name} = uint({first} |> length())']
+            lines += [f'let vk_{self.vk_name} = {vtype}({first} |> length())']
             return lines
         if self.vk_is_dyn_array_items:
             bname = self._boost_func_param_name
