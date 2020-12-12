@@ -197,7 +197,7 @@ class GenFunc(object):
                f'    {maybe_capture_result}{self._vk_func_name}(',
             ]
             for param in self._params:
-                lines += [f'        {},'.format(
+                lines += ['        {},'.format(
                     param.boost_func_query_array_size_param)]
             remove_last_char(lines, ',')
             lines += [
