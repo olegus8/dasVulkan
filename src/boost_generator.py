@@ -293,6 +293,7 @@ class GenStruct(object):
         field = self.__get_field(name)
         assert field.vk_is_pointer
         field.set_optional(False)
+        return self
 
     def declare_array(self, items, count=None,
         optional=False, force_item_type=None
