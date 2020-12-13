@@ -12,5 +12,5 @@ def create_buffer_exclusive(
 ) : Buffer
     return <- device |> create_buffer([[BufferCreateInfo
         flags=flags, size=size, usage=usage,
-        sharing_mode=VkSharingMode VK_SHARING_MODE_EXCLUSIVE,
+        sharing_mode=VkSharingMode VK_SHARING_MODE_EXCLUSIVE
     ]])
