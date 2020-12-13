@@ -47,6 +47,9 @@ def addr_unsafe(v)
     unsafe
         return addr(v)
 
+//TODO: refactor into clone() and disable can_copy on boost handles.
+//  after that transfer ownership with move, and create weak copies via clone.
+//  OR disable can_copy and can_clone, and only allow move and weak_copy.
 def weak_copy(b : auto(T)) : T
     static_if typeinfo(has_field<_needs_delete> b)
         var bc : T = b
@@ -2053,6 +2056,39 @@ def vk_view_destroy(var boost_struct : VertexInputBindingDescription)
     boost_struct._vk_view__active = false
 
 //
+// BufferCreateInfo
+//
+
+struct BufferCreateInfo
+    flags : uint
+    size : uint64
+    usage : uint
+    sharing_mode : VkSharingMode
+    queue_family_indices : array<uint>
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : BufferCreateInfo
+) : VkBufferCreateInfo
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    let vk_queue_family_index_count = uint(boost_struct.queue_family_indices |> length())
+    let vk_p_queue_family_indices = array_addr_unsafe(boost_struct.queue_family_indices)
+    return <- [[ VkBufferCreateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO,
+        flags = boost_value_to_vk(boost_struct.flags),
+        size = boost_value_to_vk(boost_struct.size),
+        usage = boost_value_to_vk(boost_struct.usage),
+        sharingMode = boost_value_to_vk(boost_struct.sharing_mode),
+        queueFamilyIndexCount = vk_queue_family_index_count,
+        pQueueFamilyIndices = vk_p_queue_family_indices
+    ]]
+
+def vk_view_destroy(var boost_struct : BufferCreateInfo)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+//
 // ComputePipelineCreateInfo
 //
 
@@ -2977,6 +3013,80 @@ def vk_view_destroy(var boost_struct : SwapchainCreateInfoKHR)
     unsafe
         delete boost_struct._vk_view_p_image_extent
     boost_struct._vk_view__active = false
+
+//
+// Buffer
+//
+
+struct Buffer
+    buffer : VkBuffer
+    _needs_delete : bool
+    _device : VkDevice
+
+def boost_value_to_vk(b : Buffer) : VkBuffer
+    return b.buffer
+
+def boost_value_to_vk(b : Buffer ?) : VkBuffer ?
+    return b?.buffer
+
+def vk_value_to_boost(v : VkBuffer) : Buffer
+    return [[ Buffer buffer=v ]]
+
+[private]
+def create_buffer__inner(
+    device : Device = [[ Device ]];
+    var create_info : BufferCreateInfo = [[ BufferCreateInfo ]];
+    var result : VkResult? = [[VkResult?]]
+) : Buffer
+
+    var vk_create_info <- create_info |> vk_view_create_unsafe()
+    defer() <| ${ create_info |> vk_view_destroy(); }
+    var vk_buffer : VkBuffer
+    var result_ = VkResult VK_SUCCESS
+
+    result ?? result_ = vkCreateBuffer(
+        boost_value_to_vk(device),
+        safe_addr(vk_create_info),
+        null,
+        safe_addr(vk_buffer)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+    return vk_value_to_boost(vk_buffer)
+
+def create_buffer(
+    device : Device = [[ Device ]];
+    var create_info : BufferCreateInfo = [[ BufferCreateInfo ]];
+    var result : VkResult? = [[VkResult?]]
+) : Buffer
+
+    var handle <- create_buffer__inner(
+        device,
+        create_info,
+        result
+    )
+    handle._needs_delete = true
+    handle._device = boost_value_to_vk(device)
+    return <- handle
+
+[private]
+def destroy_buffer(
+    device : Device = [[ Device ]];
+    buffer : Buffer = [[ Buffer ]]
+) : void
+
+    vkDestroyBuffer(
+        boost_value_to_vk(device),
+        boost_value_to_vk(buffer),
+        null
+    )
+
+def finalize(var handle : Buffer explicit)
+    if handle._needs_delete
+        destroy_buffer(
+            vk_value_to_boost(handle._device),
+            vk_value_to_boost(handle.buffer)
+        )
+    memzero(handle)
 
 //
 // Device
