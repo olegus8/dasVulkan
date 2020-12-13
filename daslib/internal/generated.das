@@ -47,6 +47,14 @@ def addr_unsafe(v)
     unsafe
         return addr(v)
 
+def weak_copy(b : auto(T)) : T
+    static_if typeinfo(has_field<_need_delete> b)
+        var bc : T = b
+        bc._needs_delete = false
+        return <- bc
+    else
+        concept_assert(0, "can't weak copy this type")
+
 //
 // Surface
 //
@@ -2987,11 +2995,6 @@ def boost_value_to_vk(b : Device ?) : VkDevice ?
 def vk_value_to_boost(v : VkDevice) : Device
     return [[ Device device=v ]]
 
-def weak_copy(b : Device) : Device
-    var bc : Device = b
-    bc._needs_delete = false
-    return <- bc
-
 [private]
 def create_device__inner(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]];
@@ -3061,11 +3064,6 @@ def boost_value_to_vk(b : CommandPool ?) : VkCommandPool ?
 
 def vk_value_to_boost(v : VkCommandPool) : CommandPool
     return [[ CommandPool command_pool=v ]]
-
-def weak_copy(b : CommandPool) : CommandPool
-    var bc : CommandPool = b
-    bc._needs_delete = false
-    return <- bc
 
 [private]
 def create_command_pool__inner(
@@ -3141,11 +3139,6 @@ def boost_value_to_vk(b : DescriptorSetLayout ?) : VkDescriptorSetLayout ?
 def vk_value_to_boost(v : VkDescriptorSetLayout) : DescriptorSetLayout
     return [[ DescriptorSetLayout descriptor_set_layout=v ]]
 
-def weak_copy(b : DescriptorSetLayout) : DescriptorSetLayout
-    var bc : DescriptorSetLayout = b
-    bc._needs_delete = false
-    return <- bc
-
 [private]
 def create_descriptor_set_layout__inner(
     device : Device = [[ Device ]];
@@ -3219,11 +3212,6 @@ def boost_value_to_vk(b : Fence ?) : VkFence ?
 
 def vk_value_to_boost(v : VkFence) : Fence
     return [[ Fence fence=v ]]
-
-def weak_copy(b : Fence) : Fence
-    var bc : Fence = b
-    bc._needs_delete = false
-    return <- bc
 
 [private]
 def create_fence__inner(
@@ -3299,11 +3287,6 @@ def boost_value_to_vk(b : Framebuffer ?) : VkFramebuffer ?
 def vk_value_to_boost(v : VkFramebuffer) : Framebuffer
     return [[ Framebuffer framebuffer=v ]]
 
-def weak_copy(b : Framebuffer) : Framebuffer
-    var bc : Framebuffer = b
-    bc._needs_delete = false
-    return <- bc
-
 [private]
 def create_framebuffer__inner(
     device : Device = [[ Device ]];
@@ -3377,11 +3360,6 @@ def boost_value_to_vk(b : Image ?) : VkImage ?
 
 def vk_value_to_boost(v : VkImage) : Image
     return [[ Image image=v ]]
-
-def weak_copy(b : Image) : Image
-    var bc : Image = b
-    bc._needs_delete = false
-    return <- bc
 
 [private]
 def create_image__inner(
@@ -3457,11 +3435,6 @@ def boost_value_to_vk(b : ImageView ?) : VkImageView ?
 def vk_value_to_boost(v : VkImageView) : ImageView
     return [[ ImageView image_view=v ]]
 
-def weak_copy(b : ImageView) : ImageView
-    var bc : ImageView = b
-    bc._needs_delete = false
-    return <- bc
-
 [private]
 def create_image_view__inner(
     device : Device = [[ Device ]];
@@ -3535,11 +3508,6 @@ def boost_value_to_vk(b : Instance ?) : VkInstance ?
 def vk_value_to_boost(v : VkInstance) : Instance
     return [[ Instance instance=v ]]
 
-def weak_copy(b : Instance) : Instance
-    var bc : Instance = b
-    bc._needs_delete = false
-    return <- bc
-
 [private]
 def create_instance__inner(
     var create_info : InstanceCreateInfo = [[ InstanceCreateInfo ]];
@@ -3605,11 +3573,6 @@ def boost_value_to_vk(b : PhysicalDevice ?) : VkPhysicalDevice ?
 def vk_value_to_boost(v : VkPhysicalDevice) : PhysicalDevice
     return [[ PhysicalDevice physical_device=v ]]
 
-def weak_copy(b : PhysicalDevice) : PhysicalDevice
-    var bc : PhysicalDevice = b
-    bc._needs_delete = false
-    return <- bc
-
 //
 // Queue
 //
@@ -3626,11 +3589,6 @@ def boost_value_to_vk(b : Queue ?) : VkQueue ?
 
 def vk_value_to_boost(v : VkQueue) : Queue
     return [[ Queue queue=v ]]
-
-def weak_copy(b : Queue) : Queue
-    var bc : Queue = b
-    bc._needs_delete = false
-    return <- bc
 
 //
 // PipelineCache
@@ -3649,11 +3607,6 @@ def boost_value_to_vk(b : PipelineCache ?) : VkPipelineCache ?
 
 def vk_value_to_boost(v : VkPipelineCache) : PipelineCache
     return [[ PipelineCache pipeline_cache=v ]]
-
-def weak_copy(b : PipelineCache) : PipelineCache
-    var bc : PipelineCache = b
-    bc._needs_delete = false
-    return <- bc
 
 [private]
 def create_pipeline_cache__inner(
@@ -3729,11 +3682,6 @@ def boost_value_to_vk(b : PipelineLayout ?) : VkPipelineLayout ?
 def vk_value_to_boost(v : VkPipelineLayout) : PipelineLayout
     return [[ PipelineLayout pipeline_layout=v ]]
 
-def weak_copy(b : PipelineLayout) : PipelineLayout
-    var bc : PipelineLayout = b
-    bc._needs_delete = false
-    return <- bc
-
 [private]
 def create_pipeline_layout__inner(
     device : Device = [[ Device ]];
@@ -3807,11 +3755,6 @@ def boost_value_to_vk(b : RenderPass ?) : VkRenderPass ?
 
 def vk_value_to_boost(v : VkRenderPass) : RenderPass
     return [[ RenderPass render_pass=v ]]
-
-def weak_copy(b : RenderPass) : RenderPass
-    var bc : RenderPass = b
-    bc._needs_delete = false
-    return <- bc
 
 [private]
 def create_render_pass__inner(
@@ -3887,11 +3830,6 @@ def boost_value_to_vk(b : Sampler ?) : VkSampler ?
 def vk_value_to_boost(v : VkSampler) : Sampler
     return [[ Sampler sampler=v ]]
 
-def weak_copy(b : Sampler) : Sampler
-    var bc : Sampler = b
-    bc._needs_delete = false
-    return <- bc
-
 [private]
 def create_sampler__inner(
     device : Device = [[ Device ]];
@@ -3965,11 +3903,6 @@ def boost_value_to_vk(b : Semaphore ?) : VkSemaphore ?
 
 def vk_value_to_boost(v : VkSemaphore) : Semaphore
     return [[ Semaphore semaphore=v ]]
-
-def weak_copy(b : Semaphore) : Semaphore
-    var bc : Semaphore = b
-    bc._needs_delete = false
-    return <- bc
 
 [private]
 def create_semaphore__inner(
@@ -4045,11 +3978,6 @@ def boost_value_to_vk(b : ShaderModule ?) : VkShaderModule ?
 def vk_value_to_boost(v : VkShaderModule) : ShaderModule
     return [[ ShaderModule shader_module=v ]]
 
-def weak_copy(b : ShaderModule) : ShaderModule
-    var bc : ShaderModule = b
-    bc._needs_delete = false
-    return <- bc
-
 [private]
 def create_shader_module__inner(
     device : Device = [[ Device ]];
@@ -4124,11 +4052,6 @@ def boost_value_to_vk(b : SwapchainKHR ?) : VkSwapchainKHR ?
 def vk_value_to_boost(v : VkSwapchainKHR) : SwapchainKHR
     return [[ SwapchainKHR swapchain_khr=v ]]
 
-def weak_copy(b : SwapchainKHR) : SwapchainKHR
-    var bc : SwapchainKHR = b
-    bc._needs_delete = false
-    return <- bc
-
 [private]
 def create_swapchain_khr__inner(
     device : Device = [[ Device ]];
@@ -4202,11 +4125,6 @@ def boost_value_to_vk(b : Pipeline ?) : VkPipeline ?
 
 def vk_value_to_boost(v : VkPipeline) : Pipeline
     return [[ Pipeline pipeline=v ]]
-
-def weak_copy(b : Pipeline) : Pipeline
-    var bc : Pipeline = b
-    bc._needs_delete = false
-    return <- bc
 
 [private]
 def create_graphics_pipelines__inner(
