@@ -25,13 +25,6 @@ let
         pAttachments = safe_addr(ATT_BLENDING_DISABLED)
     ]]
 
-    PIPELINE_MULTISAMPLING_DISABLED <- [[VkPipelineMultisampleStateCreateInfo
-        sType = (VkStructureType
-            VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO),
-        rasterizationSamples = VkSampleCountFlagBits VK_SAMPLE_COUNT_1_BIT,
-        minSampleShading = 1.0f
-    ]]
-
 
 def create_shader_module_from_file(
     device : Device;

@@ -38,7 +38,6 @@ def with_graphics_pipeline_simple(
         pstages = reinterpret<VkPipelineShaderStageCreateInfo const ?>(
             addr(stages[0]))
     let pipe_info <- [[VkGraphicsPipelineCreateInfo
-        pMultisampleState   = multisampling |> safe_addr(),
         pColorBlendState    = blending |> safe_addr(),
         basePipelineIndex   = -1
     ]]
@@ -56,13 +55,16 @@ def create_example_graphics_pipeline(device, layout, render_pass,
     var create_infos <- [{ auto[] [[GraphicsPipelineCreateInfo
         layout = weak_copy(layout),
         render_pass = weak_copy(render_pass),
-        p_input_assembly_state = new [[PipelineInputAssemblyStateCreateInfo
+        p_input_assembly_state = new [[ PipelineInputAssemblyStateCreateInfo
             topology=VkPrimitiveTopology VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST]],
-        p_rasterization_state = new [[PipelineRasterizationStateCreateInfo
+        p_rasterization_state = new [[ PipelineRasterizationStateCreateInfo
             polygon_mmode = VkPolygonMode VK_POLYGON_MODE_FILL,
             line_width = 1.0f,
             cull_mode = uint(VkCullModeFlagBits VK_CULL_MODE_BACK_BIT),
             front_face = VkFrontFace VK_FRONT_FACE_CLOCKWISE]],
+        p_multisample_state = new [[ VkPipelineMultisampleStateCreateInfo
+            rasterization_samples=VkSampleCountFlagBits VK_SAMPLE_COUNT_1_BIT,
+            min_sample_shading = 1.0f ]],
         p_vertex_input_state = new [[PipelineVertexInputStateCreateInfo
             vertex_binding_descriptions <- [{ auto[]
                 [[VertexInputBindingDescription binding = 0u,
@@ -106,7 +108,6 @@ def create_example_graphics_pipeline(device, layout, render_pass,
 
 /*
     device |> with_graphics_pipeline_simple(
-        PIPELINE_MULTISAMPLING_DISABLED,
         PIPELINE_BLENDING_DISABLED
     ) <| $(pipeline)
     {
