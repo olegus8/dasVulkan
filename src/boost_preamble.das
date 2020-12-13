@@ -47,6 +47,8 @@ def addr_unsafe(v)
     unsafe
         return addr(v)
 
+//TODO: refactor into clone() and disable can_copy on boost handles.
+//  after that transfer ownership with move, and create weak copies via clone
 def weak_copy(b : auto(T)) : T
     static_if typeinfo(has_field<_needs_delete> b)
         var bc : T = b
