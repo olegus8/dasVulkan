@@ -199,7 +199,6 @@ def with_mem_backed_buf(
     let vk_device = device.device
     var buf <- device |> create_buffer_exclusive(buf_size, usage)
     defer() <| ${ delete buf ; }
-    let vk_buf = buf.buffer
     vk_device |> find_buffer_memory_type(phys_dev, buf, mem_props
     ) <| $(mem_type, mem_size)
         var mem <- allocate_memory([device=vk_device,
@@ -211,9 +210,10 @@ def with_mem_backed_buf(
         b |> invoke(buf.buffer, mem.memory)
 
 
-def with_baked_vertex_buffer(device, phys_dev, cmd_pool, queue;
+def with_baked_vertex_buffer(device : Device; phys_dev, cmd_pool, queue;
     vertices:array<auto(VT)>; b : block<(b:VkBuffer)>
 )
+    let vk_device = device.device
     let buf_size = typeinfo(sizeof type<VT>) * vertices |> length()
 
     device |> with_mem_backed_buf(phys_dev, uint64(buf_size),
@@ -227,11 +227,11 @@ def with_baked_vertex_buffer(device, phys_dev, cmd_pool, queue;
             uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT)|
             uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_COHERENT_BIT)
         ) <| $(staging_buf, staging_mem)
-            device |> with_mapped_vk_mem(staging_mem, 0, buf_size
+            vk_device |> with_mapped_vk_mem(staging_mem, 0, buf_size
             ) <| $(var mapped_vertices : array<VT>#)
                 for dst, src in mapped_vertices, vertices
                     dst = src
-            device |> copy_buf_sync(
+            vk_device |> copy_buf_sync(
                 cmd_pool, queue, staging_buf, vbuf, buf_size)
 
         b |> invoke(vbuf)
@@ -573,7 +573,7 @@ def main
         var props <- phys_dev |> get_physical_device_properties()
         defer() <| ${ delete props ; }
         print("Using {props.device_name}\n")
-        vk_device |> with_baked_vertex_buffer(
+        device |> with_baked_vertex_buffer(
             phys_dev.physical_device, cmd_pool, queue, vertices
         ) <| $(vbuf)
             var keep_running = true
