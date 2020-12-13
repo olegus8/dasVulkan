@@ -9,6 +9,9 @@ struct VkHandleAnnotation : ManagedValueAnnotation<OT> {
     VkHandleAnnotation(const string & n, const string & cpn = string())
     : ManagedValueAnnotation<OT>(n,cpn) {
     }
+    virtual bool canBePlacedInContainer() const {
+        return true;
+    }
 };
 
 #include "module_generated.inc"
