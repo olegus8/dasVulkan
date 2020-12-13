@@ -293,8 +293,8 @@ def with_swapchain_independent_state(width, height, title; b : block<(
     queue           : VkQueue;
     var surf_fmt    : SurfaceFormatKHR;
     present_mode    : VkPresentModeKHR;
-    vert_shmod      : VkShaderModule;
-    frag_shmod      : VkShaderModule;
+    vert_shmod      : ShaderModule;
+    frag_shmod      : ShaderModule;
     render_pass     : RenderPass;
     pipeline_layout : PipelineLayout;
     cmd_pool        : VkCommandPool
@@ -342,8 +342,8 @@ def with_swapchain_independent_state(width, height, title; b : block<(
             queue.queue,
             surf_fmt,
             present_mode,
-            shvert.shader_module,
-            shfrag.shader_module,
+            shvert,
+            shfrag,
             render_pass,
             pipeline_layout,
             cmd_pool.command_pool
@@ -567,8 +567,8 @@ def main
         queue           : VkQueue;
         var surf_fmt    : SurfaceFormatKHR;
         present_mode    : VkPresentModeKHR;
-        vert_shmod      : VkShaderModule;
-        frag_shmod      : VkShaderModule;
+        vert_shmod      : ShaderModule;
+        frag_shmod      : ShaderModule;
         render_pass     : RenderPass;
         pipeline_layout : PipelineLayout;
         cmd_pool        : VkCommandPool
