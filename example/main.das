@@ -19,17 +19,6 @@ struct Vertex
     color : float3
 
 
-//TODO: remove
-def with_pipeline_shader_stages(
-    vert : VkShaderModule#; vert_main : string;
-    frag : VkShaderModule#; frag_main : string;
-    b : block<(s:array<VkPipelineShaderStageCreateInfo>#)>
-)
-    stages |> lock() <| $(tstages)
-        b |> invoke(tstages)
-    delete stages
-
-
 def create_example_graphics_pipeline(device, layout, render_pass,
     phys_dev, surface, window, vert_shmod, frag_shmod;
     b : block<(p:VkPipeline)>
@@ -76,10 +65,6 @@ def create_example_graphics_pipeline(device, layout, render_pass,
 
 
 /*
-    with_pipeline_shader_stages(
-        vert_shmod, "main",
-        frag_shmod, "main"
-    ) <| $(stages) {
     device |> with_graphics_pipeline_simple(
         layout, render_pass, stages, vtx_input,
         PIPELINE_INPUT_ASSEMBLY_TRI_LIST,
