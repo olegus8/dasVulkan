@@ -5,7 +5,7 @@
 using namespace das;
 
 template <typename OT>
-struct VkManagedValueAnnotation : ManagedValueAnnotation<OT> {
+struct VkHandleAnnotation : ManagedValueAnnotation<OT> {
 };
 
 #include "module_generated.inc"

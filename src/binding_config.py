@@ -34,6 +34,7 @@ class Config(ConfigBase):
         macro_const.ignore()
 
     def configure_opaque_struct(self, struct):
+        struct.set_annotation_type('VkHandleAnnotation')
         if struct.name.endswith('_T'):
             struct.set_das_type(struct.name[:-2])
         if struct.name.startswith('GLFW'):
