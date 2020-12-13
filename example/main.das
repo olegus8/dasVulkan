@@ -19,7 +19,7 @@ struct Vertex
     color : float3
 
 
-def create_example_graphics_pipelines(
+def create_example_graphics_pipeline(
     device : Device;
     layout : PipelineLayout;
     render_pass : RenderPass;
@@ -28,7 +28,7 @@ def create_example_graphics_pipelines(
     window : GLFWwindow_DasHandle;
     vert_shmod : ShaderModule;
     frag_shmod : ShaderModule
-) : array<Pipeline>
+) : Pipeline
     var extent <- phys_dev |> get_swap_extent(surface, window)
     var create_info <- [[GraphicsPipelineCreateInfo
         layout = weak_copy(layout),
@@ -83,7 +83,8 @@ def create_example_graphics_pipelines(
     ]]
     defer() <| ${ delete create_info; }
 
-    return <- create_graphics_pipeline(device=device, create_info=create_info)
+    return <- create_graphics_pipeline([
+        device=device, create_info=create_info])
 
 
 def with_mapped_vk_mem(device, mem, offset, size;
@@ -396,15 +397,15 @@ def with_swapchain_dependent_state(
         surf_fmt, present_mode, render_pass)
     defer() <| ${ delete swapchain; }
 
-    var pipelines <- device |> create_example_graphics_pipelines(
+    var pipeline <- device |> create_example_graphics_pipeline(
         pipeline_layout, render_pass, phys_dev,
         surface, window, vert_shmod, frag_shmod
     )
-    defer() <| ${ delete pipelines; }
+    defer() <| ${ delete pipeline; }
 
     b |> invoke(
         swapchain,
-        pipelines[0].pipeline,
+        pipeline.pipeline,
         vk_img_avail_sems,
         vk_render_done_sems,
         vk_frame_fences

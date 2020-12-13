@@ -26,12 +26,13 @@ def create_shader_module_from_file(
 def create_graphics_pipeline(
     device : Device = [[ Device ]];
     pipeline_cache : PipelineCache = [[ PipelineCache ]];
-    create_info : GraphicsPipelineCreateInfo = [[ GraphicsPipelineCreateInfo ]];
+    var create_info : GraphicsPipelineCreateInfo = [[ GraphicsPipelineCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : Pipeline
-    var cloned := create_info
-    var create_infos <- [{ auto[] cloned }]
-    defer() <| ${ delete create_infos; }
+    var create_infos <- [{ auto[] create_info }]
+    defer() <|
+        create_infos |> resize(0)
+        delete create_infos;
     var pipelines <- create_graphics_pipelines([
         device = device,
         pipeline_cache = pipeline_cache,
@@ -40,6 +41,6 @@ def create_graphics_pipeline(
     ])
     defer() <| ${ delete pipelines; }
     assert(pipelines |> length() == 1)
-    var pipeline := pipelines[0]
+    var pipeline = pipelines[0]
     pipelines |> resize(0)
     return <- pipeline
