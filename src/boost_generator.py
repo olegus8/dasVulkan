@@ -476,7 +476,7 @@ class GenHandle(object):
            f'    return [[ {bhtype} {attr}=v ]]',
             '',
            f'def weak_copy(b : {bhtype}) : {bhtype}',
-           f'    var bc := b',
+           f'    var bc : {bhtype} = b',
            f'    bc._needs_delete = false',
            f'    return <- bc',
         ]
