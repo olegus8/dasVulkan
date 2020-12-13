@@ -1288,7 +1288,7 @@ class ParamVkStruct(ParamBase):
                f'    item |> vk_view_destroy()',
                f'delete boost_struct._vk_view_{bname}',
             ]
-        if self._vk_is_pointer:
+        if self._vk_is_pointer and self._optional:
             return [
                f'if boost_struct.{bname} != null',
                f'    *(boost_struct.{bname}) |> vk_view_destroy()',

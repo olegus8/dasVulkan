@@ -1740,13 +1740,16 @@ def vk_view_create_unsafe(var boost_struct : PipelineMultisampleStateCreateInfo
 
     assert(!boost_struct._vk_view__active)
     boost_struct._vk_view__active = true
+    var vk_p_sample_mask : uint ?
+    unsafe
+        vk_p_sample_mask = addr(boost_struct.sample_mask)
     return <- [[ VkPipelineMultisampleStateCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO,
         flags = boost_value_to_vk(boost_struct.flags),
         rasterizationSamples = boost_value_to_vk(boost_struct.rasterization_samples),
         sampleShadingEnable = boost_value_to_vk(boost_struct.sample_shading_enable),
         minSampleShading = boost_value_to_vk(boost_struct.min_sample_shading),
-        pSampleMask = boost_value_to_vk(boost_struct.sample_mask),
+        pSampleMask = vk_p_sample_mask,
         alphaToCoverageEnable = boost_value_to_vk(boost_struct.alpha_to_coverage_enable),
         alphaToOneEnable = boost_value_to_vk(boost_struct.alpha_to_one_enable)
     ]]
