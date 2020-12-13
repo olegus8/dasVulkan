@@ -482,11 +482,6 @@ class GenHandle(object):
             '',
            f'def vk_value_to_boost(v : {vhtype}) : {bhtype}',
            f'    return [[ {bhtype} {attr}=v ]]',
-            '',
-           f'def weak_copy(b : {bhtype}) : {bhtype}',
-           f'    var bc : {bhtype} = b',
-           f'    bc._needs_delete = false',
-           f'    return <- bc',
         ]
         return lines
 

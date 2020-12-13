@@ -47,6 +47,14 @@ def addr_unsafe(v)
     unsafe
         return addr(v)
 
+def weak_copy(b : auto(T)) : T
+    static_if typeinfo(has_field<_need_delete> b)
+        var bc : T = b
+        bc._needs_delete = false
+        return <- bc
+    else
+        concept_assert(0, "can't weak copy this type")
+
 //
 // Surface
 //
