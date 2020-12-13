@@ -37,7 +37,7 @@ def create_example_graphics_pipeline(
         p_input_assembly_state = new [[ PipelineInputAssemblyStateCreateInfo
             topology=VkPrimitiveTopology VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST]],
         p_rasterization_state = new [[ PipelineRasterizationStateCreateInfo
-            polygon_mmode = VkPolygonMode VK_POLYGON_MODE_FILL,
+            polygon_mode = VkPolygonMode VK_POLYGON_MODE_FILL,
             line_width = 1.0f,
             cull_mode = uint(VkCullModeFlagBits VK_CULL_MODE_BACK_BIT),
             front_face = VkFrontFace VK_FRONT_FACE_CLOCKWISE]],

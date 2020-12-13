@@ -2995,7 +2995,7 @@ def vk_value_to_boost(v : VkDevice) : Device
     return [[ Device device=v ]]
 
 def weak_copy(b : Device) : Device
-    var bc := b
+    var bc : Device = b
     bc._needs_delete = false
     return <- bc
 
@@ -3070,7 +3070,7 @@ def vk_value_to_boost(v : VkCommandPool) : CommandPool
     return [[ CommandPool command_pool=v ]]
 
 def weak_copy(b : CommandPool) : CommandPool
-    var bc := b
+    var bc : CommandPool = b
     bc._needs_delete = false
     return <- bc
 
@@ -3149,7 +3149,7 @@ def vk_value_to_boost(v : VkDescriptorSetLayout) : DescriptorSetLayout
     return [[ DescriptorSetLayout descriptor_set_layout=v ]]
 
 def weak_copy(b : DescriptorSetLayout) : DescriptorSetLayout
-    var bc := b
+    var bc : DescriptorSetLayout = b
     bc._needs_delete = false
     return <- bc
 
@@ -3228,7 +3228,7 @@ def vk_value_to_boost(v : VkFence) : Fence
     return [[ Fence fence=v ]]
 
 def weak_copy(b : Fence) : Fence
-    var bc := b
+    var bc : Fence = b
     bc._needs_delete = false
     return <- bc
 
@@ -3307,7 +3307,7 @@ def vk_value_to_boost(v : VkFramebuffer) : Framebuffer
     return [[ Framebuffer framebuffer=v ]]
 
 def weak_copy(b : Framebuffer) : Framebuffer
-    var bc := b
+    var bc : Framebuffer = b
     bc._needs_delete = false
     return <- bc
 
@@ -3386,7 +3386,7 @@ def vk_value_to_boost(v : VkImage) : Image
     return [[ Image image=v ]]
 
 def weak_copy(b : Image) : Image
-    var bc := b
+    var bc : Image = b
     bc._needs_delete = false
     return <- bc
 
@@ -3465,7 +3465,7 @@ def vk_value_to_boost(v : VkImageView) : ImageView
     return [[ ImageView image_view=v ]]
 
 def weak_copy(b : ImageView) : ImageView
-    var bc := b
+    var bc : ImageView = b
     bc._needs_delete = false
     return <- bc
 
@@ -3543,7 +3543,7 @@ def vk_value_to_boost(v : VkInstance) : Instance
     return [[ Instance instance=v ]]
 
 def weak_copy(b : Instance) : Instance
-    var bc := b
+    var bc : Instance = b
     bc._needs_delete = false
     return <- bc
 
@@ -3613,7 +3613,7 @@ def vk_value_to_boost(v : VkPhysicalDevice) : PhysicalDevice
     return [[ PhysicalDevice physical_device=v ]]
 
 def weak_copy(b : PhysicalDevice) : PhysicalDevice
-    var bc := b
+    var bc : PhysicalDevice = b
     bc._needs_delete = false
     return <- bc
 
@@ -3635,7 +3635,7 @@ def vk_value_to_boost(v : VkQueue) : Queue
     return [[ Queue queue=v ]]
 
 def weak_copy(b : Queue) : Queue
-    var bc := b
+    var bc : Queue = b
     bc._needs_delete = false
     return <- bc
 
@@ -3658,7 +3658,7 @@ def vk_value_to_boost(v : VkPipelineCache) : PipelineCache
     return [[ PipelineCache pipeline_cache=v ]]
 
 def weak_copy(b : PipelineCache) : PipelineCache
-    var bc := b
+    var bc : PipelineCache = b
     bc._needs_delete = false
     return <- bc
 
@@ -3737,7 +3737,7 @@ def vk_value_to_boost(v : VkPipelineLayout) : PipelineLayout
     return [[ PipelineLayout pipeline_layout=v ]]
 
 def weak_copy(b : PipelineLayout) : PipelineLayout
-    var bc := b
+    var bc : PipelineLayout = b
     bc._needs_delete = false
     return <- bc
 
@@ -3816,7 +3816,7 @@ def vk_value_to_boost(v : VkRenderPass) : RenderPass
     return [[ RenderPass render_pass=v ]]
 
 def weak_copy(b : RenderPass) : RenderPass
-    var bc := b
+    var bc : RenderPass = b
     bc._needs_delete = false
     return <- bc
 
@@ -3895,7 +3895,7 @@ def vk_value_to_boost(v : VkSampler) : Sampler
     return [[ Sampler sampler=v ]]
 
 def weak_copy(b : Sampler) : Sampler
-    var bc := b
+    var bc : Sampler = b
     bc._needs_delete = false
     return <- bc
 
@@ -3974,7 +3974,7 @@ def vk_value_to_boost(v : VkSemaphore) : Semaphore
     return [[ Semaphore semaphore=v ]]
 
 def weak_copy(b : Semaphore) : Semaphore
-    var bc := b
+    var bc : Semaphore = b
     bc._needs_delete = false
     return <- bc
 
@@ -4053,7 +4053,7 @@ def vk_value_to_boost(v : VkShaderModule) : ShaderModule
     return [[ ShaderModule shader_module=v ]]
 
 def weak_copy(b : ShaderModule) : ShaderModule
-    var bc := b
+    var bc : ShaderModule = b
     bc._needs_delete = false
     return <- bc
 
@@ -4132,7 +4132,7 @@ def vk_value_to_boost(v : VkSwapchainKHR) : SwapchainKHR
     return [[ SwapchainKHR swapchain_khr=v ]]
 
 def weak_copy(b : SwapchainKHR) : SwapchainKHR
-    var bc := b
+    var bc : SwapchainKHR = b
     bc._needs_delete = false
     return <- bc
 
@@ -4211,7 +4211,7 @@ def vk_value_to_boost(v : VkPipeline) : Pipeline
     return [[ Pipeline pipeline=v ]]
 
 def weak_copy(b : Pipeline) : Pipeline
-    var bc := b
+    var bc : Pipeline = b
     bc._needs_delete = false
     return <- bc
 
