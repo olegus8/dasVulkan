@@ -32,15 +32,6 @@ let
         minSampleShading = 1.0f
     ]]
 
-    PIPELINE_RASTERIZER_SIMPLE <- [[VkPipelineRasterizationStateCreateInfo
-        sType = (VkStructureType
-            VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO),
-        polygonMode = VkPolygonMode VK_POLYGON_MODE_FILL,
-        lineWidth = 1.0f,
-        cullMode = uint(VkCullModeFlagBits VK_CULL_MODE_BACK_BIT),
-        frontFace = VkFrontFace VK_FRONT_FACE_CLOCKWISE
-    ]]
-
 
 def create_shader_module_from_file(
     device : Device;
