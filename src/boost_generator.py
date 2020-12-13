@@ -287,7 +287,7 @@ class GenStruct(object):
             if field.vk_name == vk_name:
                 return field
 
-    def declare_optional(self, name):
+    def declare_optional_ptr(self, name):
         field = self.__get_field(name)
         assert field.vk_is_pointer
         field.set_optional(True)
