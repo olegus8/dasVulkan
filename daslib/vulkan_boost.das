@@ -6,7 +6,6 @@ module vulkan_boost
 require vulkan
 
 require internal/buffer         public
-require internal/buffer_ex      public
 require internal/command        public
 require internal/command_ex     public
 require internal/core           public
