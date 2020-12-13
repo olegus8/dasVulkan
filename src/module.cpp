@@ -6,6 +6,9 @@ using namespace das;
 
 template <typename OT>
 struct VkHandleAnnotation : ManagedValueAnnotation<OT> {
+    VkHandleAnnotation(const string & n, const string & cpn = string())
+    : ManagedValueAnnotation(n,cpn) {
+    }
 };
 
 #include "module_generated.inc"
