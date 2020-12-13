@@ -48,7 +48,7 @@ def addr_unsafe(v)
         return addr(v)
 
 def weak_copy(b : auto(T)) : T
-    static_if typeinfo(has_field<_need_delete> b)
+    static_if typeinfo(has_field<_needs_delete> b)
         var bc : T = b
         bc._needs_delete = false
         return <- bc
