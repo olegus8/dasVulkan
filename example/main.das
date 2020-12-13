@@ -62,8 +62,8 @@ def create_example_graphics_pipeline(device, layout, render_pass,
 ) : Pipeline
     var extent <- phys_dev |> get_swap_extent(surface, window)
     var create_infos <- [{ auto[] [[GraphicsPipelineCreateInfo
-        layout = layout,
-        render_pass = render_pass,
+        layout = weak_copy(layout),
+        render_pass = weak_copy(render_pass),
         p_vertex_input_state = new [[PipelineVertexInputStateCreateInfo
             vertex_binding_descriptions <- [{ auto[]
                 [[VertexInputBindingDescription binding = 0u,
@@ -85,19 +85,15 @@ def create_example_graphics_pipeline(device, layout, render_pass,
             scissors <- [{ auto[] [[Rect2D extent = extent]] }]
         ]],
         stages <- [{ auto[]
-            [[PipelineShaderStageCreateInfo module_=vert_shmod, name="main",
+            [[PipelineShaderStageCreateInfo
+                module_ = weak_copy(vert_shmod), name = "main",
                 stage = VkShaderStageFlagBits VK_SHADER_STAGE_VERTEX_BIT]],
-            [[PipelineShaderStageCreateInfo module_=frag_shmod, name="main",
+            [[PipelineShaderStageCreateInfo
+                module_ = weak_copy(frag_shmod), name = "main",
                 stage = VkShaderStageFlagBits VK_SHADER_STAGE_FRAGMENT_BIT]]
         }],
     ]]}]
-    defer() <|
-        for info in create_infos
-            memzero(info.layout)
-            memzero(info.render_pass)
-            for stage in info.stages
-                memzero(stage.module_)
-        delete create_infos
+    defer() <| ${ delete create_infos; }
 
     var pipelines <- create_graphics_pipeline([
         device = device,

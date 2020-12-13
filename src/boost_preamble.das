@@ -47,6 +47,11 @@ def addr_unsafe(v)
     unsafe
         return addr(v)
 
+def weak_copy(handle):
+    var handle_copy := handle
+    handle_copy._need_delete = false
+    return <- handle_copy
+
 //
 // Surface
 //
