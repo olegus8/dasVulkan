@@ -189,24 +189,25 @@ def with_draw_commands(device, phys_dev, window, surface, render_pass,
 
 
 def with_mem_backed_buf(
-    device : VkDevice#;
+    device : Device;
     phys_dev : VkPhysicalDevice#;
     buf_size : uint64;
     usage : uint;
     mem_props : uint;
     b : block<(b:VkBuffer#; m:VkDeviceMemory#)>
 )
+    let vk_device = device.device
     var buf <- device |> create_buffer_exclusive(buf_size, usage)
-    defer() <|
-        delete buf
-    device |> find_buffer_memory_type(phys_dev, buf, mem_props
+    defer() <| ${ delete buf ; }
+    let vk_buf = buf.buffer
+    vk_device |> find_buffer_memory_type(phys_dev, buf, mem_props
     ) <| $(mem_type, mem_size)
-        var mem <- allocate_memory([device=device,
+        var mem <- allocate_memory([device=vk_device,
             allocation_size=mem_size, mem_type_index=mem_type])
         defer() <|
             delete mem
         verify(VkResult VK_SUCCESS ==
-            device |> vkBindBufferMemory(buf.buffer, mem.memory, uint64(0)))
+            vk_device |> vkBindBufferMemory(buf.buffer, mem.memory, uint64(0)))
         b |> invoke(buf.buffer, mem.memory)
 
 
