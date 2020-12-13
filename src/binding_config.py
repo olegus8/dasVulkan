@@ -177,6 +177,8 @@ def add_boost_content(g):
     ]:
         g.add_gen_struct(name=name, vk_to_boost=False)
 
+    g.add_gen_struct(name = 'VkBufferCreateInfo', vk_to_boost=False,
+        ).declare_array(count = 'queueFamilyIndexCount', items = 'pQueueFamilyIndices')
     g.add_gen_struct(name='VkComputePipelineCreateInfo', vk_to_boost=False)
     g.add_gen_struct(name = 'VkDescriptorSetLayoutBinding', vk_to_boost=False,
         ).declare_array(items = 'pImmutableSamplers')
