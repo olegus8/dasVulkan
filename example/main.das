@@ -1,4 +1,4 @@
-options log, log_infer_passes
+//options log, log_infer_passes
 
 options persistent_heap = true
 
