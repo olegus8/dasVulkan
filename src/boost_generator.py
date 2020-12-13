@@ -910,6 +910,7 @@ class ParamBase(object):
         if self.vk_is_dyn_array_items:
             return f'<- [{{for x in vk_{bname}; vk_value_to_boost(x)}}]'
         if self._vk_is_pointer:
+            assert not self._optional #TODO: add support when needed
             return f'vk_value_to_boost(vk_{bname})'
         raise Exception('Return type not supported: {self.vk_name}')
 
@@ -939,7 +940,7 @@ class ParamBase(object):
                 ]
             return lines
         if self._vk_is_pointer:
-            #TODO: add null support if needed via declare_can_be_null
+            assert not self._optional #TODO: add support when needed
             bname = self._boost_func_param_name
             vtype = self.vk_unqual_type
             lines = [f'var vk_{bname} : {vtype}']
@@ -987,6 +988,7 @@ class ParamBase(object):
         elif self.vk_is_dyn_array_items:
             return f'array_addr_unsafe(vk_{bname})'
         elif self._vk_is_pointer:
+            assert not self._optional #TODO: add support when needed
             return f'safe_addr(vk_{bname})'
         return f'boost_value_to_vk({bname})'
 
@@ -1190,6 +1192,7 @@ class ParamVkStruct(ParamBase):
     def boost_func_return_value(self):
         bname = self._boost_func_param_name
         if self._vk_is_pointer and not self.vk_is_dyn_array_items:
+            assert not self._optional #TODO: add support when needed
             return f'<- vk_value_to_boost(vk_{bname})'
         return super(ParamVkStruct, self).boost_func_return_value
 
@@ -1213,6 +1216,7 @@ class ParamVkStruct(ParamBase):
                     f'    delete vk_{bname}',
                 ]
             elif self._vk_is_pointer:
+                assert not self._optional #TODO: add support when needed
                 return [
                     f'var vk_{bname} <- {bname} |> vk_view_create_unsafe()',
                     f'defer() <| ${{ {bname} |> vk_view_destroy(); }}',
@@ -1224,7 +1228,7 @@ class ParamVkStruct(ParamBase):
         vutype = self.vk_unqual_type
         if self.vk_is_dyn_array_items:
             return [f'_vk_view_{bname} : array<{vutype}>']
-        if self._vk_is_pointer:
+        if self._vk_is_pointer and self._optional:
             return [f'_vk_view_{bname} : {vutype} ?']
         return [f'_vk_view_p_{bname} : {vutype} ?']
 
@@ -1238,13 +1242,21 @@ class ParamVkStruct(ParamBase):
                f'    item |> vk_view_create_unsafe()}}]',
             ]
         if self._vk_is_pointer:
-            return [
-               f'if boost_struct.{bname} != null',
-               f'    boost_struct._vk_view_{bname} = new {vutype}',
-               f'    *(boost_struct._vk_view_{bname}) <- (',
-               f'        *(boost_struct.{bname}) |> '
+            if self._optional:
+                return [
+                   f'if boost_struct.{bname} != null',
+                   f'    boost_struct._vk_view_{bname} = new {vutype}',
+                   f'    *(boost_struct._vk_view_{bname}) <- (',
+                   f'        *(boost_struct.{bname}) |> '
+                                    f'vk_view_create_unsafe())',
+                ]
+            else:
+                return [
+                   f'boost_struct._vk_view_p_{bname} = new {vutype}',
+                   f'*(boost_struct._vk_view_{bname}) <- (',
+                   f'    *(boost_struct.{bname}) |> '
                                 f'vk_view_create_unsafe())',
-            ]
+                ]
         return [
            f'boost_struct._vk_view_p_{bname} = new {vutype}',
            f'*(boost_struct._vk_view_p_{bname}) <- (',
