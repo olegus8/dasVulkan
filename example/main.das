@@ -19,42 +19,21 @@ struct Vertex
     color : float3
 
 
-//TODO: remove
-def with_graphics_pipeline_simple(
-    device          : VkDevice#;
-    layout          : VkPipelineLayout#;
-    render_pass     : VkRenderPass#;
-    stages          : array<VkPipelineShaderStageCreateInfo>#;
-    vtx_input       : VkPipelineVertexInputStateCreateInfo;
-    input_assembly  : VkPipelineInputAssemblyStateCreateInfo;
-    viewport        : VkPipelineViewportStateCreateInfo;
-    rasterizer      : VkPipelineRasterizationStateCreateInfo;
-    multisampling   : VkPipelineMultisampleStateCreateInfo;
-    blending        : VkPipelineColorBlendStateCreateInfo implicit;
-    b : block<(p:VkPipeline#)>
-)
-    var pstages : VkPipelineShaderStageCreateInfo const ?
-    unsafe
-        pstages = reinterpret<VkPipelineShaderStageCreateInfo const ?>(
-            addr(stages[0]))
-    let pipe_info <- [[VkGraphicsPipelineCreateInfo
-        pColorBlendState    = blending |> safe_addr(),
-        basePipelineIndex   = -1
-    ]]
-    var pipe : VkPipeline
-    verify(VkResult VK_SUCCESS == device |> vkCreateGraphicsPipelines(
-        [[VkPipelineCache]], 1u, safe_addr(pipe_info), null, safe_addr(pipe)))
-    b |> invoke(pipe)
-    device |> vkDestroyPipeline(pipe, null)
-
-
-def create_example_graphics_pipeline(device, layout, render_pass,
-    phys_dev, surface, window, vert_shmod, frag_shmod
+def create_example_graphics_pipeline(
+    device : Device;
+    layout : PipelineLayout;
+    render_pass : RenderPass;
+    phys_dev : PhysicalDevice;
+    surface : SurfaceKHR;
+    window : GLFWwindow_DasHandle;
+    vert_shmod : ShaderModule;
+    frag_shmod : ShaderModule
 ) : Pipeline
     var extent <- phys_dev |> get_swap_extent(surface, window)
     var create_infos <- [{ auto[] [[GraphicsPipelineCreateInfo
         layout = weak_copy(layout),
         render_pass = weak_copy(render_pass),
+        base_pipeline_index = -1,
         p_input_assembly_state = new [[ PipelineInputAssemblyStateCreateInfo
             topology=VkPrimitiveTopology VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST]],
         p_rasterization_state = new [[ PipelineRasterizationStateCreateInfo
@@ -62,9 +41,17 @@ def create_example_graphics_pipeline(device, layout, render_pass,
             line_width = 1.0f,
             cull_mode = uint(VkCullModeFlagBits VK_CULL_MODE_BACK_BIT),
             front_face = VkFrontFace VK_FRONT_FACE_CLOCKWISE]],
-        p_multisample_state = new [[ VkPipelineMultisampleStateCreateInfo
+        p_multisample_state = new [[ PipelineMultisampleStateCreateInfo
             rasterization_samples=VkSampleCountFlagBits VK_SAMPLE_COUNT_1_BIT,
             min_sample_shading = 1.0f ]],
+        p_color_blend_state = new [[ PipelineColorBlendStateCreateInfo
+            attachments <- [{ auto[] [[PipelineColorBlendAttachmentState
+                color_write_mask =
+                    uint(VkColorComponentFlagBits VK_COLOR_COMPONENT_R_BIT) |
+                    uint(VkColorComponentFlagBits VK_COLOR_COMPONENT_G_BIT) |
+                    uint(VkColorComponentFlagBits VK_COLOR_COMPONENT_B_BIT) |
+                    uint(VkColorComponentFlagBits VK_COLOR_COMPONENT_A_BIT)
+        ]]}],
         p_vertex_input_state = new [[PipelineVertexInputStateCreateInfo
             vertex_binding_descriptions <- [{ auto[]
                 [[VertexInputBindingDescription binding = 0u,
@@ -104,16 +91,6 @@ def create_example_graphics_pipeline(device, layout, render_pass,
     defer() <| ${ delete pipelines; }
 
     return <- pipelines[0]
-
-
-/*
-    device |> with_graphics_pipeline_simple(
-        PIPELINE_BLENDING_DISABLED
-    ) <| $(pipeline)
-    {
-        b |> invoke(pipeline);
-    }}}}
-*/
 
 
 def with_mapped_vk_mem(device, mem, offset, size;
