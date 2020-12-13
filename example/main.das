@@ -19,6 +19,7 @@ struct Vertex
     color : float3
 
 
+//TODO: remove
 def with_pipeline_vertex_input(
     b : block<(i:VkPipelineVertexInputStateCreateInfo)>
 )
@@ -72,32 +73,56 @@ def with_graphics_pipeline(device, layout, render_pass,
     }}}}
 
 
+//TODO: remove
+def with_pipeline_viewport_full_window(
+    phys_dev : PhysicalDevice;
+    surface : SurfaceKHR;
+    window : GLFWwindow_DasHandle#;
+    //TODO: make it pass temporary. compilation fails currently if i do
+    //b : block<(i:VkPipelineViewportStateCreateInfo#)>
+    b : block<(i:VkPipelineViewportStateCreateInfo)>
+)
+    var extent <- phys_dev |> get_swap_extent(surface, window)
+    let viewports <- [[auto[] [[VkViewport minDepth = 0.0f, maxDepth = 1.0f,
+        width = float(extent.width), height = float(extent.height)
+    ]]]]
+    extent |> with_view() <| $(vk_extent : VkExtent2D const)
+        let scissors <- [[auto[] [[VkRect2D extent = vk_extent]]]]
+        b |> invoke([[VkPipelineViewportStateCreateInfo
+            sType = (VkStructureType
+                VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO),
+            viewportCount = uint(viewports |> length()),
+            pViewports = viewports |> safe_addr(),
+            scissorCount = uint(scissors |> length()),
+            pScissors = scissors |> safe_addr()
+        ]])
+
+
 def create_example_graphics_pipeline(device, layout, render_pass,
     phys_dev, surface, window, vert_shmod, frag_shmod;
     b : block<(p:VkPipeline)>
 )
+    var extent <- phys_dev |> get_swap_extent(surface, window)
     var create_infos <- [{auto[] [[GraphicsPipelineCreateInfo
-        p_vertex_input_state = new [[VkPipelineVertexInputStateCreateInfo
+        p_vertex_input_state = new [[PipelineVertexInputStateCreateInfo
             vertex_binding_descriptions <- [{auto[]
-                [[VertexInputBindingDescription
-                    binding = 0u,
+                [[VertexInputBindingDescription binding = 0u,
                     stride = uint(typeinfo(sizeof type<Vertex>)),
-                    input_rate = VkVertexInputRate VK_VERTEX_INPUT_RATE_VERTEX
-                ]]}],
-            vertex_attribute_descriptions <- [{auto[]
-                [[VertexInputAttributeDescription
-                    binding = 0u,
-                    location = 0u,
-                    format = VkFormat VK_FORMAT_R32G32_SFLOAT,
-                    offset = uint(typeinfo(offsetof<position> type<Vertex>))
-                ]],
-                [[VkVertexInputAttributeDescription
-                    binding = 0u,
-                    location = 1u,
-                    format = VkFormat VK_FORMAT_R32G32B32_SFLOAT,
-                    offset = uint(typeinfo(offsetof<color> type<Vertex>))
-                ]]
+                    input_rate=VkVertexInputRate VK_VERTEX_INPUT_RATE_VERTEX]]
             }],
+            vertex_attribute_descriptions <- [{auto[]
+                [[VertexInputAttributeDescription binding=0u, location=0u,
+                    format = VkFormat VK_FORMAT_R32G32_SFLOAT,
+                    offset = uint(typeinfo(offsetof<position> type<Vertex>))]],
+                [[VkVertexInputAttributeDescription binding=0u, location=1u,
+                    format = VkFormat VK_FORMAT_R32G32B32_SFLOAT,
+                    offset = uint(typeinfo(offsetof<color> type<Vertex>))]]
+            }],
+        ]],
+        p_viewport_state = new [[PipelineViewportStateCreateInfo
+            viewports <- [{auto[] [[Viewport min_depth=0.f, max_depth=1.f,
+                width = float(extent.width), height = float(extent.height) ]]}]
+            scissors = scissors |> safe_addr()
         ]],
     ]]}]
     defer() <| ${ delete create_infos; }
@@ -112,16 +137,7 @@ def create_example_graphics_pipeline(device, layout, render_pass,
     return <- pipelines[0]
 
 
-def with_pipeline_vertex_input(
-    b : block<(i:VkPipelineVertexInputStateCreateInfo)>
-)
-    let vtx_bindings <- [[]]
-    let vtx_attrs <- [[auto[]
-    ]]
-    b |> invoke ([[VkPipelineVertexInputStateCreateInfo
-    ]])
-
-    with_pipeline_vertex_input() <| $(vtx_input) {
+/*
     phys_dev |> with_pipeline_viewport_full_window(surface, window
     ) <| $(viewport) {
     with_pipeline_shader_stages(
@@ -139,6 +155,7 @@ def with_pipeline_vertex_input(
     {
         b |> invoke(pipeline);
     }}}}
+*/
 
 
 def with_mapped_vk_mem(device, mem, offset, size;
