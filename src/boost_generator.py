@@ -751,7 +751,7 @@ class ParamBase(object):
         bname = vk_param_name_to_boost(self.vk_name)
         if self.vk_is_dyn_array_items:
             bname = deref_boost_ptr_name(bname)
-        elif self._vk_is_pointer and not self._optional
+        elif self._vk_is_pointer and not self._optional:
             bname = deref_boost_ptr_name(bname)
         return bname
 
