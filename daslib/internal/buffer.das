@@ -10,7 +10,7 @@ def create_buffer_exclusive(
     usage   : uint;
     flags   : uint = 0u
 ) : Buffer
-    return <- create_buffer([device=device, [[BufferCreateInfo
+    return <- device |> create_buffer([[BufferCreateInfo
         flags=flags, size=size, usage=usage,
         sharing_mode=VkSharingMode VK_SHARING_MODE_EXCLUSIVE,
-    ]]])
+    ]])
