@@ -79,7 +79,7 @@ def create_example_graphics_pipeline(
             [[PipelineShaderStageCreateInfo
                 module_ = weak_copy(frag_shmod), name = "main",
                 stage = VkShaderStageFlagBits VK_SHADER_STAGE_FRAGMENT_BIT]]
-        }],
+        }]
     ]]}]
     defer() <| ${ delete create_infos; }
 
