@@ -177,8 +177,7 @@ def add_boost_content(g):
     ]:
         g.add_gen_struct(name=name, vk_to_boost=False)
 
-    g.add_gen_struct(name='VkComputePipelineCreateInfo', vk_to_boost=False,)
-        #ignore_fields=['stage']) #TODO: this crashes interpreter during simulation
+    g.add_gen_struct(name='VkComputePipelineCreateInfo', vk_to_boost=False)
     g.add_gen_struct(name = 'VkDescriptorSetLayoutBinding', vk_to_boost=False,
         ).declare_array(items = 'pImmutableSamplers')
     g.add_gen_struct(name = 'VkDescriptorSetLayoutCreateInfo', vk_to_boost=False,
@@ -226,8 +225,7 @@ def add_boost_content(g):
         ).declare_array(count = 'inputAttachmentCount', items = 'pInputAttachments',
         ).declare_array(count = 'colorAttachmentCount', items = 'pColorAttachments',
         ).declare_array(count = 'colorAttachmentCount', items = 'pResolveAttachments', optional=True,
-        ).declare_array(count = 'preserveAttachmentCount', items = 'pPreserveAttachments',
-        ).declare_optional_ptr(name = 'pDepthStencilAttachment')
+        ).declare_array(count = 'preserveAttachmentCount', items = 'pPreserveAttachments')
     g.add_gen_struct(name = 'VkSwapchainCreateInfoKHR', vk_to_boost=False,
         ).declare_array(count = 'queueFamilyIndexCount', items = 'pQueueFamilyIndices')
 

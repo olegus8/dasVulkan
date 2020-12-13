@@ -2844,7 +2844,7 @@ struct SubpassDescription
     input_attachments : array<AttachmentReference>
     color_attachments : array<AttachmentReference>
     resolve_attachments : array<AttachmentReference>
-    depth_stencil_attachment : AttachmentReference
+    p_depth_stencil_attachment : AttachmentReference ?
     preserve_attachments : array<uint>
     _vk_view_input_attachments : array<VkAttachmentReference>
     _vk_view_color_attachments : array<VkAttachmentReference>
@@ -2869,9 +2869,10 @@ def vk_view_create_unsafe(var boost_struct : SubpassDescription
     boost_struct._vk_view_resolve_attachments <- [{
         for item in boost_struct.resolve_attachments ;
         item |> vk_view_create_unsafe()}]
-    boost_struct._vk_view_p_depth_stencil_attachment = new VkAttachmentReference
-    *(boost_struct._vk_view_p_depth_stencil_attachment) <- (
-        boost_struct.depth_stencil_attachment |> vk_view_create_unsafe())
+    if boost_struct.p_depth_stencil_attachment != null
+        boost_struct._vk_view_p_depth_stencil_attachment = new VkAttachmentReference
+        *(boost_struct._vk_view_p_depth_stencil_attachment) <- (
+            *(boost_struct.p_depth_stencil_attachment) |> vk_view_create_unsafe())
     let vk_preserve_attachment_count = uint(boost_struct.preserve_attachments |> length())
     let vk_p_preserve_attachments = array_addr_unsafe(boost_struct.preserve_attachments)
     return <- [[ VkSubpassDescription
@@ -2898,9 +2899,10 @@ def vk_view_destroy(var boost_struct : SubpassDescription)
     for item in boost_struct.resolve_attachments
         item |> vk_view_destroy()
     delete boost_struct._vk_view_resolve_attachments
-    boost_struct.depth_stencil_attachment |> vk_view_destroy()
-    unsafe
-        delete boost_struct._vk_view_p_depth_stencil_attachment
+    if boost_struct.p_depth_stencil_attachment != null
+        *(boost_struct.p_depth_stencil_attachment) |> vk_view_destroy()
+        unsafe
+            delete boost_struct._vk_view_p_depth_stencil_attachment
     boost_struct._vk_view__active = false
 
 //

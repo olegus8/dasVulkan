@@ -287,10 +287,10 @@ class GenStruct(object):
             if field.vk_name == vk_name:
                 return field
 
-    def declare_optional_ptr(self, name):
+    def declare_mandatory_ptr(self, name):
         field = self.__get_field(name)
         assert field.vk_is_pointer
-        field.set_optional(True)
+        field.set_optional(False)
 
     def declare_array(self, items, count=None,
         optional=False, force_item_type=None
