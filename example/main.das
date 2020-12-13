@@ -38,12 +38,6 @@ def with_graphics_pipeline_simple(
         pstages = reinterpret<VkPipelineShaderStageCreateInfo const ?>(
             addr(stages[0]))
     let pipe_info <- [[VkGraphicsPipelineCreateInfo
-        sType = (VkStructureType
-            VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO),
-        stageCount          = uint(stages |> length()),
-        pStages             = pstages,
-        pVertexInputState   = vtx_input |> safe_addr(),
-        pInputAssemblyState = input_assembly |> safe_addr(),
         pViewportState      = viewport |> safe_addr(),
         pRasterizationState = rasterizer |> safe_addr(),
         pMultisampleState   = multisampling |> safe_addr(),
@@ -64,6 +58,8 @@ def create_example_graphics_pipeline(device, layout, render_pass,
     var create_infos <- [{ auto[] [[GraphicsPipelineCreateInfo
         layout = weak_copy(layout),
         render_pass = weak_copy(render_pass),
+        p_input_assembly_state = new [[PipelineInputAssemblyStateCreateInfo
+            topology=VkPrimitiveTopology VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST]],
         p_vertex_input_state = new [[PipelineVertexInputStateCreateInfo
             vertex_binding_descriptions <- [{ auto[]
                 [[VertexInputBindingDescription binding = 0u,

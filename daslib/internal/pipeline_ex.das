@@ -41,13 +41,6 @@ let
         frontFace = VkFrontFace VK_FRONT_FACE_CLOCKWISE
     ]]
 
-    PIPELINE_INPUT_ASSEMBLY_TRI_LIST <- [[
-        VkPipelineInputAssemblyStateCreateInfo
-        sType = (VkStructureType 
-            VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO),
-        topology = VkPrimitiveTopology VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST
-    ]]
-
 
 def create_shader_module_from_file(
     device : Device;
