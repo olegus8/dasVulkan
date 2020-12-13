@@ -77,6 +77,28 @@ def create_example_graphics_pipeline(device, layout, render_pass,
     b : block<(p:VkPipeline)>
 )
     var create_infos <- [{auto[] [[GraphicsPipelineCreateInfo
+        p_vertex_input_state = new [[VkPipelineVertexInputStateCreateInfo
+            vertex_binding_descriptions <- [{auto[]
+                [[VertexInputBindingDescription
+                    binding = 0u,
+                    stride = uint(typeinfo(sizeof type<Vertex>)),
+                    input_rate = VkVertexInputRate VK_VERTEX_INPUT_RATE_VERTEX
+                ]]}],
+            vertex_attribute_descriptions <- [{auto[]
+                [[VertexInputAttributeDescription
+                    binding = 0u,
+                    location = 0u,
+                    format = VkFormat VK_FORMAT_R32G32_SFLOAT,
+                    offset = uint(typeinfo(offsetof<position> type<Vertex>))
+                ]],
+                [[VkVertexInputAttributeDescription
+                    binding = 0u,
+                    location = 1u,
+                    format = VkFormat VK_FORMAT_R32G32B32_SFLOAT,
+                    offset = uint(typeinfo(offsetof<color> type<Vertex>))
+                ]]
+            }],
+        ]],
     ]]}]
     defer() <| ${ delete create_infos; }
 
@@ -93,28 +115,10 @@ def create_example_graphics_pipeline(device, layout, render_pass,
 def with_pipeline_vertex_input(
     b : block<(i:VkPipelineVertexInputStateCreateInfo)>
 )
-    let vtx_bindings <- [[auto[] [[VkVertexInputBindingDescription
-        binding = 0u,
-        stride = uint(typeinfo(sizeof type<Vertex>)),
-        inputRate = VkVertexInputRate VK_VERTEX_INPUT_RATE_VERTEX
-    ]]]]
+    let vtx_bindings <- [[]]
     let vtx_attrs <- [[auto[]
-        [[VkVertexInputAttributeDescription binding = 0u, location = 0u,
-            format = VkFormat VK_FORMAT_R32G32_SFLOAT,
-            offset = uint(typeinfo(offsetof<position> type<Vertex>))
-        ]];
-        [[VkVertexInputAttributeDescription binding = 0u, location = 1u,
-            format = VkFormat VK_FORMAT_R32G32B32_SFLOAT,
-            offset = uint(typeinfo(offsetof<color> type<Vertex>))
-        ]]
     ]]
     b |> invoke ([[VkPipelineVertexInputStateCreateInfo
-        sType = (VkStructureType
-            VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO),
-        vertexBindingDescriptionCount = uint(vtx_bindings |> length()),
-        pVertexBindingDescriptions = vtx_bindings[0] |> safe_addr(),
-        vertexAttributeDescriptionCount = uint(vtx_attrs |> length()),
-        pVertexAttributeDescriptions = vtx_attrs[0] |> safe_addr()
     ]])
 
     with_pipeline_vertex_input() <| $(vtx_input) {
