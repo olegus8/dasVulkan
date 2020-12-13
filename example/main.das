@@ -47,10 +47,76 @@ def with_pipeline_vertex_input(
     ]])
 
 
+//TODO: remove
 def with_graphics_pipeline(device, layout, render_pass,
     phys_dev, surface, window, vert_shmod, frag_shmod;
     b : block<(p:VkPipeline)>
 )
+    with_pipeline_vertex_input() <| $(vtx_input) {
+    phys_dev |> with_pipeline_viewport_full_window(surface, window
+    ) <| $(viewport) {
+    with_pipeline_shader_stages(
+        vert_shmod, "main",
+        frag_shmod, "main"
+    ) <| $(stages) {
+    device |> with_graphics_pipeline_simple(
+        layout, render_pass, stages, vtx_input,
+        PIPELINE_INPUT_ASSEMBLY_TRI_LIST,
+        viewport,
+        PIPELINE_RASTERIZER_SIMPLE,
+        PIPELINE_MULTISAMPLING_DISABLED,
+        PIPELINE_BLENDING_DISABLED
+    ) <| $(pipeline)
+    {
+        b |> invoke(pipeline);
+    }}}}
+
+
+def create_example_graphics_pipeline(device, layout, render_pass,
+    phys_dev, surface, window, vert_shmod, frag_shmod;
+    b : block<(p:VkPipeline)>
+)
+    var create_infos <- [{auto[] [[GraphicsPipelineCreateInfo
+    ]]}]
+    defer() <| ${ delete create_infos; }
+
+    var pipelines <- create_graphics_pipeline([
+        device = device,
+        pipeline_cache = [[PipelineCache]],
+        create_infos = create_infos
+    ])
+    defer() <| ${ delete pipelines; }
+
+    return <- pipelines[0]
+
+
+def with_pipeline_vertex_input(
+    b : block<(i:VkPipelineVertexInputStateCreateInfo)>
+)
+    let vtx_bindings <- [[auto[] [[VkVertexInputBindingDescription
+        binding = 0u,
+        stride = uint(typeinfo(sizeof type<Vertex>)),
+        inputRate = VkVertexInputRate VK_VERTEX_INPUT_RATE_VERTEX
+    ]]]]
+    let vtx_attrs <- [[auto[]
+        [[VkVertexInputAttributeDescription binding = 0u, location = 0u,
+            format = VkFormat VK_FORMAT_R32G32_SFLOAT,
+            offset = uint(typeinfo(offsetof<position> type<Vertex>))
+        ]];
+        [[VkVertexInputAttributeDescription binding = 0u, location = 1u,
+            format = VkFormat VK_FORMAT_R32G32B32_SFLOAT,
+            offset = uint(typeinfo(offsetof<color> type<Vertex>))
+        ]]
+    ]]
+    b |> invoke ([[VkPipelineVertexInputStateCreateInfo
+        sType = (VkStructureType
+            VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO),
+        vertexBindingDescriptionCount = uint(vtx_bindings |> length()),
+        pVertexBindingDescriptions = vtx_bindings[0] |> safe_addr(),
+        vertexAttributeDescriptionCount = uint(vtx_attrs |> length()),
+        pVertexAttributeDescriptions = vtx_attrs[0] |> safe_addr()
+    ]])
+
     with_pipeline_vertex_input() <| $(vtx_input) {
     phys_dev |> with_pipeline_viewport_full_window(surface, window
     ) <| $(viewport) {
@@ -274,7 +340,7 @@ def with_swapchain_independent_state(width, height, title; b : block<(
     vert_shmod      : VkShaderModule;
     frag_shmod      : VkShaderModule;
     render_pass     : RenderPass;
-    pipeline_layout : VkPipelineLayout;
+    pipeline_layout : PipelineLayout;
     cmd_pool        : VkCommandPool
 )>)
     with_window(width, height, title) <| $(window)
@@ -323,7 +389,7 @@ def with_swapchain_independent_state(width, height, title; b : block<(
             shvert.shader_module,
             shfrag.shader_module,
             render_pass,
-            pipeline_layout.pipeline_layout,
+            pipeline_layout,
             cmd_pool.command_pool
         )
 
@@ -381,17 +447,19 @@ def with_swapchain_dependent_state(
         surf_fmt, present_mode, render_pass)
     defer() <| ${ delete swapchain; }
 
-    vk_device |> with_graphics_pipeline(
-        pipeline_layout, vk_render_pass, phys_dev,
+    var pipeline <- device |> create_example_graphics_pipeline(
+        pipeline_layout, render_pass, phys_dev,
         surface, window, vert_shmod, frag_shmod
-    ) <| $(pipeline)
-        b |> invoke(
-            swapchain,
-            pipeline,
-            vk_img_avail_sems,
-            vk_render_done_sems,
-            vk_frame_fences
-        )
+    )
+    defer() <| ${ delete pipeline; }
+
+    b |> invoke(
+        swapchain,
+        pipeline.pipeline,
+        vk_img_avail_sems,
+        vk_render_done_sems,
+        vk_frame_fences
+    )
 
 
 def wait_fence(device; fence : VkFence)
@@ -546,7 +614,7 @@ def main
         vert_shmod      : VkShaderModule;
         frag_shmod      : VkShaderModule;
         render_pass     : RenderPass;
-        pipeline_layout : VkPipelineLayout;
+        pipeline_layout : PipelineLayout;
         cmd_pool        : VkCommandPool
     )
         let vk_device = device.device
