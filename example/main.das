@@ -30,7 +30,7 @@ def create_example_graphics_pipelines(
     frag_shmod : ShaderModule
 ) : array<Pipeline>
     var extent <- phys_dev |> get_swap_extent(surface, window)
-    var create_infos <- [{ auto[] [[GraphicsPipelineCreateInfo
+    var create_info <- [[GraphicsPipelineCreateInfo
         layout = weak_copy(layout),
         render_pass = weak_copy(render_pass),
         base_pipeline_index = -1,
@@ -80,13 +80,10 @@ def create_example_graphics_pipelines(
                 module_ = weak_copy(frag_shmod), name = "main",
                 stage = VkShaderStageFlagBits VK_SHADER_STAGE_FRAGMENT_BIT]]
         }]
-    ]]}]
-    defer() <| ${ delete create_infos; }
+    ]]
+    defer() <| ${ delete create_info; }
 
-    return <- create_graphics_pipelines([
-        device = device,
-        create_infos = create_infos
-    ])
+    return <- create_graphics_pipeline(device=device, create_info=create_info)
 
 
 def with_mapped_vk_mem(device, mem, offset, size;
