@@ -842,7 +842,7 @@ class ParamBase(object):
             return [f'{vname} = vk_{bname},']
         elif self.vk_is_dyn_array_items:
             return [f'{vname} = vk_p_{bname},']
-        elif (self._vk_is_pointer and not self._optional and
+        elif (self._vk_is_pointer and not self._optional
         and self._boost_unqual_type == self.vk_unqual_type
         ):
             return [f'{vname} = vk_p_{bname},']
