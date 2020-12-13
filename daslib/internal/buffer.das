@@ -2,7 +2,6 @@ options indenting = 4
 options no_aot = true
 
 require vulkan
-require buffer
 
 
 def create_buffer_exclusive(
