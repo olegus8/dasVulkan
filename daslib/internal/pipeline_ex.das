@@ -37,7 +37,7 @@ def create_graphics_pipeline(
         create_infos = create_infos,
         result = result
     ])
-    defer <| ${ delete pipelines; }
+    defer() <| ${ delete pipelines; }
     assert(pipelines |> length() == 1)
     var pipeline := pipelines[0]
     pipelines |> resize(0)
