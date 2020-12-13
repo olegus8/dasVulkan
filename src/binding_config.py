@@ -191,7 +191,15 @@ def add_boost_content(g):
     g.add_gen_struct(name = 'VkFramebufferCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'attachmentCount', items = 'pAttachments')
     g.add_gen_struct(name = 'VkGraphicsPipelineCreateInfo', vk_to_boost=False,
-        ).declare_array(count = 'stageCount', items = 'pStages')
+        ).declare_array(count = 'stageCount', items = 'pStages',
+        ).declare_mandatory_ptr(name = 'pVertexInputState'
+        ).declare_mandatory_ptr(name = 'pInputAssemblyState'
+        ).declare_mandatory_ptr(name = 'pTessellationState'
+        ).declare_mandatory_ptr(name = 'pViewportState'
+        ).declare_mandatory_ptr(name = 'pRasterizationState'
+        ).declare_mandatory_ptr(name = 'pMultisampleState'
+        ).declare_mandatory_ptr(name = 'pDepthStencilState'
+        ).declare_mandatory_ptr(name = 'pColorBlendState')
     g.add_gen_struct(name = 'VkImageCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'queueFamilyIndexCount', items = 'pQueueFamilyIndices')
     g.add_gen_struct(name = 'VkInstanceCreateInfo', vk_to_boost=False,
