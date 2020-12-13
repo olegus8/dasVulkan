@@ -61,7 +61,7 @@ def create_example_graphics_pipeline(
             vertex_attribute_descriptions <- [{ auto[]
                 [[VertexInputAttributeDescription binding=0u, location=0u,
                     format = VkFormat VK_FORMAT_R32G32_SFLOAT,
-                    offset = uint(typeinfo(offsetof<position> type<Vertex>))]],
+                    offset = uint(typeinfo(offsetof<position> type<Vertex>))]];
                 [[VkVertexInputAttributeDescription binding=0u, location=1u,
                     format = VkFormat VK_FORMAT_R32G32B32_SFLOAT,
                     offset = uint(typeinfo(offsetof<color> type<Vertex>))]]
@@ -75,7 +75,7 @@ def create_example_graphics_pipeline(
         stages <- [{ auto[]
             [[PipelineShaderStageCreateInfo
                 module_ = weak_copy(vert_shmod), name = "main",
-                stage = VkShaderStageFlagBits VK_SHADER_STAGE_VERTEX_BIT]],
+                stage = VkShaderStageFlagBits VK_SHADER_STAGE_VERTEX_BIT]];
             [[PipelineShaderStageCreateInfo
                 module_ = weak_copy(frag_shmod), name = "main",
                 stage = VkShaderStageFlagBits VK_SHADER_STAGE_FRAGMENT_BIT]]
