@@ -106,7 +106,6 @@ def create_example_graphics_pipeline(device, layout, render_pass,
 
 /*
     device |> with_graphics_pipeline_simple(
-        PIPELINE_RASTERIZER_SIMPLE,
         PIPELINE_MULTISAMPLING_DISABLED,
         PIPELINE_BLENDING_DISABLED
     ) <| $(pipeline)
