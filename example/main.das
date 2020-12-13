@@ -83,7 +83,7 @@ def create_example_graphics_pipeline(
     ]]}]
     defer() <| ${ delete create_infos; }
 
-    var pipelines <- create_graphics_pipeline([
+    var pipelines <- create_graphics_pipelines([
         device = device,
         pipeline_cache = [[PipelineCache]],
         create_infos = create_infos
