@@ -21,3 +21,24 @@ def create_shader_module_from_file(
     ]]
     defer() <| ${ delete create_info; }
     return <- device |> create_shader_module(create_info)
+
+
+def create_graphics_pipeline(
+    device : Device = [[ Device ]];
+    pipeline_cache : PipelineCache = [[ PipelineCache ]];
+    create_info : GraphicsPipelineCreateInfo = [[ GraphicsPipelineCreateInfo ]];
+    var result : VkResult? = [[VkResult?]]
+) : Pipeline
+    var create_infos <- [{ <- clone_to_move(create_info) }]
+    defer() <| ${ delete create_infos; }
+    var pipelines <- create_graphics_pipelines([
+        device = device,
+        pipeline_cache = pipeline_cache,
+        create_infos = create_infos,
+        result = result
+    ])
+    defer <| ${ delete pipelines; }
+    assert(pipelines |> length() == 1)
+    var pipeline := pipelines[0]
+    pipelines.resize(0)
+    return <- pipeline
