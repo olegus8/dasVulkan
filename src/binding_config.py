@@ -226,7 +226,8 @@ def add_boost_content(g):
         ).declare_array(count = 'inputAttachmentCount', items = 'pInputAttachments',
         ).declare_array(count = 'colorAttachmentCount', items = 'pColorAttachments',
         ).declare_array(count = 'colorAttachmentCount', items = 'pResolveAttachments', optional=True,
-        ).declare_array(count = 'preserveAttachmentCount', items = 'pPreserveAttachments')
+        ).declare_array(count = 'preserveAttachmentCount', items = 'pPreserveAttachments',
+        ).declare_optional_ptr(name = 'pDepthStencilAttachment')
     g.add_gen_struct(name = 'VkSwapchainCreateInfoKHR', vk_to_boost=False,
         ).declare_array(count = 'queueFamilyIndexCount', items = 'pQueueFamilyIndices')
 
