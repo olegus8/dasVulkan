@@ -31,7 +31,6 @@ def create_graphics_pipeline(
 ) : Pipeline
     var create_infos <- [{ auto[] create_info }]
     defer() <|
-        create_infos |> resize(0)
         delete create_infos;
     var pipelines <- create_graphics_pipelines([
         device = device,
