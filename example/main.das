@@ -28,7 +28,7 @@ def create_example_graphics_pipelines(
     window : GLFWwindow_DasHandle;
     vert_shmod : ShaderModule;
     frag_shmod : ShaderModule
-) : Pipeline
+) : array<Pipeline>
     var extent <- phys_dev |> get_swap_extent(surface, window)
     var create_infos <- [{ auto[] [[GraphicsPipelineCreateInfo
         layout = weak_copy(layout),
