@@ -29,7 +29,7 @@ def create_graphics_pipeline(
     create_info : GraphicsPipelineCreateInfo = [[ GraphicsPipelineCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : Pipeline
-    var create_infos <- [{ <- clone_to_move(create_info) }]
+    var create_infos <- [{ clone_to_move(create_info) }]
     defer() <| ${ delete create_infos; }
     var pipelines <- create_graphics_pipelines([
         device = device,
