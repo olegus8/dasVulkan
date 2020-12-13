@@ -273,6 +273,8 @@ class GenStruct(object):
             if field.vk_name not in ignore_fields]
         for field in self.__fields:
             field.set_gen_struct(self)
+            if field.vk_is_pointer:
+                field.set_optional(True)
 
     @property
     def __c_struct(self):
