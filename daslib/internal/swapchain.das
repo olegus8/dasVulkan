@@ -5,7 +5,7 @@ require math
 
 require daslib/defer
 require vulkan
-require device_ex
+require device
 require image
 require generated
 require framebuffer

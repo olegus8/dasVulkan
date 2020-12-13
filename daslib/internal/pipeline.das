@@ -5,7 +5,7 @@ require daslib/safe_addr
 require daslib/defer
 
 require vulkan
-require device_ex
+require device
 require core
 require generated
 
