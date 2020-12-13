@@ -49,28 +49,6 @@ let
     ]]
 
 
-def with_pipeline_shader_stages(
-    vert : VkShaderModule#; vert_main : string;
-    frag : VkShaderModule#; frag_main : string;
-    b : block<(s:array<VkPipelineShaderStageCreateInfo>#)>
-)
-    var stages <- [{auto[]
-        [[VkPipelineShaderStageCreateInfo module_ = vert, pName = vert_main,
-            sType = (VkStructureType
-                VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO),
-            stage = VkShaderStageFlagBits VK_SHADER_STAGE_VERTEX_BIT
-        ]];
-        [[VkPipelineShaderStageCreateInfo module_ = frag, pName = frag_main,
-            sType = (VkStructureType
-                VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO),
-            stage = VkShaderStageFlagBits VK_SHADER_STAGE_FRAGMENT_BIT
-        ]]
-    }]
-    stages |> lock() <| $(tstages)
-        b |> invoke(tstages)
-    delete stages
-
-
 def with_graphics_pipeline_simple(
     device          : VkDevice#;
     layout          : VkPipelineLayout#;

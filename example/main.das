@@ -20,82 +20,26 @@ struct Vertex
 
 
 //TODO: remove
-def with_pipeline_vertex_input(
-    b : block<(i:VkPipelineVertexInputStateCreateInfo)>
+def with_pipeline_shader_stages(
+    vert : VkShaderModule#; vert_main : string;
+    frag : VkShaderModule#; frag_main : string;
+    b : block<(s:array<VkPipelineShaderStageCreateInfo>#)>
 )
-    let vtx_bindings <- [[auto[] [[VkVertexInputBindingDescription
-        binding = 0u,
-        stride = uint(typeinfo(sizeof type<Vertex>)),
-        inputRate = VkVertexInputRate VK_VERTEX_INPUT_RATE_VERTEX
-    ]]]]
-    let vtx_attrs <- [[auto[]
-        [[VkVertexInputAttributeDescription binding = 0u, location = 0u,
-            format = VkFormat VK_FORMAT_R32G32_SFLOAT,
-            offset = uint(typeinfo(offsetof<position> type<Vertex>))
-        ]];
-        [[VkVertexInputAttributeDescription binding = 0u, location = 1u,
-            format = VkFormat VK_FORMAT_R32G32B32_SFLOAT,
-            offset = uint(typeinfo(offsetof<color> type<Vertex>))
-        ]]
-    ]]
-    b |> invoke ([[VkPipelineVertexInputStateCreateInfo
-        sType = (VkStructureType
-            VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO),
-        vertexBindingDescriptionCount = uint(vtx_bindings |> length()),
-        pVertexBindingDescriptions = vtx_bindings[0] |> safe_addr(),
-        vertexAttributeDescriptionCount = uint(vtx_attrs |> length()),
-        pVertexAttributeDescriptions = vtx_attrs[0] |> safe_addr()
-    ]])
-
-
-//TODO: remove
-def with_graphics_pipeline(device, layout, render_pass,
-    phys_dev, surface, window, vert_shmod, frag_shmod;
-    b : block<(p:VkPipeline)>
-)
-    with_pipeline_vertex_input() <| $(vtx_input) {
-    phys_dev |> with_pipeline_viewport_full_window(surface, window
-    ) <| $(viewport) {
-    with_pipeline_shader_stages(
-        vert_shmod, "main",
-        frag_shmod, "main"
-    ) <| $(stages) {
-    device |> with_graphics_pipeline_simple(
-        layout, render_pass, stages, vtx_input,
-        PIPELINE_INPUT_ASSEMBLY_TRI_LIST,
-        viewport,
-        PIPELINE_RASTERIZER_SIMPLE,
-        PIPELINE_MULTISAMPLING_DISABLED,
-        PIPELINE_BLENDING_DISABLED
-    ) <| $(pipeline)
-    {
-        b |> invoke(pipeline);
-    }}}}
-
-
-//TODO: remove
-def with_pipeline_viewport_full_window(
-    phys_dev : PhysicalDevice;
-    surface : SurfaceKHR;
-    window : GLFWwindow_DasHandle#;
-    //TODO: make it pass temporary. compilation fails currently if i do
-    //b : block<(i:VkPipelineViewportStateCreateInfo#)>
-    b : block<(i:VkPipelineViewportStateCreateInfo)>
-)
-    var extent <- phys_dev |> get_swap_extent(surface, window)
-    let viewports <- [[auto[] [[VkViewport minDepth = 0.0f, maxDepth = 1.0f,
-        width = float(extent.width), height = float(extent.height)
-    ]]]]
-    extent |> with_view() <| $(vk_extent : VkExtent2D const)
-        let scissors <- [[auto[] [[VkRect2D extent = vk_extent]]]]
-        b |> invoke([[VkPipelineViewportStateCreateInfo
+    var stages <- [{auto[]
+        [[VkPipelineShaderStageCreateInfo module_ = vert, pName = vert_main,
             sType = (VkStructureType
-                VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO),
-            viewportCount = uint(viewports |> length()),
-            pViewports = viewports |> safe_addr(),
-            scissorCount = uint(scissors |> length()),
-            pScissors = scissors |> safe_addr()
-        ]])
+                VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO),
+            stage = VkShaderStageFlagBits VK_SHADER_STAGE_VERTEX_BIT
+        ]];
+        [[VkPipelineShaderStageCreateInfo module_ = frag, pName = frag_main,
+            sType = (VkStructureType
+                VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO),
+            stage = VkShaderStageFlagBits VK_SHADER_STAGE_FRAGMENT_BIT
+        ]]
+    }]
+    stages |> lock() <| $(tstages)
+        b |> invoke(tstages)
+    delete stages
 
 
 def create_example_graphics_pipeline(device, layout, render_pass,
