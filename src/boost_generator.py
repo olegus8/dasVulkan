@@ -815,7 +815,7 @@ class ParamBase(object):
                     f'length({cur}) == length({first}))']
             lines += [f'let vk_{bname} = {vtype}({first} |> length())']
             return lines
-        if self.vk_is_dyn_array_items:
+        elif self.vk_is_dyn_array_items:
             adr = f'array_addr_unsafe(boost_struct.{bname})'
             if self._boost_unqual_type == self.vk_unqual_type:
                 return [f'let vk_p_{bname} = {adr}']
@@ -825,6 +825,14 @@ class ParamBase(object):
                    f'unsafe',
                    f'    vk_p_{bname} = reinterpret<{vtype}>({adr})',
                 ]
+        elif (self._vk_is_pointer and not self._optional
+            and self._boost_unqual_type == self.vk_unqual_type
+        ):
+            return [
+               f'var vk_p_{bname} : {vtype}',
+               f'unsafe',
+               f'    vk_p_{bname} = addr(boost_struct.{bname})',
+            ]
         return []
 
     def generate_boost_struct_view_create_field(self):
@@ -832,7 +840,11 @@ class ParamBase(object):
         vname = self.vk_name
         if self.vk_is_dyn_array_count:
             return [f'{vname} = vk_{bname},']
-        if self.vk_is_dyn_array_items:
+        elif self.vk_is_dyn_array_items:
+            return [f'{vname} = vk_p_{bname},']
+        elif (self._vk_is_pointer and not self._optional and
+        and self._boost_unqual_type == self.vk_unqual_type
+        ):
             return [f'{vname} = vk_p_{bname},']
         return [f'{vname} = boost_value_to_vk(boost_struct.{bname}),']
 
