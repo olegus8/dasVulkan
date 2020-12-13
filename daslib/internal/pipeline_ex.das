@@ -30,7 +30,7 @@ def create_graphics_pipeline(
     var result : VkResult? = [[VkResult?]]
 ) : Pipeline
 
-    // This does not work, saying
+    // TODO: This does not work, saying
     // builtin.das:133:15:
     //     clone_dest := clone_src
     //                ^^
@@ -41,8 +41,7 @@ def create_graphics_pipeline(
     // This actually moves create_info, which is undesirable here
     var create_infos <- [{ auto[] create_info }]
 
-    defer() <|
-        delete create_infos;
+    defer() <| ${ delete create_infos; }
     var pipelines <- create_graphics_pipelines([
         device = device,
         pipeline_cache = pipeline_cache,
@@ -56,6 +55,6 @@ def create_graphics_pipeline(
     var pipeline <- pipelines[0]
     return <- pipeline
 
-    // Here pipelines[0] is not memzeroed, and hence gets deleted twice,
+    // TODO: Here pipelines[0] is not memzeroed, and hence gets deleted twice,
     // first time in defer() above, second time -- when caller calls delete
     //return <- pipelines[0]
