@@ -121,7 +121,6 @@ def create_single_queue_device(
             queue_family_index = queue_family,
             queue_priorities <- [{ auto[] 1.0f }]
         ]]}],
-        p_enabled_features = new [[PhysicalDeviceFeatures]],
         enabled_extension_names := extensions
     ]]
     defer() <| ${ delete create_info; }

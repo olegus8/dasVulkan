@@ -1832,10 +1832,9 @@ def vk_view_create_unsafe(var boost_struct : PipelineShaderStageCreateInfo
 
 def vk_view_destroy(var boost_struct : PipelineShaderStageCreateInfo)
     assert(boost_struct._vk_view__active)
-    if boost_struct.specialization_info != null
-        *(boost_struct.specialization_info) |> vk_view_destroy()
-        unsafe
-            delete boost_struct._vk_view_specialization_info
+    boost_struct.specialization_info |> vk_view_destroy()
+    unsafe
+        delete boost_struct._vk_view_p_specialization_info
     boost_struct._vk_view__active = false
 
 //
@@ -2197,10 +2196,9 @@ def vk_view_destroy(var boost_struct : DeviceCreateInfo)
     for item in boost_struct.queue_create_infos
         item |> vk_view_destroy()
     delete boost_struct._vk_view_queue_create_infos
-    if boost_struct.enabled_features != null
-        *(boost_struct.enabled_features) |> vk_view_destroy()
-        unsafe
-            delete boost_struct._vk_view_enabled_features
+    boost_struct.enabled_features |> vk_view_destroy()
+    unsafe
+        delete boost_struct._vk_view_p_enabled_features
     boost_struct._vk_view__active = false
 
 //
@@ -2366,42 +2364,33 @@ def vk_view_destroy(var boost_struct : GraphicsPipelineCreateInfo)
     for item in boost_struct.stages
         item |> vk_view_destroy()
     delete boost_struct._vk_view_stages
-    if boost_struct.vertex_input_state != null
-        *(boost_struct.vertex_input_state) |> vk_view_destroy()
-        unsafe
-            delete boost_struct._vk_view_vertex_input_state
-    if boost_struct.input_assembly_state != null
-        *(boost_struct.input_assembly_state) |> vk_view_destroy()
-        unsafe
-            delete boost_struct._vk_view_input_assembly_state
-    if boost_struct.tessellation_state != null
-        *(boost_struct.tessellation_state) |> vk_view_destroy()
-        unsafe
-            delete boost_struct._vk_view_tessellation_state
-    if boost_struct.viewport_state != null
-        *(boost_struct.viewport_state) |> vk_view_destroy()
-        unsafe
-            delete boost_struct._vk_view_viewport_state
-    if boost_struct.rasterization_state != null
-        *(boost_struct.rasterization_state) |> vk_view_destroy()
-        unsafe
-            delete boost_struct._vk_view_rasterization_state
-    if boost_struct.multisample_state != null
-        *(boost_struct.multisample_state) |> vk_view_destroy()
-        unsafe
-            delete boost_struct._vk_view_multisample_state
-    if boost_struct.depth_stencil_state != null
-        *(boost_struct.depth_stencil_state) |> vk_view_destroy()
-        unsafe
-            delete boost_struct._vk_view_depth_stencil_state
-    if boost_struct.color_blend_state != null
-        *(boost_struct.color_blend_state) |> vk_view_destroy()
-        unsafe
-            delete boost_struct._vk_view_color_blend_state
-    if boost_struct.dynamic_state != null
-        *(boost_struct.dynamic_state) |> vk_view_destroy()
-        unsafe
-            delete boost_struct._vk_view_dynamic_state
+    boost_struct.vertex_input_state |> vk_view_destroy()
+    unsafe
+        delete boost_struct._vk_view_p_vertex_input_state
+    boost_struct.input_assembly_state |> vk_view_destroy()
+    unsafe
+        delete boost_struct._vk_view_p_input_assembly_state
+    boost_struct.tessellation_state |> vk_view_destroy()
+    unsafe
+        delete boost_struct._vk_view_p_tessellation_state
+    boost_struct.viewport_state |> vk_view_destroy()
+    unsafe
+        delete boost_struct._vk_view_p_viewport_state
+    boost_struct.rasterization_state |> vk_view_destroy()
+    unsafe
+        delete boost_struct._vk_view_p_rasterization_state
+    boost_struct.multisample_state |> vk_view_destroy()
+    unsafe
+        delete boost_struct._vk_view_p_multisample_state
+    boost_struct.depth_stencil_state |> vk_view_destroy()
+    unsafe
+        delete boost_struct._vk_view_p_depth_stencil_state
+    boost_struct.color_blend_state |> vk_view_destroy()
+    unsafe
+        delete boost_struct._vk_view_p_color_blend_state
+    boost_struct.dynamic_state |> vk_view_destroy()
+    unsafe
+        delete boost_struct._vk_view_p_dynamic_state
     boost_struct._vk_view__active = false
 
 //
@@ -2494,10 +2483,9 @@ def vk_view_create_unsafe(var boost_struct : InstanceCreateInfo
 
 def vk_view_destroy(var boost_struct : InstanceCreateInfo)
     assert(boost_struct._vk_view__active)
-    if boost_struct.application_info != null
-        *(boost_struct.application_info) |> vk_view_destroy()
-        unsafe
-            delete boost_struct._vk_view_application_info
+    boost_struct.application_info |> vk_view_destroy()
+    unsafe
+        delete boost_struct._vk_view_p_application_info
     boost_struct._vk_view__active = false
 
 //
@@ -2910,10 +2898,9 @@ def vk_view_destroy(var boost_struct : SubpassDescription)
     for item in boost_struct.resolve_attachments
         item |> vk_view_destroy()
     delete boost_struct._vk_view_resolve_attachments
-    if boost_struct.depth_stencil_attachment != null
-        *(boost_struct.depth_stencil_attachment) |> vk_view_destroy()
-        unsafe
-            delete boost_struct._vk_view_depth_stencil_attachment
+    boost_struct.depth_stencil_attachment |> vk_view_destroy()
+    unsafe
+        delete boost_struct._vk_view_p_depth_stencil_attachment
     boost_struct._vk_view__active = false
 
 //
