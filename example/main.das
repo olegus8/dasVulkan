@@ -65,7 +65,7 @@ def create_example_graphics_pipeline(
                 [[VkVertexInputAttributeDescription binding=0u, location=1u,
                     format = VkFormat VK_FORMAT_R32G32B32_SFLOAT,
                     offset = uint(typeinfo(offsetof<color> type<Vertex>))]]
-            }],
+            }]
         ]],
         p_viewport_state = new [[PipelineViewportStateCreateInfo
             viewports <- [{ auto[] [[Viewport min_depth=0.f, max_depth=1.f,
