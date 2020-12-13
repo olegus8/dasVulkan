@@ -751,6 +751,8 @@ class ParamBase(object):
         bname = vk_param_name_to_boost(self.vk_name)
         if self.vk_is_dyn_array_items:
             bname = deref_boost_ptr_name(bname)
+        elif self._vk_is_pointer and not self._optional
+            bname = deref_boost_ptr_name(bname)
         return bname
 
     @property
@@ -760,25 +762,17 @@ class ParamBase(object):
             t = f'array<{t}>'
         elif self._vk_is_fixed_array:
             t += f' [{self._c_param.type.fixed_array_size}]'
-        elif self._vk_is_pointer:
+        elif self._vk_is_pointer and self._optional:
             t += ' ?'
         return t
 
     @property
     def _boost_func_param_name(self):
-        bname = self._boost_base_name
-        if self._vk_is_pointer and not self.vk_is_dyn_array_items:
-            assert not self._optional
-            bname = deref_boost_ptr_name(bname)
-        return bname
+        return self._boost_base_name
 
     @property
     def _boost_func_param_type(self):
-        btype = self._boost_base_type
-        if self._vk_is_pointer and not self.vk_is_dyn_array_items:
-            assert not self._optional
-            btype = deref_das_type(btype)
-        return btype
+        return self._boost_base_type
 
     @property
     def _boost_struct_field_name(self):
@@ -863,13 +857,18 @@ class ParamBase(object):
                f'            b <- vk_value_to_boost(*(vk_struct.{vname}+i))',
             ]
         if self._vk_is_pointer:
-            bdtype = deref_das_type(self._boost_struct_field_type)
-            return [
-               f'var b_{bname} = new {bdtype}',
-               f'if vk_struct.{vname} != null',
-               f'    (*b_{bname}) <- '
-                     f'vk_value_to_boost(*(vk_struct.{vname}))',
-            ]
+            if self._optional:
+                bdtype = deref_das_type(self._boost_struct_field_type)
+                return [
+                   f'var b_{bname} = new {bdtype}',
+                   f'if vk_struct.{vname} != null',
+                   f'    (*b_{bname}) <- '
+                         f'vk_value_to_boost(*(vk_struct.{vname}))',
+                ]
+            else:
+                return [
+                   f'assert(vk_struct.{vname} != null)',
+                ]
         return []
 
     def generate_boost_struct_v2b_field(self):
@@ -880,7 +879,10 @@ class ParamBase(object):
         if self.vk_is_dyn_array_items:
             return [f'{bname} <- b_{bname},']
         if self._vk_is_pointer:
-            return [f'{bname} = b_{bname},']
+            if self._optional:
+                return [f'{bname} = b_{bname},']
+            else:
+                return [f'{bname} <- vk_value_to_boost(*(vk_struct.{vname})),']
         return [f'{bname} = vk_value_to_boost(vk_struct.{vname}),']
 
     def generate_boost_func_param_call(self):
