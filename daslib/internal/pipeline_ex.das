@@ -51,6 +51,11 @@ def create_graphics_pipeline(
     ])
     defer() <| ${ delete pipelines; }
     assert(pipelines |> length() == 1)
-    var pipeline = pipelines[0]
-    pipelines |> resize(0)
+
+    // This works as expected. pipelines[0] is memzeroed
+    var pipeline <- pipelines[0]
     return <- pipeline
+
+    // Here pipelines[0] is not memzeroed, and hence gets deleted twice,
+    // first time in defer() above, second time -- when caller calls delete
+    //return <- pipelines[0]
