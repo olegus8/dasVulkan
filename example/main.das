@@ -51,7 +51,7 @@ def create_example_graphics_pipeline(
                     uint(VkColorComponentFlagBits VK_COLOR_COMPONENT_G_BIT) |
                     uint(VkColorComponentFlagBits VK_COLOR_COMPONENT_B_BIT) |
                     uint(VkColorComponentFlagBits VK_COLOR_COMPONENT_A_BIT)
-        ]]}],
+        ]]}]]],
         p_vertex_input_state = new [[PipelineVertexInputStateCreateInfo
             vertex_binding_descriptions <- [{ auto[]
                 [[VertexInputBindingDescription binding = 0u,
