@@ -85,7 +85,6 @@ def create_example_graphics_pipelines(
 
     return <- create_graphics_pipelines([
         device = device,
-        pipeline_cache = [[PipelineCache]],
         create_infos = create_infos
     ])
 
