@@ -1241,22 +1241,14 @@ class ParamVkStruct(ParamBase):
                f'    for item in boost_struct.{bname} ;',
                f'    item |> vk_view_create_unsafe()}}]',
             ]
-        if self._vk_is_pointer:
-            if self._optional:
-                return [
-                   f'if boost_struct.{bname} != null',
-                   f'    boost_struct._vk_view_{bname} = new {vutype}',
-                   f'    *(boost_struct._vk_view_{bname}) <- (',
-                   f'        *(boost_struct.{bname}) |> '
-                                    f'vk_view_create_unsafe())',
-                ]
-            else:
-                return [
-                   f'boost_struct._vk_view_p_{bname} = new {vutype}',
-                   f'*(boost_struct._vk_view_{bname}) <- (',
-                   f'    *(boost_struct.{bname}) |> '
+        if self._vk_is_pointer and self._optional:
+            return [
+               f'if boost_struct.{bname} != null',
+               f'    boost_struct._vk_view_{bname} = new {vutype}',
+               f'    *(boost_struct._vk_view_{bname}) <- (',
+               f'        *(boost_struct.{bname}) |> '
                                 f'vk_view_create_unsafe())',
-                ]
+            ]
         return [
            f'boost_struct._vk_view_p_{bname} = new {vutype}',
            f'*(boost_struct._vk_view_p_{bname}) <- (',
@@ -1270,7 +1262,10 @@ class ParamVkStruct(ParamBase):
             return [f'{vname} = array_addr_unsafe('
                 f'boost_struct._vk_view_{bname}),']
         if self._vk_is_pointer:
-            return [f'{vname} = boost_struct._vk_view_{bname},']
+            if self._optional:
+                return [f'{vname} = boost_struct._vk_view_{bname},']
+            else:
+                return [f'{vname} = boost_struct._vk_view_p_{bname},']
         return [f'{vname} = *(boost_struct._vk_view_p_{bname}),']
 
     def generate_boost_struct_view_destroy(self):
