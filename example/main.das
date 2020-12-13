@@ -19,12 +19,51 @@ struct Vertex
     color : float3
 
 
-def create_example_graphics_pipeline(device, layout, render_pass,
-    phys_dev, surface, window, vert_shmod, frag_shmod;
-    b : block<(p:VkPipeline)>
+//TODO: remove
+def with_graphics_pipeline_simple(
+    device          : VkDevice#;
+    layout          : VkPipelineLayout#;
+    render_pass     : VkRenderPass#;
+    stages          : array<VkPipelineShaderStageCreateInfo>#;
+    vtx_input       : VkPipelineVertexInputStateCreateInfo;
+    input_assembly  : VkPipelineInputAssemblyStateCreateInfo;
+    viewport        : VkPipelineViewportStateCreateInfo;
+    rasterizer      : VkPipelineRasterizationStateCreateInfo;
+    multisampling   : VkPipelineMultisampleStateCreateInfo;
+    blending        : VkPipelineColorBlendStateCreateInfo implicit;
+    b : block<(p:VkPipeline#)>
 )
+    var pstages : VkPipelineShaderStageCreateInfo const ?
+    unsafe
+        pstages = reinterpret<VkPipelineShaderStageCreateInfo const ?>(
+            addr(stages[0]))
+    let pipe_info <- [[VkGraphicsPipelineCreateInfo
+        sType = (VkStructureType
+            VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO),
+        stageCount          = uint(stages |> length()),
+        pStages             = pstages,
+        pVertexInputState   = vtx_input |> safe_addr(),
+        pInputAssemblyState = input_assembly |> safe_addr(),
+        pViewportState      = viewport |> safe_addr(),
+        pRasterizationState = rasterizer |> safe_addr(),
+        pMultisampleState   = multisampling |> safe_addr(),
+        pColorBlendState    = blending |> safe_addr(),
+        basePipelineIndex   = -1
+    ]]
+    var pipe : VkPipeline
+    verify(VkResult VK_SUCCESS == device |> vkCreateGraphicsPipelines(
+        [[VkPipelineCache]], 1u, safe_addr(pipe_info), null, safe_addr(pipe)))
+    b |> invoke(pipe)
+    device |> vkDestroyPipeline(pipe, null)
+
+
+def create_example_graphics_pipeline(device, layout, render_pass,
+    phys_dev, surface, window, vert_shmod, frag_shmod
+) : Pipeline
     var extent <- phys_dev |> get_swap_extent(surface, window)
     var create_infos <- [{ auto[] [[GraphicsPipelineCreateInfo
+        layout = layout,
+        render_pass = render_pass,
         p_vertex_input_state = new [[PipelineVertexInputStateCreateInfo
             vertex_binding_descriptions <- [{ auto[]
                 [[VertexInputBindingDescription binding = 0u,
@@ -52,7 +91,13 @@ def create_example_graphics_pipeline(device, layout, render_pass,
                 stage = VkShaderStageFlagBits VK_SHADER_STAGE_FRAGMENT_BIT]]
         }],
     ]]}]
-    defer() <| ${ delete create_infos; }
+    defer() <|
+        for info in create_infos
+            memzero(info.layout)
+            memzero(info.render_pass)
+            for stage in info.stages
+                memzero(stage.module_)
+        delete create_infos
 
     var pipelines <- create_graphics_pipeline([
         device = device,
