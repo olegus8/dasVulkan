@@ -34,17 +34,17 @@ def create_example_graphics_pipelines(
         layout = weak_copy(layout),
         render_pass = weak_copy(render_pass),
         base_pipeline_index = -1,
-        p_input_assembly_state = new [[ PipelineInputAssemblyStateCreateInfo
+        input_assembly_state <- [[ PipelineInputAssemblyStateCreateInfo
             topology=VkPrimitiveTopology VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST]],
-        p_rasterization_state = new [[ PipelineRasterizationStateCreateInfo
+        rasterization_state <- [[ PipelineRasterizationStateCreateInfo
             polygon_mode = VkPolygonMode VK_POLYGON_MODE_FILL,
             line_width = 1.0f,
             cull_mode = uint(VkCullModeFlagBits VK_CULL_MODE_BACK_BIT),
             front_face = VkFrontFace VK_FRONT_FACE_CLOCKWISE]],
-        p_multisample_state = new [[ PipelineMultisampleStateCreateInfo
+        multisample_state <- [[ PipelineMultisampleStateCreateInfo
             rasterization_samples=VkSampleCountFlagBits VK_SAMPLE_COUNT_1_BIT,
             min_sample_shading = 1.0f ]],
-        p_color_blend_state = new [[ PipelineColorBlendStateCreateInfo
+        color_blend_state <- [[ PipelineColorBlendStateCreateInfo
             attachments <- [{ auto[] [[PipelineColorBlendAttachmentState
                 color_write_mask =
                     uint(VkColorComponentFlagBits VK_COLOR_COMPONENT_R_BIT) |
@@ -52,7 +52,7 @@ def create_example_graphics_pipelines(
                     uint(VkColorComponentFlagBits VK_COLOR_COMPONENT_B_BIT) |
                     uint(VkColorComponentFlagBits VK_COLOR_COMPONENT_A_BIT)
         ]]}]]],
-        p_vertex_input_state = new [[PipelineVertexInputStateCreateInfo
+        vertex_input_state <- [[PipelineVertexInputStateCreateInfo
             vertex_binding_descriptions <- [{ auto[]
                 [[VertexInputBindingDescription binding = 0u,
                     stride = uint(typeinfo(sizeof type<Vertex>)),
@@ -67,7 +67,7 @@ def create_example_graphics_pipelines(
                     offset = uint(typeinfo(offsetof<color> type<Vertex>))]]
             }]
         ]],
-        p_viewport_state = new [[PipelineViewportStateCreateInfo
+        viewport_state <- [[PipelineViewportStateCreateInfo
             viewports <- [{ auto[] [[Viewport min_depth=0.f, max_depth=1.f,
                 width=float(extent.width), height=float(extent.height) ]]}],
             scissors <- [{ auto[] [[Rect2D extent = extent]] }]
