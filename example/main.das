@@ -103,14 +103,14 @@ def create_example_graphics_pipeline(device, layout, render_pass,
     b : block<(p:VkPipeline)>
 )
     var extent <- phys_dev |> get_swap_extent(surface, window)
-    var create_infos <- [{auto[] [[GraphicsPipelineCreateInfo
+    var create_infos <- [{ auto[] [[GraphicsPipelineCreateInfo
         p_vertex_input_state = new [[PipelineVertexInputStateCreateInfo
-            vertex_binding_descriptions <- [{auto[]
+            vertex_binding_descriptions <- [{ auto[]
                 [[VertexInputBindingDescription binding = 0u,
                     stride = uint(typeinfo(sizeof type<Vertex>)),
                     input_rate=VkVertexInputRate VK_VERTEX_INPUT_RATE_VERTEX]]
             }],
-            vertex_attribute_descriptions <- [{auto[]
+            vertex_attribute_descriptions <- [{ auto[]
                 [[VertexInputAttributeDescription binding=0u, location=0u,
                     format = VkFormat VK_FORMAT_R32G32_SFLOAT,
                     offset = uint(typeinfo(offsetof<position> type<Vertex>))]],
@@ -120,9 +120,9 @@ def create_example_graphics_pipeline(device, layout, render_pass,
             }],
         ]],
         p_viewport_state = new [[PipelineViewportStateCreateInfo
-            viewports <- [{auto[] [[Viewport min_depth=0.f, max_depth=1.f,
-                width = float(extent.width), height = float(extent.height) ]]}]
-            scissors = scissors |> safe_addr()
+            viewports <- [{ auto[] [[Viewport min_depth=0.f, max_depth=1.f,
+                width=float(extent.width), height=float(extent.height) ]]}],
+            scissors <- [{ auto[] [[Rect2D extent = extent]] }]
         ]],
     ]]}]
     defer() <| ${ delete create_infos; }
