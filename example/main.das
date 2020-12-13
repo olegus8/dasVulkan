@@ -25,18 +25,6 @@ def with_pipeline_shader_stages(
     frag : VkShaderModule#; frag_main : string;
     b : block<(s:array<VkPipelineShaderStageCreateInfo>#)>
 )
-    var stages <- [{auto[]
-        [[VkPipelineShaderStageCreateInfo module_ = vert, pName = vert_main,
-            sType = (VkStructureType
-                VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO),
-            stage = VkShaderStageFlagBits VK_SHADER_STAGE_VERTEX_BIT
-        ]];
-        [[VkPipelineShaderStageCreateInfo module_ = frag, pName = frag_main,
-            sType = (VkStructureType
-                VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO),
-            stage = VkShaderStageFlagBits VK_SHADER_STAGE_FRAGMENT_BIT
-        ]]
-    }]
     stages |> lock() <| $(tstages)
         b |> invoke(tstages)
     delete stages
@@ -68,6 +56,12 @@ def create_example_graphics_pipeline(device, layout, render_pass,
                 width=float(extent.width), height=float(extent.height) ]]}],
             scissors <- [{ auto[] [[Rect2D extent = extent]] }]
         ]],
+        stages <- [{ auto[]
+            [[PipelineShaderStageCreateInfo module_=vert_shmod, name="main",
+                stage = VkShaderStageFlagBits VK_SHADER_STAGE_VERTEX_BIT]],
+            [[PipelineShaderStageCreateInfo module_=frag_shmod, name="main",
+                stage = VkShaderStageFlagBits VK_SHADER_STAGE_FRAGMENT_BIT]]
+        }],
     ]]}]
     defer() <| ${ delete create_infos; }
 
