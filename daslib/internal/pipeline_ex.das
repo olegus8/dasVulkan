@@ -37,6 +37,8 @@ def create_graphics_pipeline(
     //15:133 - 16:133
     // 30507: type generated::GraphicsPipelineCreateInfo& implicit can't be cloned from generated::GraphicsPipelineCreateInfo aka TT const implicit
     //var create_infos <- [{ auto[] clone_to_move(create_info) }]
+
+    // This actually moves create_info, which is undesirable here
     var create_infos <- [{ auto[] create_info }]
 
     defer() <|
