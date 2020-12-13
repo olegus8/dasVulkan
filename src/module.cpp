@@ -7,7 +7,7 @@ using namespace das;
 template <typename OT>
 struct VkHandleAnnotation : ManagedValueAnnotation<OT> {
     VkHandleAnnotation(const string & n, const string & cpn = string())
-    : ManagedValueAnnotation(n,cpn) {
+    : ManagedValueAnnotation<OT>(n,cpn) {
     }
 };
 
