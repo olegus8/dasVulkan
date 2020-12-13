@@ -13,15 +13,11 @@ def create_single_view_framebuffer(
     height : uint
 ) : Framebuffer
     var create_info <- [[FramebufferCreateInfo
-        render_pass = render_pass,
-        attachments <- [{auto[] view}],
+        render_pass = weak_copy(render_pass),
+        attachments <- [{auto[] weak_copy(view)}],
         width = width,
         height = height,
         layers = 1u
     ]]
-    defer() <|
-        create_info.attachments |> resize(0)
-        memzero(create_info.render_pass)
-        delete create_info
-
+    defer() <| ${ delete create_info; }
     return <- device |> create_framebuffer(create_info)
