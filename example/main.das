@@ -138,8 +138,6 @@ def create_example_graphics_pipeline(device, layout, render_pass,
 
 
 /*
-    phys_dev |> with_pipeline_viewport_full_window(surface, window
-    ) <| $(viewport) {
     with_pipeline_shader_stages(
         vert_shmod, "main",
         frag_shmod, "main"
