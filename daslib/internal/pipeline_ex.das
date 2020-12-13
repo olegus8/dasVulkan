@@ -29,7 +29,16 @@ def create_graphics_pipeline(
     var create_info : GraphicsPipelineCreateInfo = [[ GraphicsPipelineCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : Pipeline
+
+    // This does not work, saying
+    // builtin.das:133:15:
+    //     clone_dest := clone_src
+    //                ^^
+    //15:133 - 16:133
+    // 30507: type generated::GraphicsPipelineCreateInfo& implicit can't be cloned from generated::GraphicsPipelineCreateInfo aka TT const implicit
+    //var create_infos <- [{ auto[] clone_to_move(create_info) }]
     var create_infos <- [{ auto[] create_info }]
+
     defer() <|
         delete create_infos;
     var pipelines <- create_graphics_pipelines([
