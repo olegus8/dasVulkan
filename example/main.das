@@ -335,8 +335,13 @@ def with_next_image(device, swapchain, sem_to_signal; b : block<(i:uint)>)
             result == VkResult VK_SUBOPTIMAL_KHR)
 
 
-def submit_draw(device, queue, cmd_buf,
-    sem_to_wait, sem_to_signal, fence_to_signal
+def submit_draw(
+    device          : Device;
+    queue           : Queue;
+    cmd_buf         : CommandBuffer;
+    sem_to_wait     : Semaphore;
+    sem_to_signal   : Semaphore;
+    fence_to_signal : Fence
 )
     unsafe
         queue_submit([queue = queue, command_buffer = cmd_buf,
