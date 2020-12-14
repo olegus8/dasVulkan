@@ -88,7 +88,7 @@ def create_example_graphics_pipeline(
 
 def with_example_draw_commands(device, phys_dev, window, surface, render_pass,
     fbufs, pipeline, cmd_pool, queue; vbuf, vertices_count;
-    b : block<(cmds:array<VkCommandBuffer>)>
+    b : block<(cmds:array<CommandBuffer>)>
 )
     var cmd_bufs <- device |> allocate_command_buffers_primary(
         cmd_pool, fbufs |> length())
@@ -108,7 +108,7 @@ def with_example_draw_commands(device, phys_dev, window, surface, render_pass,
                     vertex_count = uint(vertices_count),
                     instance_count = 1u])
 
-    b |> invoke(cmd_bufs)
+    b |> invoke(cmd_bufs.command_buffers)
 
 
 def with_mem_backed_buf(
@@ -388,7 +388,7 @@ def draw_frame(device, queue, cmd_bufs, swapchain, frame,
         imgs_used_by_frames[img_i] = frame
 
         device |> reset_fence(frame_fences[frame])
-        vk_device |> submit_draw(queue, cmd_bufs.command_buffers[img_i],
+        device |> submit_draw(queue, cmd_bufs[img_i],
             img_avail_sems[frame], render_done_sems[frame],
             frame_fences[frame])
 
