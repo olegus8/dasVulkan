@@ -151,7 +151,7 @@ def with_draw_commands(device, phys_dev, window, surface, render_pass,
         let vk_cmd_buf = cmd_buf.command_buffer
         cmd_buf |> record_render_pass(
             phys_dev, window, surface, render_pass, fbuf
-        ) <| $()
+        ) <|
             vk_cmd_buf |> vkCmdBindPipeline(
                 VkPipelineBindPoint VK_PIPELINE_BIND_POINT_GRAPHICS,
                 pipeline)

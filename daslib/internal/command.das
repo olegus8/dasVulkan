@@ -56,8 +56,8 @@ def record_render_pass_ex(
 def record_render_pass(
     command_buffer  : CommandBuffer;
     physical_device : PhysicalDevice;
-    surface         : SurfaceKHR;
     window          : GLFWwindow_DasHandle;
+    surface         : SurfaceKHR;
     render_pass     : RenderPass;
     framebuffer     : Framebuffer;
     clear_values    : array<VkClearValue>;
