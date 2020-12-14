@@ -324,12 +324,10 @@ def with_swapchain_dependent_state(
     )
 
 
-def with_next_image(device, swapchain, sem_to_signal, fence_to_signal;
-    b : block<(i:uint)>
-)
+def with_next_image(device, swapchain, sem_to_signal, b : block<(i:uint)>)
     var result : VkResult
     let img_index = device |> acquire_next_image_khr(
-        swapchain, ULONG_MAX, sem_to_signal, fence_to_signal, result)
+        swapchain, ULONG_MAX, sem_to_signal, [[Fence]], result)
     if result == VkResult VK_SUCCESS
         b |> invoke(img_index)
     else
@@ -389,9 +387,7 @@ def draw_frame(device, queue, cmd_bufs, swapchain, frame,
     device |> wait_for_fence(frame_fences[frame], ULONG_MAX)
     var img_acquired = false
     var presented = false
-    vk_device |> with_next_image(
-        vk_swapchain, img_avail_sems[frame], [[VkFence]]
-    ) <| $(img_i)
+    device |> with_next_image(vk_swapchain, img_avail_sems[frame]) <| $(img_i)
         img_acquired = true
 
         var img_frame = imgs_used_by_frames[img_i]
