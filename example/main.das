@@ -357,7 +357,7 @@ def present(device, queue, swapchain, img_i, sem_to_wait; b : block)
     unsafe
         p_result = addr(result)
     queue |> queue_present_khr(
-        swapchain, img_i, safe_addr(sem_to_wait), result)
+        swapchain, img_i, safe_addr(sem_to_wait), p_result)
     if result == VkResult VK_SUCCESS
         b |> invoke()
     else
