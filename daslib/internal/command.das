@@ -53,7 +53,7 @@ def record_render_pass_ex(
     b |> invoke()
     command_buffer |> cmd_end_render_pass()
 
-def record_render_pass_full_window(
+def record_render_pass(
     command_buffer  : CommandBuffer;
     physical_device : PhysicalDevice;
     surface         : SurfaceKHR;
