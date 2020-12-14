@@ -272,6 +272,7 @@ def add_boost_content(g):
         ).declare_array(count_expr = 'allocate_info.command_buffer_count', items = 'pCommandBuffers',
         ).declare_output(name = 'pCommandBuffers')
     g.add_gen_func(name = 'vkBeginCommandBuffer')
+    g.add_gen_func(name = 'vkBindBufferMemory')
     g.add_gen_func(name = 'vkCmdBeginRenderPass')
     g.add_gen_func(name = 'vkCmdCopyBuffer',
         ).declare_array(count = 'regionCount', items = 'pRegions')
