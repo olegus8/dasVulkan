@@ -194,7 +194,7 @@ def with_draw_commands(device, phys_dev, window, surface, render_pass,
 
 def with_mem_backed_buf(
     device : Device;
-    phys_dev : VkPhysicalDevice#;
+    phys_dev : PhysicalDevice#;
     buf_size : uint64;
     usage : uint;
     mem_props : uint;
@@ -578,8 +578,7 @@ def main
         var props <- phys_dev |> get_physical_device_properties()
         defer() <| ${ delete props ; }
         print("Using {props.device_name}\n")
-        device |> with_baked_vertex_buffer(
-            phys_dev.physical_device, cmd_pool, queue, vertices
+        device |> with_baked_vertex_buffer(phys_dev, cmd_pool, queue, vertices
         ) <| $(vbuf)
             var keep_running = true
             while keep_running // swapchain re-creation loop

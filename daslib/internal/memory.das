@@ -8,7 +8,7 @@ require generated
 
 
 def find_memory_type(
-    phys_dev        : VkPhysicalDevice implicit;
+    phys_dev        : PhysicalDevice;
     type_filter     : uint;
     needed_flags    : uint;
     b : block<(t:uint)>
@@ -26,7 +26,7 @@ def find_memory_type(
 
 def find_buffer_memory_type(
     device      : Device;
-    phys_dev    : VkPhysicalDevice;
+    phys_dev    : PhysicalDevice;
     buffer      : Buffer;
     mem_props   : uint;
     b : block<(mem_type:uint; mem_size:uint64)>
