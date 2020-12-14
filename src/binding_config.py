@@ -167,6 +167,9 @@ def add_boost_content(g):
         g.add_gen_struct(name=name, boost_to_vk=False)
 
     for name in [
+        'VkClearColorValue',
+        'VkClearDepthStencilValue',
+        'VkClearValue',
         'VkCommandBufferAllocateInfo',
         'VkCommandBufferBeginInfo',
         'VkCommandBufferInheritanceInfo',
