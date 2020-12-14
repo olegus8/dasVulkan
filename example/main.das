@@ -194,7 +194,7 @@ def with_draw_commands(device, phys_dev, window, surface, render_pass,
 
 def with_mem_backed_buf(
     device : Device;
-    phys_dev : PhysicalDevice#;
+    phys_dev : PhysicalDevice;
     buf_size : uint64;
     usage : uint;
     mem_props : uint;
