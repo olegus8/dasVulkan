@@ -31,7 +31,11 @@ class BoostGenerator(LoggingObject):
         self.enums = dict((x.name, x)
             for x in self.__context.main_c_header.enums)
         self.structs = dict((x.name, x)
-            for x in self.__context.main_c_header.structs)
+            for x in self.__context.main_c_header.structs
+            if 'union' not in x.name.split())
+        self.unions = dict((x.name, x)
+            for x in self.__context.main_c_header.structs
+            if 'union' in x.name.split())
         self.opaque_structs = dict((x.name, x)
             for x in self.__context.main_c_header.opaque_structs)
         self.functions = dict((x.name, x)
@@ -621,8 +625,6 @@ class C_Type(object):
     def __init__(self, name, generator):
         self.name = name
         self._generator = generator
-        if 'VkClearValue' in self.name:
-            print(f'union: {self.name}')
 
     @property
     def is_enum(self):
@@ -642,7 +644,7 @@ class C_Type(object):
 
     @property
     def is_union(self):
-        return 'union' in self.name.split()
+        return self.unqual_name in self._generator.unions
 
     @property
     def is_fixed_array(self):
