@@ -99,7 +99,7 @@ def copy_buf_sync(device, cmd_pool, queue, src_buf, dst_buf, buf_size)
 
 
 def with_draw_commands(device, phys_dev, window, surface, render_pass,
-    fbufs, pipeline, cmd_pool, queue, vbuf, vertices_count;
+    fbufs, pipeline, cmd_pool, queue; vbuf : Buffer; vertices_count;
     b : block<(cmds:array<VkCommandBuffer>)>
 )
     var cmd_bufs <- device |> allocate_command_buffers_primary(
@@ -149,7 +149,7 @@ def with_mem_backed_buf(
 
 
 def with_baked_vertex_buffer(device, phys_dev, cmd_pool, queue;
-    vertices:array<auto(VT)>; b : block<(b:VkBuffer)>
+    vertices:array<auto(VT)>; b : block<(b:Buffer)>
 )
     let buf_size = typeinfo(sizeof type<VT>) * vertices |> length()
 
