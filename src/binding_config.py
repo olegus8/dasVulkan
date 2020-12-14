@@ -247,7 +247,7 @@ def add_boost_content(g):
     # Functions
     #
 
-    g.add_gen_func(name = 'vkAllocateCommandBuffers'
+    g.add_gen_func(name = 'vkAllocateCommandBuffers', private = True,
         ).declare_array(count_expr = 'allocate_info.command_buffer_count', items = 'pCommandBuffers',
         ).declare_output(name = 'pCommandBuffers')
     g.add_gen_func(name = 'vkDeviceWaitIdle')
@@ -257,7 +257,7 @@ def add_boost_content(g):
     g.add_gen_func(name = 'vkEnumeratePhysicalDevices',
         ).declare_array(count = 'pPhysicalDeviceCount', items = 'pPhysicalDevices',
         ).declare_output(name = 'pPhysicalDevices')
-    g.add_gen_func(name = 'vkFreeCommandBuffers'
+    g.add_gen_func(name = 'vkFreeCommandBuffers', private = True,
         ).declare_array(count = 'commandBufferCount', items = 'pCommandBuffers')
     g.add_gen_func(name = 'vkGetDeviceQueue'
         ).declare_output(name = 'pQueue')

@@ -7,8 +7,8 @@ require vulkan
 
 struct CommandBuffers
     buffers : array<VkCommandBuffer>
-    device : VkDevice
-    pool : VkCommandPool
+    _device : VkDevice
+    _pool : VkCommandPool
 
 
 def create_command_buffers(
