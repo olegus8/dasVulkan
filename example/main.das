@@ -144,7 +144,8 @@ def submit(queue, cmd_bufs)
 def copy_buf_sync(device, cmd_pool, queue, src_buf, dst_buf, buf_size)
     var cmd_bufs <- device |> create_command_buffers_primary(cmd_pool, 1)
     defer() <| ${ delete cmd_bufs; }
-    var vk_cmd_bufs <- [{ for b in cmd_bufs ; b.command_buffer }]
+    var vk_cmd_bufs <- [{ for b in cmd_bufs.command_buffers ;
+        b.command_buffer }]
     defer() <| ${ delete vk_cmd_bufs; }
     let vk_cmd_buf = vk_cmd_bufs[0]
     vk_cmd_buf |> record() <| $()
