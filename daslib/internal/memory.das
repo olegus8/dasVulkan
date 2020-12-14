@@ -1,7 +1,7 @@
 options indenting = 4
 options no_aot = true
 
-require daslib/safe_addr
+require daslib/defer
 
 require vulkan
 require generated
@@ -13,12 +13,12 @@ def find_memory_type(
     needed_flags    : uint;
     b : block<(t:uint)>
 )
-    var actual_props : VkPhysicalDeviceMemoryProperties
-    phys_dev |> vkGetPhysicalDeviceMemoryProperties(safe_addr(actual_props))
-    for type_i in range(actual_props.memoryTypeCount)
+    var actual_props <- phys_dev |> get_physical_device_memory_properties()
+    defer() <| ${ delete actual_props; }
+    for mem_type, type_i in actual_props.memory_types, range(INT_MAX)
         if ((1u << uint(type_i)) & type_filter) == 0u
             continue
-        let actual_flags = actual_props.memoryTypes[type_i].propertyFlags
+        let actual_flags = mem_type.property_flags
         if (actual_flags & needed_flags) == needed_flags
             b |> invoke(uint(type_i))
             return

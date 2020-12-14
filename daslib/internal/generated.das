@@ -2800,17 +2800,13 @@ struct PhysicalDeviceMemoryProperties
 
 def vk_value_to_boost(vk_struct : VkPhysicalDeviceMemoryProperties) : PhysicalDeviceMemoryProperties
     var b_memory_types : array<MemoryType>
-    if vk_struct.memoryTypes != null
-        b_memory_types |> resize(int(vk_struct.memoryTypeCount))
-        for b, i in b_memory_types, range(INT_MAX)
-            unsafe
-                b <- vk_value_to_boost(*(vk_struct.memoryTypes+i))
+    b_memory_types |> resize(int(vk_struct.memoryTypeCount))
+    for b, i in b_memory_types, range(INT_MAX)
+        b <- vk_value_to_boost(vk_struct.memoryTypes[i])
     var b_memory_heaps : array<MemoryHeap>
-    if vk_struct.memoryHeaps != null
-        b_memory_heaps |> resize(int(vk_struct.memoryHeapCount))
-        for b, i in b_memory_heaps, range(INT_MAX)
-            unsafe
-                b <- vk_value_to_boost(*(vk_struct.memoryHeaps+i))
+    b_memory_heaps |> resize(int(vk_struct.memoryHeapCount))
+    for b, i in b_memory_heaps, range(INT_MAX)
+        b <- vk_value_to_boost(vk_struct.memoryHeaps[i])
     return <- [[PhysicalDeviceMemoryProperties
         memory_types <- b_memory_types,
         memory_heaps <- b_memory_heaps
