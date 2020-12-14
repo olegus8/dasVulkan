@@ -344,7 +344,7 @@ def with_swapchain_independent_state(width, height, title; b : block<(
             cmd_pool.command_pool
         )
 
-        device.device |> vkDeviceWaitIdle()
+        device |> device_wait_idle()
 
 
 def with_swapchain_dependent_state(
@@ -581,7 +581,7 @@ def main
                 // waiting while window is minimized
                 while uint2(0,0) == window |> get_framebuffer_size()
                     glfwWaitEvents()
-                vk_device |> vkDeviceWaitIdle()
+                device |> device_wait_idle()
 
                 with_swapchain_dependent_state(
                     instance,
@@ -626,7 +626,7 @@ def main
                                 break
                             frame = (frame + 1) % MAX_FRAMES_IN_FLIGHT
                         delete imgs_used_by_frames
-                        vk_device |> vkDeviceWaitIdle()
+                        device |> device_wait_idle()
 
     delete vertices
     unsafe

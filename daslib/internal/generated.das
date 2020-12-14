@@ -98,6 +98,18 @@ def finalize(var surface : SurfaceKHR explicit)
 // Functions
 //
 
+def device_wait_idle(
+    device : Device = [[ Device ]];
+    var result : VkResult? = [[VkResult?]]
+) : void
+
+    var result_ = VkResult VK_SUCCESS
+
+    result ?? result_ = vkDeviceWaitIdle(
+        boost_value_to_vk(device)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+
 def enumerate_device_extension_properties(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]];
     layer_name : string = [[ string ]];
