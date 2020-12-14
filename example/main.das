@@ -144,7 +144,7 @@ def with_mem_backed_buf(
     buf_size : uint64;
     usage : uint;
     mem_props : uint;
-    b : block<(b:VkBuffer#; m:DeviceMemory)>
+    b : block<(b:Buffer; m:DeviceMemory)>
 )
     let vk_device = device.device
     var buf <- device |> create_buffer_exclusive(buf_size, usage)
@@ -157,7 +157,7 @@ def with_mem_backed_buf(
         verify(VkResult VK_SUCCESS ==
             vk_device |> vkBindBufferMemory(
                 buf.buffer, mem.device_memory, uint64(0)))
-        b |> invoke(buf.buffer, mem)
+        b |> invoke(buf, mem)
 
 
 def with_baked_vertex_buffer(device, phys_dev, cmd_pool, queue;
