@@ -4,7 +4,6 @@ options no_aot = true
 require daslib/safe_addr
 
 require vulkan
-require memory
 require generated
 
 
