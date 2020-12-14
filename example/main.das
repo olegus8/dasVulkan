@@ -85,6 +85,30 @@ def create_example_graphics_pipeline(
     return <- create_graphics_pipeline([
         device=device, create_info=create_info])
 
+/*
+def record_render_pass(cmd_buf, phys_dev, window, surface, render_pass, fbuf;
+    b : block
+)
+    let vk_phys_dev = phys_dev.physical_device
+    let vk_cmd_buf = cmd_buf.command_buffer
+    var extent <- phys_dev |> get_swap_extent(surface, window)
+    extent |> with_view() <| $(vk_extent : VkExtent2D const)
+        cmd_buf |> record_command_buffer() <| $()
+            let clear_values <- [[auto[] [[VkClearValue]]]]
+            let info <- [[VkRenderPassBeginInfo
+                sType = (VkStructureType
+                    VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO),
+                renderPass      = render_pass,
+                framebuffer     = fbuf.framebuffer,
+                renderArea      = [[VkRect2D extent = vk_extent]],
+                clearValueCount = uint(clear_values |> length()),
+                pClearValues    = clear_values |> safe_addr()
+            ]]
+            vk_cmd_buf |> vkCmdBeginRenderPass(info |> safe_addr(),
+                VkSubpassContents VK_SUBPASS_CONTENTS_INLINE)
+            b |> invoke()
+            vk_cmd_buf |> vkCmdEndRenderPass()
+*/
 
 
 def submit(queue, cmd_bufs)
@@ -128,25 +152,26 @@ def with_draw_commands(device, phys_dev, window, surface, render_pass,
         let vk_cmd_buf = cmd_buf.command_buffer
         var clear_values <- [{ auto[] [[VkClearValue]] }]
         defer() <| ${ delete clear_values; }
-        cmd_buf |> record_render_pass(
-            phys_dev, window, surface, render_pass, fbuf, clear_values
-        ) <|
-            vk_cmd_buf |> vkCmdBindPipeline(
-                VkPipelineBindPoint VK_PIPELINE_BIND_POINT_GRAPHICS,
-                pipeline)
-            vk_cmd_buf |> vkCmdBindVertexBuffers(0u, // first binding idx
-                //TODO: make it work. says "can only dereference
-                //      simple type"
-                1u,
-                //uint(vbufs |> length()),
+        cmd_buf |> record_command_buffer() <|
+            cmd_buf |> record_render_pass(
+                phys_dev, window, surface, render_pass, fbuf, clear_values
+            ) <|
+                vk_cmd_buf |> vkCmdBindPipeline(
+                    VkPipelineBindPoint VK_PIPELINE_BIND_POINT_GRAPHICS,
+                    pipeline)
+                vk_cmd_buf |> vkCmdBindVertexBuffers(0u, // first binding idx
+                    //TODO: make it work. says "can only dereference
+                    //      simple type"
+                    1u,
+                    //uint(vbufs |> length()),
 
-                vbufs[0] |> safe_addr(),
-                offsets[0] |> safe_addr())
-            vk_cmd_buf |> vkCmdDraw(uint(vertices_count),
-                1u, // instance count
-                0u, // first vertex
-                0u  // first instance
-            )
+                    vbufs[0] |> safe_addr(),
+                    offsets[0] |> safe_addr())
+                vk_cmd_buf |> vkCmdDraw(uint(vertices_count),
+                    1u, // instance count
+                    0u, // first vertex
+                    0u  // first instance
+                )
 
     var vk_cmd_bufs <- [{ for b in cmd_bufs.command_buffers ;
         b.command_buffer }]
