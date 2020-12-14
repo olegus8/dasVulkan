@@ -252,7 +252,7 @@ def add_boost_content(g):
     # Functions
     #
 
-    g.add_gen_func(name = 'vkAllocateCommandBuffers', private = True,
+    g.add_gen_func(name = 'vkAllocateCommandBuffers', boost_name = 'allocate_command_buffers__inner', private = True,
         ).declare_array(count_expr = 'allocate_info.command_buffer_count', items = 'pCommandBuffers',
         ).declare_output(name = 'pCommandBuffers')
     g.add_gen_func(name = 'vkDeviceWaitIdle')

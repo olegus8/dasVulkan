@@ -118,16 +118,17 @@ class BoostGenerator(LoggingObject):
 
 class GenFunc(object):
 
-    def __init__(self, generator, name, private=False):
+    def __init__(self, generator, name, private=False, boost_name=None):
         self.__generator = generator
         self._vk_func_name = name
+        self.__boost_func_name = boost_name or vk_func_name_to_boost(name)
         self._private = private
 
         self._params = self.__generator.create_func_params(self.__c_func)
 
     @property
     def _boost_func_name(self):
-        return vk_func_name_to_boost(self._vk_func_name)
+        return self.__boost_func_name
 
     @property
     def __c_func(self):

@@ -1668,6 +1668,32 @@ def vk_value_to_boost(vk_struct : VkPhysicalDeviceProperties) : PhysicalDevicePr
     ]]
 
 //
+// CommandBufferAllocateInfo
+//
+
+struct CommandBufferAllocateInfo
+    command_pool : CommandPool
+    level : VkCommandBufferLevel
+    command_buffer_count : uint
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : CommandBufferAllocateInfo
+) : VkCommandBufferAllocateInfo
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    return <- [[ VkCommandBufferAllocateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO,
+        commandPool = boost_value_to_vk(boost_struct.command_pool),
+        level = boost_value_to_vk(boost_struct.level),
+        commandBufferCount = boost_value_to_vk(boost_struct.command_buffer_count)
+    ]]
+
+def vk_view_destroy(var boost_struct : CommandBufferAllocateInfo)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+//
 // CommandPoolCreateInfo
 //
 
@@ -1757,6 +1783,30 @@ def vk_view_destroy(var boost_struct : ImageViewCreateInfo)
     boost_struct.subresource_range |> vk_view_destroy()
     unsafe
         delete boost_struct._vk_view_p_subresource_range
+    boost_struct._vk_view__active = false
+
+//
+// MemoryAllocateInfo
+//
+
+struct MemoryAllocateInfo
+    allocation_size : uint64
+    memory_type_index : uint
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : MemoryAllocateInfo
+) : VkMemoryAllocateInfo
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    return <- [[ VkMemoryAllocateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO,
+        allocationSize = boost_value_to_vk(boost_struct.allocation_size),
+        memoryTypeIndex = boost_value_to_vk(boost_struct.memory_type_index)
+    ]]
+
+def vk_view_destroy(var boost_struct : MemoryAllocateInfo)
+    assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
 //
@@ -2194,32 +2244,6 @@ def vk_view_create_unsafe(var boost_struct : VertexInputBindingDescription
     ]]
 
 def vk_view_destroy(var boost_struct : VertexInputBindingDescription)
-    assert(boost_struct._vk_view__active)
-    boost_struct._vk_view__active = false
-
-//
-// CommandBufferAllocateInfo
-//
-
-struct CommandBufferAllocateInfo
-    command_pool : CommandPool
-    level : VkCommandBufferLevel
-    command_buffer_count : uint
-    _vk_view__active : bool
-
-def vk_view_create_unsafe(var boost_struct : CommandBufferAllocateInfo
-) : VkCommandBufferAllocateInfo
-
-    assert(!boost_struct._vk_view__active)
-    boost_struct._vk_view__active = true
-    return <- [[ VkCommandBufferAllocateInfo
-        sType = VkStructureType VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO,
-        commandPool = boost_value_to_vk(boost_struct.command_pool),
-        level = boost_value_to_vk(boost_struct.level),
-        commandBufferCount = boost_value_to_vk(boost_struct.command_buffer_count)
-    ]]
-
-def vk_view_destroy(var boost_struct : CommandBufferAllocateInfo)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -4536,5 +4560,79 @@ def finalize(var handle : Pipeline explicit)
         destroy_pipeline(
             vk_value_to_boost(handle._device),
             vk_value_to_boost(handle.pipeline)
+        )
+    memzero(handle)
+
+//
+// DeviceMemory
+//
+
+struct DeviceMemory
+    device_memory : VkDeviceMemory
+    _needs_delete : bool
+    _device : VkDevice
+
+def boost_value_to_vk(b : DeviceMemory) : VkDeviceMemory
+    return b.device_memory
+
+def boost_value_to_vk(b : DeviceMemory ?) : VkDeviceMemory ?
+    return b?.device_memory
+
+def vk_value_to_boost(v : VkDeviceMemory) : DeviceMemory
+    return [[ DeviceMemory device_memory=v ]]
+
+[private]
+def allocate_memory__inner(
+    device : Device = [[ Device ]];
+    var allocate_info : MemoryAllocateInfo = [[ MemoryAllocateInfo ]];
+    var result : VkResult? = [[VkResult?]]
+) : DeviceMemory
+
+    var vk_allocate_info <- allocate_info |> vk_view_create_unsafe()
+    defer() <| ${ allocate_info |> vk_view_destroy(); }
+    var vk_memory : VkDeviceMemory
+    var result_ = VkResult VK_SUCCESS
+
+    result ?? result_ = vkAllocateMemory(
+        boost_value_to_vk(device),
+        safe_addr(vk_allocate_info),
+        null,
+        safe_addr(vk_memory)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+    return vk_value_to_boost(vk_memory)
+
+def allocate_memory(
+    device : Device = [[ Device ]];
+    var allocate_info : MemoryAllocateInfo = [[ MemoryAllocateInfo ]];
+    var result : VkResult? = [[VkResult?]]
+) : DeviceMemory
+
+    var handle <- allocate_memory__inner(
+        device,
+        allocate_info,
+        result
+    )
+    handle._needs_delete = true
+    handle._device = boost_value_to_vk(device)
+    return <- handle
+
+[private]
+def free_memory(
+    device : Device = [[ Device ]];
+    memory : DeviceMemory = [[ DeviceMemory ]]
+) : void
+
+    vkFreeMemory(
+        boost_value_to_vk(device),
+        boost_value_to_vk(memory),
+        null
+    )
+
+def finalize(var handle : DeviceMemory explicit)
+    if handle._needs_delete
+        free_memory(
+            vk_value_to_boost(handle._device),
+            vk_value_to_boost(handle.device_memory)
         )
     memzero(handle)
