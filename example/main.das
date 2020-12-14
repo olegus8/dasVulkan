@@ -98,8 +98,8 @@ def copy_buf_sync(device, cmd_pool, queue, src_buf, dst_buf, buf_size)
     queue |> queue_wait_idle()
 
 
-def with_draw_commands(device, phys_dev, window, surface, render_pass,
-    fbufs, pipeline, cmd_pool, queue; vbuf : Buffer; vertices_count;
+def with_example_draw_commands(device, phys_dev, window, surface, render_pass,
+    fbufs, pipeline, cmd_pool, queue; vbuf, vertices_count;
     b : block<(cmds:array<VkCommandBuffer>)>
 )
     var cmd_bufs <- device |> allocate_command_buffers_primary(
