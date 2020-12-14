@@ -184,7 +184,7 @@ def with_baked_vertex_buffer(device, phys_dev, cmd_pool, queue;
             device |> copy_buf_sync(
                 cmd_pool, queue, staging_buf, vbuf, buf_size)
 
-        b |> invoke(vbuf)
+        b |> invoke(vbuf.buffer)
 
 
 def create_example_render_pass(
