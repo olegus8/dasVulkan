@@ -101,10 +101,7 @@ def copy_buf_sync(device, cmd_pool, queue, src_buf, dst_buf, buf_size)
         vk_cmd_buf |> vkCmdCopyBuffer(src_buf, dst_buf,
             uint(params |> length()), params[0] |> safe_addr())
 
-    var submits <- [{ auto[] [[SubmitInfo
-        command_buffers <- cmd_bufs.command_buffers]] }]
-    defer() <| ${ delete submits; }
-    queue |> queue_submit(submits)
+    queue |> queue_submit(cmd_bufs)
     queue |> queue_wait_idle()
 
 
