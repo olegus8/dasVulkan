@@ -115,7 +115,7 @@ def queue_submit(
         wait_dst_stage_mask_array.push(wait_dst_stage_mask)
 
     if signal_semaphores != null
-        signal_semaphores.push(<- weak_copy(*signal_semaphore))
+        signal_semaphores.push(weak_copy(*signal_semaphore))
 
     var submits <- [{ auto[] [[SubmitInfo
         wait_semaphores <- wait_semaphores,
