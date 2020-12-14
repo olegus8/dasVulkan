@@ -13,7 +13,7 @@ struct VkHandleAnnotation : public ManagedValueAnnotation<OT> {
         return true;
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return simulateCopy(context, at, l, r);
+        return ManagedValueAnnotation<OT>::simulateCopy(context, at, l, r);
     }
 };
 
