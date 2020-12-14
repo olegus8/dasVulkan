@@ -774,9 +774,7 @@ class ParamBase(object):
         if self.vk_is_dyn_array_items:
             if self.vk_is_pointer:
                 bname = deref_boost_ptr_name(bname)
-        elif self.vk_is_pointer and not (
-            self._optional or self._is_boost_func_output
-        ):
+        elif self.vk_is_pointer and not self._optional:
             bname = deref_boost_ptr_name(bname)
         return bname
 
@@ -787,9 +785,7 @@ class ParamBase(object):
             t = f'array<{t}>'
         elif self._vk_is_fixed_array:
             t += f' [{self._c_param.type.fixed_array_size}]'
-        elif self.vk_is_pointer and (
-            self._optional or self._is_boost_func_output
-        ):
+        elif self.vk_is_pointer and self._optional:
             t += ' ?'
         return t
 
@@ -1590,8 +1586,10 @@ def deref_das_type(type_name):
     return type_name[:-1].strip()
 
 def deref_boost_ptr_name(name):
-    assert_starts_with(name, 'p_')
-    return name[2:]
+    if name.startswith('p_'):
+        return name[2:]
+    assert_starts_with(name, 'pp_')
+    return name[3:]
 
 def vk_struct_type_to_boost(vk_type):
     assert_starts_with(vk_type, 'Vk')

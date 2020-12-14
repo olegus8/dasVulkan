@@ -243,79 +243,79 @@ def get_device_queue(
     device : Device = [[ Device ]];
     queue_family_index : uint = [[ uint ]];
     queue_index : uint = [[ uint ]]
-) : Queue
+) : Queue ?
 
-    var vk_queue : VkQueue
+    var vk_p_queue : VkQueue
 
     vkGetDeviceQueue(
         boost_value_to_vk(device),
         boost_value_to_vk(queue_family_index),
         boost_value_to_vk(queue_index),
-        safe_addr(vk_queue)
+        safe_addr(vk_p_queue)
     )
-    return vk_value_to_boost(vk_queue)
+    return vk_value_to_boost(vk_p_queue)
 
 def get_buffer_memory_requirements(
     device : Device = [[ Device ]];
     buffer : Buffer = [[ Buffer ]]
-) : MemoryRequirements
+) : MemoryRequirements ?
 
-    var vk_memory_requirements : VkMemoryRequirements
+    var vk_p_memory_requirements : VkMemoryRequirements
 
     vkGetBufferMemoryRequirements(
         boost_value_to_vk(device),
         boost_value_to_vk(buffer),
-        safe_addr(vk_memory_requirements)
+        safe_addr(vk_p_memory_requirements)
     )
-    return <- vk_value_to_boost(vk_memory_requirements)
+    return <- vk_value_to_boost(vk_p_memory_requirements)
 
 def get_physical_device_properties(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]]
-) : PhysicalDeviceProperties
+) : PhysicalDeviceProperties ?
 
-    var vk_properties : VkPhysicalDeviceProperties
+    var vk_p_properties : VkPhysicalDeviceProperties
 
     vkGetPhysicalDeviceProperties(
         boost_value_to_vk(physical_device),
-        safe_addr(vk_properties)
+        safe_addr(vk_p_properties)
     )
-    return <- vk_value_to_boost(vk_properties)
+    return <- vk_value_to_boost(vk_p_properties)
 
 def get_physical_device_surface_capabilities_khr(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]];
     surface : SurfaceKHR = [[ SurfaceKHR ]];
     var result : VkResult? = [[VkResult?]]
-) : SurfaceCapabilitiesKHR
+) : SurfaceCapabilitiesKHR ?
 
-    var vk_surface_capabilities : VkSurfaceCapabilitiesKHR
+    var vk_p_surface_capabilities : VkSurfaceCapabilitiesKHR
     var result_ = VkResult VK_SUCCESS
 
     result ?? result_ = vkGetPhysicalDeviceSurfaceCapabilitiesKHR(
         boost_value_to_vk(physical_device),
         boost_value_to_vk(surface),
-        safe_addr(vk_surface_capabilities)
+        safe_addr(vk_p_surface_capabilities)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return <- vk_value_to_boost(vk_surface_capabilities)
+    return <- vk_value_to_boost(vk_p_surface_capabilities)
 
 def get_physical_device_surface_support_khr(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]];
     queue_family_index : uint = [[ uint ]];
     surface : SurfaceKHR = [[ SurfaceKHR ]];
     var result : VkResult? = [[VkResult?]]
-) : uint
+) : uint ?
 
-    var vk_supported : uint
+    var vk_p_supported : uint
     var result_ = VkResult VK_SUCCESS
 
     result ?? result_ = vkGetPhysicalDeviceSurfaceSupportKHR(
         boost_value_to_vk(physical_device),
         boost_value_to_vk(queue_family_index),
         boost_value_to_vk(surface),
-        safe_addr(vk_supported)
+        safe_addr(vk_p_supported)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return vk_value_to_boost(vk_supported)
+    return vk_value_to_boost(vk_p_supported)
 
 def get_physical_device_queue_family_properties(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]]
@@ -400,15 +400,15 @@ def get_physical_device_surface_present_modes_khr(
 
 def get_physical_device_memory_properties(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]]
-) : PhysicalDeviceMemoryProperties
+) : PhysicalDeviceMemoryProperties ?
 
-    var vk_memory_properties : VkPhysicalDeviceMemoryProperties
+    var vk_p_memory_properties : VkPhysicalDeviceMemoryProperties
 
     vkGetPhysicalDeviceMemoryProperties(
         boost_value_to_vk(physical_device),
-        safe_addr(vk_memory_properties)
+        safe_addr(vk_p_memory_properties)
     )
-    return <- vk_value_to_boost(vk_memory_properties)
+    return <- vk_value_to_boost(vk_p_memory_properties)
 
 def get_swapchain_images_khr(
     device : Device = [[ Device ]];
@@ -440,6 +440,29 @@ def get_swapchain_images_khr(
     assert(result_ == VkResult VK_SUCCESS)
     return <- [{for x in vk_swapchain_images; vk_value_to_boost(x)}]
 
+def map_memory(
+    device : Device = [[ Device ]];
+    memory : DeviceMemory = [[ DeviceMemory ]];
+    offset : uint64 = [[ uint64 ]];
+    size : uint64 = [[ uint64 ]];
+    flags : uint = [[ uint ]];
+    var result : VkResult? = [[VkResult?]]
+) : void ? ?
+
+    var vk_pp_data : void ?
+    var result_ = VkResult VK_SUCCESS
+
+    result ?? result_ = vkMapMemory(
+        boost_value_to_vk(device),
+        boost_value_to_vk(memory),
+        boost_value_to_vk(offset),
+        boost_value_to_vk(size),
+        boost_value_to_vk(flags),
+        safe_addr(vk_pp_data)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+    return vk_value_to_boost(vk_pp_data)
+
 def queue_wait_idle(
     queue : Queue = [[ Queue ]];
     var result : VkResult? = [[VkResult?]]
@@ -451,6 +474,16 @@ def queue_wait_idle(
         boost_value_to_vk(queue)
     )
     assert(result_ == VkResult VK_SUCCESS)
+
+def unmap_memory(
+    device : Device = [[ Device ]];
+    memory : DeviceMemory = [[ DeviceMemory ]]
+) : void
+
+    vkUnmapMemory(
+        boost_value_to_vk(device),
+        boost_value_to_vk(memory)
+    )
 
 //
 // ApplicationInfo
@@ -3291,27 +3324,27 @@ def create_buffer__inner(
     device : Device = [[ Device ]];
     var create_info : BufferCreateInfo = [[ BufferCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
-) : Buffer
+) : Buffer ?
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
     defer() <| ${ create_info |> vk_view_destroy(); }
-    var vk_buffer : VkBuffer
+    var vk_p_buffer : VkBuffer
     var result_ = VkResult VK_SUCCESS
 
     result ?? result_ = vkCreateBuffer(
         boost_value_to_vk(device),
         safe_addr(vk_create_info),
         null,
-        safe_addr(vk_buffer)
+        safe_addr(vk_p_buffer)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return vk_value_to_boost(vk_buffer)
+    return vk_value_to_boost(vk_p_buffer)
 
 def create_buffer(
     device : Device = [[ Device ]];
     var create_info : BufferCreateInfo = [[ BufferCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
-) : Buffer
+) : Buffer ?
 
     var handle <- create_buffer__inner(
         device,
@@ -3381,27 +3414,27 @@ def create_device__inner(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]];
     var create_info : DeviceCreateInfo = [[ DeviceCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
-) : Device
+) : Device ?
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
     defer() <| ${ create_info |> vk_view_destroy(); }
-    var vk_device : VkDevice
+    var vk_p_device : VkDevice
     var result_ = VkResult VK_SUCCESS
 
     result ?? result_ = vkCreateDevice(
         boost_value_to_vk(physical_device),
         safe_addr(vk_create_info),
         null,
-        safe_addr(vk_device)
+        safe_addr(vk_p_device)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return vk_value_to_boost(vk_device)
+    return vk_value_to_boost(vk_p_device)
 
 def create_device(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]];
     var create_info : DeviceCreateInfo = [[ DeviceCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
-) : Device
+) : Device ?
 
     var handle <- create_device__inner(
         physical_device,
@@ -3451,27 +3484,27 @@ def create_command_pool__inner(
     device : Device = [[ Device ]];
     var create_info : CommandPoolCreateInfo = [[ CommandPoolCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
-) : CommandPool
+) : CommandPool ?
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
     defer() <| ${ create_info |> vk_view_destroy(); }
-    var vk_command_pool : VkCommandPool
+    var vk_p_command_pool : VkCommandPool
     var result_ = VkResult VK_SUCCESS
 
     result ?? result_ = vkCreateCommandPool(
         boost_value_to_vk(device),
         safe_addr(vk_create_info),
         null,
-        safe_addr(vk_command_pool)
+        safe_addr(vk_p_command_pool)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return vk_value_to_boost(vk_command_pool)
+    return vk_value_to_boost(vk_p_command_pool)
 
 def create_command_pool(
     device : Device = [[ Device ]];
     var create_info : CommandPoolCreateInfo = [[ CommandPoolCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
-) : CommandPool
+) : CommandPool ?
 
     var handle <- create_command_pool__inner(
         device,
@@ -3525,27 +3558,27 @@ def create_descriptor_set_layout__inner(
     device : Device = [[ Device ]];
     var create_info : DescriptorSetLayoutCreateInfo = [[ DescriptorSetLayoutCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
-) : DescriptorSetLayout
+) : DescriptorSetLayout ?
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
     defer() <| ${ create_info |> vk_view_destroy(); }
-    var vk_set_layout : VkDescriptorSetLayout
+    var vk_p_set_layout : VkDescriptorSetLayout
     var result_ = VkResult VK_SUCCESS
 
     result ?? result_ = vkCreateDescriptorSetLayout(
         boost_value_to_vk(device),
         safe_addr(vk_create_info),
         null,
-        safe_addr(vk_set_layout)
+        safe_addr(vk_p_set_layout)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return vk_value_to_boost(vk_set_layout)
+    return vk_value_to_boost(vk_p_set_layout)
 
 def create_descriptor_set_layout(
     device : Device = [[ Device ]];
     var create_info : DescriptorSetLayoutCreateInfo = [[ DescriptorSetLayoutCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
-) : DescriptorSetLayout
+) : DescriptorSetLayout ?
 
     var handle <- create_descriptor_set_layout__inner(
         device,
@@ -3599,27 +3632,27 @@ def create_fence__inner(
     device : Device = [[ Device ]];
     var create_info : FenceCreateInfo = [[ FenceCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
-) : Fence
+) : Fence ?
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
     defer() <| ${ create_info |> vk_view_destroy(); }
-    var vk_fence : VkFence
+    var vk_p_fence : VkFence
     var result_ = VkResult VK_SUCCESS
 
     result ?? result_ = vkCreateFence(
         boost_value_to_vk(device),
         safe_addr(vk_create_info),
         null,
-        safe_addr(vk_fence)
+        safe_addr(vk_p_fence)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return vk_value_to_boost(vk_fence)
+    return vk_value_to_boost(vk_p_fence)
 
 def create_fence(
     device : Device = [[ Device ]];
     var create_info : FenceCreateInfo = [[ FenceCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
-) : Fence
+) : Fence ?
 
     var handle <- create_fence__inner(
         device,
@@ -3673,27 +3706,27 @@ def create_framebuffer__inner(
     device : Device = [[ Device ]];
     var create_info : FramebufferCreateInfo = [[ FramebufferCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
-) : Framebuffer
+) : Framebuffer ?
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
     defer() <| ${ create_info |> vk_view_destroy(); }
-    var vk_framebuffer : VkFramebuffer
+    var vk_p_framebuffer : VkFramebuffer
     var result_ = VkResult VK_SUCCESS
 
     result ?? result_ = vkCreateFramebuffer(
         boost_value_to_vk(device),
         safe_addr(vk_create_info),
         null,
-        safe_addr(vk_framebuffer)
+        safe_addr(vk_p_framebuffer)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return vk_value_to_boost(vk_framebuffer)
+    return vk_value_to_boost(vk_p_framebuffer)
 
 def create_framebuffer(
     device : Device = [[ Device ]];
     var create_info : FramebufferCreateInfo = [[ FramebufferCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
-) : Framebuffer
+) : Framebuffer ?
 
     var handle <- create_framebuffer__inner(
         device,
@@ -3747,27 +3780,27 @@ def create_image__inner(
     device : Device = [[ Device ]];
     var create_info : ImageCreateInfo = [[ ImageCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
-) : Image
+) : Image ?
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
     defer() <| ${ create_info |> vk_view_destroy(); }
-    var vk_image : VkImage
+    var vk_p_image : VkImage
     var result_ = VkResult VK_SUCCESS
 
     result ?? result_ = vkCreateImage(
         boost_value_to_vk(device),
         safe_addr(vk_create_info),
         null,
-        safe_addr(vk_image)
+        safe_addr(vk_p_image)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return vk_value_to_boost(vk_image)
+    return vk_value_to_boost(vk_p_image)
 
 def create_image(
     device : Device = [[ Device ]];
     var create_info : ImageCreateInfo = [[ ImageCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
-) : Image
+) : Image ?
 
     var handle <- create_image__inner(
         device,
@@ -3821,27 +3854,27 @@ def create_image_view__inner(
     device : Device = [[ Device ]];
     var create_info : ImageViewCreateInfo = [[ ImageViewCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
-) : ImageView
+) : ImageView ?
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
     defer() <| ${ create_info |> vk_view_destroy(); }
-    var vk_view : VkImageView
+    var vk_p_view : VkImageView
     var result_ = VkResult VK_SUCCESS
 
     result ?? result_ = vkCreateImageView(
         boost_value_to_vk(device),
         safe_addr(vk_create_info),
         null,
-        safe_addr(vk_view)
+        safe_addr(vk_p_view)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return vk_value_to_boost(vk_view)
+    return vk_value_to_boost(vk_p_view)
 
 def create_image_view(
     device : Device = [[ Device ]];
     var create_info : ImageViewCreateInfo = [[ ImageViewCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
-) : ImageView
+) : ImageView ?
 
     var handle <- create_image_view__inner(
         device,
@@ -3893,25 +3926,25 @@ def vk_value_to_boost(v : VkInstance) : Instance
 def create_instance__inner(
     var create_info : InstanceCreateInfo = [[ InstanceCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
-) : Instance
+) : Instance ?
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
     defer() <| ${ create_info |> vk_view_destroy(); }
-    var vk_instance : VkInstance
+    var vk_p_instance : VkInstance
     var result_ = VkResult VK_SUCCESS
 
     result ?? result_ = vkCreateInstance(
         safe_addr(vk_create_info),
         null,
-        safe_addr(vk_instance)
+        safe_addr(vk_p_instance)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return vk_value_to_boost(vk_instance)
+    return vk_value_to_boost(vk_p_instance)
 
 def create_instance(
     var create_info : InstanceCreateInfo = [[ InstanceCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
-) : Instance
+) : Instance ?
 
     var handle <- create_instance__inner(
         create_info,
@@ -3994,27 +4027,27 @@ def create_pipeline_cache__inner(
     device : Device = [[ Device ]];
     var create_info : PipelineCacheCreateInfo = [[ PipelineCacheCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
-) : PipelineCache
+) : PipelineCache ?
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
     defer() <| ${ create_info |> vk_view_destroy(); }
-    var vk_pipeline_cache : VkPipelineCache
+    var vk_p_pipeline_cache : VkPipelineCache
     var result_ = VkResult VK_SUCCESS
 
     result ?? result_ = vkCreatePipelineCache(
         boost_value_to_vk(device),
         safe_addr(vk_create_info),
         null,
-        safe_addr(vk_pipeline_cache)
+        safe_addr(vk_p_pipeline_cache)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return vk_value_to_boost(vk_pipeline_cache)
+    return vk_value_to_boost(vk_p_pipeline_cache)
 
 def create_pipeline_cache(
     device : Device = [[ Device ]];
     var create_info : PipelineCacheCreateInfo = [[ PipelineCacheCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
-) : PipelineCache
+) : PipelineCache ?
 
     var handle <- create_pipeline_cache__inner(
         device,
@@ -4068,27 +4101,27 @@ def create_pipeline_layout__inner(
     device : Device = [[ Device ]];
     var create_info : PipelineLayoutCreateInfo = [[ PipelineLayoutCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
-) : PipelineLayout
+) : PipelineLayout ?
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
     defer() <| ${ create_info |> vk_view_destroy(); }
-    var vk_pipeline_layout : VkPipelineLayout
+    var vk_p_pipeline_layout : VkPipelineLayout
     var result_ = VkResult VK_SUCCESS
 
     result ?? result_ = vkCreatePipelineLayout(
         boost_value_to_vk(device),
         safe_addr(vk_create_info),
         null,
-        safe_addr(vk_pipeline_layout)
+        safe_addr(vk_p_pipeline_layout)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return vk_value_to_boost(vk_pipeline_layout)
+    return vk_value_to_boost(vk_p_pipeline_layout)
 
 def create_pipeline_layout(
     device : Device = [[ Device ]];
     var create_info : PipelineLayoutCreateInfo = [[ PipelineLayoutCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
-) : PipelineLayout
+) : PipelineLayout ?
 
     var handle <- create_pipeline_layout__inner(
         device,
@@ -4142,27 +4175,27 @@ def create_render_pass__inner(
     device : Device = [[ Device ]];
     var create_info : RenderPassCreateInfo = [[ RenderPassCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
-) : RenderPass
+) : RenderPass ?
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
     defer() <| ${ create_info |> vk_view_destroy(); }
-    var vk_render_pass : VkRenderPass
+    var vk_p_render_pass : VkRenderPass
     var result_ = VkResult VK_SUCCESS
 
     result ?? result_ = vkCreateRenderPass(
         boost_value_to_vk(device),
         safe_addr(vk_create_info),
         null,
-        safe_addr(vk_render_pass)
+        safe_addr(vk_p_render_pass)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return vk_value_to_boost(vk_render_pass)
+    return vk_value_to_boost(vk_p_render_pass)
 
 def create_render_pass(
     device : Device = [[ Device ]];
     var create_info : RenderPassCreateInfo = [[ RenderPassCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
-) : RenderPass
+) : RenderPass ?
 
     var handle <- create_render_pass__inner(
         device,
@@ -4216,27 +4249,27 @@ def create_sampler__inner(
     device : Device = [[ Device ]];
     var create_info : SamplerCreateInfo = [[ SamplerCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
-) : Sampler
+) : Sampler ?
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
     defer() <| ${ create_info |> vk_view_destroy(); }
-    var vk_sampler : VkSampler
+    var vk_p_sampler : VkSampler
     var result_ = VkResult VK_SUCCESS
 
     result ?? result_ = vkCreateSampler(
         boost_value_to_vk(device),
         safe_addr(vk_create_info),
         null,
-        safe_addr(vk_sampler)
+        safe_addr(vk_p_sampler)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return vk_value_to_boost(vk_sampler)
+    return vk_value_to_boost(vk_p_sampler)
 
 def create_sampler(
     device : Device = [[ Device ]];
     var create_info : SamplerCreateInfo = [[ SamplerCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
-) : Sampler
+) : Sampler ?
 
     var handle <- create_sampler__inner(
         device,
@@ -4290,27 +4323,27 @@ def create_semaphore__inner(
     device : Device = [[ Device ]];
     var create_info : SemaphoreCreateInfo = [[ SemaphoreCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
-) : Semaphore
+) : Semaphore ?
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
     defer() <| ${ create_info |> vk_view_destroy(); }
-    var vk_semaphore : VkSemaphore
+    var vk_p_semaphore : VkSemaphore
     var result_ = VkResult VK_SUCCESS
 
     result ?? result_ = vkCreateSemaphore(
         boost_value_to_vk(device),
         safe_addr(vk_create_info),
         null,
-        safe_addr(vk_semaphore)
+        safe_addr(vk_p_semaphore)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return vk_value_to_boost(vk_semaphore)
+    return vk_value_to_boost(vk_p_semaphore)
 
 def create_semaphore(
     device : Device = [[ Device ]];
     var create_info : SemaphoreCreateInfo = [[ SemaphoreCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
-) : Semaphore
+) : Semaphore ?
 
     var handle <- create_semaphore__inner(
         device,
@@ -4364,27 +4397,27 @@ def create_shader_module__inner(
     device : Device = [[ Device ]];
     var create_info : ShaderModuleCreateInfo = [[ ShaderModuleCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
-) : ShaderModule
+) : ShaderModule ?
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
     defer() <| ${ create_info |> vk_view_destroy(); }
-    var vk_shader_module : VkShaderModule
+    var vk_p_shader_module : VkShaderModule
     var result_ = VkResult VK_SUCCESS
 
     result ?? result_ = vkCreateShaderModule(
         boost_value_to_vk(device),
         safe_addr(vk_create_info),
         null,
-        safe_addr(vk_shader_module)
+        safe_addr(vk_p_shader_module)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return vk_value_to_boost(vk_shader_module)
+    return vk_value_to_boost(vk_p_shader_module)
 
 def create_shader_module(
     device : Device = [[ Device ]];
     var create_info : ShaderModuleCreateInfo = [[ ShaderModuleCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
-) : ShaderModule
+) : ShaderModule ?
 
     var handle <- create_shader_module__inner(
         device,
@@ -4438,27 +4471,27 @@ def create_swapchain_khr__inner(
     device : Device = [[ Device ]];
     var create_info : SwapchainCreateInfoKHR = [[ SwapchainCreateInfoKHR ]];
     var result : VkResult? = [[VkResult?]]
-) : SwapchainKHR
+) : SwapchainKHR ?
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
     defer() <| ${ create_info |> vk_view_destroy(); }
-    var vk_swapchain : VkSwapchainKHR
+    var vk_p_swapchain : VkSwapchainKHR
     var result_ = VkResult VK_SUCCESS
 
     result ?? result_ = vkCreateSwapchainKHR(
         boost_value_to_vk(device),
         safe_addr(vk_create_info),
         null,
-        safe_addr(vk_swapchain)
+        safe_addr(vk_p_swapchain)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return vk_value_to_boost(vk_swapchain)
+    return vk_value_to_boost(vk_p_swapchain)
 
 def create_swapchain_khr(
     device : Device = [[ Device ]];
     var create_info : SwapchainCreateInfoKHR = [[ SwapchainCreateInfoKHR ]];
     var result : VkResult? = [[VkResult?]]
-) : SwapchainKHR
+) : SwapchainKHR ?
 
     var handle <- create_swapchain_khr__inner(
         device,
@@ -4648,27 +4681,27 @@ def allocate_memory__inner(
     device : Device = [[ Device ]];
     var allocate_info : MemoryAllocateInfo = [[ MemoryAllocateInfo ]];
     var result : VkResult? = [[VkResult?]]
-) : DeviceMemory
+) : DeviceMemory ?
 
     var vk_allocate_info <- allocate_info |> vk_view_create_unsafe()
     defer() <| ${ allocate_info |> vk_view_destroy(); }
-    var vk_memory : VkDeviceMemory
+    var vk_p_memory : VkDeviceMemory
     var result_ = VkResult VK_SUCCESS
 
     result ?? result_ = vkAllocateMemory(
         boost_value_to_vk(device),
         safe_addr(vk_allocate_info),
         null,
-        safe_addr(vk_memory)
+        safe_addr(vk_p_memory)
     )
     assert(result_ == VkResult VK_SUCCESS)
-    return vk_value_to_boost(vk_memory)
+    return vk_value_to_boost(vk_p_memory)
 
 def allocate_memory(
     device : Device = [[ Device ]];
     var allocate_info : MemoryAllocateInfo = [[ MemoryAllocateInfo ]];
     var result : VkResult? = [[VkResult?]]
-) : DeviceMemory
+) : DeviceMemory ?
 
     var handle <- allocate_memory__inner(
         device,
