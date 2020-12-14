@@ -97,6 +97,36 @@ def queue_submit(
     queue |> queue_submit(submits, fence, result)
 
 
+def queue_submit(
+    queue               : Queue;
+    command_buffers     : CommandBuffers;
+    wait_semaphore      : Semaphore ? = [[ Semaphore ? ]];
+    wait_dst_stage_mask : uint = [[ uint ]];
+    signal_semaphore    : Semaphore ? = [[ Semaphore ? ]];
+    fence               : Fence = [[ Fence ]];
+    var result          : VkResult? = [[VkResult?]]
+)
+    var wait_semaphores : array<Semaphore>
+    defer() <| ${ delete wait_semaphores; }
+    var wait_dst_stage_mask_array : array<uint>
+    defer() <| ${ delete wait_dst_stage_mask_array; }
+    var signal_semaphores : array<Semaphore>
+    defer() <| ${ delete signal_semaphores; }
+
+    if wait_semaphore != null
+        wait_semaphores.push(<- weak_copy(*wait_semaphore))
+        wait_dst_stage_mask_array.push(wait_dst_stage_mask)
+
+    var submits <- [{ auto[] [[SubmitInfo
+        wait_semaphores := wait_semaphores,
+        wait_dst_stage_mask := wait_dst_stage_mask,
+        command_buffers := command_buffers.command_buffers,
+        signal_semaphores := signal_semaphores
+    ]]}]
+    defer() <| ${ delete submits; }
+    queue |> queue_submit(submits, fence, result)
+
+
 def cmd_copy_buffer(
     command_buffer : CommandBuffer;
     src_buffer : Buffer;
