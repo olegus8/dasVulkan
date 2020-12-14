@@ -643,6 +643,25 @@ def queue_wait_idle(
     )
     assert(result_ == VkResult VK_SUCCESS)
 
+def reset_fences(
+    device : Device = [[ Device ]];
+    fences : array<Fence> = [[ array<Fence> ]];
+    var result : VkResult? = [[VkResult?]]
+) : void
+
+    let vk_fenceCount = uint(fences |> length())
+    var vk_fences : array<VkFence>
+    defer() <| ${ delete vk_fences; }
+    vk_fences <- [{ for item in fences ; boost_value_to_vk(item) }]
+    var result_ = VkResult VK_SUCCESS
+
+    result ?? result_ = vkResetFences(
+        boost_value_to_vk(device),
+        vk_fenceCount,
+        array_addr_unsafe(vk_fences)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+
 def unmap_memory(
     device : Device = [[ Device ]];
     memory : DeviceMemory = [[ DeviceMemory ]]
@@ -652,6 +671,29 @@ def unmap_memory(
         boost_value_to_vk(device),
         boost_value_to_vk(memory)
     )
+
+def wait_for_fences(
+    device : Device = [[ Device ]];
+    fences : array<Fence> = [[ array<Fence> ]];
+    wait_all : uint = [[ uint ]];
+    timeout : uint64 = [[ uint64 ]];
+    var result : VkResult? = [[VkResult?]]
+) : void
+
+    let vk_fenceCount = uint(fences |> length())
+    var vk_fences : array<VkFence>
+    defer() <| ${ delete vk_fences; }
+    vk_fences <- [{ for item in fences ; boost_value_to_vk(item) }]
+    var result_ = VkResult VK_SUCCESS
+
+    result ?? result_ = vkWaitForFences(
+        boost_value_to_vk(device),
+        vk_fenceCount,
+        array_addr_unsafe(vk_fences),
+        boost_value_to_vk(wait_all),
+        boost_value_to_vk(timeout)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
 
 //
 // ApplicationInfo
