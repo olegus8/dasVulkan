@@ -127,6 +127,10 @@ def add_boost_content(g):
         ).declare_array(count = 'createInfoCount', items = 'pCreateInfos'
         ).declare_array(count = 'createInfoCount', items = 'pPipelines')
 
+    h = g.add_gen_handle(name = 'VkMemory')
+    h.declare_ctor(name = 'vkAllocateMemory')
+    h.declare_dtor(name = 'vkFreeMemory')
+
     #
     # Structs
     #
