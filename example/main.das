@@ -352,26 +352,14 @@ def submit_draw(
 
 
 def present(device, queue, swapchain, img_i, sem_to_wait; b : block<()>)
-    let info <- [[VkPresentInfoKHR
-        sType = VkStructureType VK_STRUCTURE_TYPE_PRESENT_INFO_KHR,
-        waitSemaphoreCount  = 1u,
-        pWaitSemaphores     = sem_to_wait.semaphore |> safe_addr(),
-        swapchainCount      = 1u,
-        pSwapchains         = swapchain |> safe_addr(),
-        pImageIndices       = img_i |> safe_addr()
-    ]]
-    //TODO: handle result properly. currently crashes on
-    //      "internal integration error"
-    verify(VkResult VK_SUCCESS ==
-        queue |> vkQueuePresentKHR(info |> safe_addr()))
-    b |> invoke()
-    /*
+    var result : VkResult
+    queue |> queue_present_khr(
+        swapchain, img_i, safe_addr(sem_to_wait), result)
     if result == VkResult VK_SUCCESS
         b |> invoke()
     else
         assert(result == VkResult VK_ERROR_OUT_OF_DATE_KHR ||
             result == VkResult VK_SUBOPTIMAL_KHR)
-    */
 
 
 def draw_frame(device, queue, cmd_bufs, swapchain, frame,
