@@ -362,14 +362,14 @@ def submit_draw(device, queue; cmd_buf : VkCommandBuffer;
     ]]]]
     verify(VkResult VK_SUCCESS == queue |> vkQueueSubmit(
         uint(infos |> length()), infos[0] |> safe_addr(),
-        fence_to_signal))
+        fence_to_signal.fence))
 
 
 def present(device, queue, swapchain, img_i, sem_to_wait; b : block<()>)
     let info <- [[VkPresentInfoKHR
         sType = VkStructureType VK_STRUCTURE_TYPE_PRESENT_INFO_KHR,
         waitSemaphoreCount  = 1u,
-        pWaitSemaphores     = sem_to_wait |> safe_addr(),
+        pWaitSemaphores     = sem_to_wait.semaphore |> safe_addr(),
         swapchainCount      = 1u,
         pSwapchains         = swapchain |> safe_addr(),
         pImageIndices       = img_i |> safe_addr()
