@@ -100,3 +100,24 @@ def create_multibuffered_swapchain(
             present_mode = present_mode,
             clipped = uint(VK_TRUE)
         ]])
+
+
+def queue_present_khr(
+    queue : Queue;
+    swapchain : SwapchainKHR;
+    image_index : uint;
+    wait_semaphore : Semaphore const ? implicit = [[ Semaphore const ? ]];
+    var result : VkResult? = [[VkResult?]]
+)
+    var wait_semaphores : array<Semaphore>
+    if wait_semaphore != null
+        wait_semaphores |> push(weak_copy(*wait_semaphore))
+
+    var info <- [[ PresentInfoKHR
+        wait_semaphores <- wait_semaphores,
+        swapchains <- [{ weak_copy(swapchain) }],
+        image_indices <- [{ image_index }]
+    ]]
+    defer() <| ${ delete info; }
+
+    queue |> queue_present_khr(info, result)
