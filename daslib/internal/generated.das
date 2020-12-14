@@ -110,7 +110,7 @@ def allocate_command_buffers(
     defer() <| ${ delete vk_command_buffers; }
     var result_ = VkResult VK_SUCCESS
 
-    vk_command_buffers |> resize(int(allocate_info.command_buffers_count))
+    vk_command_buffers |> resize(int(allocate_info.command_buffer_count))
     result ?? result_ = vkAllocateCommandBuffers(
         boost_value_to_vk(device),
         safe_addr(vk_allocate_info),
