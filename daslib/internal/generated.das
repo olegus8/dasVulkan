@@ -259,6 +259,22 @@ def cmd_copy_buffer(
         array_addr_unsafe(vk_regions)
     )
 
+def cmd_draw(
+    command_buffer : CommandBuffer = [[ CommandBuffer ]];
+    vertex_count : uint = [[ uint ]];
+    instance_count : uint = [[ uint ]];
+    first_vertex : uint = [[ uint ]];
+    first_instance : uint = [[ uint ]]
+) : void
+
+    vkCmdDraw(
+        boost_value_to_vk(command_buffer),
+        boost_value_to_vk(vertex_count),
+        boost_value_to_vk(instance_count),
+        boost_value_to_vk(first_vertex),
+        boost_value_to_vk(first_instance)
+    )
+
 def cmd_end_render_pass(
     command_buffer : CommandBuffer = [[ CommandBuffer ]]
 ) : void

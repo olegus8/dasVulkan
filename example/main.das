@@ -108,7 +108,6 @@ def with_draw_commands(device, phys_dev, window, surface, render_pass,
     var clear_values <- [{ auto[] [[VkClearValue]] }]
     defer() <| ${ delete clear_values; }
     for cmd_buf, fbuf in cmd_bufs.command_buffers, fbufs
-        let vk_cmd_buf = cmd_buf.command_buffer
         cmd_buf |> record_command_buffer() <|
             cmd_buf |> record_render_pass(
                 phys_dev, window, surface, render_pass, fbuf, clear_values
@@ -117,11 +116,9 @@ def with_draw_commands(device, phys_dev, window, surface, render_pass,
                     VkPipelineBindPoint VK_PIPELINE_BIND_POINT_GRAPHICS,
                     pipeline)
                 cmd_buf |> cmd_bind_vertex_buffer(vbuf)
-                vk_cmd_buf |> vkCmdDraw(uint(vertices_count),
-                    1u, // instance count
-                    0u, // first vertex
-                    0u  // first instance
-                )
+                cmd_draw([command_buffer = cmd_buf,
+                    vertex_count = uint(vertices_count),
+                    instance_count = 1u])
 
     var vk_cmd_bufs <- [{ for b in cmd_bufs.command_buffers ;
         b.command_buffer }]
