@@ -67,6 +67,7 @@ class BoostGenerator(LoggingObject):
             ParamVkHandlePtr,
             ParamVkStruct,
             ParamVkEnum,
+            ParamVkUnion,
             ParamString,
             ParamFixedString,
             ParamStringPtr,
@@ -638,6 +639,10 @@ class C_Type(object):
         return self.name.endswith('*')
 
     @property
+    def is_union(self):
+        return 'union' in self.name.split()
+
+    @property
     def is_fixed_array(self):
         return self.fixed_array_size is not None
 
@@ -650,7 +655,7 @@ class C_Type(object):
     @property
     def unqual_name(self):
         for pattern in [
-            (   r'^(const)?(struct|enum)?\s*'
+            (   r'^(const)?(struct|enum|union)?\s*'
                 r'(?P<type>(unsigned )?(long )?[A-z0-9_]+)'
                 r'( \*| \[\d+\])?$'
             ),
@@ -1352,6 +1357,19 @@ class ParamVkEnum(ParamBase):
     def maybe_create(cls, c_param, **kwargs):
         c_type = c_param.type
         if c_type.is_enum and c_type.unqual_name.startswith('Vk'):
+            return cls(c_param=c_param, **kwargs)
+
+    @property
+    def vk_unqual_type(self):
+        return self._c_unqual_type
+
+
+class ParamVkUnion(ParamBase):
+
+    @classmethod
+    def maybe_create(cls, c_param, **kwargs):
+        c_type = c_param.type
+        if c_type.is_union and c_type.unqual_name.startswith('Vk'):
             return cls(c_param=c_param, **kwargs)
 
     @property
