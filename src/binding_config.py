@@ -192,6 +192,15 @@ def add_boost_content(g):
     ]:
         g.add_gen_struct(name=name, vk_to_boost=False)
 
+    g.add_gen_struct(name = 'VkPresentInfoKHR', vk_to_boost=False,
+        ).declare_array(count = 'queueFamilyIndexCount', items = 'pQueueFamilyIndices')
+    uint32_t                 waitSemaphoreCount;
+    const VkSemaphore*       pWaitSemaphores;
+    uint32_t                 swapchainCount;
+    const VkSwapchainKHR*    pSwapchains;
+    const uint32_t*          pImageIndices;
+    VkResult*                pResults;
+
     g.add_gen_struct(name = 'VkBufferCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'queueFamilyIndexCount', items = 'pQueueFamilyIndices')
     g.add_gen_struct(name='VkComputePipelineCreateInfo', vk_to_boost=False)
@@ -320,6 +329,7 @@ def add_boost_content(g):
         ).declare_output(name = 'pSwapchainImages')
     g.add_gen_func(name = 'vkMapMemory'
         ).declare_output(name = 'ppData')
+    g.add_gen_func(name = 'vkQueuePresentKHR')
     g.add_gen_func(name = 'vkQueueSubmit',
         ).declare_array(count = 'submitCount', items = 'pSubmits')
     g.add_gen_func(name = 'vkQueueWaitIdle')
