@@ -514,6 +514,30 @@ def map_memory(
     assert(result_ == VkResult VK_SUCCESS)
     return vk_value_to_boost(vk_data)
 
+def queue_submit(
+    queue : Queue = [[ Queue ]];
+    var submits : array<SubmitInfo> = [[ array<SubmitInfo> ]];
+    fence : Fence = [[ Fence ]];
+    var result : VkResult? = [[VkResult?]]
+) : void
+
+    let vk_submitCount = uint(submits |> length())
+    var vk_submits <- [{ for item in submits ;
+        item |> vk_view_create_unsafe() }]
+    defer() <|
+        for item in submits
+            item |> vk_view_destroy()
+        delete vk_submits
+    var result_ = VkResult VK_SUCCESS
+
+    result ?? result_ = vkQueueSubmit(
+        boost_value_to_vk(queue),
+        vk_submitCount,
+        array_addr_unsafe(vk_submits),
+        boost_value_to_vk(fence)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+
 def queue_wait_idle(
     queue : Queue = [[ Queue ]];
     var result : VkResult? = [[VkResult?]]
@@ -3307,6 +3331,57 @@ def vk_view_destroy(var boost_struct : SpecializationInfo)
     for item in boost_struct.map_entries
         item |> vk_view_destroy()
     delete boost_struct._vk_view_map_entries
+    boost_struct._vk_view__active = false
+
+//
+// SubmitInfo
+//
+
+struct SubmitInfo
+    wait_semaphores : array<Semaphore>
+    wait_dst_stage_mask : array<uint>
+    command_buffers : array<CommandBuffer>
+    signal_semaphores : array<Semaphore>
+    _vk_view_wait_semaphores : array<VkSemaphore>
+    _vk_view_command_buffers : array<VkCommandBuffer>
+    _vk_view_signal_semaphores : array<VkSemaphore>
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : SubmitInfo
+) : VkSubmitInfo
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    assert(length(boost_struct.wait_dst_stage_mask) == length(boost_struct.wait_semaphores))
+    let vk_wait_semaphore_count = uint(boost_struct.wait_semaphores |> length())
+    boost_struct._vk_view_wait_semaphores <- [{
+        for item in boost_struct.wait_semaphores ;
+        item |> boost_value_to_vk()}]
+    let vk_p_wait_dst_stage_mask = array_addr_unsafe(boost_struct.wait_dst_stage_mask)
+    let vk_command_buffer_count = uint(boost_struct.command_buffers |> length())
+    boost_struct._vk_view_command_buffers <- [{
+        for item in boost_struct.command_buffers ;
+        item |> boost_value_to_vk()}]
+    let vk_signal_semaphore_count = uint(boost_struct.signal_semaphores |> length())
+    boost_struct._vk_view_signal_semaphores <- [{
+        for item in boost_struct.signal_semaphores ;
+        item |> boost_value_to_vk()}]
+    return <- [[ VkSubmitInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_SUBMIT_INFO,
+        waitSemaphoreCount = vk_wait_semaphore_count,
+        pWaitSemaphores = array_addr_unsafe(boost_struct._vk_view_wait_semaphores),
+        pWaitDstStageMask = vk_p_wait_dst_stage_mask,
+        commandBufferCount = vk_command_buffer_count,
+        pCommandBuffers = array_addr_unsafe(boost_struct._vk_view_command_buffers),
+        signalSemaphoreCount = vk_signal_semaphore_count,
+        pSignalSemaphores = array_addr_unsafe(boost_struct._vk_view_signal_semaphores)
+    ]]
+
+def vk_view_destroy(var boost_struct : SubmitInfo)
+    assert(boost_struct._vk_view__active)
+    delete boost_struct._vk_view_wait_semaphores
+    delete boost_struct._vk_view_command_buffers
+    delete boost_struct._vk_view_signal_semaphores
     boost_struct._vk_view__active = false
 
 //
