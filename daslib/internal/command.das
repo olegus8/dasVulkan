@@ -76,3 +76,17 @@ def record_render_pass(
     defer() <| ${ delete info; }
     let contents = VkSubpassContents VK_SUBPASS_CONTENTS_INLINE
     command_buffer |> record_render_pass_ex(info, contents, b)
+
+
+def queue_submit(
+    queue               : Queue;
+    command_buffers     : CommandBuffers;
+    wait_semaphores     : array<Semaphore> = [[ array<Semaphore> ]];
+    wait_dst_stage_mask : array<uint> = [[ array<uint> ]];
+    signal_semaphores   : array<Semaphore> = [[ array<Semaphore> ]];
+    fence               : Fence = [[ Fence ]];
+    var result          : VkResult? = [[VkResult?]]
+)
+    var submits <- [{ auto[] clone_to_move(submit) }]
+    defer() <| ${ delete submits; }
+    queue |> queue_submit(submits, fence, result)
