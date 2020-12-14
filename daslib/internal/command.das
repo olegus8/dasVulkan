@@ -5,12 +5,12 @@ require vulkan
 require generated
 
 
-def create_command_buffers_primary(
+def allocate_command_buffers_primary(
     device : Device;
     pool : CommandPool;
     count : int
 ) : CommandBuffers
-    return <- device |> create_command_buffers([[
+    return <- device |> allocate_command_buffers([[
         CommandBufferAllocateInfo
             command_pool = pool,
             command_buffer_count = uint(count),

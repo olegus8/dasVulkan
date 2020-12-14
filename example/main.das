@@ -141,7 +141,7 @@ def submit(queue, cmd_bufs)
 
 
 def copy_buf_sync(device, cmd_pool, queue, src_buf, dst_buf, buf_size)
-    var cmd_bufs <- device |> create_command_buffers_primary(cmd_pool, 1)
+    var cmd_bufs <- device |> allocate_command_buffers_primary(cmd_pool, 1)
     defer() <| ${ delete cmd_bufs; }
     var vk_cmd_bufs <- [{ for b in cmd_bufs.command_buffers ;
         b.command_buffer }]
@@ -161,7 +161,7 @@ def with_draw_commands(device, phys_dev, window, surface, render_pass,
 )
     let vbufs <- [[auto[] vbuf]]
     let offsets : uint64[1]
-    var cmd_bufs <- device |> create_command_buffers_primary(
+    var cmd_bufs <- device |> allocate_command_buffers_primary(
         cmd_pool, fbufs |> length())
     defer() <| ${ delete cmd_bufs; }
     for cmd_buf, fbuf in cmd_bufs.command_buffers, fbufs
