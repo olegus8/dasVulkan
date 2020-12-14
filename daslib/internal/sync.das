@@ -24,5 +24,5 @@ def wait_for_fence(
 )
     var fences <- [{ auto[] weak_copy(fence) }]
     defer() <| ${ delete fences; }
-    wait_for_fence([
+    wait_for_fences([
         device=device, fences=fences, timeout=timeout, result=result])
