@@ -291,31 +291,19 @@ def with_swapchain_dependent_state(
         render_done_sems    : array<Semaphore>;
         frame_fences        : array<Fence>
 )>)
-    let vk_device = device.device
-    let vk_render_pass = render_pass.render_pass
-
     var img_avail_sems <- [{for x in range(MAX_FRAMES_IN_FLIGHT);
         device |> create_semaphore() }]
     defer() <| ${ delete img_avail_sems; }
 
-    var vk_img_avail_sems <- [{for sem in img_avail_sems; sem.semaphore}]
-    defer() <| ${ delete vk_img_avail_sems; }
-
     var render_done_sems <- [{for x in range(MAX_FRAMES_IN_FLIGHT);
         device |> create_semaphore() }]
     defer() <| ${ delete render_done_sems; }
-
-    var vk_render_done_sems <- [{for sem in render_done_sems; sem.semaphore}]
-    defer() <| ${ delete vk_render_done_sems; }
 
     var frame_fences <- [{for x in range(MAX_FRAMES_IN_FLIGHT);
         device |> create_fence([[FenceCreateInfo
             flags=uint(VkFenceCreateFlagBits VK_FENCE_CREATE_SIGNALED_BIT)
     ]]) }]
     defer() <| ${ delete frame_fences; }
-
-    var vk_frame_fences <- [{for fence in frame_fences; fence.fence}]
-    defer() <| ${ delete vk_frame_fences; }
 
     var swapchain <- device |> create_swapchain_ex(phys_dev, surface, window,
         surf_fmt, present_mode, render_pass)
@@ -330,9 +318,9 @@ def with_swapchain_dependent_state(
     b |> invoke(
         swapchain,
         pipeline,
-        vk_img_avail_sems,
-        vk_render_done_sems,
-        vk_frame_fences
+        img_avail_sems,
+        render_done_sems,
+        frame_fences
     )
 
 
