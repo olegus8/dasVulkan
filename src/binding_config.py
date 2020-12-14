@@ -293,4 +293,6 @@ def add_boost_content(g):
     g.add_gen_func(name = 'vkGetSwapchainImagesKHR',
         ).declare_array(count = 'pSwapchainImageCount', items = 'pSwapchainImages',
         ).declare_output(name = 'pSwapchainImages')
+    g.add_gen_func(name = 'vkMapMemory')
     g.add_gen_func(name = 'vkQueueWaitIdle')
+    g.add_gen_func(name = 'vkUnmapMemory')
