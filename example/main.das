@@ -218,7 +218,8 @@ def with_baked_vertex_buffer(device : Device; phys_dev, cmd_pool;
             uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT)|
             uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_COHERENT_BIT)
         ) <| $(staging_buf, staging_mem)
-            device |> map_device_memory_to_array(staging_mem, uint64(buf_size)
+            device |> map_device_memory_to_array(
+                staging_mem, uint64(buf_size), uint64(0), 0u
             ) <| $(var mapped_vertices : array<VT>#)
                 for dst, src in mapped_vertices, vertices
                     dst = src
