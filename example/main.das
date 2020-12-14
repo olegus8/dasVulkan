@@ -336,16 +336,6 @@ def with_swapchain_dependent_state(
     )
 
 
-def wait_fence(device; fence : VkFence)
-    verify(VkResult VK_SUCCESS == device |> vkWaitForFences(
-        1u, fence |> safe_addr(), uint(VK_TRUE), ULONG_MAX))
-
-
-def reset_fence(device; fence : VkFence)
-    verify(VkResult VK_SUCCESS ==
-        device |> vkResetFences(1u, fence |> safe_addr()))
-
-
 def with_next_image(device, swapchain, sem_to_signal, fence_to_signal;
     b : block<(i:uint)>
 )
@@ -414,7 +404,7 @@ def draw_frame(device, queue, cmd_bufs, swapchain, frame,
     var imgs_used_by_frames
 )
     let vk_swapchain = swapchain.swapchain_khr
-    device |> wait_fence(frame_fences[frame])
+    device |> wait_for_fence(frame_fences[frame], ULONG_MAX)
     var img_acquired = false
     var presented = false
     device |> with_next_image(vk_swapchain, img_avail_sems[frame], [[VkFence]]
@@ -423,7 +413,7 @@ def draw_frame(device, queue, cmd_bufs, swapchain, frame,
 
         var img_frame = imgs_used_by_frames[img_i]
         if img_frame != -1
-            device |> wait_fence(frame_fences[img_frame])
+            device |> wait_for_fence(frame_fences[img_frame], ULONG_MAX)
         imgs_used_by_frames[img_i] = frame
 
         device |> reset_fence(frame_fences[frame])
