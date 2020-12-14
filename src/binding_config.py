@@ -160,6 +160,8 @@ def add_boost_content(g):
 
     for name in [
         'VkExtensionProperties',
+        'VkMemoryHeap',
+        'VkMemoryType',
         'VkPhysicalDeviceMemoryProperties',
         'VkPhysicalDeviceProperties',
     ]:
