@@ -102,7 +102,7 @@ def with_draw_commands(device, phys_dev, window, surface, render_pass,
     fbufs, pipeline, cmd_pool, queue, vbuf, vertices_count;
     b : block<(cmds:array<VkCommandBuffer>)>
 )
-    let vbufs <- [[auto[] vbuf]]
+    var vbufs <- [{ auto[] vbuf]]
     let offsets : uint64[1]
     var cmd_bufs <- device |> allocate_command_buffers_primary(
         cmd_pool, fbufs |> length())
@@ -118,7 +118,7 @@ def with_draw_commands(device, phys_dev, window, surface, render_pass,
                 cmd_buf |> cmd_bind_pipeline(
                     VkPipelineBindPoint VK_PIPELINE_BIND_POINT_GRAPHICS,
                     pipeline)
-                vk_cmd_buf |> vkCmdBindVertexBuffers(0u, // first binding idx
+                cmd_buf |> cmd_bind_vertex_buffers(0u, // first binding idx
                     //TODO: make it work. says "can only dereference
                     //      simple type"
                     1u,

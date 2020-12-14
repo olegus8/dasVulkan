@@ -212,6 +212,30 @@ def cmd_bind_pipeline(
         boost_value_to_vk(pipeline)
     )
 
+def cmd_bind_vertex_buffers(
+    command_buffer : CommandBuffer = [[ CommandBuffer ]];
+    first_binding : uint = [[ uint ]];
+    buffers : array<Buffer> = [[ array<Buffer> ]];
+    offsets : array<uint64> = [[ array<uint64> ]]
+) : void
+
+    assert(length(buffers) == length(offsets))
+    let vk_bindingCount = uint(buffers |> length())
+    var vk_buffers : array<VkBuffer>
+    defer() <| ${ delete vk_buffers; }
+    vk_buffers <- [{ for item in buffers ; boost_value_to_vk(item) }]
+    var vk_offsets : array<uint64>
+    defer() <| ${ delete vk_offsets; }
+    vk_offsets <- [{ for item in offsets ; boost_value_to_vk(item) }]
+
+    vkCmdBindVertexBuffers(
+        boost_value_to_vk(command_buffer),
+        boost_value_to_vk(first_binding),
+        vk_bindingCount,
+        array_addr_unsafe(vk_buffers),
+        array_addr_unsafe(vk_offsets)
+    )
+
 def cmd_copy_buffer(
     command_buffer : CommandBuffer = [[ CommandBuffer ]];
     src_buffer : Buffer = [[ Buffer ]];

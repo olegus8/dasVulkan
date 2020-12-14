@@ -109,3 +109,16 @@ def cmd_copy_buffer(
         size=size, src_offset=src_offset, dst_offset=dst_offset]] }]
     defer() <| ${ delete regions; }
     command_buffer |> cmd_copy_buffer(src_buffer, dst_buffer, regions)
+
+
+def cmd_bind_vertex_buffer(
+    command_buffer : CommandBuffer;
+    buffer : Buffer;
+    binding : uint = [[ uint ]];
+    offset : uint64 = [[ uint64 ]]
+)
+    var buffers <- [{ auto[] clone_to_move(buffer) }]
+    defer() <| ${ delete buffers; }
+    var offsets <- [{ auto[] offset }]
+    defer() <| ${ delete offsets; }
+    command_buffer |> cmd_bind_vertex_buffers(binding, buffers, offsets)
