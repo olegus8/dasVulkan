@@ -335,6 +335,22 @@ def with_next_image(device, swapchain, sem_to_signal; b : block<(i:uint)>)
             result == VkResult VK_SUBOPTIMAL_KHR)
 
 
+def submit_draw(
+    device          : Device;
+    queue           : Queue;
+    cmd_buf         : CommandBuffer;
+    sem_to_wait     : Semaphore;
+    sem_to_signal   : Semaphore;
+    fence_to_signal : Fence
+)
+    queue_submit([queue = queue, command_buffer = cmd_buf,
+        wait_semaphore = safe_addr(sem_to_wait),
+        wait_dst_stage_mask = uint(VkPipelineStageFlagBits
+            VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT),
+        signal_semaphore = safe_addr(sem_to_signal),
+        fence = fence_to_signal])
+
+
 def present(device, queue, swapchain, img_i, sem_to_wait; b : block<()>)
     let info <- [[VkPresentInfoKHR
         sType = VkStructureType VK_STRUCTURE_TYPE_PRESENT_INFO_KHR,
@@ -376,13 +392,9 @@ def draw_frame(device, queue, cmd_bufs, swapchain, frame,
         imgs_used_by_frames[img_i] = frame
 
         device |> reset_fence(frame_fences[frame])
-
-        queue_submit([queue = queue, command_buffer = cmd_bufs[img_i],
-            wait_semaphore = safe_addr(img_avail_sems[frame]),
-            wait_dst_stage_mask = uint(VkPipelineStageFlagBits
-                VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT),
-            signal_semaphore = safe_addr(render_done_sems[frame]),
-            fence = frame_fences[frame]])
+        device |> submit_draw(queue, cmd_bufs[img_i],
+            img_avail_sems[frame], render_done_sems[frame],
+            frame_fences[frame])
 
         vk_device |> present(
             queue.queue, vk_swapchain, img_i, render_done_sems[frame]
