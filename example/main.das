@@ -108,10 +108,7 @@ def with_example_draw_commands(device, phys_dev, window, surface, render_pass,
                     vertex_count = uint(vertices_count),
                     instance_count = 1u])
 
-    var vk_cmd_bufs <- [{ for b in cmd_bufs.command_buffers ;
-        b.command_buffer }]
-    defer() <| ${ delete vk_cmd_bufs; }
-    b |> invoke(vk_cmd_bufs)
+    b |> invoke(cmd_bufs)
 
 
 def with_mem_backed_buf(
@@ -338,24 +335,15 @@ def with_next_image(device, swapchain, sem_to_signal; b : block<(i:uint)>)
             result == VkResult VK_SUBOPTIMAL_KHR)
 
 
-def submit_draw(device, queue; cmd_buf : VkCommandBuffer;
+def submit_draw(device, queue, cmd_buf,
     sem_to_wait, sem_to_signal, fence_to_signal
 )
-    let stage_to_wait = uint(VkPipelineStageFlagBits
-        VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT)
-    let infos <- [[auto[] [[VkSubmitInfo
-        sType = VkStructureType VK_STRUCTURE_TYPE_SUBMIT_INFO,
-        waitSemaphoreCount      = 1u,
-        pWaitSemaphores         = sem_to_wait.semaphore |> safe_addr(),
-        pWaitDstStageMask       = stage_to_wait |> safe_addr(),
-        signalSemaphoreCount    = 1u,
-        pSignalSemaphores       = sem_to_signal.semaphore |> safe_addr(),
-        commandBufferCount      = 1u,
-        pCommandBuffers         = cmd_buf |> safe_addr_plain()
-    ]]]]
-    verify(VkResult VK_SUCCESS == queue |> vkQueueSubmit(
-        uint(infos |> length()), infos[0] |> safe_addr(),
-        fence_to_signal.fence))
+    queue_submit([queue = queue, command_buffer = cmd_buf,
+        wait_semaphore = safe_addr(sem_to_wait),
+        wait_dst_stage_mask = uint(VkPipelineStageFlagBits
+            VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT),
+        signal_semaphore = safe_addr(sem_to_signal),
+        fence = fence_to_signal])
 
 
 def present(device, queue, swapchain, img_i, sem_to_wait; b : block<()>)
@@ -399,8 +387,9 @@ def draw_frame(device, queue, cmd_bufs, swapchain, frame,
         imgs_used_by_frames[img_i] = frame
 
         device |> reset_fence(frame_fences[frame])
-        vk_device |> submit_draw(queue, cmd_bufs[img_i], img_avail_sems[frame],
-            render_done_sems[frame], frame_fences[frame])
+        vk_device |> submit_draw(queue, cmd_bufs.command_buffers[img_i],
+            img_avail_sems[frame], render_done_sems[frame],
+            frame_fences[frame])
 
         vk_device |> present(
             queue, vk_swapchain, img_i, render_done_sems[frame]

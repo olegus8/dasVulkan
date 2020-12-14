@@ -128,6 +128,30 @@ def queue_submit(
     queue |> queue_submit(submits, fence, result)
 
 
+def queue_submit(
+    queue               : Queue;
+    command_buffer      : CommandBuffer;
+    wait_semaphore      : Semaphore ? implicit = [[ Semaphore ? ]];
+    wait_dst_stage_mask : uint = [[ uint ]];
+    signal_semaphore    : Semaphore ? implicit = [[ Semaphore ? ]];
+    fence               : Fence = [[ Fence ]];
+    var result          : VkResult? = [[VkResult?]]
+)
+    var command_buffers <- [[ CommandBuffers
+        command_buffers <- [{ auto[] weak_copy(command_buffer) }]
+    ]]
+    defer() <| ${ delete command_buffers; }
+    queue_submit([
+        queue = queue,
+        command_buffers = command_buffers,
+        wait_semaphore = wait_semaphore,
+        wait_dst_stage_mask = wait_dst_stage_mask,
+        signal_semaphore = signal_semaphore,
+        fence = fence,
+        result = result
+    ])
+
+
 def cmd_copy_buffer(
     command_buffer : CommandBuffer;
     src_buffer : Buffer;
