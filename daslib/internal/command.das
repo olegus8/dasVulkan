@@ -35,10 +35,6 @@ def finalize(var bufs : CommandBuffers explicit)
     memzero(bufs)
 
 
-def unbatch(bufs : CommandBuffers) : array<CommandBuffer>
-    return <- [{ for v in bufs.command_buffers ; vk_value_to_boost(v) }]
-
-
 def allocate_command_buffers_primary(
     device : Device;
     pool : CommandPool;

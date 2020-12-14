@@ -123,7 +123,7 @@ def submit(queue, cmd_bufs)
 def copy_buf_sync(device, cmd_pool, queue, src_buf, dst_buf, buf_size)
     var cmd_bufs <- device |> allocate_command_buffers_primary(cmd_pool, 1)
     defer() <| ${ delete cmd_bufs; }
-    let cmd_buf = vk_value_to_boost(cmd_bufs.command_buffers[0])
+    let cmd_buf = cmd_bufs.command_buffers[0]
 
     var vk_cmd_bufs <- [{ for b in cmd_bufs.command_buffers ;
         b.command_buffer }]
