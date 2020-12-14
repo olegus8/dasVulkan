@@ -104,7 +104,7 @@ struct CommandBuffers
     _command_pool : CommandPool
     _needs_delete : bool
 
-def create_command_buffers(
+def allocate_command_buffers(
     device : Device = [[ Device ]];
     var allocate_info : CommandBufferAllocateInfo = [[ CommandBufferAllocateInfo ]];
     var result : VkResult? = [[VkResult?]]
@@ -114,7 +114,7 @@ def create_command_buffers(
         _device = weak_copy(device),
         _command_pool = weak_copy(allocate_info.command_pool)
     ]]
-    buffers.command_buffers <- allocate_command_buffers([
+    buffers.command_buffers <- allocate_command_buffers__inner([
         device = device, allocate_info = allocate_info, result = result])
     return <- buffers
 
@@ -130,7 +130,7 @@ def finalize(var bufs : CommandBuffers explicit)
 //
 
 [private]
-def allocate_command_buffers(
+def allocate_command_buffers__inner(
     device : Device = [[ Device ]];
     var allocate_info : CommandBufferAllocateInfo = [[ CommandBufferAllocateInfo ]];
     var result : VkResult? = [[VkResult?]]
