@@ -78,7 +78,7 @@ def record_render_pass(
     command_buffer |> record_render_pass_ex(info, contents, b)
 
 
-def queue_submit(
+def queue_submit_ex(
     queue               : Queue;
     command_buffers     : CommandBuffers;
     wait_semaphores     : array<Semaphore> = [[ array<Semaphore> ]];
