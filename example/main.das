@@ -86,18 +86,6 @@ def create_example_graphics_pipeline(
         device=device, create_info=create_info])
 
 
-def with_mapped_vk_mem(device, mem, offset, size;
-    b : block<(var a:array<auto(T)>#)>
-)
-    var mem_ptr : void?
-    verify(VkResult VK_SUCCESS == device |> vkMapMemory(
-        mem, uint64(offset), uint64(size), 0u, mem_ptr |> safe_addr()))
-    unsafe
-        mem_ptr |> map_to_array(size) <| $(var mapped : array<T>#)
-            b |> invoke(mapped)
-    device |> vkUnmapMemory(mem)
-
-
 def record(cmd_buf : VkCommandBuffer; b : block)
     let begin_info <- [[VkCommandBufferBeginInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO]]
@@ -217,7 +205,6 @@ def with_mem_backed_buf(
 def with_baked_vertex_buffer(device : Device; phys_dev, cmd_pool;
     queue : Queue; vertices:array<auto(VT)>; b : block<(b:VkBuffer)>
 )
-    let vk_device = device.device
     let buf_size = typeinfo(sizeof type<VT>) * vertices |> length()
 
     device |> with_mem_backed_buf(phys_dev, uint64(buf_size),
@@ -231,7 +218,7 @@ def with_baked_vertex_buffer(device : Device; phys_dev, cmd_pool;
             uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT)|
             uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_COHERENT_BIT)
         ) <| $(staging_buf, staging_mem)
-            vk_device |> with_mapped_vk_mem(staging_mem, 0, buf_size
+            device |> map_to_array(staging_mem, uint(buf_size)
             ) <| $(var mapped_vertices : array<VT>#)
                 for dst, src in mapped_vertices, vertices
                     dst = src

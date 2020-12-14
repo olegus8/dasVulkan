@@ -35,3 +35,19 @@ def find_buffer_memory_type(
     phys_dev |> find_memory_type(reqs.memory_type_bits, mem_props
     ) <| $(mem_type)
         b |> invoke(mem_type, reqs.size)
+
+
+def map_to_array(
+    device  : Device;
+    memory  : DeviceMemory;
+    size    : uint64;
+    offset  : uint64 = [[ uint64 ]];
+    flags   : uint = [[ uint ]];
+    b : block<(var a:array<auto(T)>#)>
+)
+    var mem_ptr = map_memory([
+        device=device, memory=mem, offset=offset, size=size, flags=flags])
+    unsafe
+        mem_ptr |> map_to_array(int(size)) <| $(var mapped : array<T>#)
+            b |> invoke(mapped)
+    device |> unmap_memory(memory)
