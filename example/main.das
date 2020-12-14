@@ -393,10 +393,12 @@ def draw_frame(device, queue, cmd_bufs, swapchain, frame,
     var imgs_used_by_frames
 )
     let vk_swapchain = swapchain.swapchain_khr
+    let vk_device = device.device
     device |> wait_for_fence(frame_fences[frame], ULONG_MAX)
     var img_acquired = false
     var presented = false
-    device |> with_next_image(vk_swapchain, img_avail_sems[frame], [[VkFence]]
+    vk_device |> with_next_image(
+        vk_swapchain, img_avail_sems[frame], [[VkFence]]
     ) <| $(img_i)
         img_acquired = true
 
@@ -406,10 +408,11 @@ def draw_frame(device, queue, cmd_bufs, swapchain, frame,
         imgs_used_by_frames[img_i] = frame
 
         device |> reset_fence(frame_fences[frame])
-        device |> submit_draw(queue, cmd_bufs[img_i], img_avail_sems[frame],
+        vk_device |> submit_draw(queue, cmd_bufs[img_i], img_avail_sems[frame],
             render_done_sems[frame], frame_fences[frame])
 
-        device |> present(queue, vk_swapchain, img_i, render_done_sems[frame]
+        vk_device |> present(
+            queue, vk_swapchain, img_i, render_done_sems[frame]
         ) <| $()
             presented = true
 
@@ -519,7 +522,7 @@ def main
                             keep_running = (
                                 window |> glfwWindowShouldClose() == 0)
                             glfwPollEvents()
-                            let is_swapchain_good = vk_device |> draw_frame(
+                            let is_swapchain_good = device |> draw_frame(
                                 vk_queue, sc_draw_cmds, sc.swapchain, frame,
                                 frame_fences, img_avail_sems, render_done_sems,
                                 imgs_used_by_frames
