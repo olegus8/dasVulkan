@@ -638,13 +638,15 @@ def main
 
     unsafe
         string_heap_collect()
-    let heap_on_finish = heap_bytes_allocated()
-    let string_heap_on_finish = string_heap_bytes_allocated()
 
-    print("{heap_on_finish} bytes on heap\n")
-    print("{string_heap_on_finish} bytes on string heap\n")
-    assert(heap_on_start == heap_on_finish)
-    assert(string_heap_on_start == string_heap_on_finish)
+    let heap_leaks = heap_bytes_allocated() - heap_on_start
+    let string_heap_leaks = (string_heap_bytes_allocated()
+        - string_heap_on_start)
+
+    print("{heap_leaks} heap bytes have leaked\n")
+    print("{string_heap_leaks} string heap bytes have leaked\n")
+    assert(heap_leaks == 0)
+    assert(string_heap_leaks == 0)
 
     print("Finished\n")
     return true
