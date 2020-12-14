@@ -45,16 +45,6 @@ def with_window(width : int; height : int; title : string;
     window |> glfwDestroyWindow()
 
 
-def with_surface(window : GLFWwindow_DasHandle#; instance : VkInstance#;
-    b : block<(s:VkSurfaceKHR#)>
-)
-    var surface : VkSurfaceKHR
-    verify(VkResult VK_SUCCESS == instance |> glfwCreateWindowSurface(
-        window, null, safe_addr(surface)))
-    b |> invoke(surface)
-    instance |> vkDestroySurfaceKHR(surface, null)
-
-
 def get_framebuffer_size(window : GLFWwindow_DasHandle#)
     var width, height : int
     window |> glfwGetFramebufferSize(safe_addr(width), safe_addr(height))
