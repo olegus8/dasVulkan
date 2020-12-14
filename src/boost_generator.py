@@ -1527,7 +1527,7 @@ class ParamVoidPtrPtr(ParamBase):
 
     @property
     def vk_unqual_type(self):
-        return 'void'
+        return 'void ?'
 
 
 class ParamUnknown(ParamBase):
