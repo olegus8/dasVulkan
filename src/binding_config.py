@@ -280,6 +280,7 @@ def add_boost_content(g):
         ).declare_array(count = 'bindingCount', items = 'pOffsets')
     g.add_gen_func(name = 'vkCmdCopyBuffer',
         ).declare_array(count = 'regionCount', items = 'pRegions')
+    g.add_gen_func(name = 'vkCmdDraw')
     g.add_gen_func(name = 'vkCmdEndRenderPass')
     g.add_gen_func(name = 'vkDeviceWaitIdle')
     g.add_gen_func(name = 'vkEndCommandBuffer')
