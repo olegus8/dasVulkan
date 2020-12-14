@@ -162,8 +162,7 @@ def with_draw_commands(device, phys_dev, window, surface, render_pass,
     let offsets : uint64[1]
     var cmd_bufs <- device |> create_command_buffers_primary(
         cmd_pool, fbufs |> length())
-    defer() <|
-        delete cmd_bufs;
+    defer() <| ${ delete cmd_bufs; }
     for cmd_buf, fbuf in cmd_bufs.buffers, fbufs
         cmd_buf |> record_render_pass(
             phys_dev, window, surface, render_pass, fbuf
@@ -292,7 +291,7 @@ def with_swapchain_independent_state(width, height, title; b : block<(
     frag_shmod      : ShaderModule;
     render_pass     : RenderPass;
     pipeline_layout : PipelineLayout;
-    cmd_pool        : VkCommandPool
+    cmd_pool        : CommandPool
 )>)
     with_window(width, height, title) <| $(window)
         var instance <- create_default_instance()
@@ -341,7 +340,7 @@ def with_swapchain_independent_state(width, height, title; b : block<(
             shfrag,
             render_pass,
             pipeline_layout,
-            cmd_pool.command_pool
+            cmd_pool
         )
 
         device |> device_wait_idle()
@@ -566,7 +565,7 @@ def main
         frag_shmod      : ShaderModule;
         render_pass     : RenderPass;
         pipeline_layout : PipelineLayout;
-        cmd_pool        : VkCommandPool
+        cmd_pool        : CommandPool
     )
         let vk_device = device.device
         let vk_render_pass = render_pass.render_pass
@@ -607,7 +606,7 @@ def main
                 )
                     print("{sc.framebuffers |> length()} " +
                         "images in swap chain\n")
-                    vk_device |> with_draw_commands(phys_dev, window, surface,
+                    device |> with_draw_commands(phys_dev, window, surface,
                         vk_render_pass, sc.framebuffers, pipeline, cmd_pool,
                         vk_queue, vbuf, vertices |> length()
                     ) <| $(sc_draw_cmds)
