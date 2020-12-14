@@ -353,6 +353,9 @@ def submit_draw(
 
 def present(device, queue, swapchain, img_i, sem_to_wait; b : block)
     var result : VkResult
+    var p_result : VkResult ?
+    unsafe
+        p_result = addr(result)
     queue |> queue_present_khr(
         swapchain, img_i, safe_addr(sem_to_wait), result)
     if result == VkResult VK_SUCCESS
