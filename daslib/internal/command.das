@@ -31,7 +31,7 @@ def create_command_pool(
 
 def record_command_buffer_ex(
     command_buffer : CommandBuffer;
-    begin_info : CommandBufferBeginInfo = [[ CommandBufferBeginInfo ]];
+    var begin_info : CommandBufferBeginInfo = [[ CommandBufferBeginInfo ]];
     b : block
 )
     command_buffer |> begin_command_buffer(begin_info)
