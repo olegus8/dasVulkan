@@ -81,9 +81,8 @@ def create_example_graphics_pipeline(
                 stage = VkShaderStageFlagBits VK_SHADER_STAGE_FRAGMENT_BIT]]
         }]
     ]]
-    defer() <| ${ print("stages after: {length(create_info.stages)}\n"); delete create_info; }
+    defer() <| ${ delete create_info; }
 
-    print("stages before: {length(create_info.stages)}\n")
     return <- create_graphics_pipeline([
         device=device, create_info=create_info])
 
