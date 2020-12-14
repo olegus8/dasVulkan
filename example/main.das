@@ -165,7 +165,7 @@ def with_draw_commands(device, phys_dev, window, surface, render_pass,
     var cmd_bufs <- device |> create_command_buffers_primary(
         cmd_pool, fbufs |> length())
     defer() <| ${ delete cmd_bufs; }
-    for cmd_buf, fbuf in cmd_bufs.buffers, fbufs
+    for cmd_buf, fbuf in cmd_bufs, fbufs
         let vk_cmd_buf = cmd_buf.command_buffer
         vk_cmd_buf |> record_render_pass(
             phys_dev, window, surface, render_pass, fbuf
