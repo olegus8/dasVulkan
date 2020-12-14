@@ -63,9 +63,9 @@ class BoostGenerator(LoggingObject):
             ParamVk_pAllocator,
             ParamVk_pNext,
             ParamVk_sType,
+            ParamVkUnion,
             ParamVkHandle,
             ParamVkHandlePtr,
-            ParamVkUnion,
             ParamVkStruct,
             ParamVkEnum,
             ParamString,
@@ -621,6 +621,8 @@ class C_Type(object):
     def __init__(self, name, generator):
         self.name = name
         self._generator = generator
+        if 'VkClearValue' in self.name:
+            print(f'union: {self.name}')
 
     @property
     def is_enum(self):
