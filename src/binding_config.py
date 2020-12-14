@@ -219,7 +219,7 @@ def add_boost_content(g):
         ).declare_array(count = 'enabledLayerCount', items = 'ppEnabledLayerNames',
         ).declare_array(count = 'enabledExtensionCount', items = 'ppEnabledExtensionNames')
     g.add_gen_struct(name = 'VkPhysicalDeviceMemoryProperties', boost_to_vk=False,
-        ).declare_array(count = 'memoryTypeCount', items = 'memoryTypes')
+        ).declare_array(count = 'memoryTypeCount', items = 'memoryTypes',
         ).declare_array(count = 'memoryHeapCount', items = 'memoryHeaps')
     g.add_gen_struct(name = 'VkPipelineCacheCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'initialDataSize', items = 'pInitialData', force_item_type = 'uint8')
