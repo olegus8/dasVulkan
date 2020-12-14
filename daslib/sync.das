@@ -5,20 +5,22 @@ require daslib/defer
 require generated
 
 
-def create_single_view_framebuffer(
+def reset_fence(
     device : Device;
-    render_pass : RenderPass;
-    view : ImageView;
-    width : uint ;
-    height : uint
-) : Framebuffer
-    var create_info <- [[FramebufferCreateInfo
-        render_pass = weak_copy(render_pass),
-        attachments <- [{auto[] weak_copy(view)}],
-        width = width,
-        height = height,
-        layers = 1u
-    ]]
-    defer() <| ${ delete create_info; }
-    return <- device |> create_framebuffer(create_info)
+    fence : Fence;
+    var result : VkResult? = [[VkResult?]]
+)
+    var fences <- [{ auto[] weak_copy(fence) }]
+    defer() <| ${ delete fences; }
+    device |> reset_fences(fences, result)
 
+def wait_for_fence(
+    device : Device;
+    fence : Fence;
+    timeout : uint64 = [[ uint64 ]];
+    var result : VkResult? = [[VkResult?]]
+)
+    var fences <- [{ auto[] weak_copy(fence) }]
+    defer() <| ${ delete fences; }
+    wait_for_fence([
+        device=device, fences=fences, timeout=timeout, result=result])
