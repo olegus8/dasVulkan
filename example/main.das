@@ -327,22 +327,14 @@ def with_swapchain_dependent_state(
 def with_next_image(device, swapchain, sem_to_signal, fence_to_signal;
     b : block<(i:uint)>
 )
-    var img_index : uint
-
-    //TODO: handle result properly. currently crashes on
-    //      "internal integration error"
-    verify(VkResult VK_SUCCESS == device |> vkAcquireNextImageKHR(
-        swapchain, ULONG_MAX, sem_to_signal.semaphore,
-        fence_to_signal,
-        img_index |> safe_addr()))
-    b |> invoke(img_index)
-    /*
+    var result : VkResult
+    let img_index = device |> acquire_next_image_khr(
+        swapchain, ULONG_MAX, sem_to_signal, fence_to_signal, result)
     if result == VkResult VK_SUCCESS
         b |> invoke(img_index)
     else
         assert(result == VkResult VK_ERROR_OUT_OF_DATE_KHR ||
             result == VkResult VK_SUBOPTIMAL_KHR)
-    */
 
 
 def submit_draw(device, queue; cmd_buf : VkCommandBuffer;

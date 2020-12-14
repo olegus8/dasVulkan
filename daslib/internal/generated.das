@@ -129,6 +129,29 @@ def finalize(var bufs : CommandBuffers explicit)
 // Functions
 //
 
+def acquire_next_image_khr(
+    device : Device = [[ Device ]];
+    swapchain : SwapchainKHR = [[ SwapchainKHR ]];
+    timeout : uint64 = [[ uint64 ]];
+    semaphore : Semaphore = [[ Semaphore ]];
+    fence : Fence = [[ Fence ]];
+    var result : VkResult? = [[VkResult?]]
+) : uint
+
+    var vk_image_index : uint
+    var result_ = VkResult VK_SUCCESS
+
+    result ?? result_ = vkAcquireNextImageKHR(
+        boost_value_to_vk(device),
+        boost_value_to_vk(swapchain),
+        boost_value_to_vk(timeout),
+        boost_value_to_vk(semaphore),
+        boost_value_to_vk(fence),
+        safe_addr(vk_image_index)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+    return vk_value_to_boost(vk_image_index)
+
 [private]
 def allocate_command_buffers__inner(
     device : Device = [[ Device ]];
