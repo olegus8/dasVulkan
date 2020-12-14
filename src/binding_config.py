@@ -245,6 +245,7 @@ def add_boost_content(g):
     # Functions
     #
 
+    g.add_gen_func(name = 'vkDeviceWaitIdle')
     g.add_gen_func(name = 'vkEnumerateDeviceExtensionProperties',
         ).declare_array(count = 'pPropertyCount', items = 'pProperties',
         ).declare_output(name = 'pProperties')
