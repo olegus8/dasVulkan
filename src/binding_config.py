@@ -263,8 +263,10 @@ def add_boost_content(g):
         ).declare_array(count_expr = 'allocate_info.command_buffer_count', items = 'pCommandBuffers',
         ).declare_output(name = 'pCommandBuffers')
     g.add_gen_func(name = 'vkBeginCommandBuffer')
+    g.add_gen_func(name = 'vkCmdBeginRenderPass')
     g.add_gen_func(name = 'vkDeviceWaitIdle')
     g.add_gen_func(name = 'vkEndCommandBuffer')
+    g.add_gen_func(name = 'vkCmdEndRenderPass')
     g.add_gen_func(name = 'vkEnumerateDeviceExtensionProperties',
         ).declare_array(count = 'pPropertyCount', items = 'pProperties',
         ).declare_output(name = 'pProperties')
