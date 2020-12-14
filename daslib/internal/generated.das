@@ -179,6 +179,18 @@ def device_wait_idle(
     )
     assert(result_ == VkResult VK_SUCCESS)
 
+def end_command_buffer(
+    command_buffer : CommandBuffer = [[ CommandBuffer ]];
+    var result : VkResult? = [[VkResult?]]
+) : void
+
+    var result_ = VkResult VK_SUCCESS
+
+    result ?? result_ = vkEndCommandBuffer(
+        boost_value_to_vk(command_buffer)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+
 def enumerate_device_extension_properties(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]];
     layer_name : string = [[ string ]];

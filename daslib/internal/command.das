@@ -27,3 +27,17 @@ def create_command_pool(
         queue_family_index = queue_family,
         flags = flags
     ]])
+
+
+def record_command_buffer_ex(
+    command_buffer : CommandBuffer;
+    begin_info : CommandBufferBeginInfo = [[ CommandBufferBeginInfo ]];
+    b : block
+)
+    command_buffer |> begin_command_buffer(begin_info)
+    b |> invoke()
+    command_buffer |> end_command_buffer
+
+
+def record_command_buffer(command_buffer : CommandBuffer; b : block)
+    record_command_buffer_ex([command_buffer=command_buffer, b=b])

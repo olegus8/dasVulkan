@@ -86,22 +86,14 @@ def create_example_graphics_pipeline(
         device=device, create_info=create_info])
 
 
-def record(cmd_buf : VkCommandBuffer; b : block)
-    let begin_info <- [[VkCommandBufferBeginInfo
-        sType = VkStructureType VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO]]
-    verify(VkResult VK_SUCCESS ==
-        cmd_buf |> vkBeginCommandBuffer(begin_info |> safe_addr()))
-    b |> invoke()
-    cmd_buf |> vkEndCommandBuffer()
-
-
 def record_render_pass(cmd_buf, phys_dev, window, surface, render_pass, fbuf;
     b : block
 )
     let vk_phys_dev = phys_dev.physical_device
+    let vk_cmd_buf = cmd_buf.command_buffer
     var extent <- phys_dev |> get_swap_extent(surface, window)
     extent |> with_view() <| $(vk_extent : VkExtent2D const)
-        cmd_buf |> record() <| $()
+        cmd_buf |> record_command_buffer() <| $()
             let clear_values <- [[auto[] [[VkClearValue]]]]
             let info <- [[VkRenderPassBeginInfo
                 sType = (VkStructureType
@@ -112,10 +104,10 @@ def record_render_pass(cmd_buf, phys_dev, window, surface, render_pass, fbuf;
                 clearValueCount = uint(clear_values |> length()),
                 pClearValues    = clear_values |> safe_addr()
             ]]
-            cmd_buf |> vkCmdBeginRenderPass(info |> safe_addr(),
+            vk_cmd_buf |> vkCmdBeginRenderPass(info |> safe_addr(),
                 VkSubpassContents VK_SUBPASS_CONTENTS_INLINE)
             b |> invoke()
-            cmd_buf |> vkCmdEndRenderPass()
+            vk_cmd_buf |> vkCmdEndRenderPass()
 
 
 def submit(queue, cmd_bufs)
@@ -135,7 +127,7 @@ def copy_buf_sync(device, cmd_pool, queue, src_buf, dst_buf, buf_size)
         b.command_buffer }]
     defer() <| ${ delete vk_cmd_bufs; }
     let vk_cmd_buf = vk_cmd_bufs[0]
-    vk_cmd_buf |> record() <| $()
+    cmd_buf |> record_command_buffer() <| $()
         let params <- [[auto[] [[VkBufferCopy size = uint64(buf_size)]]]]
         vk_cmd_buf |> vkCmdCopyBuffer(src_buf, dst_buf,
             uint(params |> length()), params[0] |> safe_addr())
@@ -154,7 +146,7 @@ def with_draw_commands(device, phys_dev, window, surface, render_pass,
     defer() <| ${ delete cmd_bufs; }
     for cmd_buf, fbuf in cmd_bufs.command_buffers, fbufs
         let vk_cmd_buf = cmd_buf.command_buffer
-        vk_cmd_buf |> record_render_pass(
+        cmd_buf |> record_render_pass(
             phys_dev, window, surface, render_pass, fbuf
         ) <| $()
             vk_cmd_buf |> vkCmdBindPipeline(
