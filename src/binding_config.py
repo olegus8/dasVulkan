@@ -283,6 +283,8 @@ def add_boost_content(g):
     g.add_gen_func(name = 'vkGetPhysicalDeviceSurfacePresentModesKHR',
         ).declare_array(count = 'pPresentModeCount', items = 'pPresentModes',
         ).declare_output(name = 'pPresentModes')
+    g.add_gen_func(name = 'vkGetPhysicalDeviceMemoryProperties',
+        ).declare_output(name = 'pMemoryProperties')
     g.add_gen_func(name = 'vkGetSwapchainImagesKHR',
         ).declare_array(count = 'pSwapchainImageCount', items = 'pSwapchainImages',
         ).declare_output(name = 'pSwapchainImages')
