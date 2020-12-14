@@ -35,7 +35,7 @@ def finalize(var bufs : CommandBuffers explicit)
     memzero(bufs)
 
 
-def split(bufs : CommandBuffers) : array<CommandBuffer>
+def unbatch(bufs : CommandBuffers) : array<CommandBuffer>
     return <- [{ for v in bufs.command_buffers ; vk_value_to_boost(v) }]
 
 
