@@ -46,7 +46,7 @@ def map_device_memory_to_array(
     b : block<(var a:array<auto(T)>#)>
 )
     var mem_ptr = map_memory([
-        device=device, memory=mem, offset=offset, size=size, flags=flags])
+        device=device, memory=memory, offset=offset, size=size, flags=flags])
     unsafe
         mem_ptr |> map_to_array(int(size)) <| $(var mapped : array<T>#)
             b |> invoke(mapped)
