@@ -353,10 +353,10 @@ def submit_draw(device, queue; cmd_buf : VkCommandBuffer;
     let infos <- [[auto[] [[VkSubmitInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_SUBMIT_INFO,
         waitSemaphoreCount      = 1u,
-        pWaitSemaphores         = sem_to_wait |> safe_addr(),
+        pWaitSemaphores         = sem_to_wait.semaphore |> safe_addr(),
         pWaitDstStageMask       = stage_to_wait |> safe_addr(),
         signalSemaphoreCount    = 1u,
-        pSignalSemaphores       = sem_to_signal |> safe_addr(),
+        pSignalSemaphores       = sem_to_signal.semaphore |> safe_addr(),
         commandBufferCount      = 1u,
         pCommandBuffers         = cmd_buf |> safe_addr_plain()
     ]]]]
