@@ -95,9 +95,41 @@ def finalize(var surface : SurfaceKHR explicit)
     memzero(surface)
 
 //
+// CommandBuffers
+//
+
+struct CommandBuffers
+    command_buffers : array<CommandBuffer>
+    _device : Device
+    _command_pool : CommandPool
+    _needs_delete : bool
+
+def create_command_buffers(
+    device : Device = [[ Device ]];
+    var allocate_info : CommandBufferAllocateInfo = [[ CommandBufferAllocateInfo ]];
+    var result : VkResult? = [[VkResult?]]
+) : CommandBuffers
+    var buffers <- [[ CommandBuffers
+        _needs_delete = true
+        _device = weak_copy(device),
+        _command_pool = weak_copy(allocate_info.command_pool)
+    ]]
+    buffers.command_buffers <- allocate_command_buffers([
+        device = device, allocate_info = allocate_info, result = result])
+    return <- buffers
+
+def finalize(var bufs : CommandBuffers explicit)
+    if bufs._needs_delete
+        bufs._device |> free_command_buffers(bufs._command_pool,
+            bufs.command_buffers)
+    delete bufs.command_buffers
+    memzero(bufs)
+
+//
 // Functions
 //
 
+[private]
 def allocate_command_buffers(
     device : Device = [[ Device ]];
     var allocate_info : CommandBufferAllocateInfo = [[ CommandBufferAllocateInfo ]];
@@ -188,6 +220,7 @@ def enumerate_physical_devices(
     assert(result_ == VkResult VK_SUCCESS)
     return <- [{for x in vk_physical_devices; vk_value_to_boost(x)}]
 
+[private]
 def free_command_buffers(
     device : Device = [[ Device ]];
     command_pool : CommandPool = [[ CommandPool ]];
