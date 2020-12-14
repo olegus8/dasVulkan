@@ -5,7 +5,7 @@
 using namespace das;
 
 template <typename OT>
-struct VkHandleAnnotation : ManagedValueAnnotation<OT> {
+struct VkHandleAnnotation : public ManagedValueAnnotation<OT> {
     VkHandleAnnotation(const string & n, const string & cpn = string())
     : ManagedValueAnnotation<OT>(n,cpn) {
     }
@@ -13,7 +13,7 @@ struct VkHandleAnnotation : ManagedValueAnnotation<OT> {
         return true;
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return simulateCopy(contest, at, l, r);
+        return simulateCopy(context, at, l, r);
     }
 };
 
