@@ -112,7 +112,7 @@ def queue_submit(
 
     if wait_semaphore != null
         wait_semaphores |> push(weak_copy(*wait_semaphore))
-        wait_dst_stage_mask_array.push(wait_dst_stage_mask)
+        wait_dst_stage_mask_array |> push(wait_dst_stage_mask)
 
     if signal_semaphores != null
         signal_semaphores |> push(weak_copy(*signal_semaphore))
