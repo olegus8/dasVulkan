@@ -32,10 +32,10 @@ class BoostGenerator(LoggingObject):
             for x in self.__context.main_c_header.enums)
         self.structs = dict((x.name, x)
             for x in self.__context.main_c_header.structs
-            if 'union' not in x.name.split())
+            if x.is_struct)
         self.unions = dict((x.name, x)
             for x in self.__context.main_c_header.structs
-            if 'union' in x.name.split())
+            if x.is_union)
         self.opaque_structs = dict((x.name, x)
             for x in self.__context.main_c_header.opaque_structs)
         self.functions = dict((x.name, x)
