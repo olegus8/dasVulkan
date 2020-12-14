@@ -912,12 +912,6 @@ class ParamBase(object):
                 return [
                    f'assert(vk_struct.{vname} != null)',
                 ]
-        if self._vk_is_fixed_array:
-            return [
-               f'var b_{bname} : {btype}',
-               f'for boost_item, vk_item in b_{bname}, vk_struct.{vname}',
-               f'    boost_item <- vk_value_to_boost(vk_item)'
-            ]
         return []
 
     def generate_boost_struct_v2b_field(self):
@@ -932,8 +926,6 @@ class ParamBase(object):
                 return [f'{bname} = b_{bname},']
             else:
                 return [f'{bname} <- vk_value_to_boost(*(vk_struct.{vname})),']
-        if self._vk_is_fixed_array:
-            return [f'{bname} <- b_{bname},']
         return [f'{bname} = vk_value_to_boost(vk_struct.{vname}),']
 
     def generate_boost_func_param_call(self):
@@ -1347,7 +1339,7 @@ class ParamVkStruct(ParamBase):
         bname = self._boost_struct_field_name
         vname = self.vk_name
         if (not self.vk_is_dyn_array_items and not self.vk_is_dyn_array_count
-        and not self.vk_is_pointer and not self._vk_is_fixed_array):
+        and not self.vk_is_pointer):
             return [f'{bname} <- vk_value_to_boost(vk_struct.{vname}),']
         return super(ParamVkStruct, self).generate_boost_struct_v2b_field()
 
