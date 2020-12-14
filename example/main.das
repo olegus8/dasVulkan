@@ -143,14 +143,15 @@ def submit(queue, cmd_bufs)
 
 def copy_buf_sync(device, cmd_pool, queue, src_buf, dst_buf, buf_size)
     var cmd_bufs <- device |> create_command_buffers_primary(cmd_pool, 1)
-    defer() <|
-        delete cmd_bufs;
-    let cmd_buf = cmd_bufs.buffers[0]
-    cmd_buf |> record() <| $()
+    defer() <| ${ delete cmd_bufs; }
+    var vk_cmd_bufs <- [{ for b in cmd_bufs ; b.command_buffer }]
+    defer() <| ${ delete vk_cmd_bufs; }
+    let vk_cmd_buf = vk_cmd_bufs[0]
+    vk_cmd_buf |> record() <| $()
         let params <- [[auto[] [[VkBufferCopy size = uint64(buf_size)]]]]
-        cmd_buf |> vkCmdCopyBuffer(src_buf, dst_buf,
+        vk_cmd_buf |> vkCmdCopyBuffer(src_buf, dst_buf,
             uint(params |> length()), params[0] |> safe_addr())
-    queue.queue |> submit(cmd_bufs.buffers)
+    queue.queue |> submit(vk_cmd_bufs.buffers)
     queue |> queue_wait_idle()
 
 
@@ -164,13 +165,14 @@ def with_draw_commands(device, phys_dev, window, surface, render_pass,
         cmd_pool, fbufs |> length())
     defer() <| ${ delete cmd_bufs; }
     for cmd_buf, fbuf in cmd_bufs.buffers, fbufs
-        cmd_buf |> record_render_pass(
+        let vk_cmd_buf = cmd_buf.command_buffer
+        vk_cmd_buf |> record_render_pass(
             phys_dev, window, surface, render_pass, fbuf
         ) <| $()
-            cmd_buf |> vkCmdBindPipeline(
+            vk_cmd_buf |> vkCmdBindPipeline(
                 VkPipelineBindPoint VK_PIPELINE_BIND_POINT_GRAPHICS,
                 pipeline)
-            cmd_buf |> vkCmdBindVertexBuffers(0u, // first binding idx
+            vk_cmd_buf |> vkCmdBindVertexBuffers(0u, // first binding idx
                 //TODO: make it work. says "can only dereference
                 //      simple type"
                 1u,
@@ -178,7 +180,7 @@ def with_draw_commands(device, phys_dev, window, surface, render_pass,
 
                 vbufs[0] |> safe_addr(),
                 offsets[0] |> safe_addr())
-            cmd_buf |> vkCmdDraw(uint(vertices_count),
+            vk_cmd_buf |> vkCmdDraw(uint(vertices_count),
                 1u, // instance count
                 0u, // first vertex
                 0u  // first instance
@@ -230,7 +232,7 @@ def with_baked_vertex_buffer(device : Device; phys_dev, cmd_pool;
             ) <| $(var mapped_vertices : array<VT>#)
                 for dst, src in mapped_vertices, vertices
                     dst = src
-            vk_device |> copy_buf_sync(
+            device |> copy_buf_sync(
                 cmd_pool, queue, staging_buf, vbuf, buf_size)
 
         b |> invoke(vbuf)
