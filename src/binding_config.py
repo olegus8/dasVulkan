@@ -248,6 +248,11 @@ def add_boost_content(g):
     g.add_gen_struct(name = 'VkSpecializationInfo', vk_to_boost=False,
         ).declare_array(count = 'mapEntryCount', items = 'pMapEntries',
         ).declare_array(count = 'dataSize', items = 'pData', force_item_type = 'uint8')
+    g.add_gen_struct(name = 'VkSubmitInfo', vk_to_boost=False,
+        ).declare_array(count = 'waitSemaphoreCount', items = 'pWaitSemaphores',
+        ).declare_array(count = 'waitSemaphoreCount', items = 'pWaitDstStageMask',
+        ).declare_array(count = 'commandBufferCount', items = 'pCommandBuffers',
+        ).declare_array(count = 'signalSemaphoreCount', items = 'pSignalSemaphores')
     g.add_gen_struct(name = 'VkSubpassDescription', vk_to_boost=False,
         ).declare_array(count = 'inputAttachmentCount', items = 'pInputAttachments',
         ).declare_array(count = 'colorAttachmentCount', items = 'pColorAttachments',
@@ -304,5 +309,7 @@ def add_boost_content(g):
         ).declare_output(name = 'pSwapchainImages')
     g.add_gen_func(name = 'vkMapMemory'
         ).declare_output(name = 'ppData')
+    g.add_gen_func(name = 'vkQueueSubmit',
+        ).declare_array(count = 'submitCount', items = 'pSubmits')
     g.add_gen_func(name = 'vkQueueWaitIdle')
     g.add_gen_func(name = 'vkUnmapMemory')
