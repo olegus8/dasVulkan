@@ -98,6 +98,27 @@ def finalize(var surface : SurfaceKHR explicit)
 // Functions
 //
 
+def allocate_command_buffers(
+    device : Device = [[ Device ]];
+    var allocate_info : CommandBufferAllocateInfo = [[ CommandBufferAllocateInfo ]];
+    command_buffers : array<CommandBuffer> = [[ array<CommandBuffer> ]];
+    var result : VkResult? = [[VkResult?]]
+) : void
+
+    var vk_allocate_info <- allocate_info |> vk_view_create_unsafe()
+    defer() <| ${ allocate_info |> vk_view_destroy(); }
+    var vk_command_buffers : array<VkCommandBuffer>
+    defer() <| ${ delete vk_command_buffers; }
+    vk_command_buffers <- [{ for item in command_buffers ; boost_value_to_vk(command_buffers) }]
+    var result_ = VkResult VK_SUCCESS
+
+    result ?? result_ = vkAllocateCommandBuffers(
+        boost_value_to_vk(device),
+        safe_addr(vk_allocate_info),
+        array_addr_unsafe(vk_command_buffers)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+
 def device_wait_idle(
     device : Device = [[ Device ]];
     var result : VkResult? = [[VkResult?]]
@@ -166,6 +187,24 @@ def enumerate_physical_devices(
     )
     assert(result_ == VkResult VK_SUCCESS)
     return <- [{for x in vk_physical_devices; vk_value_to_boost(x)}]
+
+def free_command_buffers(
+    device : Device = [[ Device ]];
+    command_pool : CommandPool = [[ CommandPool ]];
+    command_buffers : array<CommandBuffer> = [[ array<CommandBuffer> ]]
+) : void
+
+    let vk_commandBufferCount = uint(command_buffers |> length())
+    var vk_command_buffers : array<VkCommandBuffer>
+    defer() <| ${ delete vk_command_buffers; }
+    vk_command_buffers <- [{ for item in command_buffers ; boost_value_to_vk(command_buffers) }]
+
+    vkFreeCommandBuffers(
+        boost_value_to_vk(device),
+        boost_value_to_vk(command_pool),
+        vk_commandBufferCount,
+        array_addr_unsafe(vk_command_buffers)
+    )
 
 def get_device_queue(
     device : Device = [[ Device ]];
@@ -2126,6 +2165,32 @@ def vk_view_destroy(var boost_struct : VertexInputBindingDescription)
     boost_struct._vk_view__active = false
 
 //
+// CommandBufferAllocateInfo
+//
+
+struct CommandBufferAllocateInfo
+    command_pool : CommandPool
+    level : VkCommandBufferLevel
+    command_buffer_count : uint
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : CommandBufferAllocateInfo
+) : VkCommandBufferAllocateInfo
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    return <- [[ VkCommandBufferAllocateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO,
+        commandPool = boost_value_to_vk(boost_struct.command_pool),
+        level = boost_value_to_vk(boost_struct.level),
+        commandBufferCount = boost_value_to_vk(boost_struct.command_buffer_count)
+    ]]
+
+def vk_view_destroy(var boost_struct : CommandBufferAllocateInfo)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+//
 // BufferCreateInfo
 //
 
@@ -3157,6 +3222,23 @@ def finalize(var handle : Buffer explicit)
             vk_value_to_boost(handle.buffer)
         )
     memzero(handle)
+
+//
+// CommandBuffer
+//
+
+struct CommandBuffer
+    command_buffer : VkCommandBuffer
+    _needs_delete : bool
+
+def boost_value_to_vk(b : CommandBuffer) : VkCommandBuffer
+    return b.command_buffer
+
+def boost_value_to_vk(b : CommandBuffer ?) : VkCommandBuffer ?
+    return b?.command_buffer
+
+def vk_value_to_boost(v : VkCommandBuffer) : CommandBuffer
+    return [[ CommandBuffer command_buffer=v ]]
 
 //
 // Device

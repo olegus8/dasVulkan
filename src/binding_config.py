@@ -258,6 +258,7 @@ def add_boost_content(g):
         ).declare_output(name = 'pPhysicalDevices')
     g.add_gen_func(name = 'vkFreeCommandBuffers'
         ).declare_array(count = 'commandBufferCount', items = 'pCommandBuffers')
+        ).declare_output(name = 'pCommandBuffers')
     g.add_gen_func(name = 'vkGetDeviceQueue'
         ).declare_output(name = 'pQueue')
     g.add_gen_func(name = 'vkGetBufferMemoryRequirements'
