@@ -86,18 +86,6 @@ def create_example_graphics_pipeline(
         device=device, create_info=create_info])
 
 
-/*
-def submit(queue, cmd_bufs)
-    let infos <- [[auto[] [[VkSubmitInfo
-        sType = VkStructureType VK_STRUCTURE_TYPE_SUBMIT_INFO,
-        commandBufferCount = uint(cmd_bufs |> length()),
-        pCommandBuffers = cmd_bufs[0] |> safe_addr_plain()
-    ]]]]
-    verify(VkResult VK_SUCCESS == queue |> vkQueueSubmit(
-        uint(infos |> length()), infos[0] |> safe_addr(), [[VkFence]]))
-*/
-
-
 def copy_buf_sync(device, cmd_pool, queue, src_buf, dst_buf, buf_size)
     var cmd_bufs <- device |> allocate_command_buffers_primary(cmd_pool, 1)
     defer() <| ${ delete cmd_bufs; }
