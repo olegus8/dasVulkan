@@ -98,8 +98,8 @@ def add_boost_content(g):
 
     for name in [
         'VkBuffer',
-        'VkDevice',
         'VkCommandBuffer',
+        'VkDevice',
         'VkCommandPool',
         'VkDescriptorSetLayout',
         'VkFence',
@@ -247,6 +247,8 @@ def add_boost_content(g):
     # Functions
     #
 
+    g.add_gen_func(name = 'vkAllocateCommandBuffers'
+        ).declare_array(count_expr = 'allocate_info.command_buffers_count', items = 'pCommandBuffers')
     g.add_gen_func(name = 'vkDeviceWaitIdle')
     g.add_gen_func(name = 'vkEnumerateDeviceExtensionProperties',
         ).declare_array(count = 'pPropertyCount', items = 'pProperties',
@@ -254,6 +256,8 @@ def add_boost_content(g):
     g.add_gen_func(name = 'vkEnumeratePhysicalDevices',
         ).declare_array(count = 'pPhysicalDeviceCount', items = 'pPhysicalDevices',
         ).declare_output(name = 'pPhysicalDevices')
+    g.add_gen_func(name = 'vkFreeCommandBuffers'
+        ).declare_array(count = 'commandBufferCount', items = 'pCommandBuffers')
     g.add_gen_func(name = 'vkGetDeviceQueue'
         ).declare_output(name = 'pQueue')
     g.add_gen_func(name = 'vkGetBufferMemoryRequirements'
