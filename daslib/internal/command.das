@@ -13,7 +13,7 @@ def create_command_buffers_primary(
     return <- device |> create_command_buffers([[
         CommandBufferAllocateInfo
             command_pool = pool,
-            command_buffer_count = count,
+            command_buffer_count = uint(count),
             level = VkCommandBufferLevel VK_COMMAND_BUFFER_LEVEL_PRIMARY
         ]])
 

@@ -230,7 +230,7 @@ def free_command_buffers(
     let vk_commandBufferCount = uint(command_buffers |> length())
     var vk_command_buffers : array<VkCommandBuffer>
     defer() <| ${ delete vk_command_buffers; }
-    vk_command_buffers <- [{ for item in command_buffers ; boost_value_to_vk(command_buffers) }]
+    vk_command_buffers <- [{ for item in command_buffers ; boost_value_to_vk(item) }]
 
     vkFreeCommandBuffers(
         boost_value_to_vk(device),
