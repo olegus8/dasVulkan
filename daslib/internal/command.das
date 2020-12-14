@@ -1,6 +1,7 @@
 options indenting = 4
 options no_aot = true
 
+require daslib/defer
 require vulkan
 require generated
 require device
