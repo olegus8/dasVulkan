@@ -72,5 +72,5 @@ def record_render_pass(
         clear_values <- clone_to_move(clear_values)
     ]]
     defer() <| ${ delete info; }
-    var contents = VkSubpassContents VK_SUBPASS_CONTENTS_INLINE
+    let contents = VkSubpassContents VK_SUBPASS_CONTENTS_INLINE
     command_buffer |> record_render_pass_ex(info, contents, b)

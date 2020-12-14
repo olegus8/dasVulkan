@@ -148,10 +148,10 @@ def with_draw_commands(device, phys_dev, window, surface, render_pass,
     var cmd_bufs <- device |> allocate_command_buffers_primary(
         cmd_pool, fbufs |> length())
     defer() <| ${ delete cmd_bufs; }
+    var clear_values <- [{ auto[] [[VkClearValue]] }]
+    defer() <| ${ delete clear_values; }
     for cmd_buf, fbuf in cmd_bufs.command_buffers, fbufs
         let vk_cmd_buf = cmd_buf.command_buffer
-        var clear_values <- [{ auto[] [[VkClearValue]] }]
-        defer() <| ${ delete clear_values; }
         cmd_buf |> record_command_buffer() <|
             cmd_buf |> record_render_pass(
                 phys_dev, window, surface, render_pass, fbuf, clear_values
