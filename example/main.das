@@ -155,7 +155,7 @@ def with_baked_vertex_buffer(device, phys_dev, cmd_pool, queue;
                 for dst, src in mapped_vertices, vertices
                     dst = src
             device |> copy_buffer_sync(
-                cmd_pool, queue, staging_buf, vbuf, buf_size)
+                cmd_pool, queue, staging_buf, vbuf, uint64(buf_size))
 
         b |> invoke(vbuf)
 

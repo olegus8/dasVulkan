@@ -124,7 +124,7 @@ def cmd_bind_vertex_buffer(
     command_buffer |> cmd_bind_vertex_buffers(binding, buffers, offsets)
 
 
-def copy_buf_sync(
+def copy_buffer_sync(
     device : Device;
     command_pool : CommandPool;
     queue : Queue;
