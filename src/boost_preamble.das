@@ -110,7 +110,7 @@ def create_command_buffers(
     var result : VkResult? = [[VkResult?]]
 ) : CommandBuffers
     var buffers <- [[ CommandBuffers
-        _needs_delete = true
+        _needs_delete = true,
         _device = weak_copy(device),
         _command_pool = weak_copy(allocate_info.command_pool)
     ]]
