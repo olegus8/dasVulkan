@@ -254,6 +254,8 @@ def add_boost_content(g):
         ).declare_array(count = 'preserveAttachmentCount', items = 'pPreserveAttachments')
     g.add_gen_struct(name = 'VkSwapchainCreateInfoKHR', vk_to_boost=False,
         ).declare_array(count = 'queueFamilyIndexCount', items = 'pQueueFamilyIndices')
+    g.add_gen_struct(name = 'VkRenderPassBeginInfo', vk_to_boost=False,
+        ).declare_array(count = 'clearValueCount', items = 'pClearValues')
 
     #
     # Functions
