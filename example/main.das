@@ -186,7 +186,7 @@ def with_mem_backed_buf(
     buf_size : uint64;
     usage : uint;
     mem_props : uint;
-    b : block<(b:VkBuffer#; m:VkDeviceMemory#)>
+    b : block<(b:VkBuffer#; m:DeviceMemory)>
 )
     let vk_device = device.device
     var buf <- device |> create_buffer_exclusive(buf_size, usage)
@@ -218,7 +218,7 @@ def with_baked_vertex_buffer(device : Device; phys_dev, cmd_pool;
             uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT)|
             uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_COHERENT_BIT)
         ) <| $(staging_buf, staging_mem)
-            device |> map_device_memory_to_array(staging_mem, uint(buf_size)
+            device |> map_device_memory_to_array(staging_mem, uint64(buf_size)
             ) <| $(var mapped_vertices : array<VT>#)
                 for dst, src in mapped_vertices, vertices
                     dst = src
