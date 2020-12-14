@@ -188,9 +188,6 @@ def add_boost_content(g):
     ]:
         g.add_gen_struct(name=name, vk_to_boost=False)
 
-    g.add_gen_struct(name = 'VkPhysicalDeviceMemoryProperties', boost_to_vk=False,
-        ).declare_array(count = 'memoryTypeCount', items = 'memoryTypes')
-        ).declare_array(count = 'memoryHeapCount', items = 'memoryHeaps')
     g.add_gen_struct(name = 'VkBufferCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'queueFamilyIndexCount', items = 'pQueueFamilyIndices')
     g.add_gen_struct(name='VkComputePipelineCreateInfo', vk_to_boost=False)
@@ -221,6 +218,9 @@ def add_boost_content(g):
     g.add_gen_struct(name = 'VkInstanceCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'enabledLayerCount', items = 'ppEnabledLayerNames',
         ).declare_array(count = 'enabledExtensionCount', items = 'ppEnabledExtensionNames')
+    g.add_gen_struct(name = 'VkPhysicalDeviceMemoryProperties', boost_to_vk=False,
+        ).declare_array(count = 'memoryTypeCount', items = 'memoryTypes')
+        ).declare_array(count = 'memoryHeapCount', items = 'memoryHeaps')
     g.add_gen_struct(name = 'VkPipelineCacheCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'initialDataSize', items = 'pInitialData', force_item_type = 'uint8')
     g.add_gen_struct(name = 'VkPipelineColorBlendStateCreateInfo', vk_to_boost=False,
