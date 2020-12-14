@@ -199,7 +199,7 @@ def with_mem_backed_buf(
         verify(VkResult VK_SUCCESS ==
             vk_device |> vkBindBufferMemory(
                 buf.buffer, mem.device_memory, uint64(0)))
-        b |> invoke(buf.buffer, mem.device_memory)
+        b |> invoke(buf.buffer, mem)
 
 
 def with_baked_vertex_buffer(device : Device; phys_dev, cmd_pool;
