@@ -351,7 +351,7 @@ def submit_draw(
         fence = fence_to_signal])
 
 
-def present(device, queue, swapchain, img_i, sem_to_wait; b : block<()>)
+def present(device, queue, swapchain, img_i, sem_to_wait; b : block)
     var result : VkResult
     queue |> queue_present_khr(
         swapchain, img_i, safe_addr(sem_to_wait), result)
