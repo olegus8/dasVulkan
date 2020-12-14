@@ -37,7 +37,7 @@ def find_buffer_memory_type(
         b |> invoke(mem_type, reqs.size)
 
 
-def map_to_array(
+def map_device_memory_to_array(
     device  : Device;
     memory  : DeviceMemory;
     size    : uint64;
