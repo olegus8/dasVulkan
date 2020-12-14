@@ -424,7 +424,7 @@ def main
     print("\nStarted\n")
     glfwInit()
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API)
-    glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE)
+    glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE)
 
     var vertices <- [{auto[]
         [[Vertex position=float2( 0.0f, -0.5f), color=float3(1f, 0f, 0f)]];
