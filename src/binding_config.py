@@ -168,6 +168,8 @@ def add_boost_content(g):
 
     for name in [
         'VkCommandBufferAllocateInfo',
+        'VkCommandBufferBeginInfo',
+        'VkCommandBufferInheritanceInfo',
         'VkCommandPoolCreateInfo',
         'VkFenceCreateInfo',
         'VkImageViewCreateInfo',
@@ -260,6 +262,7 @@ def add_boost_content(g):
     g.add_gen_func(name = 'vkAllocateCommandBuffers', boost_name = 'allocate_command_buffers__inner', private = True,
         ).declare_array(count_expr = 'allocate_info.command_buffer_count', items = 'pCommandBuffers',
         ).declare_output(name = 'pCommandBuffers')
+    g.add_gen_func(name = 'vkBeginCommandBuffer')
     g.add_gen_func(name = 'vkDeviceWaitIdle')
     g.add_gen_func(name = 'vkEnumerateDeviceExtensionProperties',
         ).declare_array(count = 'pPropertyCount', items = 'pProperties',
