@@ -167,6 +167,24 @@ def begin_command_buffer(
     )
     assert(result_ == VkResult VK_SUCCESS)
 
+def bind_buffer_memory(
+    device : Device = [[ Device ]];
+    buffer : Buffer = [[ Buffer ]];
+    memory : DeviceMemory = [[ DeviceMemory ]];
+    memory_offset : uint64 = [[ uint64 ]];
+    var result : VkResult? = [[VkResult?]]
+) : void
+
+    var result_ = VkResult VK_SUCCESS
+
+    result ?? result_ = vkBindBufferMemory(
+        boost_value_to_vk(device),
+        boost_value_to_vk(buffer),
+        boost_value_to_vk(memory),
+        boost_value_to_vk(memory_offset)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+
 def cmd_begin_render_pass(
     command_buffer : CommandBuffer = [[ CommandBuffer ]];
     var render_pass_begin : RenderPassBeginInfo = [[ RenderPassBeginInfo ]];

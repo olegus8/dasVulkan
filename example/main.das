@@ -146,7 +146,6 @@ def with_mem_backed_buf(
     mem_props : uint;
     b : block<(b:Buffer; m:DeviceMemory)>
 )
-    let vk_device = device.device
     var buf <- device |> create_buffer_exclusive(buf_size, usage)
     defer() <| ${ delete buf; }
     device |> find_buffer_memory_type(phys_dev, buf, mem_props
@@ -154,9 +153,7 @@ def with_mem_backed_buf(
         var mem <- device |> allocate_memory([[MemoryAllocateInfo
             allocation_size=mem_size, memory_type_index=mem_type]])
         defer() <| ${ delete mem; }
-        verify(VkResult VK_SUCCESS ==
-            vk_device |> vkBindBufferMemory(
-                buf.buffer, mem.device_memory, uint64(0)))
+        device |> bind_buffer_memory(buf, mem)
         b |> invoke(buf, mem)
 
 
