@@ -7,7 +7,6 @@ require vulkan
 
 require internal/buffer         public
 require internal/command        public
-require internal/command_ex     public
 require internal/core           public
 require internal/device         public
 require internal/framebuffer    public
