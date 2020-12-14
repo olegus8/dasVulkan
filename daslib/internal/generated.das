@@ -182,6 +182,37 @@ def cmd_begin_render_pass(
         boost_value_to_vk(contents)
     )
 
+def cmd_copy_buffer(
+    command_buffer : CommandBuffer = [[ CommandBuffer ]];
+    src_buffer : Buffer = [[ Buffer ]];
+    dst_buffer : Buffer = [[ Buffer ]];
+    var regions : array<BufferCopy> = [[ array<BufferCopy> ]]
+) : void
+
+    let vk_regionCount = uint(regions |> length())
+    var vk_regions <- [{ for item in regions ;
+        item |> vk_view_create_unsafe() }]
+    defer() <|
+        for item in regions
+            item |> vk_view_destroy()
+        delete vk_regions
+
+    vkCmdCopyBuffer(
+        boost_value_to_vk(command_buffer),
+        boost_value_to_vk(src_buffer),
+        boost_value_to_vk(dst_buffer),
+        vk_regionCount,
+        array_addr_unsafe(vk_regions)
+    )
+
+def cmd_end_render_pass(
+    command_buffer : CommandBuffer = [[ CommandBuffer ]]
+) : void
+
+    vkCmdEndRenderPass(
+        boost_value_to_vk(command_buffer)
+    )
+
 def device_wait_idle(
     device : Device = [[ Device ]];
     var result : VkResult? = [[VkResult?]]
@@ -205,14 +236,6 @@ def end_command_buffer(
         boost_value_to_vk(command_buffer)
     )
     assert(result_ == VkResult VK_SUCCESS)
-
-def cmd_end_render_pass(
-    command_buffer : CommandBuffer = [[ CommandBuffer ]]
-) : void
-
-    vkCmdEndRenderPass(
-        boost_value_to_vk(command_buffer)
-    )
 
 def enumerate_device_extension_properties(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]];
@@ -1814,6 +1837,31 @@ def vk_value_to_boost(vk_struct : VkPhysicalDeviceProperties) : PhysicalDevicePr
         limits <- vk_value_to_boost(vk_struct.limits),
         sparse_properties <- vk_value_to_boost(vk_struct.sparseProperties)
     ]]
+
+//
+// BufferCopy
+//
+
+struct BufferCopy
+    src_offset : uint64
+    dst_offset : uint64
+    size : uint64
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : BufferCopy
+) : VkBufferCopy
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    return <- [[ VkBufferCopy
+        srcOffset = boost_value_to_vk(boost_struct.src_offset),
+        dstOffset = boost_value_to_vk(boost_struct.dst_offset),
+        size = boost_value_to_vk(boost_struct.size)
+    ]]
+
+def vk_view_destroy(var boost_struct : BufferCopy)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
 
 //
 // ClearDepthStencilValue

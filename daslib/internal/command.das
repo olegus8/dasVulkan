@@ -95,3 +95,17 @@ def queue_submit(
     ]]}]
     defer() <| ${ delete submits; }
     queue |> queue_submit(submits, fence, result)
+
+
+def cmd_copy_buffer(
+    command_buffer : CommandBuffer;
+    src_buffer : Buffer;
+    dst_buffer : Buffer;
+    size : uint64;
+    src_offset : uint64 = [[ uint64 ]];
+    dst_offset : uint64 = [[ uint64 ]];
+)
+    var regions <- [{ auto[] [[BufferCopy
+        size=size, src_offset=src_offset, dst_offset=dst_offset]] }]
+    defer() <| ${ delete regions; }
+    command_buffer |> cmd_copy_buffer(src_buffer, dst_buffer, regions)
