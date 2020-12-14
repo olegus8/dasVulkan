@@ -100,9 +100,11 @@ def queue_submit(
 def queue_submit(
     queue               : Queue;
     command_buffers     : CommandBuffers;
-    wait_semaphore      : Semaphore const ? implicit = [[ Semaphore ? const ]];
+    wait_semaphore      : Semaphore const ? implicit = [[ 
+        Semaphore ? const implicit ]];
     wait_dst_stage_mask : uint = [[ uint ]];
-    signal_semaphore    : Semaphore const ? implicit = [[ Semaphore ? const ]];
+    signal_semaphore    : Semaphore const ? implicit = [[ 
+        Semaphore ? const implicit ]];
     fence               : Fence = [[ Fence ]];
     var result          : VkResult? = [[VkResult?]]
 )
