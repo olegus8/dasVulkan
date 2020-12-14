@@ -45,8 +45,9 @@ def record_command_buffer(command_buffer : CommandBuffer; b : block)
     record_command_buffer_ex([command_buffer=command_buffer, b=b])
 
 def record_render_pass_ex(
-    command_buffer : CommandBuffer;
-    var render_pass_begin : RenderPassBeginInfo;
+    command_buffer          : CommandBuffer;
+    var render_pass_begin   : RenderPassBeginInfo;
+    contents                : VkSubpassContents;
     b : block
 )
     command_buffer |> cmd_begin_render_pass(render_pass_begin)
@@ -71,4 +72,5 @@ def record_render_pass(
         clear_values <- clone_to_move(clear_values)
     ]]
     defer() <| ${ delete info; }
-    command_buffer |> record_render_pass_ex(info, b)
+    var contents = VkSubpassContents VK_SUBPASS_CONTENTS_INLINE
+    command_buffer |> record_render_pass_ex(info, contents, b)
