@@ -160,6 +160,7 @@ def add_boost_content(g):
 
     for name in [
         'VkExtensionProperties',
+        'VkPhysicalDeviceMemoryProperties',
         'VkPhysicalDeviceProperties',
     ]:
         g.add_gen_struct(name=name, boost_to_vk=False)

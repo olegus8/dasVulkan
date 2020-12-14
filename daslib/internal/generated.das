@@ -398,6 +398,18 @@ def get_physical_device_surface_present_modes_khr(
     assert(result_ == VkResult VK_SUCCESS)
     return <- [{for x in vk_present_modes; vk_value_to_boost(x)}]
 
+def get_physical_device_memory_properties(
+    physical_device : PhysicalDevice = [[ PhysicalDevice ]]
+) : PhysicalDeviceMemoryProperties
+
+    var vk_memory_properties : VkPhysicalDeviceMemoryProperties
+
+    vkGetPhysicalDeviceMemoryProperties(
+        boost_value_to_vk(physical_device),
+        safe_addr(vk_memory_properties)
+    )
+    return <- vk_value_to_boost(vk_memory_properties)
+
 def get_swapchain_images_khr(
     device : Device = [[ Device ]];
     swapchain : SwapchainKHR = [[ SwapchainKHR ]];
