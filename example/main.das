@@ -115,7 +115,7 @@ def with_draw_commands(device, phys_dev, window, surface, render_pass,
             cmd_buf |> record_render_pass(
                 phys_dev, window, surface, render_pass, fbuf, clear_values
             ) <|
-                vk_cmd_buf |> vkCmdBindPipeline(
+                cmd_buf |> cmd_bind_pipeline(
                     VkPipelineBindPoint VK_PIPELINE_BIND_POINT_GRAPHICS,
                     pipeline)
                 vk_cmd_buf |> vkCmdBindVertexBuffers(0u, // first binding idx

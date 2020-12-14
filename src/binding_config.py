@@ -274,6 +274,7 @@ def add_boost_content(g):
     g.add_gen_func(name = 'vkBeginCommandBuffer')
     g.add_gen_func(name = 'vkBindBufferMemory')
     g.add_gen_func(name = 'vkCmdBeginRenderPass')
+    g.add_gen_func(name = 'vkCmdBindPipeline')
     g.add_gen_func(name = 'vkCmdCopyBuffer',
         ).declare_array(count = 'regionCount', items = 'pRegions')
     g.add_gen_func(name = 'vkCmdEndRenderPass')

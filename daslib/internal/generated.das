@@ -200,6 +200,18 @@ def cmd_begin_render_pass(
         boost_value_to_vk(contents)
     )
 
+def cmd_bind_pipeline(
+    command_buffer : CommandBuffer = [[ CommandBuffer ]];
+    pipeline_bind_point : VkPipelineBindPoint = [[ VkPipelineBindPoint ]];
+    pipeline : Pipeline = [[ Pipeline ]]
+) : void
+
+    vkCmdBindPipeline(
+        boost_value_to_vk(command_buffer),
+        boost_value_to_vk(pipeline_bind_point),
+        boost_value_to_vk(pipeline)
+    )
+
 def cmd_copy_buffer(
     command_buffer : CommandBuffer = [[ CommandBuffer ]];
     src_buffer : Buffer = [[ Buffer ]];
