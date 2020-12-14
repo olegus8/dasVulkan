@@ -544,9 +544,9 @@ def main
     log_type(v)
     return true
 */
+    let heap_on_start = heap_bytes_allocated()
+    let string_heap_on_start = string_heap_bytes_allocated()
     print("\nStarted\n")
-    print("{heap_bytes_allocated()} bytes on heap\n")
-    print("{string_heap_bytes_allocated()} bytes on string heap\n")
     glfwInit()
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API)
     glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE)
@@ -634,11 +634,17 @@ def main
                         device |> device_wait_idle()
 
     delete vertices
+    glfwTerminate()
+
     unsafe
         string_heap_collect()
+    let heap_on_finish = heap_bytes_allocated()
+    let string_heap_on_finish = string_heap_bytes_allocated()
 
-    glfwTerminate()
+    print("{heap_on_finish} bytes on heap\n")
+    print("{string_heap_on_finish} bytes on string heap\n")
+    assert(heap_on_start == heap_on_finish)
+    assert(string_heap_on_start == string_heap_on_finish)
+
     print("Finished\n")
-    print("{heap_bytes_allocated()} bytes on heap\n")
-    print("{string_heap_bytes_allocated()} bytes on string heap\n")
     return true
