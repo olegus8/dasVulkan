@@ -343,13 +343,12 @@ def submit_draw(
     sem_to_signal   : Semaphore;
     fence_to_signal : Fence
 )
-    unsafe
-        queue_submit([queue = queue, command_buffer = cmd_buf,
-            wait_semaphore = addr(sem_to_wait),
-            wait_dst_stage_mask = uint(VkPipelineStageFlagBits
-                VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT),
-            signal_semaphore = addr(sem_to_signal),
-            fence = fence_to_signal])
+    queue_submit([queue = queue, command_buffer = cmd_buf,
+        wait_semaphore = safe_addr(sem_to_wait),
+        wait_dst_stage_mask = uint(VkPipelineStageFlagBits
+            VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT),
+        signal_semaphore = safe_addr(sem_to_signal),
+        fence = fence_to_signal])
 
 
 def present(device, queue, swapchain, img_i, sem_to_wait; b : block<()>)
