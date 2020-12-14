@@ -541,9 +541,9 @@ def main
                 )
                     print("{sc.framebuffers |> length()} " +
                         "images in swap chain\n")
-                    device |> with_draw_commands(phys_dev, window, surface,
-                        render_pass, sc.framebuffers, pipeline, cmd_pool,
-                        vk_queue, vbuf, vertices |> length()
+                    device |> with_example_draw_commands(phys_dev, window,
+                        surface, render_pass, sc.framebuffers, pipeline,
+                        cmd_pool, vk_queue, vbuf, vertices |> length()
                     ) <| $(sc_draw_cmds)
                         var frame = 0
                         var imgs_used_by_frames <- [{
