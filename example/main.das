@@ -86,18 +86,6 @@ def create_example_graphics_pipeline(
         device=device, create_info=create_info])
 
 
-def copy_buf_sync(device, cmd_pool, queue, src_buf, dst_buf, buf_size)
-    var cmd_bufs <- device |> allocate_command_buffers_primary(cmd_pool, 1)
-    defer() <| ${ delete cmd_bufs; }
-    let cmd_buf = cmd_bufs.command_buffers[0]
-
-    cmd_buf |> record_command_buffer() <| $()
-        cmd_buf |> cmd_copy_buffer(src_buf, dst_buf, uint64(buf_size))
-
-    queue |> queue_submit(cmd_bufs)
-    queue |> queue_wait_idle()
-
-
 def with_example_draw_commands(device, phys_dev, window, surface, render_pass,
     fbufs, pipeline, cmd_pool, queue; vbuf, vertices_count;
     b : block<(cmds:array<VkCommandBuffer>)>
@@ -166,7 +154,7 @@ def with_baked_vertex_buffer(device, phys_dev, cmd_pool, queue;
             ) <| $(var mapped_vertices : array<VT>#)
                 for dst, src in mapped_vertices, vertices
                     dst = src
-            device |> copy_buf_sync(
+            device |> copy_buffer_sync(
                 cmd_pool, queue, staging_buf, vbuf, buf_size)
 
         b |> invoke(vbuf)
