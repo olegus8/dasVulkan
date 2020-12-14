@@ -78,6 +78,7 @@ class BoostGenerator(LoggingObject):
             ParamVkBool32,
             ParamVkSampleMask,
             ParamVoidPtr,
+            ParamVoidPtrPtr,
             ParamUnknown,
         ]:
             param = param_class.maybe_create(
