@@ -324,7 +324,7 @@ def with_swapchain_dependent_state(
     )
 
 
-def with_next_image(device, swapchain, sem_to_signal, b : block<(i:uint)>)
+def with_next_image(device, swapchain, sem_to_signal; b : block<(i:uint)>)
     var result : VkResult
     let img_index = device |> acquire_next_image_khr(
         swapchain, ULONG_MAX, sem_to_signal, [[Fence]], result)
