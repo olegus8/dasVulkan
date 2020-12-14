@@ -398,7 +398,7 @@ def draw_frame(device, queue, cmd_bufs, swapchain, frame,
             frame_fences[frame])
 
         vk_device |> present(
-            queue, vk_swapchain, img_i, render_done_sems[frame]
+            queue.queue, vk_swapchain, img_i, render_done_sems[frame]
         ) <| $()
             presented = true
 
@@ -509,7 +509,7 @@ def main
                                 window |> glfwWindowShouldClose() == 0)
                             glfwPollEvents()
                             let is_swapchain_good = device |> draw_frame(
-                                vk_queue, sc_draw_cmds, sc.swapchain, frame,
+                                queue, sc_draw_cmds, sc.swapchain, frame,
                                 frame_fences, img_avail_sems, render_done_sems,
                                 imgs_used_by_frames
                             )
