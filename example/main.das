@@ -202,16 +202,15 @@ def with_mem_backed_buf(
 )
     let vk_device = device.device
     var buf <- device |> create_buffer_exclusive(buf_size, usage)
-    defer() <| ${ delete buf ; }
+    defer() <| ${ delete buf; }
     device |> find_buffer_memory_type(phys_dev, buf, mem_props
     ) <| $(mem_type, mem_size)
-        var mem <- allocate_memory([device=vk_device,
-            allocation_size=mem_size, mem_type_index=mem_type])
-        defer() <|
-            delete mem
+        var mem <- device |> allocate_memory([[MemoryAllocateInfo
+            allocation_size=mem_size, memory_type_index=mem_type])
+        defer() <| ${ delete mem; }
         verify(VkResult VK_SUCCESS ==
             vk_device |> vkBindBufferMemory(buf.buffer, mem.memory, uint64(0)))
-        b |> invoke(buf.buffer, mem.memory)
+        b |> invoke(buf.buffer, mem.device_memory)
 
 
 def with_baked_vertex_buffer(device : Device; phys_dev, cmd_pool;
