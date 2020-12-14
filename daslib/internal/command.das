@@ -87,6 +87,11 @@ def queue_submit(
     fence               : Fence = [[ Fence ]];
     var result          : VkResult? = [[VkResult?]]
 )
-    var submits <- [{ auto[] clone_to_move(submit) }]
+    var submits <- [{ auto[] [[SubmitInfo
+        wait_semaphores := wait_semaphores,
+        wait_dst_stage_mask := wait_dst_stage_mask,
+        command_buffers := command_buffers.command_buffers,
+        signal_semaphores := signal_semaphores
+    ]]}]
     defer() <| ${ delete submits; }
     queue |> queue_submit(submits, fence, result)
