@@ -99,6 +99,7 @@ def add_boost_content(g):
     for name in [
         'VkBuffer',
         'VkDevice',
+        'VkCommandBuffer',
         'VkCommandPool',
         'VkDescriptorSetLayout',
         'VkFence',
@@ -176,6 +177,7 @@ def add_boost_content(g):
         'VkStencilOpState',
         'VkVertexInputAttributeDescription',
         'VkVertexInputBindingDescription',
+        'VkCommandBufferAllocateInfo',
     ]:
         g.add_gen_struct(name=name, vk_to_boost=False)
 
