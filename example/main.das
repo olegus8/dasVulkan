@@ -152,7 +152,7 @@ def copy_buf_sync(device, cmd_pool, queue, src_buf, dst_buf, buf_size)
         let params <- [[auto[] [[VkBufferCopy size = uint64(buf_size)]]]]
         vk_cmd_buf |> vkCmdCopyBuffer(src_buf, dst_buf,
             uint(params |> length()), params[0] |> safe_addr())
-    queue.queue |> submit(vk_cmd_bufs.buffers)
+    queue.queue |> submit(vk_cmd_bufs)
     queue |> queue_wait_idle()
 
 
