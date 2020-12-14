@@ -661,6 +661,7 @@ class C_Type(object):
 
         unqual_name = {
             'const char *const *': 'char',
+            'void **': 'void *',
         }.get(self.name)
 
         if unqual_name:
