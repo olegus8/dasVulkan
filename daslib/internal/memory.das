@@ -4,32 +4,35 @@ options no_aot = true
 require daslib/safe_addr
 
 require vulkan
+require memory
+require generated
 
 
-struct Memory
-    memory  : VkDeviceMemory
-    _device : VkDevice
+def find_memory_type(
+    phys_dev        : VkPhysicalDevice implicit;
+    type_filter     : uint;
+    needed_flags    : uint;
+    b : block<(t:uint)>
+)
+    var actual_props : VkPhysicalDeviceMemoryProperties
+    phys_dev |> vkGetPhysicalDeviceMemoryProperties(safe_addr(actual_props))
+    for type_i in range(actual_props.memoryTypeCount)
+        if ((1u << uint(type_i)) & type_filter) == 0u
+            continue
+        let actual_flags = actual_props.memoryTypes[type_i].propertyFlags
+        if (actual_flags & needed_flags) == needed_flags
+            b |> invoke(uint(type_i))
+            return
 
 
-def allocate_memory(
-    device          : VkDevice;
-    allocation_size : uint64;
-    mem_type_index  : uint;
-    var result      : VkResult? = [[ VkResult? ]]
-) : Memory
-    let alloc_info <- [[VkMemoryAllocateInfo
-        sType = VkStructureType VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO,
-        allocationSize = allocation_size,
-        memoryTypeIndex = mem_type_index
-    ]]
-    var mem <- [[Memory _device=device]]
-    var result_ = VkResult VK_SUCCESS
-    result ?? result_ = device |> vkAllocateMemory(
-        safe_addr(alloc_info), null, safe_addr(mem.memory))
-    assert(result_ == VkResult VK_SUCCESS)
-    return <- mem
-
-
-def finalize(var mem : Memory)
-    mem._device |> vkFreeMemory(mem.memory, null)
-    memzero(mem)
+def find_buffer_memory_type(
+    device      : Device;
+    phys_dev    : VkPhysicalDevice;
+    buffer      : Buffer;
+    mem_props   : uint;
+    b : block<(mem_type:uint; mem_size:uint64)>
+)
+    let reqs <- device |> get_buffer_memory_requirements(buffer)
+    phys_dev |> find_memory_type(reqs.memory_type_bits, mem_props
+    ) <| $(mem_type)
+        b |> invoke(mem_type, reqs.size)

@@ -13,7 +13,6 @@ require internal/framebuffer    public
 require internal/glfw           public
 require internal/instance       public
 require internal/memory         public
-require internal/memory_ex      public
 require internal/pipeline       public
 require internal/swapchain      public
 
