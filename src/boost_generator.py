@@ -81,7 +81,8 @@ class BoostGenerator(LoggingObject):
             ParamUInt32,
             ParamUInt64,
             ParamVkBool32,
-            ParamVkSampleMask,
+            ParamVkMask,
+            ParamVkFlags,
             ParamVoidPtr,
             ParamVoidPtrPtr,
             ParamUnknown,
@@ -1518,11 +1519,23 @@ class ParamVkBool32(ParamBase):
         return 'uint'
 
 
-class ParamVkSampleMask(ParamBase):
+class ParamVkMask(ParamBase):
 
     @classmethod
     def maybe_create(cls, c_param, **kwargs):
-        if c_param.type.unqual_name == 'VkSampleMask':
+        if c_param.type.unqual_name in ['VkSampleMask']:
+            return cls(c_param=c_param, **kwargs)
+
+    @property
+    def vk_unqual_type(self):
+        return 'uint'
+
+
+class ParamVkFlags(ParamBase):
+
+    @classmethod
+    def maybe_create(cls, c_param, **kwargs):
+        if c_param.type.unqual_name in ['VkPipelineStageFlags']:
             return cls(c_param=c_param, **kwargs)
 
     @property
