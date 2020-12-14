@@ -192,15 +192,6 @@ def add_boost_content(g):
     ]:
         g.add_gen_struct(name=name, vk_to_boost=False)
 
-    g.add_gen_struct(name = 'VkPresentInfoKHR', vk_to_boost=False,
-        ).declare_array(count = 'queueFamilyIndexCount', items = 'pQueueFamilyIndices')
-    uint32_t                 waitSemaphoreCount;
-    const VkSemaphore*       pWaitSemaphores;
-    uint32_t                 swapchainCount;
-    const VkSwapchainKHR*    pSwapchains;
-    const uint32_t*          pImageIndices;
-    VkResult*                pResults;
-
     g.add_gen_struct(name = 'VkBufferCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'queueFamilyIndexCount', items = 'pQueueFamilyIndices')
     g.add_gen_struct(name='VkComputePipelineCreateInfo', vk_to_boost=False)
@@ -249,6 +240,11 @@ def add_boost_content(g):
     g.add_gen_struct(name = 'VkPipelineViewportStateCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'viewportCount', items = 'pViewports',
         ).declare_array(count = 'scissorCount', items = 'pScissors')
+    g.add_gen_struct(name = 'VkPresentInfoKHR', vk_to_boost=False,
+        ).declare_array(count = 'waitSemaphoreCount', items = 'pWaitSemaphores',
+        ).declare_array(count = 'swapchainCount', items = 'pSwapchains',
+        ).declare_array(count = 'swapchainCount', items = 'pImageIndices',
+        ).declare_array(count = 'swapchainCount', items = 'pResults', optional=True)
     g.add_gen_struct(name = 'VkRenderPassCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'attachmentCount', items = 'pAttachments',
         ).declare_array(count = 'subpassCount', items = 'pSubpasses',
