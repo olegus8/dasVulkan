@@ -3,6 +3,7 @@ options no_aot = true
 
 require vulkan
 require generated
+require device
 
 
 def allocate_command_buffers_primary(
@@ -57,9 +58,16 @@ def record_render_pass_full_window(
     surface         : SurfaceKHR;
     window          : GLFWwindow_DasHandle;
     render_pass     : RenderPass;
-    frame_buffer    : Framebuffer;
+    framebuffer     : Framebuffer;
+    clear_values    : array<VkClearValue>;
     b : block
 )
-    command_buffer |> cmd_begin_render_pass(render_pass_begin)
-    b |> invoke()
-    command_buffer |> cmd_end_render_pass()
+    var extent <- physical_device |> get_swap_extent(surface, window)
+    var info <- [[RenderPassBeginInfo
+        render_pass = weak_copy(render_pass),
+        framebuffer = weak_copy(framebuffer),
+        render_area = [[ Rect2D extent <- extent ]],
+        clear_values <- clone_to_move(clear_values)
+    ]]
+    defer() <| ${ delete info; }
+    command_buffer |> record_render_pass_ex(info, b)
