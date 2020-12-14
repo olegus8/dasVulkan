@@ -14,6 +14,7 @@ def reset_fence(
     defer() <| ${ delete fences; }
     device |> reset_fences(fences, result)
 
+
 def wait_for_fence(
     device : Device;
     fence : Fence;
