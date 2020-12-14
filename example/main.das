@@ -85,31 +85,6 @@ def create_example_graphics_pipeline(
     return <- create_graphics_pipeline([
         device=device, create_info=create_info])
 
-/*
-def record_render_pass(cmd_buf, phys_dev, window, surface, render_pass, fbuf;
-    b : block
-)
-    let vk_phys_dev = phys_dev.physical_device
-    let vk_cmd_buf = cmd_buf.command_buffer
-    var extent <- phys_dev |> get_swap_extent(surface, window)
-    extent |> with_view() <| $(vk_extent : VkExtent2D const)
-        cmd_buf |> record_command_buffer() <| $()
-            let clear_values <- [[auto[] [[VkClearValue]]]]
-            let info <- [[VkRenderPassBeginInfo
-                sType = (VkStructureType
-                    VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO),
-                renderPass      = render_pass,
-                framebuffer     = fbuf.framebuffer,
-                renderArea      = [[VkRect2D extent = vk_extent]],
-                clearValueCount = uint(clear_values |> length()),
-                pClearValues    = clear_values |> safe_addr()
-            ]]
-            vk_cmd_buf |> vkCmdBeginRenderPass(info |> safe_addr(),
-                VkSubpassContents VK_SUBPASS_CONTENTS_INLINE)
-            b |> invoke()
-            vk_cmd_buf |> vkCmdEndRenderPass()
-*/
-
 
 def submit(queue, cmd_bufs)
     let infos <- [[auto[] [[VkSubmitInfo
