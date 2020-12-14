@@ -387,7 +387,7 @@ def draw_frame(device, queue, cmd_bufs, swapchain, frame,
     device |> wait_for_fence(frame_fences[frame], ULONG_MAX)
     var img_acquired = false
     var presented = false
-    device |> with_next_image(vk_swapchain, img_avail_sems[frame]) <| $(img_i)
+    device |> with_next_image(swapchain, img_avail_sems[frame]) <| $(img_i)
         img_acquired = true
 
         var img_frame = imgs_used_by_frames[img_i]
