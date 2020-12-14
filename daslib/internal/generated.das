@@ -356,6 +356,18 @@ def get_swapchain_images_khr(
     assert(result_ == VkResult VK_SUCCESS)
     return <- [{for x in vk_swapchain_images; vk_value_to_boost(x)}]
 
+def queue_wait_idle(
+    queue : Queue = [[ Queue ]];
+    var result : VkResult? = [[VkResult?]]
+) : void
+
+    var result_ = VkResult VK_SUCCESS
+
+    result ?? result_ = vkQueueWaitIdle(
+        boost_value_to_vk(queue)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+
 //
 // ApplicationInfo
 //

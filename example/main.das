@@ -150,8 +150,8 @@ def copy_buf_sync(device, cmd_pool, queue, src_buf, dst_buf, buf_size)
         let params <- [[auto[] [[VkBufferCopy size = uint64(buf_size)]]]]
         cmd_buf |> vkCmdCopyBuffer(src_buf, dst_buf,
             uint(params |> length()), params[0] |> safe_addr())
-    queue |> submit(cmd_bufs.buffers)
-    queue |> vkQueueWaitIdle()
+    queue.queue |> submit(cmd_bufs.buffers)
+    queue |> queue_wait_idle()
 
 
 def with_draw_commands(device, phys_dev, window, surface, render_pass,
@@ -210,8 +210,8 @@ def with_mem_backed_buf(
         b |> invoke(buf.buffer, mem.memory)
 
 
-def with_baked_vertex_buffer(device : Device; phys_dev, cmd_pool, queue;
-    vertices:array<auto(VT)>; b : block<(b:VkBuffer)>
+def with_baked_vertex_buffer(device : Device; phys_dev, cmd_pool;
+    queue : Queue; vertices:array<auto(VT)>; b : block<(b:VkBuffer)>
 )
     let vk_device = device.device
     let buf_size = typeinfo(sizeof type<VT>) * vertices |> length()
@@ -285,7 +285,7 @@ def with_swapchain_independent_state(width, height, title; b : block<(
     surface         : SurfaceKHR;
     phys_dev        : PhysicalDevice;
     device          : Device;
-    queue           : VkQueue;
+    queue           : Queue;
     var surf_fmt    : SurfaceFormatKHR;
     present_mode    : VkPresentModeKHR;
     vert_shmod      : ShaderModule;
@@ -334,7 +334,7 @@ def with_swapchain_independent_state(width, height, title; b : block<(
             surface,
             phys_dev,
             device,
-            queue.queue,
+            queue,
             surf_fmt,
             present_mode,
             shvert,
@@ -559,7 +559,7 @@ def main
         surface         : SurfaceKHR;
         phys_dev        : PhysicalDevice;
         device          : Device;
-        queue           : VkQueue;
+        queue           : Queue;
         var surf_fmt    : SurfaceFormatKHR;
         present_mode    : VkPresentModeKHR;
         vert_shmod      : ShaderModule;
@@ -570,6 +570,7 @@ def main
     )
         let vk_device = device.device
         let vk_render_pass = render_pass.render_pass
+        let vk_queue = queue.queue
         var props <- phys_dev |> get_physical_device_properties()
         defer() <| ${ delete props ; }
         print("Using {props.device_name}\n")
@@ -589,7 +590,7 @@ def main
                     surface,
                     phys_dev,
                     device,
-                    queue,
+                    vk_queue,
                     surf_fmt,
                     present_mode,
                     vert_shmod,
@@ -608,7 +609,7 @@ def main
                         "images in swap chain\n")
                     vk_device |> with_draw_commands(phys_dev, window, surface,
                         vk_render_pass, sc.framebuffers, pipeline, cmd_pool,
-                        queue, vbuf, vertices |> length()
+                        vk_queue, vbuf, vertices |> length()
                     ) <| $(sc_draw_cmds)
                         var frame = 0
                         var imgs_used_by_frames <- [{
@@ -618,7 +619,7 @@ def main
                                 window |> glfwWindowShouldClose() == 0)
                             glfwPollEvents()
                             let is_swapchain_good = vk_device |> draw_frame(
-                                queue, sc_draw_cmds, sc.swapchain, frame,
+                                vk_queue, sc_draw_cmds, sc.swapchain, frame,
                                 frame_fences, img_avail_sems, render_done_sems,
                                 imgs_used_by_frames
                             )
