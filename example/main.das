@@ -287,9 +287,9 @@ def with_swapchain_dependent_state(
     b : block<(
         swapchain           : SwapchainEx;
         pipeline            : Pipeline;
-        img_avail_sems      : array<VkSemaphore>;
-        render_done_sems    : array<VkSemaphore>;
-        frame_fences        : array<VkFence>
+        img_avail_sems      : array<Semaphore>;
+        render_done_sems    : array<Semaphore>;
+        frame_fences        : array<Fence>
 )>)
     let vk_device = device.device
     let vk_render_pass = render_pass.render_pass
@@ -513,9 +513,9 @@ def main
                 ) <| $(
                     sc                  : SwapchainEx;
                     pipeline            : Pipeline;
-                    img_avail_sems      : array<VkSemaphore>;
-                    render_done_sems    : array<VkSemaphore>;
-                    frame_fences        : array<VkFence>
+                    img_avail_sems      : array<Semaphore>;
+                    render_done_sems    : array<Semaphore>;
+                    frame_fences        : array<Fence>
                 )
                     print("{sc.framebuffers |> length()} " +
                         "images in swap chain\n")
