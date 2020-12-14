@@ -326,8 +326,11 @@ def with_swapchain_dependent_state(
 
 def with_next_image(device, swapchain, sem_to_signal; b : block<(i:uint)>)
     var result : VkResult
+    var p_result : VkResult ?
+    unsafe
+        p_result = addr(result)
     let img_index = device |> acquire_next_image_khr(
-        swapchain, ULONG_MAX, sem_to_signal, [[Fence]], result)
+        swapchain, ULONG_MAX, sem_to_signal, [[Fence]], p_result)
     if result == VkResult VK_SUCCESS
         b |> invoke(img_index)
     else
