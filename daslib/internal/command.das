@@ -41,3 +41,25 @@ def record_command_buffer_ex(
 
 def record_command_buffer(command_buffer : CommandBuffer; b : block)
     record_command_buffer_ex([command_buffer=command_buffer, b=b])
+
+def record_render_pass_ex(
+    command_buffer : CommandBuffer;
+    var render_pass_begin : RenderPassBeginInfo;
+    b : block
+)
+    command_buffer |> cmd_begin_render_pass(render_pass_begin)
+    b |> invoke()
+    command_buffer |> cmd_end_render_pass()
+
+def record_render_pass_full_window(
+    command_buffer  : CommandBuffer;
+    physical_device : PhysicalDevice;
+    surface         : SurfaceKHR;
+    window          : GLFWwindow_DasHandle;
+    render_pass     : RenderPass;
+    frame_buffer    : Framebuffer;
+    b : block
+)
+    command_buffer |> cmd_begin_render_pass(render_pass_begin)
+    b |> invoke()
+    command_buffer |> cmd_end_render_pass()

@@ -3448,9 +3448,8 @@ struct RenderPassBeginInfo
     render_pass : RenderPass
     framebuffer : Framebuffer
     render_area : Rect2D
-    clear_values : array<ClearValue>
+    clear_values : array<VkClearValue>
     _vk_view_p_render_area : VkRect2D ?
-    _vk_view_clear_values : array<VkClearValue>
     _vk_view__active : bool
 
 def vk_view_create_unsafe(var boost_struct : RenderPassBeginInfo
@@ -3462,16 +3461,14 @@ def vk_view_create_unsafe(var boost_struct : RenderPassBeginInfo
     *(boost_struct._vk_view_p_render_area) <- (
         boost_struct.render_area |> vk_view_create_unsafe())
     let vk_clear_value_count = uint(boost_struct.clear_values |> length())
-    boost_struct._vk_view_clear_values <- [{
-        for item in boost_struct.clear_values ;
-        item |> vk_view_create_unsafe()}]
+    let vk_p_clear_values = array_addr_unsafe(boost_struct.clear_values)
     return <- [[ VkRenderPassBeginInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO,
         renderPass = boost_value_to_vk(boost_struct.render_pass),
         framebuffer = boost_value_to_vk(boost_struct.framebuffer),
         renderArea = *(boost_struct._vk_view_p_render_area),
         clearValueCount = vk_clear_value_count,
-        pClearValues = array_addr_unsafe(boost_struct._vk_view_clear_values)
+        pClearValues = vk_p_clear_values
     ]]
 
 def vk_view_destroy(var boost_struct : RenderPassBeginInfo)
@@ -3479,9 +3476,6 @@ def vk_view_destroy(var boost_struct : RenderPassBeginInfo)
     boost_struct.render_area |> vk_view_destroy()
     unsafe
         delete boost_struct._vk_view_p_render_area
-    for item in boost_struct.clear_values
-        item |> vk_view_destroy()
-    delete boost_struct._vk_view_clear_values
     boost_struct._vk_view__active = false
 
 //
