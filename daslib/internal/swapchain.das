@@ -115,8 +115,8 @@ def queue_present_khr(
 
     var info <- [[ PresentInfoKHR
         wait_semaphores <- wait_semaphores,
-        swapchains <- [{ weak_copy(swapchain) }],
-        image_indices <- [{ image_index }]
+        swapchains <- [{ auto[] weak_copy(swapchain) }],
+        image_indices <- [{ auto[] image_index }]
     ]]
     defer() <| ${ delete info; }
 
