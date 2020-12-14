@@ -429,6 +429,12 @@ class GenHandle(object):
         self._ctors.append(ctor)
         return ctor
 
+    def declare_dtor(self, name):
+        assert_is(self.dtor, None)
+        dtor = GenHandleDtor(handle=self, name=name)
+        self.dtor = dtor
+        return dtor
+
     @property
     def boost_handle_type_name(self):
         return vk_handle_type_to_boost(self.vk_handle_type_name)
