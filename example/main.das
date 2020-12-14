@@ -206,10 +206,11 @@ def with_mem_backed_buf(
     device |> find_buffer_memory_type(phys_dev, buf, mem_props
     ) <| $(mem_type, mem_size)
         var mem <- device |> allocate_memory([[MemoryAllocateInfo
-            allocation_size=mem_size, memory_type_index=mem_type])
+            allocation_size=mem_size, memory_type_index=mem_type]])
         defer() <| ${ delete mem; }
         verify(VkResult VK_SUCCESS ==
-            vk_device |> vkBindBufferMemory(buf.buffer, mem.memory, uint64(0)))
+            vk_device |> vkBindBufferMemory(
+                buf.buffer, mem.device_memory, uint64(0)))
         b |> invoke(buf.buffer, mem.device_memory)
 
 
