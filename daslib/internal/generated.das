@@ -101,23 +101,23 @@ def finalize(var surface : SurfaceKHR explicit)
 def allocate_command_buffers(
     device : Device = [[ Device ]];
     var allocate_info : CommandBufferAllocateInfo = [[ CommandBufferAllocateInfo ]];
-    command_buffers : array<CommandBuffer> = [[ array<CommandBuffer> ]];
     var result : VkResult? = [[VkResult?]]
-) : void
+) : array<CommandBuffer>
 
     var vk_allocate_info <- allocate_info |> vk_view_create_unsafe()
     defer() <| ${ allocate_info |> vk_view_destroy(); }
     var vk_command_buffers : array<VkCommandBuffer>
     defer() <| ${ delete vk_command_buffers; }
-    vk_command_buffers <- [{ for item in command_buffers ; boost_value_to_vk(command_buffers) }]
     var result_ = VkResult VK_SUCCESS
 
+    vk_command_buffers |> resize(int(allocate_info.command_buffers_count))
     result ?? result_ = vkAllocateCommandBuffers(
         boost_value_to_vk(device),
         safe_addr(vk_allocate_info),
         array_addr_unsafe(vk_command_buffers)
     )
     assert(result_ == VkResult VK_SUCCESS)
+    return <- [{for x in vk_command_buffers; vk_value_to_boost(x)}]
 
 def device_wait_idle(
     device : Device = [[ Device ]];
