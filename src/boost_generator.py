@@ -81,7 +81,7 @@ class BoostGenerator(LoggingObject):
             ParamUInt32,
             ParamUInt64,
             ParamVkBool32,
-            ParamVkMask,
+            ParamVkSampleMask,
             ParamVkFlags,
             ParamVoidPtr,
             ParamVoidPtrPtr,
@@ -1519,7 +1519,7 @@ class ParamVkBool32(ParamBase):
         return 'uint'
 
 
-class ParamVkMask(ParamBase):
+class ParamVkSampleMask(ParamBase):
 
     @classmethod
     def maybe_create(cls, c_param, **kwargs):
