@@ -123,10 +123,13 @@ def submit(queue, cmd_bufs)
 def copy_buf_sync(device, cmd_pool, queue, src_buf, dst_buf, buf_size)
     var cmd_bufs <- device |> allocate_command_buffers_primary(cmd_pool, 1)
     defer() <| ${ delete cmd_bufs; }
+    let cmd_buf = cmd_bufs[0]
+
     var vk_cmd_bufs <- [{ for b in cmd_bufs.command_buffers ;
         b.command_buffer }]
     defer() <| ${ delete vk_cmd_bufs; }
     let vk_cmd_buf = vk_cmd_bufs[0]
+
     cmd_buf |> record_command_buffer() <| $()
         let params <- [[auto[] [[VkBufferCopy size = uint64(buf_size)]]]]
         vk_cmd_buf |> vkCmdCopyBuffer(src_buf, dst_buf,
