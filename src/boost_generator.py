@@ -961,7 +961,7 @@ class ParamBase(object):
             if not self._is_boost_func_output:
                 lines += [
                     f'vk_{bname} <- [{{ '
-                        f'for item in {bname} ; boost_value_to_vk({bname}) }}]'
+                        f'for item in {bname} ; boost_value_to_vk(item) }}]'
                 ]
             return lines
         if self.vk_is_pointer:
