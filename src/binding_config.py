@@ -167,6 +167,7 @@ def add_boost_content(g):
         g.add_gen_struct(name=name, boost_to_vk=False)
 
     for name in [
+        'VkBufferCopy',
         'VkClearDepthStencilValue',
         'VkCommandBufferAllocateInfo',
         'VkCommandBufferBeginInfo',
@@ -272,9 +273,11 @@ def add_boost_content(g):
         ).declare_output(name = 'pCommandBuffers')
     g.add_gen_func(name = 'vkBeginCommandBuffer')
     g.add_gen_func(name = 'vkCmdBeginRenderPass')
+    g.add_gen_func(name = 'vkCmdCopyBuffer',
+        ).declare_array(count = 'regionCount', items = 'pRegions')
+    g.add_gen_func(name = 'vkCmdEndRenderPass')
     g.add_gen_func(name = 'vkDeviceWaitIdle')
     g.add_gen_func(name = 'vkEndCommandBuffer')
-    g.add_gen_func(name = 'vkCmdEndRenderPass')
     g.add_gen_func(name = 'vkEnumerateDeviceExtensionProperties',
         ).declare_array(count = 'pPropertyCount', items = 'pProperties',
         ).declare_output(name = 'pProperties')
