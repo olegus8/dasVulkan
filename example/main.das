@@ -384,9 +384,7 @@ def draw_frame(device, queue, cmd_bufs, swapchain, frame,
             img_avail_sems[frame], render_done_sems[frame],
             frame_fences[frame])
 
-        vk_device |> present(
-            queue.queue, vk_swapchain, img_i, render_done_sems[frame]
-        ) <| $()
+        device |> present(queue, swapchain, img_i, render_done_sems[frame]) <|
             presented = true
 
     return img_acquired && presented
