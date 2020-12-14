@@ -127,7 +127,7 @@ def add_boost_content(g):
         ).declare_array(count = 'createInfoCount', items = 'pCreateInfos'
         ).declare_array(count = 'createInfoCount', items = 'pPipelines')
 
-    h = g.add_gen_handle(name = 'VkMemory')
+    h = g.add_gen_handle(name = 'VkDeviceMemory')
     h.declare_ctor(name = 'vkAllocateMemory')
     h.declare_dtor(name = 'vkFreeMemory')
 
@@ -165,9 +165,11 @@ def add_boost_content(g):
         g.add_gen_struct(name=name, boost_to_vk=False)
 
     for name in [
+        'VkCommandBufferAllocateInfo',
         'VkCommandPoolCreateInfo',
         'VkFenceCreateInfo',
         'VkImageViewCreateInfo',
+        'VkMemoryAllocateInfo',
         'VkPipelineColorBlendAttachmentState',
         'VkPipelineDepthStencilStateCreateInfo',
         'VkPipelineInputAssemblyStateCreateInfo',
@@ -181,7 +183,6 @@ def add_boost_content(g):
         'VkStencilOpState',
         'VkVertexInputAttributeDescription',
         'VkVertexInputBindingDescription',
-        'VkCommandBufferAllocateInfo',
     ]:
         g.add_gen_struct(name=name, vk_to_boost=False)
 
