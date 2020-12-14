@@ -167,6 +167,21 @@ def begin_command_buffer(
     )
     assert(result_ == VkResult VK_SUCCESS)
 
+def cmd_begin_render_pass(
+    command_buffer : CommandBuffer = [[ CommandBuffer ]];
+    var render_pass_begin : RenderPassBeginInfo = [[ RenderPassBeginInfo ]];
+    contents : VkSubpassContents = [[ VkSubpassContents ]]
+) : void
+
+    var vk_render_pass_begin <- render_pass_begin |> vk_view_create_unsafe()
+    defer() <| ${ render_pass_begin |> vk_view_destroy(); }
+
+    vkCmdBeginRenderPass(
+        boost_value_to_vk(command_buffer),
+        safe_addr(vk_render_pass_begin),
+        boost_value_to_vk(contents)
+    )
+
 def device_wait_idle(
     device : Device = [[ Device ]];
     var result : VkResult? = [[VkResult?]]
@@ -190,6 +205,14 @@ def end_command_buffer(
         boost_value_to_vk(command_buffer)
     )
     assert(result_ == VkResult VK_SUCCESS)
+
+def cmd_end_render_pass(
+    command_buffer : CommandBuffer = [[ CommandBuffer ]]
+) : void
+
+    vkCmdEndRenderPass(
+        boost_value_to_vk(command_buffer)
+    )
 
 def enumerate_device_extension_properties(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]];
@@ -1767,6 +1790,29 @@ def vk_value_to_boost(vk_struct : VkPhysicalDeviceProperties) : PhysicalDevicePr
         limits <- vk_value_to_boost(vk_struct.limits),
         sparse_properties <- vk_value_to_boost(vk_struct.sparseProperties)
     ]]
+
+//
+// ClearDepthStencilValue
+//
+
+struct ClearDepthStencilValue
+    depth : float
+    stencil : uint
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : ClearDepthStencilValue
+) : VkClearDepthStencilValue
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    return <- [[ VkClearDepthStencilValue
+        depth = boost_value_to_vk(boost_struct.depth),
+        stencil = boost_value_to_vk(boost_struct.stencil)
+    ]]
+
+def vk_view_destroy(var boost_struct : ClearDepthStencilValue)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
 
 //
 // CommandBufferAllocateInfo
@@ -3392,6 +3438,50 @@ def vk_view_destroy(var boost_struct : SwapchainCreateInfoKHR)
     boost_struct.image_extent |> vk_view_destroy()
     unsafe
         delete boost_struct._vk_view_p_image_extent
+    boost_struct._vk_view__active = false
+
+//
+// RenderPassBeginInfo
+//
+
+struct RenderPassBeginInfo
+    render_pass : RenderPass
+    framebuffer : Framebuffer
+    render_area : Rect2D
+    clear_values : array<ClearValue>
+    _vk_view_p_render_area : VkRect2D ?
+    _vk_view_clear_values : array<VkClearValue>
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : RenderPassBeginInfo
+) : VkRenderPassBeginInfo
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    boost_struct._vk_view_p_render_area = new VkRect2D
+    *(boost_struct._vk_view_p_render_area) <- (
+        boost_struct.render_area |> vk_view_create_unsafe())
+    let vk_clear_value_count = uint(boost_struct.clear_values |> length())
+    boost_struct._vk_view_clear_values <- [{
+        for item in boost_struct.clear_values ;
+        item |> vk_view_create_unsafe()}]
+    return <- [[ VkRenderPassBeginInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO,
+        renderPass = boost_value_to_vk(boost_struct.render_pass),
+        framebuffer = boost_value_to_vk(boost_struct.framebuffer),
+        renderArea = *(boost_struct._vk_view_p_render_area),
+        clearValueCount = vk_clear_value_count,
+        pClearValues = array_addr_unsafe(boost_struct._vk_view_clear_values)
+    ]]
+
+def vk_view_destroy(var boost_struct : RenderPassBeginInfo)
+    assert(boost_struct._vk_view__active)
+    boost_struct.render_area |> vk_view_destroy()
+    unsafe
+        delete boost_struct._vk_view_p_render_area
+    for item in boost_struct.clear_values
+        item |> vk_view_destroy()
+    delete boost_struct._vk_view_clear_values
     boost_struct._vk_view__active = false
 
 //
