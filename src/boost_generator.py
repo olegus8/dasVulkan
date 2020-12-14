@@ -82,6 +82,7 @@ class BoostGenerator(LoggingObject):
             ParamUInt64,
             ParamVkBool32,
             ParamVkSampleMask,
+            ParamVkDeviceSize,
             ParamVkFlags,
             ParamVoidPtr,
             ParamVoidPtrPtr,
@@ -1529,6 +1530,18 @@ class ParamVkSampleMask(ParamBase):
     @property
     def vk_unqual_type(self):
         return 'uint'
+
+
+class ParamVkDeviceSize(ParamBase):
+
+    @classmethod
+    def maybe_create(cls, c_param, **kwargs):
+        if c_param.type.unqual_name in ['VkDeviceSize']:
+            return cls(c_param=c_param, **kwargs)
+
+    @property
+    def vk_unqual_type(self):
+        return 'uint64'
 
 
 class ParamVkFlags(ParamBase):
