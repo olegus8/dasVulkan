@@ -36,7 +36,7 @@ def record_command_buffer_ex(
 )
     command_buffer |> begin_command_buffer(begin_info)
     b |> invoke()
-    command_buffer |> end_command_buffer
+    command_buffer |> end_command_buffer()
 
 
 def record_command_buffer(command_buffer : CommandBuffer; b : block)
