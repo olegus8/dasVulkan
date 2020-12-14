@@ -151,6 +151,22 @@ def allocate_command_buffers__inner(
     assert(result_ == VkResult VK_SUCCESS)
     return <- [{for x in vk_command_buffers; vk_value_to_boost(x)}]
 
+def begin_command_buffer(
+    command_buffer : CommandBuffer = [[ CommandBuffer ]];
+    var begin_info : CommandBufferBeginInfo = [[ CommandBufferBeginInfo ]];
+    var result : VkResult? = [[VkResult?]]
+) : void
+
+    var vk_begin_info <- begin_info |> vk_view_create_unsafe()
+    defer() <| ${ begin_info |> vk_view_destroy(); }
+    var result_ = VkResult VK_SUCCESS
+
+    result ?? result_ = vkBeginCommandBuffer(
+        boost_value_to_vk(command_buffer),
+        safe_addr(vk_begin_info)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+
 def device_wait_idle(
     device : Device = [[ Device ]];
     var result : VkResult? = [[VkResult?]]
@@ -1763,6 +1779,71 @@ def vk_view_create_unsafe(var boost_struct : CommandBufferAllocateInfo
     ]]
 
 def vk_view_destroy(var boost_struct : CommandBufferAllocateInfo)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+//
+// CommandBufferBeginInfo
+//
+
+struct CommandBufferBeginInfo
+    flags : uint
+    p_inheritance_info : CommandBufferInheritanceInfo ?
+    _vk_view_p_inheritance_info : VkCommandBufferInheritanceInfo ?
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : CommandBufferBeginInfo
+) : VkCommandBufferBeginInfo
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    if boost_struct.p_inheritance_info != null
+        boost_struct._vk_view_p_inheritance_info = new VkCommandBufferInheritanceInfo
+        *(boost_struct._vk_view_p_inheritance_info) <- (
+            *(boost_struct.p_inheritance_info) |> vk_view_create_unsafe())
+    return <- [[ VkCommandBufferBeginInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO,
+        flags = boost_value_to_vk(boost_struct.flags),
+        pInheritanceInfo = boost_struct._vk_view_p_inheritance_info
+    ]]
+
+def vk_view_destroy(var boost_struct : CommandBufferBeginInfo)
+    assert(boost_struct._vk_view__active)
+    if boost_struct.p_inheritance_info != null
+        *(boost_struct.p_inheritance_info) |> vk_view_destroy()
+        unsafe
+            delete boost_struct._vk_view_p_inheritance_info
+    boost_struct._vk_view__active = false
+
+//
+// CommandBufferInheritanceInfo
+//
+
+struct CommandBufferInheritanceInfo
+    render_pass : RenderPass
+    subpass : uint
+    framebuffer : Framebuffer
+    occlusion_query_enable : uint
+    query_flags : uint
+    pipeline_statistics : uint
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : CommandBufferInheritanceInfo
+) : VkCommandBufferInheritanceInfo
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    return <- [[ VkCommandBufferInheritanceInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_COMMAND_BUFFER_INHERITANCE_INFO,
+        renderPass = boost_value_to_vk(boost_struct.render_pass),
+        subpass = boost_value_to_vk(boost_struct.subpass),
+        framebuffer = boost_value_to_vk(boost_struct.framebuffer),
+        occlusionQueryEnable = boost_value_to_vk(boost_struct.occlusion_query_enable),
+        queryFlags = boost_value_to_vk(boost_struct.query_flags),
+        pipelineStatistics = boost_value_to_vk(boost_struct.pipeline_statistics)
+    ]]
+
+def vk_view_destroy(var boost_struct : CommandBufferInheritanceInfo)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
