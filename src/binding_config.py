@@ -322,3 +322,5 @@ def add_boost_content(g):
         ).declare_array(count = 'submitCount', items = 'pSubmits')
     g.add_gen_func(name = 'vkQueueWaitIdle')
     g.add_gen_func(name = 'vkUnmapMemory')
+    g.add_gen_func(name = 'vkWaitForFences',
+        ).declare_array(count = 'fenceCount', items = 'pFences')
