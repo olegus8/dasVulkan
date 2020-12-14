@@ -639,8 +639,8 @@ def main
     unsafe
         string_heap_collect()
 
-    let heap_leaks = heap_bytes_allocated() - heap_on_start
-    let string_heap_leaks = (string_heap_bytes_allocated()
+    let heap_leaks = int(heap_bytes_allocated() - heap_on_start)
+    let string_heap_leaks = int(string_heap_bytes_allocated()
         - string_heap_on_start)
 
     print("{heap_leaks} heap bytes have leaked\n")
