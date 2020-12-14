@@ -162,7 +162,6 @@ def add_boost_content(g):
         'VkExtensionProperties',
         'VkMemoryHeap',
         'VkMemoryType',
-        'VkPhysicalDeviceMemoryProperties',
         'VkPhysicalDeviceProperties',
     ]:
         g.add_gen_struct(name=name, boost_to_vk=False)
@@ -189,6 +188,9 @@ def add_boost_content(g):
     ]:
         g.add_gen_struct(name=name, vk_to_boost=False)
 
+    g.add_gen_struct(name = 'VkPhysicalDeviceMemoryProperties', boost_to_vk=False,
+        ).declare_array(count = 'memoryTypeCount', items = 'memoryTypes')
+        ).declare_array(count = 'memoryHeapCount', items = 'memoryHeaps')
     g.add_gen_struct(name = 'VkBufferCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'queueFamilyIndexCount', items = 'pQueueFamilyIndices')
     g.add_gen_struct(name='VkComputePipelineCreateInfo', vk_to_boost=False)

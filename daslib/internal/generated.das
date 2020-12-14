@@ -1185,6 +1185,24 @@ def vk_view_destroy(var boost_struct : PhysicalDeviceLimits)
     boost_struct._vk_view__active = false
 
 def vk_value_to_boost(vk_struct : VkPhysicalDeviceLimits) : PhysicalDeviceLimits
+    var b_max_compute_work_group_count : uint [3]
+    for boost_item, vk_item in b_max_compute_work_group_count, vk_struct.maxComputeWorkGroupCount
+        boost_item <- vk_value_to_boost(vk_item)
+    var b_max_compute_work_group_size : uint [3]
+    for boost_item, vk_item in b_max_compute_work_group_size, vk_struct.maxComputeWorkGroupSize
+        boost_item <- vk_value_to_boost(vk_item)
+    var b_max_viewport_dimensions : uint [2]
+    for boost_item, vk_item in b_max_viewport_dimensions, vk_struct.maxViewportDimensions
+        boost_item <- vk_value_to_boost(vk_item)
+    var b_viewport_bounds_range : float [2]
+    for boost_item, vk_item in b_viewport_bounds_range, vk_struct.viewportBoundsRange
+        boost_item <- vk_value_to_boost(vk_item)
+    var b_point_size_range : float [2]
+    for boost_item, vk_item in b_point_size_range, vk_struct.pointSizeRange
+        boost_item <- vk_value_to_boost(vk_item)
+    var b_line_width_range : float [2]
+    for boost_item, vk_item in b_line_width_range, vk_struct.lineWidthRange
+        boost_item <- vk_value_to_boost(vk_item)
     return <- [[PhysicalDeviceLimits
         max_image_dimension_1d = vk_value_to_boost(vk_struct.maxImageDimension1D),
         max_image_dimension_2d_ = vk_value_to_boost(vk_struct.maxImageDimension2D),
@@ -1238,9 +1256,9 @@ def vk_value_to_boost(vk_struct : VkPhysicalDeviceLimits) : PhysicalDeviceLimits
         max_fragment_dual_src_attachments = vk_value_to_boost(vk_struct.maxFragmentDualSrcAttachments),
         max_fragment_combined_output_resources = vk_value_to_boost(vk_struct.maxFragmentCombinedOutputResources),
         max_compute_shared_memory_size = vk_value_to_boost(vk_struct.maxComputeSharedMemorySize),
-        max_compute_work_group_count = vk_value_to_boost(vk_struct.maxComputeWorkGroupCount),
+        max_compute_work_group_count <- b_max_compute_work_group_count,
         max_compute_work_group_invocations = vk_value_to_boost(vk_struct.maxComputeWorkGroupInvocations),
-        max_compute_work_group_size = vk_value_to_boost(vk_struct.maxComputeWorkGroupSize),
+        max_compute_work_group_size <- b_max_compute_work_group_size,
         sub_pixel_precision_bits = vk_value_to_boost(vk_struct.subPixelPrecisionBits),
         sub_texel_precision_bits = vk_value_to_boost(vk_struct.subTexelPrecisionBits),
         mipmap_precision_bits = vk_value_to_boost(vk_struct.mipmapPrecisionBits),
@@ -1249,8 +1267,8 @@ def vk_value_to_boost(vk_struct : VkPhysicalDeviceLimits) : PhysicalDeviceLimits
         max_sampler_lod_bias = vk_value_to_boost(vk_struct.maxSamplerLodBias),
         max_sampler_anisotropy = vk_value_to_boost(vk_struct.maxSamplerAnisotropy),
         max_viewports = vk_value_to_boost(vk_struct.maxViewports),
-        max_viewport_dimensions = vk_value_to_boost(vk_struct.maxViewportDimensions),
-        viewport_bounds_range = vk_value_to_boost(vk_struct.viewportBoundsRange),
+        max_viewport_dimensions <- b_max_viewport_dimensions,
+        viewport_bounds_range <- b_viewport_bounds_range,
         viewport_sub_pixel_bits = vk_value_to_boost(vk_struct.viewportSubPixelBits),
         min_memory_map_alignment = vk_value_to_boost(vk_struct.minMemoryMapAlignment),
         min_texel_buffer_offset_alignment = vk_value_to_boost(vk_struct.minTexelBufferOffsetAlignment),
@@ -1283,8 +1301,8 @@ def vk_value_to_boost(vk_struct : VkPhysicalDeviceLimits) : PhysicalDeviceLimits
         max_cull_distances = vk_value_to_boost(vk_struct.maxCullDistances),
         max_combined_clip_and_cull_distances = vk_value_to_boost(vk_struct.maxCombinedClipAndCullDistances),
         discrete_queue_priorities = vk_value_to_boost(vk_struct.discreteQueuePriorities),
-        point_size_range = vk_value_to_boost(vk_struct.pointSizeRange),
-        line_width_range = vk_value_to_boost(vk_struct.lineWidthRange),
+        point_size_range <- b_point_size_range,
+        line_width_range <- b_line_width_range,
         point_size_granularity = vk_value_to_boost(vk_struct.pointSizeGranularity),
         line_width_granularity = vk_value_to_boost(vk_struct.lineWidthGranularity),
         strict_lines = vk_value_to_boost(vk_struct.strictLines),
@@ -1690,11 +1708,17 @@ struct PhysicalDeviceMemoryProperties
     memory_heaps : MemoryHeap [16]
 
 def vk_value_to_boost(vk_struct : VkPhysicalDeviceMemoryProperties) : PhysicalDeviceMemoryProperties
+    var b_memory_types : MemoryType [32]
+    for boost_item, vk_item in b_memory_types, vk_struct.memoryTypes
+        boost_item <- vk_value_to_boost(vk_item)
+    var b_memory_heaps : MemoryHeap [16]
+    for boost_item, vk_item in b_memory_heaps, vk_struct.memoryHeaps
+        boost_item <- vk_value_to_boost(vk_item)
     return <- [[PhysicalDeviceMemoryProperties
         memory_type_count = vk_value_to_boost(vk_struct.memoryTypeCount),
-        memory_types <- vk_value_to_boost(vk_struct.memoryTypes),
+        memory_types <- b_memory_types,
         memory_heap_count = vk_value_to_boost(vk_struct.memoryHeapCount),
-        memory_heaps <- vk_value_to_boost(vk_struct.memoryHeaps)
+        memory_heaps <- b_memory_heaps
     ]]
 
 //
@@ -1713,6 +1737,9 @@ struct PhysicalDeviceProperties
     sparse_properties : PhysicalDeviceSparseProperties
 
 def vk_value_to_boost(vk_struct : VkPhysicalDeviceProperties) : PhysicalDeviceProperties
+    var b_pipeline_cache_uuid : uint8 [16]
+    for boost_item, vk_item in b_pipeline_cache_uuid, vk_struct.pipelineCacheUUID
+        boost_item <- vk_value_to_boost(vk_item)
     return <- [[PhysicalDeviceProperties
         api_version = vk_value_to_boost(vk_struct.apiVersion),
         driver_version = vk_value_to_boost(vk_struct.driverVersion),
@@ -1720,7 +1747,7 @@ def vk_value_to_boost(vk_struct : VkPhysicalDeviceProperties) : PhysicalDevicePr
         device_id = vk_value_to_boost(vk_struct.deviceID),
         device_type = vk_value_to_boost(vk_struct.deviceType),
         device_name = vk_value_to_boost(vk_struct.deviceName),
-        pipeline_cache_uuid = vk_value_to_boost(vk_struct.pipelineCacheUUID),
+        pipeline_cache_uuid <- b_pipeline_cache_uuid,
         limits <- vk_value_to_boost(vk_struct.limits),
         sparse_properties <- vk_value_to_boost(vk_struct.sparseProperties)
     ]]
