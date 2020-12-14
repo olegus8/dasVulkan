@@ -3,6 +3,7 @@ options no_aot = true
 
 require daslib/defer
 require generated
+require vulkan
 
 
 def reset_fence(
