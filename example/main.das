@@ -7,7 +7,6 @@ require daslib/vulkan_boost
 require daslib/defer
 require math
 require strings
-require vulkan
 
 
 let
