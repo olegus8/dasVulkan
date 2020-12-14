@@ -153,7 +153,7 @@ class GenFunc(object):
             if param.vk_name == vk_name:
                 return param
 
-    def declare_array(self, items, count=None):
+    def declare_array(self, items, count=None, count_expr=None):
         with log_on_exception(func=self._vk_func_name,
              count=count, items=items
         ):
@@ -161,7 +161,8 @@ class GenFunc(object):
             p_items = self.__get_param(items)
             if p_count:
                 p_count.set_dyn_array(count=p_count, items=p_items)
-            p_items.set_dyn_array(count=p_count, items=p_items)
+            p_items.set_dyn_array(count=p_count, items=p_items,
+                count_expr=count_expr)
         return self
 
     def declare_output(self, name):
@@ -295,14 +296,15 @@ class GenStruct(object):
         field.set_optional(False)
         return self
 
-    def declare_array(self, items, count=None,
+    def declare_array(self, items, count=None, count_expr=None,
         optional=False, force_item_type=None
     ):
         p_count = self.__get_field(count) if count else None
         p_items = self.__get_field(items)
         if p_count:
             p_count.set_dyn_array(count=p_count, items=p_items)
-        p_items.set_dyn_array(count=p_count, items=p_items)
+        p_items.set_dyn_array(count=p_count, items=p_items,
+            count_expr=count_expr)
         p_items.set_optional(optional)
         p_items.force_boost_unqual_type(force_item_type)
         return self
@@ -665,6 +667,7 @@ class ParamBase(object):
         self._c_param = c_param
         self._dyn_arrays_items = []
         self._dyn_array_count = None
+        self._dyn_array_count_expr = None
         self._optional = False
         self._forced_boost_unqual_type = None
         self._is_boost_func_output = False
@@ -695,13 +698,20 @@ class ParamBase(object):
     def _boost_unqual_type(self):
         return self._forced_boost_unqual_type or self.vk_unqual_type
 
-    def set_dyn_array(self, count, items):
+    def set_dyn_array(self, count, items, count_expr=None):
+        if count_expr is not None:
+            assert count is None
+            assert self._dyn_array_count is None
+        if count is not None:
+            assert count_expr is None
+
         if self._dyn_array_count is not None:
             assert self._dyn_array_count is count
         else:
             self._dyn_array_count = count
         assert_not_in(items, self._dyn_arrays_items)
         self._dyn_arrays_items.append(items)
+        self._dyn_array_count_expr = count_expr
 
     def set_optional(self, optional):
         self._optional = optional
@@ -968,8 +978,11 @@ class ParamBase(object):
         if self.vk_is_dyn_array_items and self._is_boost_func_output:
             bname = self._boost_func_param_name
             vtype = self.vk_unqual_type
-            vcname = self._dyn_array_count.vk_name
-            return [f'vk_{bname} |> resize(int(vk_{vcname}))']
+            if self._dyn_array_count:
+                count_expr = f'vk_{self._dyn_array_count.vk_name}'
+            else:
+                count_expr = self._dyn_array_count_expr
+            return [f'vk_{bname} |> resize(int({count_expr}))']
         return []
 
     def generate_boost_handle_field(self):
