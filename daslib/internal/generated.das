@@ -1698,30 +1698,6 @@ def vk_value_to_boost(vk_struct : VkMemoryType) : MemoryType
     ]]
 
 //
-// PhysicalDeviceMemoryProperties
-//
-
-struct PhysicalDeviceMemoryProperties
-    memory_type_count : uint
-    memory_types : MemoryType [32]
-    memory_heap_count : uint
-    memory_heaps : MemoryHeap [16]
-
-def vk_value_to_boost(vk_struct : VkPhysicalDeviceMemoryProperties) : PhysicalDeviceMemoryProperties
-    var b_memory_types : MemoryType [32]
-    for boost_item, vk_item in b_memory_types, vk_struct.memoryTypes
-        boost_item <- vk_value_to_boost(vk_item)
-    var b_memory_heaps : MemoryHeap [16]
-    for boost_item, vk_item in b_memory_heaps, vk_struct.memoryHeaps
-        boost_item <- vk_value_to_boost(vk_item)
-    return <- [[PhysicalDeviceMemoryProperties
-        memory_type_count = vk_value_to_boost(vk_struct.memoryTypeCount),
-        memory_types <- b_memory_types,
-        memory_heap_count = vk_value_to_boost(vk_struct.memoryHeapCount),
-        memory_heaps <- b_memory_heaps
-    ]]
-
-//
 // PhysicalDeviceProperties
 //
 
@@ -2813,6 +2789,32 @@ def vk_view_destroy(var boost_struct : InstanceCreateInfo)
         unsafe
             delete boost_struct._vk_view_p_application_info
     boost_struct._vk_view__active = false
+
+//
+// PhysicalDeviceMemoryProperties
+//
+
+struct PhysicalDeviceMemoryProperties
+    memory_types : array<MemoryType>
+    memory_heaps : array<MemoryHeap>
+
+def vk_value_to_boost(vk_struct : VkPhysicalDeviceMemoryProperties) : PhysicalDeviceMemoryProperties
+    var b_memory_types : array<MemoryType>
+    if vk_struct.memoryTypes != null
+        b_memory_types |> resize(int(vk_struct.memoryTypeCount))
+        for b, i in b_memory_types, range(INT_MAX)
+            unsafe
+                b <- vk_value_to_boost(*(vk_struct.memoryTypes+i))
+    var b_memory_heaps : array<MemoryHeap>
+    if vk_struct.memoryHeaps != null
+        b_memory_heaps |> resize(int(vk_struct.memoryHeapCount))
+        for b, i in b_memory_heaps, range(INT_MAX)
+            unsafe
+                b <- vk_value_to_boost(*(vk_struct.memoryHeaps+i))
+    return <- [[PhysicalDeviceMemoryProperties
+        memory_types <- b_memory_types,
+        memory_heaps <- b_memory_heaps
+    ]]
 
 //
 // PipelineCacheCreateInfo
