@@ -202,8 +202,8 @@ def with_mem_backed_buf(
         b |> invoke(buf.buffer, mem)
 
 
-def with_baked_vertex_buffer(device : Device; phys_dev, cmd_pool;
-    queue : Queue; vertices:array<auto(VT)>; b : block<(b:VkBuffer)>
+def with_baked_vertex_buffer(device, phys_dev, cmd_pool, queue;
+    vertices:array<auto(VT)>; b : block<(b:VkBuffer)>
 )
     let buf_size = typeinfo(sizeof type<VT>) * vertices |> length()
 
