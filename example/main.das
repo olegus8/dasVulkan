@@ -187,7 +187,10 @@ def with_draw_commands(device, phys_dev, window, surface, render_pass,
                 0u  // first instance
             )
 
-    b |> invoke(cmd_bufs.buffers)
+    var vk_cmd_bufs <- [{ for b in cmd_bufs.command_buffers ;
+        b.command_buffer }]
+    defer() <| ${ delete vk_cmd_bufs; }
+    b |> invoke(vk_cmd_bufs)
 
 
 def with_mem_backed_buf(
