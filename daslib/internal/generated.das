@@ -630,6 +630,22 @@ def map_memory(
     assert(result_ == VkResult VK_SUCCESS)
     return vk_value_to_boost(vk_data)
 
+def queue_present_khr(
+    queue : Queue = [[ Queue ]];
+    var present_info : PresentInfoKHR = [[ PresentInfoKHR ]];
+    var result : VkResult? = [[VkResult?]]
+) : void
+
+    var vk_present_info <- present_info |> vk_view_create_unsafe()
+    defer() <| ${ present_info |> vk_view_destroy(); }
+    var result_ = VkResult VK_SUCCESS
+
+    result ?? result_ = vkQueuePresentKHR(
+        boost_value_to_vk(queue),
+        safe_addr(vk_present_info)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+
 def queue_submit(
     queue : Queue = [[ Queue ]];
     var submits : array<SubmitInfo> = [[ array<SubmitInfo> ]];
@@ -3393,6 +3409,52 @@ def vk_view_destroy(var boost_struct : PipelineViewportStateCreateInfo)
     for item in boost_struct.scissors
         item |> vk_view_destroy()
     delete boost_struct._vk_view_scissors
+    boost_struct._vk_view__active = false
+
+//
+// PresentInfoKHR
+//
+
+struct PresentInfoKHR
+    wait_semaphores : array<Semaphore>
+    swapchains : array<SwapchainKHR>
+    image_indices : array<uint>
+    results : array<VkResult>
+    _vk_view_wait_semaphores : array<VkSemaphore>
+    _vk_view_swapchains : array<VkSwapchainKHR>
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : PresentInfoKHR
+) : VkPresentInfoKHR
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    let vk_wait_semaphore_count = uint(boost_struct.wait_semaphores |> length())
+    boost_struct._vk_view_wait_semaphores <- [{
+        for item in boost_struct.wait_semaphores ;
+        item |> boost_value_to_vk()}]
+    assert(length(boost_struct.image_indices) == length(boost_struct.swapchains))
+    assert(length(boost_struct.results) == 0 || length(boost_struct.results) == length(boost_struct.swapchains))
+    let vk_swapchain_count = uint(boost_struct.swapchains |> length())
+    boost_struct._vk_view_swapchains <- [{
+        for item in boost_struct.swapchains ;
+        item |> boost_value_to_vk()}]
+    let vk_p_image_indices = array_addr_unsafe(boost_struct.image_indices)
+    let vk_p_results = array_addr_unsafe(boost_struct.results)
+    return <- [[ VkPresentInfoKHR
+        sType = VkStructureType VK_STRUCTURE_TYPE_PRESENT_INFO_KHR,
+        waitSemaphoreCount = vk_wait_semaphore_count,
+        pWaitSemaphores = array_addr_unsafe(boost_struct._vk_view_wait_semaphores),
+        swapchainCount = vk_swapchain_count,
+        pSwapchains = array_addr_unsafe(boost_struct._vk_view_swapchains),
+        pImageIndices = vk_p_image_indices,
+        pResults = vk_p_results
+    ]]
+
+def vk_view_destroy(var boost_struct : PresentInfoKHR)
+    assert(boost_struct._vk_view__active)
+    delete boost_struct._vk_view_wait_semaphores
+    delete boost_struct._vk_view_swapchains
     boost_struct._vk_view__active = false
 
 //
