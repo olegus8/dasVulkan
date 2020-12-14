@@ -1652,6 +1652,34 @@ def vk_value_to_boost(vk_struct : VkExtensionProperties) : ExtensionProperties
     ]]
 
 //
+// MemoryHeap
+//
+
+struct MemoryHeap
+    size : uint64
+    flags : uint
+
+def vk_value_to_boost(vk_struct : VkMemoryHeap) : MemoryHeap
+    return <- [[MemoryHeap
+        size = vk_value_to_boost(vk_struct.size),
+        flags = vk_value_to_boost(vk_struct.flags)
+    ]]
+
+//
+// MemoryType
+//
+
+struct MemoryType
+    property_flags : uint
+    heap_index : uint
+
+def vk_value_to_boost(vk_struct : VkMemoryType) : MemoryType
+    return <- [[MemoryType
+        property_flags = vk_value_to_boost(vk_struct.propertyFlags),
+        heap_index = vk_value_to_boost(vk_struct.heapIndex)
+    ]]
+
+//
 // PhysicalDeviceMemoryProperties
 //
 
