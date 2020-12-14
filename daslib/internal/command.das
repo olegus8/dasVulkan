@@ -117,7 +117,7 @@ def cmd_bind_vertex_buffer(
     binding : uint = [[ uint ]];
     offset : uint64 = [[ uint64 ]]
 )
-    var buffers <- [{ auto[] clone_to_move(buffer) }]
+    var buffers <- [{ auto[] weak_copy(buffer) }]
     defer() <| ${ delete buffers; }
     var offsets <- [{ auto[] offset }]
     defer() <| ${ delete offsets; }
