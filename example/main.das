@@ -310,7 +310,7 @@ def with_swapchain_dependent_state(
     cmd_pool;
     b : block<(
         swapchain           : SwapchainEx;
-        pipeline            : VkPipeline;
+        pipeline            : Pipeline;
         img_avail_sems      : array<VkSemaphore>;
         render_done_sems    : array<VkSemaphore>;
         frame_fences        : array<VkFence>
@@ -353,7 +353,7 @@ def with_swapchain_dependent_state(
 
     b |> invoke(
         swapchain,
-        pipeline.pipeline,
+        pipeline,
         vk_img_avail_sems,
         vk_render_done_sems,
         vk_frame_fences
@@ -546,7 +546,7 @@ def main
                     cmd_pool
                 ) <| $(
                     sc                  : SwapchainEx;
-                    pipeline            : VkPipeline;
+                    pipeline            : Pipeline;
                     img_avail_sems      : array<VkSemaphore>;
                     render_done_sems    : array<VkSemaphore>;
                     frame_fences        : array<VkFence>
