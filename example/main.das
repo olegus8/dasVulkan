@@ -332,7 +332,8 @@ def with_next_image(device, swapchain, sem_to_signal, fence_to_signal;
     //TODO: handle result properly. currently crashes on
     //      "internal integration error"
     verify(VkResult VK_SUCCESS == device |> vkAcquireNextImageKHR(
-        swapchain, ULONG_MAX, sem_to_signal, fence_to_signal,
+        swapchain, ULONG_MAX, sem_to_signal.semaphore,
+        fence_to_signal.fence,
         img_index |> safe_addr()))
     b |> invoke(img_index)
     /*
