@@ -9,6 +9,12 @@ struct VkHandleAnnotation : ManagedValueAnnotation<OT> {
     VkHandleAnnotation(const string & n, const string & cpn = string())
     : ManagedValueAnnotation<OT>(n,cpn) {
     }
+    virtual bool canClone() const {
+        return true;
+    }
+    virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
+        return simulateCopy(contest, at, l, r);
+    }
 };
 
 #include "module_generated.inc"

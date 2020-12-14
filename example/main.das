@@ -545,6 +545,9 @@ def main
     log_type(v)
     return true
 */
+    var a : VkDevice
+    var b := a
+    //b |> vkDeviceWaitIdle()
     print("\nStarted\n")
     print("{heap_bytes_allocated()} bytes on heap\n")
     print("{string_heap_bytes_allocated()} bytes on string heap\n")
