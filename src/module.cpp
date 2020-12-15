@@ -18,3 +18,9 @@ struct VkHandleAnnotation : public ManagedValueAnnotation<OT> {
 };
 
 #include "module_generated.inc"
+
+class Module_vulkan : public GeneratedModule_vulkan {
+public:
+    Module_vulkan() : GeneratedModule_vulkan() {
+    }
+};
