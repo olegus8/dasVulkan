@@ -15712,9 +15712,9 @@ struct GLFWgamepadstateAnnotation
     }
 };
 
-class Module_vulkan : public Module {
+class GeneratedModule_vulkan : public Module {
 public:
-    Module_vulkan() : Module("vulkan") {
+    GeneratedModule_vulkan() : Module("vulkan") {
         ModuleLibrary lib;
         lib.addModule(this);
         lib.addBuiltInModule();
@@ -17727,5 +17727,3 @@ public:
         addConstant(*this,"VK_EXT_IMAGE_ROBUSTNESS_SPEC_VERSION",1);
     }
 };
-
-REGISTER_MODULE(Module_vulkan);

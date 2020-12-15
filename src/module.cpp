@@ -24,3 +24,5 @@ public:
     Module_vulkan() : GeneratedModule_vulkan() {
     }
 };
+
+REGISTER_MODULE(Module_vulkan);
