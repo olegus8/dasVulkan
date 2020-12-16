@@ -31,7 +31,7 @@ GLFWwindow* glfw_create_window(int width, int height, const char* title,
     GLFWwindow * wnd = glfwCreateWindow(width, height, title, monitor, share);
     if ( wnd ) {
         WindowContext * window_ctx = new WindowContext();
-        window_ctx.ctx = ctx;
+        window_ctx->ctx = ctx;
         glfwSetWindowUserPointer(wnd, window_ctx);
     }
     return wnd;
