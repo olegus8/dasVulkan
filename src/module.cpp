@@ -21,6 +21,16 @@ struct VkHandleAnnotation : public ManagedValueAnnotation<OT> {
 
 void addVulkanCustom(Module &, ModuleLibrary &);
 
+GLFWwindow* glfw_create_window(int width, int height, const char* title,
+    GLFWmonitor* monitor, GLFWwindow* share
+) {
+    return glfwCreateWindow(width, height, title, monitor, share);
+}
+
+void glfw_destroy_window(GLFWwindow* window) {
+    glfwDestroyWindow(window);
+}
+
 class Module_vulkan : public GeneratedModule_vulkan {
 public:
     Module_vulkan() : GeneratedModule_vulkan() {
@@ -29,6 +39,12 @@ public:
         lib.addBuiltInModule();
         addGenerated(lib);
         addVulkanCustom(*this, lib);
+        addExtern<DAS_BIND_FUN(glfw_create_window)>(
+            *this, lib, "glfwCreateWindow",
+            SideEffects::worstDefault, "glfwCreateWindow");
+        addExtern<DAS_BIND_FUN(glfw_destroy_window)>(
+            *this, lib, "glfwDestroyWindow",
+            SideEffects::worstDefault, "glfwDestroyWindow");
     }
 };
 
