@@ -241,15 +241,16 @@ def create_swapchain_independent_state(
 
 def finalize(var s : SwapchainIndependentState explicit)
     s.device |> device_wait_idle()
-    delete pipeline_layout
-    delete render_pass
-    delete shfrag
-    delete shvert
-    delete cmd_pool
-    delete device
-    delete surface
-    delete instance
-    delete window
+    delete s.pipeline_layout
+    delete s.render_pass
+    delete s.shfrag
+    delete s.shvert
+    delete s.cmd_pool
+    delete s.device
+    delete s.surface
+    delete s.instance
+    delete s.window
+    memzero(s)
 
 
 struct SwapchainDependentState
@@ -258,35 +259,36 @@ struct SwapchainDependentState
     img_avail_sems   : array<Semaphore>
     render_done_sems : array<Semaphore>
     frame_fences     : array<Fence>
+    _device          : Device
 
 
-def with_swapchain_dependent_state(
-    var sis : SwapchainIndependentState;
-    b : block<(
-)>)
-    var img_avail_sems <- [{for x in range(MAX_FRAMES_IN_FLIGHT);
-        device |> create_semaphore() }]
-    defer() <| ${ delete img_avail_sems; }
+def finalize(var s : SwapchainDependentState explicit)
+    s._device |> device_wait_idle()
+    delete s.pipeline
+    delete s.swapchain
+    delete s.frame_fences
+    delete s.render_done_sems
+    delete s.img_avail_sems
+    memzero(s)
 
-    var render_done_sems <- [{for x in range(MAX_FRAMES_IN_FLIGHT);
-        device |> create_semaphore() }]
-    defer() <| ${ delete render_done_sems; }
-
-    var frame_fences <- [{for x in range(MAX_FRAMES_IN_FLIGHT);
-        device |> create_fence([[FenceCreateInfo
+def create_swapchain_dependent_state(
+    var sis : SwapchainIndependentState
+) : SwapchainDependentState
+    var sds : [[ SwapchainDependentState _device <- weak_copy(sis.device) ]]
+    sds.img_avail_sems <- [{for x in range(MAX_FRAMES_IN_FLIGHT);
+        sis.device |> create_semaphore() }]
+    sds.render_done_sems <- [{for x in range(MAX_FRAMES_IN_FLIGHT);
+        sis.device |> create_semaphore() }]
+    sds.frame_fences <- [{for x in range(MAX_FRAMES_IN_FLIGHT);
+        sis.device |> create_fence([[FenceCreateInfo
             flags=uint(VkFenceCreateFlagBits VK_FENCE_CREATE_SIGNALED_BIT)
     ]]) }]
-    defer() <| ${ delete frame_fences; }
-
-    var swapchain <- device |> create_swapchain_ex(phys_dev, surface, window,
-        surf_fmt, present_mode, render_pass)
-    defer() <| ${ delete swapchain; }
-
-    var pipeline <- device |> create_example_graphics_pipeline(
-        pipeline_layout, render_pass, phys_dev,
-        surface, window, vert_shmod, frag_shmod
-    )
-    defer() <| ${ delete pipeline; }
+    sds.swapchain <- sis.device |> create_swapchain_ex(sis.phys_dev,
+        sis.surface, sis.window, sis.surf_fmt, sis.present_mode,
+        sis.render_pass)
+    sds.pipeline <- device |> create_example_graphics_pipeline(
+        sis.pipeline_layout, sis.render_pass, sis.phys_dev,
+        sis.surface, sis.window, sis.vert_shmod, sis.frag_shmod)
 
     b |> invoke(
         swapchain,
@@ -387,10 +389,10 @@ def run_example
     defer() <| ${ delete sis; }
 
     window |> glfwSetKeyCallback(@@key_callback)
-    var props <- phys_dev |> get_physical_device_properties()
+    var props <- sis.phys_dev |> get_physical_device_properties()
     defer() <| ${ delete props ; }
     print("Using {props.device_name}\n")
-    device |> with_baked_vertex_buffer(phys_dev, cmd_pool, queue, vertices
+    device |> with_baked_vertex_buffer(sis.phys_dev, cmd_pool, queue, vertices
     ) <| $(vbuf)
         var keep_running = true
         while keep_running // swapchain re-creation loop
@@ -402,7 +404,7 @@ def run_example
             with_swapchain_dependent_state(
                 window,
                 surface,
-                phys_dev,
+                sis.phys_dev,
                 device,
                 surf_fmt,
                 present_mode,
