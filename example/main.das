@@ -122,8 +122,6 @@ def create_memory_backed_buffer(
     usage       : uint;
     mem_props   : uint
 ) : MemoryBackedBuffer
-    b : block<(b:Buffer; m:DeviceMemory)>
-)
     var created = false
     var mbb : MemoryBackedBuffer
     mbb.buffer <- device |> create_buffer_exclusive(buf_size, usage)
