@@ -93,6 +93,7 @@ class Config(ConfigBase):
         if func.name in [
             'glfwCreateWindow', 
             'glfwDestroyWindow',
+            'glfwSetWindowUserPointer',
         ]:
             func.ignore()
 
