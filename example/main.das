@@ -398,8 +398,8 @@ def my_das_func
 
 [export]
 def main
-    my_cpp_func()
-    return true
+    //my_cpp_func()
+    //return true
     let heap_on_start = heap_bytes_allocated()
     let string_heap_on_start = string_heap_bytes_allocated()
     print("\nStarted\n")
