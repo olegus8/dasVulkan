@@ -24,7 +24,7 @@ def create_example_graphics_pipeline(
     render_pass : RenderPass;
     phys_dev : PhysicalDevice;
     surface : SurfaceKHR;
-    window : GLFWwindow_DasHandle;
+    window : Window;
     vert_shmod : ShaderModule;
     frag_shmod : ShaderModule
 ) : Pipeline
