@@ -393,17 +393,14 @@ def draw_frame(device, queue, cmd_bufs, swapchain, frame,
     return img_acquired && presented
 
 [export]
-def framebuffer_size_callback(window, width, height)
+def framebuffer_size_callback(
+    window : GLFWwindow_DasHandle;
+    width, height : int
+)
     print("framebuffer size: {width}, {height}\n")
 
 [export]
-def my_das_func
-    print("das func called\n")
-
-[export]
 def main
-    my_cpp_func()
-    return true
     let heap_on_start = heap_bytes_allocated()
     let string_heap_on_start = string_heap_bytes_allocated()
     print("\nStarted\n")
@@ -433,6 +430,7 @@ def main
         cmd_pool        : CommandPool
     )
         window |> glfwSetFramebufferSizeCallback("framebuffer_size_callback")
+        glfwSetFramebufferSizeCallback("framebuffer_size_callback")
         let vk_device = device.device
         let vk_render_pass = render_pass.render_pass
         let vk_queue = queue.queue
