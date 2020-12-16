@@ -217,8 +217,8 @@ struct SwapchainIndependentState
     queue           : Queue
     surf_fmt        : SurfaceFormatKHR
     present_mode    : VkPresentModeKHR
-    vert_shmod          : ShaderModule
-    frag_shmod          : ShaderModule
+    vert_shmod      : ShaderModule
+    frag_shmod      : ShaderModule
     render_pass     : RenderPass
     pipeline_layout : PipelineLayout
     cmd_pool        : CommandPool
