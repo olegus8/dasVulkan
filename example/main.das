@@ -138,7 +138,7 @@ def create_memory_backed_buffer(
 
 def create_baked_vertex_buffer(
     sis : SwapchainIndependentState;
-    vertices : array<auto(VT)>;
+    vertices : array<auto(VT)>
 ) : MemoryBackedBuffer
     let buf_size = typeinfo(sizeof type<VT>) * vertices |> length()
 
