@@ -401,8 +401,8 @@ def run_example
             print("{sds.swapchain.framebuffers |> length()} " +
                 "images in swap chain\n")
             sis.device |> with_example_draw_commands(sis.phys_dev, sis.window,
-                surface, render_pass, sds.swapchain.framebuffers, sds.pipeline,
-                sis.cmd_pool, vbuf, vertices |> length()
+                sis.surface, sis.render_pass, sds.swapchain.framebuffers,
+                sds.pipeline, sis.cmd_pool, vbuf, vertices |> length()
             ) <| $(sc_draw_cmds)
                 var frame = 0
                 var imgs_used_by_frames <- [{
