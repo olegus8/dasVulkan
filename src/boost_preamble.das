@@ -72,7 +72,7 @@ def boost_value_to_vk(b : SurfaceKHR) : VkSurfaceKHR
 
 def create_window_surface(
     instance : Instance = [[ Instance ]];
-    window : GLFWwindow_DasHandle = [[ GLFWwindow_DasHandle ]];
+    window : Window = [[ Window ]];
     var result : VkResult? = [[VkResult?]]
 ) : SurfaceKHR
 
@@ -80,7 +80,7 @@ def create_window_surface(
     var result_ = VkResult VK_SUCCESS
     result ?? result_ = glfwCreateWindowSurface(
         instance.instance,
-        window,
+        window.window,
         null,
         safe_addr(surface.surface_khr)
     )
