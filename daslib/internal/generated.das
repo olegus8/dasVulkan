@@ -7,6 +7,7 @@ require daslib/defer
 require daslib/safe_addr
 
 require vulkan
+require window
 
 //
 // Helpers
@@ -50,7 +51,7 @@ def addr_unsafe(v)
 //TODO: refactor into clone() and disable can_copy on boost handles.
 //  after that transfer ownership with move, and create weak copies via clone.
 //  OR disable can_copy and can_clone, and only allow move and weak_copy.
-def weak_copy(b : auto(T)) : T
+def weak_copy(b : auto(T)) : T -const
     static_if typeinfo(has_field<_needs_delete> b)
         var bc : T = b
         bc._needs_delete = false
@@ -65,21 +66,24 @@ def weak_copy(b : auto(T)) : T
 struct SurfaceKHR
     surface_khr : VkSurfaceKHR
     _instance : VkInstance
+    _needs_delete : bool
 
 def boost_value_to_vk(b : SurfaceKHR) : VkSurfaceKHR
     return b.surface_khr
 
 def create_window_surface(
     instance : Instance = [[ Instance ]];
-    window : GLFWwindow_DasHandle = [[ GLFWwindow_DasHandle ]];
+    window : Window = [[ Window ]];
     var result : VkResult? = [[VkResult?]]
 ) : SurfaceKHR
 
-    var surface <- [[SurfaceKHR _instance=instance.instance]]
+    var surface <- [[SurfaceKHR
+        _instance = instance.instance,
+        _needs_delete = true]]
     var result_ = VkResult VK_SUCCESS
     result ?? result_ = glfwCreateWindowSurface(
         instance.instance,
-        window,
+        window.window,
         null,
         safe_addr(surface.surface_khr)
     )
@@ -87,11 +91,12 @@ def create_window_surface(
     return <- surface
 
 def finalize(var surface : SurfaceKHR explicit)
-    vkDestroySurfaceKHR(
-        surface._instance,
-        surface.surface_khr,
-        null
-    )
+    if surface._needs_delete
+        vkDestroySurfaceKHR(
+            surface._instance,
+            surface.surface_khr,
+            null
+        )
     memzero(surface)
 
 //

@@ -9,6 +9,7 @@ require device
 require image
 require generated
 require framebuffer
+require window
 
 
 struct SwapchainEx
@@ -22,7 +23,7 @@ def create_swapchain_ex(
     device          : Device;
     phys_dev        : PhysicalDevice;
     surface         : SurfaceKHR;
-    window          : GLFWwindow_DasHandle;
+    window          : Window;
     surf_fmt        : SurfaceFormatKHR;
     present_mode    : VkPresentModeKHR;
     render_pass     : RenderPass
@@ -73,7 +74,7 @@ def create_multibuffered_swapchain(
     device          : Device;
     phys_dev        : PhysicalDevice;
     surface         : SurfaceKHR;
-    window          : GLFWwindow_DasHandle;
+    window          : Window;
     surf_fmt        : SurfaceFormatKHR;
     present_mode    : VkPresentModeKHR
 ) : SwapchainKHR

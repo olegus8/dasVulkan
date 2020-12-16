@@ -5,6 +5,7 @@ require daslib/defer
 require vulkan
 require generated
 require device
+require window
 
 
 def allocate_command_buffers_primary(
@@ -59,7 +60,7 @@ def record_render_pass_ex(
 def record_render_pass(
     command_buffer  : CommandBuffer;
     physical_device : PhysicalDevice;
-    window          : GLFWwindow_DasHandle;
+    window          : Window;
     surface         : SurfaceKHR;
     render_pass     : RenderPass;
     framebuffer     : Framebuffer;
