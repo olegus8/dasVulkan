@@ -392,6 +392,12 @@ def draw_frame(device, queue, cmd_bufs, swapchain, frame,
 
     return img_acquired && presented
 
+[export]
+def key_callback(
+    window : GLFWwindow_DasHandle;
+    key, scancode, action, mods : int
+)
+    print("key={key} scancode={scancode} action={action} mods={mods}\n")
 
 [export]
 def main
@@ -423,6 +429,7 @@ def main
         pipeline_layout : PipelineLayout;
         cmd_pool        : CommandPool
     )
+        window |> glfwSetKeyCallback("key_callback")
         let vk_device = device.device
         let vk_render_pass = render_pass.render_pass
         let vk_queue = queue.queue

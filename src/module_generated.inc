@@ -15712,12 +15712,13 @@ struct GLFWgamepadstateAnnotation
     }
 };
 
-class Module_vulkan : public Module {
+class GeneratedModule_vulkan : public Module {
 public:
-    Module_vulkan() : Module("vulkan") {
-        ModuleLibrary lib;
-        lib.addModule(this);
-        lib.addBuiltInModule();
+    GeneratedModule_vulkan() : Module("vulkan") {
+    }
+
+protected:
+    void addGenerated(ModuleLibrary & lib) {
 
         //
         // enums
@@ -16873,10 +16874,6 @@ public:
             SideEffects::worstDefault, "glfwWindowHint");
         addExtern<DAS_BIND_FUN(glfwWindowHintString)>(*this, lib, "glfwWindowHintString",
             SideEffects::worstDefault, "glfwWindowHintString");
-        addExtern<DAS_BIND_FUN(glfwCreateWindow)>(*this, lib, "glfwCreateWindow",
-            SideEffects::worstDefault, "glfwCreateWindow");
-        addExtern<DAS_BIND_FUN(glfwDestroyWindow)>(*this, lib, "glfwDestroyWindow",
-            SideEffects::worstDefault, "glfwDestroyWindow");
         addExtern<DAS_BIND_FUN(glfwWindowShouldClose)>(*this, lib, "glfwWindowShouldClose",
             SideEffects::worstDefault, "glfwWindowShouldClose");
         addExtern<DAS_BIND_FUN(glfwSetWindowShouldClose)>(*this, lib, "glfwSetWindowShouldClose",
@@ -16929,8 +16926,6 @@ public:
             SideEffects::worstDefault, "glfwGetWindowAttrib");
         addExtern<DAS_BIND_FUN(glfwSetWindowAttrib)>(*this, lib, "glfwSetWindowAttrib",
             SideEffects::worstDefault, "glfwSetWindowAttrib");
-        addExtern<DAS_BIND_FUN(glfwSetWindowUserPointer)>(*this, lib, "glfwSetWindowUserPointer",
-            SideEffects::worstDefault, "glfwSetWindowUserPointer");
         addExtern<DAS_BIND_FUN(glfwGetWindowUserPointer)>(*this, lib, "glfwGetWindowUserPointer",
             SideEffects::worstDefault, "glfwGetWindowUserPointer");
         addExtern<DAS_BIND_FUN(glfwPollEvents)>(*this, lib, "glfwPollEvents",
@@ -17727,5 +17722,3 @@ public:
         addConstant(*this,"VK_EXT_IMAGE_ROBUSTNESS_SPEC_VERSION",1);
     }
 };
-
-REGISTER_MODULE(Module_vulkan);
