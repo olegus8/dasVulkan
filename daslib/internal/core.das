@@ -36,17 +36,11 @@ def read_file_to_array(file_path : string) : array<uint8>
     return <- data
 
 
-[export]
-def framebuffer_size_callback(window, width, height)
-    print("framebuffer size: {width}, {height}\n")
-
-
 def with_window(width : int; height : int; title : string;
     b : block<(w:GLFWwindow_DasHandle#)>
 )
     var window = glfwCreateWindow(width, height, title,
         [[GLFWmonitor_DasHandle]], [[GLFWwindow_DasHandle]])
-    window |> glfwSetFramebufferSizeCallback("framebuffer_size_callback")
     b |> invoke(window)
     window |> glfwDestroyWindow()
 
