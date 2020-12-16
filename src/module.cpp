@@ -93,9 +93,7 @@ void glfw_key_callback(
     window_ctx->ctx->eval(window_ctx->key_callback, args);
 }
 
-void glfw_set_key_callback(
-    GLFWwindow * window, const char * func_name, Context * ctx
-) {
+void glfw_set_key_callback(GLFWwindow * window, Func fn, Context * ctx) {
     auto window_ctx = reinterpret_cast<WindowContext*>(
         glfwGetWindowUserPointer(window));
     if ( window_ctx->ctx != ctx )
@@ -103,10 +101,9 @@ void glfw_set_key_callback(
     if ( ! window_ctx->key_callback ) {
         glfwSetKeyCallback(window, glfw_key_callback);
     }
-    window_ctx->key_callback = window_ctx->ctx->findFunction(func_name);
+    window_ctx->key_callback = window_ctx->ctx->getFunction(fn.index-1);
     if ( ! window_ctx->key_callback ) {
-        window_ctx->ctx->throw_error(("callback function \""
-            + string(func_name) + "\" not found").c_str());
+        window_ctx->ctx->throw_error("callback function  not found");
     }
 }
 

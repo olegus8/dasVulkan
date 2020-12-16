@@ -429,7 +429,7 @@ def main
         pipeline_layout : PipelineLayout;
         cmd_pool        : CommandPool
     )
-        window |> glfwSetKeyCallback("key_callback")
+        window |> glfwSetKeyCallback(@@key_callback)
         let vk_device = device.device
         let vk_render_pass = render_pass.render_pass
         let vk_queue = queue.queue
