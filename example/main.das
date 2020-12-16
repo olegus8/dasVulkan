@@ -392,10 +392,13 @@ def draw_frame(device, queue, cmd_bufs, swapchain, frame,
 
     return img_acquired && presented
 
+[export]
+def my_das_func
+    print("das func called\n")
 
 [export]
 def main
-    print("get num = {get_num()}")
+    my_cpp_func()
     return true
     let heap_on_start = heap_bytes_allocated()
     let string_heap_on_start = string_heap_bytes_allocated()
