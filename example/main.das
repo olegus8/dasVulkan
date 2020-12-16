@@ -290,14 +290,7 @@ def create_swapchain_dependent_state(
     sds.pipeline <- device |> create_example_graphics_pipeline(
         sis.pipeline_layout, sis.render_pass, sis.phys_dev,
         sis.surface, sis.window, sis.vert_shmod, sis.frag_shmod)
-
-    b |> invoke(
-        swapchain,
-        pipeline,
-        img_avail_sems,
-        render_done_sems,
-        frame_fences
-    )
+    return <- sds
 
 
 def with_next_image(device, swapchain, sem_to_signal; b : block<(i:uint)>)
