@@ -16926,8 +16926,6 @@ protected:
             SideEffects::worstDefault, "glfwGetWindowAttrib");
         addExtern<DAS_BIND_FUN(glfwSetWindowAttrib)>(*this, lib, "glfwSetWindowAttrib",
             SideEffects::worstDefault, "glfwSetWindowAttrib");
-        addExtern<DAS_BIND_FUN(glfwSetWindowUserPointer)>(*this, lib, "glfwSetWindowUserPointer",
-            SideEffects::worstDefault, "glfwSetWindowUserPointer");
         addExtern<DAS_BIND_FUN(glfwGetWindowUserPointer)>(*this, lib, "glfwGetWindowUserPointer",
             SideEffects::worstDefault, "glfwGetWindowUserPointer");
         addExtern<DAS_BIND_FUN(glfwPollEvents)>(*this, lib, "glfwPollEvents",
