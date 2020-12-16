@@ -79,29 +79,30 @@ def create_example_graphics_pipeline(
         device=sis.device, create_info=create_info])
 
 
-def with_example_draw_commands(device, phys_dev, window, surface, render_pass,
-    fbufs, pipeline, cmd_pool; vbuf, vertices_count;
-    b : block<(cmds:array<CommandBuffer>)>
-)
-    var cmd_bufs <- device |> allocate_command_buffers_primary(
-        cmd_pool, fbufs |> length())
-    defer() <| ${ delete cmd_bufs; }
+def with_example_draw_commands(
+    sis             : SwapchainIndependentState;
+    sds             : SwapchainDependentState;
+    vbuf            : Buffer;
+    vertices_count  : int
+) : CommandBuffers
+    var cmd_bufs <- sis.device |> allocate_command_buffers_primary(
+        sis.cmd_pool, sds.swapchain.framebuffers |> length())
     var clear_values <- [{ auto[] [[VkClearValue]] }]
     defer() <| ${ delete clear_values; }
-    for cmd_buf, fbuf in cmd_bufs.command_buffers, fbufs
+    for cmd_buf, fbuf in cmd_bufs.command_buffers, sds.swapchain.framebuffers
         cmd_buf |> record_command_buffer() <|
             cmd_buf |> record_render_pass(
-                phys_dev, window, surface, render_pass, fbuf, clear_values
+                sis.phys_dev, sis.window, sis.surface, sis.render_pass,
+                fbuf, clear_values
             ) <|
                 cmd_buf |> cmd_bind_pipeline(
                     VkPipelineBindPoint VK_PIPELINE_BIND_POINT_GRAPHICS,
-                    pipeline)
+                    sds.pipeline)
                 cmd_buf |> cmd_bind_vertex_buffer(vbuf)
                 cmd_draw([command_buffer = cmd_buf,
                     vertex_count = uint(vertices_count),
                     instance_count = 1u])
-
-    b |> invoke(cmd_bufs.command_buffers)
+    return <- cmd_bufs
 
 
 def with_mem_backed_buf(
@@ -391,9 +392,8 @@ def run_example
 
             print("{sds.swapchain.framebuffers |> length()} " +
                 "images in swap chain\n")
-            sis.device |> with_example_draw_commands(sis.phys_dev, sis.window,
-                sis.surface, sis.render_pass, sds.swapchain.framebuffers,
-                sds.pipeline, sis.cmd_pool, vbuf, vertices |> length()
+            sis.device |> with_example_draw_commands(
+                sis, sds, vbuf, vertices |> length()
             ) <| $(sc_draw_cmds)
                 var frame = 0
                 var imgs_used_by_frames <- [{
