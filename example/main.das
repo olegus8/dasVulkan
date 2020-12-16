@@ -387,7 +387,7 @@ def run_example
     defer() <| ${ delete props ; }
     print("Using {props.device_name}\n")
     sis.device |> with_baked_vertex_buffer(
-        sis.phys_dev, cmd_pool, queue, vertices
+        sis.phys_dev, sis.cmd_pool, sis.queue, vertices
     ) <| $(vbuf)
         var keep_running = true
         while keep_running // swapchain re-creation loop
@@ -402,7 +402,7 @@ def run_example
                 "images in swap chain\n")
             sis.device |> with_example_draw_commands(sis.phys_dev, sis.window,
                 surface, render_pass, sds.swapchain.framebuffers, sds.pipeline,
-                cmd_pool, vbuf, vertices |> length()
+                sis.cmd_pool, vbuf, vertices |> length()
             ) <| $(sc_draw_cmds)
                 var frame = 0
                 var imgs_used_by_frames <- [{
@@ -412,8 +412,8 @@ def run_example
                         sis.window.window |> glfwWindowShouldClose() == 0)
                     glfwPollEvents()
                     let is_swapchain_good = sis.device |> draw_frame(
-                        queue, sc_draw_cmds, sds.swapchain.swapchain, frame,
-                        sds.frame_fences, sds.img_avail_sems,
+                        sis.queue, sc_draw_cmds, sds.swapchain.swapchain,
+                        frame, sds.frame_fences, sds.img_avail_sems,
                         sds.render_done_sems, imgs_used_by_frames
                     )
                     if ! is_swapchain_good
