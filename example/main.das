@@ -331,7 +331,7 @@ def submit_draw(
         fence = fence_to_signal])
 
 
-def present(device, queue, swapchain, img_i, sem_to_wait; b : block)
+def present(device, queue, swapchain, img_i, sem_to_wait) : bool
     var result : VkResult
     var p_result : VkResult ?
     unsafe
@@ -339,35 +339,39 @@ def present(device, queue, swapchain, img_i, sem_to_wait; b : block)
     queue |> queue_present_khr(
         swapchain, img_i, safe_addr(sem_to_wait), p_result)
     if result == VkResult VK_SUCCESS
-        b |> invoke()
-    else
-        assert(result == VkResult VK_ERROR_OUT_OF_DATE_KHR ||
-            result == VkResult VK_SUBOPTIMAL_KHR)
+        return true
+    assert(result == VkResult VK_ERROR_OUT_OF_DATE_KHR ||
+        result == VkResult VK_SUBOPTIMAL_KHR)
+    return false
 
 
-def draw_frame(device, queue, cmd_bufs, swapchain, frame,
-    frame_fences, img_avail_sems, render_done_sems;
-    var imgs_used_by_frames
+def draw_frame(
+    sis                     : SwapchainIndependentState;
+    sds                     : SwapchainDependentState;
+    cmd_bufs                : array<CommandBuffer>;
+    frame                   : int;
+    var imgs_used_by_frames : array<int>
 )
-    let vk_swapchain = swapchain.swapchain_khr
-    device |> wait_for_fence(frame_fences[frame], ULONG_MAX)
+    sis.device |> wait_for_fence(sds.frame_fences[frame], ULONG_MAX)
     var img_acquired = false
     var presented = false
-    device |> with_next_image(swapchain, img_avail_sems[frame]) <| $(img_i)
+    sis.device |> with_next_image(sds.swapchain, sds.img_avail_sems[frame]
+    ) <| $(img_i)
         img_acquired = true
 
         var img_frame = imgs_used_by_frames[img_i]
         if img_frame != -1
-            device |> wait_for_fence(frame_fences[img_frame], ULONG_MAX)
+            sis.device |> wait_for_fence(
+                sds.frame_fences[img_frame], ULONG_MAX)
         imgs_used_by_frames[img_i] = frame
 
-        device |> reset_fence(frame_fences[frame])
-        device |> submit_draw(queue, cmd_bufs[img_i],
-            img_avail_sems[frame], render_done_sems[frame],
-            frame_fences[frame])
+        sis.device |> reset_fence(sds.frame_fences[frame])
+        sis.device |> submit_draw(sis.queue, cmd_bufs[img_i],
+            sds.img_avail_sems[frame], sds.render_done_sems[frame],
+            sds.frame_fences[frame])
 
-        device |> present(queue, swapchain, img_i, render_done_sems[frame]) <|
-            presented = true
+        presented = sis.device |> present(sis.queue, sis.swapchain.swapchain,
+            img_i, sds.render_done_sems[frame])
 
     return img_acquired && presented
 
@@ -420,8 +424,8 @@ def run_example
         while keep_running
             keep_running = sis.window.window |> glfwWindowShouldClose() == 0
             glfwPollEvents()
-            let is_swapchain_good = draw_frame(
-                sis, sds, sc_draw_cmds, frame, imgs_used_by_frames)
+            let is_swapchain_good = draw_frame(sis, sds,
+                draw_cmds.command_buffers, frame, imgs_used_by_frames)
             if ! is_swapchain_good
                 break
             frame = (frame + 1) % MAX_FRAMES_IN_FLIGHT
