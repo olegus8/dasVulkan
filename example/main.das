@@ -355,7 +355,8 @@ def draw_frame(
     sis.device |> wait_for_fence(sds.frame_fences[frame], ULONG_MAX)
     var img_acquired = false
     var presented = false
-    sis.device |> with_next_image(sds.swapchain, sds.img_avail_sems[frame]
+    sis.device |> with_next_image(sds.swapchain.swapchain,
+        sds.img_avail_sems[frame]
     ) <| $(img_i)
         img_acquired = true
 
