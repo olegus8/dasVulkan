@@ -370,7 +370,7 @@ def draw_frame(
             sds.img_avail_sems[frame], sds.render_done_sems[frame],
             sds.frame_fences[frame])
 
-        presented = sis.device |> present(sis.queue, sis.swapchain.swapchain,
+        presented = sis.device |> present(sis.queue, sds.swapchain.swapchain,
             img_i, sds.render_done_sems[frame])
 
     return img_acquired && presented
