@@ -418,8 +418,7 @@ def run_example
         var imgs_used_by_frames <- [{for x in sds.swapchain.framebuffers; -1}]
 
         while keep_running
-            keep_running = (
-                sis.window.window |> glfwWindowShouldClose() == 0)
+            keep_running = sis.window.window |> glfwWindowShouldClose() == 0
             glfwPollEvents()
             let is_swapchain_good = sis.device |> draw_frame(
                 sis.queue, sc_draw_cmds, sds.swapchain.swapchain,
