@@ -7,6 +7,7 @@ require daslib/defer
 require daslib/safe_addr
 
 require vulkan
+require window
 
 //
 // Helpers
@@ -50,7 +51,7 @@ def addr_unsafe(v)
 //TODO: refactor into clone() and disable can_copy on boost handles.
 //  after that transfer ownership with move, and create weak copies via clone.
 //  OR disable can_copy and can_clone, and only allow move and weak_copy.
-def weak_copy(b : auto(T)) : T
+def weak_copy(b : auto(T)) : T -const
     static_if typeinfo(has_field<_needs_delete> b)
         var bc : T = b
         bc._needs_delete = false

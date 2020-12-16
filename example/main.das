@@ -287,7 +287,7 @@ def create_swapchain_dependent_state(
     sds.swapchain <- sis.device |> create_swapchain_ex(sis.phys_dev,
         sis.surface, sis.window, sis.surf_fmt, sis.present_mode,
         sis.render_pass)
-    sds.pipeline <- device |> create_example_graphics_pipeline(
+    sds.pipeline <- sis.device |> create_example_graphics_pipeline(
         sis.pipeline_layout, sis.render_pass, sis.phys_dev,
         sis.surface, sis.window, sis.vert_shmod, sis.frag_shmod)
     return <- sds
