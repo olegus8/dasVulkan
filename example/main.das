@@ -124,9 +124,9 @@ def with_mem_backed_buf(
         b |> invoke(buf, mem)
 
 
-def with_baked_vertex_buffer(device, phys_dev, cmd_pool, queue;
-    vertices:array<auto(VT)>; b : block<(b:Buffer)>
-)
+def create_baked_vertex_buffer(device, phys_dev, cmd_pool, queue;
+    vertices:array<auto(VT)>;
+) : Buffer
     let buf_size = typeinfo(sizeof type<VT>) * vertices |> length()
 
     device |> with_mem_backed_buf(phys_dev, uint64(buf_size),
@@ -378,44 +378,46 @@ def run_example
     var props <- sis.phys_dev |> get_physical_device_properties()
     defer() <| ${ delete props ; }
     print("Using {props.device_name}\n")
-    sis.device |> with_baked_vertex_buffer(
-        sis.phys_dev, sis.cmd_pool, sis.queue, vertices
-    ) <| $(vbuf)
-        var keep_running = true
-        while keep_running // swapchain re-creation loop
-            // waiting while window is minimized
-            while uint2(0,0) == sis.window |> get_framebuffer_size()
-                glfwWaitEvents()
-            sis.device |> device_wait_idle()
 
-            var sds <- create_swapchain_dependent_state(sis)
+    var vbuf <- sis |> with_baked_vertex_buffer(vertices)
+    defer() <| ${ delete vbuf; }
 
-            print("{sds.swapchain.framebuffers |> length()} " +
-                "images in swap chain\n")
+    var keep_running = true
+    while keep_running // swapchain re-creation loop
+        // waiting while window is minimized
+        while uint2(0,0) == sis.window |> get_framebuffer_size()
+            glfwWaitEvents()
+        sis.device |> device_wait_idle()
 
-            var draw_cmds <- sis.device |> create_example_draw_commands(
-                sis, sds, vbuf, vertices |> length())
+        var sds <- create_swapchain_dependent_state(sis)
 
-            var frame = 0
-            var imgs_used_by_frames <- [{
-                for x in sds.swapchain.framebuffers ; -1 }]
-            while keep_running
-                keep_running = (
-                    sis.window.window |> glfwWindowShouldClose() == 0)
-                glfwPollEvents()
-                let is_swapchain_good = sis.device |> draw_frame(
-                    sis.queue, sc_draw_cmds, sds.swapchain.swapchain,
-                    frame, sds.frame_fences, sds.img_avail_sems,
-                    sds.render_done_sems, imgs_used_by_frames
-                )
-                if ! is_swapchain_good
-                    break
-                frame = (frame + 1) % MAX_FRAMES_IN_FLIGHT
-            delete imgs_used_by_frames
-            sis.device |> device_wait_idle()
+        print("{sds.swapchain.framebuffers |> length()} " +
+            "images in swap chain\n")
 
-            delete draw_cmds
-            delete sds
+        var draw_cmds <- sis.device |> create_example_draw_commands(
+            sis, sds, vbuf, vertices |> length())
+
+        var frame = 0
+        var imgs_used_by_frames <- [{for x in sds.swapchain.framebuffers; -1}]
+
+        while keep_running
+            keep_running = (
+                sis.window.window |> glfwWindowShouldClose() == 0)
+            glfwPollEvents()
+            let is_swapchain_good = sis.device |> draw_frame(
+                sis.queue, sc_draw_cmds, sds.swapchain.swapchain,
+                frame, sds.frame_fences, sds.img_avail_sems,
+                sds.render_done_sems, imgs_used_by_frames
+            )
+            if ! is_swapchain_good
+                break
+            frame = (frame + 1) % MAX_FRAMES_IN_FLIGHT
+
+        delete imgs_used_by_frames
+        sis.device |> device_wait_idle()
+
+        delete draw_cmds
+        delete sds
 
 
 [export]
