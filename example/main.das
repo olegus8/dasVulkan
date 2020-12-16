@@ -140,29 +140,31 @@ def create_memory_backed_buffer(
 def create_baked_vertex_buffer(
     sis : SwapchainIndependentState;
     vertices : array<auto(VT)>;
-) : Buffer
+) : MemoryBackedBuffer
     let buf_size = typeinfo(sizeof type<VT>) * vertices |> length()
 
-    device |> with_mem_backed_buf(phys_dev, uint64(buf_size),
+    var vbuf <- sis.device |> create_memory_backed_buffer(
+        sis.phys_dev, uint64(buf_size),
         uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_TRANSFER_DST_BIT) |
         uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_VERTEX_BUFFER_BIT),
-        uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT)
-    ) <| $(vbuf, vbuf_mem)
+        uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT))
 
-        device |> with_mem_backed_buf(phys_dev, uint64(buf_size),
-            uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_TRANSFER_SRC_BIT),
-            uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT)|
-            uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_COHERENT_BIT)
-        ) <| $(staging_buf, staging_mem)
-            device |> map_device_memory_to_array(
-                staging_mem, uint64(buf_size), uint64(0), 0u
-            ) <| $(var mapped_vertices : array<VT>#)
-                for dst, src in mapped_vertices, vertices
-                    dst = src
-            device |> copy_buffer_sync(
-                cmd_pool, queue, staging_buf, vbuf, uint64(buf_size))
+    var staging <- sis.device |> create_memory_backed_buffer(
+        sis.phys_dev, uint64(buf_size),
+        uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_TRANSFER_SRC_BIT),
+        uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT)|
+        uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_COHERENT_BIT))
+    defer() <| ${ delete staging; }
 
-        b |> invoke(vbuf)
+    sis.device |> map_device_memory_to_array(
+        staging.memory, uint64(buf_size), uint64(0), 0u
+    ) <| $(var mapped_vertices : array<VT>#)
+        for dst, src in mapped_vertices, vertices
+            dst = src
+    sis.device |> copy_buffer_sync(
+        sis.cmd_pool, sis.queue, staging.buffer, vbuf.buffer, uint64(buf_size))
+
+    return <- vbuf
 
 
 def create_example_render_pass(
@@ -409,7 +411,7 @@ def run_example
             "images in swap chain\n")
 
         var draw_cmds <- sis.device |> create_example_draw_commands(
-            sis, sds, vbuf, vertices |> length())
+            sis, sds, vbuf.buffer, vertices |> length())
 
         var frame = 0
         var imgs_used_by_frames <- [{for x in sds.swapchain.framebuffers; -1}]
