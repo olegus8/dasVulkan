@@ -60,7 +60,7 @@ void glfw_framebuffer_size_callback(
 }
 
 void glfw_set_framebuffer_size_callback(
-    GLFWwindow * window, const char * func_name, Context * ctx
+    GLFWwindow * window, Func fn, Context * ctx
 ) {
     auto window_ctx = reinterpret_cast<WindowContext*>(
         glfwGetWindowUserPointer(window));
@@ -70,8 +70,8 @@ void glfw_set_framebuffer_size_callback(
         glfwSetFramebufferSizeCallback(
             window, glfw_framebuffer_size_callback);
     }
-    window_ctx->framebuffer_size_callback = window_ctx->ctx->findFunction(
-        func_name);
+    window_ctx->framebuffer_size_callback = window_ctx->ctx->getFunction(
+        fn.index-1);
     if ( ! window_ctx->framebuffer_size_callback ) {
         window_ctx->ctx->throw_error(("callback function \""
             + string(func_name) + "\" not found").c_str());
