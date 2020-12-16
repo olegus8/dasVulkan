@@ -392,10 +392,6 @@ def draw_frame(device, queue, cmd_bufs, swapchain, frame,
 
     return img_acquired && presented
 
-[export, sideeffects]
-def framebuffer_size_callback(window, width, height)
-    print("framebuffer size: {width}, {height}\n")
-
 [export]
 def main
     let heap_on_start = heap_bytes_allocated()
@@ -426,7 +422,6 @@ def main
         pipeline_layout : PipelineLayout;
         cmd_pool        : CommandPool
     )
-        window |> glfwSetFramebufferSizeCallback("framebuffer_size_callback")
         let vk_device = device.device
         let vk_render_pass = render_pass.render_pass
         let vk_queue = queue.queue
