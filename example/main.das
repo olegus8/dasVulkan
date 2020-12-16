@@ -217,8 +217,8 @@ struct SwapchainIndependentState
     queue           : Queue
     surf_fmt        : SurfaceFormatKHR
     present_mode    : VkPresentModeKHR
-    shvert          : ShaderModule
-    shfrag          : ShaderModule
+    vert_shmod          : ShaderModule
+    frag_shmod          : ShaderModule
     render_pass     : RenderPass
     pipeline_layout : PipelineLayout
     cmd_pool        : CommandPool
@@ -228,8 +228,8 @@ def finalize(var s : SwapchainIndependentState explicit)
     s.device |> device_wait_idle()
     delete s.pipeline_layout
     delete s.render_pass
-    delete s.shfrag
-    delete s.shvert
+    delete s.frag_shmod
+    delete s.vert_shmod
     delete s.cmd_pool
     delete s.device
     delete s.surface
@@ -253,9 +253,9 @@ def create_swapchain_independent_state(
     s.device <- s.phys_dev |> create_single_queue_device(qfam)
     s.queue <- s.device |> get_device_queue(qfam)
     s.cmd_pool <- create_command_pool([device=s.device, queue_family=qfam])
-    s.shvert <- s.device |> create_shader_module_from_file(
+    s.vert_shmod <- s.device |> create_shader_module_from_file(
         "{get_das_root()}/modules/dasVulkan/example/vert.spv")
-    s.shfrag <- s.device |> create_shader_module_from_file(
+    s.frag_shmod <- s.device |> create_shader_module_from_file(
         "{get_das_root()}/modules/dasVulkan/example/frag.spv")
     s.render_pass <- s.device |> create_example_render_pass(s.surf_fmt)
     s.pipeline_layout <- s.device |> create_pipeline_layout()
