@@ -275,7 +275,7 @@ def finalize(var s : SwapchainDependentState explicit)
 def create_swapchain_dependent_state(
     var sis : SwapchainIndependentState
 ) : SwapchainDependentState
-    var sds : [[ SwapchainDependentState _device <- weak_copy(sis.device) ]]
+    var sds <- [[ SwapchainDependentState _device <- weak_copy(sis.device) ]]
     sds.img_avail_sems <- [{for x in range(MAX_FRAMES_IN_FLIGHT);
         sis.device |> create_semaphore() }]
     sds.render_done_sems <- [{for x in range(MAX_FRAMES_IN_FLIGHT);
