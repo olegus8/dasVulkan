@@ -199,19 +199,23 @@ def create_example_render_pass(
     return <- device |> create_render_pass(create_info)
 
 
-def with_swapchain_independent_state(width, height, title; b : block<(
-    window          : GLFWwindow_DasHandle#;
-    surface         : SurfaceKHR;
-    phys_dev        : PhysicalDevice;
-    device          : Device;
-    queue           : Queue;
-    var surf_fmt    : SurfaceFormatKHR;
-    present_mode    : VkPresentModeKHR;
-    vert_shmod      : ShaderModule;
-    frag_shmod      : ShaderModule;
-    render_pass     : RenderPass;
-    pipeline_layout : PipelineLayout;
+struct SwapchainIndependentState
+    window          : GLFWwindow_DasHandle
+    surface         : SurfaceKHR
+    phys_dev        : PhysicalDevice
+    device          : Device
+    queue           : Queue
+    surf_fmt        : SurfaceFormatKHR
+    present_mode    : VkPresentModeKHR
+    vert_shmod      : ShaderModule
+    frag_shmod      : ShaderModule
+    render_pass     : RenderPass
+    pipeline_layout : PipelineLayout
     cmd_pool        : CommandPool
+
+
+def with_swapchain_independent_state(width, height, title; b : block<(
+    var state : SwapchainIndependentState
 )>)
     with_window(width, height, title) <| $(window)
         var instance <- create_default_instance()
@@ -247,19 +251,19 @@ def with_swapchain_independent_state(width, height, title; b : block<(
         var pipeline_layout <- device |> create_pipeline_layout()
         defer() <| ${ delete pipeline_layout; }
 
-        b |> invoke(
-            window,
-            surface,
-            phys_dev,
-            device,
-            queue,
-            surf_fmt,
-            present_mode,
-            shvert,
-            shfrag,
-            render_pass,
-            pipeline_layout,
-            cmd_pool
+        b |> invoke(<- [[SwapchainIndependentState
+            window = window,
+            surface = weak_copy(surface),
+            phys_dev = weak_copy(phys_dev),
+            device = weak_copy(device),
+            queue = weak_copy(device),
+            surf_fmt <- surf_fmt,
+            present_mode = present_mode,
+            shvert = weak_copy(shvert),
+            shfrag = weak_copy(shfrag),
+            render_pass = weak_copy(render_pass),
+            pipeline_layout = weak_copy(pipeline_layout),
+            cmd_pool = weak_copy(cmd_pool)
         )
 
         device |> device_wait_idle()
