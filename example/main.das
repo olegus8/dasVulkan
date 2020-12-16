@@ -393,13 +393,6 @@ def draw_frame(device, queue, cmd_bufs, swapchain, frame,
     return img_acquired && presented
 
 [export]
-def framebuffer_size_callback(
-    window : GLFWwindow_DasHandle;
-    width, height : int
-)
-    print("framebuffer size: {width}, {height}\n")
-
-[export]
 def key_callback(
     window : GLFWwindow_DasHandle;
     key, scancode, action, mods : int
@@ -436,7 +429,6 @@ def main
         pipeline_layout : PipelineLayout;
         cmd_pool        : CommandPool
     )
-        window |> glfwSetFramebufferSizeCallback("framebuffer_size_callback")
         window |> glfwSetKeyCallback("key_callback")
         let vk_device = device.device
         let vk_render_pass = render_pass.render_pass
