@@ -87,7 +87,7 @@ def create_example_graphics_pipeline(
 
 
 def with_example_draw_commands(device, phys_dev, window, surface, render_pass,
-    fbufs, pipeline, cmd_pool, queue; vbuf, vertices_count;
+    fbufs, pipeline, cmd_pool; vbuf, vertices_count;
     b : block<(cmds:array<CommandBuffer>)>
 )
     var cmd_bufs <- device |> allocate_command_buffers_primary(
@@ -222,47 +222,25 @@ def create_swapchain_independent_state(
     var s : SwapchainIndependentState
     s.window <- create_window(width, height, title)
     s.instance <- create_default_instance()
-    s.surface <- instance |> create_window_surface(s.window)
-    s.phys_dev <- instance |> find_physical_device_for_graphics(s.surface)
-    s.present_mode <- phys_dev |> find_present_mode_like_mailbox(s.surface)
-    s.surf_fmt <- phys_dev |> find_format_like_srgb_bgra8(s.surface)
-    s.qfam <- phys_dev |> get_graphics_queue_family(s.surface)
-
-    var device <- phys_dev |> create_single_queue_device(qfam)
-
-    let queue <- device |> get_device_queue(qfam)
-
-    var cmd_pool <- create_command_pool([device=device, queue_family=qfam])
-
-    var shvert <- device |> create_shader_module_from_file(
+    s.surface <- s.instance |> create_window_surface(s.window)
+    s.phys_dev <- s.instance |> find_physical_device_for_graphics(s.surface)
+    s.present_mode <- s.phys_dev |> find_present_mode_like_mailbox(s.surface)
+    s.surf_fmt <- s.phys_dev |> find_format_like_srgb_bgra8(s.surface)
+    let qfam <- s.phys_dev |> get_graphics_queue_family(s.surface)
+    s.device <- s.phys_dev |> create_single_queue_device(qfam)
+    s.queue <- s.device |> get_device_queue(qfam)
+    s.cmd_pool <- create_command_pool([device=s.device, queue_family=qfam])
+    s.shvert <- s.device |> create_shader_module_from_file(
         "{get_das_root()}/modules/dasVulkan/example/vert.spv")
-
-    var shfrag <- device |> create_shader_module_from_file(
+    s.shfrag <- s.device |> create_shader_module_from_file(
         "{get_das_root()}/modules/dasVulkan/example/frag.spv")
-
-    var render_pass <- device |> create_example_render_pass(surf_fmt)
-
-    var pipeline_layout <- device |> create_pipeline_layout()
-
-    b |> invoke(<- [[SwapchainIndependentState
-        window = window,
-        surface = weak_copy(surface),
-        phys_dev = weak_copy(phys_dev),
-        device = weak_copy(device),
-        queue = weak_copy(device),
-        surf_fmt <- surf_fmt,
-        present_mode = present_mode,
-        shvert = weak_copy(shvert),
-        shfrag = weak_copy(shfrag),
-        render_pass = weak_copy(render_pass),
-        pipeline_layout = weak_copy(pipeline_layout),
-        cmd_pool = weak_copy(cmd_pool)
-    )
-
-    device |> device_wait_idle()
+    s.render_pass <- s.device |> create_example_render_pass(s.surf_fmt)
+    s.pipeline_layout <- s.device |> create_pipeline_layout()
+    return <- s
 
 
-def finalize(var sis : SwapchainIndependentState explicit)
+def finalize(var s : SwapchainIndependentState explicit)
+    s.device |> device_wait_idle()
     delete pipeline_layout
     delete render_pass
     delete shfrag
@@ -368,7 +346,6 @@ def draw_frame(device, queue, cmd_bufs, swapchain, frame,
     var imgs_used_by_frames
 )
     let vk_swapchain = swapchain.swapchain_khr
-    let vk_device = device.device
     device |> wait_for_fence(frame_fences[frame], ULONG_MAX)
     var img_acquired = false
     var presented = false
@@ -412,24 +389,9 @@ def main
         [[Vertex position=float2(-0.5f,  0.5f), color=float3(0f, 0f, 1f)]]
     }]
 
-    with_swapchain_independent_state(800, 600, "dasVulkanExample") <| $(
-        window          : GLFWwindow_DasHandle;
-        surface         : SurfaceKHR;
-        phys_dev        : PhysicalDevice;
-        device          : Device;
-        queue           : Queue;
-        var surf_fmt    : SurfaceFormatKHR;
-        present_mode    : VkPresentModeKHR;
-        vert_shmod      : ShaderModule;
-        frag_shmod      : ShaderModule;
-        render_pass     : RenderPass;
-        pipeline_layout : PipelineLayout;
-        cmd_pool        : CommandPool
-    )
+    var sis <- swapchain_independent_state(800, 600, "dasVulkanExample")
+
         window |> glfwSetKeyCallback(@@key_callback)
-        let vk_device = device.device
-        let vk_render_pass = render_pass.render_pass
-        let vk_queue = queue.queue
         var props <- phys_dev |> get_physical_device_properties()
         defer() <| ${ delete props ; }
         print("Using {props.device_name}\n")
@@ -447,7 +409,6 @@ def main
                     surface,
                     phys_dev,
                     device,
-                    vk_queue,
                     surf_fmt,
                     present_mode,
                     vert_shmod,
@@ -466,7 +427,7 @@ def main
                         "images in swap chain\n")
                     device |> with_example_draw_commands(phys_dev, window,
                         surface, render_pass, sc.framebuffers, pipeline,
-                        cmd_pool, vk_queue, vbuf, vertices |> length()
+                        cmd_pool, vbuf, vertices |> length()
                     ) <| $(sc_draw_cmds)
                         var frame = 0
                         var imgs_used_by_frames <- [{
@@ -486,6 +447,7 @@ def main
                         delete imgs_used_by_frames
                         device |> device_wait_idle()
 
+    delete sis
     delete vertices
     glfwTerminate()
 
