@@ -130,7 +130,7 @@ def create_memory_backed_buffer(
     ) <| $(mem_type, mem_size)
         mbb.memory <- device |> allocate_memory([[MemoryAllocateInfo
             allocation_size=mem_size, memory_type_index=mem_type]])
-        mbb.device |> bind_buffer_memory(mbb.buffer, mbb.memory)
+        device |> bind_buffer_memory(mbb.buffer, mbb.memory)
         created = true
     assert(created)
     return <- mbb
