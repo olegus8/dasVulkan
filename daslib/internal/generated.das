@@ -89,6 +89,7 @@ def create_window_surface(
     return <- surface
 
 def finalize(var surface : SurfaceKHR explicit)
+    print("finalizing surface. needs_delete={surface._needs_delete})\n")
     if surface._needs_delete
         vkDestroySurfaceKHR(
             surface._instance,
