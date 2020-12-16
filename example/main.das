@@ -420,11 +420,8 @@ def run_example
         while keep_running
             keep_running = sis.window.window |> glfwWindowShouldClose() == 0
             glfwPollEvents()
-            let is_swapchain_good = sis.device |> draw_frame(
-                sis.queue, sc_draw_cmds, sds.swapchain.swapchain,
-                frame, sds.frame_fences, sds.img_avail_sems,
-                sds.render_done_sems, imgs_used_by_frames
-            )
+            let is_swapchain_good = draw_frame(
+                sis, sds, sc_draw_cmds, frame, imgs_used_by_frames)
             if ! is_swapchain_good
                 break
             frame = (frame + 1) % MAX_FRAMES_IN_FLIGHT
