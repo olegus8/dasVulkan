@@ -23,14 +23,15 @@ void addVulkanCustom(Module &, ModuleLibrary &);
 
 struct WindowContext {
     Context * ctx = nullptr;
+    SimFunction * framebuffer_size_callback = nullptr;
 };
 
 GLFWwindow* glfw_create_window(int width, int height, const char* title,
     GLFWmonitor* monitor, GLFWwindow* share, Context * ctx
 ) {
-    GLFWwindow * wnd = glfwCreateWindow(width, height, title, monitor, share);
+    auto wnd = glfwCreateWindow(width, height, title, monitor, share);
     if ( wnd ) {
-        WindowContext * window_ctx = new WindowContext();
+        auto window_ctx = new WindowContext();
         window_ctx->ctx = ctx;
         glfwSetWindowUserPointer(wnd, window_ctx);
     }
@@ -38,10 +39,39 @@ GLFWwindow* glfw_create_window(int width, int height, const char* title,
 }
 
 void glfw_destroy_window(GLFWwindow* window) {
-    WindowContext * window_ctx = reinterpret_cast<WindowContext*>(
+    auto window_ctx = reinterpret_cast<WindowContext*>(
         glfwGetWindowUserPointer(window));
     delete window_ctx;
     glfwDestroyWindow(window);
+}
+
+void glfw_framebuffer_size_callback(
+    GLFWwindow* window, int width, int height
+) {
+    auto window_ctx = reinterpret_cast<WindowContext*>(
+        glfwGetWindowUserPointer(window));
+    vec4f args[3] = {
+        cast<GLFWwindow *>::from(window),
+        cast<int32_t>::from(width),
+        cast<int32_t>::from(height)
+    };
+    window_ctx->ctx->eval(window_ctx->framebuffer_size_callback, args);
+}
+
+void glfw_set_framebuffer_size_callback(
+    GLFWwindow * window, const char * func_name
+) {
+    auto window_ctx = reinterpret_cast<WindowContext*>(
+        glfwGetWindowUserPointer(window));
+    if ( ! window_ctx->framebuffer_size_callback ) {
+        glfwSetFramebufferSizeCallback(
+            window, glfw_framebuffer_size_callback);
+    }
+    window_ctx->framebuffer_size_callback = window_ctx->ctx->findFunction(
+        func_name);
+    if ( ! window_ctx->framebuffer_size_callback ) {
+        ctx->throw_error("callback function not found");
+    }
 }
 
 class Module_vulkan : public GeneratedModule_vulkan {
