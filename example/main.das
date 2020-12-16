@@ -392,7 +392,7 @@ def draw_frame(device, queue, cmd_bufs, swapchain, frame,
 
     return img_acquired && presented
 
-[export]
+[export, sideeffects]
 def framebuffer_size_callback(window, width, height)
     print("framebuffer size: {width}, {height}\n")
 
