@@ -79,7 +79,7 @@ def create_example_graphics_pipeline(
         device=sis.device, create_info=create_info])
 
 
-def with_example_draw_commands(
+def create_example_draw_commands(
     sis             : SwapchainIndependentState;
     sds             : SwapchainDependentState;
     vbuf            : Buffer;
@@ -392,27 +392,29 @@ def run_example
 
             print("{sds.swapchain.framebuffers |> length()} " +
                 "images in swap chain\n")
-            sis.device |> with_example_draw_commands(
-                sis, sds, vbuf, vertices |> length()
-            ) <| $(sc_draw_cmds)
-                var frame = 0
-                var imgs_used_by_frames <- [{
-                    for x in sds.swapchain.framebuffers ; -1 }]
-                while keep_running
-                    keep_running = (
-                        sis.window.window |> glfwWindowShouldClose() == 0)
-                    glfwPollEvents()
-                    let is_swapchain_good = sis.device |> draw_frame(
-                        sis.queue, sc_draw_cmds, sds.swapchain.swapchain,
-                        frame, sds.frame_fences, sds.img_avail_sems,
-                        sds.render_done_sems, imgs_used_by_frames
-                    )
-                    if ! is_swapchain_good
-                        break
-                    frame = (frame + 1) % MAX_FRAMES_IN_FLIGHT
-                delete imgs_used_by_frames
-                sis.device |> device_wait_idle()
 
+            var draw_cmds <- sis.device |> create_example_draw_commands(
+                sis, sds, vbuf, vertices |> length())
+
+            var frame = 0
+            var imgs_used_by_frames <- [{
+                for x in sds.swapchain.framebuffers ; -1 }]
+            while keep_running
+                keep_running = (
+                    sis.window.window |> glfwWindowShouldClose() == 0)
+                glfwPollEvents()
+                let is_swapchain_good = sis.device |> draw_frame(
+                    sis.queue, sc_draw_cmds, sds.swapchain.swapchain,
+                    frame, sds.frame_fences, sds.img_avail_sems,
+                    sds.render_done_sems, imgs_used_by_frames
+                )
+                if ! is_swapchain_good
+                    break
+                frame = (frame + 1) % MAX_FRAMES_IN_FLIGHT
+            delete imgs_used_by_frames
+            sis.device |> device_wait_idle()
+
+            delete draw_cmds
             delete sds
 
 
