@@ -9,7 +9,7 @@ struct VkHandleAnnotation : public ManagedValueAnnotation<OT> {
     VkHandleAnnotation(const string & n, const string & cpn = string())
     : ManagedValueAnnotation<OT>(n,cpn) {
     }
-    virtual bool canClone() const {
+    virtual bool canClone() const override {
         return true;
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
@@ -22,6 +22,9 @@ struct VkHandleAnnotation : public ManagedValueAnnotation<OT> {
 class Module_vulkan : public GeneratedModule_vulkan {
 public:
     Module_vulkan() : GeneratedModule_vulkan() {
+            '        ModuleLibrary lib;',
+            '        lib.addModule(this);',
+            '        lib.addBuiltInModule();'
     }
 };
 
