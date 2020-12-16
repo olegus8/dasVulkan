@@ -208,11 +208,25 @@ struct SwapchainIndependentState
     queue           : Queue
     surf_fmt        : SurfaceFormatKHR
     present_mode    : VkPresentModeKHR
-    vert_shmod      : ShaderModule
-    frag_shmod      : ShaderModule
+    shvert          : ShaderModule
+    shfrag          : ShaderModule
     render_pass     : RenderPass
     pipeline_layout : PipelineLayout
     cmd_pool        : CommandPool
+
+
+def finalize(var s : SwapchainIndependentState explicit)
+    s.device |> device_wait_idle()
+    delete s.pipeline_layout
+    delete s.render_pass
+    delete s.shfrag
+    delete s.shvert
+    delete s.cmd_pool
+    delete s.device
+    delete s.surface
+    delete s.instance
+    delete s.window
+    memzero(s)
 
 
 def create_swapchain_independent_state(
@@ -239,20 +253,6 @@ def create_swapchain_independent_state(
     return <- s
 
 
-def finalize(var s : SwapchainIndependentState explicit)
-    s.device |> device_wait_idle()
-    delete s.pipeline_layout
-    delete s.render_pass
-    delete s.shfrag
-    delete s.shvert
-    delete s.cmd_pool
-    delete s.device
-    delete s.surface
-    delete s.instance
-    delete s.window
-    memzero(s)
-
-
 struct SwapchainDependentState
     swapchain        : SwapchainEx
     pipeline         : Pipeline
@@ -270,6 +270,7 @@ def finalize(var s : SwapchainDependentState explicit)
     delete s.render_done_sems
     delete s.img_avail_sems
     memzero(s)
+
 
 def create_swapchain_dependent_state(
     var sis : SwapchainIndependentState
