@@ -105,27 +105,41 @@ def create_example_draw_commands(
     return <- cmd_bufs
 
 
-def with_mem_backed_buf(
-    device : Device;
-    phys_dev : PhysicalDevice;
-    buf_size : uint64;
-    usage : uint;
-    mem_props : uint;
+struct MemoryBackedBuffer
+    buffer : Buffer
+    memory : DeviceMemory
+
+
+def finalize(var b: MemoryBackedBuffer explicit)
+    delete b.memory
+    delete b.buffer
+
+
+def create_memory_backed_buffer(
+    device      : Device;
+    phys_dev    : PhysicalDevice;
+    buf_size    : uint64;
+    usage       : uint;
+    mem_props   : uint
+) : MemoryBackedBuffer
     b : block<(b:Buffer; m:DeviceMemory)>
 )
-    var buf <- device |> create_buffer_exclusive(buf_size, usage)
-    defer() <| ${ delete buf; }
-    device |> find_buffer_memory_type(phys_dev, buf, mem_props
+    var created = false
+    var mbb : MemoryBackedBuffer
+    mbb.buffer <- device |> create_buffer_exclusive(buf_size, usage)
+    device |> find_buffer_memory_type(phys_dev, mbb.buffer, mem_props
     ) <| $(mem_type, mem_size)
-        var mem <- device |> allocate_memory([[MemoryAllocateInfo
+        mbb.memory <- device |> allocate_memory([[MemoryAllocateInfo
             allocation_size=mem_size, memory_type_index=mem_type]])
-        defer() <| ${ delete mem; }
-        device |> bind_buffer_memory(buf, mem)
-        b |> invoke(buf, mem)
+        mbb.device |> bind_buffer_memory(mbb.buffer, mbb.memory)
+        created = true
+    assert(created)
+    return <- mbb
 
 
-def create_baked_vertex_buffer(device, phys_dev, cmd_pool, queue;
-    vertices:array<auto(VT)>;
+def create_baked_vertex_buffer(
+    sis : SwapchainIndependentState;
+    vertices : array<auto(VT)>;
 ) : Buffer
     let buf_size = typeinfo(sizeof type<VT>) * vertices |> length()
 
@@ -379,7 +393,7 @@ def run_example
     defer() <| ${ delete props ; }
     print("Using {props.device_name}\n")
 
-    var vbuf <- sis |> with_baked_vertex_buffer(vertices)
+    var vbuf <- sis |> create_baked_vertex_buffer(vertices)
     defer() <| ${ delete vbuf; }
 
     var keep_running = true
@@ -413,9 +427,8 @@ def run_example
                 break
             frame = (frame + 1) % MAX_FRAMES_IN_FLIGHT
 
-        delete imgs_used_by_frames
         sis.device |> device_wait_idle()
-
+        delete imgs_used_by_frames
         delete draw_cmds
         delete sds
 
