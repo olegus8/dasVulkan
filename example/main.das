@@ -113,6 +113,7 @@ struct MemoryBackedBuffer
 def finalize(var b: MemoryBackedBuffer explicit)
     delete b.memory
     delete b.buffer
+    memzero(b)
 
 
 def create_memory_backed_buffer(
