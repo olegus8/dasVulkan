@@ -22,9 +22,10 @@ struct VkHandleAnnotation : public ManagedValueAnnotation<OT> {
 class Module_vulkan : public GeneratedModule_vulkan {
 public:
     Module_vulkan() : GeneratedModule_vulkan() {
-            '        ModuleLibrary lib;',
-            '        lib.addModule(this);',
-            '        lib.addBuiltInModule();'
+        ModuleLibrary lib;
+        lib.addModule(this);
+        lib.addBuiltInModule();
+        add_generated(lib);
     }
 };
 
