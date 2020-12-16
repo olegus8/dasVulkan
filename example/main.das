@@ -225,6 +225,7 @@ struct SwapchainIndependentState
 
 
 def finalize(var s : SwapchainIndependentState explicit)
+    print("finalizing sis\n")
     s.device |> device_wait_idle()
     delete s.pipeline_layout
     delete s.render_pass
@@ -232,8 +233,11 @@ def finalize(var s : SwapchainIndependentState explicit)
     delete s.vert_shmod
     delete s.cmd_pool
     delete s.device
+    print("destroying surface\n")
     delete s.surface
+    print("destroying instance\n")
     delete s.instance
+    print("destroying window\n")
     delete s.window
     memzero(s)
 
