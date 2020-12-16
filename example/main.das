@@ -415,7 +415,7 @@ def run_example
         print("{sds.swapchain.framebuffers |> length()} " +
             "images in swap chain\n")
 
-        var draw_cmds <- sis.device |> create_example_draw_commands(
+        var draw_cmds <- create_example_draw_commands(
             sis, sds, vbuf.buffer, vertices |> length())
 
         var frame = 0
