@@ -200,7 +200,8 @@ def create_example_render_pass(
 
 
 struct SwapchainIndependentState
-    window          : GLFWwindow_DasHandle
+    window          : Window
+    instance        : Instance
     surface         : SurfaceKHR
     phys_dev        : PhysicalDevice
     device          : Device
@@ -218,16 +219,14 @@ def create_swapchain_independent_state(
     width, height : int;
     title : string
 ) : SwapchainIndependentState
-    var window <- create_window(width, height, title)
-
-    var instance <- create_default_instance()
-
-    var surface <- instance |> create_window_surface(window)
-
-    let phys_dev <- instance |> find_physical_device_for_graphics(surface)
-    let present_mode <- phys_dev |> find_present_mode_like_mailbox(surface)
-    var surf_fmt <- phys_dev |> find_format_like_srgb_bgra8(surface)
-    let qfam <- phys_dev |> get_graphics_queue_family(surface)
+    var s : SwapchainIndependentState
+    s.window <- create_window(width, height, title)
+    s.instance <- create_default_instance()
+    s.surface <- instance |> create_window_surface(s.window)
+    s.phys_dev <- instance |> find_physical_device_for_graphics(s.surface)
+    s.present_mode <- phys_dev |> find_present_mode_like_mailbox(s.surface)
+    s.surf_fmt <- phys_dev |> find_format_like_srgb_bgra8(s.surface)
+    s.qfam <- phys_dev |> get_graphics_queue_family(s.surface)
 
     var device <- phys_dev |> create_single_queue_device(qfam)
 
