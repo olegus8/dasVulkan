@@ -2,7 +2,7 @@
 
 using namespace das;
 
-void my_cpp_func(Context * context) {
+void my_cpp_func(Context * ctx) {
     auto fx = ctx->findFunction("my_das_func");
     if (!fx) {
         ctx->throw_error("function not found");
