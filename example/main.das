@@ -371,6 +371,7 @@ def draw_frame(device, queue, cmd_bufs, swapchain, frame,
 
     return img_acquired && presented
 
+
 [export]
 def key_callback(
     window : GLFWwindow_DasHandle;
