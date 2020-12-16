@@ -77,7 +77,9 @@ def create_window_surface(
     var result : VkResult? = [[VkResult?]]
 ) : SurfaceKHR
 
-    var surface <- [[SurfaceKHR _instance=instance.instance]]
+    var surface <- [[SurfaceKHR
+        _instance = instance.instance,
+        _needs_delete = true]]
     var result_ = VkResult VK_SUCCESS
     result ?? result_ = glfwCreateWindowSurface(
         instance.instance,
