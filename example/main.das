@@ -399,7 +399,7 @@ def run_example
 
             print("{sds.swapchain.framebuffers |> length()} " +
                 "images in swap chain\n")
-            device |> with_example_draw_commands(phys_dev, window,
+            device |> with_example_draw_commands(sis.phys_dev, sis.window,
                 surface, render_pass, sds.swapchain.framebuffers, sds.pipeline,
                 cmd_pool, vbuf, vertices |> length()
             ) <| $(sc_draw_cmds)
