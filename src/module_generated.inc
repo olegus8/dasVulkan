@@ -15715,9 +15715,10 @@ struct GLFWgamepadstateAnnotation
 class GeneratedModule_vulkan : public Module {
 public:
     GeneratedModule_vulkan() : Module("vulkan") {
-        ModuleLibrary lib;
-        lib.addModule(this);
-        lib.addBuiltInModule();
+    }
+
+protected:
+    void add_generated(ModuleLibrary & lib) {
 
         //
         // enums

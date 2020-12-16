@@ -19,13 +19,16 @@ struct VkHandleAnnotation : public ManagedValueAnnotation<OT> {
 
 #include "module_generated.inc"
 
+void addVulkanCustom(Module &, ModuleLibrary &);
+
 class Module_vulkan : public GeneratedModule_vulkan {
 public:
     Module_vulkan() : GeneratedModule_vulkan() {
         ModuleLibrary lib;
         lib.addModule(this);
         lib.addBuiltInModule();
-        add_generated(lib);
+        addGenerated(lib);
+        addVulkanCustom(*this, lib);
     }
 };
 
