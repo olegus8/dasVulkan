@@ -19,19 +19,12 @@ struct Vertex
 
 
 def create_example_graphics_pipeline(
-    device : Device;
-    layout : PipelineLayout;
-    render_pass : RenderPass;
-    phys_dev : PhysicalDevice;
-    surface : SurfaceKHR;
-    window : Window;
-    vert_shmod : ShaderModule;
-    frag_shmod : ShaderModule
+    sis : SwapchainIndependentState
 ) : Pipeline
-    var extent <- phys_dev |> get_swap_extent(surface, window)
+    var extent <- sis.phys_dev |> get_swap_extent(sis.surface, sis.window)
     var create_info <- [[GraphicsPipelineCreateInfo
-        layout = weak_copy(layout),
-        render_pass = weak_copy(render_pass),
+        layout = weak_copy(sis.layout),
+        render_pass = weak_copy(sis.render_pass),
         base_pipeline_index = -1,
         input_assembly_state <- [[ PipelineInputAssemblyStateCreateInfo
             topology=VkPrimitiveTopology VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST]],
@@ -73,17 +66,17 @@ def create_example_graphics_pipeline(
         ]],
         stages <- [{ auto[]
             [[PipelineShaderStageCreateInfo
-                module_ = weak_copy(vert_shmod), name = "main",
+                module_ = weak_copy(sis.vert_shmod), name = "main",
                 stage = VkShaderStageFlagBits VK_SHADER_STAGE_VERTEX_BIT]];
             [[PipelineShaderStageCreateInfo
-                module_ = weak_copy(frag_shmod), name = "main",
+                module_ = weak_copy(sis.frag_shmod), name = "main",
                 stage = VkShaderStageFlagBits VK_SHADER_STAGE_FRAGMENT_BIT]]
         }]
     ]]
     defer() <| ${ delete create_info; }
 
     return <- create_graphics_pipeline([
-        device=device, create_info=create_info])
+        device=sis.device, create_info=create_info])
 
 
 def with_example_draw_commands(device, phys_dev, window, surface, render_pass,
@@ -287,9 +280,7 @@ def create_swapchain_dependent_state(
     sds.swapchain <- sis.device |> create_swapchain_ex(sis.phys_dev,
         sis.surface, sis.window, sis.surf_fmt, sis.present_mode,
         sis.render_pass)
-    sds.pipeline <- sis.device |> create_example_graphics_pipeline(
-        sis.pipeline_layout, sis.render_pass, sis.phys_dev,
-        sis.surface, sis.window, sis.vert_shmod, sis.frag_shmod)
+    sds.pipeline <- sis |> create_example_graphics_pipeline()
     return <- sds
 
 
