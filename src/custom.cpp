@@ -29,9 +29,9 @@ void addVulkanCustom(Module & module, ModuleLibrary & lib) {
     addExtern<DAS_BIND_FUN(my_cpp_func)>(module, lib, "my_cpp_func",
         SideEffects::worstDefault, "my_cpp_func");
     addExtern<DAS_BIND_FUN(glfw_create_window)>(
-        *this, lib, "glfwCreateWindow",
+        module, lib, "glfwCreateWindow",
         SideEffects::worstDefault, "glfwCreateWindow");
     addExtern<DAS_BIND_FUN(glfw_destroy_window)>(
-        *this, lib, "glfwDestroyWindow",
+        module, lib, "glfwDestroyWindow",
         SideEffects::worstDefault, "glfwDestroyWindow");
 }

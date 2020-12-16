@@ -16874,10 +16874,6 @@ protected:
             SideEffects::worstDefault, "glfwWindowHint");
         addExtern<DAS_BIND_FUN(glfwWindowHintString)>(*this, lib, "glfwWindowHintString",
             SideEffects::worstDefault, "glfwWindowHintString");
-        addExtern<DAS_BIND_FUN(glfwCreateWindow)>(*this, lib, "glfwCreateWindow",
-            SideEffects::worstDefault, "glfwCreateWindow");
-        addExtern<DAS_BIND_FUN(glfwDestroyWindow)>(*this, lib, "glfwDestroyWindow",
-            SideEffects::worstDefault, "glfwDestroyWindow");
         addExtern<DAS_BIND_FUN(glfwWindowShouldClose)>(*this, lib, "glfwWindowShouldClose",
             SideEffects::worstDefault, "glfwWindowShouldClose");
         addExtern<DAS_BIND_FUN(glfwSetWindowShouldClose)>(*this, lib, "glfwSetWindowShouldClose",
