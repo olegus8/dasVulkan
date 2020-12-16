@@ -200,7 +200,6 @@ def create_example_render_pass(
 
 
 def with_swapchain_independent_state(width, height, title; b : block<(
-    instance        : VkInstance#;
     window          : GLFWwindow_DasHandle#;
     surface         : SurfaceKHR;
     phys_dev        : PhysicalDevice;
@@ -249,7 +248,6 @@ def with_swapchain_independent_state(width, height, title; b : block<(
         defer() <| ${ delete pipeline_layout; }
 
         b |> invoke(
-            instance.instance,
             window,
             surface,
             phys_dev,
@@ -268,7 +266,6 @@ def with_swapchain_independent_state(width, height, title; b : block<(
 
 
 def with_swapchain_dependent_state(
-    instance,
     window,
     surface,
     phys_dev,
@@ -415,7 +412,6 @@ def main
     }]
 
     with_swapchain_independent_state(800, 600, "dasVulkanExample") <| $(
-        instance        : VkInstance;
         window          : GLFWwindow_DasHandle;
         surface         : SurfaceKHR;
         phys_dev        : PhysicalDevice;
@@ -446,7 +442,6 @@ def main
                 device |> device_wait_idle()
 
                 with_swapchain_dependent_state(
-                    instance,
                     window,
                     surface,
                     phys_dev,
