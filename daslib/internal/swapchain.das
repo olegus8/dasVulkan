@@ -9,6 +9,7 @@ require device
 require image
 require generated
 require framebuffer
+require window
 
 
 struct SwapchainEx
