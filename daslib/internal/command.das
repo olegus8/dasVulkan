@@ -5,6 +5,7 @@ require daslib/defer
 require vulkan
 require generated
 require device
+require window
 
 
 def allocate_command_buffers_primary(
