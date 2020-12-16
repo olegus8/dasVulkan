@@ -15718,7 +15718,7 @@ public:
     }
 
 protected:
-    void add_generated(ModuleLibrary & lib) {
+    void addGenerated(ModuleLibrary & lib) {
 
         //
         // enums
