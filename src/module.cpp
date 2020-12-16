@@ -70,7 +70,7 @@ void glfw_set_framebuffer_size_callback(
     window_ctx->framebuffer_size_callback = window_ctx->ctx->findFunction(
         func_name);
     if ( ! window_ctx->framebuffer_size_callback ) {
-        window_ctx->ctx->throw_error("callback function not found");
+        window_ctx->ctx->throw_error("callback function " + string(func_name) + " not found");
     }
 }
 
