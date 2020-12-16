@@ -214,80 +214,78 @@ struct SwapchainIndependentState
     cmd_pool        : CommandPool
 
 
-def with_swapchain_independent_state(width, height, title; b : block<(
-    var state : SwapchainIndependentState
-)>)
-    with_window(width, height, title) <| $(window)
-        var instance <- create_default_instance()
-        defer() <| ${ delete instance; }
+def create_swapchain_independent_state(
+    width, height : int;
+    title : string
+) : SwapchainIndependentState
+    var window <- create_window(width, height, title)
 
-        var surface <- instance |> create_window_surface(window)
-        defer() <| ${ delete surface; }
+    var instance <- create_default_instance()
 
-        let phys_dev <- instance |> find_physical_device_for_graphics(surface)
-        let present_mode <- phys_dev |> find_present_mode_like_mailbox(surface)
-        var surf_fmt <- phys_dev |> find_format_like_srgb_bgra8(surface)
-        let qfam <- phys_dev |> get_graphics_queue_family(surface)
+    var surface <- instance |> create_window_surface(window)
 
-        var device <- phys_dev |> create_single_queue_device(qfam)
-        defer() <| ${ delete device; }
+    let phys_dev <- instance |> find_physical_device_for_graphics(surface)
+    let present_mode <- phys_dev |> find_present_mode_like_mailbox(surface)
+    var surf_fmt <- phys_dev |> find_format_like_srgb_bgra8(surface)
+    let qfam <- phys_dev |> get_graphics_queue_family(surface)
 
-        let queue <- device |> get_device_queue(qfam)
+    var device <- phys_dev |> create_single_queue_device(qfam)
 
-        var cmd_pool <- create_command_pool([device=device, queue_family=qfam])
-        defer() <| ${ delete cmd_pool; };
+    let queue <- device |> get_device_queue(qfam)
 
-        var shvert <- device |> create_shader_module_from_file(
-            "{get_das_root()}/modules/dasVulkan/example/vert.spv")
-        defer() <| ${ delete shvert; }
+    var cmd_pool <- create_command_pool([device=device, queue_family=qfam])
 
-        var shfrag <- device |> create_shader_module_from_file(
-            "{get_das_root()}/modules/dasVulkan/example/frag.spv")
-        defer() <| ${ delete shfrag; }
+    var shvert <- device |> create_shader_module_from_file(
+        "{get_das_root()}/modules/dasVulkan/example/vert.spv")
 
-        var render_pass <- device |> create_example_render_pass(surf_fmt)
-        defer() <| ${ delete render_pass; }
+    var shfrag <- device |> create_shader_module_from_file(
+        "{get_das_root()}/modules/dasVulkan/example/frag.spv")
 
-        var pipeline_layout <- device |> create_pipeline_layout()
-        defer() <| ${ delete pipeline_layout; }
+    var render_pass <- device |> create_example_render_pass(surf_fmt)
 
-        b |> invoke(<- [[SwapchainIndependentState
-            window = window,
-            surface = weak_copy(surface),
-            phys_dev = weak_copy(phys_dev),
-            device = weak_copy(device),
-            queue = weak_copy(device),
-            surf_fmt <- surf_fmt,
-            present_mode = present_mode,
-            shvert = weak_copy(shvert),
-            shfrag = weak_copy(shfrag),
-            render_pass = weak_copy(render_pass),
-            pipeline_layout = weak_copy(pipeline_layout),
-            cmd_pool = weak_copy(cmd_pool)
-        )
+    var pipeline_layout <- device |> create_pipeline_layout()
 
-        device |> device_wait_idle()
+    b |> invoke(<- [[SwapchainIndependentState
+        window = window,
+        surface = weak_copy(surface),
+        phys_dev = weak_copy(phys_dev),
+        device = weak_copy(device),
+        queue = weak_copy(device),
+        surf_fmt <- surf_fmt,
+        present_mode = present_mode,
+        shvert = weak_copy(shvert),
+        shfrag = weak_copy(shfrag),
+        render_pass = weak_copy(render_pass),
+        pipeline_layout = weak_copy(pipeline_layout),
+        cmd_pool = weak_copy(cmd_pool)
+    )
+
+    device |> device_wait_idle()
+
+
+def finalize(var sis : SwapchainIndependentState explicit)
+    delete pipeline_layout
+    delete render_pass
+    delete shfrag
+    delete shvert
+    delete cmd_pool
+    delete device
+    delete surface
+    delete instance
+    delete window
+
+
+struct SwapchainDependentState
+    swapchain        : SwapchainEx
+    pipeline         : Pipeline
+    img_avail_sems   : array<Semaphore>
+    render_done_sems : array<Semaphore>
+    frame_fences     : array<Fence>
 
 
 def with_swapchain_dependent_state(
-    window,
-    surface,
-    phys_dev,
-    device,
-    queue;
-    var surf_fmt;
-    present_mode,
-    vert_shmod,
-    frag_shmod,
-    render_pass,
-    pipeline_layout,
-    cmd_pool;
+    var sis : SwapchainIndependentState;
     b : block<(
-        swapchain           : SwapchainEx;
-        pipeline            : Pipeline;
-        img_avail_sems      : array<Semaphore>;
-        render_done_sems    : array<Semaphore>;
-        frame_fences        : array<Fence>
 )>)
     var img_avail_sems <- [{for x in range(MAX_FRAMES_IN_FLIGHT);
         device |> create_semaphore() }]

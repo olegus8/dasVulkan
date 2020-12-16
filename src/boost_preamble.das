@@ -65,6 +65,7 @@ def weak_copy(b : auto(T)) : T
 struct SurfaceKHR
     surface_khr : VkSurfaceKHR
     _instance : VkInstance
+    _needs_delete : bool
 
 def boost_value_to_vk(b : SurfaceKHR) : VkSurfaceKHR
     return b.surface_khr
@@ -87,11 +88,12 @@ def create_window_surface(
     return <- surface
 
 def finalize(var surface : SurfaceKHR explicit)
-    vkDestroySurfaceKHR(
-        surface._instance,
-        surface.surface_khr,
-        null
-    )
+    if surface._needs_delete
+        vkDestroySurfaceKHR(
+            surface._instance,
+            surface.surface_khr,
+            null
+        )
     memzero(surface)
 
 //
