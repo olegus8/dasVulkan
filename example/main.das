@@ -23,7 +23,7 @@ def create_example_graphics_pipeline(
 ) : Pipeline
     var extent <- sis.phys_dev |> get_swap_extent(sis.surface, sis.window)
     var create_info <- [[GraphicsPipelineCreateInfo
-        layout = weak_copy(sis.layout),
+        layout = weak_copy(sis.pipeline_layout),
         render_pass = weak_copy(sis.render_pass),
         base_pipeline_index = -1,
         input_assembly_state <- [[ PipelineInputAssemblyStateCreateInfo
