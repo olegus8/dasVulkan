@@ -89,6 +89,13 @@ class Config(ConfigBase):
                 if kw in func.name:
                     func.ignore()
 
+        # we have custom implementations for these
+        if func.name in [
+            'glfwCreateWindow', 
+            'glfwDestroyWindow',
+        ]:
+            func.ignore()
+
 
 def add_boost_content(g):
 
