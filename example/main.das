@@ -430,7 +430,6 @@ def main
         cmd_pool        : CommandPool
     )
         window |> glfwSetFramebufferSizeCallback("framebuffer_size_callback")
-        glfwSetFramebufferSizeCallback("framebuffer_size_callback")
         let vk_device = device.device
         let vk_render_pass = render_pass.render_pass
         let vk_queue = queue.queue
