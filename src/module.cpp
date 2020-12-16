@@ -24,6 +24,7 @@ void addVulkanCustom(Module &, ModuleLibrary &);
 struct WindowContext {
     Context * ctx = nullptr;
     SimFunction * framebuffer_size_callback = nullptr;
+    SimFunction * key_callback = nullptr;
 };
 
 GLFWwindow* glfw_create_window(int width, int height, const char* title,
@@ -77,6 +78,40 @@ void glfw_set_framebuffer_size_callback(
     }
 }
 
+void glfw_key_callback(
+    GLFWwindow* window, int key, int scancode, int action, int mods
+) {
+    auto window_ctx = reinterpret_cast<WindowContext*>(
+        glfwGetWindowUserPointer(window));
+    vec4f args[5] = {
+        cast<GLFWwindow *>::from(window),
+        cast<int32_t>::from(key),
+        cast<int32_t>::from(scancode),
+        cast<int32_t>::from(action),
+        cast<int32_t>::from(mods)
+    };
+    window_ctx->ctx->eval(window_ctx->key_callback, args);
+}
+
+void glfw_set_key_callback(
+    GLFWwindow * window, const char * func_name, Context * ctx
+) {
+    auto window_ctx = reinterpret_cast<WindowContext*>(
+        glfwGetWindowUserPointer(window));
+    if ( window_ctx->ctx != ctx )
+        ctx->throw_error("must call from same context as was window created");
+    if ( ! window_ctx->key_callback ) {
+        glfwSetKeyCallback(
+            window, glfw_framebuffer_size_callback);
+    }
+    window_ctx->framebuffer_size_callback = window_ctx->ctx->findFunction(
+        func_name);
+    if ( ! window_ctx->framebuffer_size_callback ) {
+        window_ctx->ctx->throw_error(("callback function \""
+            + string(func_name) + "\" not found").c_str());
+    }
+}
+
 class Module_vulkan : public GeneratedModule_vulkan {
 public:
     Module_vulkan() : GeneratedModule_vulkan() {
@@ -94,6 +129,9 @@ public:
         addExtern<DAS_BIND_FUN(glfw_set_framebuffer_size_callback)>(
             *this, lib, "glfwSetFramebufferSizeCallback",
             SideEffects::worstDefault, "glfwSetFramebufferSizeCallback");
+        addExtern<DAS_BIND_FUN(glfw_set_key_callback)>(
+            *this, lib, "glfwSetKeyCallback",
+            SideEffects::worstDefault, "glfwSetKeyCallback");
     }
 };
 
