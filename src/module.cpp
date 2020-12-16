@@ -88,6 +88,9 @@ public:
         addExtern<DAS_BIND_FUN(glfw_destroy_window)>(
             *this, lib, "glfwDestroyWindow",
             SideEffects::worstDefault, "glfwDestroyWindow");
+        addExtern<DAS_BIND_FUN(glfw_set_framebuffer_size_callback)>(
+            *this, lib, "glfw_set_framebuffer_size_callback",
+            SideEffects::worstDefault, "glfw_set_framebuffer_size_callback");
     }
 };
 
