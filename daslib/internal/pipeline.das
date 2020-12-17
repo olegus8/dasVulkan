@@ -26,7 +26,8 @@ def create_shader_module_from_file(
 def create_graphics_pipeline(
     device : Device = [[ Device ]];
     pipeline_cache : PipelineCache = [[ PipelineCache ]];
-    var create_info : GraphicsPipelineCreateInfo = [[ GraphicsPipelineCreateInfo ]];
+    var create_info : GraphicsPipelineCreateInfo = [[
+        GraphicsPipelineCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : Pipeline
 
