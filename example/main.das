@@ -26,7 +26,8 @@ def create_example_descriptor_set_layout(
     sis : SwapchainIndependentState
 ) : DescriptorSetLayout
     var info <- [[ DescriptorSetLayoutCreateInfo
-    ]]
+        bindings <- [{ auto[] [[ DescriptorSetLayoutBinding
+    ]] }] ]]
     defer() <| { delete info; }
 
 
