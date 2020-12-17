@@ -318,7 +318,7 @@ def finalize(var s : SwapchainDependentState explicit)
 
 
 def create_swapchain_dependent_state(
-    var sis : SwapchainIndependentState
+    sis : SwapchainIndependentState
 ) : SwapchainDependentState
     var sds <- [[ SwapchainDependentState _device <- weak_copy(sis.device) ]]
     sds.img_avail_sems <- [{for x in range(MAX_FRAMES_IN_FLIGHT);
@@ -332,8 +332,19 @@ def create_swapchain_dependent_state(
     sds.swapchain <- sis.device |> create_swapchain_ex(sis.phys_dev,
         sis.surface, sis.window, sis.surf_fmt, sis.present_mode,
         sis.render_pass)
+    sds.uniform_bufs <- sis |> create_example_uniform_buffers(
+        sds.swapchain.framebuffers)
     sds.pipeline <- sis |> create_example_graphics_pipeline()
     return <- sds
+
+
+def create_example_uniform_buffers(
+    sis : SwapchainIndependentState;
+    framebuffers : array<Framebuffer>
+) : array<MemoryBackedBuffer>
+    var ubufs : array<MemoryBackedBuffer>
+    ubufs |> resize(
+    return <- ubufs
 
 
 def with_next_image(device, swapchain, sem_to_signal; b : block<(i:uint)>)
