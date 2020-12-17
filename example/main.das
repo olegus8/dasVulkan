@@ -166,7 +166,7 @@ def create_memory_backed_buffer(
     return <- mbb
 
 
-def create_baked_vertex_buffer(
+def create_example_vertex_buffer(
     sis : SwapchainIndependentState;
     vertices : array<auto(VT)>
 ) : MemoryBackedBuffer
@@ -434,7 +434,7 @@ def run_example
     defer() <| { delete props ; }
     print("Using {props.device_name}\n")
 
-    var vbuf <- sis |> create_baked_vertex_buffer(vertices)
+    var vbuf <- sis |> create_example_vertex_buffer(vertices)
     defer() <| { delete vbuf; }
 
     var keep_running = true
