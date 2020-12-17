@@ -388,7 +388,9 @@ def create_example_descriptor_pool(
         pool_sizes <- [{ auto[] [[ DescriptorPoolSize
             type_ = VkDescriptorType VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER,
             descriptor_count = uint(framebuffers |> length()) ]] }],
-        max_sets = uint(framebuffers |> length()) 
+        max_sets = uint(framebuffers |> length()),
+        flags = uint(VkDescriptorPoolCreateFlagBits
+            VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT)
     ]]
     defer() <| { delete info; }
     return <- sis.device |> create_descriptor_pool(info)
