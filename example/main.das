@@ -340,6 +340,8 @@ def create_swapchain_dependent_state(
         sds.swapchain.framebuffers)
     sds.desc_pool <- sis |> create_example_descriptor_pool(
         sds.swapchain.framebuffers)
+    sds.desc_sets <- sis |> create_example_descriptor_sets(
+        sds.swapchain.framebuffers, sds.desc_pool)
     sds.pipeline <- sis |> create_example_graphics_pipeline()
     return <- sds
 
