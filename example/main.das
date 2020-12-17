@@ -507,7 +507,7 @@ def draw_frame(
 
         sis.device |> reset_fence(sds.frame_fences[frame])
         sis.device |> submit_draw(sis.queue,
-            sds.cmd_bufs.command_buffers[img_i],
+            sds.draw_cmds.command_buffers[img_i],
             sds.img_avail_sems[frame], sds.render_done_sems[frame],
             sds.frame_fences[frame])
 
