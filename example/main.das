@@ -23,7 +23,7 @@ struct UniformBufferObject
 
 
 def create_example_descriptor_set_layout(
-    sis : SwapchainIndependentState
+    device : Device
 ) : DescriptorSetLayout
     var info <- [[ DescriptorSetLayoutCreateInfo
         bindings <- [{ auto[] [[ DescriptorSetLayoutBinding
@@ -34,7 +34,7 @@ def create_example_descriptor_set_layout(
             stage_flags = VkShaderStageFlagBits VK_SHADER_STAGE_VERTEX_BIT
     ]] }] ]]
     defer() <| { delete info; }
-    return <- sis.device |> create_descriptor_set_layout(info)
+    return <- .device |> create_descriptor_set_layout(info)
 
 
 def create_example_graphics_pipeline(
@@ -239,6 +239,7 @@ struct SwapchainIndependentState
     vert_shmod      : ShaderModule
     frag_shmod      : ShaderModule
     render_pass     : RenderPass
+    desc_set_layout : DescriptorSetLayout
     pipeline_layout : PipelineLayout
     cmd_pool        : CommandPool
 
@@ -246,6 +247,7 @@ struct SwapchainIndependentState
 def finalize(var s : SwapchainIndependentState explicit)
     s.device |> device_wait_idle()
     delete s.pipeline_layout
+    delete s.desc_set_layout
     delete s.render_pass
     delete s.frag_shmod
     delete s.vert_shmod
@@ -277,6 +279,7 @@ def create_swapchain_independent_state(
     s.frag_shmod <- s.device |> create_shader_module_from_file(
         "{get_das_root()}/modules/dasVulkan/example/frag.spv")
     s.render_pass <- s.device |> create_example_render_pass(s.surf_fmt)
+    s.desc_set_layout <- s.device |> create_example_descriptor_set_layout()
     s.pipeline_layout <- s.device |> create_pipeline_layout()
     return <- s
 
