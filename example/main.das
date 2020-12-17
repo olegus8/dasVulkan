@@ -415,6 +415,8 @@ def draw_frame(
                 sds.frame_fences[img_frame], ULONG_MAX)
         imgs_used_by_frames[img_i] = frame
 
+        sis.device |> update_uniform_buffer(sds.uniform_bufs[img_i])
+
         sis.device |> reset_fence(sds.frame_fences[frame])
         sis.device |> submit_draw(sis.queue, cmd_bufs[img_i],
             sds.img_avail_sems[frame], sds.render_done_sems[frame],
