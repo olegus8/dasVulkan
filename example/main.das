@@ -34,7 +34,18 @@ def create_example_descriptor_set_layout(
             stage_flags = VkShaderStageFlagBits VK_SHADER_STAGE_VERTEX_BIT
     ]] }] ]]
     defer() <| { delete info; }
-    return <- .device |> create_descriptor_set_layout(info)
+    return <- device |> create_descriptor_set_layout(info)
+
+
+def create_example_pipeline_layout(
+    device : Device;
+    desc_set_layout : DescriptorSetLayout
+) : PipelineLayout
+    var info <- [[ PipelineLayoutCreateInfo
+        set_layouts <- [{ auto[] weak_copy(desc_set_layout) }]
+    ]]
+    defer() <| { delete info; }
+    return <- device |> create_pipeline_layout(info)
 
 
 def create_example_graphics_pipeline(
@@ -280,7 +291,8 @@ def create_swapchain_independent_state(
         "{get_das_root()}/modules/dasVulkan/example/frag.spv")
     s.render_pass <- s.device |> create_example_render_pass(s.surf_fmt)
     s.desc_set_layout <- s.device |> create_example_descriptor_set_layout()
-    s.pipeline_layout <- s.device |> create_pipeline_layout()
+    s.pipeline_layout <- s.device |> create_example_pipeline_layout(
+        s.desc_set_layout)
     return <- s
 
 
