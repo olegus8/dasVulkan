@@ -311,9 +311,9 @@ def create_swapchain_independent_state(
         [[Vertex position=float2( 0.5f,  0.5f), color=float3(0f, 0f, 1f)]];
         [[Vertex position=float2(-0.5f,  0.5f), color=float3(1f, 1f, 1f)]]}]
     s.indices <- [{auto[] 0u; 1u; 2u; 2u; 3u; 0u}]
-    s.vbuf <- sis |> create_device_local_buffer(sis.vertices,
+    s.vbuf <- s |> create_device_local_buffer(s.vertices,
         uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_VERTEX_BUFFER_BIT))
-    s.ibuf <- sis |> create_device_local_buffer(sis.indices, 
+    s.ibuf <- s |> create_device_local_buffer(s.indices, 
         uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_INDEX_BUFFER_BIT))
 
 
