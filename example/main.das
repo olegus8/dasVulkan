@@ -18,6 +18,10 @@ struct Vertex
     color : float3
 
 
+struct UniformBufferObject
+    offset : float2
+
+
 def create_example_graphics_pipeline(
     sis : SwapchainIndependentState
 ) : Pipeline
