@@ -119,11 +119,7 @@ def create_example_draw_commands(
         sis.cmd_pool, sds.swapchain.framebuffers |> length())
     var clear_values <- [{ auto[] [[VkClearValue]] }]
     defer() <| { delete clear_values; }
-    for cmd_buf, fbuf, dset in (
-        cmd_bufs.command_buffers,
-        sds.swapchain.framebuffers,
-        sds.desc_sets.descriptor_sets
-    )
+    for cmd_buf, fbuf, dset in cmd_bufs.command_buffers, sds.swapchain.framebuffers, sds.desc_sets.descriptor_sets
         cmd_buf |> record_command_buffer() <|
             cmd_buf |> record_render_pass(
                 sis.phys_dev, sis.window, sis.surface, sis.render_pass,
