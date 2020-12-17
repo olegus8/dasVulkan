@@ -351,7 +351,9 @@ def create_example_descriptor_sets(
     framebuffers : array<Framebuffer>
     pool : DescriptorPool
 ) : DescriptorSets
-    var info <- [[
+    var info <- [[ DescriptorSetAllocateInfo
+        descriptor_pool = weak_copy(pool),
+        set_layouts <- [{ auto[] weak_copy(sis.desc_set_layout) }]
     ]]
     defer() <| { delete info; }
     return <- sis.device |> allocate_descriptor_sets(info)
