@@ -311,6 +311,7 @@ def add_boost_content(g):
     g.add_gen_func(name = 'vkCmdBindDescriptorSets',
         ).declare_array(count = 'descriptorSetCount', items = 'pDescriptorSets',
         ).declare_array(count = 'dynamicOffsetCount', items = 'pDynamicOffsets')
+    g.add_gen_func(name = 'vkCmdBindIndexBuffer')
     g.add_gen_func(name = 'vkCmdBindPipeline')
     g.add_gen_func(name = 'vkCmdBindVertexBuffers',
         ).declare_array(count = 'bindingCount', items = 'pBuffers',
