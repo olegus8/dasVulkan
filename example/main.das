@@ -513,6 +513,7 @@ def draw_frame(
         presented = sis.device |> present(sis.queue, sds.swapchain.swapchain,
             img_i, sds.render_done_sems[frame])
 
+    sds.frames_since_start += 1
     return img_acquired && presented
 
 
@@ -551,7 +552,6 @@ def run_example
             glfwPollEvents()
             if ! draw_frame(sis, sds)
                 break
-            sds.frames_since_start += 1
 
         sis.device |> device_wait_idle()
         delete sds
