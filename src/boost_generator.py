@@ -987,7 +987,7 @@ class ParamBase(object):
             vtype = self.vk_unqual_type
             lines = [
                 f'var vk_{bname} : array<{vtype}>',
-                f'defer() <| ${{ delete vk_{bname}; }}',
+                f'defer() <| {{ delete vk_{bname}; }}',
             ]
             if not self._is_boost_func_output:
                 lines += [
@@ -1278,7 +1278,7 @@ class ParamVkStruct(ParamBase):
                 assert not self._optional #TODO: add support when needed
                 return [
                     f'var vk_{bname} <- {bname} |> vk_view_create_unsafe()',
-                    f'defer() <| ${{ {bname} |> vk_view_destroy(); }}',
+                    f'defer() <| {{ {bname} |> vk_view_destroy(); }}',
                 ]
         return super(ParamVkStruct, self).generate_boost_func_temp_vars_init()
 
