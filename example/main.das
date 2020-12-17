@@ -369,10 +369,10 @@ def create_example_descriptor_sets(
             dst_binding = 0u,
             descriptor_type = (VkDescriptorType
                 VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER),
-            buffer_info <- {[ auto[] [[ DescriptorBufferInfo
+            buffer_info <- [{ auto[] [[ DescriptorBufferInfo
                 buffer = weak_copy(ubuf.buffer),
                 range_ = uint64(typeinfo(sizeof type<UniformBufferObject>))
-            ]] ]}
+            ]] }]
         ]] }]
         sis.device |> update_descriptor_sets(writes)
         delete update_info
