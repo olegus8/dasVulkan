@@ -27,6 +27,10 @@ def create_example_descriptor_set_layout(
 ) : DescriptorSetLayout
     var info <- [[ DescriptorSetLayoutCreateInfo
         bindings <- [{ auto[] [[ DescriptorSetLayoutBinding
+            binding = 0,
+            descriptor_type = (VkDescriptorType
+                VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER),
+            descriptor_count = 1
     ]] }] ]]
     defer() <| { delete info; }
 
