@@ -386,7 +386,7 @@ def create_example_descriptor_pool(
     var info <- [[ DescriptorPoolCreateInfo
         pool_sizes <- [{ auto[] [[ DescriptorPoolSize
             type_ = VkDescriptorType VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER,
-            descriptor_count = uint(framebuffers |> length()) }]
+            descriptor_count = uint(framebuffers |> length()) ]] }]
         max_sets = uint(framebuffers |> length())
     ]]
     defer() <| { delete info; }
