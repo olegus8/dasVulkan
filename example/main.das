@@ -452,10 +452,11 @@ def present(device, queue, swapchain, img_i, sem_to_wait) : bool
 
 
 def update_uniform_buffer(
+    device : Device;
     ubuf : MemoryBackedBuffer;
     frames_since_start : int
 )
-    sis.device |> map_device_memory_to_array(
+    device |> map_device_memory_to_array(
         ubuf.memory, uint64(typeinfo(sizeof type<UniformBufferObject>)),
         uint64(0), 0u
     ) <| $(var mapped_ubos : array<UniformBufferObject>#)
