@@ -34,6 +34,7 @@ def create_example_descriptor_set_layout(
             stage_flags = VkShaderStageFlagBits VK_SHADER_STAGE_VERTEX_BIT
     ]] }] ]]
     defer() <| { delete info; }
+    return <- sis.device |> create_descriptor_set_layout(info)
 
 
 def create_example_graphics_pipeline(
