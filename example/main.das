@@ -223,7 +223,7 @@ def create_example_index_buffer(
         for dst, src in mapped_indices, sis.indices
             dst = src
     sis.device |> copy_buffer_sync(
-        sis.cmd_pool, sis.queue, staging.buffer, vbuf.buffer, uint64(buf_size))
+        sis.cmd_pool, sis.queue, staging.buffer, ibuf.buffer, uint64(buf_size))
 
     return <- ibuf
 
