@@ -27,10 +27,11 @@ def create_example_descriptor_set_layout(
 ) : DescriptorSetLayout
     var info <- [[ DescriptorSetLayoutCreateInfo
         bindings <- [{ auto[] [[ DescriptorSetLayoutBinding
-            binding = 0,
+            binding = 0u,
             descriptor_type = (VkDescriptorType
                 VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER),
-            descriptor_count = 1
+            descriptor_count = 1u,
+            stage_flags = VkShaderStageFlagBits VK_SHADER_STAGE_VERTEX_BIT
     ]] }] ]]
     defer() <| { delete info; }
 
