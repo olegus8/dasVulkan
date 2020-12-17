@@ -347,7 +347,7 @@ def create_example_uniform_buffers(
         uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT),
         uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT) |
         uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_COHERENT_BIT))
-    return <- ubufs
+    }]
 
 
 def with_next_image(device, swapchain, sem_to_signal; b : block<(i:uint)>)
