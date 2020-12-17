@@ -362,12 +362,10 @@ def create_example_descriptor_sets(
         var writes <- [{ auto[] [[ WriteDescriptorSet
             dst_set = weak_copy(dset),
             dst_binding = 0u,
-            dst_array_element = 0u,
             descriptor_type = (VkDescriptorType
                 VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER),
             buffer_info <- {[ auto[] [[ DescriptorBufferInfo
                 buffer = weak_copy(ubuf.buffer),
-                offset = 0u,
                 range_ = uint64(typeinfo(sizeof type<UniformBufferObject>))
             ]] ]}
         ]] }]
