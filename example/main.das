@@ -170,20 +170,6 @@ def create_memory_backed_buffer(
     return <- mbb
 
 
-def create_example_vertex_buffer(
-    sis : SwapchainIndependentState
-) : MemoryBackedBuffer
-    return <- sis |> create_device_local_buffer(sis.vertices,
-        uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_VERTEX_BUFFER_BIT))
-
-
-def create_example_index_buffer(
-    sis : SwapchainIndependentState
-) : MemoryBackedBuffer
-    return <- sis |> create_device_local_buffer(sis.indices, 
-        uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_INDEX_BUFFER_BIT))
-
-
 def create_device_local_buffer(
     sis     : SwapchainIndependentState;
     data    : array<auto(T)>;
@@ -324,10 +310,11 @@ def create_swapchain_independent_state(
         [[Vertex position=float2( 0.5f, -0.5f), color=float3(0f, 1f, 0f)]];
         [[Vertex position=float2( 0.5f,  0.5f), color=float3(0f, 0f, 1f)]];
         [[Vertex position=float2(-0.5f,  0.5f), color=float3(1f, 1f, 1f)]]}]
-    s.vbuf <- create_example_vertex_buffer(s)
     s.indices <- [{auto[] 0u; 1u; 2u; 2u; 3u; 0u}]
-    s.ibuf <- create_example_index_buffer(s)
-    return <- s
+    s.vbuf <- sis |> create_device_local_buffer(sis.vertices,
+        uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_VERTEX_BUFFER_BIT))
+    s.ibuf <- sis |> create_device_local_buffer(sis.indices, 
+        uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_INDEX_BUFFER_BIT))
 
 
 struct SwapchainDependentState
