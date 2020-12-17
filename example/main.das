@@ -258,7 +258,7 @@ struct SwapchainIndependentState
     cmd_pool        : CommandPool
     vertices        : array<Vertex>
     vbuf            : MemoryBackedBuffer
-    indices         : array<uint16>
+    indices         : array<uint>
 
 
 def finalize(var s : SwapchainIndependentState explicit)
@@ -308,9 +308,7 @@ def create_swapchain_independent_state(
         [[Vertex position=float2( 0.5f,  0.5f), color=float3(0f, 0f, 1f)]];
         [[Vertex position=float2(-0.5f,  0.5f), color=float3(1f, 1f, 1f)]]}]
     s.vbuf <- create_example_vertex_buffer(s)
-    s.indices <- [{auto[]
-        uint16(0); uint16(1); uint16(2);
-        uint16(2); uint16(3); uint16(0)}]
+    s.indices <- [{auto[] 0u; 1u; 2u; 2u; 3u; 0u}]
     return <- s
 
 
