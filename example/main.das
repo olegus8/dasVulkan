@@ -169,9 +169,9 @@ def create_memory_backed_image(
     var mbi : MemoryBackedImage
     mbi.image <- device |> create_image( [[ ImageCreateInfo
         image_type = VkImageType VK_IMAGE_TYPE_2D,
-        extent = [[Extent3D width=width, height=height, depth=1u]],
+        extent <- [[Extent3D width=uint(width),height=uint(height),depth=1u]],
         mip_levels = 1u,
-        array_layers = 1u
+        array_layers = 1u,
         format = format,
         tiling = tiling,
         initial_layout = VkImageLayout VK_IMAGE_LAYOUT_UNDEFINED,
