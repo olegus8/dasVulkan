@@ -208,7 +208,7 @@ def add_boost_content(g):
     g.add_gen_struct(name='VkComputePipelineCreateInfo', vk_to_boost=False)
     g.add_gen_struct(name = 'VkDescriptorPoolCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'poolSizeCount', items = 'pPoolSizes')
-    g.add_gen_struct(name = 'VkDescriptorSetAllocateInfo ', vk_to_boost=False,
+    g.add_gen_struct(name = 'VkDescriptorSetAllocateInfo', vk_to_boost=False,
         ).declare_array(count = 'descriptorSetCount', items = 'pSetLayouts')
     g.add_gen_struct(name = 'VkDescriptorSetLayoutBinding', vk_to_boost=False,
         ).declare_array(items = 'pImmutableSamplers')
