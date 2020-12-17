@@ -351,13 +351,22 @@ def create_example_descriptor_sets(
     framebuffers : array<Framebuffer>
     pool : DescriptorPool
 ) : DescriptorSets
-    var info <- [[ DescriptorSetAllocateInfo
+    var create_info <- [[ DescriptorSetAllocateInfo
         descriptor_pool = weak_copy(pool),
         set_layouts <- [{ for fbuf in framebuffers ;
             weak_copy(sis.desc_set_layout) }]
     ]]
-    defer() <| { delete info; }
-    return <- sis.device |> allocate_descriptor_sets(info)
+    defer() <| { delete create_info; }
+    var dsets <- sis.device |> allocate_descriptor_sets(info)
+    for dset in dets
+        var writes <- [{ auto[] [[ WriteDescriptorSet
+            dst_set = weak_copy(dset),
+            dst_binding = 0u,
+            dst_array_element = 0u,
+        ]] }]
+        sis.device |> update_descriptor_sets(writes)
+        delete update_info
+    return <- dsets
 
 
 def create_example_descriptor_pool(
