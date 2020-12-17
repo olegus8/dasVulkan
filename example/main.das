@@ -31,7 +31,8 @@ def create_example_descriptor_set_layout(
             descriptor_type = (VkDescriptorType
                 VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER),
             descriptor_count = 1u,
-            stage_flags = VkShaderStageFlagBits VK_SHADER_STAGE_VERTEX_BIT
+            stage_flags = uint(VkShaderStageFlagBits
+                VK_SHADER_STAGE_VERTEX_BIT)
     ]] }] ]]
     defer() <| { delete info; }
     return <- device |> create_descriptor_set_layout(info)
