@@ -11,7 +11,7 @@ def cmd_bind_descriptor_set(
     pipeline_bind_point : VkPipelineBindPoint;
     layout : PipelineLayout;
     descriptor_set : DescriptorSet;
-    first_set : uint = [[ uint ]];
+    first_set : uint = [[ uint ]]
 ) : void
     var dsets <- [{ auto[] weak_copy(descriptor_set) }]
     defer() <| { delete dsets; }
