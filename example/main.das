@@ -551,7 +551,8 @@ def run_example
             keep_running = sis.window.window |> glfwWindowShouldClose() == 0
             glfwPollEvents()
             let is_swapchain_good = draw_frame(sis, sds,
-                draw_cmds.command_buffers, frame, imgs_used_by_frames)
+                draw_cmds.command_buffers, frames_since_start,
+                imgs_used_by_frames)
             if ! is_swapchain_good
                 break
             frames_since_start += 1
