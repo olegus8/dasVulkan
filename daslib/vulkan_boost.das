@@ -18,3 +18,4 @@ require internal/pipeline       public
 require internal/swapchain      public
 require internal/sync           public
 require internal/window         public
+require internal/descriptor_set public
