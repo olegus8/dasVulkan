@@ -179,6 +179,28 @@ def allocate_command_buffers__inner(
     assert(result_ == VkResult VK_SUCCESS)
     return <- [{for x in vk_command_buffers; vk_value_to_boost(x)}]
 
+[private]
+def allocate_descriptor_sets__inner(
+    device : Device = [[ Device ]];
+    var allocate_info : DescriptorSetAllocateInfo = [[ DescriptorSetAllocateInfo ]];
+    var result : VkResult? = [[VkResult?]]
+) : array<DescriptorSet>
+
+    var vk_allocate_info <- allocate_info |> vk_view_create_unsafe()
+    defer() <| { allocate_info |> vk_view_destroy(); }
+    var vk_descriptor_sets : array<VkDescriptorSet>
+    defer() <| { delete vk_descriptor_sets; }
+    var result_ = VkResult VK_SUCCESS
+
+    vk_descriptor_sets |> resize(int(allocate_info.command_buffer_count))
+    result ?? result_ = vkAllocateDescriptorSets(
+        boost_value_to_vk(device),
+        safe_addr(vk_allocate_info),
+        array_addr_unsafe(vk_descriptor_sets)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+    return <- [{for x in vk_descriptor_sets; vk_value_to_boost(x)}]
+
 def begin_command_buffer(
     command_buffer : CommandBuffer = [[ CommandBuffer ]];
     var begin_info : CommandBufferBeginInfo = [[ CommandBufferBeginInfo ]];
@@ -410,6 +432,28 @@ def free_command_buffers(
         vk_commandBufferCount,
         array_addr_unsafe(vk_command_buffers)
     )
+
+[private]
+def free_descriptor_sets(
+    device : Device = [[ Device ]];
+    descriptor_pool : DescriptorPool = [[ DescriptorPool ]];
+    descriptor_sets : array<DescriptorSet> = [[ array<DescriptorSet> ]];
+    var result : VkResult? = [[VkResult?]]
+) : void
+
+    let vk_descriptorSetCount = uint(descriptor_sets |> length())
+    var vk_descriptor_sets : array<VkDescriptorSet>
+    defer() <| { delete vk_descriptor_sets; }
+    vk_descriptor_sets <- [{ for item in descriptor_sets ; boost_value_to_vk(item) }]
+    var result_ = VkResult VK_SUCCESS
+
+    result ?? result_ = vkFreeDescriptorSets(
+        boost_value_to_vk(device),
+        boost_value_to_vk(descriptor_pool),
+        vk_descriptorSetCount,
+        array_addr_unsafe(vk_descriptor_sets)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
 
 def get_device_queue(
     device : Device = [[ Device ]];
@@ -2816,6 +2860,37 @@ def vk_view_destroy(var boost_struct : DescriptorPoolCreateInfo)
     boost_struct._vk_view__active = false
 
 //
+// DescriptorSetAllocateInfo
+//
+
+struct DescriptorSetAllocateInfo
+    descriptor_pool : DescriptorPool
+    set_layouts : array<DescriptorSetLayout>
+    _vk_view_set_layouts : array<VkDescriptorSetLayout>
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : DescriptorSetAllocateInfo
+) : VkDescriptorSetAllocateInfo
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    let vk_descriptor_set_count = uint(boost_struct.set_layouts |> length())
+    boost_struct._vk_view_set_layouts <- [{
+        for item in boost_struct.set_layouts ;
+        item |> boost_value_to_vk()}]
+    return <- [[ VkDescriptorSetAllocateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO,
+        descriptorPool = boost_value_to_vk(boost_struct.descriptor_pool),
+        descriptorSetCount = vk_descriptor_set_count,
+        pSetLayouts = array_addr_unsafe(boost_struct._vk_view_set_layouts)
+    ]]
+
+def vk_view_destroy(var boost_struct : DescriptorSetAllocateInfo)
+    assert(boost_struct._vk_view__active)
+    delete boost_struct._vk_view_set_layouts
+    boost_struct._vk_view__active = false
+
+//
 // DescriptorSetLayoutBinding
 //
 
@@ -3951,6 +4026,23 @@ def boost_value_to_vk(b : CommandBuffer ?) : VkCommandBuffer ?
 
 def vk_value_to_boost(v : VkCommandBuffer) : CommandBuffer
     return [[ CommandBuffer command_buffer=v ]]
+
+//
+// DescriptorSet
+//
+
+struct DescriptorSet
+    descriptor_set : VkDescriptorSet
+    _needs_delete : bool
+
+def boost_value_to_vk(b : DescriptorSet) : VkDescriptorSet
+    return b.descriptor_set
+
+def boost_value_to_vk(b : DescriptorSet ?) : VkDescriptorSet ?
+    return b?.descriptor_set
+
+def vk_value_to_boost(v : VkDescriptorSet) : DescriptorSet
+    return [[ DescriptorSet descriptor_set=v ]]
 
 //
 // Device
