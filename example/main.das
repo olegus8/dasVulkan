@@ -376,7 +376,7 @@ def create_example_descriptor_sets(
             ]] }]
         ]] }]
         sis.device |> update_descriptor_sets(writes)
-        delete update_info
+        delete writes
     return <- dsets
 
 
