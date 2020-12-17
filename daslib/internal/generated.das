@@ -157,7 +157,7 @@ def allocate_descriptor_sets(
 
 def finalize(var sets : DescriptorSets explicit)
     if sets._needs_delete
-        sets._device |> free_descriptor_sets(bufs._descriptor_pool,
+        sets._device |> free_descriptor_sets(sets._descriptor_pool,
             sets.descriptor_sets)
     delete sets.descriptor_sets
     memzero(sets)
@@ -4162,7 +4162,7 @@ def vk_view_create_unsafe(var boost_struct : WriteDescriptorSet
 
     assert(!boost_struct._vk_view__active)
     boost_struct._vk_view__active = true
-    var vk_descriptor_count
+    var vk_descriptor_count : uint
     vk_descriptor_count = max(vk_descriptor_count, uint(boost_struct.image_info |> length()))
     vk_descriptor_count = max(vk_descriptor_count, uint(boost_struct.buffer_info |> length()))
     vk_descriptor_count = max(vk_descriptor_count, uint(boost_struct.texel_buffer_view |> length()))
