@@ -202,12 +202,20 @@ def create_example_vertex_buffer(
 def create_example_index_buffer(
     sis : SwapchainIndependentState
 ) : MemoryBackedBuffer
-    let buf_size = typeinfo(sizeof type<uint>) * sis.indices |> length()
+    return <- sis |> create_device_local_buffer(sis.indices, 
+        uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_INDEX_BUFFER_BIT))
 
-    var ibuf <- sis.device |> create_memory_backed_buffer(
+
+def create_device_local_buffer(
+    sis     : SwapchainIndependentState;
+    data    : array<auto(T)>;
+    usage   : uint
+) : MemoryBackedBuffer
+    let buf_size = typeinfo(sizeof type<T>) * data |> length()
+
+    var buf <- sis.device |> create_memory_backed_buffer(
         sis.phys_dev, uint64(buf_size),
-        uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_TRANSFER_DST_BIT) |
-        uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_INDEX_BUFFER_BIT),
+        usage | uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_TRANSFER_DST_BIT),
         uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT))
 
     var staging <- sis.device |> create_memory_backed_buffer(
@@ -219,13 +227,13 @@ def create_example_index_buffer(
 
     sis.device |> map_device_memory_to_array(
         staging.memory, uint64(buf_size), uint64(0), 0u
-    ) <| $(var mapped_indices : array<uint>#)
-        for dst, src in mapped_indices, sis.indices
+    ) <| $(var mapped_data : array<T>#)
+        for dst, src in mapped_data, data
             dst = src
     sis.device |> copy_buffer_sync(
-        sis.cmd_pool, sis.queue, staging.buffer, ibuf.buffer, uint64(buf_size))
+        sis.cmd_pool, sis.queue, staging.buffer, buf.buffer, uint64(buf_size))
 
-    return <- ibuf
+    return <- buf
 
 
 def create_example_render_pass(
