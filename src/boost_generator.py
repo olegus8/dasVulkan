@@ -837,18 +837,27 @@ class ParamBase(object):
         bname = self._boost_struct_field_name
         vtype = self._vk_type
         if self.vk_is_dyn_array_count:
-            first = ('boost_struct.' +
-                self.__dyn_array_items_mandatory[0]._boost_func_param_name)
-            lines = []
-            for ar_items in self.__dyn_array_items_mandatory[1:]:
-                cur = 'boost_struct.' + ar_items._boost_func_param_name
-                lines += [f'assert(length({cur}) == length({first}))']
-            for ar_items in self.__dyn_array_items_optional:
-                cur = 'boost_struct.' + ar_items._boost_func_param_name
-                lines += [f'assert(length({cur}) == 0 || '
-                    f'length({cur}) == length({first}))']
-            lines += [f'let vk_{bname} = {vtype}({first} |> length())']
-            return lines
+            if self.__dyn_array_items_mandatory:
+                first = ('boost_struct.' + (self.__dyn_array_items_mandatory[0]
+                    ._boost_struct_field_name))
+                lines = []
+                for ar_items in self.__dyn_array_items_mandatory[1:]:
+                    cur = 'boost_struct.' + ar_items._boost_struct_field_name
+                    lines += [f'assert(length({cur}) == length({first}))']
+                for ar_items in self.__dyn_array_items_optional:
+                    cur = 'boost_struct.' + ar_items._boost_struct_field_name
+                    lines += [f'assert(length({cur}) == 0 || '
+                        f'length({cur}) == length({first}))']
+                lines += [f'let vk_{bname} = {vtype}({first} |> length())']
+                return lines
+            else:
+                assert_greater(len(self.__dyn_array_items_optional), 0)
+                lines = [f'var vk_{bname} : {vtype}']
+                for ar_items in self.__dyn_array_items_optional:
+                    cur = 'boost_struct.' + ar_items._boost_struct_field_name
+                    lines += [f'vk_{bname} = '
+                        f'max(vk_{bname}, {vtype}({cur} |> length()))']
+                return lines
         elif self.vk_is_dyn_array_items:
             adr = f'array_addr_unsafe(boost_struct.{bname})'
             if self._boost_unqual_type == self.vk_unqual_type:
@@ -987,7 +996,7 @@ class ParamBase(object):
             vtype = self.vk_unqual_type
             lines = [
                 f'var vk_{bname} : array<{vtype}>',
-                f'defer() <| ${{ delete vk_{bname}; }}',
+                f'defer() <| {{ delete vk_{bname}; }}',
             ]
             if not self._is_boost_func_output:
                 lines += [
@@ -1278,7 +1287,7 @@ class ParamVkStruct(ParamBase):
                 assert not self._optional #TODO: add support when needed
                 return [
                     f'var vk_{bname} <- {bname} |> vk_view_create_unsafe()',
-                    f'defer() <| ${{ {bname} |> vk_view_destroy(); }}',
+                    f'defer() <| {{ {bname} |> vk_view_destroy(); }}',
                 ]
         return super(ParamVkStruct, self).generate_boost_func_temp_vars_init()
 

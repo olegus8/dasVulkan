@@ -8,6 +8,7 @@ require daslib/safe_addr
 
 require vulkan
 require window
+require math
 
 //
 // Helpers
@@ -110,8 +111,8 @@ struct CommandBuffers
     _needs_delete : bool
 
 def allocate_command_buffers(
-    device : Device = [[ Device ]];
-    var allocate_info : CommandBufferAllocateInfo = [[ CommandBufferAllocateInfo ]];
+    device : Device;
+    var allocate_info : CommandBufferAllocateInfo;
     var result : VkResult? = [[VkResult?]]
 ) : CommandBuffers
     var buffers <- [[ CommandBuffers
@@ -129,3 +130,34 @@ def finalize(var bufs : CommandBuffers explicit)
             bufs.command_buffers)
     delete bufs.command_buffers
     memzero(bufs)
+
+//
+// DescriptorSets
+//
+
+struct DescriptorSets
+    descriptor_sets : array<DescriptorSet>
+    _device : Device
+    _descriptor_pool : DescriptorPool
+    _needs_delete : bool
+
+def allocate_descriptor_sets(
+    device : Device;
+    var allocate_info : DescriptorSetAllocateInfo;
+    var result : VkResult? = [[VkResult?]]
+) : DescriptorSets
+    var sets <- [[ DescriptorSets
+        _needs_delete = true,
+        _device = weak_copy(device),
+        _descriptor_pool = weak_copy(allocate_info.descriptor_pool)
+    ]]
+    sets.descriptor_sets <- allocate_descriptor_sets__inner([
+        device = device, allocate_info = allocate_info, result = result])
+    return <- sets
+
+def finalize(var sets : DescriptorSets explicit)
+    if sets._needs_delete
+        sets._device |> free_descriptor_sets(sets._descriptor_pool,
+            sets.descriptor_sets)
+    delete sets.descriptor_sets
+    memzero(sets)

@@ -106,19 +106,22 @@ def add_boost_content(g):
 
     for name in [
         'VkBuffer',
+        'VkBufferView',
         'VkCommandBuffer',
-        'VkDevice',
         'VkCommandPool',
+        'VkDescriptorPool',
+        'VkDescriptorSet',
         'VkDescriptorSetLayout',
+        'VkDevice',
         'VkFence',
         'VkFramebuffer',
         'VkImage',
         'VkImageView',
         'VkInstance',
         'VkPhysicalDevice',
-        'VkQueue',
         'VkPipelineCache',
         'VkPipelineLayout',
+        'VkQueue',
         'VkRenderPass',
         'VkSampler',
         'VkSemaphore',
@@ -176,11 +179,16 @@ def add_boost_content(g):
 
     for name in [
         'VkBufferCopy',
+        'VkBufferViewCreateInfo',
         'VkClearDepthStencilValue',
         'VkCommandBufferAllocateInfo',
         'VkCommandBufferBeginInfo',
         'VkCommandBufferInheritanceInfo',
         'VkCommandPoolCreateInfo',
+        'VkCopyDescriptorSet',
+        'VkDescriptorBufferInfo',
+        'VkDescriptorImageInfo',
+        'VkDescriptorPoolSize',
         'VkFenceCreateInfo',
         'VkImageViewCreateInfo',
         'VkMemoryAllocateInfo',
@@ -203,6 +211,10 @@ def add_boost_content(g):
     g.add_gen_struct(name = 'VkBufferCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'queueFamilyIndexCount', items = 'pQueueFamilyIndices')
     g.add_gen_struct(name='VkComputePipelineCreateInfo', vk_to_boost=False)
+    g.add_gen_struct(name = 'VkDescriptorPoolCreateInfo', vk_to_boost=False,
+        ).declare_array(count = 'poolSizeCount', items = 'pPoolSizes')
+    g.add_gen_struct(name = 'VkDescriptorSetAllocateInfo', vk_to_boost=False,
+        ).declare_array(count = 'descriptorSetCount', items = 'pSetLayouts')
     g.add_gen_struct(name = 'VkDescriptorSetLayoutBinding', vk_to_boost=False,
         ).declare_array(items = 'pImmutableSamplers')
     g.add_gen_struct(name = 'VkDescriptorSetLayoutCreateInfo', vk_to_boost=False,
@@ -276,6 +288,10 @@ def add_boost_content(g):
         ).declare_array(count = 'queueFamilyIndexCount', items = 'pQueueFamilyIndices')
     g.add_gen_struct(name = 'VkRenderPassBeginInfo', vk_to_boost=False,
         ).declare_array(count = 'clearValueCount', items = 'pClearValues')
+    g.add_gen_struct(name = 'VkWriteDescriptorSet', vk_to_boost=False,
+        ).declare_array(count = 'descriptorCount', items = 'pImageInfo', optional=True,
+        ).declare_array(count = 'descriptorCount', items = 'pBufferInfo', optional=True,
+        ).declare_array(count = 'descriptorCount', items = 'pTexelBufferView', optional=True)
 
     #
     # Functions
@@ -286,9 +302,15 @@ def add_boost_content(g):
     g.add_gen_func(name = 'vkAllocateCommandBuffers', boost_name = 'allocate_command_buffers__inner', private = True,
         ).declare_array(count_expr = 'allocate_info.command_buffer_count', items = 'pCommandBuffers',
         ).declare_output(name = 'pCommandBuffers')
+    g.add_gen_func(name = 'vkAllocateDescriptorSets', boost_name = 'allocate_descriptor_sets__inner', private = True,
+        ).declare_array(count_expr = 'length(allocate_info.set_layouts)', items = 'pDescriptorSets',
+        ).declare_output(name = 'pDescriptorSets')
     g.add_gen_func(name = 'vkBeginCommandBuffer')
     g.add_gen_func(name = 'vkBindBufferMemory')
     g.add_gen_func(name = 'vkCmdBeginRenderPass')
+    g.add_gen_func(name = 'vkCmdBindDescriptorSets',
+        ).declare_array(count = 'descriptorSetCount', items = 'pDescriptorSets',
+        ).declare_array(count = 'dynamicOffsetCount', items = 'pDynamicOffsets')
     g.add_gen_func(name = 'vkCmdBindPipeline')
     g.add_gen_func(name = 'vkCmdBindVertexBuffers',
         ).declare_array(count = 'bindingCount', items = 'pBuffers',
@@ -307,6 +329,8 @@ def add_boost_content(g):
         ).declare_output(name = 'pPhysicalDevices')
     g.add_gen_func(name = 'vkFreeCommandBuffers', private = True,
         ).declare_array(count = 'commandBufferCount', items = 'pCommandBuffers')
+    g.add_gen_func(name = 'vkFreeDescriptorSets', private = True,
+        ).declare_array(count = 'descriptorSetCount', items = 'pDescriptorSets')
     g.add_gen_func(name = 'vkGetDeviceQueue'
         ).declare_output(name = 'pQueue')
     g.add_gen_func(name = 'vkGetBufferMemoryRequirements'
@@ -340,5 +364,8 @@ def add_boost_content(g):
     g.add_gen_func(name = 'vkResetFences',
         ).declare_array(count = 'fenceCount', items = 'pFences')
     g.add_gen_func(name = 'vkUnmapMemory')
+    g.add_gen_func(name = 'vkUpdateDescriptorSets',
+        ).declare_array(count = 'descriptorWriteCount', items = 'pDescriptorWrites',
+        ).declare_array(count = 'descriptorCopyCount', items = 'pDescriptorCopies')
     g.add_gen_func(name = 'vkWaitForFences',
         ).declare_array(count = 'fenceCount', items = 'pFences')

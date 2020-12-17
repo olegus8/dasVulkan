@@ -18,6 +18,37 @@ struct Vertex
     color : float3
 
 
+struct UniformBufferObject
+    offset : float2
+
+
+def create_example_descriptor_set_layout(
+    device : Device
+) : DescriptorSetLayout
+    var info <- [[ DescriptorSetLayoutCreateInfo
+        bindings <- [{ auto[] [[ DescriptorSetLayoutBinding
+            binding = 0u,
+            descriptor_type = (VkDescriptorType
+                VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER),
+            descriptor_count = 1u,
+            stage_flags = uint(VkShaderStageFlagBits
+                VK_SHADER_STAGE_VERTEX_BIT)
+    ]] }] ]]
+    defer() <| { delete info; }
+    return <- device |> create_descriptor_set_layout(info)
+
+
+def create_example_pipeline_layout(
+    device : Device;
+    desc_set_layout : DescriptorSetLayout
+) : PipelineLayout
+    var info <- [[ PipelineLayoutCreateInfo
+        set_layouts <- [{ auto[] weak_copy(desc_set_layout) }]
+    ]]
+    defer() <| { delete info; }
+    return <- device |> create_pipeline_layout(info)
+
+
 def create_example_graphics_pipeline(
     sis : SwapchainIndependentState
 ) : Pipeline
@@ -73,23 +104,21 @@ def create_example_graphics_pipeline(
                 stage = VkShaderStageFlagBits VK_SHADER_STAGE_FRAGMENT_BIT]]
         }]
     ]]
-    defer() <| ${ delete create_info; }
+    defer() <| { delete create_info; }
 
     return <- create_graphics_pipeline([
         device=sis.device, create_info=create_info])
 
 
 def create_example_draw_commands(
-    sis             : SwapchainIndependentState;
-    sds             : SwapchainDependentState;
-    vbuf            : Buffer;
-    vertices_count  : int
+    sis : SwapchainIndependentState;
+    sds : SwapchainDependentState
 ) : CommandBuffers
     var cmd_bufs <- sis.device |> allocate_command_buffers_primary(
         sis.cmd_pool, sds.swapchain.framebuffers |> length())
     var clear_values <- [{ auto[] [[VkClearValue]] }]
-    defer() <| ${ delete clear_values; }
-    for cmd_buf, fbuf in cmd_bufs.command_buffers, sds.swapchain.framebuffers
+    defer() <| { delete clear_values; }
+    for cmd_buf, fbuf, dset in cmd_bufs.command_buffers, sds.swapchain.framebuffers, sds.desc_sets.descriptor_sets
         cmd_buf |> record_command_buffer() <|
             cmd_buf |> record_render_pass(
                 sis.phys_dev, sis.window, sis.surface, sis.render_pass,
@@ -98,9 +127,14 @@ def create_example_draw_commands(
                 cmd_buf |> cmd_bind_pipeline(
                     VkPipelineBindPoint VK_PIPELINE_BIND_POINT_GRAPHICS,
                     sds.pipeline)
-                cmd_buf |> cmd_bind_vertex_buffer(vbuf)
+                cmd_buf |> cmd_bind_vertex_buffer(sis.vbuf.buffer)
+                
+                cmd_buf |> cmd_bind_descriptor_set(
+                    VkPipelineBindPoint VK_PIPELINE_BIND_POINT_GRAPHICS,
+                    sis.pipeline_layout, dset)
+
                 cmd_draw([command_buffer = cmd_buf,
-                    vertex_count = uint(vertices_count),
+                    vertex_count = uint(sis.vertices |> length()),
                     instance_count = 1u])
     return <- cmd_bufs
 
@@ -136,11 +170,10 @@ def create_memory_backed_buffer(
     return <- mbb
 
 
-def create_baked_vertex_buffer(
-    sis : SwapchainIndependentState;
-    vertices : array<auto(VT)>
+def create_example_vertex_buffer(
+    sis : SwapchainIndependentState
 ) : MemoryBackedBuffer
-    let buf_size = typeinfo(sizeof type<VT>) * vertices |> length()
+    let buf_size = typeinfo(sizeof type<Vertex>) * sis.vertices |> length()
 
     var vbuf <- sis.device |> create_memory_backed_buffer(
         sis.phys_dev, uint64(buf_size),
@@ -153,12 +186,12 @@ def create_baked_vertex_buffer(
         uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_TRANSFER_SRC_BIT),
         uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT)|
         uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_COHERENT_BIT))
-    defer() <| ${ delete staging; }
+    defer() <| { delete staging; }
 
     sis.device |> map_device_memory_to_array(
         staging.memory, uint64(buf_size), uint64(0), 0u
-    ) <| $(var mapped_vertices : array<VT>#)
-        for dst, src in mapped_vertices, vertices
+    ) <| $(var mapped_vertices : array<Vertex>#)
+        for dst, src in mapped_vertices, sis.vertices
             dst = src
     sis.device |> copy_buffer_sync(
         sis.cmd_pool, sis.queue, staging.buffer, vbuf.buffer, uint64(buf_size))
@@ -204,7 +237,7 @@ def create_example_render_pass(
                 VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT)
         ]]}]
     ]]
-    defer() <| ${ delete create_info; }
+    defer() <| { delete create_info; }
     return <- device |> create_render_pass(create_info)
 
 
@@ -220,13 +253,19 @@ struct SwapchainIndependentState
     vert_shmod      : ShaderModule
     frag_shmod      : ShaderModule
     render_pass     : RenderPass
+    desc_set_layout : DescriptorSetLayout
     pipeline_layout : PipelineLayout
     cmd_pool        : CommandPool
+    vertices        : array<Vertex>
+    vbuf            : MemoryBackedBuffer
 
 
 def finalize(var s : SwapchainIndependentState explicit)
     s.device |> device_wait_idle()
+    delete s.vbuf
+    delete s.vertices
     delete s.pipeline_layout
+    delete s.desc_set_layout
     delete s.render_pass
     delete s.frag_shmod
     delete s.vert_shmod
@@ -258,22 +297,41 @@ def create_swapchain_independent_state(
     s.frag_shmod <- s.device |> create_shader_module_from_file(
         "{get_das_root()}/modules/dasVulkan/example/frag.spv")
     s.render_pass <- s.device |> create_example_render_pass(s.surf_fmt)
-    s.pipeline_layout <- s.device |> create_pipeline_layout()
+    s.desc_set_layout <- s.device |> create_example_descriptor_set_layout()
+    s.pipeline_layout <- s.device |> create_example_pipeline_layout(
+        s.desc_set_layout)
+    s.vertices <- [{auto[]
+        [[Vertex position=float2( 0.0f, -0.5f), color=float3(1f, 0f, 0f)]];
+        [[Vertex position=float2( 0.5f,  0.5f), color=float3(0f, 1f, 0f)]];
+        [[Vertex position=float2(-0.5f,  0.5f), color=float3(0f, 0f, 1f)]]
+    }]
+    s.vbuf <- create_example_vertex_buffer(s)
     return <- s
 
 
 struct SwapchainDependentState
-    swapchain        : SwapchainEx
-    pipeline         : Pipeline
-    img_avail_sems   : array<Semaphore>
-    render_done_sems : array<Semaphore>
-    frame_fences     : array<Fence>
-    _device          : Device
+    swapchain           : SwapchainEx
+    pipeline            : Pipeline
+    img_avail_sems      : array<Semaphore>
+    render_done_sems    : array<Semaphore>
+    frame_fences        : array<Fence>
+    uniform_bufs        : array<MemoryBackedBuffer>
+    desc_pool           : DescriptorPool
+    desc_sets           : DescriptorSets
+    draw_cmds           : CommandBuffers
+    frames_since_start  : int
+    imgs_used_by_frames : array<int>
+    _device             : Device
 
 
 def finalize(var s : SwapchainDependentState explicit)
     s._device |> device_wait_idle()
+    delete s.imgs_used_by_frames
+    delete s.draw_cmds
     delete s.pipeline
+    delete s.desc_sets
+    delete s.desc_pool
+    delete s.uniform_bufs
     delete s.swapchain
     delete s.frame_fences
     delete s.render_done_sems
@@ -282,7 +340,7 @@ def finalize(var s : SwapchainDependentState explicit)
 
 
 def create_swapchain_dependent_state(
-    var sis : SwapchainIndependentState
+    sis : SwapchainIndependentState
 ) : SwapchainDependentState
     var sds <- [[ SwapchainDependentState _device <- weak_copy(sis.device) ]]
     sds.img_avail_sems <- [{for x in range(MAX_FRAMES_IN_FLIGHT);
@@ -296,8 +354,74 @@ def create_swapchain_dependent_state(
     sds.swapchain <- sis.device |> create_swapchain_ex(sis.phys_dev,
         sis.surface, sis.window, sis.surf_fmt, sis.present_mode,
         sis.render_pass)
+    sds.uniform_bufs <- sis |> create_example_uniform_buffers(
+        sds.swapchain.framebuffers)
+    sds.desc_pool <- sis |> create_example_descriptor_pool(
+        sds.swapchain.framebuffers)
+    sds.desc_sets <- sis |> create_example_descriptor_sets(
+        sds.desc_pool, sds.uniform_bufs)
     sds.pipeline <- sis |> create_example_graphics_pipeline()
+    sds.draw_cmds <- create_example_draw_commands(sis, sds)
+    sds.imgs_used_by_frames <- [{for x in sds.swapchain.framebuffers; -1}]
+
     return <- sds
+
+
+def create_example_descriptor_sets(
+    sis : SwapchainIndependentState;
+    pool : DescriptorPool;
+    ubufs : array<MemoryBackedBuffer>
+) : DescriptorSets
+    var create_info <- [[ DescriptorSetAllocateInfo
+        descriptor_pool = weak_copy(pool),
+        set_layouts <- [{ for ubuf in ubufs ;
+            weak_copy(sis.desc_set_layout) }]
+    ]]
+    defer() <| { delete create_info; }
+    var dsets <- sis.device |> allocate_descriptor_sets(create_info)
+    for dset, ubuf in dsets.descriptor_sets, ubufs
+        var writes <- [{ auto[] [[ WriteDescriptorSet
+            dst_set = weak_copy(dset),
+            dst_binding = 0u,
+            descriptor_type = (VkDescriptorType
+                VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER),
+            buffer_info <- [{ auto[] [[ DescriptorBufferInfo
+                buffer = weak_copy(ubuf.buffer),
+                range_ = uint64(typeinfo(sizeof type<UniformBufferObject>))
+            ]] }]
+        ]] }]
+        sis.device |> update_descriptor_sets(writes)
+        delete writes
+    return <- dsets
+
+
+def create_example_descriptor_pool(
+    sis : SwapchainIndependentState;
+    framebuffers : array<Framebuffer>
+) : DescriptorPool
+    var info <- [[ DescriptorPoolCreateInfo
+        pool_sizes <- [{ auto[] [[ DescriptorPoolSize
+            type_ = VkDescriptorType VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER,
+            descriptor_count = uint(framebuffers |> length()) ]] }],
+        max_sets = uint(framebuffers |> length()),
+        flags = uint(VkDescriptorPoolCreateFlagBits
+            VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT)
+    ]]
+    defer() <| { delete info; }
+    return <- sis.device |> create_descriptor_pool(info)
+
+
+def create_example_uniform_buffers(
+    sis : SwapchainIndependentState;
+    framebuffers : array<Framebuffer>
+) : array<MemoryBackedBuffer>
+    return <- [{ for fbuf in framebuffers ;
+        sis.device |> create_memory_backed_buffer(
+            sis.phys_dev, uint64(typeinfo(sizeof type<UniformBufferObject>)),
+            uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT),
+            uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT)|
+            uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_COHERENT_BIT)
+        ) }]
 
 
 def with_next_image(device, swapchain, sem_to_signal; b : block<(i:uint)>)
@@ -344,13 +468,26 @@ def present(device, queue, swapchain, img_i, sem_to_wait) : bool
     return false
 
 
-def draw_frame(
-    sis                     : SwapchainIndependentState;
-    sds                     : SwapchainDependentState;
-    cmd_bufs                : array<CommandBuffer>;
-    frame                   : int;
-    var imgs_used_by_frames : array<int>
+def update_uniform_buffer(
+    device : Device;
+    ubuf : MemoryBackedBuffer;
+    frames_since_start : int
 )
+    device |> map_device_memory_to_array(
+        ubuf.memory, uint64(typeinfo(sizeof type<UniformBufferObject>)),
+        uint64(0), 0u
+    ) <| $(var mapped_ubos : array<UniformBufferObject>#)
+        mapped_ubos[0] <- [[ UniformBufferObject offset = float2(
+            0.5f*sin(float(frames_since_start)*2.0f*PI / 100.0f),
+            0.0f)
+        ]]
+
+
+def draw_frame(
+    sis : SwapchainIndependentState;
+    var sds : SwapchainDependentState
+)
+    let frame = sds.frames_since_start % MAX_FRAMES_IN_FLIGHT
     sis.device |> wait_for_fence(sds.frame_fences[frame], ULONG_MAX)
     var img_acquired = false
     var presented = false
@@ -359,20 +496,25 @@ def draw_frame(
     ) <| $(img_i)
         img_acquired = true
 
-        var img_frame = imgs_used_by_frames[img_i]
+        var img_frame = sds.imgs_used_by_frames[img_i]
         if img_frame != -1
             sis.device |> wait_for_fence(
                 sds.frame_fences[img_frame], ULONG_MAX)
-        imgs_used_by_frames[img_i] = frame
+        sds.imgs_used_by_frames[img_i] = frame
+
+        sis.device |> update_uniform_buffer(sds.uniform_bufs[img_i],
+            sds.frames_since_start)
 
         sis.device |> reset_fence(sds.frame_fences[frame])
-        sis.device |> submit_draw(sis.queue, cmd_bufs[img_i],
+        sis.device |> submit_draw(sis.queue,
+            sds.draw_cmds.command_buffers[img_i],
             sds.img_avail_sems[frame], sds.render_done_sems[frame],
             sds.frame_fences[frame])
 
         presented = sis.device |> present(sis.queue, sds.swapchain.swapchain,
             img_i, sds.render_done_sems[frame])
 
+    sds.frames_since_start += 1
     return img_acquired && presented
 
 
@@ -385,23 +527,14 @@ def key_callback(
 
 
 def run_example
-    var vertices <- [{auto[]
-        [[Vertex position=float2( 0.0f, -0.5f), color=float3(1f, 0f, 0f)]];
-        [[Vertex position=float2( 0.5f,  0.5f), color=float3(0f, 1f, 0f)]];
-        [[Vertex position=float2(-0.5f,  0.5f), color=float3(0f, 0f, 1f)]]
-    }]
-    defer() <| ${ delete vertices; }
 
     var sis <- create_swapchain_independent_state(800, 600, "dasVulkanExample")
-    defer() <| ${ delete sis; }
+    defer() <| { delete sis; }
 
     sis.window.window |> glfwSetKeyCallback(@@key_callback)
     var props <- sis.phys_dev |> get_physical_device_properties()
-    defer() <| ${ delete props ; }
+    defer() <| { delete props ; }
     print("Using {props.device_name}\n")
-
-    var vbuf <- sis |> create_baked_vertex_buffer(vertices)
-    defer() <| ${ delete vbuf; }
 
     var keep_running = true
     while keep_running // swapchain re-creation loop
@@ -415,24 +548,13 @@ def run_example
         print("{sds.swapchain.framebuffers |> length()} " +
             "images in swap chain\n")
 
-        var draw_cmds <- create_example_draw_commands(
-            sis, sds, vbuf.buffer, vertices |> length())
-
-        var frame = 0
-        var imgs_used_by_frames <- [{for x in sds.swapchain.framebuffers; -1}]
-
         while keep_running
             keep_running = sis.window.window |> glfwWindowShouldClose() == 0
             glfwPollEvents()
-            let is_swapchain_good = draw_frame(sis, sds,
-                draw_cmds.command_buffers, frame, imgs_used_by_frames)
-            if ! is_swapchain_good
+            if ! draw_frame(sis, sds)
                 break
-            frame = (frame + 1) % MAX_FRAMES_IN_FLIGHT
 
         sis.device |> device_wait_idle()
-        delete imgs_used_by_frames
-        delete draw_cmds
         delete sds
 
 

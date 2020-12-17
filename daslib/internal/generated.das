@@ -8,6 +8,7 @@ require daslib/safe_addr
 
 require vulkan
 require window
+require math
 
 //
 // Helpers
@@ -110,8 +111,8 @@ struct CommandBuffers
     _needs_delete : bool
 
 def allocate_command_buffers(
-    device : Device = [[ Device ]];
-    var allocate_info : CommandBufferAllocateInfo = [[ CommandBufferAllocateInfo ]];
+    device : Device;
+    var allocate_info : CommandBufferAllocateInfo;
     var result : VkResult? = [[VkResult?]]
 ) : CommandBuffers
     var buffers <- [[ CommandBuffers
@@ -129,6 +130,37 @@ def finalize(var bufs : CommandBuffers explicit)
             bufs.command_buffers)
     delete bufs.command_buffers
     memzero(bufs)
+
+//
+// DescriptorSets
+//
+
+struct DescriptorSets
+    descriptor_sets : array<DescriptorSet>
+    _device : Device
+    _descriptor_pool : DescriptorPool
+    _needs_delete : bool
+
+def allocate_descriptor_sets(
+    device : Device;
+    var allocate_info : DescriptorSetAllocateInfo;
+    var result : VkResult? = [[VkResult?]]
+) : DescriptorSets
+    var sets <- [[ DescriptorSets
+        _needs_delete = true,
+        _device = weak_copy(device),
+        _descriptor_pool = weak_copy(allocate_info.descriptor_pool)
+    ]]
+    sets.descriptor_sets <- allocate_descriptor_sets__inner([
+        device = device, allocate_info = allocate_info, result = result])
+    return <- sets
+
+def finalize(var sets : DescriptorSets explicit)
+    if sets._needs_delete
+        sets._device |> free_descriptor_sets(sets._descriptor_pool,
+            sets.descriptor_sets)
+    delete sets.descriptor_sets
+    memzero(sets)
 
 //
 // Functions
@@ -165,9 +197,9 @@ def allocate_command_buffers__inner(
 ) : array<CommandBuffer>
 
     var vk_allocate_info <- allocate_info |> vk_view_create_unsafe()
-    defer() <| ${ allocate_info |> vk_view_destroy(); }
+    defer() <| { allocate_info |> vk_view_destroy(); }
     var vk_command_buffers : array<VkCommandBuffer>
-    defer() <| ${ delete vk_command_buffers; }
+    defer() <| { delete vk_command_buffers; }
     var result_ = VkResult VK_SUCCESS
 
     vk_command_buffers |> resize(int(allocate_info.command_buffer_count))
@@ -179,6 +211,28 @@ def allocate_command_buffers__inner(
     assert(result_ == VkResult VK_SUCCESS)
     return <- [{for x in vk_command_buffers; vk_value_to_boost(x)}]
 
+[private]
+def allocate_descriptor_sets__inner(
+    device : Device = [[ Device ]];
+    var allocate_info : DescriptorSetAllocateInfo = [[ DescriptorSetAllocateInfo ]];
+    var result : VkResult? = [[VkResult?]]
+) : array<DescriptorSet>
+
+    var vk_allocate_info <- allocate_info |> vk_view_create_unsafe()
+    defer() <| { allocate_info |> vk_view_destroy(); }
+    var vk_descriptor_sets : array<VkDescriptorSet>
+    defer() <| { delete vk_descriptor_sets; }
+    var result_ = VkResult VK_SUCCESS
+
+    vk_descriptor_sets |> resize(int(length(allocate_info.set_layouts)))
+    result ?? result_ = vkAllocateDescriptorSets(
+        boost_value_to_vk(device),
+        safe_addr(vk_allocate_info),
+        array_addr_unsafe(vk_descriptor_sets)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+    return <- [{for x in vk_descriptor_sets; vk_value_to_boost(x)}]
+
 def begin_command_buffer(
     command_buffer : CommandBuffer = [[ CommandBuffer ]];
     var begin_info : CommandBufferBeginInfo = [[ CommandBufferBeginInfo ]];
@@ -186,7 +240,7 @@ def begin_command_buffer(
 ) : void
 
     var vk_begin_info <- begin_info |> vk_view_create_unsafe()
-    defer() <| ${ begin_info |> vk_view_destroy(); }
+    defer() <| { begin_info |> vk_view_destroy(); }
     var result_ = VkResult VK_SUCCESS
 
     result ?? result_ = vkBeginCommandBuffer(
@@ -220,12 +274,41 @@ def cmd_begin_render_pass(
 ) : void
 
     var vk_render_pass_begin <- render_pass_begin |> vk_view_create_unsafe()
-    defer() <| ${ render_pass_begin |> vk_view_destroy(); }
+    defer() <| { render_pass_begin |> vk_view_destroy(); }
 
     vkCmdBeginRenderPass(
         boost_value_to_vk(command_buffer),
         safe_addr(vk_render_pass_begin),
         boost_value_to_vk(contents)
+    )
+
+def cmd_bind_descriptor_sets(
+    command_buffer : CommandBuffer = [[ CommandBuffer ]];
+    pipeline_bind_point : VkPipelineBindPoint = [[ VkPipelineBindPoint ]];
+    layout : PipelineLayout = [[ PipelineLayout ]];
+    first_set : uint = [[ uint ]];
+    descriptor_sets : array<DescriptorSet> = [[ array<DescriptorSet> ]];
+    dynamic_offsets : array<uint> = [[ array<uint> ]]
+) : void
+
+    let vk_descriptorSetCount = uint(descriptor_sets |> length())
+    var vk_descriptor_sets : array<VkDescriptorSet>
+    defer() <| { delete vk_descriptor_sets; }
+    vk_descriptor_sets <- [{ for item in descriptor_sets ; boost_value_to_vk(item) }]
+    let vk_dynamicOffsetCount = uint(dynamic_offsets |> length())
+    var vk_dynamic_offsets : array<uint>
+    defer() <| { delete vk_dynamic_offsets; }
+    vk_dynamic_offsets <- [{ for item in dynamic_offsets ; boost_value_to_vk(item) }]
+
+    vkCmdBindDescriptorSets(
+        boost_value_to_vk(command_buffer),
+        boost_value_to_vk(pipeline_bind_point),
+        boost_value_to_vk(layout),
+        boost_value_to_vk(first_set),
+        vk_descriptorSetCount,
+        array_addr_unsafe(vk_descriptor_sets),
+        vk_dynamicOffsetCount,
+        array_addr_unsafe(vk_dynamic_offsets)
     )
 
 def cmd_bind_pipeline(
@@ -250,10 +333,10 @@ def cmd_bind_vertex_buffers(
     assert(length(buffers) == length(offsets))
     let vk_bindingCount = uint(buffers |> length())
     var vk_buffers : array<VkBuffer>
-    defer() <| ${ delete vk_buffers; }
+    defer() <| { delete vk_buffers; }
     vk_buffers <- [{ for item in buffers ; boost_value_to_vk(item) }]
     var vk_offsets : array<uint64>
-    defer() <| ${ delete vk_offsets; }
+    defer() <| { delete vk_offsets; }
     vk_offsets <- [{ for item in offsets ; boost_value_to_vk(item) }]
 
     vkCmdBindVertexBuffers(
@@ -343,7 +426,7 @@ def enumerate_device_extension_properties(
 
     var vk_pPropertyCount : uint
     var vk_properties : array<VkExtensionProperties>
-    defer() <| ${ delete vk_properties; }
+    defer() <| { delete vk_properties; }
     var result_ = VkResult VK_SUCCESS
 
     result ?? result_ = vkEnumerateDeviceExtensionProperties(
@@ -372,7 +455,7 @@ def enumerate_physical_devices(
 
     var vk_pPhysicalDeviceCount : uint
     var vk_physical_devices : array<VkPhysicalDevice>
-    defer() <| ${ delete vk_physical_devices; }
+    defer() <| { delete vk_physical_devices; }
     var result_ = VkResult VK_SUCCESS
 
     result ?? result_ = vkEnumeratePhysicalDevices(
@@ -401,7 +484,7 @@ def free_command_buffers(
 
     let vk_commandBufferCount = uint(command_buffers |> length())
     var vk_command_buffers : array<VkCommandBuffer>
-    defer() <| ${ delete vk_command_buffers; }
+    defer() <| { delete vk_command_buffers; }
     vk_command_buffers <- [{ for item in command_buffers ; boost_value_to_vk(item) }]
 
     vkFreeCommandBuffers(
@@ -410,6 +493,28 @@ def free_command_buffers(
         vk_commandBufferCount,
         array_addr_unsafe(vk_command_buffers)
     )
+
+[private]
+def free_descriptor_sets(
+    device : Device = [[ Device ]];
+    descriptor_pool : DescriptorPool = [[ DescriptorPool ]];
+    descriptor_sets : array<DescriptorSet> = [[ array<DescriptorSet> ]];
+    var result : VkResult? = [[VkResult?]]
+) : void
+
+    let vk_descriptorSetCount = uint(descriptor_sets |> length())
+    var vk_descriptor_sets : array<VkDescriptorSet>
+    defer() <| { delete vk_descriptor_sets; }
+    vk_descriptor_sets <- [{ for item in descriptor_sets ; boost_value_to_vk(item) }]
+    var result_ = VkResult VK_SUCCESS
+
+    result ?? result_ = vkFreeDescriptorSets(
+        boost_value_to_vk(device),
+        boost_value_to_vk(descriptor_pool),
+        vk_descriptorSetCount,
+        array_addr_unsafe(vk_descriptor_sets)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
 
 def get_device_queue(
     device : Device = [[ Device ]];
@@ -495,7 +600,7 @@ def get_physical_device_queue_family_properties(
 
     var vk_pQueueFamilyPropertyCount : uint
     var vk_queue_family_properties : array<VkQueueFamilyProperties>
-    defer() <| ${ delete vk_queue_family_properties; }
+    defer() <| { delete vk_queue_family_properties; }
 
     vkGetPhysicalDeviceQueueFamilyProperties(
         boost_value_to_vk(physical_device),
@@ -518,7 +623,7 @@ def get_physical_device_surface_formats_khr(
 
     var vk_pSurfaceFormatCount : uint
     var vk_surface_formats : array<VkSurfaceFormatKHR>
-    defer() <| ${ delete vk_surface_formats; }
+    defer() <| { delete vk_surface_formats; }
     var result_ = VkResult VK_SUCCESS
 
     result ?? result_ = vkGetPhysicalDeviceSurfaceFormatsKHR(
@@ -548,7 +653,7 @@ def get_physical_device_surface_present_modes_khr(
 
     var vk_pPresentModeCount : uint
     var vk_present_modes : array<VkPresentModeKHR>
-    defer() <| ${ delete vk_present_modes; }
+    defer() <| { delete vk_present_modes; }
     var result_ = VkResult VK_SUCCESS
 
     result ?? result_ = vkGetPhysicalDeviceSurfacePresentModesKHR(
@@ -590,7 +695,7 @@ def get_swapchain_images_khr(
 
     var vk_pSwapchainImageCount : uint
     var vk_swapchain_images : array<VkImage>
-    defer() <| ${ delete vk_swapchain_images; }
+    defer() <| { delete vk_swapchain_images; }
     var result_ = VkResult VK_SUCCESS
 
     result ?? result_ = vkGetSwapchainImagesKHR(
@@ -642,7 +747,7 @@ def queue_present_khr(
 ) : void
 
     var vk_present_info <- present_info |> vk_view_create_unsafe()
-    defer() <| ${ present_info |> vk_view_destroy(); }
+    defer() <| { present_info |> vk_view_destroy(); }
     var result_ = VkResult VK_SUCCESS
 
     result ?? result_ = vkQueuePresentKHR(
@@ -695,7 +800,7 @@ def reset_fences(
 
     let vk_fenceCount = uint(fences |> length())
     var vk_fences : array<VkFence>
-    defer() <| ${ delete vk_fences; }
+    defer() <| { delete vk_fences; }
     vk_fences <- [{ for item in fences ; boost_value_to_vk(item) }]
     var result_ = VkResult VK_SUCCESS
 
@@ -716,6 +821,35 @@ def unmap_memory(
         boost_value_to_vk(memory)
     )
 
+def update_descriptor_sets(
+    device : Device = [[ Device ]];
+    var descriptor_writes : array<WriteDescriptorSet> = [[ array<WriteDescriptorSet> ]];
+    var descriptor_copies : array<CopyDescriptorSet> = [[ array<CopyDescriptorSet> ]]
+) : void
+
+    let vk_descriptorWriteCount = uint(descriptor_writes |> length())
+    var vk_descriptor_writes <- [{ for item in descriptor_writes ;
+        item |> vk_view_create_unsafe() }]
+    defer() <|
+        for item in descriptor_writes
+            item |> vk_view_destroy()
+        delete vk_descriptor_writes
+    let vk_descriptorCopyCount = uint(descriptor_copies |> length())
+    var vk_descriptor_copies <- [{ for item in descriptor_copies ;
+        item |> vk_view_create_unsafe() }]
+    defer() <|
+        for item in descriptor_copies
+            item |> vk_view_destroy()
+        delete vk_descriptor_copies
+
+    vkUpdateDescriptorSets(
+        boost_value_to_vk(device),
+        vk_descriptorWriteCount,
+        array_addr_unsafe(vk_descriptor_writes),
+        vk_descriptorCopyCount,
+        array_addr_unsafe(vk_descriptor_copies)
+    )
+
 def wait_for_fences(
     device : Device = [[ Device ]];
     fences : array<Fence> = [[ array<Fence> ]];
@@ -726,7 +860,7 @@ def wait_for_fences(
 
     let vk_fenceCount = uint(fences |> length())
     var vk_fences : array<VkFence>
-    defer() <| ${ delete vk_fences; }
+    defer() <| { delete vk_fences; }
     vk_fences <- [{ for item in fences ; boost_value_to_vk(item) }]
     var result_ = VkResult VK_SUCCESS
 
@@ -2020,6 +2154,36 @@ def vk_view_destroy(var boost_struct : BufferCopy)
     boost_struct._vk_view__active = false
 
 //
+// BufferViewCreateInfo
+//
+
+struct BufferViewCreateInfo
+    flags : uint
+    buffer : Buffer
+    format : VkFormat
+    offset : uint64
+    range_ : uint64
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : BufferViewCreateInfo
+) : VkBufferViewCreateInfo
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    return <- [[ VkBufferViewCreateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_BUFFER_VIEW_CREATE_INFO,
+        flags = boost_value_to_vk(boost_struct.flags),
+        buffer = boost_value_to_vk(boost_struct.buffer),
+        format = boost_value_to_vk(boost_struct.format),
+        offset = boost_value_to_vk(boost_struct.offset),
+        range_ = boost_value_to_vk(boost_struct.range_)
+    ]]
+
+def vk_view_destroy(var boost_struct : BufferViewCreateInfo)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+//
 // ClearDepthStencilValue
 //
 
@@ -2154,6 +2318,113 @@ def vk_view_create_unsafe(var boost_struct : CommandPoolCreateInfo
     ]]
 
 def vk_view_destroy(var boost_struct : CommandPoolCreateInfo)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+//
+// CopyDescriptorSet
+//
+
+struct CopyDescriptorSet
+    src_set : DescriptorSet
+    src_binding : uint
+    src_array_element : uint
+    dst_set : DescriptorSet
+    dst_binding : uint
+    dst_array_element : uint
+    descriptor_count : uint
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : CopyDescriptorSet
+) : VkCopyDescriptorSet
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    return <- [[ VkCopyDescriptorSet
+        sType = VkStructureType VK_STRUCTURE_TYPE_COPY_DESCRIPTOR_SET,
+        srcSet = boost_value_to_vk(boost_struct.src_set),
+        srcBinding = boost_value_to_vk(boost_struct.src_binding),
+        srcArrayElement = boost_value_to_vk(boost_struct.src_array_element),
+        dstSet = boost_value_to_vk(boost_struct.dst_set),
+        dstBinding = boost_value_to_vk(boost_struct.dst_binding),
+        dstArrayElement = boost_value_to_vk(boost_struct.dst_array_element),
+        descriptorCount = boost_value_to_vk(boost_struct.descriptor_count)
+    ]]
+
+def vk_view_destroy(var boost_struct : CopyDescriptorSet)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+//
+// DescriptorBufferInfo
+//
+
+struct DescriptorBufferInfo
+    buffer : Buffer
+    offset : uint64
+    range_ : uint64
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : DescriptorBufferInfo
+) : VkDescriptorBufferInfo
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    return <- [[ VkDescriptorBufferInfo
+        buffer = boost_value_to_vk(boost_struct.buffer),
+        offset = boost_value_to_vk(boost_struct.offset),
+        range_ = boost_value_to_vk(boost_struct.range_)
+    ]]
+
+def vk_view_destroy(var boost_struct : DescriptorBufferInfo)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+//
+// DescriptorImageInfo
+//
+
+struct DescriptorImageInfo
+    sampler : Sampler
+    image_view : ImageView
+    image_layout : VkImageLayout
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : DescriptorImageInfo
+) : VkDescriptorImageInfo
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    return <- [[ VkDescriptorImageInfo
+        sampler = boost_value_to_vk(boost_struct.sampler),
+        imageView = boost_value_to_vk(boost_struct.image_view),
+        imageLayout = boost_value_to_vk(boost_struct.image_layout)
+    ]]
+
+def vk_view_destroy(var boost_struct : DescriptorImageInfo)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+//
+// DescriptorPoolSize
+//
+
+struct DescriptorPoolSize
+    type_ : VkDescriptorType
+    descriptor_count : uint
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : DescriptorPoolSize
+) : VkDescriptorPoolSize
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    return <- [[ VkDescriptorPoolSize
+        type_ = boost_value_to_vk(boost_struct.type_),
+        descriptorCount = boost_value_to_vk(boost_struct.descriptor_count)
+    ]]
+
+def vk_view_destroy(var boost_struct : DescriptorPoolSize)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -2755,6 +3026,72 @@ def vk_view_destroy(var boost_struct : ComputePipelineCreateInfo)
     boost_struct.stage |> vk_view_destroy()
     unsafe
         delete boost_struct._vk_view_p_stage
+    boost_struct._vk_view__active = false
+
+//
+// DescriptorPoolCreateInfo
+//
+
+struct DescriptorPoolCreateInfo
+    flags : uint
+    max_sets : uint
+    pool_sizes : array<DescriptorPoolSize>
+    _vk_view_pool_sizes : array<VkDescriptorPoolSize>
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : DescriptorPoolCreateInfo
+) : VkDescriptorPoolCreateInfo
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    let vk_pool_size_count = uint(boost_struct.pool_sizes |> length())
+    boost_struct._vk_view_pool_sizes <- [{
+        for item in boost_struct.pool_sizes ;
+        item |> vk_view_create_unsafe()}]
+    return <- [[ VkDescriptorPoolCreateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO,
+        flags = boost_value_to_vk(boost_struct.flags),
+        maxSets = boost_value_to_vk(boost_struct.max_sets),
+        poolSizeCount = vk_pool_size_count,
+        pPoolSizes = array_addr_unsafe(boost_struct._vk_view_pool_sizes)
+    ]]
+
+def vk_view_destroy(var boost_struct : DescriptorPoolCreateInfo)
+    assert(boost_struct._vk_view__active)
+    for item in boost_struct.pool_sizes
+        item |> vk_view_destroy()
+    delete boost_struct._vk_view_pool_sizes
+    boost_struct._vk_view__active = false
+
+//
+// DescriptorSetAllocateInfo
+//
+
+struct DescriptorSetAllocateInfo
+    descriptor_pool : DescriptorPool
+    set_layouts : array<DescriptorSetLayout>
+    _vk_view_set_layouts : array<VkDescriptorSetLayout>
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : DescriptorSetAllocateInfo
+) : VkDescriptorSetAllocateInfo
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    let vk_descriptor_set_count = uint(boost_struct.set_layouts |> length())
+    boost_struct._vk_view_set_layouts <- [{
+        for item in boost_struct.set_layouts ;
+        item |> boost_value_to_vk()}]
+    return <- [[ VkDescriptorSetAllocateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO,
+        descriptorPool = boost_value_to_vk(boost_struct.descriptor_pool),
+        descriptorSetCount = vk_descriptor_set_count,
+        pSetLayouts = array_addr_unsafe(boost_struct._vk_view_set_layouts)
+    ]]
+
+def vk_view_destroy(var boost_struct : DescriptorSetAllocateInfo)
+    assert(boost_struct._vk_view__active)
+    delete boost_struct._vk_view_set_layouts
     boost_struct._vk_view__active = false
 
 //
@@ -3804,6 +4141,64 @@ def vk_view_destroy(var boost_struct : RenderPassBeginInfo)
     boost_struct._vk_view__active = false
 
 //
+// WriteDescriptorSet
+//
+
+struct WriteDescriptorSet
+    dst_set : DescriptorSet
+    dst_binding : uint
+    dst_array_element : uint
+    descriptor_type : VkDescriptorType
+    image_info : array<DescriptorImageInfo>
+    buffer_info : array<DescriptorBufferInfo>
+    texel_buffer_view : array<BufferView>
+    _vk_view_image_info : array<VkDescriptorImageInfo>
+    _vk_view_buffer_info : array<VkDescriptorBufferInfo>
+    _vk_view_texel_buffer_view : array<VkBufferView>
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : WriteDescriptorSet
+) : VkWriteDescriptorSet
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    var vk_descriptor_count : uint
+    vk_descriptor_count = max(vk_descriptor_count, uint(boost_struct.image_info |> length()))
+    vk_descriptor_count = max(vk_descriptor_count, uint(boost_struct.buffer_info |> length()))
+    vk_descriptor_count = max(vk_descriptor_count, uint(boost_struct.texel_buffer_view |> length()))
+    boost_struct._vk_view_image_info <- [{
+        for item in boost_struct.image_info ;
+        item |> vk_view_create_unsafe()}]
+    boost_struct._vk_view_buffer_info <- [{
+        for item in boost_struct.buffer_info ;
+        item |> vk_view_create_unsafe()}]
+    boost_struct._vk_view_texel_buffer_view <- [{
+        for item in boost_struct.texel_buffer_view ;
+        item |> boost_value_to_vk()}]
+    return <- [[ VkWriteDescriptorSet
+        sType = VkStructureType VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET,
+        dstSet = boost_value_to_vk(boost_struct.dst_set),
+        dstBinding = boost_value_to_vk(boost_struct.dst_binding),
+        dstArrayElement = boost_value_to_vk(boost_struct.dst_array_element),
+        descriptorCount = vk_descriptor_count,
+        descriptorType = boost_value_to_vk(boost_struct.descriptor_type),
+        pImageInfo = array_addr_unsafe(boost_struct._vk_view_image_info),
+        pBufferInfo = array_addr_unsafe(boost_struct._vk_view_buffer_info),
+        pTexelBufferView = array_addr_unsafe(boost_struct._vk_view_texel_buffer_view)
+    ]]
+
+def vk_view_destroy(var boost_struct : WriteDescriptorSet)
+    assert(boost_struct._vk_view__active)
+    for item in boost_struct.image_info
+        item |> vk_view_destroy()
+    delete boost_struct._vk_view_image_info
+    for item in boost_struct.buffer_info
+        item |> vk_view_destroy()
+    delete boost_struct._vk_view_buffer_info
+    delete boost_struct._vk_view_texel_buffer_view
+    boost_struct._vk_view__active = false
+
+//
 // Buffer
 //
 
@@ -3829,7 +4224,7 @@ def create_buffer__inner(
 ) : Buffer
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
-    defer() <| ${ create_info |> vk_view_destroy(); }
+    defer() <| { create_info |> vk_view_destroy(); }
     var vk_buffer : VkBuffer
     var result_ = VkResult VK_SUCCESS
 
@@ -3878,6 +4273,80 @@ def finalize(var handle : Buffer explicit)
     memzero(handle)
 
 //
+// BufferView
+//
+
+struct BufferView
+    buffer_view : VkBufferView
+    _needs_delete : bool
+    _device : VkDevice
+
+def boost_value_to_vk(b : BufferView) : VkBufferView
+    return b.buffer_view
+
+def boost_value_to_vk(b : BufferView ?) : VkBufferView ?
+    return b?.buffer_view
+
+def vk_value_to_boost(v : VkBufferView) : BufferView
+    return [[ BufferView buffer_view=v ]]
+
+[private]
+def create_buffer_view__inner(
+    device : Device = [[ Device ]];
+    var create_info : BufferViewCreateInfo = [[ BufferViewCreateInfo ]];
+    var result : VkResult? = [[VkResult?]]
+) : BufferView
+
+    var vk_create_info <- create_info |> vk_view_create_unsafe()
+    defer() <| { create_info |> vk_view_destroy(); }
+    var vk_view : VkBufferView
+    var result_ = VkResult VK_SUCCESS
+
+    result ?? result_ = vkCreateBufferView(
+        boost_value_to_vk(device),
+        safe_addr(vk_create_info),
+        null,
+        safe_addr(vk_view)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+    return vk_value_to_boost(vk_view)
+
+def create_buffer_view(
+    device : Device = [[ Device ]];
+    var create_info : BufferViewCreateInfo = [[ BufferViewCreateInfo ]];
+    var result : VkResult? = [[VkResult?]]
+) : BufferView
+
+    var handle <- create_buffer_view__inner(
+        device,
+        create_info,
+        result
+    )
+    handle._needs_delete = true
+    handle._device = boost_value_to_vk(device)
+    return <- handle
+
+[private]
+def destroy_buffer_view(
+    device : Device = [[ Device ]];
+    buffer_view : BufferView = [[ BufferView ]]
+) : void
+
+    vkDestroyBufferView(
+        boost_value_to_vk(device),
+        boost_value_to_vk(buffer_view),
+        null
+    )
+
+def finalize(var handle : BufferView explicit)
+    if handle._needs_delete
+        destroy_buffer_view(
+            vk_value_to_boost(handle._device),
+            vk_value_to_boost(handle.buffer_view)
+        )
+    memzero(handle)
+
+//
 // CommandBuffer
 //
 
@@ -3893,75 +4362,6 @@ def boost_value_to_vk(b : CommandBuffer ?) : VkCommandBuffer ?
 
 def vk_value_to_boost(v : VkCommandBuffer) : CommandBuffer
     return [[ CommandBuffer command_buffer=v ]]
-
-//
-// Device
-//
-
-struct Device
-    device : VkDevice
-    _needs_delete : bool
-
-def boost_value_to_vk(b : Device) : VkDevice
-    return b.device
-
-def boost_value_to_vk(b : Device ?) : VkDevice ?
-    return b?.device
-
-def vk_value_to_boost(v : VkDevice) : Device
-    return [[ Device device=v ]]
-
-[private]
-def create_device__inner(
-    physical_device : PhysicalDevice = [[ PhysicalDevice ]];
-    var create_info : DeviceCreateInfo = [[ DeviceCreateInfo ]];
-    var result : VkResult? = [[VkResult?]]
-) : Device
-
-    var vk_create_info <- create_info |> vk_view_create_unsafe()
-    defer() <| ${ create_info |> vk_view_destroy(); }
-    var vk_device : VkDevice
-    var result_ = VkResult VK_SUCCESS
-
-    result ?? result_ = vkCreateDevice(
-        boost_value_to_vk(physical_device),
-        safe_addr(vk_create_info),
-        null,
-        safe_addr(vk_device)
-    )
-    assert(result_ == VkResult VK_SUCCESS)
-    return vk_value_to_boost(vk_device)
-
-def create_device(
-    physical_device : PhysicalDevice = [[ PhysicalDevice ]];
-    var create_info : DeviceCreateInfo = [[ DeviceCreateInfo ]];
-    var result : VkResult? = [[VkResult?]]
-) : Device
-
-    var handle <- create_device__inner(
-        physical_device,
-        create_info,
-        result
-    )
-    handle._needs_delete = true
-    return <- handle
-
-[private]
-def destroy_device(
-    device : Device = [[ Device ]]
-) : void
-
-    vkDestroyDevice(
-        boost_value_to_vk(device),
-        null
-    )
-
-def finalize(var handle : Device explicit)
-    if handle._needs_delete
-        destroy_device(
-            vk_value_to_boost(handle.device)
-        )
-    memzero(handle)
 
 //
 // CommandPool
@@ -3989,7 +4389,7 @@ def create_command_pool__inner(
 ) : CommandPool
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
-    defer() <| ${ create_info |> vk_view_destroy(); }
+    defer() <| { create_info |> vk_view_destroy(); }
     var vk_command_pool : VkCommandPool
     var result_ = VkResult VK_SUCCESS
 
@@ -4038,6 +4438,97 @@ def finalize(var handle : CommandPool explicit)
     memzero(handle)
 
 //
+// DescriptorPool
+//
+
+struct DescriptorPool
+    descriptor_pool : VkDescriptorPool
+    _needs_delete : bool
+    _device : VkDevice
+
+def boost_value_to_vk(b : DescriptorPool) : VkDescriptorPool
+    return b.descriptor_pool
+
+def boost_value_to_vk(b : DescriptorPool ?) : VkDescriptorPool ?
+    return b?.descriptor_pool
+
+def vk_value_to_boost(v : VkDescriptorPool) : DescriptorPool
+    return [[ DescriptorPool descriptor_pool=v ]]
+
+[private]
+def create_descriptor_pool__inner(
+    device : Device = [[ Device ]];
+    var create_info : DescriptorPoolCreateInfo = [[ DescriptorPoolCreateInfo ]];
+    var result : VkResult? = [[VkResult?]]
+) : DescriptorPool
+
+    var vk_create_info <- create_info |> vk_view_create_unsafe()
+    defer() <| { create_info |> vk_view_destroy(); }
+    var vk_descriptor_pool : VkDescriptorPool
+    var result_ = VkResult VK_SUCCESS
+
+    result ?? result_ = vkCreateDescriptorPool(
+        boost_value_to_vk(device),
+        safe_addr(vk_create_info),
+        null,
+        safe_addr(vk_descriptor_pool)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+    return vk_value_to_boost(vk_descriptor_pool)
+
+def create_descriptor_pool(
+    device : Device = [[ Device ]];
+    var create_info : DescriptorPoolCreateInfo = [[ DescriptorPoolCreateInfo ]];
+    var result : VkResult? = [[VkResult?]]
+) : DescriptorPool
+
+    var handle <- create_descriptor_pool__inner(
+        device,
+        create_info,
+        result
+    )
+    handle._needs_delete = true
+    handle._device = boost_value_to_vk(device)
+    return <- handle
+
+[private]
+def destroy_descriptor_pool(
+    device : Device = [[ Device ]];
+    descriptor_pool : DescriptorPool = [[ DescriptorPool ]]
+) : void
+
+    vkDestroyDescriptorPool(
+        boost_value_to_vk(device),
+        boost_value_to_vk(descriptor_pool),
+        null
+    )
+
+def finalize(var handle : DescriptorPool explicit)
+    if handle._needs_delete
+        destroy_descriptor_pool(
+            vk_value_to_boost(handle._device),
+            vk_value_to_boost(handle.descriptor_pool)
+        )
+    memzero(handle)
+
+//
+// DescriptorSet
+//
+
+struct DescriptorSet
+    descriptor_set : VkDescriptorSet
+    _needs_delete : bool
+
+def boost_value_to_vk(b : DescriptorSet) : VkDescriptorSet
+    return b.descriptor_set
+
+def boost_value_to_vk(b : DescriptorSet ?) : VkDescriptorSet ?
+    return b?.descriptor_set
+
+def vk_value_to_boost(v : VkDescriptorSet) : DescriptorSet
+    return [[ DescriptorSet descriptor_set=v ]]
+
+//
 // DescriptorSetLayout
 //
 
@@ -4063,7 +4554,7 @@ def create_descriptor_set_layout__inner(
 ) : DescriptorSetLayout
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
-    defer() <| ${ create_info |> vk_view_destroy(); }
+    defer() <| { create_info |> vk_view_destroy(); }
     var vk_set_layout : VkDescriptorSetLayout
     var result_ = VkResult VK_SUCCESS
 
@@ -4112,6 +4603,75 @@ def finalize(var handle : DescriptorSetLayout explicit)
     memzero(handle)
 
 //
+// Device
+//
+
+struct Device
+    device : VkDevice
+    _needs_delete : bool
+
+def boost_value_to_vk(b : Device) : VkDevice
+    return b.device
+
+def boost_value_to_vk(b : Device ?) : VkDevice ?
+    return b?.device
+
+def vk_value_to_boost(v : VkDevice) : Device
+    return [[ Device device=v ]]
+
+[private]
+def create_device__inner(
+    physical_device : PhysicalDevice = [[ PhysicalDevice ]];
+    var create_info : DeviceCreateInfo = [[ DeviceCreateInfo ]];
+    var result : VkResult? = [[VkResult?]]
+) : Device
+
+    var vk_create_info <- create_info |> vk_view_create_unsafe()
+    defer() <| { create_info |> vk_view_destroy(); }
+    var vk_device : VkDevice
+    var result_ = VkResult VK_SUCCESS
+
+    result ?? result_ = vkCreateDevice(
+        boost_value_to_vk(physical_device),
+        safe_addr(vk_create_info),
+        null,
+        safe_addr(vk_device)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+    return vk_value_to_boost(vk_device)
+
+def create_device(
+    physical_device : PhysicalDevice = [[ PhysicalDevice ]];
+    var create_info : DeviceCreateInfo = [[ DeviceCreateInfo ]];
+    var result : VkResult? = [[VkResult?]]
+) : Device
+
+    var handle <- create_device__inner(
+        physical_device,
+        create_info,
+        result
+    )
+    handle._needs_delete = true
+    return <- handle
+
+[private]
+def destroy_device(
+    device : Device = [[ Device ]]
+) : void
+
+    vkDestroyDevice(
+        boost_value_to_vk(device),
+        null
+    )
+
+def finalize(var handle : Device explicit)
+    if handle._needs_delete
+        destroy_device(
+            vk_value_to_boost(handle.device)
+        )
+    memzero(handle)
+
+//
 // Fence
 //
 
@@ -4137,7 +4697,7 @@ def create_fence__inner(
 ) : Fence
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
-    defer() <| ${ create_info |> vk_view_destroy(); }
+    defer() <| { create_info |> vk_view_destroy(); }
     var vk_fence : VkFence
     var result_ = VkResult VK_SUCCESS
 
@@ -4211,7 +4771,7 @@ def create_framebuffer__inner(
 ) : Framebuffer
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
-    defer() <| ${ create_info |> vk_view_destroy(); }
+    defer() <| { create_info |> vk_view_destroy(); }
     var vk_framebuffer : VkFramebuffer
     var result_ = VkResult VK_SUCCESS
 
@@ -4285,7 +4845,7 @@ def create_image__inner(
 ) : Image
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
-    defer() <| ${ create_info |> vk_view_destroy(); }
+    defer() <| { create_info |> vk_view_destroy(); }
     var vk_image : VkImage
     var result_ = VkResult VK_SUCCESS
 
@@ -4359,7 +4919,7 @@ def create_image_view__inner(
 ) : ImageView
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
-    defer() <| ${ create_info |> vk_view_destroy(); }
+    defer() <| { create_info |> vk_view_destroy(); }
     var vk_view : VkImageView
     var result_ = VkResult VK_SUCCESS
 
@@ -4431,7 +4991,7 @@ def create_instance__inner(
 ) : Instance
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
-    defer() <| ${ create_info |> vk_view_destroy(); }
+    defer() <| { create_info |> vk_view_destroy(); }
     var vk_instance : VkInstance
     var result_ = VkResult VK_SUCCESS
 
@@ -4490,23 +5050,6 @@ def vk_value_to_boost(v : VkPhysicalDevice) : PhysicalDevice
     return [[ PhysicalDevice physical_device=v ]]
 
 //
-// Queue
-//
-
-struct Queue
-    queue : VkQueue
-    _needs_delete : bool
-
-def boost_value_to_vk(b : Queue) : VkQueue
-    return b.queue
-
-def boost_value_to_vk(b : Queue ?) : VkQueue ?
-    return b?.queue
-
-def vk_value_to_boost(v : VkQueue) : Queue
-    return [[ Queue queue=v ]]
-
-//
 // PipelineCache
 //
 
@@ -4532,7 +5075,7 @@ def create_pipeline_cache__inner(
 ) : PipelineCache
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
-    defer() <| ${ create_info |> vk_view_destroy(); }
+    defer() <| { create_info |> vk_view_destroy(); }
     var vk_pipeline_cache : VkPipelineCache
     var result_ = VkResult VK_SUCCESS
 
@@ -4606,7 +5149,7 @@ def create_pipeline_layout__inner(
 ) : PipelineLayout
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
-    defer() <| ${ create_info |> vk_view_destroy(); }
+    defer() <| { create_info |> vk_view_destroy(); }
     var vk_pipeline_layout : VkPipelineLayout
     var result_ = VkResult VK_SUCCESS
 
@@ -4655,6 +5198,23 @@ def finalize(var handle : PipelineLayout explicit)
     memzero(handle)
 
 //
+// Queue
+//
+
+struct Queue
+    queue : VkQueue
+    _needs_delete : bool
+
+def boost_value_to_vk(b : Queue) : VkQueue
+    return b.queue
+
+def boost_value_to_vk(b : Queue ?) : VkQueue ?
+    return b?.queue
+
+def vk_value_to_boost(v : VkQueue) : Queue
+    return [[ Queue queue=v ]]
+
+//
 // RenderPass
 //
 
@@ -4680,7 +5240,7 @@ def create_render_pass__inner(
 ) : RenderPass
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
-    defer() <| ${ create_info |> vk_view_destroy(); }
+    defer() <| { create_info |> vk_view_destroy(); }
     var vk_render_pass : VkRenderPass
     var result_ = VkResult VK_SUCCESS
 
@@ -4754,7 +5314,7 @@ def create_sampler__inner(
 ) : Sampler
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
-    defer() <| ${ create_info |> vk_view_destroy(); }
+    defer() <| { create_info |> vk_view_destroy(); }
     var vk_sampler : VkSampler
     var result_ = VkResult VK_SUCCESS
 
@@ -4828,7 +5388,7 @@ def create_semaphore__inner(
 ) : Semaphore
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
-    defer() <| ${ create_info |> vk_view_destroy(); }
+    defer() <| { create_info |> vk_view_destroy(); }
     var vk_semaphore : VkSemaphore
     var result_ = VkResult VK_SUCCESS
 
@@ -4902,7 +5462,7 @@ def create_shader_module__inner(
 ) : ShaderModule
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
-    defer() <| ${ create_info |> vk_view_destroy(); }
+    defer() <| { create_info |> vk_view_destroy(); }
     var vk_shader_module : VkShaderModule
     var result_ = VkResult VK_SUCCESS
 
@@ -4976,7 +5536,7 @@ def create_swapchain_khr__inner(
 ) : SwapchainKHR
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
-    defer() <| ${ create_info |> vk_view_destroy(); }
+    defer() <| { create_info |> vk_view_destroy(); }
     var vk_swapchain : VkSwapchainKHR
     var result_ = VkResult VK_SUCCESS
 
@@ -5058,7 +5618,7 @@ def create_graphics_pipelines__inner(
             item |> vk_view_destroy()
         delete vk_create_infos
     var vk_pipelines : array<VkPipeline>
-    defer() <| ${ delete vk_pipelines; }
+    defer() <| { delete vk_pipelines; }
     var result_ = VkResult VK_SUCCESS
 
     vk_pipelines |> resize(int(vk_createInfoCount))
@@ -5107,7 +5667,7 @@ def create_compute_pipelines__inner(
             item |> vk_view_destroy()
         delete vk_create_infos
     var vk_pipelines : array<VkPipeline>
-    defer() <| ${ delete vk_pipelines; }
+    defer() <| { delete vk_pipelines; }
     var result_ = VkResult VK_SUCCESS
 
     vk_pipelines |> resize(int(vk_createInfoCount))
@@ -5186,7 +5746,7 @@ def allocate_memory__inner(
 ) : DeviceMemory
 
     var vk_allocate_info <- allocate_info |> vk_view_create_unsafe()
-    defer() <| ${ allocate_info |> vk_view_destroy(); }
+    defer() <| { allocate_info |> vk_view_destroy(); }
     var vk_memory : VkDeviceMemory
     var result_ = VkResult VK_SUCCESS
 
