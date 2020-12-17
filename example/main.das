@@ -143,6 +143,51 @@ def create_example_draw_commands(
     return <- cmd_bufs
 
 
+struct MemoryBackedImage
+    image : Image
+    memory : DeviceMemory
+
+
+def finalize(var b: MemoryBackedImage explicit)
+    delete b.memory
+    delete b.image
+    memzero(b)
+
+
+def create_memory_backed_image(
+    device      : Device;
+    phys_dev    : PhysicalDevice;
+    width       : int;
+    height      : int;
+    format      : VkFormat;
+    tiling      : VkImageTiling;
+    usage       : uint;
+    mem_props   : uint
+) : MemoryBackedImage
+    var created = false
+    var mbi : MemoryBackedImage
+    mbi.image <- device |> create_image( [[ ImageCreateInfo
+        image_type = VkImageType VK_IMAGE_TYPE_2D,
+        extent = [[Extent3D width=width, height=height, depth=1u]],
+        mip_levels = 1u,
+        array_layers = 1u
+        format = format,
+        tiling = tiling,
+    imageInfo.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+    imageInfo.usage = usage;
+    imageInfo.samples = VK_SAMPLE_COUNT_1_BIT;
+    imageInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
+*/
+    device |> find_buffer_memory_type(phys_dev, mbb.buffer, mem_props
+    ) <| $(mem_type, mem_size)
+        mbb.memory <- device |> allocate_memory([[MemoryAllocateInfo
+            allocation_size=mem_size, memory_type_index=mem_type]])
+        device |> bind_buffer_memory(mbb.buffer, mbb.memory)
+        created = true
+    assert(created)
+    return <- mbi
+
+
 struct MemoryBackedBuffer
     buffer : Buffer
     memory : DeviceMemory
