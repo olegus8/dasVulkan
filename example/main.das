@@ -165,7 +165,6 @@ def create_memory_backed_image(
     mem_props   : uint
 ) : MemoryBackedImage
 
-    var created = false
     var mbi : MemoryBackedImage
     mbi.image <- device |> create_image( [[ ImageCreateInfo
         image_type = VkImageType VK_IMAGE_TYPE_2D,
@@ -178,13 +177,6 @@ def create_memory_backed_image(
         usage = usage,
         samples = VkSampleCountFlagBits VK_SAMPLE_COUNT_1_BIT,
         sharing_mode = VkSharingMode VK_SHARING_MODE_EXCLUSIVE]])
-    device |> find_buffer_memory_type(phys_dev, mbb.buffer, mem_props
-    ) <| $(mem_type, mem_size)
-        mbb.memory <- device |> allocate_memory([[MemoryAllocateInfo
-            allocation_size=mem_size, memory_type_index=mem_type]])
-        device |> bind_buffer_memory(mbb.buffer, mbb.memory)
-        created = true
-    assert(created)
     return <- mbi
 
 
