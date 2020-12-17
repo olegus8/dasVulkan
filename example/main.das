@@ -134,13 +134,9 @@ def create_example_draw_commands(
                     sds.pipeline)
                 cmd_buf |> cmd_bind_vertex_buffer(vbuf)
                 
-                var dsets <- [{ auto[] weak_copy(dset) }]
-                cmd_bind_descriptor_sets([command_buffer = cmd_buf,
-                    pipeline_bind_point = (VkPipelineBindPoint
-                        VK_PIPELINE_BIND_POINT_GRAPHICS),
-                    layout = sis.pipeline_layout,
-                    descriptor_sets = dsets])
-                delete dsets
+                cmd_buf |> cmd_bind_descriptor_set(
+                    VkPipelineBindPoint VK_PIPELINE_BIND_POINT_GRAPHICS,
+                    sis.pipeline_layout, dset)
 
                 cmd_draw([command_buffer = cmd_buf,
                     vertex_count = uint(vertices_count),
