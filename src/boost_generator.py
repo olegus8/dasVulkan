@@ -852,7 +852,7 @@ class ParamBase(object):
                 return lines
             else:
                 assert_greater(len(self.__dyn_array_items_optional), 0)
-                lines = [f'var vk_{bname}']
+                lines = [f'var vk_{bname} : {vtype}']
                 for ar_items in self.__dyn_array_items_optional:
                     cur = 'boost_struct.' + ar_items._boost_struct_field_name
                     lines += [f'vk_{bname} = '
