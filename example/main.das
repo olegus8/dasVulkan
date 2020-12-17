@@ -547,19 +547,20 @@ def run_example
             glfwWaitEvents()
         sis.device |> device_wait_idle()
 
-        var sds <- create_swapchain_dependent_state(sis)
+        if true
+            var sds <- create_swapchain_dependent_state(sis)
+            defer() <| { delete sds; }
 
-        print("{sds.swapchain.framebuffers |> length()} " +
-            "images in swap chain\n")
+            print("{sds.swapchain.framebuffers |> length()} " +
+                "images in swap chain\n")
 
-        while keep_running
-            keep_running = sis.window.window |> glfwWindowShouldClose() == 0
-            glfwPollEvents()
-            if ! draw_frame(sis, sds)
-                break
+            while keep_running
+                keep_running = sis.window.window |> glfwWindowShouldClose()==0
+                glfwPollEvents()
+                if ! draw_frame(sis, sds)
+                    break
 
-        sis.device |> device_wait_idle()
-        delete sds
+            sis.device |> device_wait_idle()
 
 
 [export]
