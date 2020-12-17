@@ -259,10 +259,12 @@ struct SwapchainIndependentState
     vertices        : array<Vertex>
     vbuf            : MemoryBackedBuffer
     indices         : array<uint>
+    ibuf            : MemoryBackedBuffer
 
 
 def finalize(var s : SwapchainIndependentState explicit)
     s.device |> device_wait_idle()
+    delete s.ibuf
     delete s.indices
     delete s.vbuf
     delete s.vertices
