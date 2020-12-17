@@ -394,6 +394,20 @@ def present(device, queue, swapchain, img_i, sem_to_wait) : bool
     return false
 
 
+def update_uniform_buffer(
+    MemoryBackedBuffer ubuf;
+    int frames_since_start
+)
+    sis.device |> map_device_memory_to_array(
+        ubuf.memory, uint64(typeinfo(sizeof type<UniformBufferObject>)),
+        uint64(0), 0u
+    ) <| $(var mapped_ubos : array<UniformBufferObject>#)
+        mapped_ubos[0] <- [[ UniformBufferObject offset = float2(
+            0.5f*sin(float(frames_since_start)*2.0f*PI / 100.0f),
+            0.0f)
+        ]]
+
+
 def draw_frame(
     sis                     : SwapchainIndependentState;
     sds                     : SwapchainDependentState;
