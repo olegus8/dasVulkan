@@ -352,5 +352,8 @@ def add_boost_content(g):
     g.add_gen_func(name = 'vkResetFences',
         ).declare_array(count = 'fenceCount', items = 'pFences')
     g.add_gen_func(name = 'vkUnmapMemory')
+    g.add_gen_func(name = 'vkUpdateDescriptorSets',
+        ).declare_array(count = 'descriptorWriteCount', items = 'pDescriptorWrites',
+        ).declare_array(count = 'descriptorCopyCount', items = 'pDescriptorCopies')
     g.add_gen_func(name = 'vkWaitForFences',
         ).declare_array(count = 'fenceCount', items = 'pFences')
