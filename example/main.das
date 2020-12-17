@@ -301,9 +301,10 @@ def create_swapchain_independent_state(
     s.pipeline_layout <- s.device |> create_example_pipeline_layout(
         s.desc_set_layout)
     s.vertices <- [{auto[]
-        [[Vertex position=float2( 0.0f, -0.5f), color=float3(1f, 0f, 0f)]];
-        [[Vertex position=float2( 0.5f,  0.5f), color=float3(0f, 1f, 0f)]];
-        [[Vertex position=float2(-0.5f,  0.5f), color=float3(0f, 0f, 1f)]]
+        [[Vertex position=float2(-0.5f, -0.5f), color=float3(1f, 0f, 0f)]];
+        [[Vertex position=float2( 0.5f, -0.5f), color=float3(0f, 1f, 0f)]];
+        [[Vertex position=float2( 0.5f,  0.5f), color=float3(0f, 0f, 1f)]]
+        [[Vertex position=float2(-0.5f,  0.5f), color=float3(1f, 1f, 1f)]]
     }]
     s.vbuf <- create_example_vertex_buffer(s)
     return <- s
