@@ -485,7 +485,7 @@ def update_uniform_buffer(
 
 def draw_frame(
     sis : SwapchainIndependentState;
-    sds : SwapchainDependentState
+    var sds : SwapchainDependentState
 )
     let frame = sds.frames_since_start % MAX_FRAMES_IN_FLIGHT
     sis.device |> wait_for_fence(sds.frame_fences[frame], ULONG_MAX)
