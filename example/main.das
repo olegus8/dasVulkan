@@ -134,7 +134,7 @@ def create_example_draw_commands(
                     sis.pipeline_layout, dset)
 
                 cmd_draw([command_buffer = cmd_buf,
-                    vertex_count = uint(vertices_count),
+                    vertex_count = uint(sis.vertices |> length()),
                     instance_count = 1u])
     return <- cmd_bufs
 
