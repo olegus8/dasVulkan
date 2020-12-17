@@ -578,6 +578,20 @@ def get_buffer_memory_requirements(
     )
     return <- vk_value_to_boost(vk_memory_requirements)
 
+def get_image_memory_requirements(
+    device : Device = [[ Device ]];
+    image : Image = [[ Image ]]
+) : MemoryRequirements
+
+    var vk_memory_requirements : VkMemoryRequirements
+
+    vkGetImageMemoryRequirements(
+        boost_value_to_vk(device),
+        boost_value_to_vk(image),
+        safe_addr(vk_memory_requirements)
+    )
+    return <- vk_value_to_boost(vk_memory_requirements)
+
 def get_physical_device_properties(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]]
 ) : PhysicalDeviceProperties

@@ -37,6 +37,19 @@ def find_buffer_memory_type(
         b |> invoke(mem_type, reqs.size)
 
 
+def find_image_memory_type(
+    device      : Device;
+    phys_dev    : PhysicalDevice;
+    image       : Image;
+    mem_props   : uint;
+    b : block<(mem_type:uint; mem_size:uint64)>
+)
+    let reqs <- device |> get_image_memory_requirements(image)
+    phys_dev |> find_memory_type(reqs.memory_type_bits, mem_props
+    ) <| $(mem_type)
+        b |> invoke(mem_type, reqs.size)
+
+
 def map_device_memory_to_array(
     device  : Device;
     memory  : DeviceMemory;
