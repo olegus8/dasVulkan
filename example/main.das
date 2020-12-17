@@ -128,6 +128,10 @@ def create_example_draw_commands(
                     VkPipelineBindPoint VK_PIPELINE_BIND_POINT_GRAPHICS,
                     sds.pipeline)
                 cmd_buf |> cmd_bind_vertex_buffer(sis.vbuf.buffer)
+                cmd_bind_index_buffer([
+                    command_buffer = cmd_buf,
+                    buffer = sis.ibuf.buffer,
+                    index_type = VkIndexType VK_INDEX_TYPE_UINT32])
                 
                 cmd_buf |> cmd_bind_descriptor_set(
                     VkPipelineBindPoint VK_PIPELINE_BIND_POINT_GRAPHICS,

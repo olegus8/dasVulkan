@@ -311,6 +311,20 @@ def cmd_bind_descriptor_sets(
         array_addr_unsafe(vk_dynamic_offsets)
     )
 
+def cmd_bind_index_buffer(
+    command_buffer : CommandBuffer = [[ CommandBuffer ]];
+    buffer : Buffer = [[ Buffer ]];
+    offset : uint64 = [[ uint64 ]];
+    index_type : VkIndexType = [[ VkIndexType ]]
+) : void
+
+    vkCmdBindIndexBuffer(
+        boost_value_to_vk(command_buffer),
+        boost_value_to_vk(buffer),
+        boost_value_to_vk(offset),
+        boost_value_to_vk(index_type)
+    )
+
 def cmd_bind_pipeline(
     command_buffer : CommandBuffer = [[ CommandBuffer ]];
     pipeline_bind_point : VkPipelineBindPoint = [[ VkPipelineBindPoint ]];
