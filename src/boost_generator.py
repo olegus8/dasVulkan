@@ -855,7 +855,8 @@ class ParamBase(object):
                 lines = [f'var vk_{bname}']
                 for ar_items in self.__dyn_array_items_optional:
                     cur = 'boost_struct.' + ar_items._boost_struct_field_name
-                    lines += [f'vk_{bname} = max(vk_{bname}, {cur})']
+                    lines += [f'vk_{bname} = '
+                        f'max(vk_{bname}, {vtype}({cur} |> length()))']
                 return lines
         elif self.vk_is_dyn_array_items:
             adr = f'array_addr_unsafe(boost_struct.{bname})'

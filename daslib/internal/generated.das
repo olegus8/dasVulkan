@@ -2262,6 +2262,90 @@ def vk_view_destroy(var boost_struct : CommandPoolCreateInfo)
     boost_struct._vk_view__active = false
 
 //
+// CopyDescriptorSet
+//
+
+struct CopyDescriptorSet
+    src_set : DescriptorSet
+    src_binding : uint
+    src_array_element : uint
+    dst_set : DescriptorSet
+    dst_binding : uint
+    dst_array_element : uint
+    descriptor_count : uint
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : CopyDescriptorSet
+) : VkCopyDescriptorSet
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    return <- [[ VkCopyDescriptorSet
+        sType = VkStructureType VK_STRUCTURE_TYPE_COPY_DESCRIPTOR_SET,
+        srcSet = boost_value_to_vk(boost_struct.src_set),
+        srcBinding = boost_value_to_vk(boost_struct.src_binding),
+        srcArrayElement = boost_value_to_vk(boost_struct.src_array_element),
+        dstSet = boost_value_to_vk(boost_struct.dst_set),
+        dstBinding = boost_value_to_vk(boost_struct.dst_binding),
+        dstArrayElement = boost_value_to_vk(boost_struct.dst_array_element),
+        descriptorCount = boost_value_to_vk(boost_struct.descriptor_count)
+    ]]
+
+def vk_view_destroy(var boost_struct : CopyDescriptorSet)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+//
+// DescriptorBufferInfo
+//
+
+struct DescriptorBufferInfo
+    buffer : Buffer
+    offset : uint64
+    range_ : uint64
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : DescriptorBufferInfo
+) : VkDescriptorBufferInfo
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    return <- [[ VkDescriptorBufferInfo
+        buffer = boost_value_to_vk(boost_struct.buffer),
+        offset = boost_value_to_vk(boost_struct.offset),
+        range_ = boost_value_to_vk(boost_struct.range_)
+    ]]
+
+def vk_view_destroy(var boost_struct : DescriptorBufferInfo)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+//
+// DescriptorImageInfo
+//
+
+struct DescriptorImageInfo
+    sampler : Sampler
+    image_view : ImageView
+    image_layout : VkImageLayout
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : DescriptorImageInfo
+) : VkDescriptorImageInfo
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    return <- [[ VkDescriptorImageInfo
+        sampler = boost_value_to_vk(boost_struct.sampler),
+        imageView = boost_value_to_vk(boost_struct.image_view),
+        imageLayout = boost_value_to_vk(boost_struct.image_layout)
+    ]]
+
+def vk_view_destroy(var boost_struct : DescriptorImageInfo)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+//
 // DescriptorPoolSize
 //
 
@@ -3994,6 +4078,64 @@ def vk_view_destroy(var boost_struct : RenderPassBeginInfo)
     boost_struct.render_area |> vk_view_destroy()
     unsafe
         delete boost_struct._vk_view_p_render_area
+    boost_struct._vk_view__active = false
+
+//
+// WriteDescriptorSet
+//
+
+struct WriteDescriptorSet
+    dst_set : DescriptorSet
+    dst_binding : uint
+    dst_array_element : uint
+    descriptor_type : VkDescriptorType
+    image_info : array<DescriptorImageInfo>
+    buffer_info : array<DescriptorBufferInfo>
+    texel_buffer_view : array<BufferView>
+    _vk_view_image_info : array<VkDescriptorImageInfo>
+    _vk_view_buffer_info : array<VkDescriptorBufferInfo>
+    _vk_view_texel_buffer_view : array<VkBufferView>
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : WriteDescriptorSet
+) : VkWriteDescriptorSet
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    var vk_descriptor_count
+    vk_descriptor_count = max(vk_descriptor_count, boost_struct.image_info)
+    vk_descriptor_count = max(vk_descriptor_count, boost_struct.buffer_info)
+    vk_descriptor_count = max(vk_descriptor_count, boost_struct.texel_buffer_view)
+    boost_struct._vk_view_image_info <- [{
+        for item in boost_struct.image_info ;
+        item |> vk_view_create_unsafe()}]
+    boost_struct._vk_view_buffer_info <- [{
+        for item in boost_struct.buffer_info ;
+        item |> vk_view_create_unsafe()}]
+    boost_struct._vk_view_texel_buffer_view <- [{
+        for item in boost_struct.texel_buffer_view ;
+        item |> boost_value_to_vk()}]
+    return <- [[ VkWriteDescriptorSet
+        sType = VkStructureType VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET,
+        dstSet = boost_value_to_vk(boost_struct.dst_set),
+        dstBinding = boost_value_to_vk(boost_struct.dst_binding),
+        dstArrayElement = boost_value_to_vk(boost_struct.dst_array_element),
+        descriptorCount = vk_descriptor_count,
+        descriptorType = boost_value_to_vk(boost_struct.descriptor_type),
+        pImageInfo = array_addr_unsafe(boost_struct._vk_view_image_info),
+        pBufferInfo = array_addr_unsafe(boost_struct._vk_view_buffer_info),
+        pTexelBufferView = array_addr_unsafe(boost_struct._vk_view_texel_buffer_view)
+    ]]
+
+def vk_view_destroy(var boost_struct : WriteDescriptorSet)
+    assert(boost_struct._vk_view__active)
+    for item in boost_struct.image_info
+        item |> vk_view_destroy()
+    delete boost_struct._vk_view_image_info
+    for item in boost_struct.buffer_info
+        item |> vk_view_destroy()
+    delete boost_struct._vk_view_buffer_info
+    delete boost_struct._vk_view_texel_buffer_view
     boost_struct._vk_view__active = false
 
 //
