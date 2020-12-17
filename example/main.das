@@ -137,8 +137,8 @@ def create_example_draw_commands(
                     VkPipelineBindPoint VK_PIPELINE_BIND_POINT_GRAPHICS,
                     sis.pipeline_layout, dset)
 
-                cmd_draw([command_buffer = cmd_buf,
-                    vertex_count = uint(sis.vertices |> length()),
+                cmd_draw_indexed([command_buffer = cmd_buf,
+                    index_count = uint(sis.indices |> length()),
                     instance_count = 1u])
     return <- cmd_bufs
 

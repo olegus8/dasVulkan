@@ -400,6 +400,24 @@ def cmd_draw(
         boost_value_to_vk(first_instance)
     )
 
+def cmd_draw_indexed(
+    command_buffer : CommandBuffer = [[ CommandBuffer ]];
+    index_count : uint = [[ uint ]];
+    instance_count : uint = [[ uint ]];
+    first_index : uint = [[ uint ]];
+    vertex_offset : int = [[ int ]];
+    first_instance : uint = [[ uint ]]
+) : void
+
+    vkCmdDrawIndexed(
+        boost_value_to_vk(command_buffer),
+        boost_value_to_vk(index_count),
+        boost_value_to_vk(instance_count),
+        boost_value_to_vk(first_index),
+        boost_value_to_vk(vertex_offset),
+        boost_value_to_vk(first_instance)
+    )
+
 def cmd_end_render_pass(
     command_buffer : CommandBuffer = [[ CommandBuffer ]]
 ) : void
