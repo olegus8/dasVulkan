@@ -224,7 +224,7 @@ def allocate_descriptor_sets__inner(
     defer() <| { delete vk_descriptor_sets; }
     var result_ = VkResult VK_SUCCESS
 
-    vk_descriptor_sets |> resize(int(allocate_info.command_buffer_count))
+    vk_descriptor_sets |> resize(int(length(allocate_info.set_layouts)))
     result ?? result_ = vkAllocateDescriptorSets(
         boost_value_to_vk(device),
         safe_addr(vk_allocate_info),

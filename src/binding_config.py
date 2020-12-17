@@ -303,7 +303,7 @@ def add_boost_content(g):
         ).declare_array(count_expr = 'allocate_info.command_buffer_count', items = 'pCommandBuffers',
         ).declare_output(name = 'pCommandBuffers')
     g.add_gen_func(name = 'vkAllocateDescriptorSets', boost_name = 'allocate_descriptor_sets__inner', private = True,
-        ).declare_array(count_expr = 'allocate_info.command_buffer_count', items = 'pDescriptorSets',
+        ).declare_array(count_expr = 'length(allocate_info.set_layouts)', items = 'pDescriptorSets',
         ).declare_output(name = 'pDescriptorSets')
     g.add_gen_func(name = 'vkBeginCommandBuffer')
     g.add_gen_func(name = 'vkBindBufferMemory')
