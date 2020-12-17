@@ -326,7 +326,7 @@ struct SwapchainDependentState
 
 def finalize(var s : SwapchainDependentState explicit)
     s._device |> device_wait_idle()
-    delete s.imgs.used_by_frames
+    delete s.imgs_used_by_frames
     delete s.draw_cmds
     delete s.pipeline
     delete s.desc_sets
