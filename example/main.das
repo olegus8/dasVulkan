@@ -302,12 +302,14 @@ struct SwapchainDependentState
     img_avail_sems   : array<Semaphore>
     render_done_sems : array<Semaphore>
     frame_fences     : array<Fence>
+    uniform_bufs     : array<MemoryBackedBuffer>
     _device          : Device
 
 
 def finalize(var s : SwapchainDependentState explicit)
     s._device |> device_wait_idle()
     delete s.pipeline
+    delete s.uniform_bufs
     delete s.swapchain
     delete s.frame_fences
     delete s.render_done_sems
