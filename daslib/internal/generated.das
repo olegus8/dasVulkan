@@ -4103,9 +4103,9 @@ def vk_view_create_unsafe(var boost_struct : WriteDescriptorSet
     assert(!boost_struct._vk_view__active)
     boost_struct._vk_view__active = true
     var vk_descriptor_count
-    vk_descriptor_count = max(vk_descriptor_count, boost_struct.image_info)
-    vk_descriptor_count = max(vk_descriptor_count, boost_struct.buffer_info)
-    vk_descriptor_count = max(vk_descriptor_count, boost_struct.texel_buffer_view)
+    vk_descriptor_count = max(vk_descriptor_count, uint(boost_struct.image_info |> length()))
+    vk_descriptor_count = max(vk_descriptor_count, uint(boost_struct.buffer_info |> length()))
+    vk_descriptor_count = max(vk_descriptor_count, uint(boost_struct.texel_buffer_view |> length()))
     boost_struct._vk_view_image_info <- [{
         for item in boost_struct.image_info ;
         item |> vk_view_create_unsafe()}]
