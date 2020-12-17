@@ -532,7 +532,6 @@ def key_callback(
 
 
 def run_example
-
     var sis <- create_swapchain_independent_state(800, 600, "dasVulkanExample")
     defer() <| { delete sis; }
 
