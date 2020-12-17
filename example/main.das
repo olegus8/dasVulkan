@@ -398,10 +398,10 @@ def draw_frame(
     sis                     : SwapchainIndependentState;
     sds                     : SwapchainDependentState;
     cmd_bufs                : array<CommandBuffer>;
-    total_frame             : int;
+    frames_since_start      : int;
     var imgs_used_by_frames : array<int>
 )
-    let frame = total_frame % MAX_FRAMES_IN_FLIGHT
+    let frame = frames_since_start % MAX_FRAMES_IN_FLIGHT
     sis.device |> wait_for_fence(sds.frame_fences[frame], ULONG_MAX)
     var img_acquired = false
     var presented = false
@@ -417,7 +417,7 @@ def draw_frame(
         imgs_used_by_frames[img_i] = frame
 
         sis.device |> update_uniform_buffer(sds.uniform_bufs[img_i],
-            total_frame)
+            frames_since_start)
 
         sis.device |> reset_fence(sds.frame_fences[frame])
         sis.device |> submit_draw(sis.queue, cmd_bufs[img_i],
@@ -472,7 +472,7 @@ def run_example
         var draw_cmds <- create_example_draw_commands(
             sis, sds, vbuf.buffer, vertices |> length())
 
-        var frame = 0
+        var frames_since_start = 0
         var imgs_used_by_frames <- [{for x in sds.swapchain.framebuffers; -1}]
 
         while keep_running
@@ -482,7 +482,7 @@ def run_example
                 draw_cmds.command_buffers, frame, imgs_used_by_frames)
             if ! is_swapchain_good
                 break
-            frame += 1
+            frames_since_start += 1
 
         sis.device |> device_wait_idle()
         delete imgs_used_by_frames
