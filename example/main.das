@@ -315,6 +315,7 @@ def create_swapchain_independent_state(
         uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_VERTEX_BUFFER_BIT))
     s.ibuf <- s |> create_device_local_buffer(s.indices, 
         uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_INDEX_BUFFER_BIT))
+    return <- s
 
 
 struct SwapchainDependentState
