@@ -364,7 +364,7 @@ def create_example_descriptor_sets(
     ]]
     defer() <| { delete create_info; }
     var dsets <- sis.device |> allocate_descriptor_sets(create_info)
-    for dset, ubuf in dsets, ubufs
+    for dset, ubuf in dsets.descriptor_sets, ubufs
         var writes <- [{ auto[] [[ WriteDescriptorSet
             dst_set = weak_copy(dset),
             dst_binding = 0u,
