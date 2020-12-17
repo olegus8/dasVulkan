@@ -303,12 +303,14 @@ struct SwapchainDependentState
     render_done_sems : array<Semaphore>
     frame_fences     : array<Fence>
     uniform_bufs     : array<MemoryBackedBuffer>
+    desc_pool        : DescriptorPool
     _device          : Device
 
 
 def finalize(var s : SwapchainDependentState explicit)
     s._device |> device_wait_idle()
     delete s.pipeline
+    delete s.desc_pool
     delete s.uniform_bufs
     delete s.swapchain
     delete s.frame_fences
@@ -334,8 +336,24 @@ def create_swapchain_dependent_state(
         sis.render_pass)
     sds.uniform_bufs <- sis |> create_example_uniform_buffers(
         sds.swapchain.framebuffers)
+    sds.desc_pool <- sis |> create_example_descriptor_pool(
+        sds.swapchain.framebuffers)
     sds.pipeline <- sis |> create_example_graphics_pipeline()
     return <- sds
+
+
+def create_example_descriptor_pool(
+    sis : SwapchainIndependentState;
+    framebuffers : array<Framebuffer>
+) : DescriptorPool
+    var info <- [[ DescriptorPoolCreateInfo
+        pool_sizes <- [{ auto[] [[ DescriptorPoolSize
+            type_ = VkDescriptorType VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER,
+            descriptor_count = uint(framebuffers |> length()) }]
+        max_sets = uint(framebuffers |> length())
+    ]]
+    defer() <| { delete info; }
+    return <- sis.device |> create_descriptor_pool(info)
 
 
 def create_example_uniform_buffers(
