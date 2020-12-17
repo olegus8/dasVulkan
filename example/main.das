@@ -310,7 +310,6 @@ def create_swapchain_independent_state(
     }]
     s.vbuf <- create_example_vertex_buffer(s)
     s.indices <- [{auto[] 0u; 1u; 2u; 2u; 3u; 0u}]
-};
     return <- s
 
 
