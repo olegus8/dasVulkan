@@ -307,6 +307,7 @@ def add_boost_content(g):
         ).declare_output(name = 'pDescriptorSets')
     g.add_gen_func(name = 'vkBeginCommandBuffer')
     g.add_gen_func(name = 'vkBindBufferMemory')
+    g.add_gen_func(name = 'vkBindImageMemory')
     g.add_gen_func(name = 'vkCmdBeginRenderPass')
     g.add_gen_func(name = 'vkCmdBindDescriptorSets',
         ).declare_array(count = 'descriptorSetCount', items = 'pDescriptorSets',

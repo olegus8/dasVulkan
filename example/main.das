@@ -180,6 +180,9 @@ def create_memory_backed_image(
         sharing_mode = VkSharingMode VK_SHARING_MODE_EXCLUSIVE]])
     device |> find_image_memory_type(phys_dev, mbi.image, mem_props
     ) <| $(mem_type, mem_size)
+        mbi.memory <- device |> allocate_memory([[MemoryAllocateInfo
+            allocation_size=mem_size, memory_type_index=mem_type]])
+        device |> bind_image_memory(mbb.buffer, mbb.memory)
         created = true
     assert(created)
     return <- mbi
