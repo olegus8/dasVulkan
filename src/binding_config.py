@@ -107,6 +107,7 @@ def add_boost_content(g):
     for name in [
         'VkBuffer',
         'VkCommandBuffer',
+        'VkDescriptorSet',
         'VkDevice',
         'VkCommandPool',
         'VkDescriptorPool',
@@ -207,6 +208,8 @@ def add_boost_content(g):
     g.add_gen_struct(name='VkComputePipelineCreateInfo', vk_to_boost=False)
     g.add_gen_struct(name = 'VkDescriptorPoolCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'poolSizeCount', items = 'pPoolSizes')
+    g.add_gen_struct(name = 'VkDescriptorSetAllocateInfo ', vk_to_boost=False,
+        ).declare_array(count = 'descriptorSetCount', items = 'pSetLayouts')
     g.add_gen_struct(name = 'VkDescriptorSetLayoutBinding', vk_to_boost=False,
         ).declare_array(items = 'pImmutableSamplers')
     g.add_gen_struct(name = 'VkDescriptorSetLayoutCreateInfo', vk_to_boost=False,
@@ -290,6 +293,9 @@ def add_boost_content(g):
     g.add_gen_func(name = 'vkAllocateCommandBuffers', boost_name = 'allocate_command_buffers__inner', private = True,
         ).declare_array(count_expr = 'allocate_info.command_buffer_count', items = 'pCommandBuffers',
         ).declare_output(name = 'pCommandBuffers')
+    g.add_gen_func(name = 'vkAllocateDescriptorSets', boost_name = 'allocate_descriptor_sets__inner', private = True,
+        ).declare_array(count_expr = 'allocate_info.command_buffer_count', items = 'pDescriptorSets',
+        ).declare_output(name = 'pDescriptorSets')
     g.add_gen_func(name = 'vkBeginCommandBuffer')
     g.add_gen_func(name = 'vkBindBufferMemory')
     g.add_gen_func(name = 'vkCmdBeginRenderPass')
@@ -311,6 +317,8 @@ def add_boost_content(g):
         ).declare_output(name = 'pPhysicalDevices')
     g.add_gen_func(name = 'vkFreeCommandBuffers', private = True,
         ).declare_array(count = 'commandBufferCount', items = 'pCommandBuffers')
+    g.add_gen_func(name = 'vkFreeDescriptorSets', private = True,
+        ).declare_array(count = 'descriptorSetCount', items = 'pDescriptorSets')
     g.add_gen_func(name = 'vkGetDeviceQueue'
         ).declare_output(name = 'pQueue')
     g.add_gen_func(name = 'vkGetBufferMemoryRequirements'
