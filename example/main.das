@@ -119,7 +119,11 @@ def create_example_draw_commands(
         sis.cmd_pool, sds.swapchain.framebuffers |> length())
     var clear_values <- [{ auto[] [[VkClearValue]] }]
     defer() <| { delete clear_values; }
-    for cmd_buf, fbuf in cmd_bufs.command_buffers, sds.swapchain.framebuffers
+    for cmd_buf, fbuf, dset in (
+        cmd_bufs.command_buffers,
+        sds.swapchain.framebuffers,
+        sds.desc_sets.descriptor_sets
+    )
         cmd_buf |> record_command_buffer() <|
             cmd_buf |> record_render_pass(
                 sis.phys_dev, sis.window, sis.surface, sis.render_pass,
@@ -129,6 +133,15 @@ def create_example_draw_commands(
                     VkPipelineBindPoint VK_PIPELINE_BIND_POINT_GRAPHICS,
                     sds.pipeline)
                 cmd_buf |> cmd_bind_vertex_buffer(vbuf)
+                
+                var dsets <- [{ auto[] weak_copy(dset) }]
+                cmd_bind_descriptor_sets([command_buffer = cmd_buf,
+                    pipeline_bind_point = (VkPipelineBindPoint
+                        VK_PIPELINE_BIND_POINT_GRAPHICS),
+                    layout = sis.pipeline_layout,
+                    descriptor_sets = dsets])
+                delete dsets
+
                 cmd_draw([command_buffer = cmd_buf,
                     vertex_count = uint(vertices_count),
                     instance_count = 1u])
