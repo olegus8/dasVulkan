@@ -111,8 +111,8 @@ def create_example_graphics_pipeline(
 
 
 def create_example_draw_commands(
-    sis             : SwapchainIndependentState;
-    sds             : SwapchainDependentState
+    sis : SwapchainIndependentState;
+    sds : SwapchainDependentState
 ) : CommandBuffers
     var cmd_bufs <- sis.device |> allocate_command_buffers_primary(
         sis.cmd_pool, sds.swapchain.framebuffers |> length())
