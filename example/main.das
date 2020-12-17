@@ -173,30 +173,8 @@ def create_memory_backed_buffer(
 def create_example_vertex_buffer(
     sis : SwapchainIndependentState
 ) : MemoryBackedBuffer
-    let buf_size = typeinfo(sizeof type<Vertex>) * sis.vertices |> length()
-
-    var vbuf <- sis.device |> create_memory_backed_buffer(
-        sis.phys_dev, uint64(buf_size),
-        uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_TRANSFER_DST_BIT) |
-        uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_VERTEX_BUFFER_BIT),
-        uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT))
-
-    var staging <- sis.device |> create_memory_backed_buffer(
-        sis.phys_dev, uint64(buf_size),
-        uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_TRANSFER_SRC_BIT),
-        uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT)|
-        uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_COHERENT_BIT))
-    defer() <| { delete staging; }
-
-    sis.device |> map_device_memory_to_array(
-        staging.memory, uint64(buf_size), uint64(0), 0u
-    ) <| $(var mapped_vertices : array<Vertex>#)
-        for dst, src in mapped_vertices, sis.vertices
-            dst = src
-    sis.device |> copy_buffer_sync(
-        sis.cmd_pool, sis.queue, staging.buffer, vbuf.buffer, uint64(buf_size))
-
-    return <- vbuf
+    return <- sis |> create_device_local_buffer(sis.vertices,
+        uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_VERTEX_BUFFER_BIT))
 
 
 def create_example_index_buffer(
