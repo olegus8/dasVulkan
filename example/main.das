@@ -22,6 +22,14 @@ struct UniformBufferObject
     offset : float2
 
 
+def create_example_descriptor_set_layout(
+    sis : SwapchainIndependentState
+) : DescriptorSetLayout
+    var info <- [[ DescriptorSetLayoutCreateInfo
+    ]]
+    defer() <| { delete info; }
+
+
 def create_example_graphics_pipeline(
     sis : SwapchainIndependentState
 ) : Pipeline
@@ -77,7 +85,7 @@ def create_example_graphics_pipeline(
                 stage = VkShaderStageFlagBits VK_SHADER_STAGE_FRAGMENT_BIT]]
         }]
     ]]
-    defer() <| ${ delete create_info; }
+    defer() <| { delete create_info; }
 
     return <- create_graphics_pipeline([
         device=sis.device, create_info=create_info])
@@ -92,7 +100,7 @@ def create_example_draw_commands(
     var cmd_bufs <- sis.device |> allocate_command_buffers_primary(
         sis.cmd_pool, sds.swapchain.framebuffers |> length())
     var clear_values <- [{ auto[] [[VkClearValue]] }]
-    defer() <| ${ delete clear_values; }
+    defer() <| { delete clear_values; }
     for cmd_buf, fbuf in cmd_bufs.command_buffers, sds.swapchain.framebuffers
         cmd_buf |> record_command_buffer() <|
             cmd_buf |> record_render_pass(
@@ -157,7 +165,7 @@ def create_baked_vertex_buffer(
         uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_TRANSFER_SRC_BIT),
         uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT)|
         uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_COHERENT_BIT))
-    defer() <| ${ delete staging; }
+    defer() <| { delete staging; }
 
     sis.device |> map_device_memory_to_array(
         staging.memory, uint64(buf_size), uint64(0), 0u
@@ -208,7 +216,7 @@ def create_example_render_pass(
                 VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT)
         ]]}]
     ]]
-    defer() <| ${ delete create_info; }
+    defer() <| { delete create_info; }
     return <- device |> create_render_pass(create_info)
 
 
@@ -394,18 +402,18 @@ def run_example
         [[Vertex position=float2( 0.5f,  0.5f), color=float3(0f, 1f, 0f)]];
         [[Vertex position=float2(-0.5f,  0.5f), color=float3(0f, 0f, 1f)]]
     }]
-    defer() <| ${ delete vertices; }
+    defer() <| { delete vertices; }
 
     var sis <- create_swapchain_independent_state(800, 600, "dasVulkanExample")
-    defer() <| ${ delete sis; }
+    defer() <| { delete sis; }
 
     sis.window.window |> glfwSetKeyCallback(@@key_callback)
     var props <- sis.phys_dev |> get_physical_device_properties()
-    defer() <| ${ delete props ; }
+    defer() <| { delete props ; }
     print("Using {props.device_name}\n")
 
     var vbuf <- sis |> create_baked_vertex_buffer(vertices)
-    defer() <| ${ delete vbuf; }
+    defer() <| { delete vbuf; }
 
     var keep_running = true
     while keep_running // swapchain re-creation loop
