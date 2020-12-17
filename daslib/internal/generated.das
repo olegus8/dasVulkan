@@ -311,6 +311,20 @@ def cmd_bind_descriptor_sets(
         array_addr_unsafe(vk_dynamic_offsets)
     )
 
+def cmd_bind_index_buffer(
+    command_buffer : CommandBuffer = [[ CommandBuffer ]];
+    buffer : Buffer = [[ Buffer ]];
+    offset : uint64 = [[ uint64 ]];
+    index_type : VkIndexType = [[ VkIndexType ]]
+) : void
+
+    vkCmdBindIndexBuffer(
+        boost_value_to_vk(command_buffer),
+        boost_value_to_vk(buffer),
+        boost_value_to_vk(offset),
+        boost_value_to_vk(index_type)
+    )
+
 def cmd_bind_pipeline(
     command_buffer : CommandBuffer = [[ CommandBuffer ]];
     pipeline_bind_point : VkPipelineBindPoint = [[ VkPipelineBindPoint ]];
@@ -383,6 +397,24 @@ def cmd_draw(
         boost_value_to_vk(vertex_count),
         boost_value_to_vk(instance_count),
         boost_value_to_vk(first_vertex),
+        boost_value_to_vk(first_instance)
+    )
+
+def cmd_draw_indexed(
+    command_buffer : CommandBuffer = [[ CommandBuffer ]];
+    index_count : uint = [[ uint ]];
+    instance_count : uint = [[ uint ]];
+    first_index : uint = [[ uint ]];
+    vertex_offset : int = [[ int ]];
+    first_instance : uint = [[ uint ]]
+) : void
+
+    vkCmdDrawIndexed(
+        boost_value_to_vk(command_buffer),
+        boost_value_to_vk(index_count),
+        boost_value_to_vk(instance_count),
+        boost_value_to_vk(first_index),
+        boost_value_to_vk(vertex_offset),
         boost_value_to_vk(first_instance)
     )
 

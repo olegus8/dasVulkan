@@ -128,13 +128,17 @@ def create_example_draw_commands(
                     VkPipelineBindPoint VK_PIPELINE_BIND_POINT_GRAPHICS,
                     sds.pipeline)
                 cmd_buf |> cmd_bind_vertex_buffer(sis.vbuf.buffer)
+                cmd_bind_index_buffer([
+                    command_buffer = cmd_buf,
+                    buffer = sis.ibuf.buffer,
+                    index_type = VkIndexType VK_INDEX_TYPE_UINT32])
                 
                 cmd_buf |> cmd_bind_descriptor_set(
                     VkPipelineBindPoint VK_PIPELINE_BIND_POINT_GRAPHICS,
                     sis.pipeline_layout, dset)
 
-                cmd_draw([command_buffer = cmd_buf,
-                    vertex_count = uint(sis.vertices |> length()),
+                cmd_draw_indexed([command_buffer = cmd_buf,
+                    index_count = uint(sis.indices |> length()),
                     instance_count = 1u])
     return <- cmd_bufs
 
@@ -170,15 +174,16 @@ def create_memory_backed_buffer(
     return <- mbb
 
 
-def create_example_vertex_buffer(
-    sis : SwapchainIndependentState
+def create_device_local_buffer(
+    sis     : SwapchainIndependentState;
+    data    : array<auto(T)>;
+    usage   : uint
 ) : MemoryBackedBuffer
-    let buf_size = typeinfo(sizeof type<Vertex>) * sis.vertices |> length()
+    let buf_size = typeinfo(sizeof type<T>) * data |> length()
 
-    var vbuf <- sis.device |> create_memory_backed_buffer(
+    var buf <- sis.device |> create_memory_backed_buffer(
         sis.phys_dev, uint64(buf_size),
-        uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_TRANSFER_DST_BIT) |
-        uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_VERTEX_BUFFER_BIT),
+        usage | uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_TRANSFER_DST_BIT),
         uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT))
 
     var staging <- sis.device |> create_memory_backed_buffer(
@@ -190,13 +195,13 @@ def create_example_vertex_buffer(
 
     sis.device |> map_device_memory_to_array(
         staging.memory, uint64(buf_size), uint64(0), 0u
-    ) <| $(var mapped_vertices : array<Vertex>#)
-        for dst, src in mapped_vertices, sis.vertices
+    ) <| $(var mapped_data : array<T>#)
+        for dst, src in mapped_data, data
             dst = src
     sis.device |> copy_buffer_sync(
-        sis.cmd_pool, sis.queue, staging.buffer, vbuf.buffer, uint64(buf_size))
+        sis.cmd_pool, sis.queue, staging.buffer, buf.buffer, uint64(buf_size))
 
-    return <- vbuf
+    return <- buf
 
 
 def create_example_render_pass(
@@ -258,10 +263,14 @@ struct SwapchainIndependentState
     cmd_pool        : CommandPool
     vertices        : array<Vertex>
     vbuf            : MemoryBackedBuffer
+    indices         : array<uint>
+    ibuf            : MemoryBackedBuffer
 
 
 def finalize(var s : SwapchainIndependentState explicit)
     s.device |> device_wait_idle()
+    delete s.ibuf
+    delete s.indices
     delete s.vbuf
     delete s.vertices
     delete s.pipeline_layout
@@ -301,11 +310,15 @@ def create_swapchain_independent_state(
     s.pipeline_layout <- s.device |> create_example_pipeline_layout(
         s.desc_set_layout)
     s.vertices <- [{auto[]
-        [[Vertex position=float2( 0.0f, -0.5f), color=float3(1f, 0f, 0f)]];
-        [[Vertex position=float2( 0.5f,  0.5f), color=float3(0f, 1f, 0f)]];
-        [[Vertex position=float2(-0.5f,  0.5f), color=float3(0f, 0f, 1f)]]
-    }]
-    s.vbuf <- create_example_vertex_buffer(s)
+        [[Vertex position=float2(-0.5f, -0.5f), color=float3(1f, 0f, 0f)]];
+        [[Vertex position=float2( 0.5f, -0.5f), color=float3(0f, 1f, 0f)]];
+        [[Vertex position=float2( 0.5f,  0.5f), color=float3(0f, 0f, 1f)]];
+        [[Vertex position=float2(-0.5f,  0.5f), color=float3(1f, 1f, 1f)]]}]
+    s.indices <- [{auto[] 0u; 1u; 2u; 2u; 3u; 0u}]
+    s.vbuf <- s |> create_device_local_buffer(s.vertices,
+        uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_VERTEX_BUFFER_BIT))
+    s.ibuf <- s |> create_device_local_buffer(s.indices, 
+        uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_INDEX_BUFFER_BIT))
     return <- s
 
 
@@ -527,7 +540,6 @@ def key_callback(
 
 
 def run_example
-
     var sis <- create_swapchain_independent_state(800, 600, "dasVulkanExample")
     defer() <| { delete sis; }
 
@@ -543,19 +555,20 @@ def run_example
             glfwWaitEvents()
         sis.device |> device_wait_idle()
 
-        var sds <- create_swapchain_dependent_state(sis)
+        if true
+            var sds <- create_swapchain_dependent_state(sis)
+            defer() <| { delete sds; }
 
-        print("{sds.swapchain.framebuffers |> length()} " +
-            "images in swap chain\n")
+            print("{sds.swapchain.framebuffers |> length()} " +
+                "images in swap chain\n")
 
-        while keep_running
-            keep_running = sis.window.window |> glfwWindowShouldClose() == 0
-            glfwPollEvents()
-            if ! draw_frame(sis, sds)
-                break
+            while keep_running
+                keep_running = sis.window.window |> glfwWindowShouldClose()==0
+                glfwPollEvents()
+                if ! draw_frame(sis, sds)
+                    break
 
-        sis.device |> device_wait_idle()
-        delete sds
+            sis.device |> device_wait_idle()
 
 
 [export]
