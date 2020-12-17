@@ -127,7 +127,7 @@ def create_example_draw_commands(
                 cmd_buf |> cmd_bind_pipeline(
                     VkPipelineBindPoint VK_PIPELINE_BIND_POINT_GRAPHICS,
                     sds.pipeline)
-                cmd_buf |> cmd_bind_vertex_buffer(vbuf)
+                cmd_buf |> cmd_bind_vertex_buffer(sis.vbuf.buffer)
                 
                 cmd_buf |> cmd_bind_descriptor_set(
                     VkPipelineBindPoint VK_PIPELINE_BIND_POINT_GRAPHICS,
