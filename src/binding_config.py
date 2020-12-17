@@ -283,6 +283,10 @@ def add_boost_content(g):
         ).declare_array(count = 'queueFamilyIndexCount', items = 'pQueueFamilyIndices')
     g.add_gen_struct(name = 'VkRenderPassBeginInfo', vk_to_boost=False,
         ).declare_array(count = 'clearValueCount', items = 'pClearValues')
+    g.add_gen_struct(name = 'VkWriteDescriptorSet ', vk_to_boost=False,
+        ).declare_array(count = 'descriptorCount', items = 'pImageInfo', optional=True,
+        ).declare_array(count = 'descriptorCount', items = 'pBufferInfo', optional=True,
+        ).declare_array(count = 'descriptorCount', items = 'pTexelBufferView', optional=True)
 
     #
     # Functions

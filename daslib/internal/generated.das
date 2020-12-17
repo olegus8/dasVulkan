@@ -791,6 +791,35 @@ def unmap_memory(
         boost_value_to_vk(memory)
     )
 
+def update_descriptor_sets(
+    device : Device = [[ Device ]];
+    var descriptor_writes : array<WriteDescriptorSet> = [[ array<WriteDescriptorSet> ]];
+    var descriptor_copies : array<CopyDescriptorSet> = [[ array<CopyDescriptorSet> ]]
+) : void
+
+    let vk_descriptorWriteCount = uint(descriptor_writes |> length())
+    var vk_descriptor_writes <- [{ for item in descriptor_writes ;
+        item |> vk_view_create_unsafe() }]
+    defer() <|
+        for item in descriptor_writes
+            item |> vk_view_destroy()
+        delete vk_descriptor_writes
+    let vk_descriptorCopyCount = uint(descriptor_copies |> length())
+    var vk_descriptor_copies <- [{ for item in descriptor_copies ;
+        item |> vk_view_create_unsafe() }]
+    defer() <|
+        for item in descriptor_copies
+            item |> vk_view_destroy()
+        delete vk_descriptor_copies
+
+    vkUpdateDescriptorSets(
+        boost_value_to_vk(device),
+        vk_descriptorWriteCount,
+        array_addr_unsafe(vk_descriptor_writes),
+        vk_descriptorCopyCount,
+        array_addr_unsafe(vk_descriptor_copies)
+    )
+
 def wait_for_fences(
     device : Device = [[ Device ]];
     fences : array<Fence> = [[ array<Fence> ]];
