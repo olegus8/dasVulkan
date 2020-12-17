@@ -397,12 +397,13 @@ def create_example_uniform_buffers(
     sis : SwapchainIndependentState;
     framebuffers : array<Framebuffer>
 ) : array<MemoryBackedBuffer>
-    return <- [{ sis.device |> create_memory_backed_buffer(
-        sis.phys_dev, uint64(typeinfo(sizeof type<UniformBufferObject>)),
-        uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT),
-        uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT) |
-        uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_COHERENT_BIT))
-    }]
+    return <- [{ for fbuf in framebuffers ;
+        sis.device |> create_memory_backed_buffer(
+            sis.phys_dev, uint64(typeinfo(sizeof type<UniformBufferObject>)),
+            uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT),
+            uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT)|
+            uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_COHERENT_BIT)
+        ) }]
 
 
 def with_next_image(device, swapchain, sem_to_signal; b : block<(i:uint)>)
