@@ -853,7 +853,7 @@ class ParamBase(object):
             else:
                 assert_greater(len(self.__dyn_array_items_optional), 0)
                 lines = [f'var vk_{bname}']
-                for ar_items in self._dyn_array_items_optional:
+                for ar_items in self.__dyn_array_items_optional:
                     cur = 'boost_struct.' + ar_items._boost_struct_field_name
                     lines += [f'vk_{bname} = max(vk_{bname}, {cur})']
                 return lines
