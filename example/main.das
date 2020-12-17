@@ -348,21 +348,28 @@ def create_swapchain_dependent_state(
 
 def create_example_descriptor_sets(
     sis : SwapchainIndependentState;
-    framebuffers : array<Framebuffer>
+    ubufs : array<MemoryBackedBuffer>
     pool : DescriptorPool
 ) : DescriptorSets
     var create_info <- [[ DescriptorSetAllocateInfo
         descriptor_pool = weak_copy(pool),
-        set_layouts <- [{ for fbuf in framebuffers ;
+        set_layouts <- [{ for ubuf in ubufs ;
             weak_copy(sis.desc_set_layout) }]
     ]]
     defer() <| { delete create_info; }
     var dsets <- sis.device |> allocate_descriptor_sets(info)
-    for dset in dets
+    for dset, ubuf in dsets, ubufs
         var writes <- [{ auto[] [[ WriteDescriptorSet
             dst_set = weak_copy(dset),
             dst_binding = 0u,
             dst_array_element = 0u,
+            descriptor_type = (VkDescriptorType
+                VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER),
+            buffer_info <- {[ auto[] [[ DescriptorBufferInfo
+                buffer = weak_copy(ubuf.buffer),
+                offset = 0u,
+                range_ = uint64(typeinfo(sizeof type<UniformBufferObject>))
+            ]] ]}
         ]] }]
         sis.device |> update_descriptor_sets(writes)
         delete update_info
