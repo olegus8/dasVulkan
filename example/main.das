@@ -304,12 +304,14 @@ struct SwapchainDependentState
     frame_fences     : array<Fence>
     uniform_bufs     : array<MemoryBackedBuffer>
     desc_pool        : DescriptorPool
+    desc_sets        : DescriptorSets
     _device          : Device
 
 
 def finalize(var s : SwapchainDependentState explicit)
     s._device |> device_wait_idle()
     delete s.pipeline
+    delete s.desc_sets
     delete s.desc_pool
     delete s.uniform_bufs
     delete s.swapchain
