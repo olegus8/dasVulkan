@@ -346,6 +346,17 @@ def create_swapchain_dependent_state(
     return <- sds
 
 
+def create_example_descriptor_sets(
+    sis : SwapchainIndependentState;
+    framebuffers : array<Framebuffer>
+    pool : DescriptorPool
+) : DescriptorSets
+    var info <- [[
+    ]]
+    defer() <| { delete info; }
+    return <- sis.device |> allocate_descriptor_sets(info)
+
+
 def create_example_descriptor_pool(
     sis : SwapchainIndependentState;
     framebuffers : array<Framebuffer>
