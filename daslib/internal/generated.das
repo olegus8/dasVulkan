@@ -281,6 +281,35 @@ def cmd_begin_render_pass(
         boost_value_to_vk(contents)
     )
 
+def cmd_bind_descriptor_sets(
+    command_buffer : CommandBuffer = [[ CommandBuffer ]];
+    pipeline_bind_point : VkPipelineBindPoint = [[ VkPipelineBindPoint ]];
+    layout : PipelineLayout = [[ PipelineLayout ]];
+    first_set : uint = [[ uint ]];
+    descriptor_sets : array<DescriptorSet> = [[ array<DescriptorSet> ]];
+    dynamic_offsets : array<uint> = [[ array<uint> ]]
+) : void
+
+    let vk_descriptorSetCount = uint(descriptor_sets |> length())
+    var vk_descriptor_sets : array<VkDescriptorSet>
+    defer() <| { delete vk_descriptor_sets; }
+    vk_descriptor_sets <- [{ for item in descriptor_sets ; boost_value_to_vk(item) }]
+    let vk_dynamicOffsetCount = uint(dynamic_offsets |> length())
+    var vk_dynamic_offsets : array<uint>
+    defer() <| { delete vk_dynamic_offsets; }
+    vk_dynamic_offsets <- [{ for item in dynamic_offsets ; boost_value_to_vk(item) }]
+
+    vkCmdBindDescriptorSets(
+        boost_value_to_vk(command_buffer),
+        boost_value_to_vk(pipeline_bind_point),
+        boost_value_to_vk(layout),
+        boost_value_to_vk(first_set),
+        vk_descriptorSetCount,
+        array_addr_unsafe(vk_descriptor_sets),
+        vk_dynamicOffsetCount,
+        array_addr_unsafe(vk_dynamic_offsets)
+    )
+
 def cmd_bind_pipeline(
     command_buffer : CommandBuffer = [[ CommandBuffer ]];
     pipeline_bind_point : VkPipelineBindPoint = [[ VkPipelineBindPoint ]];
