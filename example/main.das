@@ -536,8 +536,8 @@ def update_uniform_buffer(
         uint64(0), 0u
     ) <| $(var mapped_ubos : array<UniformBufferObject>#)
         mapped_ubos[0] <- [[ UniformBufferObject offset = float2(
-            0.5f*sin(float(frames_since_start)*2.0f*PI / 100.0f),
-            0.0f)
+            0.0f,
+            0.5f*sin(float(frames_since_start)*2.0f*PI / 100.0f))
         ]]
 
 
