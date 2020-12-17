@@ -2124,6 +2124,36 @@ def vk_view_destroy(var boost_struct : BufferCopy)
     boost_struct._vk_view__active = false
 
 //
+// BufferViewCreateInfo
+//
+
+struct BufferViewCreateInfo
+    flags : uint
+    buffer : Buffer
+    format : VkFormat
+    offset : uint64
+    range_ : uint64
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : BufferViewCreateInfo
+) : VkBufferViewCreateInfo
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    return <- [[ VkBufferViewCreateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_BUFFER_VIEW_CREATE_INFO,
+        flags = boost_value_to_vk(boost_struct.flags),
+        buffer = boost_value_to_vk(boost_struct.buffer),
+        format = boost_value_to_vk(boost_struct.format),
+        offset = boost_value_to_vk(boost_struct.offset),
+        range_ = boost_value_to_vk(boost_struct.range_)
+    ]]
+
+def vk_view_destroy(var boost_struct : BufferViewCreateInfo)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+//
 // ClearDepthStencilValue
 //
 
@@ -4213,6 +4243,80 @@ def finalize(var handle : Buffer explicit)
     memzero(handle)
 
 //
+// BufferView
+//
+
+struct BufferView
+    buffer_view : VkBufferView
+    _needs_delete : bool
+    _device : VkDevice
+
+def boost_value_to_vk(b : BufferView) : VkBufferView
+    return b.buffer_view
+
+def boost_value_to_vk(b : BufferView ?) : VkBufferView ?
+    return b?.buffer_view
+
+def vk_value_to_boost(v : VkBufferView) : BufferView
+    return [[ BufferView buffer_view=v ]]
+
+[private]
+def create_buffer_view__inner(
+    device : Device = [[ Device ]];
+    var create_info : BufferViewCreateInfo = [[ BufferViewCreateInfo ]];
+    var result : VkResult? = [[VkResult?]]
+) : BufferView
+
+    var vk_create_info <- create_info |> vk_view_create_unsafe()
+    defer() <| { create_info |> vk_view_destroy(); }
+    var vk_view : VkBufferView
+    var result_ = VkResult VK_SUCCESS
+
+    result ?? result_ = vkCreateBufferView(
+        boost_value_to_vk(device),
+        safe_addr(vk_create_info),
+        null,
+        safe_addr(vk_view)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+    return vk_value_to_boost(vk_view)
+
+def create_buffer_view(
+    device : Device = [[ Device ]];
+    var create_info : BufferViewCreateInfo = [[ BufferViewCreateInfo ]];
+    var result : VkResult? = [[VkResult?]]
+) : BufferView
+
+    var handle <- create_buffer_view__inner(
+        device,
+        create_info,
+        result
+    )
+    handle._needs_delete = true
+    handle._device = boost_value_to_vk(device)
+    return <- handle
+
+[private]
+def destroy_buffer_view(
+    device : Device = [[ Device ]];
+    buffer_view : BufferView = [[ BufferView ]]
+) : void
+
+    vkDestroyBufferView(
+        boost_value_to_vk(device),
+        boost_value_to_vk(buffer_view),
+        null
+    )
+
+def finalize(var handle : BufferView explicit)
+    if handle._needs_delete
+        destroy_buffer_view(
+            vk_value_to_boost(handle._device),
+            vk_value_to_boost(handle.buffer_view)
+        )
+    memzero(handle)
+
+//
 // CommandBuffer
 //
 
@@ -4228,92 +4332,6 @@ def boost_value_to_vk(b : CommandBuffer ?) : VkCommandBuffer ?
 
 def vk_value_to_boost(v : VkCommandBuffer) : CommandBuffer
     return [[ CommandBuffer command_buffer=v ]]
-
-//
-// DescriptorSet
-//
-
-struct DescriptorSet
-    descriptor_set : VkDescriptorSet
-    _needs_delete : bool
-
-def boost_value_to_vk(b : DescriptorSet) : VkDescriptorSet
-    return b.descriptor_set
-
-def boost_value_to_vk(b : DescriptorSet ?) : VkDescriptorSet ?
-    return b?.descriptor_set
-
-def vk_value_to_boost(v : VkDescriptorSet) : DescriptorSet
-    return [[ DescriptorSet descriptor_set=v ]]
-
-//
-// Device
-//
-
-struct Device
-    device : VkDevice
-    _needs_delete : bool
-
-def boost_value_to_vk(b : Device) : VkDevice
-    return b.device
-
-def boost_value_to_vk(b : Device ?) : VkDevice ?
-    return b?.device
-
-def vk_value_to_boost(v : VkDevice) : Device
-    return [[ Device device=v ]]
-
-[private]
-def create_device__inner(
-    physical_device : PhysicalDevice = [[ PhysicalDevice ]];
-    var create_info : DeviceCreateInfo = [[ DeviceCreateInfo ]];
-    var result : VkResult? = [[VkResult?]]
-) : Device
-
-    var vk_create_info <- create_info |> vk_view_create_unsafe()
-    defer() <| { create_info |> vk_view_destroy(); }
-    var vk_device : VkDevice
-    var result_ = VkResult VK_SUCCESS
-
-    result ?? result_ = vkCreateDevice(
-        boost_value_to_vk(physical_device),
-        safe_addr(vk_create_info),
-        null,
-        safe_addr(vk_device)
-    )
-    assert(result_ == VkResult VK_SUCCESS)
-    return vk_value_to_boost(vk_device)
-
-def create_device(
-    physical_device : PhysicalDevice = [[ PhysicalDevice ]];
-    var create_info : DeviceCreateInfo = [[ DeviceCreateInfo ]];
-    var result : VkResult? = [[VkResult?]]
-) : Device
-
-    var handle <- create_device__inner(
-        physical_device,
-        create_info,
-        result
-    )
-    handle._needs_delete = true
-    return <- handle
-
-[private]
-def destroy_device(
-    device : Device = [[ Device ]]
-) : void
-
-    vkDestroyDevice(
-        boost_value_to_vk(device),
-        null
-    )
-
-def finalize(var handle : Device explicit)
-    if handle._needs_delete
-        destroy_device(
-            vk_value_to_boost(handle.device)
-        )
-    memzero(handle)
 
 //
 // CommandPool
@@ -4464,6 +4482,23 @@ def finalize(var handle : DescriptorPool explicit)
     memzero(handle)
 
 //
+// DescriptorSet
+//
+
+struct DescriptorSet
+    descriptor_set : VkDescriptorSet
+    _needs_delete : bool
+
+def boost_value_to_vk(b : DescriptorSet) : VkDescriptorSet
+    return b.descriptor_set
+
+def boost_value_to_vk(b : DescriptorSet ?) : VkDescriptorSet ?
+    return b?.descriptor_set
+
+def vk_value_to_boost(v : VkDescriptorSet) : DescriptorSet
+    return [[ DescriptorSet descriptor_set=v ]]
+
+//
 // DescriptorSetLayout
 //
 
@@ -4534,6 +4569,75 @@ def finalize(var handle : DescriptorSetLayout explicit)
         destroy_descriptor_set_layout(
             vk_value_to_boost(handle._device),
             vk_value_to_boost(handle.descriptor_set_layout)
+        )
+    memzero(handle)
+
+//
+// Device
+//
+
+struct Device
+    device : VkDevice
+    _needs_delete : bool
+
+def boost_value_to_vk(b : Device) : VkDevice
+    return b.device
+
+def boost_value_to_vk(b : Device ?) : VkDevice ?
+    return b?.device
+
+def vk_value_to_boost(v : VkDevice) : Device
+    return [[ Device device=v ]]
+
+[private]
+def create_device__inner(
+    physical_device : PhysicalDevice = [[ PhysicalDevice ]];
+    var create_info : DeviceCreateInfo = [[ DeviceCreateInfo ]];
+    var result : VkResult? = [[VkResult?]]
+) : Device
+
+    var vk_create_info <- create_info |> vk_view_create_unsafe()
+    defer() <| { create_info |> vk_view_destroy(); }
+    var vk_device : VkDevice
+    var result_ = VkResult VK_SUCCESS
+
+    result ?? result_ = vkCreateDevice(
+        boost_value_to_vk(physical_device),
+        safe_addr(vk_create_info),
+        null,
+        safe_addr(vk_device)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+    return vk_value_to_boost(vk_device)
+
+def create_device(
+    physical_device : PhysicalDevice = [[ PhysicalDevice ]];
+    var create_info : DeviceCreateInfo = [[ DeviceCreateInfo ]];
+    var result : VkResult? = [[VkResult?]]
+) : Device
+
+    var handle <- create_device__inner(
+        physical_device,
+        create_info,
+        result
+    )
+    handle._needs_delete = true
+    return <- handle
+
+[private]
+def destroy_device(
+    device : Device = [[ Device ]]
+) : void
+
+    vkDestroyDevice(
+        boost_value_to_vk(device),
+        null
+    )
+
+def finalize(var handle : Device explicit)
+    if handle._needs_delete
+        destroy_device(
+            vk_value_to_boost(handle.device)
         )
     memzero(handle)
 
@@ -4916,23 +5020,6 @@ def vk_value_to_boost(v : VkPhysicalDevice) : PhysicalDevice
     return [[ PhysicalDevice physical_device=v ]]
 
 //
-// Queue
-//
-
-struct Queue
-    queue : VkQueue
-    _needs_delete : bool
-
-def boost_value_to_vk(b : Queue) : VkQueue
-    return b.queue
-
-def boost_value_to_vk(b : Queue ?) : VkQueue ?
-    return b?.queue
-
-def vk_value_to_boost(v : VkQueue) : Queue
-    return [[ Queue queue=v ]]
-
-//
 // PipelineCache
 //
 
@@ -5079,6 +5166,23 @@ def finalize(var handle : PipelineLayout explicit)
             vk_value_to_boost(handle.pipeline_layout)
         )
     memzero(handle)
+
+//
+// Queue
+//
+
+struct Queue
+    queue : VkQueue
+    _needs_delete : bool
+
+def boost_value_to_vk(b : Queue) : VkQueue
+    return b.queue
+
+def boost_value_to_vk(b : Queue ?) : VkQueue ?
+    return b?.queue
+
+def vk_value_to_boost(v : VkQueue) : Queue
+    return [[ Queue queue=v ]]
 
 //
 // RenderPass
