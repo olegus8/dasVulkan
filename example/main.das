@@ -484,13 +484,10 @@ def update_uniform_buffer(
 
 
 def draw_frame(
-    sis                     : SwapchainIndependentState;
-    sds                     : SwapchainDependentState;
-    cmd_bufs                : array<CommandBuffer>;
-    frames_since_start      : int;
-    var imgs_used_by_frames : array<int>
+    sis : SwapchainIndependentState;
+    sds : SwapchainDependentState
 )
-    let frame = frames_since_start % MAX_FRAMES_IN_FLIGHT
+    let frame = sds.frames_since_start % MAX_FRAMES_IN_FLIGHT
     sis.device |> wait_for_fence(sds.frame_fences[frame], ULONG_MAX)
     var img_acquired = false
     var presented = false
@@ -499,17 +496,17 @@ def draw_frame(
     ) <| $(img_i)
         img_acquired = true
 
-        var img_frame = imgs_used_by_frames[img_i]
+        var img_frame = sds.imgs_used_by_frames[img_i]
         if img_frame != -1
             sis.device |> wait_for_fence(
                 sds.frame_fences[img_frame], ULONG_MAX)
-        imgs_used_by_frames[img_i] = frame
+        sds.imgs_used_by_frames[img_i] = frame
 
         sis.device |> update_uniform_buffer(sds.uniform_bufs[img_i],
-            frames_since_start)
+            sds.frames_since_start)
 
         sis.device |> reset_fence(sds.frame_fences[frame])
-        sis.device |> submit_draw(sis.queue, cmd_bufs[img_i],
+        sis.device |> submit_draw(sis.queue, cmd_bufs.command_buffers[img_i],
             sds.img_avail_sems[frame], sds.render_done_sems[frame],
             sds.frame_fences[frame])
 
