@@ -311,6 +311,7 @@ def create_swapchain_independent_state(
         [[Vertex position=float2(-0.5f,  0.5f), color=float3(1f, 1f, 1f)]]}]
     s.vbuf <- create_example_vertex_buffer(s)
     s.indices <- [{auto[] 0u; 1u; 2u; 2u; 3u; 0u}]
+    s.ibuf <- create_example_index_buffer(s)
     return <- s
 
 
