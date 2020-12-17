@@ -308,6 +308,9 @@ def add_boost_content(g):
     g.add_gen_func(name = 'vkBeginCommandBuffer')
     g.add_gen_func(name = 'vkBindBufferMemory')
     g.add_gen_func(name = 'vkCmdBeginRenderPass')
+    g.add_gen_func(name = 'vkCmdBindDescriptorSets',
+        ).declare_array(count = 'descriptorSetCount', items = 'pDescriptorSets',
+        ).declare_array(count = 'dynamicOffsetCount', items = 'pDynamicOffsets')
     g.add_gen_func(name = 'vkCmdBindPipeline')
     g.add_gen_func(name = 'vkCmdBindVertexBuffers',
         ).declare_array(count = 'bindingCount', items = 'pBuffers',
@@ -366,7 +369,3 @@ def add_boost_content(g):
         ).declare_array(count = 'descriptorCopyCount', items = 'pDescriptorCopies')
     g.add_gen_func(name = 'vkWaitForFences',
         ).declare_array(count = 'fenceCount', items = 'pFences')
-
-    g.add_gen_func(name = 'vkCmdBindDescriptorSets',
-        ).declare_array(count = 'descriptorSetCount', items = 'pDescriptorSets',
-        ).declare_array(count = 'dynamicOffsetCount', items = 'pDynamicOffsets')
