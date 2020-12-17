@@ -267,6 +267,24 @@ def bind_buffer_memory(
     )
     assert(result_ == VkResult VK_SUCCESS)
 
+def bind_image_memory(
+    device : Device = [[ Device ]];
+    image : Image = [[ Image ]];
+    memory : DeviceMemory = [[ DeviceMemory ]];
+    memory_offset : uint64 = [[ uint64 ]];
+    var result : VkResult? = [[VkResult?]]
+) : void
+
+    var result_ = VkResult VK_SUCCESS
+
+    result ?? result_ = vkBindImageMemory(
+        boost_value_to_vk(device),
+        boost_value_to_vk(image),
+        boost_value_to_vk(memory),
+        boost_value_to_vk(memory_offset)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+
 def cmd_begin_render_pass(
     command_buffer : CommandBuffer = [[ CommandBuffer ]];
     var render_pass_begin : RenderPassBeginInfo = [[ RenderPassBeginInfo ]];

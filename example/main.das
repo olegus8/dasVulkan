@@ -182,7 +182,7 @@ def create_memory_backed_image(
     ) <| $(mem_type, mem_size)
         mbi.memory <- device |> allocate_memory([[MemoryAllocateInfo
             allocation_size=mem_size, memory_type_index=mem_type]])
-        device |> bind_image_memory(mbb.buffer, mbb.memory)
+        device |> bind_image_memory(mbi.image, mbi.memory)
         created = true
     assert(created)
     return <- mbi
