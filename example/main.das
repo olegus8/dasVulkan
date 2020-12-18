@@ -295,23 +295,21 @@ def transition_image_layout(
     new_layout : VkImageLayout
 )
     sis.device |> run_cmd_sync(sis.cmd_pool, sis.queue) <| $(cmd_buf)
-        var barriers <- [{
-VkImageMemoryBarrier barrier{};
-barrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
-barrier.oldLayout = oldLayout;
-barrier.newLayout = newLayout;
-barrier.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
-barrier.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
-barrier.image = image;
-barrier.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-barrier.subresourceRange.baseMipLevel = 0;
-barrier.subresourceRange.levelCount = 1;
-barrier.subresourceRange.baseArrayLayer = 0;
-barrier.subresourceRange.layerCount = 1;
-        }]
+        var barriers <- [{ ImageMemoryBarrier
+            old_layout = old_layout,
+            new_layout = new_layout,
+            src_queue_family_index = VK_QUEUE_FAMILY_IGNORED,
+            dst_queue_family_index = VK_QUEUE_FAMILY_IGNORED,
+            image = image.image,
+            subresource_range <- [[ ImageSubresourceRange
+                aspect_mask = VkImageAspectFlagBits VK_IMAGE_ASPECT_COLOR_BIT,
+                base_mip_level = 0u,
+                level_count = 1u,
+                base_arrayLayer = 0u,
+                layer_count = 1u
+        ]] }]
         defer() <| { delete barriers; }
         cmd_pipeline_barrier([command_buffer = cmd_buf, barriers=barriers])
-
 
 
 //TODO: to builtin
