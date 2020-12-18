@@ -294,16 +294,17 @@ def create_example_texture(
     return <- sis |> create_device_local_sampled_image_rgba8(width1, height
     ) <| $(var texels : array<uint4>#)
         let width = width1 / 4
+        let one = float4(1.f, 1.f, 1.f, 1.f)
         for texel, texel_i in texels, range(INT_MAX)
             let y1 = float(texel_i / width)
             let x1 = float(texel_i % width)
             var x = float4(x1, x1+1.f, x1+2.f, x1+3.f)
-            var y = float4(y1, y1, y1, y1)
+            var y = one * y1
             x /= float(width1)
             y /= float(height)
-            let r = 0.5f*(1.f + sin(0.1f*x + 0.6f*y + 0.1f))
-            let g = 0.5f*(1.f + sin(0.2f*x + 0.5f*y + 0.5f))
-            let b = 0.5f*(1.f + sin(0.3f*x + 0.4f*y + 1.0f))
+            let r = 0.5f*(one + sin(0.1f*x + 0.6f*y + 0.1f*one))
+            let g = 0.5f*(one + sin(0.2f*x + 0.5f*y + 0.5f*one))
+            let b = 0.5f*(one + sin(0.3f*x + 0.4f*y + 1.0f*one))
 
 
 def create_example_render_pass(
