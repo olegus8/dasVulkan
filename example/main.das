@@ -268,7 +268,7 @@ def create_device_local_image_rgba8(
 
     sis.device |> map_device_memory_to_array(
         staging.memory, uint64(buf_size), uint64(0), 0u
-    ) <| $(var mapped_data : array<T>#)
+    ) <| $(var mapped_data : array<uint>#)
         for dst, src in mapped_data, data
             dst = src
     sis.device |> copy_buffer_sync(
