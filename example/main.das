@@ -389,7 +389,8 @@ def create_example_texture(
 ) : MemoryBackedImage
     let width1 = 1 << 8
     let height = 1 << 8
-    return <- sis |> create_device_local_sampled_image_rgba8(width1, height
+    return <- sis |> create_device_local_sampled_image_rgba8(
+        width1, height
     ) <| $(var texels : array<uint4>#)
         let width = width1 / 4
         let one = float4(1.f, 1.f, 1.f, 1.f)
