@@ -286,17 +286,13 @@ def create_device_local_sampled_image_rgba8(
             VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT)
     ])
 
-/*
     sis |> transition_image_layout(img,
         VkImageLayout VK_IMAGE_LAYOUT_UNDEFINED,
         VkImageLayout VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL)
-*/
     sis |> copy_buffer_to_image(staging, img)
-/*
     sis |> transition_image_layout(img,
         VkImageLayout VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
         VkImageLayout VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL)
-*/
 
     return <- img
 
@@ -366,7 +362,7 @@ def transition_image_layout(
         new_layout = new_layout,
         src_queue_family_index = VK_QUEUE_FAMILY_IGNORED,
         dst_queue_family_index = VK_QUEUE_FAMILY_IGNORED,
-        image = image.image,
+        image = weak_copy(image.image),
         subresource_range <- [[ ImageSubresourceRange
             aspect_mask = uint(
                 VkImageAspectFlagBits VK_IMAGE_ASPECT_COLOR_BIT),
