@@ -402,6 +402,31 @@ def cmd_copy_buffer(
         array_addr_unsafe(vk_regions)
     )
 
+def cmd_copy_buffer_to_image(
+    command_buffer : CommandBuffer = [[ CommandBuffer ]];
+    src_buffer : Buffer = [[ Buffer ]];
+    dst_image : Image = [[ Image ]];
+    dst_image_layout : VkImageLayout = [[ VkImageLayout ]];
+    var regions : array<BufferImageCopy> = [[ array<BufferImageCopy> ]]
+) : void
+
+    let vk_regionCount = uint(regions |> length())
+    var vk_regions <- [{ for item in regions ;
+        item |> vk_view_create_unsafe() }]
+    defer() <|
+        for item in regions
+            item |> vk_view_destroy()
+        delete vk_regions
+
+    vkCmdCopyBufferToImage(
+        boost_value_to_vk(command_buffer),
+        boost_value_to_vk(src_buffer),
+        boost_value_to_vk(dst_image),
+        boost_value_to_vk(dst_image_layout),
+        vk_regionCount,
+        array_addr_unsafe(vk_regions)
+    )
+
 def cmd_draw(
     command_buffer : CommandBuffer = [[ CommandBuffer ]];
     vertex_count : uint = [[ uint ]];
@@ -1293,6 +1318,38 @@ def vk_value_to_boost(vk_struct : VkOffset2D) : Offset2D
     return <- [[Offset2D
         x = vk_value_to_boost(vk_struct.x),
         y = vk_value_to_boost(vk_struct.y)
+    ]]
+
+//
+// Offset3D
+//
+
+struct Offset3D
+    x : int
+    y : int
+    z : int
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : Offset3D
+) : VkOffset3D
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    return <- [[ VkOffset3D
+        x = boost_value_to_vk(boost_struct.x),
+        y = boost_value_to_vk(boost_struct.y),
+        z = boost_value_to_vk(boost_struct.z)
+    ]]
+
+def vk_view_destroy(var boost_struct : Offset3D)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+def vk_value_to_boost(vk_struct : VkOffset3D) : Offset3D
+    return <- [[Offset3D
+        x = vk_value_to_boost(vk_struct.x),
+        y = vk_value_to_boost(vk_struct.y),
+        z = vk_value_to_boost(vk_struct.z)
     ]]
 
 //
@@ -2263,6 +2320,58 @@ def vk_view_destroy(var boost_struct : BufferCopy)
     boost_struct._vk_view__active = false
 
 //
+// BufferImageCopy
+//
+
+struct BufferImageCopy
+    buffer_offset : uint64
+    buffer_row_length : uint
+    buffer_image_height : uint
+    image_subresource : ImageSubresourceLayers
+    image_offset : Offset3D
+    image_extent : Extent3D
+    _vk_view_p_image_subresource : VkImageSubresourceLayers ?
+    _vk_view_p_image_offset : VkOffset3D ?
+    _vk_view_p_image_extent : VkExtent3D ?
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : BufferImageCopy
+) : VkBufferImageCopy
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    boost_struct._vk_view_p_image_subresource = new VkImageSubresourceLayers
+    *(boost_struct._vk_view_p_image_subresource) <- (
+        boost_struct.image_subresource |> vk_view_create_unsafe())
+    boost_struct._vk_view_p_image_offset = new VkOffset3D
+    *(boost_struct._vk_view_p_image_offset) <- (
+        boost_struct.image_offset |> vk_view_create_unsafe())
+    boost_struct._vk_view_p_image_extent = new VkExtent3D
+    *(boost_struct._vk_view_p_image_extent) <- (
+        boost_struct.image_extent |> vk_view_create_unsafe())
+    return <- [[ VkBufferImageCopy
+        bufferOffset = boost_value_to_vk(boost_struct.buffer_offset),
+        bufferRowLength = boost_value_to_vk(boost_struct.buffer_row_length),
+        bufferImageHeight = boost_value_to_vk(boost_struct.buffer_image_height),
+        imageSubresource = *(boost_struct._vk_view_p_image_subresource),
+        imageOffset = *(boost_struct._vk_view_p_image_offset),
+        imageExtent = *(boost_struct._vk_view_p_image_extent)
+    ]]
+
+def vk_view_destroy(var boost_struct : BufferImageCopy)
+    assert(boost_struct._vk_view__active)
+    boost_struct.image_subresource |> vk_view_destroy()
+    unsafe
+        delete boost_struct._vk_view_p_image_subresource
+    boost_struct.image_offset |> vk_view_destroy()
+    unsafe
+        delete boost_struct._vk_view_p_image_offset
+    boost_struct.image_extent |> vk_view_destroy()
+    unsafe
+        delete boost_struct._vk_view_p_image_extent
+    boost_struct._vk_view__active = false
+
+//
 // BufferMemoryBarrier
 //
 
@@ -2634,6 +2743,33 @@ def vk_view_destroy(var boost_struct : ImageMemoryBarrier)
     boost_struct.subresource_range |> vk_view_destroy()
     unsafe
         delete boost_struct._vk_view_p_subresource_range
+    boost_struct._vk_view__active = false
+
+//
+// ImageSubresourceLayers
+//
+
+struct ImageSubresourceLayers
+    aspect_mask : uint
+    mip_level : uint
+    base_array_layer : uint
+    layer_count : uint
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : ImageSubresourceLayers
+) : VkImageSubresourceLayers
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    return <- [[ VkImageSubresourceLayers
+        aspectMask = boost_value_to_vk(boost_struct.aspect_mask),
+        mipLevel = boost_value_to_vk(boost_struct.mip_level),
+        baseArrayLayer = boost_value_to_vk(boost_struct.base_array_layer),
+        layerCount = boost_value_to_vk(boost_struct.layer_count)
+    ]]
+
+def vk_view_destroy(var boost_struct : ImageSubresourceLayers)
+    assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
 //

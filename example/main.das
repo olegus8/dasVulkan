@@ -285,6 +285,14 @@ def create_device_local_sampled_image_rgba8(
             VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT)
     ])
 
+    sis.device |> run_cmd_sync(sis.cmd_pool, sis.queue) <| $(cmd_buf)
+        var regions <- [{ auto[] [[
+        ]] }]
+        defer() <| { delete regions; }
+        cmd_buf |> copy_buffer_to_image(staging, img.image,
+            VkImageLayout VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
+            regions)
+
     return <- img
 
 
