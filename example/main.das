@@ -308,7 +308,7 @@ def transition_image_layout(
                 layer_count = 1u ]]
         ]] }]
         defer() <| { delete barriers; }
-        cmd_pipeline_barrier([command_buffer = cmd_buf, barriers=barriers])
+        cmd_pipeline_barrier([command_buffer=cmd_buf, barriers=barriers])
 
 
 //TODO: to builtin
