@@ -322,6 +322,8 @@ def add_boost_content(g):
         ).declare_array(count = 'bindingCount', items = 'pOffsets')
     g.add_gen_func(name = 'vkCmdCopyBuffer',
         ).declare_array(count = 'regionCount', items = 'pRegions')
+    g.add_gen_func(name = 'vkCmdCopyBufferToImage',
+        ).declare_array(count = 'regionCount', items = 'pRegions')
     g.add_gen_func(name = 'vkCmdDraw')
     g.add_gen_func(name = 'vkCmdDrawIndexed')
     g.add_gen_func(name = 'vkCmdEndRenderPass')
