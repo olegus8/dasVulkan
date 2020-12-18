@@ -186,8 +186,7 @@ def run_cmd_sync(
     queue           : Queue;
     b               : block<(cmd_buf:CommandBuffer)>
 )
-    var cmd_bufs <- device |> allocate_command_buffers_primary(
-        command_pool, 1)
+    var cmd_bufs <- device |> allocate_command_buffers_primary(command_pool, 1)
     defer() <| ${ delete cmd_bufs; }
     let cmd_buf = cmd_bufs.command_buffers[0]
 
