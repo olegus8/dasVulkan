@@ -146,6 +146,7 @@ def create_example_draw_commands(
 struct MemoryBackedImage
     image : Image
     memory : DeviceMemory
+    format : VkFormat
 
 
 def finalize(var b: MemoryBackedImage explicit)
@@ -167,6 +168,7 @@ def create_memory_backed_image(
 
     var created = false
     var mbi : MemoryBackedImage
+    mbi.format = format
     mbi.image <- device |> create_image( [[ ImageCreateInfo
         image_type = VkImageType VK_IMAGE_TYPE_2D,
         extent <- [[Extent3D width=uint(width),height=uint(height),depth=1u]],
@@ -283,13 +285,33 @@ def create_device_local_sampled_image_rgba8(
             VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT)
     ])
 
+    return <- img
+
+
+def transition_image_layout(
+    sis : SwapchainIndependentState;
+    image : MemoryBackedImage;
+    old_layout : VkImageLayout;
+    new_layout : VkImageLayout
+)
     sis.device |> run_cmd_sync(sis.cmd_pool, sis.queue) <| $(cmd_buf)
         var barriers <- [{
+VkImageMemoryBarrier barrier{};
+barrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
+barrier.oldLayout = oldLayout;
+barrier.newLayout = newLayout;
+barrier.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+barrier.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+barrier.image = image;
+barrier.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+barrier.subresourceRange.baseMipLevel = 0;
+barrier.subresourceRange.levelCount = 1;
+barrier.subresourceRange.baseArrayLayer = 0;
+barrier.subresourceRange.layerCount = 1;
         }]
         defer() <| { delete barriers; }
         cmd_pipeline_barrier([command_buffer = cmd_buf, barriers=barriers])
 
-    return <- img
 
 
 //TODO: to builtin
