@@ -262,7 +262,7 @@ def create_image_view(
         view_type = VkImageViewType VK_IMAGE_VIEW_TYPE_2D,
         subresource_range = IMAGE_SUBRESOURCE_RANGE_SINGLE_COLOR,
         components = COMPONENT_MAPPING_IDENTITY
-    ]]
+    ]])
 
 
 def create_device_local_sampled_image_rgba8(
