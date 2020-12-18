@@ -295,10 +295,15 @@ def create_example_texture(
     ) <| $(var texels : array<uint4>#)
         let width = width1 / 4
         for texel, texel_i in texels, range(INT_MAX)
-            var y1 = float(texel_i / width)
-            var x1 = float(texel_i % width)
+            let y1 = float(texel_i / width)
+            let x1 = float(texel_i % width)
             var x = float4(x1, x1+1.f, x1+2.f, x1+3.f)
             var y = float4(y1, y1, y1, y1)
+            x /= float(width1)
+            y /= float(height)
+            let r = 0.5f*(1.f + sin(0.1f*x + 0.2*y + 0.5f))
+            let g = 0.5f*(1.f + sin(0.1f*x + 0.2*y + 0.5f))
+            let b = 0.5f*(1.f + sin(0.1f*x + 0.2*y + 0.5f))
 
 
 def create_example_render_pass(
