@@ -322,6 +322,10 @@ def add_boost_content(g):
     g.add_gen_func(name = 'vkCmdDraw')
     g.add_gen_func(name = 'vkCmdDrawIndexed')
     g.add_gen_func(name = 'vkCmdEndRenderPass')
+    g.add_gen_func(name = 'vkCmdPipelineBarrier',
+        ).declare_array(count = 'memoryBarrierCount', items = 'pMemoryBarriers',
+        ).declare_array(count = 'bufferMemoryBarrierCount', items = 'pBufferMemoryBarriers',
+        ).declare_array(count = 'imageMemoryBarrierCount', items = 'pImageMemoryBarriers')
     g.add_gen_func(name = 'vkDeviceWaitIdle')
     g.add_gen_func(name = 'vkEndCommandBuffer')
     g.add_gen_func(name = 'vkEnumerateDeviceExtensionProperties',
