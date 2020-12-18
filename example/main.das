@@ -243,8 +243,8 @@ def create_device_local_buffer(
     ) <| $(var mapped_data : array<T>#)
         for dst, src in mapped_data, data
             dst = src
-    sis.device |> copy_buffer_sync(
-        sis.cmd_pool, sis.queue, staging.buffer, buf.buffer, uint64(buf_size))
+    sis.device |> run_cmd_sync(sis.cmd_pool, sis.queue) <| $(cmd_buf)
+        cmd_buf |> cmd_copy_buffer(staging.buffer,buf.buffer,uint64(buf_size))
 
     return <- buf
 
