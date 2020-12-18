@@ -297,8 +297,9 @@ def create_example_texture(
         let width4 = width / 4
         for texel4, texel4_i in texels, range(INT_MAX)
             var y = texel4_i / width4
-            var x4 = texel4_i % width4
-            var x = int4(x4, x4+1, x4+2 x4+3)
+            var x = texel4_i % width4
+            var x4 = int4(x4, x4+1, x4+2 x4+3)
+            var y4 = int4(y, y, y, y)
 
 
 def create_example_render_pass(
