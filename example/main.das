@@ -377,10 +377,12 @@ struct SwapchainIndependentState
     vbuf            : MemoryBackedBuffer
     indices         : array<uint>
     ibuf            : MemoryBackedBuffer
+    texture         : MemoryBackedImage
 
 
 def finalize(var s : SwapchainIndependentState explicit)
     s.device |> device_wait_idle()
+    delete s.texture
     delete s.ibuf
     delete s.indices
     delete s.vbuf
@@ -431,6 +433,7 @@ def create_swapchain_independent_state(
         uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_VERTEX_BUFFER_BIT))
     s.ibuf <- s |> create_device_local_buffer(s.indices, 
         uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_INDEX_BUFFER_BIT))
+    s.texture <- s |> create_example_texture()
     return <- s
 
 
