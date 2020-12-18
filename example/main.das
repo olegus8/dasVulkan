@@ -289,7 +289,9 @@ def create_device_local_sampled_image_rgba8(
     sis |> transition_image_layout(img,
         VkImageLayout VK_IMAGE_LAYOUT_UNDEFINED,
         VkImageLayout VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL)
+
     sis |> copy_buffer_to_image(staging, img)
+
     sis |> transition_image_layout(img,
         VkImageLayout VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
         VkImageLayout VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL)
