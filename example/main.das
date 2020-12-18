@@ -301,9 +301,9 @@ def create_example_texture(
             var y = float4(y1, y1, y1, y1)
             x /= float(width1)
             y /= float(height)
-            let r = 0.5f*(1.f + sin(0.1f*x + 0.6*y + 0.1f))
-            let g = 0.5f*(1.f + sin(0.2f*x + 0.5*y + 0.5f))
-            let b = 0.5f*(1.f + sin(0.3f*x + 0.4*y + 1.0f))
+            let r = 0.5f*(1.f + sin(0.1f*x + 0.6f*y + 0.1f))
+            let g = 0.5f*(1.f + sin(0.2f*x + 0.5f*y + 0.5f))
+            let b = 0.5f*(1.f + sin(0.3f*x + 0.4f*y + 1.0f))
 
 
 def create_example_render_pass(
