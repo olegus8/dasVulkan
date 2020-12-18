@@ -396,20 +396,22 @@ def create_example_texture(
     ) <| $(var texels : array<uint4>#)
         let width = width1 / 4
         let one = float4(1.f, 1.f, 1.f, 1.f)
-        for texel, texel_i in texels, range(INT_MAX)
-            var x = float(texel_i % width)*one + float4(0.f, 1.f, 2.f, 3.f)
-            var y = float(texel_i / width)*one
-            x /= float(width1)
-            y /= float(height)
-            var r = 0.5f*(one + sin(0.1f*x + 0.6f*y + 0.1f*one))
-            var g = 0.5f*(one + sin(0.2f*x + 0.5f*y + 0.5f*one))
-            var b = 0.5f*(one + sin(0.3f*x + 0.4f*y + 1.0f*one))
-            r = 255.f*saturate(r)
-            g = 255.f*saturate(g)
-            b = 255.f*saturate(b)
-            texel = ((to_uint4(r) << 24) +
-                     (to_uint4(g) << 16) +
-                     (to_uint4(b) << 8))
+        for iy in range(height)
+            for ix in range(width)
+                var x = float(ix)*one + float4(0.f, 1.f, 2.f, 3.f)
+                var y = float(iy)*one
+                x /= float(width1)
+                y /= float(height)
+                var r = 0.5f*(one + sin(0.1f*x + 0.6f*y + 0.1f*one))
+                var g = 0.5f*(one + sin(0.2f*x + 0.5f*y + 0.5f*one))
+                var b = 0.5f*(one + sin(0.3f*x + 0.4f*y + 1.0f*one))
+                r = 255.f*saturate(r)
+                g = 255.f*saturate(g)
+                b = 255.f*saturate(b)
+                texels[iy*width + ix] = (
+                    (to_uint4(r) << 24) +
+                    (to_uint4(g) << 16) +
+                    (to_uint4(b) << 8))
 
 
 def create_example_render_pass(
