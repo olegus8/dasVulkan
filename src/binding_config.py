@@ -156,6 +156,7 @@ def add_boost_content(g):
         'VkImageSubresourceRange',
         'VkMemoryRequirements',
         'VkOffset2D',
+        'VkOffset3D',
         'VkPhysicalDeviceFeatures',
         'VkPhysicalDeviceLimits',
         'VkPhysicalDeviceSparseProperties',
