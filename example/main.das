@@ -406,9 +406,9 @@ def create_example_texture(
                 let g = 0.5f*(one + sin(0.2f*x + 0.5f*y + 0.5f*one))
                 let b = 0.5f*(one + sin(0.3f*x + 0.4f*y + 1.0f*one))
                 texels[iy*width + ix] = (
-                    (to_uint4(255.f*saturate(r) << 24) +
-                    (to_uint4(255.f*saturate(g) << 16) +
-                    (to_uint4(255.f*saturate(b) << 8))
+                    (to_uint4(255.f*saturate(r)) << 24) +
+                    (to_uint4(255.f*saturate(g)) << 16) +
+                    (to_uint4(255.f*saturate(b)) <<  8))
 
 
 def create_example_render_pass(
