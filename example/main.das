@@ -294,8 +294,8 @@ def to_uint4(f : float4) : uint4
 def create_example_texture(
     sis : SwapchainIndependentState
 ) : MemoryBackedImage
-    let width1 = 256
-    let height = 256
+    let width1 = 1 << 12
+    let height = 1 << 12
     return <- sis |> create_device_local_sampled_image_rgba8(width1, height
     ) <| $(var texels : array<uint4>#)
         let width = width1 / 4
