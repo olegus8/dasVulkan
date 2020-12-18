@@ -286,6 +286,10 @@ def create_device_local_sampled_image_rgba8(
     return <- img
 
 
+def to_uint4(f : float4) : uint4
+    return uint4(f[0], f[1], f[2], f[3])
+
+
 def create_example_texture(
     sis : SwapchainIndependentState
 ) : MemoryBackedImage
@@ -306,6 +310,9 @@ def create_example_texture(
             r = 255.f*saturate(r)
             g = 255.f*saturate(g)
             b = 255.f*saturate(b)
+            texel = ((to_uint4(r) << 24) +
+                     (to_uint4(g) << 16) +
+                     (to_uint4(b) << 8))
 
 
 def create_example_render_pass(
