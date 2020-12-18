@@ -329,50 +329,53 @@ def transition_image_layout(
     old_layout : VkImageLayout;
     new_layout : VkImageLayout
 )
-    sis.device |> run_cmd_sync(sis.cmd_pool, sis.queue) <| $(cmd_buf)
-        var src_stage : uint
-        var dst_stage : uint
-        var src_access_mask : uint
-        var dst_access_mask : uint
-        if (old_layout == VkImageLayout VK_IMAGE_LAYOUT_UNDEFINED
-        &&  new_layout == VkImageLayout VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL
-        )
-            src_access_mask = 0u
-            dst_access_maek = uint(
-                VkAccessFlagBits VK_ACCESS_TRANSFER_WRITE_BIT)
-            src_stage = uint(
-                VkPipelineStageFlagBits VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT)
-            dst_stage = uint(
-                VkPipelineStageFlagBits VK_PIPELINE_STAGE_TRANSFER_BIT)
-        elif (old_layout == VkImageLayout VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL
-        &&    new_layout == (
-                VkImageLayout VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL)
-        )
-            barrier.srcAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
-            barrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
+    var src_stage : uint
+    var dst_stage : uint
+    var src_access_mask : uint
+    var dst_access_mask : uint
 
-            sourceStage = VK_PIPELINE_STAGE_TRANSFER_BIT;
-            destinationStage = VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT;
-        } else {
-            throw std::invalid_argument("unsupported layout transition!");
-        }
-/*
-*/
-        var barriers <- [{ auto[] [[ ImageMemoryBarrier
-            src_access_mask = src_access_mask,
-            dst_access_mask = dst_access_mask,
-            old_layout = old_layout,
-            new_layout = new_layout,
-            src_queue_family_index = VK_QUEUE_FAMILY_IGNORED,
-            dst_queue_family_index = VK_QUEUE_FAMILY_IGNORED,
-            image = image.image,
-            subresource_range <- [[ ImageSubresourceRange
-                aspect_mask = uint(
-                    VkImageAspectFlagBits VK_IMAGE_ASPECT_COLOR_BIT),
-                level_count = 1u,
-                layer_count = 1u ]]
-        ]] }]
-        defer() <| { delete barriers; }
+    if (old_layout == VkImageLayout VK_IMAGE_LAYOUT_UNDEFINED
+    &&  new_layout == VkImageLayout VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL
+    )
+        src_access_mask = 0u
+        dst_access_maek = uint(
+            VkAccessFlagBits VK_ACCESS_TRANSFER_WRITE_BIT)
+        src_stage = uint(
+            VkPipelineStageFlagBits VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT)
+        dst_stage = uint(
+            VkPipelineStageFlagBits VK_PIPELINE_STAGE_TRANSFER_BIT)
+    elif (old_layout == VkImageLayout VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL
+    &&    new_layout == (
+            VkImageLayout VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL)
+    )
+        src_access_mask = uint(
+            VkAccessFlagBits VK_ACCESS_TRANSFER_WRITE_BIT)
+        dst_access_mask = uint(
+            VkAccessFlagBits VK_ACCESS_SHADER_READ_BIT)
+        src_stage = uint(
+            VkPipelineStageFlagBits VK_PIPELINE_STAGE_TRANSFER_BIT)
+        dst_stage = uint(
+            VkPipelineStageFlagBits VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT)
+    else
+        panic("unsupported layout transition!")
+
+    var barriers <- [{ auto[] [[ ImageMemoryBarrier
+        src_access_mask = src_access_mask,
+        dst_access_mask = dst_access_mask,
+        old_layout = old_layout,
+        new_layout = new_layout,
+        src_queue_family_index = VK_QUEUE_FAMILY_IGNORED,
+        dst_queue_family_index = VK_QUEUE_FAMILY_IGNORED,
+        image = image.image,
+        subresource_range <- [[ ImageSubresourceRange
+            aspect_mask = uint(
+                VkImageAspectFlagBits VK_IMAGE_ASPECT_COLOR_BIT),
+            level_count = 1u,
+            layer_count = 1u ]]
+    ]] }]
+    defer() <| { delete barriers; }
+
+    sis.device |> run_cmd_sync(sis.cmd_pool, sis.queue) <| $(cmd_buf)
         cmd_pipeline_barrier([command_buffer=cmd_buf,
             image_memory_barriers=barriers])
 
