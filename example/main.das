@@ -249,14 +249,14 @@ def create_device_local_buffer(
     return <- buf
 
 
-def create_device_local_image_rgba8(
+def create_device_local_sampled_image_rgba8(
     sis     : SwapchainIndependentState;
     width   : int;
     height  : int;
-    data    : array<uint>;
-    usage   : uint
+    b       : block<(var mapped_data : array<uint4>#)>
 ) : MemoryBackedImage
     assert(data |> length() == width*height)
+    assert(width % 4 == 0)
     let buf_size = typeinfo(sizeof type<uint>) * data |> length()
 
     var staging <- sis.device |> create_memory_backed_buffer(
@@ -268,9 +268,8 @@ def create_device_local_image_rgba8(
 
     sis.device |> map_device_memory_to_array(
         staging.memory, uint64(buf_size), uint64(0), 0u
-    ) <| $(var mapped_data : array<uint>#)
-        for dst, src in mapped_data, data
-            dst = src
+    ) <| $(var mapped_data : array<uint4>#)
+        b |> invoke(mapped_data)
 
     var img <- create_memory_backed_image([
         device = sis.device,
@@ -286,6 +285,18 @@ def create_device_local_image_rgba8(
     ])
 
     return <- img
+
+
+def create_example_texture(
+    sis : SwapchainIndependentState
+) : MemoryBackedImage
+    let width = 256
+    let height = 256
+    var texels : array<uint>
+    texels.resize(width * height)
+    for texel, texel_i in texels, range(INT_MAX)
+        pass
+    pass
 
 
 def create_example_render_pass(
