@@ -286,7 +286,13 @@ def create_device_local_sampled_image_rgba8(
     ])
 
     sis.device |> run_cmd_sync(sis.cmd_pool, sis.queue) <| $(cmd_buf)
-        var regions <- [{ auto[] [[
+        var regions <- [{ auto[] [[ BufferImageCopy
+            aspect_mask=uint(VkImageAspectFlagBits VK_IMAGE_ASPECT_COLOR_BIT),
+            layer_count = 1u,
+            image_extent <- [[ Extent3D
+                width = uint(width),
+                height = uint(height),
+                depth = 1u ]]
         ]] }]
         defer() <| { delete regions; }
         cmd_buf |> copy_buffer_to_image(staging, img.image,
