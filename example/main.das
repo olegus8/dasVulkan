@@ -302,7 +302,8 @@ def transition_image_layout(
             dst_queue_family_index = VK_QUEUE_FAMILY_IGNORED,
             image = image.image,
             subresource_range <- [[ ImageSubresourceRange
-                aspect_mask = VkImageAspectFlagBits VK_IMAGE_ASPECT_COLOR_BIT,
+                aspect_mask = uint(
+                    VkImageAspectFlagBits VK_IMAGE_ASPECT_COLOR_BIT),
                 base_mip_level = 0u,
                 level_count = 1u,
                 base_arrayLayer = 0u,
