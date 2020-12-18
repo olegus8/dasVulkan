@@ -255,7 +255,7 @@ def create_device_local_image_rgba8(
     height  : int;
     data    : array<uint>;
     usage   : uint
-) : MemoryBackedBuffer
+) : MemoryBackedImage
     assert(data |> length() == width*height)
     let buf_size = typeinfo(sizeof type<uint>) * data |> length()
 
@@ -285,7 +285,7 @@ def create_device_local_image_rgba8(
             VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT)
     ])
 
-    return <- buf
+    return <- img
 
 
 def create_example_render_pass(
