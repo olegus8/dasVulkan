@@ -192,6 +192,7 @@ def add_boost_content(g):
         'VkFenceCreateInfo',
         'VkImageViewCreateInfo',
         'VkMemoryAllocateInfo',
+        'VkMemoryBarrier',
         'VkPipelineColorBlendAttachmentState',
         'VkPipelineDepthStencilStateCreateInfo',
         'VkPipelineInputAssemblyStateCreateInfo',
