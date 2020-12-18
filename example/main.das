@@ -286,6 +286,7 @@ def create_device_local_sampled_image_rgba8(
     return <- img
 
 
+//TODO: to builtin
 def to_uint4(f : float4) : uint4
     return uint4(f[0], f[1], f[2], f[3])
 
