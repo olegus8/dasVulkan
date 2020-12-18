@@ -251,15 +251,13 @@ def create_device_local_buffer(
 
 def create_device_local_image_rgba8(
     sis     : SwapchainIndependentState;
-    data    : array<auto(T)>;
+    width   : int;
+    height  : int;
+    data    : array<uint>;
     usage   : uint
 ) : MemoryBackedBuffer
-    let buf_size = typeinfo(sizeof type<T>) * data |> length()
-
-    var buf <- sis.device |> create_memory_backed_buffer(
-        sis.phys_dev, uint64(buf_size),
-        usage | uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_TRANSFER_DST_BIT),
-        uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT))
+    assert(data |> length() == width*height)
+    let buf_size = typeinfo(sizeof type<uint>) * data |> length()
 
     var staging <- sis.device |> create_memory_backed_buffer(
         sis.phys_dev, uint64(buf_size),
