@@ -444,6 +444,51 @@ def cmd_end_render_pass(
         boost_value_to_vk(command_buffer)
     )
 
+def cmd_pipeline_barrier(
+    command_buffer : CommandBuffer = [[ CommandBuffer ]];
+    src_stage_mask : uint = [[ uint ]];
+    dst_stage_mask : uint = [[ uint ]];
+    dependency_flags : uint = [[ uint ]];
+    var memory_barriers : array<MemoryBarrier> = [[ array<MemoryBarrier> ]];
+    var buffer_memory_barriers : array<BufferMemoryBarrier> = [[ array<BufferMemoryBarrier> ]];
+    var image_memory_barriers : array<ImageMemoryBarrier> = [[ array<ImageMemoryBarrier> ]]
+) : void
+
+    let vk_memoryBarrierCount = uint(memory_barriers |> length())
+    var vk_memory_barriers <- [{ for item in memory_barriers ;
+        item |> vk_view_create_unsafe() }]
+    defer() <|
+        for item in memory_barriers
+            item |> vk_view_destroy()
+        delete vk_memory_barriers
+    let vk_bufferMemoryBarrierCount = uint(buffer_memory_barriers |> length())
+    var vk_buffer_memory_barriers <- [{ for item in buffer_memory_barriers ;
+        item |> vk_view_create_unsafe() }]
+    defer() <|
+        for item in buffer_memory_barriers
+            item |> vk_view_destroy()
+        delete vk_buffer_memory_barriers
+    let vk_imageMemoryBarrierCount = uint(image_memory_barriers |> length())
+    var vk_image_memory_barriers <- [{ for item in image_memory_barriers ;
+        item |> vk_view_create_unsafe() }]
+    defer() <|
+        for item in image_memory_barriers
+            item |> vk_view_destroy()
+        delete vk_image_memory_barriers
+
+    vkCmdPipelineBarrier(
+        boost_value_to_vk(command_buffer),
+        boost_value_to_vk(src_stage_mask),
+        boost_value_to_vk(dst_stage_mask),
+        boost_value_to_vk(dependency_flags),
+        vk_memoryBarrierCount,
+        array_addr_unsafe(vk_memory_barriers),
+        vk_bufferMemoryBarrierCount,
+        array_addr_unsafe(vk_buffer_memory_barriers),
+        vk_imageMemoryBarrierCount,
+        array_addr_unsafe(vk_image_memory_barriers)
+    )
+
 def device_wait_idle(
     device : Device = [[ Device ]];
     var result : VkResult? = [[VkResult?]]
@@ -2218,6 +2263,40 @@ def vk_view_destroy(var boost_struct : BufferCopy)
     boost_struct._vk_view__active = false
 
 //
+// BufferMemoryBarrier
+//
+
+struct BufferMemoryBarrier
+    src_access_mask : uint
+    dst_access_mask : uint
+    src_queue_family_index : uint
+    dst_queue_family_index : uint
+    buffer : Buffer
+    offset : uint64
+    size : uint64
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : BufferMemoryBarrier
+) : VkBufferMemoryBarrier
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    return <- [[ VkBufferMemoryBarrier
+        sType = VkStructureType VK_STRUCTURE_TYPE_BUFFER_MEMORY_BARRIER,
+        srcAccessMask = boost_value_to_vk(boost_struct.src_access_mask),
+        dstAccessMask = boost_value_to_vk(boost_struct.dst_access_mask),
+        srcQueueFamilyIndex = boost_value_to_vk(boost_struct.src_queue_family_index),
+        dstQueueFamilyIndex = boost_value_to_vk(boost_struct.dst_queue_family_index),
+        buffer = boost_value_to_vk(boost_struct.buffer),
+        offset = boost_value_to_vk(boost_struct.offset),
+        size = boost_value_to_vk(boost_struct.size)
+    ]]
+
+def vk_view_destroy(var boost_struct : BufferMemoryBarrier)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+//
 // BufferViewCreateInfo
 //
 
@@ -2515,6 +2594,49 @@ def vk_view_destroy(var boost_struct : FenceCreateInfo)
     boost_struct._vk_view__active = false
 
 //
+// ImageMemoryBarrier
+//
+
+struct ImageMemoryBarrier
+    src_access_mask : uint
+    dst_access_mask : uint
+    old_layout : VkImageLayout
+    new_layout : VkImageLayout
+    src_queue_family_index : uint
+    dst_queue_family_index : uint
+    image : Image
+    subresource_range : ImageSubresourceRange
+    _vk_view_p_subresource_range : VkImageSubresourceRange ?
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : ImageMemoryBarrier
+) : VkImageMemoryBarrier
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    boost_struct._vk_view_p_subresource_range = new VkImageSubresourceRange
+    *(boost_struct._vk_view_p_subresource_range) <- (
+        boost_struct.subresource_range |> vk_view_create_unsafe())
+    return <- [[ VkImageMemoryBarrier
+        sType = VkStructureType VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER,
+        srcAccessMask = boost_value_to_vk(boost_struct.src_access_mask),
+        dstAccessMask = boost_value_to_vk(boost_struct.dst_access_mask),
+        oldLayout = boost_value_to_vk(boost_struct.old_layout),
+        newLayout = boost_value_to_vk(boost_struct.new_layout),
+        srcQueueFamilyIndex = boost_value_to_vk(boost_struct.src_queue_family_index),
+        dstQueueFamilyIndex = boost_value_to_vk(boost_struct.dst_queue_family_index),
+        image = boost_value_to_vk(boost_struct.image),
+        subresourceRange = *(boost_struct._vk_view_p_subresource_range)
+    ]]
+
+def vk_view_destroy(var boost_struct : ImageMemoryBarrier)
+    assert(boost_struct._vk_view__active)
+    boost_struct.subresource_range |> vk_view_destroy()
+    unsafe
+        delete boost_struct._vk_view_p_subresource_range
+    boost_struct._vk_view__active = false
+
+//
 // ImageViewCreateInfo
 //
 
@@ -2581,6 +2703,30 @@ def vk_view_create_unsafe(var boost_struct : MemoryAllocateInfo
     ]]
 
 def vk_view_destroy(var boost_struct : MemoryAllocateInfo)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+//
+// MemoryBarrier
+//
+
+struct MemoryBarrier
+    src_access_mask : uint
+    dst_access_mask : uint
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : MemoryBarrier
+) : VkMemoryBarrier
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    return <- [[ VkMemoryBarrier
+        sType = VkStructureType VK_STRUCTURE_TYPE_MEMORY_BARRIER,
+        srcAccessMask = boost_value_to_vk(boost_struct.src_access_mask),
+        dstAccessMask = boost_value_to_vk(boost_struct.dst_access_mask)
+    ]]
+
+def vk_view_destroy(var boost_struct : MemoryBarrier)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 

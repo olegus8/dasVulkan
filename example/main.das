@@ -284,7 +284,10 @@ def create_device_local_sampled_image_rgba8(
     ])
 
     sis.device |> run_cmd_sync(sis.cmd_pool, sis.queue) <| $(cmd_buf)
-        pass
+        var barriers <- [{
+        }]
+        defer() <| { delete barriers; }
+        cmd_pipeline_barrier([command_buffer = cmd_buf, barriers=barriers])
 
     return <- img
 
