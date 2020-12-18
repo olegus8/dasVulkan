@@ -286,17 +286,13 @@ def create_device_local_sampled_image_rgba8(
             VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT)
     ])
 
-    /*
     sis |> transition_image_layout(img,
         VkImageLayout VK_IMAGE_LAYOUT_UNDEFINED,
         VkImageLayout VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL)
-    */
     sis |> copy_buffer_to_image(staging, img)
-    /*
     sis |> transition_image_layout(img,
         VkImageLayout VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
         VkImageLayout VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL)
-    */
 
     return <- img
 
@@ -376,8 +372,11 @@ def transition_image_layout(
     defer() <| { delete barriers; }
 
     sis.device |> run_cmd_sync(sis.cmd_pool, sis.queue) <| $(cmd_buf)
-        cmd_pipeline_barrier([command_buffer=cmd_buf,
-            image_memory_barriers=barriers])
+        cmd_pipeline_barrier([
+            command_buffer = cmd_buf,
+            src_stage_mask = src_stage_mask,
+            dst_stage_mask = dst_stage_mask,
+            image_memory_barriers = barriers])
 
 
 //TODO: to builtin
