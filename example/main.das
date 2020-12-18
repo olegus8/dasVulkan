@@ -295,7 +295,7 @@ def transition_image_layout(
     new_layout : VkImageLayout
 )
     sis.device |> run_cmd_sync(sis.cmd_pool, sis.queue) <| $(cmd_buf)
-        var barriers <- [{ ImageMemoryBarrier
+        var barriers <- [{ auto[] [[ ImageMemoryBarrier
             old_layout = old_layout,
             new_layout = new_layout,
             src_queue_family_index = VK_QUEUE_FAMILY_IGNORED,
@@ -306,7 +306,7 @@ def transition_image_layout(
                 base_mip_level = 0u,
                 level_count = 1u,
                 base_arrayLayer = 0u,
-                layer_count = 1u
+                layer_count = 1u ]]
         ]] }]
         defer() <| { delete barriers; }
         cmd_pipeline_barrier([command_buffer = cmd_buf, barriers=barriers])
