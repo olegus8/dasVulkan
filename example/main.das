@@ -306,7 +306,7 @@ def copy_image_to_buffer(
                 depth = 1u ]]
         ]] }]
         defer() <| { delete regions; }
-        cmd_buf |> cmd_copy_buffer_to_image(buffer.buffer, img.image,
+        cmd_buf |> cmd_copy_buffer_to_image(buffer.buffer, image.image,
             VkImageLayout VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
             regions)
 
