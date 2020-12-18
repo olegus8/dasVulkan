@@ -284,7 +284,6 @@ def create_device_local_sampled_image_rgba8(
         mem_props = uint(VkMemoryPropertyFlagBits
             VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT)
     ])
-
     sis.device |> run_cmd_sync(sis.cmd_pool, sis.queue) <| $(cmd_buf)
         var regions <- [{ auto[] [[ BufferImageCopy
             aspect_mask=uint(VkImageAspectFlagBits VK_IMAGE_ASPECT_COLOR_BIT),
