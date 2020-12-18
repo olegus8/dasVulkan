@@ -296,7 +296,7 @@ def create_device_local_sampled_image_rgba8(
                 depth = 1u ]]
         ]] }]
         defer() <| { delete regions; }
-        cmd_buf |> copy_buffer_to_image(staging, img.image,
+        cmd_buf |> cmd_copy_buffer_to_image(staging, img.image,
             VkImageLayout VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
             regions)
 
