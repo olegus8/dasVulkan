@@ -325,8 +325,8 @@ def transition_image_layout(
     old_layout : VkImageLayout;
     new_layout : VkImageLayout
 )
-    var src_stage : uint
-    var dst_stage : uint
+    var src_stage_mask : uint
+    var dst_stage_mask : uint
     var src_access_mask : uint
     var dst_access_mask : uint
 
@@ -336,9 +336,9 @@ def transition_image_layout(
         src_access_mask = 0u
         dst_access_mask = uint(
             VkAccessFlagBits VK_ACCESS_TRANSFER_WRITE_BIT)
-        src_stage = uint(
+        src_stage_mask = uint(
             VkPipelineStageFlagBits VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT)
-        dst_stage = uint(
+        dst_stage_mask = uint(
             VkPipelineStageFlagBits VK_PIPELINE_STAGE_TRANSFER_BIT)
     elif (old_layout == VkImageLayout VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL
     &&    new_layout == (
@@ -348,9 +348,9 @@ def transition_image_layout(
             VkAccessFlagBits VK_ACCESS_TRANSFER_WRITE_BIT)
         dst_access_mask = uint(
             VkAccessFlagBits VK_ACCESS_SHADER_READ_BIT)
-        src_stage = uint(
+        src_stage_mask = uint(
             VkPipelineStageFlagBits VK_PIPELINE_STAGE_TRANSFER_BIT)
-        dst_stage = uint(
+        dst_stage_mask = uint(
             VkPipelineStageFlagBits VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT)
     else
         panic("unsupported layout transition!")
