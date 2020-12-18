@@ -289,16 +289,16 @@ def create_device_local_sampled_image_rgba8(
 def create_example_texture(
     sis : SwapchainIndependentState
 ) : MemoryBackedImage
-    let width = 256
+    let width1 = 256
     let height = 256
-    return <- sis |> create_device_local_sampled_image_rgba8(width, height
+    return <- sis |> create_device_local_sampled_image_rgba8(width1, height
     ) <| $(var texels : array<uint4>#)
-        let width4 = width / 4
-        for texel4, texel4_i in texels, range(INT_MAX)
-            var y = texel4_i / width4
-            var x = texel4_i % width4
-            var x4 = int4(x, x+1, x+2, x+3)
-            var y4 = int4(y, y, y, y)
+        let width = width1 / 4
+        for texel, texel_i in texels, range(INT_MAX)
+            var y1 = texel_i / width
+            var x1 = texel_i % width
+            var x = int4(x1, x1+1, x1+2, x1+3)
+            var y = int4(y1, y1, y1, y1)
 
 
 def create_example_render_pass(
