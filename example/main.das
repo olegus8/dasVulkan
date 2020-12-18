@@ -332,14 +332,18 @@ def transition_image_layout(
     sis.device |> run_cmd_sync(sis.cmd_pool, sis.queue) <| $(cmd_buf)
         var src_stage : uint
         var dst_stage : uint
+        var src_access_mask : uint
+        var dst_access_mask : uint
         if (old_layout == VkImageLayout VK_IMAGE_LAYOUT_UNDEFINED
         &&  new_layout == VkImageLayout VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL
         )
-            barrier.srcAccessMask = 0;
-            barrier.dstAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
-
-            sourceStage = VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT;
-            destinationStage = VK_PIPELINE_STAGE_TRANSFER_BIT;
+            src_access_mask = 0u
+            dst_access_maek = uint(
+                VkAccessFlagBits VK_ACCESS_TRANSFER_WRITE_BIT)
+            src_stage = uint(
+                VkPipelineStageFlagBits VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT)
+            dst_stage = uint(
+                VkPipelineStageFlagBits VK_PIPELINE_STAGE_TRANSFER_BIT)
         } else if (oldLayout == VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL && newLayout == VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL) {
             barrier.srcAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
             barrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
