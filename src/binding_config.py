@@ -191,6 +191,7 @@ def add_boost_content(g):
         'VkDescriptorImageInfo',
         'VkDescriptorPoolSize',
         'VkFenceCreateInfo',
+        'VkImageMemoryBarrier',
         'VkImageViewCreateInfo',
         'VkMemoryAllocateInfo',
         'VkMemoryBarrier',
