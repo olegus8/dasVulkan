@@ -271,8 +271,19 @@ def create_device_local_image_rgba8(
     ) <| $(var mapped_data : array<uint>#)
         for dst, src in mapped_data, data
             dst = src
-    sis.device |> copy_buffer_sync(
-        sis.cmd_pool, sis.queue, staging.buffer, buf.buffer, uint64(buf_size))
+
+    var img <- create_memory_backed_image([
+        device = sis.device,
+        phys_dev = sis.phys_dev,
+        width = width,
+        height = height,
+        format = VkFormat VK_FORMAT_R8G8B8A8_SRGB,
+        tiling = VkImageTiling VK_IMAGE_TILING_OPTIMAL,
+        usage = uint(VkImageUsageFlagBits VK_IMAGE_USAGE_TRANSFER_DST_BIT)
+              | uint(VkImageUsageFlagBits VK_IMAGE_USAGE_SAMPLED_BIT),
+        mem_props = uint(VkMemoryPropertyFlagBits
+            VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT)
+    ])
 
     return <- buf
 
