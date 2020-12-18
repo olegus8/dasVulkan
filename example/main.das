@@ -296,10 +296,8 @@ def create_example_texture(
         let width = width1 / 4
         let one = float4(1.f, 1.f, 1.f, 1.f)
         for texel, texel_i in texels, range(INT_MAX)
-            let y1 = float(texel_i / width)
-            let x1 = float(texel_i % width)
-            var x = float4(x1, x1+1.f, x1+2.f, x1+3.f)
-            var y = one * y1
+            let x = float(texel_i % width)*one + float4(0.f, 1.f, 2.f, 3.f)
+            let y = float(texel_i / width)*one
             x /= float(width1)
             y /= float(height)
             let r = 0.5f*(one + sin(0.1f*x + 0.6f*y + 0.1f*one))
