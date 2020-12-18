@@ -300,9 +300,12 @@ def create_example_texture(
             let y = float(texel_i / width)*one
             x /= float(width1)
             y /= float(height)
-            let r = 0.5f*(one + sin(0.1f*x + 0.6f*y + 0.1f*one))
-            let g = 0.5f*(one + sin(0.2f*x + 0.5f*y + 0.5f*one))
-            let b = 0.5f*(one + sin(0.3f*x + 0.4f*y + 1.0f*one))
+            var r = 0.5f*(one + sin(0.1f*x + 0.6f*y + 0.1f*one))
+            var g = 0.5f*(one + sin(0.2f*x + 0.5f*y + 0.5f*one))
+            var b = 0.5f*(one + sin(0.3f*x + 0.4f*y + 1.0f*one))
+            r = 255.f*saturate(r)
+            g = 255.f*saturate(g)
+            b = 255.f*saturate(b)
 
 
 def create_example_render_pass(
