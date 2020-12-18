@@ -292,11 +292,13 @@ def create_example_texture(
 ) : MemoryBackedImage
     let width = 256
     let height = 256
-    var texels : array<uint>
-    texels.resize(width * height)
-    for texel, texel_i in texels, range(INT_MAX)
-        pass
-    pass
+    return <- sis |> create_device_local_sampled_image_rgba8(width, height
+    ) <| (var texels : array<uint4>#)
+        let width4 = width / 4
+        for texel4, texel4_i in texels, range(INT_MAX)
+            var y = texel4_i / width4
+            var x4 = texel4_i % width4
+            var x = int4(x4, x4+1, x4+2 x4+3)
 
 
 def create_example_render_pass(
