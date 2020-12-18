@@ -147,6 +147,8 @@ struct MemoryBackedImage
     image : Image
     memory : DeviceMemory
     format : VkFormat
+    width : int
+    height : int
 
 
 def finalize(var b: MemoryBackedImage explicit)
@@ -167,8 +169,7 @@ def create_memory_backed_image(
 ) : MemoryBackedImage
 
     var created = false
-    var mbi : MemoryBackedImage
-    mbi.format = format
+    var mbi<-[[ MemoryBackedImage format=format, width=width, height=height ]]
     mbi.image <- device |> create_image( [[ ImageCreateInfo
         image_type = VkImageType VK_IMAGE_TYPE_2D,
         extent <- [[Extent3D width=uint(width),height=uint(height),depth=1u]],
@@ -284,6 +285,15 @@ def create_device_local_sampled_image_rgba8(
         mem_props = uint(VkMemoryPropertyFlagBits
             VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT)
     ])
+
+    return <- img
+
+
+def copy_image_to_buffer(
+    sis : SwapchainIndependentState;
+    image : MemoryBackedImage;
+    buffer : MemoryBackedBuffer
+)
     sis.device |> run_cmd_sync(sis.cmd_pool, sis.queue) <| $(cmd_buf)
         var regions <- [{ auto[] [[ BufferImageCopy
             image_subresource <- [[ ImageSubresourceLayers
@@ -291,16 +301,14 @@ def create_device_local_sampled_image_rgba8(
                     VkImageAspectFlagBits VK_IMAGE_ASPECT_COLOR_BIT),
                 layer_count = 1u ]],
             image_extent <- [[ Extent3D
-                width = uint(width),
-                height = uint(height),
+                width = uint(image.width),
+                height = uint(image.height),
                 depth = 1u ]]
         ]] }]
         defer() <| { delete regions; }
-        cmd_buf |> cmd_copy_buffer_to_image(staging.buffer, img.image,
+        cmd_buf |> cmd_copy_buffer_to_image(buffer.buffer, img.image,
             VkImageLayout VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
             regions)
-
-    return <- img
 
 
 def transition_image_layout(
