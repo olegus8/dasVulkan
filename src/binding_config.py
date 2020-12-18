@@ -179,6 +179,7 @@ def add_boost_content(g):
 
     for name in [
         'VkBufferCopy',
+        'VkBufferImageCopy',
         'VkBufferMemoryBarrier',
         'VkBufferViewCreateInfo',
         'VkClearDepthStencilValue',
@@ -192,6 +193,7 @@ def add_boost_content(g):
         'VkDescriptorPoolSize',
         'VkFenceCreateInfo',
         'VkImageMemoryBarrier',
+        'VkImageSubresourceLayers',
         'VkImageViewCreateInfo',
         'VkMemoryAllocateInfo',
         'VkMemoryBarrier',
