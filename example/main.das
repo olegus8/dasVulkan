@@ -255,9 +255,8 @@ def create_device_local_sampled_image_rgba8(
     height  : int;
     b       : block<(var mapped_data : array<uint4>#)>
 ) : MemoryBackedImage
-    assert(data |> length() == width*height)
     assert(width % 4 == 0)
-    let buf_size = typeinfo(sizeof type<uint>) * data |> length()
+    let buf_size = typeinfo(sizeof type<uint>) * width * height
 
     var staging <- sis.device |> create_memory_backed_buffer(
         sis.phys_dev, uint64(buf_size),
@@ -293,12 +292,12 @@ def create_example_texture(
     let width = 256
     let height = 256
     return <- sis |> create_device_local_sampled_image_rgba8(width, height
-    ) <| (var texels : array<uint4>#)
+    ) <| $(var texels : array<uint4>#)
         let width4 = width / 4
         for texel4, texel4_i in texels, range(INT_MAX)
             var y = texel4_i / width4
             var x = texel4_i % width4
-            var x4 = int4(x4, x4+1, x4+2 x4+3)
+            var x4 = int4(x, x+1, x+2, x+3)
             var y4 = int4(y, y, y, y)
 
 
