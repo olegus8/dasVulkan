@@ -286,13 +286,18 @@ def create_device_local_sampled_image_rgba8(
             VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT)
     ])
 
+    sis |> transition_image_layout(img,
+        VkImageLayout VK_IMAGE_LAYOUT_UNDEFINED,
+        VkImageLayout VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL)
+    sis |> copy_buffer_to_image(staging, img)
+
     return <- img
 
 
-def copy_image_to_buffer(
+def copy_buffer_to_image(
     sis : SwapchainIndependentState;
-    image : MemoryBackedImage;
-    buffer : MemoryBackedBuffer
+    buffer : MemoryBackedBuffer;
+    image : MemoryBackedImage
 )
     sis.device |> run_cmd_sync(sis.cmd_pool, sis.queue) <| $(cmd_buf)
         var regions <- [{ auto[] [[ BufferImageCopy
