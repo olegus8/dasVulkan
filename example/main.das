@@ -304,9 +304,7 @@ def transition_image_layout(
             subresource_range <- [[ ImageSubresourceRange
                 aspect_mask = uint(
                     VkImageAspectFlagBits VK_IMAGE_ASPECT_COLOR_BIT),
-                base_mip_level = 0u,
                 level_count = 1u,
-                base_array_layer = 0u,
                 layer_count = 1u ]]
         ]] }]
         defer() <| { delete barriers; }
