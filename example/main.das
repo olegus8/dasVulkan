@@ -338,7 +338,7 @@ def transition_image_layout(
     &&  new_layout == VkImageLayout VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL
     )
         src_access_mask = 0u
-        dst_access_maek = uint(
+        dst_access_mask = uint(
             VkAccessFlagBits VK_ACCESS_TRANSFER_WRITE_BIT)
         src_stage = uint(
             VkPipelineStageFlagBits VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT)
