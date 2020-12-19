@@ -734,10 +734,19 @@ def create_example_descriptor_sets(
             dst_binding = 0u,
             descriptor_type = (VkDescriptorType
                 VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER),
-            buffer_info <- [{ auto[] [[ DescriptorBufferInfo
-                buffer = weak_copy(ubuf.buffer),
-                range_ = uint64(typeinfo(sizeof type<UniformBufferObject>))
-            ]] }]
+            buffer_info <- [{ auto[]
+                [[ DescriptorBufferInfo
+                    buffer = weak_copy(ubuf.buffer),
+                    range_ = uint64(
+                        typeinfo(sizeof type<UniformBufferObject>))
+                ]];
+                [[ DescriptorImageInfo
+                    image_layout = (VkImageLayout
+                        VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL),
+                    image_view = weak_copy(sis.texture_view),
+                    sampler = weak_copy(sis.sampler)
+                ]]
+             }]
         ]] }]
         sis.device |> update_descriptor_sets(writes)
         delete writes
