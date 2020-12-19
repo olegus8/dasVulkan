@@ -26,14 +26,23 @@ def create_example_descriptor_set_layout(
     device : Device
 ) : DescriptorSetLayout
     var info <- [[ DescriptorSetLayoutCreateInfo
-        bindings <- [{ auto[] [[ DescriptorSetLayoutBinding
-            binding = 0u,
-            descriptor_type = (VkDescriptorType
-                VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER),
-            descriptor_count = 1u,
-            stage_flags = uint(VkShaderStageFlagBits
-                VK_SHADER_STAGE_VERTEX_BIT)
-    ]] }] ]]
+        bindings <- [{ auto[]
+            [[ DescriptorSetLayoutBinding
+                binding = 0u,
+                descriptor_count = 1u,
+                descriptor_type = (VkDescriptorType
+                    VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER),
+                stage_flags = uint(VkShaderStageFlagBits
+                    VK_SHADER_STAGE_VERTEX_BIT)
+            ]];
+            [[ DescriptorSetLayoutBinding
+                binding = 1u,
+                descriptor_count = 1u,
+                descriptor_type = (VkDescriptorType
+                    VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER),
+                stage_flags = uint(VkShaderStageFlagBits
+                    VK_SHADER_STAGE_FRAGMENT_BIT)
+        }] ]]
     defer() <| { delete info; }
     return <- device |> create_descriptor_set_layout(info)
 
