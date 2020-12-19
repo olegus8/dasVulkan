@@ -394,9 +394,7 @@ def transition_image_layout(
             image_memory_barriers = barriers])
 
 
-def create_example_sampler(
-    SwapchainIndependentState sis
-) : Sampler
+def create_example_sampler(sis : SwapchainIndependentState) : Sampler
     let props <- sis.phys_dev |> get_physical_device_properties()
     return <- create_sampler( [[ SamplerCreateInfo
         mag_filter = VkFilter VK_FILTER_LINEAR,
