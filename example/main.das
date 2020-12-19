@@ -730,23 +730,29 @@ def create_example_descriptor_sets(
     var dsets <- sis.device |> allocate_descriptor_sets(create_info)
     for dset, ubuf in dsets.descriptor_sets, ubufs
         if true
-            var writes <- [{ auto[] [[ WriteDescriptorSet
-                dst_set = weak_copy(dset),
-                dst_binding = 0u,
-                descriptor_type = (VkDescriptorType
-                    VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER),
-                buffer_info <- [{ auto[] [[ DescriptorBufferInfo
-                    buffer = weak_copy(ubuf.buffer),
-                    range_ = uint64(
-                        typeinfo(sizeof type<UniformBufferObject>))
-                ]] }],
-                image_info <- [{ auto[] [[ DescriptorImageInfo
-                    image_layout = (VkImageLayout
-                        VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL),
-                    image_view = weak_copy(sis.texture_view),
-                    sampler = weak_copy(sis.sampler)
-                ]] }]
-            ]] }]
+            var writes <- [{ auto[]
+                [[ WriteDescriptorSet
+                    dst_set = weak_copy(dset),
+                    dst_binding = 0u,
+                    descriptor_type = (VkDescriptorType
+                        VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER),
+                    buffer_info <- [{ auto[] [[ DescriptorBufferInfo
+                        buffer = weak_copy(ubuf.buffer),
+                        range_ = uint64(
+                            typeinfo(sizeof type<UniformBufferObject>))
+                ]] }] ]],
+                [[ WriteDescriptorSet
+                    dst_set = weak_copy(dset),
+                    dst_binding = 1u,
+                    descriptor_type = (VkDescriptorType
+                        VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER),
+                    image_info <- [{ auto[] [[ DescriptorImageInfo
+                        image_layout = (VkImageLayout
+                            VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL),
+                        image_view = weak_copy(sis.texture_view),
+                        sampler = weak_copy(sis.sampler)
+                ]] }] ]]
+            }]
             defer <| { delete writes; }
             sis.device |> update_descriptor_sets(writes)
     return <- dsets
