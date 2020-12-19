@@ -16,6 +16,7 @@ let
 struct Vertex
     position : float2
     color : float3
+    tex_pos : float2
 
 
 struct UniformBufferObject
@@ -97,7 +98,10 @@ def create_example_graphics_pipeline(
                     offset = uint(typeinfo(offsetof<position> type<Vertex>))]];
                 [[VertexInputAttributeDescription binding=0u, location=1u,
                     format = VkFormat VK_FORMAT_R32G32B32_SFLOAT,
-                    offset = uint(typeinfo(offsetof<color> type<Vertex>))]]
+                    offset = uint(typeinfo(offsetof<color> type<Vertex>))]];
+                [[VertexInputAttributeDescription binding=0u, location=2u,
+                    format = VkFormat VK_FORMAT_R32G32_SFLOAT,
+                    offset = uint(typeinfo(offsetof<tex_pos> type<Vertex>))]]
             }]
         ]],
         viewport_state <- [[PipelineViewportStateCreateInfo
