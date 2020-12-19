@@ -42,6 +42,7 @@ def create_example_descriptor_set_layout(
                     VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER),
                 stage_flags = uint(VkShaderStageFlagBits
                     VK_SHADER_STAGE_FRAGMENT_BIT)
+            ]]
         }] ]]
     defer() <| { delete info; }
     return <- device |> create_descriptor_set_layout(info)
