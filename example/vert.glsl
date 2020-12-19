@@ -15,5 +15,5 @@ layout(location = 1) out vec2 frag_tex_pos;
 void main() {
     gl_Position = vec4(in_pos + ubo.offset, 0.0, 1.0);
     frag_color = in_color;
-    frag_tex_pos = tex_pos;
+    frag_tex_pos = in_tex_pos;
 }
