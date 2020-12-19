@@ -123,6 +123,8 @@ def create_single_queue_device(
             queue_priorities <- [{ auto[] 1.0f }]
         ]]}],
         enabled_extension_names := extensions
+        p_enabled_features <- new [[ PhysicalDeviceFeatures
+            sampler_anisotropy = 1u ]]
     ]]
     defer() <| ${ delete create_info; }
 
