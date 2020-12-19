@@ -749,9 +749,17 @@ def create_example_descriptor_pool(
     framebuffers : array<Framebuffer>
 ) : DescriptorPool
     var info <- [[ DescriptorPoolCreateInfo
-        pool_sizes <- [{ auto[] [[ DescriptorPoolSize
-            type_ = VkDescriptorType VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER,
-            descriptor_count = uint(framebuffers |> length()) ]] }],
+        pool_sizes <- [{ auto[]
+            [[ DescriptorPoolSize
+                type_ = VkDescriptorType VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER,
+                descriptor_count = uint(framebuffers |> length())
+            ]];
+            [[ DescriptorPoolSize
+                type_ = (VkDescriptorType
+                    VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER),
+                descriptor_count = uint(framebuffers |> length())
+            ]]
+        }],
         max_sets = uint(framebuffers |> length()),
         flags = uint(VkDescriptorPoolCreateFlagBits
             VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT)
