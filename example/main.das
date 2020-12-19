@@ -439,19 +439,23 @@ def create_example_texture(
     ) <| $(var texels : array<uint4>#)
         let width = width1 / 4
         let one = float4(1.f, 1.f, 1.f, 1.f)
+        let s = 0.5f
         for iy in range(height)
             for ix in range(width)
                 var x = float(ix)*one*4.f + float4(0.f, 1.f, 2.f, 3.f)
                 var y = float(iy)*one
                 x /= float(width1)
                 y /= float(height)
-                let r = 0.5f*(one + sin(17.f*x + 63.f*y + 0.1f*one))
-                let g = 0.5f*(one + sin(33.f*x + 37.f*y + 0.5f*one))
-                let b = 0.5f*(one + sin(61.f*x + 15.f*y + 1.0f*one))
+                var r = 0.5f*(one + sin(s*(17.f*x + 63.f*y) + 0.1f*one))
+                var g = 0.5f*(one + sin(s*(33.f*x + 37.f*y) + 0.5f*one))
+                var b = 0.5f*(one + sin(s*(61.f*x + 15.f*y) + 1.0f*one))
+                r = lerp(0.5f*one, one, r)
+                g = lerp(0.5f*one, one, g)
+                b = lerp(0.5f*one, one, b)
                 texels[iy*width + ix] = (
-                    (to_uint4(255.f*saturate(r))) +
-                    (to_uint4(255.f*saturate(g)) << 8) +
-                    (to_uint4(255.f*saturate(b)) << 16))
+                    (to_uint4(255.f*r)) +
+                    (to_uint4(255.f*g) << 8) +
+                    (to_uint4(255.f*b) << 16))
 
 
 def create_example_render_pass(
