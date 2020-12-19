@@ -394,6 +394,24 @@ def transition_image_layout(
             image_memory_barriers = barriers])
 
 
+def create_example_sampler(
+    SwapchainIndependentState sis
+) : Sampler
+    let props <- sis.phys_dev |> get_physical_device_properties()
+    return <- create_sampler( [[ SamplerCreateInfo
+        mag_filter = VkFilter VK_FILTER_LINEAR,
+        min_filter = VkFilter VK_FILTER_LINEAR,
+        address_mode_u = VkSamplerAddressMode VK_SAMPLER_ADDRESS_MODE_REPEAT,
+        address_mode_v = VkSamplerAddressMode VK_SAMPLER_ADDRESS_MODE_REPEAT,
+        address_mode_w = VkSamplerAddressMode VK_SAMPLER_ADDRESS_MODE_REPEAT,
+        anisotropy_enable = VK_TRUE,
+        max_anisotropy = props.limits.max_sampler_anisotropy,
+        border_color = VkBorderColor VK_BORDER_COLOR_INT_OPAQUE_BLACK,
+        compare_op = VkCompareOp VK_COMPARE_OP_ALWAYS,
+        mipmap_mode = VkSamplerMipmapMode VK_SAMPLER_MIPMAP_MODE_LINEAR
+    ]] )
+
+
 //TODO: to builtin
 def to_uint4(f : float4) : uint4
     return uint4(f[0], f[1], f[2], f[3])
