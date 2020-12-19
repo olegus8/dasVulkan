@@ -647,10 +647,14 @@ def create_swapchain_independent_state(
     s.pipeline_layout <- s.device |> create_example_pipeline_layout(
         s.desc_set_layout)
     s.vertices <- [{auto[]
-        [[Vertex pos=float2(-0.5f, -0.5f), color=float3(1f, 0f, 0f)]];
-        [[Vertex pos=float2( 0.5f, -0.5f), color=float3(0f, 1f, 0f)]];
-        [[Vertex pos=float2( 0.5f,  0.5f), color=float3(0f, 0f, 1f)]];
-        [[Vertex pos=float2(-0.5f,  0.5f), color=float3(1f, 1f, 1f)]]}]
+        [[Vertex pos=float2(-0.5f, -0.5f), color=float3(1f, 0f, 0f),
+                                                      tex_pos=float2(1f, 0f)]];
+        [[Vertex pos=float2( 0.5f, -0.5f), color=float3(0f, 1f, 0f),
+                                                      tex_pos=float2(0f, 0f)]];
+        [[Vertex pos=float2( 0.5f,  0.5f), color=float3(0f, 0f, 1f),
+                                                      tex_pos=float2(0f, 1f)]];
+        [[Vertex pos=float2(-0.5f,  0.5f), color=float3(1f, 1f, 1f),
+                                                      tex_pos=float2(1f, 1f]]}]
     s.indices <- [{auto[] 0u; 1u; 2u; 2u; 3u; 0u}]
     s.vbuf <- s |> create_device_local_buffer(s.vertices,
         uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_VERTEX_BUFFER_BIT))
@@ -660,6 +664,18 @@ def create_swapchain_independent_state(
     s.texture_view <- s.device |> create_image_view(s.texture)
     s.sampler <- s |> create_example_sampler()
     return <- s
+
+
+def create_example_vertices() : array<Vertex>
+/*
+const std::vector<Vertex> vertices = {
+    {{-0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}, {1.0f, 0.0f}},
+    {{0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}, {0.0f, 0.0f}},
+    {{0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}, {0.0f, 1.0f}},
+    {{-0.5f, 0.5f}, {1.0f, 1.0f, 1.0f}, {1.0f, 1.0f}}
+};
+*/
+    return
 
 
 struct SwapchainDependentState
