@@ -503,10 +503,12 @@ struct SwapchainIndependentState
     ibuf            : MemoryBackedBuffer
     texture         : MemoryBackedImage
     texture_view    : ImageView
+    sampler         : Sampler
 
 
 def finalize(var s : SwapchainIndependentState explicit)
     s.device |> device_wait_idle()
+    delete s.sampler
     delete s.texture_view
     delete s.texture
     delete s.ibuf
@@ -561,6 +563,7 @@ def create_swapchain_independent_state(
         uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_INDEX_BUFFER_BIT))
     s.texture <- s |> create_example_texture()
     s.texture_view <- s.device |> create_image_view(s.texture)
+    s.sampler <- s |> create_example_sampler()
     return <- s
 
 
