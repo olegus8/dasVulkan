@@ -452,10 +452,6 @@ def create_example_texture(
                     (to_uint4(255.f*saturate(r))) +
                     (to_uint4(255.f*saturate(g)) << 8) +
                     (to_uint4(255.f*saturate(b)) << 16))
-                /*
-                texels[iy*width + ix] = uint4(
-                    0x000000ff, 0x0000ff00, 0x00ff0000, 0xffffffff)
-                */
 
 
 def create_example_render_pass(
