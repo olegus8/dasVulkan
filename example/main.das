@@ -445,9 +445,9 @@ def create_example_texture(
                 var y = float(iy)*one
                 x /= float(width1)
                 y /= float(height)
-                let r = 0.5f*(one + sin(10.f*x + 60.f*y + 0.1f*one))
-                let g = 0.5f*(one + sin(20.f*x + 50.f*y + 0.5f*one))
-                let b = 0.5f*(one + sin(30.f*x + 40.f*y + 1.0f*one))
+                let r = 0.5f*(one + sin(17.f*x + 63.f*y + 0.1f*one))
+                let g = 0.5f*(one + sin(33.f*x + 37.f*y + 0.5f*one))
+                let b = 0.5f*(one + sin(61.f*x + 15.f*y + 1.0f*one))
                 texels[iy*width + ix] = (
                     (to_uint4(255.f*saturate(r))) +
                     (to_uint4(255.f*saturate(g)) << 8) +
