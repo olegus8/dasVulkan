@@ -666,18 +666,6 @@ def create_swapchain_independent_state(
     return <- s
 
 
-def create_example_vertices() : array<Vertex>
-/*
-const std::vector<Vertex> vertices = {
-    {{-0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}, {1.0f, 0.0f}},
-    {{0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}, {0.0f, 0.0f}},
-    {{0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}, {0.0f, 1.0f}},
-    {{-0.5f, 0.5f}, {1.0f, 1.0f, 1.0f}, {1.0f, 1.0f}}
-};
-*/
-    return
-
-
 struct SwapchainDependentState
     swapchain           : SwapchainEx
     pipeline            : Pipeline
