@@ -180,21 +180,18 @@ def cmd_bind_vertex_buffer(
     command_buffer |> cmd_bind_vertex_buffers(binding, buffers, offsets)
 
 
-def copy_buffer_sync(
-    device : Device;
-    command_pool : CommandPool;
-    queue : Queue;
-    src_buffer : Buffer;
-    dst_buffer : Buffer;
-    size : uint64
+def run_cmd_sync(
+    device          : Device;
+    command_pool    : CommandPool;
+    queue           : Queue;
+    b               : block<(cmd_buf:CommandBuffer)>
 )
-    var cmd_bufs <- device |> allocate_command_buffers_primary(
-        command_pool, 1)
+    var cmd_bufs <- device |> allocate_command_buffers_primary(command_pool, 1)
     defer() <| ${ delete cmd_bufs; }
     let cmd_buf = cmd_bufs.command_buffers[0]
 
-    cmd_buf |> record_command_buffer() <| $()
-        cmd_buf |> cmd_copy_buffer(src_buffer, dst_buffer, size)
+    cmd_buf |> record_command_buffer() <|
+        b |> invoke(cmd_buf)
 
     queue |> queue_submit(cmd_bufs)
     queue |> queue_wait_idle()

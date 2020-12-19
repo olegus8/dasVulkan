@@ -14,8 +14,9 @@ let
 
 
 struct Vertex
-    position : float2
+    pos : float2
     color : float3
+    tex_pos : float2
 
 
 struct UniformBufferObject
@@ -26,14 +27,24 @@ def create_example_descriptor_set_layout(
     device : Device
 ) : DescriptorSetLayout
     var info <- [[ DescriptorSetLayoutCreateInfo
-        bindings <- [{ auto[] [[ DescriptorSetLayoutBinding
-            binding = 0u,
-            descriptor_type = (VkDescriptorType
-                VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER),
-            descriptor_count = 1u,
-            stage_flags = uint(VkShaderStageFlagBits
-                VK_SHADER_STAGE_VERTEX_BIT)
-    ]] }] ]]
+        bindings <- [{ auto[]
+            [[ DescriptorSetLayoutBinding
+                binding = 0u,
+                descriptor_count = 1u,
+                descriptor_type = (VkDescriptorType
+                    VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER),
+                stage_flags = uint(VkShaderStageFlagBits
+                    VK_SHADER_STAGE_VERTEX_BIT)
+            ]];
+            [[ DescriptorSetLayoutBinding
+                binding = 1u,
+                descriptor_count = 1u,
+                descriptor_type = (VkDescriptorType
+                    VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER),
+                stage_flags = uint(VkShaderStageFlagBits
+                    VK_SHADER_STAGE_FRAGMENT_BIT)
+            ]]
+        }] ]]
     defer() <| { delete info; }
     return <- device |> create_descriptor_set_layout(info)
 
@@ -84,10 +95,13 @@ def create_example_graphics_pipeline(
             vertex_attribute_descriptions <- [{ auto[]
                 [[VertexInputAttributeDescription binding=0u, location=0u,
                     format = VkFormat VK_FORMAT_R32G32_SFLOAT,
-                    offset = uint(typeinfo(offsetof<position> type<Vertex>))]];
+                    offset = uint(typeinfo(offsetof<pos> type<Vertex>))]];
                 [[VertexInputAttributeDescription binding=0u, location=1u,
                     format = VkFormat VK_FORMAT_R32G32B32_SFLOAT,
-                    offset = uint(typeinfo(offsetof<color> type<Vertex>))]]
+                    offset = uint(typeinfo(offsetof<color> type<Vertex>))]];
+                [[VertexInputAttributeDescription binding=0u, location=2u,
+                    format = VkFormat VK_FORMAT_R32G32_SFLOAT,
+                    offset = uint(typeinfo(offsetof<tex_pos> type<Vertex>))]]
             }]
         ]],
         viewport_state <- [[PipelineViewportStateCreateInfo
@@ -141,6 +155,54 @@ def create_example_draw_commands(
                     index_count = uint(sis.indices |> length()),
                     instance_count = 1u])
     return <- cmd_bufs
+
+
+struct MemoryBackedImage
+    image : Image
+    memory : DeviceMemory
+    format : VkFormat
+    width : int
+    height : int
+
+
+def finalize(var b: MemoryBackedImage explicit)
+    delete b.memory
+    delete b.image
+    memzero(b)
+
+
+def create_memory_backed_image(
+    device      : Device;
+    phys_dev    : PhysicalDevice;
+    width       : int;
+    height      : int;
+    format      : VkFormat;
+    tiling      : VkImageTiling;
+    usage       : uint;
+    mem_props   : uint
+) : MemoryBackedImage
+
+    var created = false
+    var mbi<-[[ MemoryBackedImage format=format, width=width, height=height ]]
+    mbi.image <- device |> create_image( [[ ImageCreateInfo
+        image_type = VkImageType VK_IMAGE_TYPE_2D,
+        extent <- [[Extent3D width=uint(width),height=uint(height),depth=1u]],
+        mip_levels = 1u,
+        array_layers = 1u,
+        format = format,
+        tiling = tiling,
+        initial_layout = VkImageLayout VK_IMAGE_LAYOUT_UNDEFINED,
+        usage = usage,
+        samples = VkSampleCountFlagBits VK_SAMPLE_COUNT_1_BIT,
+        sharing_mode = VkSharingMode VK_SHARING_MODE_EXCLUSIVE]])
+    device |> find_image_memory_type(phys_dev, mbi.image, mem_props
+    ) <| $(mem_type, mem_size)
+        mbi.memory <- device |> allocate_memory([[MemoryAllocateInfo
+            allocation_size=mem_size, memory_type_index=mem_type]])
+        device |> bind_image_memory(mbi.image, mbi.memory)
+        created = true
+    assert(created)
+    return <- mbi
 
 
 struct MemoryBackedBuffer
@@ -198,10 +260,202 @@ def create_device_local_buffer(
     ) <| $(var mapped_data : array<T>#)
         for dst, src in mapped_data, data
             dst = src
-    sis.device |> copy_buffer_sync(
-        sis.cmd_pool, sis.queue, staging.buffer, buf.buffer, uint64(buf_size))
+    sis.device |> run_cmd_sync(sis.cmd_pool, sis.queue) <| $(cmd_buf)
+        cmd_buf |> cmd_copy_buffer(staging.buffer,buf.buffer,uint64(buf_size))
 
     return <- buf
+
+
+def create_image_view(
+    device : Device;
+    image : MemoryBackedImage
+) : ImageView
+    return <- device |> create_image_view([[ ImageViewCreateInfo
+        image = image.image,
+        format = image.format,
+        view_type = VkImageViewType VK_IMAGE_VIEW_TYPE_2D,
+        subresource_range = IMAGE_SUBRESOURCE_RANGE_SINGLE_COLOR,
+        components = COMPONENT_MAPPING_IDENTITY
+    ]])
+
+
+def create_device_local_sampled_image_rgba8(
+    sis     : SwapchainIndependentState;
+    width   : int;
+    height  : int;
+    b       : block<(var mapped_data : array<uint4>#)>
+) : MemoryBackedImage
+    assert(width % 4 == 0)
+    let buf_size = typeinfo(sizeof type<uint>) * width * height
+
+    var staging <- sis.device |> create_memory_backed_buffer(
+        sis.phys_dev, uint64(buf_size),
+        uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_TRANSFER_SRC_BIT),
+        uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT)|
+        uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_COHERENT_BIT))
+    defer() <| { delete staging; }
+
+    sis.device |> map_device_memory_to_array(
+        staging.memory, uint64(buf_size), uint64(0), 0u
+    ) <| $(var mapped_data : array<uint4>#)
+        b |> invoke(mapped_data)
+
+    var img <- create_memory_backed_image([
+        device = sis.device,
+        phys_dev = sis.phys_dev,
+        width = width,
+        height = height,
+        format = VkFormat VK_FORMAT_R8G8B8A8_SRGB,
+        tiling = VkImageTiling VK_IMAGE_TILING_OPTIMAL,
+        usage = uint(VkImageUsageFlagBits VK_IMAGE_USAGE_TRANSFER_DST_BIT)
+              | uint(VkImageUsageFlagBits VK_IMAGE_USAGE_SAMPLED_BIT),
+        mem_props = uint(VkMemoryPropertyFlagBits
+            VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT)
+    ])
+
+    sis |> transition_image_layout(img,
+        VkImageLayout VK_IMAGE_LAYOUT_UNDEFINED,
+        VkImageLayout VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL)
+
+    sis |> copy_buffer_to_image(staging, img)
+
+    sis |> transition_image_layout(img,
+        VkImageLayout VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
+        VkImageLayout VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL)
+
+    return <- img
+
+
+def copy_buffer_to_image(
+    sis : SwapchainIndependentState;
+    buffer : MemoryBackedBuffer;
+    image : MemoryBackedImage
+)
+    sis.device |> run_cmd_sync(sis.cmd_pool, sis.queue) <| $(cmd_buf)
+        var regions <- [{ auto[] [[ BufferImageCopy
+            image_subresource <- [[ ImageSubresourceLayers
+                aspect_mask = uint(
+                    VkImageAspectFlagBits VK_IMAGE_ASPECT_COLOR_BIT),
+                layer_count = 1u ]],
+            image_extent <- [[ Extent3D
+                width = uint(image.width),
+                height = uint(image.height),
+                depth = 1u ]]
+        ]] }]
+        defer() <| { delete regions; }
+        cmd_buf |> cmd_copy_buffer_to_image(buffer.buffer, image.image,
+            VkImageLayout VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
+            regions)
+
+
+def transition_image_layout(
+    sis : SwapchainIndependentState;
+    image : MemoryBackedImage;
+    old_layout : VkImageLayout;
+    new_layout : VkImageLayout
+)
+    var src_stage_mask : uint
+    var dst_stage_mask : uint
+    var src_access_mask : uint
+    var dst_access_mask : uint
+
+    if (old_layout == VkImageLayout VK_IMAGE_LAYOUT_UNDEFINED
+    &&  new_layout == VkImageLayout VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL
+    )
+        src_access_mask = 0u
+        dst_access_mask = uint(
+            VkAccessFlagBits VK_ACCESS_TRANSFER_WRITE_BIT)
+        src_stage_mask = uint(
+            VkPipelineStageFlagBits VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT)
+        dst_stage_mask = uint(
+            VkPipelineStageFlagBits VK_PIPELINE_STAGE_TRANSFER_BIT)
+    elif (old_layout == VkImageLayout VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL
+    &&    new_layout == (
+            VkImageLayout VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL)
+    )
+        src_access_mask = uint(
+            VkAccessFlagBits VK_ACCESS_TRANSFER_WRITE_BIT)
+        dst_access_mask = uint(
+            VkAccessFlagBits VK_ACCESS_SHADER_READ_BIT)
+        src_stage_mask = uint(
+            VkPipelineStageFlagBits VK_PIPELINE_STAGE_TRANSFER_BIT)
+        dst_stage_mask = uint(
+            VkPipelineStageFlagBits VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT)
+    else
+        panic("unsupported layout transition!")
+
+    var barriers <- [{ auto[] [[ ImageMemoryBarrier
+        src_access_mask = src_access_mask,
+        dst_access_mask = dst_access_mask,
+        old_layout = old_layout,
+        new_layout = new_layout,
+        src_queue_family_index = VK_QUEUE_FAMILY_IGNORED,
+        dst_queue_family_index = VK_QUEUE_FAMILY_IGNORED,
+        image = weak_copy(image.image),
+        subresource_range <- [[ ImageSubresourceRange
+            aspect_mask = uint(
+                VkImageAspectFlagBits VK_IMAGE_ASPECT_COLOR_BIT),
+            level_count = 1u,
+            layer_count = 1u ]]
+    ]] }]
+    defer() <| { delete barriers; }
+
+    sis.device |> run_cmd_sync(sis.cmd_pool, sis.queue) <| $(cmd_buf)
+        cmd_pipeline_barrier([
+            command_buffer = cmd_buf,
+            src_stage_mask = src_stage_mask,
+            dst_stage_mask = dst_stage_mask,
+            image_memory_barriers = barriers])
+
+
+def create_example_sampler(sis : SwapchainIndependentState) : Sampler
+    let props <- sis.phys_dev |> get_physical_device_properties()
+    return <- sis.device |> create_sampler( [[ SamplerCreateInfo
+        mag_filter = VkFilter VK_FILTER_LINEAR,
+        min_filter = VkFilter VK_FILTER_LINEAR,
+        address_mode_u = VkSamplerAddressMode VK_SAMPLER_ADDRESS_MODE_REPEAT,
+        address_mode_v = VkSamplerAddressMode VK_SAMPLER_ADDRESS_MODE_REPEAT,
+        address_mode_w = VkSamplerAddressMode VK_SAMPLER_ADDRESS_MODE_REPEAT,
+        anisotropy_enable = 1u,
+        max_anisotropy = props.limits.max_sampler_anisotropy,
+        border_color = VkBorderColor VK_BORDER_COLOR_INT_OPAQUE_BLACK,
+        compare_op = VkCompareOp VK_COMPARE_OP_ALWAYS,
+        mipmap_mode = VkSamplerMipmapMode VK_SAMPLER_MIPMAP_MODE_LINEAR
+    ]] )
+
+
+//TODO: to builtin
+def to_uint4(f : float4) : uint4
+    return uint4(f[0], f[1], f[2], f[3])
+
+
+def create_example_texture(
+    sis : SwapchainIndependentState
+) : MemoryBackedImage
+    let width1 = 1 << 8
+    let height = 1 << 8
+    return <- sis |> create_device_local_sampled_image_rgba8(
+        width1, height
+    ) <| $(var texels : array<uint4>#)
+        let width = width1 / 4
+        let one = float4(1.f, 1.f, 1.f, 1.f)
+        let s = 0.5f
+        for iy in range(height)
+            for ix in range(width)
+                var x = float(ix)*one*4.f + float4(0.f, 1.f, 2.f, 3.f)
+                var y = float(iy)*one
+                x /= float(width1)
+                y /= float(height)
+                var r = 0.5f*(one + sin(s*(17.f*x + 63.f*y) + 0.1f*one))
+                var g = 0.5f*(one + sin(s*(33.f*x + 37.f*y) + 0.5f*one))
+                var b = 0.5f*(one + sin(s*(61.f*x + 15.f*y) + 1.0f*one))
+                r = lerp(0.5f*one, one, r)
+                g = lerp(0.5f*one, one, g)
+                b = lerp(0.5f*one, one, b)
+                texels[iy*width + ix] = (
+                    (to_uint4(255.f*r)) +
+                    (to_uint4(255.f*g) << 8) +
+                    (to_uint4(255.f*b) << 16))
 
 
 def create_example_render_pass(
@@ -246,6 +500,87 @@ def create_example_render_pass(
     return <- device |> create_render_pass(create_info)
 
 
+def create_example_device(
+    physical_device : PhysicalDevice;
+    queue_family    : uint;
+    extensions      : array<string> = DEFAULT_REQUIRED_EXTENSIONS
+) : Device
+    var create_info <- [[DeviceCreateInfo
+        queue_create_infos <- [{auto[] [[DeviceQueueCreateInfo
+            queue_family_index = queue_family,
+            queue_priorities <- [{ auto[] 1.0f }]
+        ]]}],
+        enabled_extension_names := extensions,
+        p_enabled_features = new [[ PhysicalDeviceFeatures
+            sampler_anisotropy = 1u ]]
+    ]]
+    defer() <| ${ delete create_info; }
+
+    return <- physical_device |> create_device(create_info)
+
+
+def find_best_physical_device(
+    instance : Instance;
+    surface : SurfaceKHR
+) : PhysicalDevice
+    var best_score : int = 0
+    var best_device : PhysicalDevice
+    var devices <- instance |> enumerate_physical_devices()
+    defer() <| ${ delete devices; }
+    for device in devices
+        var score = device |> get_suitability_score(surface)
+        if score > best_score
+            best_score = score
+            best_device = device
+    if best_score == 0
+        panic("No suitable physical device found.")
+    return <- best_device
+
+
+def get_suitability_score(device : PhysicalDevice; surface : SurfaceKHR)
+    var score = 1
+
+    var has_graphics = false
+    device |> find_graphics_queue_family(surface) <| $(qfam)
+        has_graphics = true
+    if ! has_graphics
+        return 0
+    
+    var props <- device |> get_physical_device_properties()
+    if (props.device_type ==
+        VkPhysicalDeviceType VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU
+    )
+        score += 1000
+
+    var feats <- device |> get_physical_device_features()
+    if feats.sampler_anisotropy == 0u
+        return 0
+
+    var exts <- device |> enumerate_device_extension_properties()
+    defer() <| ${ delete exts; }
+    for required_ext in DEFAULT_REQUIRED_EXTENSIONS
+        var found = false
+        for ext in exts
+            if hash(ext.extension_name) == hash(required_ext)
+                found = true
+                break
+        if ! found
+            return 0
+
+    var formats <- device |> get_physical_device_surface_formats_khr(surface)
+    defer() <| ${ delete formats; }
+    if formats |> length() == 0
+        return 0
+
+    var present_modes <- (
+        device |> get_physical_device_surface_present_modes_khr(surface))
+    defer() <| ${ delete present_modes; }
+    if present_modes |> length() == 0
+        return 0
+
+    return score
+
+
 struct SwapchainIndependentState
     window          : Window
     instance        : Instance
@@ -265,10 +600,16 @@ struct SwapchainIndependentState
     vbuf            : MemoryBackedBuffer
     indices         : array<uint>
     ibuf            : MemoryBackedBuffer
+    texture         : MemoryBackedImage
+    texture_view    : ImageView
+    sampler         : Sampler
 
 
 def finalize(var s : SwapchainIndependentState explicit)
     s.device |> device_wait_idle()
+    delete s.sampler
+    delete s.texture_view
+    delete s.texture
     delete s.ibuf
     delete s.indices
     delete s.vbuf
@@ -294,11 +635,11 @@ def create_swapchain_independent_state(
     s.window <- create_window(width, height, title)
     s.instance <- create_default_instance()
     s.surface <- s.instance |> create_window_surface(s.window)
-    s.phys_dev <- s.instance |> find_physical_device_for_graphics(s.surface)
+    s.phys_dev <- s.instance |> find_best_physical_device(s.surface)
     s.present_mode <- s.phys_dev |> find_present_mode_like_mailbox(s.surface)
     s.surf_fmt <- s.phys_dev |> find_format_like_srgb_bgra8(s.surface)
     let qfam <- s.phys_dev |> get_graphics_queue_family(s.surface)
-    s.device <- s.phys_dev |> create_single_queue_device(qfam)
+    s.device <- s.phys_dev |> create_example_device(qfam)
     s.queue <- s.device |> get_device_queue(qfam)
     s.cmd_pool <- create_command_pool([device=s.device, queue_family=qfam])
     s.vert_shmod <- s.device |> create_shader_module_from_file(
@@ -310,15 +651,22 @@ def create_swapchain_independent_state(
     s.pipeline_layout <- s.device |> create_example_pipeline_layout(
         s.desc_set_layout)
     s.vertices <- [{auto[]
-        [[Vertex position=float2(-0.5f, -0.5f), color=float3(1f, 0f, 0f)]];
-        [[Vertex position=float2( 0.5f, -0.5f), color=float3(0f, 1f, 0f)]];
-        [[Vertex position=float2( 0.5f,  0.5f), color=float3(0f, 0f, 1f)]];
-        [[Vertex position=float2(-0.5f,  0.5f), color=float3(1f, 1f, 1f)]]}]
+        [[Vertex pos=float2(-0.5f, -0.5f), color=float3(1f, 0f, 0f),
+                                                     tex_pos=float2(1f, 0f)]];
+        [[Vertex pos=float2( 0.5f, -0.5f), color=float3(0f, 1f, 0f),
+                                                     tex_pos=float2(0f, 0f)]];
+        [[Vertex pos=float2( 0.5f,  0.5f), color=float3(0f, 0f, 1f),
+                                                     tex_pos=float2(0f, 1f)]];
+        [[Vertex pos=float2(-0.5f,  0.5f), color=float3(1f, 1f, 1f),
+                                                     tex_pos=float2(1f, 1f)]]}]
     s.indices <- [{auto[] 0u; 1u; 2u; 2u; 3u; 0u}]
     s.vbuf <- s |> create_device_local_buffer(s.vertices,
         uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_VERTEX_BUFFER_BIT))
     s.ibuf <- s |> create_device_local_buffer(s.indices, 
         uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_INDEX_BUFFER_BIT))
+    s.texture <- s |> create_example_texture()
+    s.texture_view <- s.device |> create_image_view(s.texture)
+    s.sampler <- s |> create_example_sampler()
     return <- s
 
 
@@ -393,18 +741,32 @@ def create_example_descriptor_sets(
     defer() <| { delete create_info; }
     var dsets <- sis.device |> allocate_descriptor_sets(create_info)
     for dset, ubuf in dsets.descriptor_sets, ubufs
-        var writes <- [{ auto[] [[ WriteDescriptorSet
-            dst_set = weak_copy(dset),
-            dst_binding = 0u,
-            descriptor_type = (VkDescriptorType
-                VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER),
-            buffer_info <- [{ auto[] [[ DescriptorBufferInfo
-                buffer = weak_copy(ubuf.buffer),
-                range_ = uint64(typeinfo(sizeof type<UniformBufferObject>))
-            ]] }]
-        ]] }]
-        sis.device |> update_descriptor_sets(writes)
-        delete writes
+        if true
+            var writes <- [{ auto[]
+                [[ WriteDescriptorSet
+                    dst_set = weak_copy(dset),
+                    dst_binding = 0u,
+                    descriptor_type = (VkDescriptorType
+                        VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER),
+                    buffer_info <- [{ auto[] [[ DescriptorBufferInfo
+                        buffer = weak_copy(ubuf.buffer),
+                        range_ = uint64(
+                            typeinfo(sizeof type<UniformBufferObject>))
+                ]] }] ]];
+                [[ WriteDescriptorSet
+                    dst_set = weak_copy(dset),
+                    dst_binding = 1u,
+                    descriptor_type = (VkDescriptorType
+                        VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER),
+                    image_info <- [{ auto[] [[ DescriptorImageInfo
+                        image_layout = (VkImageLayout
+                            VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL),
+                        image_view = weak_copy(sis.texture_view),
+                        sampler = weak_copy(sis.sampler)
+                ]] }] ]]
+            }]
+            defer <| { delete writes; }
+            sis.device |> update_descriptor_sets(writes)
     return <- dsets
 
 
@@ -413,9 +775,17 @@ def create_example_descriptor_pool(
     framebuffers : array<Framebuffer>
 ) : DescriptorPool
     var info <- [[ DescriptorPoolCreateInfo
-        pool_sizes <- [{ auto[] [[ DescriptorPoolSize
-            type_ = VkDescriptorType VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER,
-            descriptor_count = uint(framebuffers |> length()) ]] }],
+        pool_sizes <- [{ auto[]
+            [[ DescriptorPoolSize
+                type_ = VkDescriptorType VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER,
+                descriptor_count = uint(framebuffers |> length())
+            ]];
+            [[ DescriptorPoolSize
+                type_ = (VkDescriptorType
+                    VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER),
+                descriptor_count = uint(framebuffers |> length())
+            ]]
+        }],
         max_sets = uint(framebuffers |> length()),
         flags = uint(VkDescriptorPoolCreateFlagBits
             VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT)
@@ -491,8 +861,8 @@ def update_uniform_buffer(
         uint64(0), 0u
     ) <| $(var mapped_ubos : array<UniformBufferObject>#)
         mapped_ubos[0] <- [[ UniformBufferObject offset = float2(
-            0.5f*sin(float(frames_since_start)*2.0f*PI / 100.0f),
-            0.0f)
+            0.0f,
+            0.1f*sin(float(frames_since_start)*2.0f*PI / 100.0f))
         ]]
 
 

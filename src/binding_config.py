@@ -156,6 +156,7 @@ def add_boost_content(g):
         'VkImageSubresourceRange',
         'VkMemoryRequirements',
         'VkOffset2D',
+        'VkOffset3D',
         'VkPhysicalDeviceFeatures',
         'VkPhysicalDeviceLimits',
         'VkPhysicalDeviceSparseProperties',
@@ -179,6 +180,8 @@ def add_boost_content(g):
 
     for name in [
         'VkBufferCopy',
+        'VkBufferImageCopy',
+        'VkBufferMemoryBarrier',
         'VkBufferViewCreateInfo',
         'VkClearDepthStencilValue',
         'VkCommandBufferAllocateInfo',
@@ -190,8 +193,11 @@ def add_boost_content(g):
         'VkDescriptorImageInfo',
         'VkDescriptorPoolSize',
         'VkFenceCreateInfo',
+        'VkImageMemoryBarrier',
+        'VkImageSubresourceLayers',
         'VkImageViewCreateInfo',
         'VkMemoryAllocateInfo',
+        'VkMemoryBarrier',
         'VkPipelineColorBlendAttachmentState',
         'VkPipelineDepthStencilStateCreateInfo',
         'VkPipelineInputAssemblyStateCreateInfo',
@@ -307,6 +313,7 @@ def add_boost_content(g):
         ).declare_output(name = 'pDescriptorSets')
     g.add_gen_func(name = 'vkBeginCommandBuffer')
     g.add_gen_func(name = 'vkBindBufferMemory')
+    g.add_gen_func(name = 'vkBindImageMemory')
     g.add_gen_func(name = 'vkCmdBeginRenderPass')
     g.add_gen_func(name = 'vkCmdBindDescriptorSets',
         ).declare_array(count = 'descriptorSetCount', items = 'pDescriptorSets',
@@ -318,9 +325,15 @@ def add_boost_content(g):
         ).declare_array(count = 'bindingCount', items = 'pOffsets')
     g.add_gen_func(name = 'vkCmdCopyBuffer',
         ).declare_array(count = 'regionCount', items = 'pRegions')
+    g.add_gen_func(name = 'vkCmdCopyBufferToImage',
+        ).declare_array(count = 'regionCount', items = 'pRegions')
     g.add_gen_func(name = 'vkCmdDraw')
     g.add_gen_func(name = 'vkCmdDrawIndexed')
     g.add_gen_func(name = 'vkCmdEndRenderPass')
+    g.add_gen_func(name = 'vkCmdPipelineBarrier',
+        ).declare_array(count = 'memoryBarrierCount', items = 'pMemoryBarriers',
+        ).declare_array(count = 'bufferMemoryBarrierCount', items = 'pBufferMemoryBarriers',
+        ).declare_array(count = 'imageMemoryBarrierCount', items = 'pImageMemoryBarriers')
     g.add_gen_func(name = 'vkDeviceWaitIdle')
     g.add_gen_func(name = 'vkEndCommandBuffer')
     g.add_gen_func(name = 'vkEnumerateDeviceExtensionProperties',
@@ -337,6 +350,10 @@ def add_boost_content(g):
         ).declare_output(name = 'pQueue')
     g.add_gen_func(name = 'vkGetBufferMemoryRequirements'
         ).declare_output(name = 'pMemoryRequirements')
+    g.add_gen_func(name = 'vkGetImageMemoryRequirements',
+        ).declare_output(name = 'pMemoryRequirements')
+    g.add_gen_func(name = 'vkGetPhysicalDeviceFeatures',
+        ).declare_output(name = 'pFeatures')
     g.add_gen_func(name = 'vkGetPhysicalDeviceProperties',
         ).declare_output(name = 'pProperties')
     g.add_gen_func(name = 'vkGetPhysicalDeviceSurfaceCapabilitiesKHR',

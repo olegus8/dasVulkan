@@ -15,24 +15,6 @@ let
     }]
 
 
-def find_physical_device_for_graphics(
-    instance : Instance;
-    surface : SurfaceKHR
-) : PhysicalDevice
-    var best_score : int = 0
-    var best_device : PhysicalDevice
-    var devices <- instance |> enumerate_physical_devices()
-    defer() <| ${ delete devices; }
-    for device in devices
-        var score = device |> get_suitability_score(surface)
-        if score > best_score
-            best_score = score
-            best_device = device
-    if best_score == 0
-        panic("No suitable physical device found.")
-    return <- best_device
-
-
 def get_graphics_queue_family(
     physical_device : PhysicalDevice;
     surface : SurfaceKHR
@@ -112,23 +94,6 @@ def find_present_mode_like_mailbox(
     return VkPresentModeKHR VK_PRESENT_MODE_FIFO_KHR
 
 
-def create_single_queue_device(
-    physical_device : PhysicalDevice;
-    queue_family    : uint;
-    extensions      : array<string> = DEFAULT_REQUIRED_EXTENSIONS
-) : Device
-    var create_info <- [[DeviceCreateInfo
-        queue_create_infos <- [{auto[] [[DeviceQueueCreateInfo
-            queue_family_index = queue_family,
-            queue_priorities <- [{ auto[] 1.0f }]
-        ]]}],
-        enabled_extension_names := extensions
-    ]]
-    defer() <| ${ delete create_info; }
-
-    return <- physical_device |> create_device(create_info)
-
-
 def get_swap_extent(
     device : PhysicalDevice;
     surface : SurfaceKHR;
@@ -148,53 +113,3 @@ def get_swap_extent(
                 caps.min_image_extent.height,
                 caps.max_image_extent.height)
         ]]
-
-
-////////////////////////////
-//
-// private
-//
-////////////////////////////
-
-
-[private]
-def get_suitability_score(device : PhysicalDevice; surface : SurfaceKHR)
-    var score = 1
-
-    var has_graphics = false
-    device |> find_graphics_queue_family(surface) <| $(qfam)
-        has_graphics = true
-    if ! has_graphics
-        score = 0
-    
-    var props <- device |> get_physical_device_properties()
-    defer() <| ${ delete props; }
-    if (props.device_type ==
-        VkPhysicalDeviceType VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU
-    )
-        score += 1000
-
-    var exts <- device |> enumerate_device_extension_properties()
-    defer() <| ${ delete exts; }
-    for required_ext in DEFAULT_REQUIRED_EXTENSIONS
-        var found = false
-        for ext in exts
-            if hash(ext.extension_name) == hash(required_ext)
-                found = true
-                break
-        if ! found
-            score = 0
-            break
-
-    var formats <- device |> get_physical_device_surface_formats_khr(surface)
-    defer() <| ${ delete formats; }
-    if formats |> length() == 0
-        score = 0
-
-    var present_modes <- (
-        device |> get_physical_device_surface_present_modes_khr(surface))
-    defer() <| ${ delete present_modes; }
-    if present_modes |> length() == 0
-        score = 0
-
-    return score
