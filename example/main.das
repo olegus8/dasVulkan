@@ -14,7 +14,7 @@ let
 
 
 struct Vertex
-    position : float2
+    pos : float2
     color : float3
     tex_pos : float2
 
@@ -95,7 +95,7 @@ def create_example_graphics_pipeline(
             vertex_attribute_descriptions <- [{ auto[]
                 [[VertexInputAttributeDescription binding=0u, location=0u,
                     format = VkFormat VK_FORMAT_R32G32_SFLOAT,
-                    offset = uint(typeinfo(offsetof<position> type<Vertex>))]];
+                    offset = uint(typeinfo(offsetof<pos> type<Vertex>))]];
                 [[VertexInputAttributeDescription binding=0u, location=1u,
                     format = VkFormat VK_FORMAT_R32G32B32_SFLOAT,
                     offset = uint(typeinfo(offsetof<color> type<Vertex>))]];
@@ -647,10 +647,10 @@ def create_swapchain_independent_state(
     s.pipeline_layout <- s.device |> create_example_pipeline_layout(
         s.desc_set_layout)
     s.vertices <- [{auto[]
-        [[Vertex position=float2(-0.5f, -0.5f), color=float3(1f, 0f, 0f)]];
-        [[Vertex position=float2( 0.5f, -0.5f), color=float3(0f, 1f, 0f)]];
-        [[Vertex position=float2( 0.5f,  0.5f), color=float3(0f, 0f, 1f)]];
-        [[Vertex position=float2(-0.5f,  0.5f), color=float3(1f, 1f, 1f)]]}]
+        [[Vertex pos=float2(-0.5f, -0.5f), color=float3(1f, 0f, 0f)]];
+        [[Vertex pos=float2( 0.5f, -0.5f), color=float3(0f, 1f, 0f)]];
+        [[Vertex pos=float2( 0.5f,  0.5f), color=float3(0f, 0f, 1f)]];
+        [[Vertex pos=float2(-0.5f,  0.5f), color=float3(1f, 1f, 1f)]]}]
     s.indices <- [{auto[] 0u; 1u; 2u; 2u; 3u; 0u}]
     s.vbuf <- s |> create_device_local_buffer(s.vertices,
         uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_VERTEX_BUFFER_BIT))
