@@ -396,13 +396,13 @@ def transition_image_layout(
 
 def create_example_sampler(sis : SwapchainIndependentState) : Sampler
     let props <- sis.phys_dev |> get_physical_device_properties()
-    return <- create_sampler( [[ SamplerCreateInfo
+    return <- sis.device |> create_sampler( [[ SamplerCreateInfo
         mag_filter = VkFilter VK_FILTER_LINEAR,
         min_filter = VkFilter VK_FILTER_LINEAR,
         address_mode_u = VkSamplerAddressMode VK_SAMPLER_ADDRESS_MODE_REPEAT,
         address_mode_v = VkSamplerAddressMode VK_SAMPLER_ADDRESS_MODE_REPEAT,
         address_mode_w = VkSamplerAddressMode VK_SAMPLER_ADDRESS_MODE_REPEAT,
-        anisotropy_enable = VK_TRUE,
+        anisotropy_enable = 1u,
         max_anisotropy = props.limits.max_sampler_anisotropy,
         border_color = VkBorderColor VK_BORDER_COLOR_INT_OPAQUE_BLACK,
         compare_op = VkCompareOp VK_COMPARE_OP_ALWAYS,
