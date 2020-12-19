@@ -740,7 +740,7 @@ def create_example_descriptor_sets(
                         buffer = weak_copy(ubuf.buffer),
                         range_ = uint64(
                             typeinfo(sizeof type<UniformBufferObject>))
-                ]] }] ]],
+                ]] }] ]];
                 [[ WriteDescriptorSet
                     dst_set = weak_copy(dset),
                     dst_binding = 1u,
