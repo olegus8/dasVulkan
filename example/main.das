@@ -441,7 +441,7 @@ def create_example_texture(
         let one = float4(1.f, 1.f, 1.f, 1.f)
         for iy in range(height)
             for ix in range(width)
-                var x = float(ix)*one + float4(0.f, 1.f, 2.f, 3.f)
+                var x = float(ix)*one*4.f + float4(0.f, 1.f, 2.f, 3.f)
                 var y = float(iy)*one
                 x /= float(width1)
                 y /= float(height)
