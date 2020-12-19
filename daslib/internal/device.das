@@ -168,11 +168,13 @@ def get_suitability_score(device : PhysicalDevice; surface : SurfaceKHR)
         score = 0
     
     var props <- device |> get_physical_device_properties()
-    defer() <| ${ delete props; }
     if (props.device_type ==
         VkPhysicalDeviceType VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU
     )
         score += 1000
+
+    var feats <- device |> get_physical_device_features()
+    defer
 
     var exts <- device |> enumerate_device_extension_properties()
     defer() <| ${ delete exts; }

@@ -352,6 +352,8 @@ def add_boost_content(g):
         ).declare_output(name = 'pMemoryRequirements')
     g.add_gen_func(name = 'vkGetImageMemoryRequirements',
         ).declare_output(name = 'pMemoryRequirements')
+    g.add_gen_func(name = 'vkGetPhysicalDeviceFeatures',
+        ).declare_output(name = 'pFeatures')
     g.add_gen_func(name = 'vkGetPhysicalDeviceProperties',
         ).declare_output(name = 'pProperties')
     g.add_gen_func(name = 'vkGetPhysicalDeviceSurfaceCapabilitiesKHR',
