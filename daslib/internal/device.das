@@ -165,7 +165,7 @@ def get_suitability_score(device : PhysicalDevice; surface : SurfaceKHR)
     device |> find_graphics_queue_family(surface) <| $(qfam)
         has_graphics = true
     if ! has_graphics
-        score = 0
+        return 0
     
     var props <- device |> get_physical_device_properties()
     if (props.device_type ==
@@ -174,7 +174,8 @@ def get_suitability_score(device : PhysicalDevice; surface : SurfaceKHR)
         score += 1000
 
     var feats <- device |> get_physical_device_features()
-    defer
+    if feats.sampler_anisotropy == 0u
+        return 0
 
     var exts <- device |> enumerate_device_extension_properties()
     defer() <| ${ delete exts; }
@@ -185,18 +186,17 @@ def get_suitability_score(device : PhysicalDevice; surface : SurfaceKHR)
                 found = true
                 break
         if ! found
-            score = 0
-            break
+            return 0
 
     var formats <- device |> get_physical_device_surface_formats_khr(surface)
     defer() <| ${ delete formats; }
     if formats |> length() == 0
-        score = 0
+        return 0
 
     var present_modes <- (
         device |> get_physical_device_surface_present_modes_khr(surface))
     defer() <| ${ delete present_modes; }
     if present_modes |> length() == 0
-        score = 0
+        return 0
 
     return score
