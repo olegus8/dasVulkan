@@ -482,6 +482,87 @@ def create_example_render_pass(
     return <- device |> create_render_pass(create_info)
 
 
+def create_example_device(
+    physical_device : PhysicalDevice;
+    queue_family    : uint;
+    extensions      : array<string> = DEFAULT_REQUIRED_EXTENSIONS
+) : Device
+    var create_info <- [[DeviceCreateInfo
+        queue_create_infos <- [{auto[] [[DeviceQueueCreateInfo
+            queue_family_index = queue_family,
+            queue_priorities <- [{ auto[] 1.0f }]
+        ]]}],
+        enabled_extension_names := extensions,
+        p_enabled_features = new [[ PhysicalDeviceFeatures
+            sampler_anisotropy = 1u ]]
+    ]]
+    defer() <| ${ delete create_info; }
+
+    return <- physical_device |> create_device(create_info)
+
+
+def find_best_physical_device(
+    instance : Instance;
+    surface : SurfaceKHR
+) : PhysicalDevice
+    var best_score : int = 0
+    var best_device : PhysicalDevice
+    var devices <- instance |> enumerate_physical_devices()
+    defer() <| ${ delete devices; }
+    for device in devices
+        var score = device |> get_suitability_score(surface)
+        if score > best_score
+            best_score = score
+            best_device = device
+    if best_score == 0
+        panic("No suitable physical device found.")
+    return <- best_device
+
+
+def get_suitability_score(device : PhysicalDevice; surface : SurfaceKHR)
+    var score = 1
+
+    var has_graphics = false
+    device |> find_graphics_queue_family(surface) <| $(qfam)
+        has_graphics = true
+    if ! has_graphics
+        return 0
+    
+    var props <- device |> get_physical_device_properties()
+    if (props.device_type ==
+        VkPhysicalDeviceType VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU
+    )
+        score += 1000
+
+    var feats <- device |> get_physical_device_features()
+    if feats.sampler_anisotropy == 0u
+        return 0
+
+    var exts <- device |> enumerate_device_extension_properties()
+    defer() <| ${ delete exts; }
+    for required_ext in DEFAULT_REQUIRED_EXTENSIONS
+        var found = false
+        for ext in exts
+            if hash(ext.extension_name) == hash(required_ext)
+                found = true
+                break
+        if ! found
+            return 0
+
+    var formats <- device |> get_physical_device_surface_formats_khr(surface)
+    defer() <| ${ delete formats; }
+    if formats |> length() == 0
+        return 0
+
+    var present_modes <- (
+        device |> get_physical_device_surface_present_modes_khr(surface))
+    defer() <| ${ delete present_modes; }
+    if present_modes |> length() == 0
+        return 0
+
+    return score
+
+
 struct SwapchainIndependentState
     window          : Window
     instance        : Instance
@@ -536,11 +617,11 @@ def create_swapchain_independent_state(
     s.window <- create_window(width, height, title)
     s.instance <- create_default_instance()
     s.surface <- s.instance |> create_window_surface(s.window)
-    s.phys_dev <- s.instance |> find_physical_device_for_graphics(s.surface)
+    s.phys_dev <- s.instance |> find_best_physical_device(s.surface)
     s.present_mode <- s.phys_dev |> find_present_mode_like_mailbox(s.surface)
     s.surf_fmt <- s.phys_dev |> find_format_like_srgb_bgra8(s.surface)
     let qfam <- s.phys_dev |> get_graphics_queue_family(s.surface)
-    s.device <- s.phys_dev |> create_single_queue_device(qfam)
+    s.device <- s.phys_dev |> create_example_device(qfam)
     s.queue <- s.device |> get_device_queue(qfam)
     s.cmd_pool <- create_command_pool([device=s.device, queue_family=qfam])
     s.vert_shmod <- s.device |> create_shader_module_from_file(
