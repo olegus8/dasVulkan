@@ -424,11 +424,6 @@ def create_example_sampler(sis : SwapchainIndependentState) : Sampler
     ]] )
 
 
-//TODO: to builtin
-def to_uint4(f : float4) : uint4
-    return uint4(f[0], f[1], f[2], f[3])
-
-
 def create_example_texture(
     sis : SwapchainIndependentState
 ) : MemoryBackedImage
@@ -449,13 +444,14 @@ def create_example_texture(
                 var r = 0.5f*(one + sin(s*(17.f*x + 63.f*y) + 0.1f*one))
                 var g = 0.5f*(one + sin(s*(33.f*x + 37.f*y) + 0.5f*one))
                 var b = 0.5f*(one + sin(s*(61.f*x + 15.f*y) + 1.0f*one))
-                r = lerp(0.5f*one, one, r)
-                g = lerp(0.5f*one, one, g)
-                b = lerp(0.5f*one, one, b)
-                texels[iy*width + ix] = (
-                    (to_uint4(255.f*r)) +
-                    (to_uint4(255.f*g) << 8) +
-                    (to_uint4(255.f*b) << 16))
+                r = 255.f*lerp(0.5f*one, one, r)
+                g = 255.f*lerp(0.5f*one, one, g)
+                b = 255.f*lerp(0.5f*one, one, b)
+                texels[iy*width + ix] = uint4(
+                    pack_float_to_byte(float4(r[0], g[0], b[0], 0f)),
+                    pack_float_to_byte(float4(r[1], g[1], b[1], 0f)),
+                    pack_float_to_byte(float4(r[2], g[2], b[2], 0f)),
+                    pack_float_to_byte(float4(r[3], g[3], b[3], 0f)))
 
 
 def create_example_render_pass(
