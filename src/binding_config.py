@@ -54,11 +54,7 @@ class Config(ConfigBase):
     def configure_struct_field(self, field):
         # These structs have function pointers, but we can probably
         # live without them for a time being.
-        if field.name.startswith('pfn') and field.struct.name in [
-            'VkAllocationCallbacks',
-            'VkDebugReportCallbackCreateInfoEXT',
-            'VkDebugUtilsMessengerCreateInfoEXT',
-        ]:
+        if field.name.startswith('pfn'):
             field.ignore()
 
     def configure_function(self, func):
