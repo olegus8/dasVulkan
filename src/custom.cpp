@@ -2,5 +2,5 @@
 
 using namespace das;
 
-void addVulkanCustom(Module & module, ModuleLibrary & lib) {
+void addVulkanCustom(Module &, ModuleLibrary &) {
 }
