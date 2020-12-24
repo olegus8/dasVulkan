@@ -124,7 +124,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkResult");
         }
-    }
+    };
 }
 namespace das
 {
@@ -1271,7 +1271,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkStructureType");
         }
-    }
+    };
 }
 namespace das
 {
@@ -1352,7 +1352,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkImageLayout");
         }
-    }
+    };
 }
 namespace das
 {
@@ -1469,7 +1469,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkObjectType");
         }
-    }
+    };
 }
 namespace das
 {
@@ -1510,7 +1510,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkVendorId");
         }
-    }
+    };
 }
 namespace das
 {
@@ -1543,7 +1543,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkPipelineCacheHeaderVersion");
         }
-    }
+    };
 }
 namespace das
 {
@@ -1584,7 +1584,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkSystemAllocationScope");
         }
-    }
+    };
 }
 namespace das
 {
@@ -1617,7 +1617,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkInternalAllocationType");
         }
-    }
+    };
 }
 namespace das
 {
@@ -2198,7 +2198,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkFormat");
         }
-    }
+    };
 }
 namespace das
 {
@@ -2235,7 +2235,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkImageTiling");
         }
-    }
+    };
 }
 namespace das
 {
@@ -2272,7 +2272,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkImageType");
         }
-    }
+    };
 }
 namespace das
 {
@@ -2313,7 +2313,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkPhysicalDeviceType");
         }
-    }
+    };
 }
 namespace das
 {
@@ -2362,7 +2362,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkQueryType");
         }
-    }
+    };
 }
 namespace das
 {
@@ -2397,7 +2397,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkSharingMode");
         }
-    }
+    };
 }
 namespace das
 {
@@ -2442,7 +2442,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkComponentSwizzle");
         }
-    }
+    };
 }
 namespace das
 {
@@ -2487,7 +2487,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkImageViewType");
         }
-    }
+    };
 }
 namespace das
 {
@@ -2556,7 +2556,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkBlendFactor");
         }
-    }
+    };
 }
 namespace das
 {
@@ -2689,7 +2689,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkBlendOp");
         }
-    }
+    };
 }
 namespace das
 {
@@ -2736,7 +2736,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkCompareOp");
         }
-    }
+    };
 }
 namespace das
 {
@@ -2823,7 +2823,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkDynamicState");
         }
-    }
+    };
 }
 namespace das
 {
@@ -2858,7 +2858,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkFrontFace");
         }
-    }
+    };
 }
 namespace das
 {
@@ -2893,7 +2893,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkVertexInputRate");
         }
-    }
+    };
 }
 namespace das
 {
@@ -2946,7 +2946,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkPrimitiveTopology");
         }
-    }
+    };
 }
 namespace das
 {
@@ -2985,7 +2985,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkPolygonMode");
         }
-    }
+    };
 }
 namespace das
 {
@@ -3032,7 +3032,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkStencilOp");
         }
-    }
+    };
 }
 namespace das
 {
@@ -3095,7 +3095,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkLogicOp");
         }
-    }
+    };
 }
 namespace das
 {
@@ -3142,7 +3142,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkBorderColor");
         }
-    }
+    };
 }
 namespace das
 {
@@ -3181,7 +3181,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkFilter");
         }
-    }
+    };
 }
 namespace das
 {
@@ -3224,7 +3224,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkSamplerAddressMode");
         }
-    }
+    };
 }
 namespace das
 {
@@ -3259,7 +3259,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkSamplerMipmapMode");
         }
-    }
+    };
 }
 namespace das
 {
@@ -3318,7 +3318,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkDescriptorType");
         }
-    }
+    };
 }
 namespace das
 {
@@ -3355,7 +3355,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkAttachmentLoadOp");
         }
-    }
+    };
 }
 namespace das
 {
@@ -3392,7 +3392,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkAttachmentStoreOp");
         }
-    }
+    };
 }
 namespace das
 {
@@ -3431,7 +3431,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkPipelineBindPoint");
         }
-    }
+    };
 }
 namespace das
 {
@@ -3466,7 +3466,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkCommandBufferLevel");
         }
-    }
+    };
 }
 namespace das
 {
@@ -3507,7 +3507,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkIndexType");
         }
-    }
+    };
 }
 namespace das
 {
@@ -3542,7 +3542,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkSubpassContents");
         }
-    }
+    };
 }
 namespace das
 {
@@ -3633,7 +3633,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkAccessFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -3692,7 +3692,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkImageAspectFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -3797,7 +3797,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkFormatFeatureFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -3870,7 +3870,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkImageCreateFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -3915,7 +3915,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkSampleCountFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -3966,7 +3966,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkImageUsageFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -4003,7 +4003,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkMemoryHeapFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -4050,7 +4050,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkMemoryPropertyFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -4091,7 +4091,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkQueueFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -4124,7 +4124,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkDeviceQueueCreateFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -4211,7 +4211,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkPipelineStageFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -4244,7 +4244,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkSparseMemoryBindFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -4281,7 +4281,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkSparseImageFormatFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -4314,7 +4314,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkFenceCreateFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -4367,7 +4367,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkQueryPipelineStatisticFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -4406,7 +4406,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkQueryResultFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -4451,7 +4451,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkBufferCreateFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -4516,7 +4516,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkBufferUsageFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -4551,7 +4551,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkImageViewCreateFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -4582,7 +4582,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkShaderModuleCreateFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -4615,7 +4615,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkPipelineCacheCreateFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -4654,7 +4654,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkColorComponentFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -4727,7 +4727,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkPipelineCreateFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -4762,7 +4762,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkPipelineShaderStageCreateFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -4837,7 +4837,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkShaderStageFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -4876,7 +4876,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkCullModeFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -4911,7 +4911,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkSamplerCreateFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -4948,7 +4948,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkDescriptorPoolCreateFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -4985,7 +4985,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkDescriptorSetLayoutCreateFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -5018,7 +5018,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkAttachmentDescriptionFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -5059,7 +5059,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkDependencyFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -5094,7 +5094,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkFramebufferCreateFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -5127,7 +5127,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkRenderPassCreateFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -5166,7 +5166,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkSubpassDescriptionFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -5203,7 +5203,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkCommandPoolCreateFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -5236,7 +5236,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkCommandPoolResetFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -5273,7 +5273,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkCommandBufferUsageFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -5306,7 +5306,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkQueryControlFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -5339,7 +5339,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkCommandBufferResetFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -5378,7 +5378,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkStencilFaceFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -5417,7 +5417,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkPointClippingBehavior");
         }
-    }
+    };
 }
 namespace das
 {
@@ -5456,7 +5456,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkTessellationDomainOrigin");
         }
-    }
+    };
 }
 namespace das
 {
@@ -5507,7 +5507,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkSamplerYcbcrModelConversion");
         }
-    }
+    };
 }
 namespace das
 {
@@ -5546,7 +5546,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkSamplerYcbcrRange");
         }
-    }
+    };
 }
 namespace das
 {
@@ -5585,7 +5585,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkChromaLocation");
         }
-    }
+    };
 }
 namespace das
 {
@@ -5622,7 +5622,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkDescriptorUpdateTemplateType");
         }
-    }
+    };
 }
 namespace das
 {
@@ -5671,7 +5671,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkSubgroupFeatureFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -5718,7 +5718,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkPeerMemoryFeatureFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -5761,7 +5761,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkMemoryAllocateFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -5828,7 +5828,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkExternalMemoryHandleTypeFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -5871,7 +5871,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkExternalMemoryFeatureFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -5918,7 +5918,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkExternalFenceHandleTypeFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -5957,7 +5957,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkExternalFenceFeatureFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -5992,7 +5992,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkFenceImportFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -6027,7 +6027,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkSemaphoreImportFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -6080,7 +6080,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkExternalSemaphoreHandleTypeFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -6119,7 +6119,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkExternalSemaphoreFeatureFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -6202,7 +6202,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkDriverId");
         }
-    }
+    };
 }
 namespace das
 {
@@ -6245,7 +6245,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkShaderFloatControlsIndependence");
         }
-    }
+    };
 }
 namespace das
 {
@@ -6288,7 +6288,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkSamplerReductionMode");
         }
-    }
+    };
 }
 namespace das
 {
@@ -6327,7 +6327,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkSemaphoreType");
         }
-    }
+    };
 }
 namespace das
 {
@@ -6378,7 +6378,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkResolveModeFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -6425,7 +6425,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkDescriptorBindingFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -6460,7 +6460,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkSemaphoreWaitFlagBits");
         }
-    }
+    };
 }
 namespace das
 {
@@ -6503,7 +6503,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkPresentModeKHR");
         }
-    }
+    };
 }
 namespace das
 {
@@ -6570,7 +6570,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkColorSpaceKHR");
         }
-    }
+    };
 }
 namespace das
 {
@@ -6619,7 +6619,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkSurfaceTransformFlagBitsKHR");
         }
-    }
+    };
 }
 namespace das
 {
@@ -6658,7 +6658,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkCompositeAlphaFlagBitsKHR");
         }
-    }
+    };
 }
 namespace das
 {
@@ -6695,7 +6695,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkSwapchainCreateFlagBitsKHR");
         }
-    }
+    };
 }
 namespace das
 {
@@ -6734,7 +6734,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkDeviceGroupPresentModeFlagBitsKHR");
         }
-    }
+    };
 }
 namespace das
 {
@@ -6773,7 +6773,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkDisplayPlaneAlphaFlagBitsKHR");
         }
-    }
+    };
 }
 namespace das
 {
@@ -6826,7 +6826,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkPerformanceCounterUnitKHR");
         }
-    }
+    };
 }
 namespace das
 {
@@ -6869,7 +6869,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkPerformanceCounterScopeKHR");
         }
-    }
+    };
 }
 namespace das
 {
@@ -6912,7 +6912,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkPerformanceCounterStorageKHR");
         }
-    }
+    };
 }
 namespace das
 {
@@ -6947,7 +6947,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkPerformanceCounterDescriptionFlagBitsKHR");
         }
-    }
+    };
 }
 namespace das
 {
@@ -6978,7 +6978,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkAcquireProfilingLockFlagBitsKHR");
         }
-    }
+    };
 }
 namespace das
 {
@@ -7017,7 +7017,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkPipelineExecutableStatisticFormatKHR");
         }
-    }
+    };
 }
 namespace das
 {
@@ -7128,7 +7128,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkDebugReportObjectTypeEXT");
         }
-    }
+    };
 }
 namespace das
 {
@@ -7169,7 +7169,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkDebugReportFlagBitsEXT");
         }
-    }
+    };
 }
 namespace das
 {
@@ -7204,7 +7204,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkRasterizationOrderAMD");
         }
-    }
+    };
 }
 namespace das
 {
@@ -7241,7 +7241,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkShaderInfoTypeAMD");
         }
-    }
+    };
 }
 namespace das
 {
@@ -7280,7 +7280,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkExternalMemoryHandleTypeFlagBitsNV");
         }
-    }
+    };
 }
 namespace das
 {
@@ -7317,7 +7317,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkExternalMemoryFeatureFlagBitsNV");
         }
-    }
+    };
 }
 namespace das
 {
@@ -7352,7 +7352,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkValidationCheckEXT");
         }
-    }
+    };
 }
 namespace das
 {
@@ -7385,7 +7385,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkConditionalRenderingFlagBitsEXT");
         }
-    }
+    };
 }
 namespace das
 {
@@ -7418,7 +7418,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkSurfaceCounterFlagBitsEXT");
         }
-    }
+    };
 }
 namespace das
 {
@@ -7455,7 +7455,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkDisplayPowerStateEXT");
         }
-    }
+    };
 }
 namespace das
 {
@@ -7488,7 +7488,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkDeviceEventTypeEXT");
         }
-    }
+    };
 }
 namespace das
 {
@@ -7521,7 +7521,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkDisplayEventTypeEXT");
         }
-    }
+    };
 }
 namespace das
 {
@@ -7568,7 +7568,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkViewportCoordinateSwizzleNV");
         }
-    }
+    };
 }
 namespace das
 {
@@ -7603,7 +7603,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkDiscardRectangleModeEXT");
         }
-    }
+    };
 }
 namespace das
 {
@@ -7640,7 +7640,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkConservativeRasterizationModeEXT");
         }
-    }
+    };
 }
 namespace das
 {
@@ -7679,7 +7679,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkDebugUtilsMessageSeverityFlagBitsEXT");
         }
-    }
+    };
 }
 namespace das
 {
@@ -7716,7 +7716,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkDebugUtilsMessageTypeFlagBitsEXT");
         }
-    }
+    };
 }
 namespace das
 {
@@ -7753,7 +7753,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkBlendOverlapEXT");
         }
-    }
+    };
 }
 namespace das
 {
@@ -7792,7 +7792,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkCoverageModulationModeNV");
         }
-    }
+    };
 }
 namespace das
 {
@@ -7825,7 +7825,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkValidationCacheHeaderVersionEXT");
         }
-    }
+    };
 }
 namespace das
 {
@@ -7880,7 +7880,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkShadingRatePaletteEntryNV");
         }
-    }
+    };
 }
 namespace das
 {
@@ -7919,7 +7919,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkCoarseSampleOrderTypeNV");
         }
-    }
+    };
 }
 namespace das
 {
@@ -7962,7 +7962,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkRayTracingShaderGroupTypeKHR");
         }
-    }
+    };
 }
 namespace das
 {
@@ -8003,7 +8003,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkGeometryTypeKHR");
         }
-    }
+    };
 }
 namespace das
 {
@@ -8042,7 +8042,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkAccelerationStructureTypeKHR");
         }
-    }
+    };
 }
 namespace das
 {
@@ -8085,7 +8085,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkCopyAccelerationStructureModeKHR");
         }
-    }
+    };
 }
 namespace das
 {
@@ -8128,7 +8128,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkAccelerationStructureMemoryRequirementsTypeKHR");
         }
-    }
+    };
 }
 namespace das
 {
@@ -8167,7 +8167,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkGeometryFlagBitsKHR");
         }
-    }
+    };
 }
 namespace das
 {
@@ -8214,7 +8214,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkGeometryInstanceFlagBitsKHR");
         }
-    }
+    };
 }
 namespace das
 {
@@ -8265,7 +8265,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkBuildAccelerationStructureFlagBitsKHR");
         }
-    }
+    };
 }
 namespace das
 {
@@ -8304,7 +8304,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkQueueGlobalPriorityEXT");
         }
-    }
+    };
 }
 namespace das
 {
@@ -8335,7 +8335,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkPipelineCompilerControlFlagBitsAMD");
         }
-    }
+    };
 }
 namespace das
 {
@@ -8374,7 +8374,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkTimeDomainEXT");
         }
-    }
+    };
 }
 namespace das
 {
@@ -8411,7 +8411,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkMemoryOverallocationBehaviorAMD");
         }
-    }
+    };
 }
 namespace das
 {
@@ -8448,7 +8448,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkPipelineCreationFeedbackFlagBitsEXT");
         }
-    }
+    };
 }
 namespace das
 {
@@ -8481,7 +8481,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkPerformanceConfigurationTypeINTEL");
         }
-    }
+    };
 }
 namespace das
 {
@@ -8514,7 +8514,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkQueryPoolSamplingModeINTEL");
         }
-    }
+    };
 }
 namespace das
 {
@@ -8549,7 +8549,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkPerformanceOverrideTypeINTEL");
         }
-    }
+    };
 }
 namespace das
 {
@@ -8584,7 +8584,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkPerformanceParameterTypeINTEL");
         }
-    }
+    };
 }
 namespace das
 {
@@ -8625,7 +8625,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkPerformanceValueTypeINTEL");
         }
-    }
+    };
 }
 namespace das
 {
@@ -8656,7 +8656,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkShaderCorePropertiesFlagBitsAMD");
         }
-    }
+    };
 }
 namespace das
 {
@@ -8701,7 +8701,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkToolPurposeFlagBitsEXT");
         }
-    }
+    };
 }
 namespace das
 {
@@ -8740,7 +8740,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkValidationFeatureEnableEXT");
         }
-    }
+    };
 }
 namespace das
 {
@@ -8785,7 +8785,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkValidationFeatureDisableEXT");
         }
-    }
+    };
 }
 namespace das
 {
@@ -8838,7 +8838,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkComponentTypeNV");
         }
-    }
+    };
 }
 namespace das
 {
@@ -8877,7 +8877,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkScopeNV");
         }
-    }
+    };
 }
 namespace das
 {
@@ -8912,7 +8912,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkCoverageReductionModeNV");
         }
-    }
+    };
 }
 namespace das
 {
@@ -8951,7 +8951,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkLineRasterizationModeEXT");
         }
-    }
+    };
 }
 namespace das
 {
@@ -8998,7 +8998,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkIndirectCommandsTokenTypeNV");
         }
-    }
+    };
 }
 namespace das
 {
@@ -9031,7 +9031,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkIndirectStateFlagBitsNV");
         }
-    }
+    };
 }
 namespace das
 {
@@ -9068,7 +9068,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkIndirectCommandsLayoutUsageFlagBitsNV");
         }
-    }
+    };
 }
 namespace das
 {
@@ -9099,7 +9099,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkPrivateDataSlotCreateFlagBitsEXT");
         }
-    }
+    };
 }
 namespace das
 {
@@ -9136,7 +9136,7 @@ namespace das
         static TypeDeclPtr make(const ModuleLibrary & library){
             return library.makeEnumType("VkDeviceDiagnosticsConfigFlagBitsNV");
         }
-    }
+    };
 }
 
 //
