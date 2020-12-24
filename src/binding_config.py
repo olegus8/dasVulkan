@@ -10,7 +10,7 @@ class Config(ConfigBase):
 
     @property
     def save_ast(self):
-        return True
+        return False
 
     @property
     def c_headers_to_extract_macro_consts_from(self):
