@@ -108,12 +108,15 @@ class BoostGenerator(LoggingObject):
 
     @property
     def __glfw_version(self):
-        return 'TODO'
+        return '.'.join(self.macro_consts[name] for name in [
+            'GLFW_VERSION_MAJOR',
+            'GLFW_VERSION_MINOR',
+            'GLFW_VERSION_REVISION'])
 
     @property
     def __vk_version(self):
-        v = self.macro_consts['VK_HEADER_VERSION_COMPLETE'].replace(
-            'VK_HEADER_VERSION', self.macro_consts['VK_HEADER_VERSION'])
+        v = self.macro_consts['VK_HEADER_VERSION_COMPLETE'].value.replace(
+            'VK_HEADER_VERSION', self.macro_consts['VK_HEADER_VERSION'].value)
         m = re.match(r'VK_MAKE_VERSION\((\d+), (\d+), (\d+)\)', v)
         return '.'.join(m.groups())
 
