@@ -73,7 +73,7 @@ IF(NOT DAS_VULKAN_INCLUDED)
                 ${DAS_VULKAN_DIR}/src/headers_to_bind.h
                 ${DAS_VULKAN_DIR}/src/module_generated.inc
                 ${DAS_VULKAN_DIR}/src/binding_config.py
-                ${DAS_VULKAN_INCLUDE_DIRS}
+                "${DAS_VULKAN_INCLUDE_DIRS}"
                 "${DAS_VULKAN_BINDER_DEPS}"
             )
             ADD_CUSTOM_COMMAND(

@@ -522,9 +522,14 @@ def find_best_physical_device(
     var best_device : PhysicalDevice
     var devices <- instance |> enumerate_physical_devices()
     defer() <| ${ delete devices; }
+    print("Looking for a suitable physical device\n")
     for device in devices
+        var props <- device |> get_physical_device_properties()
+        defer() <| { delete props ; }
+        print("Considering {props.device_name}\n")
         var score = device |> get_suitability_score(surface)
         if score > best_score
+            print("Found new best device.\n")
             best_score = score
             best_device = device
     if best_score == 0
@@ -539,6 +544,7 @@ def get_suitability_score(device : PhysicalDevice; surface : SurfaceKHR)
     device |> find_graphics_queue_family(surface) <| $(qfam)
         has_graphics = true
     if ! has_graphics
+        print("No graphics. No go.\n")
         return 0
     
     var props <- device |> get_physical_device_properties()
@@ -549,6 +555,7 @@ def get_suitability_score(device : PhysicalDevice; surface : SurfaceKHR)
 
     var feats <- device |> get_physical_device_features()
     if feats.sampler_anisotropy == 0u
+        print("No anisotropy. No go.\n")
         return 0
 
     var exts <- device |> enumerate_device_extension_properties()
@@ -556,21 +563,24 @@ def get_suitability_score(device : PhysicalDevice; surface : SurfaceKHR)
     for required_ext in DEFAULT_REQUIRED_EXTENSIONS
         var found = false
         for ext in exts
-            if hash(ext.extension_name) == hash(required_ext)
+            if ext.extension_name == required_ext
                 found = true
                 break
         if ! found
+            print("Required extension {required_ext} not found. No go.\n")
             return 0
 
     var formats <- device |> get_physical_device_surface_formats_khr(surface)
     defer() <| ${ delete formats; }
     if formats |> length() == 0
+        print("No surface formats. No go.\n")
         return 0
 
     var present_modes <- (
         device |> get_physical_device_surface_present_modes_khr(surface))
     defer() <| ${ delete present_modes; }
     if present_modes |> length() == 0
+        print("No present modes. No go.\n")
         return 0
 
     return score
