@@ -37,6 +37,7 @@ IF(NOT DAS_VULKAN_INCLUDED)
             ${DAS_VULKAN_DIR}/src/custom.cpp
             ${DAS_VULKAN_DIR}/src/module.cpp
             ${DAS_VULKAN_DIR}/src/module_generated.inc
+            ${DAS_VULKAN_DIR}/src/module_pregenerated.inc
         )
 
         ADD_MODULE_LIB(libDasModuleVulkan)
@@ -73,8 +74,20 @@ IF(NOT DAS_VULKAN_INCLUDED)
                 ${DAS_VULKAN_INCLUDE_DIRS}
                 "${DAS_VULKAN_BINDER_DEPS}"
             )
+            ADD_CUSTOM_COMMAND(
+                DEPENDS ${DAS_VULKAN_DIR}/src/module_generated.inc
+                OUTPUT ${DAS_VULKAN_DIR}/src/module_pregenerated.inc
+                VERBATIM
+                COMMAND ${CMAKE_COMMAND} -E copy_if_different ${DAS_VULKAN_DIR}/src/module_generated.inc ${DAS_VULKAN_DIR}/src/module_pregenerated.inc
+            )
         ELSE()
             MESSAGE(STATUS "dasBinder not found. Using pre-generated Vulkan bindings.")
+            ADD_CUSTOM_COMMAND(
+                DEPENDS ${DAS_VULKAN_DIR}/src/module_pregenerated.inc
+                OUTPUT ${DAS_VULKAN_DIR}/src/module_generated.inc
+                VERBATIM
+                COMMAND ${CMAKE_COMMAND} -E copy_if_different ${DAS_VULKAN_DIR}/src/module_pregenerated.inc ${DAS_VULKAN_DIR}/src/module_generated.inc
+            )
         ENDIF()
 
         DAS_VULKAN_COMPILE_SHADER(${DAS_VULKAN_DIR}/example/vert.glsl vert)
