@@ -4,22 +4,31 @@ from boost_generator import BoostGenerator
 
 class Config(ConfigBase):
 
+    def __init__(self, **kwargs):
+        super(Config, self).__init__()
+        self.__title = None
+
     @property
     def das_module_name(self):
         return 'vulkan'
 
     @property
     def save_ast(self):
-        return True
+        return False
 
     @property
     def c_headers_to_extract_macro_consts_from(self):
         return ['GLFW/glfw3.h', 'vulkan/vulkan_core.h']
 
+    @property
+    def title(self):
+        return self.__title
+
     def custom_pass(self, context):
         generator = BoostGenerator(context)
         add_boost_content(generator)
         generator.write()
+        self.__title = generator.title
 
     def configure_macro_const(self, macro_const):
         if '"' in macro_const.value:
@@ -45,11 +54,7 @@ class Config(ConfigBase):
     def configure_struct_field(self, field):
         # These structs have function pointers, but we can probably
         # live without them for a time being.
-        if field.name.startswith('pfn') and field.struct.name in [
-            'VkAllocationCallbacks',
-            'VkDebugReportCallbackCreateInfoEXT',
-            'VkDebugUtilsMessengerCreateInfoEXT',
-        ]:
+        if field.name.startswith('pfn'):
             field.ignore()
 
     def configure_function(self, func):
