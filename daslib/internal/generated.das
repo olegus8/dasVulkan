@@ -45,10 +45,6 @@ def array_addr_unsafe(var ar : array<auto(T)>) : T?
     unsafe
         return length(ar) > 0 ? addr(ar[0]) : [[T ?]]
 
-def addr_unsafe(v)
-    unsafe
-        return addr(v)
-
 //TODO: refactor into clone() and disable can_copy on boost handles.
 //  after that transfer ownership with move, and create weak copies via clone.
 //  OR disable can_copy and can_clone, and only allow move and weak_copy.
