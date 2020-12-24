@@ -2,7 +2,9 @@ IF(NOT DAS_VULKAN_INCLUDED)
     SET(DAS_VULKAN_INCLUDED TRUE)
     MESSAGE(STATUS "dasVulkan module included.")
 
-    INCLUDE(${CMAKE_SOURCE_DIR}/modules/dasBinder/CMakeLists.txt)
+    IF(EXISTS ${CMAKE_SOURCE_DIR}/modules/dasBinder/CMakeLists.txt)
+        INCLUDE(${CMAKE_SOURCE_DIR}/modules/dasBinder/CMakeLists.txt)
+    ENDIF()
 
     FIND_PACKAGE(Vulkan)
     FIND_PACKAGE(glfw3)
