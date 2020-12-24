@@ -502,7 +502,7 @@ def create_example_device(
 ) : Device
     var req_exts := DEFAULT_REQUIRED_EXTENSIONS
     defer() <| { delete req_exts; }
-    var dev_exts <- device |> enumerate_device_extension_properties()
+    var dev_exts <- physical_device |> enumerate_device_extension_properties()
     defer() <| { delete dev_exts; }
     for ext in dev_exts
         if hash(ext.extension_name) == hash("VK_KHR_portability_subset")
