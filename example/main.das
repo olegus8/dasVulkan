@@ -563,7 +563,7 @@ def get_suitability_score(device : PhysicalDevice; surface : SurfaceKHR)
     for required_ext in DEFAULT_REQUIRED_EXTENSIONS
         var found = false
         for ext in exts
-            if hash(ext.extension_name) == hash(required_ext)
+            if ext.extension_name == required_ext
                 found = true
                 break
         if ! found
