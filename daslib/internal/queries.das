@@ -20,3 +20,6 @@ def create_timestamp_query_pool(device : Device; query_count : uint
             query_count = query_count
         ]])
     ]]
+
+def reset(var query_pool : TimestampQueryPool)
+    query_pool._query_pool |> reset_query_pool(0u, query_pool.query_count)
