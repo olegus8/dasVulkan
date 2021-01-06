@@ -5551,6 +5551,80 @@ def finalize(var handle : PipelineLayout explicit)
     memzero(handle)
 
 //
+// QueryPool
+//
+
+struct QueryPool
+    query_pool : VkQueryPool
+    _needs_delete : bool
+    _device : VkDevice
+
+def boost_value_to_vk(b : QueryPool) : VkQueryPool
+    return b.query_pool
+
+def boost_value_to_vk(b : QueryPool ?) : VkQueryPool ?
+    return b?.query_pool
+
+def vk_value_to_boost(v : VkQueryPool) : QueryPool
+    return [[ QueryPool query_pool=v ]]
+
+[private]
+def create_query_pool__inner(
+    device : Device = [[ Device ]];
+    var create_info : QueryPoolCreateInfo = [[ QueryPoolCreateInfo ]];
+    var result : VkResult? = [[VkResult?]]
+) : QueryPool
+
+    var vk_create_info <- create_info |> vk_view_create_unsafe()
+    defer() <| { create_info |> vk_view_destroy(); }
+    var vk_query_pool : VkQueryPool
+    var result_ = VkResult VK_SUCCESS
+
+    result ?? result_ = vkCreateQueryPool(
+        boost_value_to_vk(device),
+        safe_addr(vk_create_info),
+        null,
+        safe_addr(vk_query_pool)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+    return vk_value_to_boost(vk_query_pool)
+
+def create_query_pool(
+    device : Device = [[ Device ]];
+    var create_info : QueryPoolCreateInfo = [[ QueryPoolCreateInfo ]];
+    var result : VkResult? = [[VkResult?]]
+) : QueryPool
+
+    var handle <- create_query_pool__inner(
+        device,
+        create_info,
+        result
+    )
+    handle._needs_delete = true
+    handle._device = boost_value_to_vk(device)
+    return <- handle
+
+[private]
+def destroy_query_pool(
+    device : Device = [[ Device ]];
+    query_pool : QueryPool = [[ QueryPool ]]
+) : void
+
+    vkDestroyQueryPool(
+        boost_value_to_vk(device),
+        boost_value_to_vk(query_pool),
+        null
+    )
+
+def finalize(var handle : QueryPool explicit)
+    if handle._needs_delete
+        destroy_query_pool(
+            vk_value_to_boost(handle._device),
+            vk_value_to_boost(handle.query_pool)
+        )
+    memzero(handle)
+
+//
 // Queue
 //
 
