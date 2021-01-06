@@ -2,6 +2,7 @@ options indenting = 4
 options no_aot = true
 
 require daslib/defer
+require daslib/safe_addr
 require generated
 require vulkan
 
@@ -10,6 +11,12 @@ struct TimestampQueryPool
     timestamps : array<uint64>
     _query_pool : QueryPool
     _device : Device
+
+
+[private]
+struct TimestampQueryRawData
+    ticks : uint64
+    available : uint64
 
 
 def create_timestamp_query_pool(device : Device; query_count : int
@@ -24,6 +31,7 @@ def create_timestamp_query_pool(device : Device; query_count : int
     pool.timestamps |> resize <| query_count
     return <- pool
 
+
 def reset(var pool : TimestampQueryPool)
     pool._device |> reset_query_pool(
         pool._query_pool, 0u, uint(pool.timestamps |> length()))
@@ -31,15 +39,26 @@ def reset(var pool : TimestampQueryPool)
     pool.timestamps |> clear
     pool.timestamps |> resize <| query_count
 
-def update(var pool : TimestampQueryPool)
+
+def update(var pool : TimestampQueryPool) : bool
+    var data : array<TimestampQueryRawData>
+    defer() <| { delete data; }
+    data |> resize <| length(pool.timestamps)
+    assert(intptr(data[0]) % uint64(8) == uint64(0))
+
     let result = vkGetQueryPoolResults(
         _device.device,
         pool._query_pool.query_pool,
         0u,
         uint(pool.timestamps |> length()),
-        boost_value_to_vk(data_size),
-        safe_addr(vk_data),
-        boost_value_to_vk(stride),
-        boost_value_to_vk(flags)
+        uint64(typeinfo(sizeof type<TimestampQueryRawData>)*length(data)),
+        safe_addr(data[0]),
+        uint64(typeinfo(sizeof type<TimestampQueryRawData>)),
+        uint(VkQueryResultFlagBits VK_QUERY_RESULT_64_BIT) |
+        uint(VkQueryResultFlagBits VK_QUERY_RESULT_WITH_AVAILABILITY_BIT)
     )
-    assert(result == VkResult VK_SUCCESS)
+    assert(result == VkResult VK_SUCCESS || result == VkResult VK_NOT_READY)
+
+    //TODO: fill available timestamp data, convert to nanoseconds
+
+    return result == VkResult VK_SUCCESS
