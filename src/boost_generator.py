@@ -198,10 +198,10 @@ class GenFunc(object):
                 count_expr=count_expr)
         return self
 
-    def declare_output(self, name):
+    def declare_output(self, name, as_param=False):
         for param in self._params:
             if param.vk_name == name:
-                param.set_boost_func_output()
+                param.set_boost_func_output(as_param=as_param)
         return self
 
     @property
@@ -534,7 +534,7 @@ class GenHandleCtor(GenFunc):
             generator=handle._generator, name=name, private=True)
         self.__handle = handle
 
-        self.__handle_param.set_boost_func_output()
+        self.__handle_param.set_boost_func_output(as_param=False)
 
     @property
     def _boost_func_name(self):
@@ -763,8 +763,9 @@ class ParamBase(object):
     def force_boost_unqual_type(self, type_name):
         self._forced_boost_unqual_type = type_name
 
-    def set_boost_func_output(self):
+    def set_boost_func_output(self, as_param):
         self._is_boost_func_output = True
+        self._boost_output_as_param = as_param
 
     def set_gen_struct(self, struct):
         self._gen_struct = struct
