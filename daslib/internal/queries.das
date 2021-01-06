@@ -40,7 +40,7 @@ def update(var pool : TimestampQueryPool)
     data |> resize <| length(pool.timestamps)
     assert(intptr(data[0]) % uint64(8) == uint64(0))
 
-    let result = vkGetQueryPoolResults(
+    verify(VkResult VK_SUCCESS == vkGetQueryPoolResults(
         _device.device,
         pool._query_pool.query_pool,
         0u,
@@ -49,7 +49,6 @@ def update(var pool : TimestampQueryPool)
         safe_addr(data[0]),
         uint64(typeinfo(sizeof type<uint64>)),
         uint(VkQueryResultFlagBits VK_QUERY_RESULT_64_BIT)
-    )
-    assert(result == VkResult VK_SUCCESS)
+    ))
 
     //TODO: fill available timestamp data, convert to nanoseconds
