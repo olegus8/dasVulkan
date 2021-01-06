@@ -40,8 +40,8 @@ def reset(var pool : TimestampQueryPool)
     pool.timestamps |> resize <| query_count
 
 
-def update(var pool : TimestampQueryPool) : bool
-    var data : array<TimestampQueryRawData>
+def update(var pool : TimestampQueryPool)
+    var data : array<uint64>
     defer() <| { delete data; }
     data |> resize <| length(pool.timestamps)
     assert(intptr(data[0]) % uint64(8) == uint64(0))
@@ -51,14 +51,11 @@ def update(var pool : TimestampQueryPool) : bool
         pool._query_pool.query_pool,
         0u,
         uint(pool.timestamps |> length()),
-        uint64(typeinfo(sizeof type<TimestampQueryRawData>)*length(data)),
+        uint64(typeinfo(sizeof type<uint64>)*length(data)),
         safe_addr(data[0]),
-        uint64(typeinfo(sizeof type<TimestampQueryRawData>)),
-        uint(VkQueryResultFlagBits VK_QUERY_RESULT_64_BIT) |
-        uint(VkQueryResultFlagBits VK_QUERY_RESULT_WITH_AVAILABILITY_BIT)
+        uint64(typeinfo(sizeof type<uint64>)),
+        uint(VkQueryResultFlagBits VK_QUERY_RESULT_64_BIT)
     )
-    assert(result == VkResult VK_SUCCESS || result == VkResult VK_NOT_READY)
+    assert(result == VkResult VK_SUCCESS)
 
     //TODO: fill available timestamp data, convert to nanoseconds
-
-    return result == VkResult VK_SUCCESS
