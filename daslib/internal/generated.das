@@ -3128,6 +3128,34 @@ def vk_view_destroy(var boost_struct : PipelineTessellationStateCreateInfo)
     boost_struct._vk_view__active = false
 
 //
+// QueryPoolCreateInfo
+//
+
+struct QueryPoolCreateInfo
+    flags : uint
+    query_type : VkQueryType
+    query_count : uint
+    pipeline_statistics : uint
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : QueryPoolCreateInfo
+) : VkQueryPoolCreateInfo
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    return <- [[ VkQueryPoolCreateInfo
+        sType = VkStructureType VK_STRUCTURE_TYPE_QUERY_POOL_CREATE_INFO,
+        flags = boost_value_to_vk(boost_struct.flags),
+        queryType = boost_value_to_vk(boost_struct.query_type),
+        queryCount = boost_value_to_vk(boost_struct.query_count),
+        pipelineStatistics = boost_value_to_vk(boost_struct.pipeline_statistics)
+    ]]
+
+def vk_view_destroy(var boost_struct : QueryPoolCreateInfo)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+//
 // SamplerCreateInfo
 //
 
