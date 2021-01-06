@@ -1593,7 +1593,7 @@ class ParamVoidPtr(ParamBase):
 
     @classmethod
     def maybe_create(cls, c_param, **kwargs):
-        if c_param.type.name == 'const void *':
+        if c_param.type.name in ['const void *', 'void *']:
             return cls(c_param=c_param, **kwargs)
 
     @property
