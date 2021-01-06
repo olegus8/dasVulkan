@@ -30,3 +30,16 @@ def reset(var pool : TimestampQueryPool)
     let query_count = pool.timestamps |> length()
     pool.timestamps |> clear
     pool.timestamps |> resize <| query_count
+
+def update(var pool : TimestampQueryPool)
+    let result = vkGetQueryPoolResults(
+        _device.device,
+        pool._query_pool.query_pool,
+        0u,
+        uint(pool.timestamps |> length()),
+        boost_value_to_vk(data_size),
+        safe_addr(vk_data),
+        boost_value_to_vk(stride),
+        boost_value_to_vk(flags)
+    )
+    assert(result == VkResult VK_SUCCESS)

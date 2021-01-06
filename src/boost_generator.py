@@ -198,10 +198,10 @@ class GenFunc(object):
                 count_expr=count_expr)
         return self
 
-    def declare_output(self, name, as_param=False):
+    def declare_output(self, name):
         for param in self._params:
             if param.vk_name == name:
-                param.set_boost_func_output(as_param=as_param)
+                param.set_boost_func_output()
         return self
 
     @property
@@ -534,7 +534,7 @@ class GenHandleCtor(GenFunc):
             generator=handle._generator, name=name, private=True)
         self.__handle = handle
 
-        self.__handle_param.set_boost_func_output(as_param=False)
+        self.__handle_param.set_boost_func_output()
 
     @property
     def _boost_func_name(self):
@@ -714,8 +714,7 @@ class ParamBase(object):
         self._dyn_array_count_expr = None
         self._optional = False
         self._forced_boost_unqual_type = None
-        self._is_boost_func_output_as_param = False
-        self._is_boost_func_output_as_return = False
+        self._is_boost_func_output = False
         self._gen_struct = None
 
     @property
@@ -764,13 +763,8 @@ class ParamBase(object):
     def force_boost_unqual_type(self, type_name):
         self._forced_boost_unqual_type = type_name
 
-    def set_boost_func_output(self, as_param):
-        self._is_boost_func_output_as_param = as_param
-        self._is_boost_func_output_as_return = not as_param
-
-    def _is_boost_func_output(self):
-        return (self._is_boost_func_output_as_param
-            or  self._is_boost_func_output_as_return)
+    def set_boost_func_output(self):
+        self._is_boost_func_output = True
 
     def set_gen_struct(self, struct):
         self._gen_struct = struct
@@ -847,7 +841,7 @@ class ParamBase(object):
         return self._boost_base_type
 
     def generate_boost_func_param_decl(self):
-        if self.vk_is_dyn_array_count or self._is_boost_func_output_as_return:
+        if self.vk_is_dyn_array_count or self._is_boost_func_output:
             return []
         bname = self._boost_func_param_name
         btype = self._boost_func_param_type
@@ -981,7 +975,7 @@ class ParamBase(object):
         return [f'{bname} = vk_value_to_boost(vk_struct.{vname}),']
 
     def generate_boost_func_param_call(self):
-        if self.vk_is_dyn_array_count or self._is_boost_func_output_return:
+        if self.vk_is_dyn_array_count or self._is_boost_func_output:
             return []
         return [f'{self._boost_func_param_name},']
 
@@ -1599,7 +1593,7 @@ class ParamVoidPtr(ParamBase):
 
     @classmethod
     def maybe_create(cls, c_param, **kwargs):
-        if c_param.type.name in ['const void *', 'void *']:
+        if c_param.type.name == 'const void *':
             return cls(c_param=c_param, **kwargs)
 
     @property
