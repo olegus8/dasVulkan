@@ -681,6 +681,7 @@ struct SwapchainDependentState
     img_avail_sems      : array<Semaphore>
     render_done_sems    : array<Semaphore>
     frame_fences        : array<Fence>
+    query_pools         : array<QueryPool>
     uniform_bufs        : array<MemoryBackedBuffer>
     desc_pool           : DescriptorPool
     desc_sets           : DescriptorSets
@@ -700,6 +701,7 @@ def finalize(var s : SwapchainDependentState explicit)
     delete s.uniform_bufs
     delete s.swapchain
     delete s.frame_fences
+    delete s.query_pools
     delete s.render_done_sems
     delete s.img_avail_sems
     memzero(s)
@@ -716,6 +718,11 @@ def create_swapchain_dependent_state(
     sds.frame_fences <- [{for x in range(MAX_FRAMES_IN_FLIGHT);
         sis.device |> create_fence([[FenceCreateInfo
             flags=uint(VkFenceCreateFlagBits VK_FENCE_CREATE_SIGNALED_BIT)
+    ]]) }]
+    sds.query_pools <- [{for x in range(MAX_FRAMES_IN_FLIGHT);
+        sis.device |> create_query_pool([[QueryPoolCreateInfo
+            query_type = VkQueryType VK_QUERY_TYPE_TIMESTAMP,
+            query_count = 2
     ]]) }]
     sds.swapchain <- sis.device |> create_swapchain_ex(sis.phys_dev,
         sis.surface, sis.window, sis.surf_fmt, sis.present_mode,
