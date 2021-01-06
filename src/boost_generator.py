@@ -714,9 +714,9 @@ class ParamBase(object):
         self._dyn_array_count_expr = None
         self._optional = False
         self._forced_boost_unqual_type = None
-        self._is_boost_func_output = False
+        self._is_boost_func_output_as_param = False
+        self._is_boost_func_output_as_return = False
         self._gen_struct = None
-        self._boost_output_as_param = False
 
     @property
     def _c_unqual_type(self):
@@ -765,8 +765,12 @@ class ParamBase(object):
         self._forced_boost_unqual_type = type_name
 
     def set_boost_func_output(self, as_param):
-        self._is_boost_func_output = True
-        self._boost_output_as_param = as_param
+        self._is_boost_func_output_as_param = as_param
+        self._is_boost_func_output_as_return = not as_param
+
+    def _is_boost_func_output(self):
+        return (self._is_boost_func_output_as_param
+            or  self._is_boost_func_output_as_return)
 
     def set_gen_struct(self, struct):
         self._gen_struct = struct
@@ -843,7 +847,7 @@ class ParamBase(object):
         return self._boost_base_type
 
     def generate_boost_func_param_decl(self):
-        if self.vk_is_dyn_array_count or self._is_boost_func_output:
+        if self.vk_is_dyn_array_count or self._is_boost_func_output_as_return:
             return []
         bname = self._boost_func_param_name
         btype = self._boost_func_param_type
@@ -977,7 +981,7 @@ class ParamBase(object):
         return [f'{bname} = vk_value_to_boost(vk_struct.{vname}),']
 
     def generate_boost_func_param_call(self):
-        if self.vk_is_dyn_array_count or self._is_boost_func_output:
+        if self.vk_is_dyn_array_count or self._is_boost_func_output_return:
             return []
         return [f'{self._boost_func_param_name},']
 
