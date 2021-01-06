@@ -722,7 +722,7 @@ def create_swapchain_dependent_state(
     sds.query_pools <- [{for x in range(MAX_FRAMES_IN_FLIGHT);
         sis.device |> create_query_pool([[QueryPoolCreateInfo
             query_type = VkQueryType VK_QUERY_TYPE_TIMESTAMP,
-            query_count = 2
+            query_count = 2u
     ]]) }]
     sds.swapchain <- sis.device |> create_swapchain_ex(sis.phys_dev,
         sis.surface, sis.window, sis.surf_fmt, sis.present_mode,
