@@ -74,8 +74,7 @@ class Config(ConfigBase):
             return
 
         #TODO: make these work
-        if ('size_t' in func.type
-        or  'PFN_' in func.type
+        if ('PFN_' in func.type
         or  func.name.endswith('KHR')
         or  func.name.endswith('EXT')
         or  func.name.endswith('INTEL')
@@ -378,6 +377,7 @@ def add_boost_content(g):
         ).declare_output(name = 'pPresentModes')
     g.add_gen_func(name = 'vkGetPhysicalDeviceMemoryProperties',
         ).declare_output(name = 'pMemoryProperties')
+    g.add_gen_func(name = 'vkGetQueryPoolResults')
     g.add_gen_func(name = 'vkGetSwapchainImagesKHR',
         ).declare_array(count = 'pSwapchainImageCount', items = 'pSwapchainImages',
         ).declare_output(name = 'pSwapchainImages')
