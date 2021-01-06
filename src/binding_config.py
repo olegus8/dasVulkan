@@ -389,6 +389,7 @@ def add_boost_content(g):
     g.add_gen_func(name = 'vkQueueWaitIdle')
     g.add_gen_func(name = 'vkResetFences',
         ).declare_array(count = 'fenceCount', items = 'pFences')
+    g.add_gen_func(name = 'vkResetQueryPool')
     g.add_gen_func(name = 'vkUnmapMemory')
     g.add_gen_func(name = 'vkUpdateDescriptorSets',
         ).declare_array(count = 'descriptorWriteCount', items = 'pDescriptorWrites',

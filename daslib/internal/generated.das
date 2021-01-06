@@ -952,6 +952,20 @@ def reset_fences(
     )
     assert(result_ == VkResult VK_SUCCESS)
 
+def reset_query_pool(
+    device : Device = [[ Device ]];
+    query_pool : QueryPool = [[ QueryPool ]];
+    first_query : uint = [[ uint ]];
+    query_count : uint = [[ uint ]]
+) : void
+
+    vkResetQueryPool(
+        boost_value_to_vk(device),
+        boost_value_to_vk(query_pool),
+        boost_value_to_vk(first_query),
+        boost_value_to_vk(query_count)
+    )
+
 def unmap_memory(
     device : Device = [[ Device ]];
     memory : DeviceMemory = [[ DeviceMemory ]]
