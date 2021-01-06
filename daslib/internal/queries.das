@@ -13,12 +13,6 @@ struct TimestampQueryPool
     _device : Device
 
 
-[private]
-struct TimestampQueryRawData
-    ticks : uint64
-    available : uint64
-
-
 def create_timestamp_query_pool(device : Device; query_count : int
 ) : TimestampQueryPool
     var pool <- [[ TimestampQueryPool
