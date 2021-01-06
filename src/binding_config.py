@@ -211,6 +211,7 @@ def add_boost_content(g):
         'VkPipelineRasterizationStateCreateInfo',
         'VkPipelineShaderStageCreateInfo',
         'VkPipelineTessellationStateCreateInfo',
+        'VkQueryPoolCreateInfo',
         'VkSamplerCreateInfo',
         'VkSemaphoreCreateInfo',
         'VkSpecializationMapEntry',
