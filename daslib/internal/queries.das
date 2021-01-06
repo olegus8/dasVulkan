@@ -43,7 +43,7 @@ def update(var pool : TimestampQueryPool)
     unsafe
         pdata = addr(data[0])
 
-    assert(intptr(pdata)) % uint64(8) == uint64(0))
+    assert(intptr(pdata) % uint64(8) == uint64(0))
 
     verify(VkResult VK_SUCCESS == vkGetQueryPoolResults(
         pool._device.device,
