@@ -716,6 +716,7 @@ class ParamBase(object):
         self._forced_boost_unqual_type = None
         self._is_boost_func_output = False
         self._gen_struct = None
+        self._boost_output_as_param = False
 
     @property
     def _c_unqual_type(self):
