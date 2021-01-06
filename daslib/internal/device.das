@@ -44,6 +44,9 @@ def find_graphics_queue_family(
         if (family.queue_flags & graphics_bit) == 0u
             continue
 
+        if (family.timestamp_valid_bits == 0u)
+            continue
+
         b |> invoke(uint(index))
         break
 
