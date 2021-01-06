@@ -42,7 +42,7 @@ def update(var pool : TimestampQueryPool)
         assert(intptr(addr(data[0])) % uint64(8) == uint64(0))
 
     verify(VkResult VK_SUCCESS == vkGetQueryPoolResults(
-        _device.device,
+        pool._device.device,
         pool._query_pool.query_pool,
         0u,
         uint(pool.timestamps |> length()),
