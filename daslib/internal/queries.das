@@ -6,24 +6,10 @@ require generated
 require vulkan
 
 
-def reset_fence(
-    device : Device;
-    fence : Fence;
-    var result : VkResult? = [[VkResult?]]
+def create_and_reset_query_pool(
+    device : Device = [[ Device ]];
+    var create_info : QueryPoolCreateInfo = [[ QueryPoolCreateInfo ]]
 )
-    var fences <- [{ auto[] weak_copy(fence) }]
-    defer() <| ${ delete fences; }
-    device |> reset_fences(fences, result)
-
-
-def wait_for_fence(
-    device : Device;
-    fence : Fence;
-    timeout : uint64 = [[ uint64 ]];
-    var result : VkResult? = [[VkResult?]]
-)
-    var fences <- [{ auto[] weak_copy(fence) }]
-    defer() <| ${ delete fences; }
-    wait_for_fences([
-        device=device, fences=fences, timeout=timeout, result=result])
-
+    var pool <- device |> create_query_pool <| create_info
+    device |> reset_query_pool(pool, 0u, create_info.query_count)
+    return <- pool

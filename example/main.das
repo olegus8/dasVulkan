@@ -720,7 +720,7 @@ def create_swapchain_dependent_state(
             flags=uint(VkFenceCreateFlagBits VK_FENCE_CREATE_SIGNALED_BIT)
     ]]) }]
     sds.query_pools <- [{for x in range(MAX_FRAMES_IN_FLIGHT);
-        sis.device |> create_query_pool([[QueryPoolCreateInfo
+        sis.device |> create_and_reset_query_pool([[QueryPoolCreateInfo
             query_type = VkQueryType VK_QUERY_TYPE_TIMESTAMP,
             query_count = 2u
     ]]) }]
