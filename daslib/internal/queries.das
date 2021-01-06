@@ -8,7 +8,7 @@ require vulkan
 
 
 struct TimestampQueryPool
-    timestamps : array<uint64>
+    timestamps : array<uint64>  // nanoseconds
     _query_pool : QueryPool
     _device : Device
 
