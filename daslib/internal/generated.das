@@ -828,34 +828,6 @@ def get_physical_device_memory_properties(
     )
     return <- vk_value_to_boost(vk_memory_properties)
 
-def get_query_pool_results(
-    device : Device = [[ Device ]];
-    query_pool : QueryPool = [[ QueryPool ]];
-    first_query : uint = [[ uint ]];
-    query_count : uint = [[ uint ]];
-    data_size : uint64 = [[ uint64 ]];
-    data : void = [[ void ]];
-    stride : uint64 = [[ uint64 ]];
-    flags : uint = [[ uint ]];
-    var result : VkResult? = [[VkResult?]]
-) : void
-
-    var vk_data : void
-    vk_data <- boost_value_to_vk(data)
-    var result_ = VkResult VK_SUCCESS
-
-    result ?? result_ = vkGetQueryPoolResults(
-        boost_value_to_vk(device),
-        boost_value_to_vk(query_pool),
-        boost_value_to_vk(first_query),
-        boost_value_to_vk(query_count),
-        boost_value_to_vk(data_size),
-        safe_addr(vk_data),
-        boost_value_to_vk(stride),
-        boost_value_to_vk(flags)
-    )
-    assert(result_ == VkResult VK_SUCCESS)
-
 def get_swapchain_images_khr(
     device : Device = [[ Device ]];
     swapchain : SwapchainKHR = [[ SwapchainKHR ]];
