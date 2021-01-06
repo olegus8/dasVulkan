@@ -68,13 +68,15 @@ class Config(ConfigBase):
             'vkGetPhysicalDeviceSurfaceFormatsKHR',
             'vkGetPhysicalDeviceSurfacePresentModesKHR',
             'vkGetPhysicalDeviceSurfaceSupportKHR',
+            'vkGetQueryPoolResults',
             'vkGetSwapchainImagesKHR',
             'vkQueuePresentKHR',
         ]:
             return
 
         #TODO: make these work
-        if ('PFN_' in func.type
+        if ('size_t' in func.type
+        or  'PFN_' in func.type
         or  func.name.endswith('KHR')
         or  func.name.endswith('EXT')
         or  func.name.endswith('INTEL')
