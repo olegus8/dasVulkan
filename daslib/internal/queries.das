@@ -26,6 +26,7 @@ def create_timestamp_query_pool(device : Device; query_count : int
 
 def reset(var pool : TimestampQueryPool)
     pool._device |> reset_query_pool(
-        query_pool._query_pool, 0u, uint(query_pool.timestamps |> length()))
+        pool._query_pool, 0u, uint(pool.timestamps |> length()))
+    let query_count = pool.timestamps |> length()
     pool.timestamps |> clear
     pool.timestamps |> resize <| query_count
