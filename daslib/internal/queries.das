@@ -38,7 +38,8 @@ def update(var pool : TimestampQueryPool)
     var data : array<uint64>
     defer() <| { delete data; }
     data |> resize <| length(pool.timestamps)
-    assert(intptr(data[0]) % uint64(8) == uint64(0))
+    unsafe
+        assert(intptr(addr(data[0])) % uint64(8) == uint64(0))
 
     verify(VkResult VK_SUCCESS == vkGetQueryPoolResults(
         _device.device,
