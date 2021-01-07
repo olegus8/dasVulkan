@@ -21,6 +21,12 @@ struct TimestampQuery
     _query_pool : QueryPool
 
 
+[private]
+struct TimestampQueryResult
+    value : uint64
+    available : uint64
+
+
 def create_timestamp_query_pool(device : Device; query_count : int
 ) : TimestampQueryPool
     var pool <- [[ TimestampQueryPool
@@ -42,16 +48,16 @@ def create_timestamp_query_pool(device : Device; query_count : int
 
 def reset(var pool : TimestampQueryPool)
     pool._device |> reset_query_pool(
-        pool._query_pool, 0u, uint(pool.timestamps |> length()))
-    let query_count = pool.timestamps |> length()
-    pool.timestamps |> clear
-    pool.timestamps |> resize <| query_count
+        pool._query_pool, 0u, uint(pool.queries |> length()))
+    for query in pool.queries
+        query.ns = uint64(0)
+        query.available = false
 
 
 def update(var pool : TimestampQueryPool)
-    var data : array<uint64>
+    var data : array<TimestampQueryResult>
     defer() <| { delete data; }
-    data |> resize <| length(pool.timestamps)
+    data |> resize <| length(pool.queries)
 
     var pdata : void ?
     unsafe
@@ -59,15 +65,17 @@ def update(var pool : TimestampQueryPool)
 
     assert(intptr(pdata) % uint64(8) == uint64(0))
 
-    verify(VkResult VK_SUCCESS == vkGetQueryPoolResults(
+    let result = vkGetQueryPoolResults(
         pool._device.device,
         pool._query_pool.query_pool,
         0u,
         uint(pool.timestamps |> length()),
-        uint64(typeinfo(sizeof type<uint64>)*length(data)),
+        uint64(typeinfo(sizeof type<TimestampQueryResult>)*length(data)),
         pdata,
-        uint64(typeinfo(sizeof type<uint64>)),
-        uint(VkQueryResultFlagBits VK_QUERY_RESULT_64_BIT)
-    ))
+        uint64(typeinfo(sizeof type<TimestampQueryResult>)),
+        uint(VkQueryResultFlagBits VK_QUERY_RESULT_64_BIT) |
+        uint(VkQueryResultFlagBits VK_QUERY_RESULT_WITH_AVAILABILITY_BIT)
+    )
+    assert(result == VkResult VK_SUCCESS || result == VkResult VK_NOT_READY)
 
     //TODO: fill available timestamp data, convert to nanoseconds
