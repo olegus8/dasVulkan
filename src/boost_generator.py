@@ -1150,6 +1150,8 @@ class ParamVk_pNext(ParamBase):
         return []
 
     def generate_boost_struct_v2b_field(self):
+        if self.__next:
+            return [f'next <- vk_value_to_boost(*vk_p_next),']
         return []
 
     def generate_boost_struct_v2b_vars(self):
