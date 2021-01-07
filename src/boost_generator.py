@@ -1351,7 +1351,7 @@ class ParamVkStruct(ParamBase):
 
     def generate_boost_struct_field_view_decl(self):
         bname = self._boost_struct_field_name
-        vtype = self.vk_type
+        vtype = self._vk_type
         vutype = self.vk_unqual_type
         if self.vk_is_dyn_array_items:
             if self._vk_is_fixed_array:
