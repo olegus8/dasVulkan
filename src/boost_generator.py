@@ -1459,6 +1459,10 @@ class ParamFixedString(ParamBase):
             return cls(c_param=c_param, **kwargs)
 
     @property
+    def vk_unqual_type(self):
+        return 'int8'
+
+    @property
     def _boost_struct_field_type(self):
         return 'string'
 
