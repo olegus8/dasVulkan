@@ -79,10 +79,14 @@ def update(var pool : TimestampQueryPool)
     //TODO: fill available timestamp data, convert to nanoseconds
 
 
-def cmd_write(command_buffer : CommandBuffer; query : TimestampQuery)
+def cmd_write(
+    command_buffer : CommandBuffer;
+    query : TimestampQuery;
+    pipeline_stage : VkPipelineStageFlagBits
+)
     vkCmdWriteTimestamp(
         boost_value_to_vk(command_buffer),
         boost_value_to_vk(pipeline_stage),
-        boost_value_to_vk(query_pool),
-        boost_value_to_vk(query)
+        boost_value_to_vk(query._query_pool),
+        boost_value_to_vk(query._index)
     )
