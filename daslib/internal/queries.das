@@ -9,9 +9,10 @@ require vulkan
 
 struct TimestampQueryPool
     queries : array<TimestampQuery>
-    
     _query_pool : QueryPool
     _device : Device
+    _timestamp_valid_bits : uint
+    _timestamp_period : float
 
 
 struct TimestampQuery
@@ -19,8 +20,6 @@ struct TimestampQuery
     available : bool
     _index : uint
     _query_pool : QueryPool
-    _timestamp_valid_bits : uint
-    _timestamp_period : float
 
 
 [private]
@@ -33,7 +32,7 @@ def create_timestamp_query_pool(
     phys_dev : PhysicalDevice;
     device : Device;
     queue_family : uint;
-    query_count : int;
+    query_count : int
 ) : TimestampQueryPool
     var pool <- [[ TimestampQueryPool
         _device <- weak_copy(device),
