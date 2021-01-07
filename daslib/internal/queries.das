@@ -95,7 +95,6 @@ def update(var pool : TimestampQueryPool)
     for datum, query in data, pool.queries
         query.ns = pool |> to_ns <| datum
         query.available = datum.available != uint64(0)
-        print("{query.ns} {query.available}\n")
 
 
 def cmd_write(
