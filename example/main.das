@@ -733,9 +733,8 @@ def create_swapchain_dependent_state(
         sis.surface, sis.window, sis.surf_fmt, sis.present_mode,
         sis.render_pass)
     sds.draw_submitted <- [{for fbuf in sds.swapchain.framebuffers; false}]
-    sds.timestamp_pools <- [{for fbuf in sds.swapchain.framebuffers;
-        sis.device |> create_timestamp_query_pool(2)
-    }]
+    sds.timestamp_pools <- sis |> create_timestamp_query_pools(
+        sds.swapchain.framebuffers)
     sds.uniform_bufs <- sis |> create_example_uniform_buffers(
         sds.swapchain.framebuffers)
     sds.desc_pool <- sis |> create_example_descriptor_pool(
@@ -757,7 +756,8 @@ def create_example_timestamp_query_pools(
         create_timestamp_query_pool([
             phys_dev = sis.phys_dev,
             device = sis.device,
-            queue_family = 
+            queue_family = sis.graphics_family,
+            query_count = 2
         ])
     }]
 
