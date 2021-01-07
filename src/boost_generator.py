@@ -1166,6 +1166,17 @@ class ParamVk_pNext(ParamBase):
         return []
 
     def generate_boost_struct_view_create_field(self):
+        if self.__next:
+            return [f'pNext = boost_struct._vk_view_p_next,']
+        return []
+
+    def generate_boost_struct_view_destroy(self):
+        if self.__next:
+            return [
+               f'boost_struct.next |> vk_view_destroy()',
+               f'unsafe',
+               f'    delete boost_struct._vk_view_p_next',
+            ]
         return []
 
 
