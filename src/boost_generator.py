@@ -1157,10 +1157,11 @@ class ParamVk_pNext(ParamBase):
 
     def generate_boost_struct_view_create_init(self):
         if self.__next:
+            nvtype = self.__next.vk_type_name
             return [
-               f'boost_struct._vk_view_p_next = new {vutype}',
-               f'*(boost_struct._vk_view_p_{bname}) <- (',
-               f'    boost_struct.{bname} |> vk_view_create_unsafe())',
+               f'boost_struct._vk_view_p_next = new {nvtype}',
+               f'*(boost_struct._vk_view_p_next) <- (',
+               f'    boost_struct.next |> vk_view_create_unsafe())',
             ]
         return []
 
