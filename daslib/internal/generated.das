@@ -545,8 +545,12 @@ def enumerate_device_extension_properties(
 
     var vk_pPropertyCount : uint
     var properties : array<ExtensionProperties>
-    var vk_properties <- properties |> vk_view_create_unsafe()
-    defer() <| { properties |> vk_view_destroy(); }
+    var vk_properties <- [{ for item in properties ;
+        item |> vk_view_create_unsafe() }]
+    defer() <|
+        for item in properties
+            item |> vk_view_destroy()
+        delete vk_properties
     var result_ = VkResult VK_SUCCESS
 
     result ?? result_ = vkEnumerateDeviceExtensionProperties(
@@ -770,8 +774,12 @@ def get_physical_device_queue_family_properties(
 
     var vk_pQueueFamilyPropertyCount : uint
     var queue_family_properties : array<QueueFamilyProperties>
-    var vk_queue_family_properties <- queue_family_properties |> vk_view_create_unsafe()
-    defer() <| { queue_family_properties |> vk_view_destroy(); }
+    var vk_queue_family_properties <- [{ for item in queue_family_properties ;
+        item |> vk_view_create_unsafe() }]
+    defer() <|
+        for item in queue_family_properties
+            item |> vk_view_destroy()
+        delete vk_queue_family_properties
 
     vkGetPhysicalDeviceQueueFamilyProperties(
         boost_value_to_vk(physical_device),
@@ -794,8 +802,12 @@ def get_physical_device_surface_formats_khr(
 
     var vk_pSurfaceFormatCount : uint
     var surface_formats : array<SurfaceFormatKHR>
-    var vk_surface_formats <- surface_formats |> vk_view_create_unsafe()
-    defer() <| { surface_formats |> vk_view_destroy(); }
+    var vk_surface_formats <- [{ for item in surface_formats ;
+        item |> vk_view_create_unsafe() }]
+    defer() <|
+        for item in surface_formats
+            item |> vk_view_destroy()
+        delete vk_surface_formats
     var result_ = VkResult VK_SUCCESS
 
     result ?? result_ = vkGetPhysicalDeviceSurfaceFormatsKHR(
