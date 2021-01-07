@@ -4078,8 +4078,8 @@ def vk_value_to_boost(vk_struct : VkPhysicalDeviceFeatures2) : PhysicalDeviceFea
 struct PhysicalDeviceMemoryProperties
     memory_types : array<MemoryType>
     memory_heaps : array<MemoryHeap>
-    _vk_view_memory_types : array<VkMemoryType>
-    _vk_view_memory_heaps : array<VkMemoryHeap>
+    _vk_view_memory_types : VkMemoryType [32]
+    _vk_view_memory_heaps : VkMemoryHeap [16]
     _vk_view__active : bool
 
 def vk_view_create_unsafe(var boost_struct : PhysicalDeviceMemoryProperties
@@ -4088,18 +4088,16 @@ def vk_view_create_unsafe(var boost_struct : PhysicalDeviceMemoryProperties
     assert(!boost_struct._vk_view__active)
     boost_struct._vk_view__active = true
     let vk_memory_type_count = uint(boost_struct.memory_types |> length())
-    boost_struct._vk_view_memory_types <- [{
-        for item in boost_struct.memory_types ;
-        item |> vk_view_create_unsafe()}]
+    for dst, src in boost_struct._vk_view_memory_types, boost_struct.memory_types
+        dst <- src |> vk_view_create_unsafe
     let vk_memory_heap_count = uint(boost_struct.memory_heaps |> length())
-    boost_struct._vk_view_memory_heaps <- [{
-        for item in boost_struct.memory_heaps ;
-        item |> vk_view_create_unsafe()}]
+    for dst, src in boost_struct._vk_view_memory_heaps, boost_struct.memory_heaps
+        dst <- src |> vk_view_create_unsafe
     return <- [[ VkPhysicalDeviceMemoryProperties
         memoryTypeCount = vk_memory_type_count,
-        memoryTypes = array_addr_unsafe(boost_struct._vk_view_memory_types),
+        memoryTypes := boost_struct._vk_view_memory_types,
         memoryHeapCount = vk_memory_heap_count,
-        memoryHeaps = array_addr_unsafe(boost_struct._vk_view_memory_heaps)
+        memoryHeaps := boost_struct._vk_view_memory_heaps
     ]]
 
 def vk_view_destroy(var boost_struct : PhysicalDeviceMemoryProperties)
