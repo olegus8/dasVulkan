@@ -1137,7 +1137,7 @@ class ParamVk_pNext(ParamBase):
         next_ = self._gen_struct.next_in_chain
         bname = self._boost_struct_field_name
         if next_:
-            return [f'next_in_chain : {next_.boost_type_name}']
+            return [f'next : {next_.boost_type_name}']
         return []
 
     def generate_boost_struct_v2b_field(self):

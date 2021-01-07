@@ -4931,7 +4931,7 @@ def vk_value_to_boost(vk_struct : VkPhysicalDeviceVulkan12Features) : PhysicalDe
 //
 
 struct PhysicalDeviceVulkan11Features
-    next_in_chain : PhysicalDeviceVulkan12Features
+    next : PhysicalDeviceVulkan12Features
     storage_buffer_16bit_access : uint
     uniform_and_storage_buffer_16bit_access : uint
     storage_push_constant_16 : uint
@@ -4992,7 +4992,7 @@ def vk_value_to_boost(vk_struct : VkPhysicalDeviceVulkan11Features) : PhysicalDe
 //
 
 struct PhysicalDeviceFeatures2
-    next_in_chain : PhysicalDeviceVulkan11Features
+    next : PhysicalDeviceVulkan11Features
     features : PhysicalDeviceFeatures
     _vk_view_p_features : VkPhysicalDeviceFeatures ?
     _vk_view__active : bool
