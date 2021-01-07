@@ -9,14 +9,13 @@ require vulkan
 
 struct TimestampQueryPool
     queries : array<TimestampQuery>
+    timestamp_period : float
     _query_pool : QueryPool
     _device : Device
-    _timestamp_valid_bits : uint
-    _timestamp_period : float
 
 
 struct TimestampQuery
-    ns : double
+    ticks : uint64
     available : bool
     _index : uint
     _query_pool : QueryPool
@@ -24,7 +23,7 @@ struct TimestampQuery
 
 [private]
 struct TimestampQueryResult
-    value : uint64
+    ticks : uint64
     available : uint64
 
 
@@ -51,8 +50,7 @@ def create_timestamp_query_pool(
     let props <- phys_dev |> get_physical_device_properties
     var qprops <- phys_dev |> get_physical_device_queue_family_properties
     defer() <| { delete qprops; }
-    pool._timestamp_valid_bits = qprops[queue_family].timestamp_valid_bits
-    pool._timestamp_period = props.limits.timestamp_period
+    pool.timestamp_period = props.limits.timestamp_period
 
     return <- pool
 
