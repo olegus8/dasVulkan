@@ -687,6 +687,18 @@ def get_physical_device_features(
     )
     return <- vk_value_to_boost(vk_features)
 
+def get_physical_device_features_2(
+    physical_device : PhysicalDevice = [[ PhysicalDevice ]]
+) : PhysicalDeviceFeatures2
+
+    var vk_features : VkPhysicalDeviceFeatures2
+
+    vkGetPhysicalDeviceFeatures2(
+        boost_value_to_vk(physical_device),
+        safe_addr(vk_features)
+    )
+    return <- vk_value_to_boost(vk_features)
+
 def get_physical_device_properties(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]]
 ) : PhysicalDeviceProperties
@@ -3900,6 +3912,40 @@ def vk_view_destroy(var boost_struct : InstanceCreateInfo)
         unsafe
             delete boost_struct._vk_view_p_application_info
     boost_struct._vk_view__active = false
+
+//
+// PhysicalDeviceFeatures2
+//
+
+struct PhysicalDeviceFeatures2
+    features : PhysicalDeviceFeatures
+    _vk_view_p_features : VkPhysicalDeviceFeatures ?
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : PhysicalDeviceFeatures2
+) : VkPhysicalDeviceFeatures2
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    boost_struct._vk_view_p_features = new VkPhysicalDeviceFeatures
+    *(boost_struct._vk_view_p_features) <- (
+        boost_struct.features |> vk_view_create_unsafe())
+    return <- [[ VkPhysicalDeviceFeatures2
+        sType = VkStructureType VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FEATURES_2,
+        features = *(boost_struct._vk_view_p_features)
+    ]]
+
+def vk_view_destroy(var boost_struct : PhysicalDeviceFeatures2)
+    assert(boost_struct._vk_view__active)
+    boost_struct.features |> vk_view_destroy()
+    unsafe
+        delete boost_struct._vk_view_p_features
+    boost_struct._vk_view__active = false
+
+def vk_value_to_boost(vk_struct : VkPhysicalDeviceFeatures2) : PhysicalDeviceFeatures2
+    return <- [[PhysicalDeviceFeatures2
+        features <- vk_value_to_boost(vk_struct.features)
+    ]]
 
 //
 // PhysicalDeviceMemoryProperties
