@@ -38,7 +38,7 @@ def vk_value_to_boost(v : int8[]) : string
     unsafe
         return <- clone_string(reinterpret<string>(addr(v[0])))
 
-def vk_value_to_boost(v : string]) : string
+def vk_value_to_boost(v : string) : string
     unsafe
         return <- clone_string(v)
 
