@@ -1303,6 +1303,7 @@ class ParamVkStruct(ParamBase):
             if self.vk_is_dyn_array_items:
                 return [
                     f'var {bname} : {btype}',
+                    f'defer() <| {{ delete {bname} }}',
                 ]
             elif self.vk_is_pointer:
                 return [
