@@ -45,6 +45,10 @@ def vk_value_to_boost(v : string) : string
     unsafe
         return <- clone_string(v)
 
+def copy_to_array(src : string; var auto(T)[] & dst)
+    for s, d in src, dst:
+        d = T(s)
+
 def array_addr_unsafe(var ar : array<auto(T)>) : T?
     unsafe
         return length(ar) > 0 ? addr(ar[0]) : [[T ?]]
@@ -1242,8 +1246,7 @@ def vk_view_create_unsafe(var boost_struct : ExtensionProperties
     assert(!boost_struct._vk_view__active)
     boost_struct._vk_view__active = true
     var vk_extension_name : uint8 [256]
-    for i in range(min(vk_extension_name |> length(), boost_struct.extension_name |> length()))
-        vk_extension_name[i] = uint8 [256](boost_struct.extension_name |> character_at <| i)
+    boost_struct.extension_name |> copy_to_array <| vk_extension_name
     return <- [[ VkExtensionProperties
         extensionName := vk_extension_name,
         specVersion = boost_value_to_vk(boost_struct.spec_version)
@@ -2062,8 +2065,7 @@ def vk_view_create_unsafe(var boost_struct : PhysicalDeviceProperties
     assert(!boost_struct._vk_view__active)
     boost_struct._vk_view__active = true
     var vk_device_name : uint8 [256]
-    for i in range(min(vk_device_name |> length(), boost_struct.device_name |> length()))
-        vk_device_name[i] = uint8 [256](boost_struct.device_name |> character_at <| i)
+    boost_struct.device_name |> copy_to_array <| vk_device_name
     boost_struct._vk_view_p_limits = new VkPhysicalDeviceLimits
     *(boost_struct._vk_view_p_limits) <- (
         boost_struct.limits |> vk_view_create_unsafe())

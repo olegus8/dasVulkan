@@ -1472,7 +1472,7 @@ class ParamFixedString(ParamBase):
         lines = []
         lines += [
            f'var vk_{bname} : {vtype}',
-           f'vk_{bname} |> copy_to_array <| vk_{bname}',
+           f'boost_struct.{bname} |> copy_to_array <| vk_{bname}',
         ]
         return lines
 
