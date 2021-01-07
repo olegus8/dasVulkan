@@ -1297,7 +1297,15 @@ class ParamVkStruct(ParamBase):
 
     def generate_boost_func_temp_vars_init(self):
         bname = self._boost_func_param_name
-        if not self._is_boost_func_output:
+        btype = self._boost_func_param_type
+        if self._is_boost_func_output:
+            if self.vk_is_pointer:
+                return [
+                    f'var {bname} : {btype}',
+                    f'var vk_{bname} <- {bname} |> vk_view_create_unsafe()',
+                    f'defer() <| {{ {bname} |> vk_view_destroy(); }}',
+                ]
+        else:
             if self.vk_is_dyn_array_items:
                 return [
                     f'var vk_{bname} <- [{{ for item in {bname} ;',
@@ -1639,8 +1647,16 @@ class ParamUnknown(ParamBase):
 
 def boost_camel_to_lower(camel):
     result = ''
+
     for force_sep_after in ['2D', '3D', '4D']:
         camel = camel.replace(force_sep_after, force_sep_after + '_')
+
+    for src, dst in [
+        ('Vulkan11', 'Vulkan_1_1_'),
+        ('Vulkan12', 'Vulkan_1_2_'),
+    ]:
+        camel = camel.replace(src, dst)
+
     state = None
     for c in camel:
         if c.islower():

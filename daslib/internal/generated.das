@@ -540,8 +540,12 @@ def enumerate_device_extension_properties(
 ) : array<ExtensionProperties>
 
     var vk_pPropertyCount : uint
-    var vk_properties : array<VkExtensionProperties>
-    defer() <| { delete vk_properties; }
+    var vk_properties <- [{ for item in properties ;
+        item |> vk_view_create_unsafe() }]
+    defer() <|
+        for item in properties
+            item |> vk_view_destroy()
+        delete vk_properties
     var result_ = VkResult VK_SUCCESS
 
     result ?? result_ = vkEnumerateDeviceExtensionProperties(
@@ -652,7 +656,8 @@ def get_buffer_memory_requirements(
     buffer : Buffer = [[ Buffer ]]
 ) : MemoryRequirements
 
-    var vk_memory_requirements : VkMemoryRequirements
+    var vk_memory_requirements <- memory_requirements |> vk_view_create_unsafe()
+    defer() <| { memory_requirements |> vk_view_destroy(); }
 
     vkGetBufferMemoryRequirements(
         boost_value_to_vk(device),
@@ -666,7 +671,8 @@ def get_image_memory_requirements(
     image : Image = [[ Image ]]
 ) : MemoryRequirements
 
-    var vk_memory_requirements : VkMemoryRequirements
+    var vk_memory_requirements <- memory_requirements |> vk_view_create_unsafe()
+    defer() <| { memory_requirements |> vk_view_destroy(); }
 
     vkGetImageMemoryRequirements(
         boost_value_to_vk(device),
@@ -679,7 +685,8 @@ def get_physical_device_features(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]]
 ) : PhysicalDeviceFeatures
 
-    var vk_features : VkPhysicalDeviceFeatures
+    var vk_features <- features |> vk_view_create_unsafe()
+    defer() <| { features |> vk_view_destroy(); }
 
     vkGetPhysicalDeviceFeatures(
         boost_value_to_vk(physical_device),
@@ -691,7 +698,8 @@ def get_physical_device_features_2(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]]
 ) : PhysicalDeviceFeatures2
 
-    var vk_features : VkPhysicalDeviceFeatures2
+    var vk_features <- features |> vk_view_create_unsafe()
+    defer() <| { features |> vk_view_destroy(); }
 
     vkGetPhysicalDeviceFeatures2(
         boost_value_to_vk(physical_device),
@@ -703,7 +711,8 @@ def get_physical_device_properties(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]]
 ) : PhysicalDeviceProperties
 
-    var vk_properties : VkPhysicalDeviceProperties
+    var vk_properties <- properties |> vk_view_create_unsafe()
+    defer() <| { properties |> vk_view_destroy(); }
 
     vkGetPhysicalDeviceProperties(
         boost_value_to_vk(physical_device),
@@ -717,7 +726,8 @@ def get_physical_device_surface_capabilities_khr(
     var result : VkResult? = [[VkResult?]]
 ) : SurfaceCapabilitiesKHR
 
-    var vk_surface_capabilities : VkSurfaceCapabilitiesKHR
+    var vk_surface_capabilities <- surface_capabilities |> vk_view_create_unsafe()
+    defer() <| { surface_capabilities |> vk_view_destroy(); }
     var result_ = VkResult VK_SUCCESS
 
     result ?? result_ = vkGetPhysicalDeviceSurfaceCapabilitiesKHR(
@@ -752,8 +762,12 @@ def get_physical_device_queue_family_properties(
 ) : array<QueueFamilyProperties>
 
     var vk_pQueueFamilyPropertyCount : uint
-    var vk_queue_family_properties : array<VkQueueFamilyProperties>
-    defer() <| { delete vk_queue_family_properties; }
+    var vk_queue_family_properties <- [{ for item in queue_family_properties ;
+        item |> vk_view_create_unsafe() }]
+    defer() <|
+        for item in queue_family_properties
+            item |> vk_view_destroy()
+        delete vk_queue_family_properties
 
     vkGetPhysicalDeviceQueueFamilyProperties(
         boost_value_to_vk(physical_device),
@@ -775,8 +789,12 @@ def get_physical_device_surface_formats_khr(
 ) : array<SurfaceFormatKHR>
 
     var vk_pSurfaceFormatCount : uint
-    var vk_surface_formats : array<VkSurfaceFormatKHR>
-    defer() <| { delete vk_surface_formats; }
+    var vk_surface_formats <- [{ for item in surface_formats ;
+        item |> vk_view_create_unsafe() }]
+    defer() <|
+        for item in surface_formats
+            item |> vk_view_destroy()
+        delete vk_surface_formats
     var result_ = VkResult VK_SUCCESS
 
     result ?? result_ = vkGetPhysicalDeviceSurfaceFormatsKHR(
@@ -832,7 +850,8 @@ def get_physical_device_memory_properties(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]]
 ) : PhysicalDeviceMemoryProperties
 
-    var vk_memory_properties : VkPhysicalDeviceMemoryProperties
+    var vk_memory_properties <- memory_properties |> vk_view_create_unsafe()
+    defer() <| { memory_properties |> vk_view_destroy(); }
 
     vkGetPhysicalDeviceMemoryProperties(
         boost_value_to_vk(physical_device),
@@ -3967,6 +3986,231 @@ def vk_value_to_boost(vk_struct : VkPhysicalDeviceMemoryProperties) : PhysicalDe
     return <- [[PhysicalDeviceMemoryProperties
         memory_types <- b_memory_types,
         memory_heaps <- b_memory_heaps
+    ]]
+
+//
+// PhysicalDeviceVulkan11Features
+//
+
+struct PhysicalDeviceVulkan11Features
+    storage_buffer_16bit_access : uint
+    uniform_and_storage_buffer_16bit_access : uint
+    storage_push_constant_16 : uint
+    storage_input_output_16 : uint
+    multiview : uint
+    multiview_geometry_shader : uint
+    multiview_tessellation_shader : uint
+    variable_pointers_storage_buffer : uint
+    variable_pointers : uint
+    protected_memory : uint
+    sampler_ycbcr_conversion : uint
+    shader_draw_parameters : uint
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : PhysicalDeviceVulkan11Features
+) : VkPhysicalDeviceVulkan11Features
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    return <- [[ VkPhysicalDeviceVulkan11Features
+        sType = VkStructureType VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VULKAN_1_1_FEATURES,
+        storageBuffer16BitAccess = boost_value_to_vk(boost_struct.storage_buffer_16bit_access),
+        uniformAndStorageBuffer16BitAccess = boost_value_to_vk(boost_struct.uniform_and_storage_buffer_16bit_access),
+        storagePushConstant16 = boost_value_to_vk(boost_struct.storage_push_constant_16),
+        storageInputOutput16 = boost_value_to_vk(boost_struct.storage_input_output_16),
+        multiview = boost_value_to_vk(boost_struct.multiview),
+        multiviewGeometryShader = boost_value_to_vk(boost_struct.multiview_geometry_shader),
+        multiviewTessellationShader = boost_value_to_vk(boost_struct.multiview_tessellation_shader),
+        variablePointersStorageBuffer = boost_value_to_vk(boost_struct.variable_pointers_storage_buffer),
+        variablePointers = boost_value_to_vk(boost_struct.variable_pointers),
+        protectedMemory = boost_value_to_vk(boost_struct.protected_memory),
+        samplerYcbcrConversion = boost_value_to_vk(boost_struct.sampler_ycbcr_conversion),
+        shaderDrawParameters = boost_value_to_vk(boost_struct.shader_draw_parameters)
+    ]]
+
+def vk_view_destroy(var boost_struct : PhysicalDeviceVulkan11Features)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+def vk_value_to_boost(vk_struct : VkPhysicalDeviceVulkan11Features) : PhysicalDeviceVulkan11Features
+    return <- [[PhysicalDeviceVulkan11Features
+        storage_buffer_16bit_access = vk_value_to_boost(vk_struct.storageBuffer16BitAccess),
+        uniform_and_storage_buffer_16bit_access = vk_value_to_boost(vk_struct.uniformAndStorageBuffer16BitAccess),
+        storage_push_constant_16 = vk_value_to_boost(vk_struct.storagePushConstant16),
+        storage_input_output_16 = vk_value_to_boost(vk_struct.storageInputOutput16),
+        multiview = vk_value_to_boost(vk_struct.multiview),
+        multiview_geometry_shader = vk_value_to_boost(vk_struct.multiviewGeometryShader),
+        multiview_tessellation_shader = vk_value_to_boost(vk_struct.multiviewTessellationShader),
+        variable_pointers_storage_buffer = vk_value_to_boost(vk_struct.variablePointersStorageBuffer),
+        variable_pointers = vk_value_to_boost(vk_struct.variablePointers),
+        protected_memory = vk_value_to_boost(vk_struct.protectedMemory),
+        sampler_ycbcr_conversion = vk_value_to_boost(vk_struct.samplerYcbcrConversion),
+        shader_draw_parameters = vk_value_to_boost(vk_struct.shaderDrawParameters)
+    ]]
+
+//
+// PhysicalDeviceVulkan12Features
+//
+
+struct PhysicalDeviceVulkan12Features
+    sampler_mirror_clamp_to_edge : uint
+    draw_indirect_count : uint
+    storage_buffer_8bit_access : uint
+    uniform_and_storage_buffer_8bit_access : uint
+    storage_push_constant_8 : uint
+    shader_buffer_int_64atomics : uint
+    shader_shared_int_64atomics : uint
+    shader_float_16 : uint
+    shader_int_8 : uint
+    descriptor_indexing : uint
+    shader_input_attachment_array_dynamic_indexing : uint
+    shader_uniform_texel_buffer_array_dynamic_indexing : uint
+    shader_storage_texel_buffer_array_dynamic_indexing : uint
+    shader_uniform_buffer_array_non_uniform_indexing : uint
+    shader_sampled_image_array_non_uniform_indexing : uint
+    shader_storage_buffer_array_non_uniform_indexing : uint
+    shader_storage_image_array_non_uniform_indexing : uint
+    shader_input_attachment_array_non_uniform_indexing : uint
+    shader_uniform_texel_buffer_array_non_uniform_indexing : uint
+    shader_storage_texel_buffer_array_non_uniform_indexing : uint
+    descriptor_binding_uniform_buffer_update_after_bind : uint
+    descriptor_binding_sampled_image_update_after_bind : uint
+    descriptor_binding_storage_image_update_after_bind : uint
+    descriptor_binding_storage_buffer_update_after_bind : uint
+    descriptor_binding_uniform_texel_buffer_update_after_bind : uint
+    descriptor_binding_storage_texel_buffer_update_after_bind : uint
+    descriptor_binding_update_unused_while_pending : uint
+    descriptor_binding_partially_bound : uint
+    descriptor_binding_variable_descriptor_count : uint
+    runtime_descriptor_array : uint
+    sampler_filter_minmax : uint
+    scalar_block_layout : uint
+    imageless_framebuffer : uint
+    uniform_buffer_standard_layout : uint
+    shader_subgroup_extended_types : uint
+    separate_depth_stencil_layouts : uint
+    host_query_reset : uint
+    timeline_semaphore : uint
+    buffer_device_address : uint
+    buffer_device_address_capture_replay : uint
+    buffer_device_address_multi_device : uint
+    vulkan_memory_model : uint
+    vulkan_memory_model_device_scope : uint
+    vulkan_memory_model_availability_visibility_chains : uint
+    shader_output_viewport_index : uint
+    shader_output_layer : uint
+    subgroup_broadcast_dynamic_id : uint
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : PhysicalDeviceVulkan12Features
+) : VkPhysicalDeviceVulkan12Features
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    return <- [[ VkPhysicalDeviceVulkan12Features
+        sType = VkStructureType VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VULKAN_1_2_FEATURES,
+        samplerMirrorClampToEdge = boost_value_to_vk(boost_struct.sampler_mirror_clamp_to_edge),
+        drawIndirectCount = boost_value_to_vk(boost_struct.draw_indirect_count),
+        storageBuffer8BitAccess = boost_value_to_vk(boost_struct.storage_buffer_8bit_access),
+        uniformAndStorageBuffer8BitAccess = boost_value_to_vk(boost_struct.uniform_and_storage_buffer_8bit_access),
+        storagePushConstant8 = boost_value_to_vk(boost_struct.storage_push_constant_8),
+        shaderBufferInt64Atomics = boost_value_to_vk(boost_struct.shader_buffer_int_64atomics),
+        shaderSharedInt64Atomics = boost_value_to_vk(boost_struct.shader_shared_int_64atomics),
+        shaderFloat16 = boost_value_to_vk(boost_struct.shader_float_16),
+        shaderInt8 = boost_value_to_vk(boost_struct.shader_int_8),
+        descriptorIndexing = boost_value_to_vk(boost_struct.descriptor_indexing),
+        shaderInputAttachmentArrayDynamicIndexing = boost_value_to_vk(boost_struct.shader_input_attachment_array_dynamic_indexing),
+        shaderUniformTexelBufferArrayDynamicIndexing = boost_value_to_vk(boost_struct.shader_uniform_texel_buffer_array_dynamic_indexing),
+        shaderStorageTexelBufferArrayDynamicIndexing = boost_value_to_vk(boost_struct.shader_storage_texel_buffer_array_dynamic_indexing),
+        shaderUniformBufferArrayNonUniformIndexing = boost_value_to_vk(boost_struct.shader_uniform_buffer_array_non_uniform_indexing),
+        shaderSampledImageArrayNonUniformIndexing = boost_value_to_vk(boost_struct.shader_sampled_image_array_non_uniform_indexing),
+        shaderStorageBufferArrayNonUniformIndexing = boost_value_to_vk(boost_struct.shader_storage_buffer_array_non_uniform_indexing),
+        shaderStorageImageArrayNonUniformIndexing = boost_value_to_vk(boost_struct.shader_storage_image_array_non_uniform_indexing),
+        shaderInputAttachmentArrayNonUniformIndexing = boost_value_to_vk(boost_struct.shader_input_attachment_array_non_uniform_indexing),
+        shaderUniformTexelBufferArrayNonUniformIndexing = boost_value_to_vk(boost_struct.shader_uniform_texel_buffer_array_non_uniform_indexing),
+        shaderStorageTexelBufferArrayNonUniformIndexing = boost_value_to_vk(boost_struct.shader_storage_texel_buffer_array_non_uniform_indexing),
+        descriptorBindingUniformBufferUpdateAfterBind = boost_value_to_vk(boost_struct.descriptor_binding_uniform_buffer_update_after_bind),
+        descriptorBindingSampledImageUpdateAfterBind = boost_value_to_vk(boost_struct.descriptor_binding_sampled_image_update_after_bind),
+        descriptorBindingStorageImageUpdateAfterBind = boost_value_to_vk(boost_struct.descriptor_binding_storage_image_update_after_bind),
+        descriptorBindingStorageBufferUpdateAfterBind = boost_value_to_vk(boost_struct.descriptor_binding_storage_buffer_update_after_bind),
+        descriptorBindingUniformTexelBufferUpdateAfterBind = boost_value_to_vk(boost_struct.descriptor_binding_uniform_texel_buffer_update_after_bind),
+        descriptorBindingStorageTexelBufferUpdateAfterBind = boost_value_to_vk(boost_struct.descriptor_binding_storage_texel_buffer_update_after_bind),
+        descriptorBindingUpdateUnusedWhilePending = boost_value_to_vk(boost_struct.descriptor_binding_update_unused_while_pending),
+        descriptorBindingPartiallyBound = boost_value_to_vk(boost_struct.descriptor_binding_partially_bound),
+        descriptorBindingVariableDescriptorCount = boost_value_to_vk(boost_struct.descriptor_binding_variable_descriptor_count),
+        runtimeDescriptorArray = boost_value_to_vk(boost_struct.runtime_descriptor_array),
+        samplerFilterMinmax = boost_value_to_vk(boost_struct.sampler_filter_minmax),
+        scalarBlockLayout = boost_value_to_vk(boost_struct.scalar_block_layout),
+        imagelessFramebuffer = boost_value_to_vk(boost_struct.imageless_framebuffer),
+        uniformBufferStandardLayout = boost_value_to_vk(boost_struct.uniform_buffer_standard_layout),
+        shaderSubgroupExtendedTypes = boost_value_to_vk(boost_struct.shader_subgroup_extended_types),
+        separateDepthStencilLayouts = boost_value_to_vk(boost_struct.separate_depth_stencil_layouts),
+        hostQueryReset = boost_value_to_vk(boost_struct.host_query_reset),
+        timelineSemaphore = boost_value_to_vk(boost_struct.timeline_semaphore),
+        bufferDeviceAddress = boost_value_to_vk(boost_struct.buffer_device_address),
+        bufferDeviceAddressCaptureReplay = boost_value_to_vk(boost_struct.buffer_device_address_capture_replay),
+        bufferDeviceAddressMultiDevice = boost_value_to_vk(boost_struct.buffer_device_address_multi_device),
+        vulkanMemoryModel = boost_value_to_vk(boost_struct.vulkan_memory_model),
+        vulkanMemoryModelDeviceScope = boost_value_to_vk(boost_struct.vulkan_memory_model_device_scope),
+        vulkanMemoryModelAvailabilityVisibilityChains = boost_value_to_vk(boost_struct.vulkan_memory_model_availability_visibility_chains),
+        shaderOutputViewportIndex = boost_value_to_vk(boost_struct.shader_output_viewport_index),
+        shaderOutputLayer = boost_value_to_vk(boost_struct.shader_output_layer),
+        subgroupBroadcastDynamicId = boost_value_to_vk(boost_struct.subgroup_broadcast_dynamic_id)
+    ]]
+
+def vk_view_destroy(var boost_struct : PhysicalDeviceVulkan12Features)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+def vk_value_to_boost(vk_struct : VkPhysicalDeviceVulkan12Features) : PhysicalDeviceVulkan12Features
+    return <- [[PhysicalDeviceVulkan12Features
+        sampler_mirror_clamp_to_edge = vk_value_to_boost(vk_struct.samplerMirrorClampToEdge),
+        draw_indirect_count = vk_value_to_boost(vk_struct.drawIndirectCount),
+        storage_buffer_8bit_access = vk_value_to_boost(vk_struct.storageBuffer8BitAccess),
+        uniform_and_storage_buffer_8bit_access = vk_value_to_boost(vk_struct.uniformAndStorageBuffer8BitAccess),
+        storage_push_constant_8 = vk_value_to_boost(vk_struct.storagePushConstant8),
+        shader_buffer_int_64atomics = vk_value_to_boost(vk_struct.shaderBufferInt64Atomics),
+        shader_shared_int_64atomics = vk_value_to_boost(vk_struct.shaderSharedInt64Atomics),
+        shader_float_16 = vk_value_to_boost(vk_struct.shaderFloat16),
+        shader_int_8 = vk_value_to_boost(vk_struct.shaderInt8),
+        descriptor_indexing = vk_value_to_boost(vk_struct.descriptorIndexing),
+        shader_input_attachment_array_dynamic_indexing = vk_value_to_boost(vk_struct.shaderInputAttachmentArrayDynamicIndexing),
+        shader_uniform_texel_buffer_array_dynamic_indexing = vk_value_to_boost(vk_struct.shaderUniformTexelBufferArrayDynamicIndexing),
+        shader_storage_texel_buffer_array_dynamic_indexing = vk_value_to_boost(vk_struct.shaderStorageTexelBufferArrayDynamicIndexing),
+        shader_uniform_buffer_array_non_uniform_indexing = vk_value_to_boost(vk_struct.shaderUniformBufferArrayNonUniformIndexing),
+        shader_sampled_image_array_non_uniform_indexing = vk_value_to_boost(vk_struct.shaderSampledImageArrayNonUniformIndexing),
+        shader_storage_buffer_array_non_uniform_indexing = vk_value_to_boost(vk_struct.shaderStorageBufferArrayNonUniformIndexing),
+        shader_storage_image_array_non_uniform_indexing = vk_value_to_boost(vk_struct.shaderStorageImageArrayNonUniformIndexing),
+        shader_input_attachment_array_non_uniform_indexing = vk_value_to_boost(vk_struct.shaderInputAttachmentArrayNonUniformIndexing),
+        shader_uniform_texel_buffer_array_non_uniform_indexing = vk_value_to_boost(vk_struct.shaderUniformTexelBufferArrayNonUniformIndexing),
+        shader_storage_texel_buffer_array_non_uniform_indexing = vk_value_to_boost(vk_struct.shaderStorageTexelBufferArrayNonUniformIndexing),
+        descriptor_binding_uniform_buffer_update_after_bind = vk_value_to_boost(vk_struct.descriptorBindingUniformBufferUpdateAfterBind),
+        descriptor_binding_sampled_image_update_after_bind = vk_value_to_boost(vk_struct.descriptorBindingSampledImageUpdateAfterBind),
+        descriptor_binding_storage_image_update_after_bind = vk_value_to_boost(vk_struct.descriptorBindingStorageImageUpdateAfterBind),
+        descriptor_binding_storage_buffer_update_after_bind = vk_value_to_boost(vk_struct.descriptorBindingStorageBufferUpdateAfterBind),
+        descriptor_binding_uniform_texel_buffer_update_after_bind = vk_value_to_boost(vk_struct.descriptorBindingUniformTexelBufferUpdateAfterBind),
+        descriptor_binding_storage_texel_buffer_update_after_bind = vk_value_to_boost(vk_struct.descriptorBindingStorageTexelBufferUpdateAfterBind),
+        descriptor_binding_update_unused_while_pending = vk_value_to_boost(vk_struct.descriptorBindingUpdateUnusedWhilePending),
+        descriptor_binding_partially_bound = vk_value_to_boost(vk_struct.descriptorBindingPartiallyBound),
+        descriptor_binding_variable_descriptor_count = vk_value_to_boost(vk_struct.descriptorBindingVariableDescriptorCount),
+        runtime_descriptor_array = vk_value_to_boost(vk_struct.runtimeDescriptorArray),
+        sampler_filter_minmax = vk_value_to_boost(vk_struct.samplerFilterMinmax),
+        scalar_block_layout = vk_value_to_boost(vk_struct.scalarBlockLayout),
+        imageless_framebuffer = vk_value_to_boost(vk_struct.imagelessFramebuffer),
+        uniform_buffer_standard_layout = vk_value_to_boost(vk_struct.uniformBufferStandardLayout),
+        shader_subgroup_extended_types = vk_value_to_boost(vk_struct.shaderSubgroupExtendedTypes),
+        separate_depth_stencil_layouts = vk_value_to_boost(vk_struct.separateDepthStencilLayouts),
+        host_query_reset = vk_value_to_boost(vk_struct.hostQueryReset),
+        timeline_semaphore = vk_value_to_boost(vk_struct.timelineSemaphore),
+        buffer_device_address = vk_value_to_boost(vk_struct.bufferDeviceAddress),
+        buffer_device_address_capture_replay = vk_value_to_boost(vk_struct.bufferDeviceAddressCaptureReplay),
+        buffer_device_address_multi_device = vk_value_to_boost(vk_struct.bufferDeviceAddressMultiDevice),
+        vulkan_memory_model = vk_value_to_boost(vk_struct.vulkanMemoryModel),
+        vulkan_memory_model_device_scope = vk_value_to_boost(vk_struct.vulkanMemoryModelDeviceScope),
+        vulkan_memory_model_availability_visibility_chains = vk_value_to_boost(vk_struct.vulkanMemoryModelAvailabilityVisibilityChains),
+        shader_output_viewport_index = vk_value_to_boost(vk_struct.shaderOutputViewportIndex),
+        shader_output_layer = vk_value_to_boost(vk_struct.shaderOutputLayer),
+        subgroup_broadcast_dynamic_id = vk_value_to_boost(vk_struct.subgroupBroadcastDynamicId)
     ]]
 
 //
