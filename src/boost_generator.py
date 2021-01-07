@@ -1460,7 +1460,7 @@ class ParamFixedString(ParamBase):
 
     @property
     def vk_unqual_type(self):
-        return 'uint8'
+        return 'int8'
 
     @property
     def _boost_struct_field_type(self):
