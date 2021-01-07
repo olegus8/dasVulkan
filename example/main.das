@@ -976,9 +976,6 @@ def main
     let string_heap_leaks = int(string_heap_bytes_allocated()
         - string_heap_on_start)
 
-    unsafe
-        heap_report()
-
     print("{heap_leaks} heap bytes have leaked\n")
     print("{string_heap_leaks} string heap bytes have leaked\n")
     assert(heap_leaks == 0)
