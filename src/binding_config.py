@@ -250,12 +250,9 @@ def add_boost_content(g):
     g.add_gen_struct(name = 'VkInstanceCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'enabledLayerCount', items = 'ppEnabledLayerNames',
         ).declare_array(count = 'enabledExtensionCount', items = 'ppEnabledExtensionNames')
-    g.add_gen_struct(name = 'VkPhysicalDeviceFeatures2', next_in_chain = 'VkPhysicalDeviceVulkan11Features')
     g.add_gen_struct(name = 'VkPhysicalDeviceMemoryProperties',
         ).declare_array(count = 'memoryTypeCount', items = 'memoryTypes',
         ).declare_array(count = 'memoryHeapCount', items = 'memoryHeaps')
-    g.add_gen_struct(name = 'VkPhysicalDeviceVulkan11Features', next_in_chain = 'VkPhysicalDeviceVulkan12Features')
-    g.add_gen_struct(name = 'VkPhysicalDeviceVulkan12Features')
     g.add_gen_struct(name = 'VkPipelineCacheCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'initialDataSize', items = 'pInitialData', force_item_type = 'uint8')
     g.add_gen_struct(name = 'VkPipelineColorBlendStateCreateInfo', vk_to_boost=False,
@@ -303,6 +300,13 @@ def add_boost_content(g):
         ).declare_array(count = 'descriptorCount', items = 'pImageInfo', optional=True,
         ).declare_array(count = 'descriptorCount', items = 'pBufferInfo', optional=True,
         ).declare_array(count = 'descriptorCount', items = 'pTexelBufferView', optional=True)
+
+    g.add_gen_struct(
+        name = 'VkPhysicalDeviceFeatures2',
+        next_in_chain = g.add_gen_struct(
+            name = 'VkPhysicalDeviceVulkan11Features',
+            next_in_chain = g.add_gen_struct(
+                name = 'VkPhysicalDeviceVulkan12Features')))
 
     #
     # Functions
