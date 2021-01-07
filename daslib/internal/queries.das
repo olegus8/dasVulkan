@@ -16,8 +16,8 @@ struct TimestampQueryPool
 struct TimestampQuery
     ticks : uint64
     available : bool
+    period : double
     _index : uint
-    _period : double
     _query_pool : QueryPool
 
 
@@ -28,7 +28,7 @@ struct TimestampQueryResult
 
 
 def diff_ns(t0 : TimestampQuery; t1: TimestampQuery) : double
-    return double(t1.ticks - t0.ticks) * t0._period
+    return double(t1.ticks - t0.ticks) * t0.period
 
 
 def create_timestamp_query_pool(
@@ -52,7 +52,7 @@ def create_timestamp_query_pool(
         pool.queries |> emplace <| [[TimestampQuery
             _index = uint(i),
             _query_pool = weak_copy(pool._query_pool),
-            _period = period
+            period = period
         ]]
 
     return <- pool
