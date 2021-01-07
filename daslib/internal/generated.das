@@ -4980,7 +4980,12 @@ def vk_view_destroy(var boost_struct : PhysicalDeviceVulkan11Features)
     boost_struct._vk_view__active = false
 
 def vk_value_to_boost(vk_struct : VkPhysicalDeviceVulkan11Features) : PhysicalDeviceVulkan11Features
+    assert(vk_struct.pNext != null)
+    var vk_p_next : VkPhysicalDeviceVulkan12Features ?
+    unsafe
+        vk_p_next = reinterpret<VkPhysicalDeviceVulkan12Features ?>(vk_struct.pNext)
     return <- [[PhysicalDeviceVulkan11Features
+        next <- vk_value_to_boost(*vk_p_next),
         storage_buffer_16bit_access = vk_value_to_boost(vk_struct.storageBuffer16BitAccess),
         uniform_and_storage_buffer_16bit_access = vk_value_to_boost(vk_struct.uniformAndStorageBuffer16BitAccess),
         storage_push_constant_16 = vk_value_to_boost(vk_struct.storagePushConstant16),
@@ -5034,7 +5039,12 @@ def vk_view_destroy(var boost_struct : PhysicalDeviceFeatures2)
     boost_struct._vk_view__active = false
 
 def vk_value_to_boost(vk_struct : VkPhysicalDeviceFeatures2) : PhysicalDeviceFeatures2
+    assert(vk_struct.pNext != null)
+    var vk_p_next : VkPhysicalDeviceVulkan11Features ?
+    unsafe
+        vk_p_next = reinterpret<VkPhysicalDeviceVulkan11Features ?>(vk_struct.pNext)
     return <- [[PhysicalDeviceFeatures2
+        next <- vk_value_to_boost(*vk_p_next),
         features <- vk_value_to_boost(vk_struct.features)
     ]]
 
