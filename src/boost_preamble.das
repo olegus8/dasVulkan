@@ -40,7 +40,7 @@ def vk_value_to_boost(v : int8[]) : string
 
 def vk_value_to_boost(v : string]) : string
     unsafe
-        return clone_string(v)
+        return <- clone_string(v)
 
 def array_addr_unsafe(var ar : array<auto(T)>) : T?
     unsafe
