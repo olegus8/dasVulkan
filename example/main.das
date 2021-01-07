@@ -134,6 +134,9 @@ def create_example_draw_commands(
     defer() <| { delete clear_values; }
     for cmd_buf, fbuf, dset, tspool in cmd_bufs.command_buffers, sds.swapchain.framebuffers, sds.desc_sets.descriptor_sets, sds.timestamp_pools
         cmd_buf |> record_command_buffer() <|
+            cmd_buf |> cmd_reset <| tspool
+            cmd_buf |> cmd_write(tspool.queries[0],
+                VkPipelineStageFlagBits VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT)
             cmd_buf |> record_render_pass(
                 sis.phys_dev, sis.window, sis.surface, sis.render_pass,
                 fbuf, clear_values
@@ -151,14 +154,11 @@ def create_example_draw_commands(
                     VkPipelineBindPoint VK_PIPELINE_BIND_POINT_GRAPHICS,
                     sis.pipeline_layout, dset)
 
-                cmd_buf |> cmd_reset <| tspool
-                cmd_buf |> cmd_write(tspool.queries[0],
-                    VkPipelineStageFlagBits VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT)
                 cmd_draw_indexed([command_buffer = cmd_buf,
                     index_count = uint(sis.indices |> length()),
                     instance_count = 1u])
-                cmd_buf |> cmd_write(tspool.queries[1],
-                    VkPipelineStageFlagBits VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT)
+            cmd_buf |> cmd_write(tspool.queries[1],
+                VkPipelineStageFlagBits VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT)
     return <- cmd_bufs
 
 
