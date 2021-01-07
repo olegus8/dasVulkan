@@ -40,6 +40,10 @@ def vk_value_to_boost(v : int8[]) : string
     unsafe
         return <- clone_string(reinterpret<string>(addr(v[0])))
 
+def vk_value_to_boost(v : string]) : string
+    unsafe
+        return clone_string(v)
+
 def array_addr_unsafe(var ar : array<auto(T)>) : T?
     unsafe
         return length(ar) > 0 ? addr(ar[0]) : [[T ?]]
@@ -540,12 +544,9 @@ def enumerate_device_extension_properties(
 ) : array<ExtensionProperties>
 
     var vk_pPropertyCount : uint
-    var vk_properties <- [{ for item in properties ;
-        item |> vk_view_create_unsafe() }]
-    defer() <|
-        for item in properties
-            item |> vk_view_destroy()
-        delete vk_properties
+    var properties : array<ExtensionProperties>
+    var vk_properties <- properties |> vk_view_create_unsafe()
+    defer() <| { properties |> vk_view_destroy(); }
     var result_ = VkResult VK_SUCCESS
 
     result ?? result_ = vkEnumerateDeviceExtensionProperties(
@@ -656,6 +657,7 @@ def get_buffer_memory_requirements(
     buffer : Buffer = [[ Buffer ]]
 ) : MemoryRequirements
 
+    var memory_requirements : MemoryRequirements
     var vk_memory_requirements <- memory_requirements |> vk_view_create_unsafe()
     defer() <| { memory_requirements |> vk_view_destroy(); }
 
@@ -671,6 +673,7 @@ def get_image_memory_requirements(
     image : Image = [[ Image ]]
 ) : MemoryRequirements
 
+    var memory_requirements : MemoryRequirements
     var vk_memory_requirements <- memory_requirements |> vk_view_create_unsafe()
     defer() <| { memory_requirements |> vk_view_destroy(); }
 
@@ -685,6 +688,7 @@ def get_physical_device_features(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]]
 ) : PhysicalDeviceFeatures
 
+    var features : PhysicalDeviceFeatures
     var vk_features <- features |> vk_view_create_unsafe()
     defer() <| { features |> vk_view_destroy(); }
 
@@ -698,6 +702,7 @@ def get_physical_device_features_2(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]]
 ) : PhysicalDeviceFeatures2
 
+    var features : PhysicalDeviceFeatures2
     var vk_features <- features |> vk_view_create_unsafe()
     defer() <| { features |> vk_view_destroy(); }
 
@@ -711,6 +716,7 @@ def get_physical_device_properties(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]]
 ) : PhysicalDeviceProperties
 
+    var properties : PhysicalDeviceProperties
     var vk_properties <- properties |> vk_view_create_unsafe()
     defer() <| { properties |> vk_view_destroy(); }
 
@@ -726,6 +732,7 @@ def get_physical_device_surface_capabilities_khr(
     var result : VkResult? = [[VkResult?]]
 ) : SurfaceCapabilitiesKHR
 
+    var surface_capabilities : SurfaceCapabilitiesKHR
     var vk_surface_capabilities <- surface_capabilities |> vk_view_create_unsafe()
     defer() <| { surface_capabilities |> vk_view_destroy(); }
     var result_ = VkResult VK_SUCCESS
@@ -762,12 +769,9 @@ def get_physical_device_queue_family_properties(
 ) : array<QueueFamilyProperties>
 
     var vk_pQueueFamilyPropertyCount : uint
-    var vk_queue_family_properties <- [{ for item in queue_family_properties ;
-        item |> vk_view_create_unsafe() }]
-    defer() <|
-        for item in queue_family_properties
-            item |> vk_view_destroy()
-        delete vk_queue_family_properties
+    var queue_family_properties : array<QueueFamilyProperties>
+    var vk_queue_family_properties <- queue_family_properties |> vk_view_create_unsafe()
+    defer() <| { queue_family_properties |> vk_view_destroy(); }
 
     vkGetPhysicalDeviceQueueFamilyProperties(
         boost_value_to_vk(physical_device),
@@ -789,12 +793,9 @@ def get_physical_device_surface_formats_khr(
 ) : array<SurfaceFormatKHR>
 
     var vk_pSurfaceFormatCount : uint
-    var vk_surface_formats <- [{ for item in surface_formats ;
-        item |> vk_view_create_unsafe() }]
-    defer() <|
-        for item in surface_formats
-            item |> vk_view_destroy()
-        delete vk_surface_formats
+    var surface_formats : array<SurfaceFormatKHR>
+    var vk_surface_formats <- surface_formats |> vk_view_create_unsafe()
+    defer() <| { surface_formats |> vk_view_destroy(); }
     var result_ = VkResult VK_SUCCESS
 
     result ?? result_ = vkGetPhysicalDeviceSurfaceFormatsKHR(
@@ -850,6 +851,7 @@ def get_physical_device_memory_properties(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]]
 ) : PhysicalDeviceMemoryProperties
 
+    var memory_properties : PhysicalDeviceMemoryProperties
     var vk_memory_properties <- memory_properties |> vk_view_create_unsafe()
     defer() <| { memory_properties |> vk_view_destroy(); }
 
@@ -1210,6 +1212,35 @@ def vk_value_to_boost(vk_struct : VkComponentMapping) : ComponentMapping
         g = vk_value_to_boost(vk_struct.g),
         b = vk_value_to_boost(vk_struct.b),
         a = vk_value_to_boost(vk_struct.a)
+    ]]
+
+//
+// ExtensionProperties
+//
+
+struct ExtensionProperties
+    extension_name : string
+    spec_version : uint
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : ExtensionProperties
+) : VkExtensionProperties
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    return <- [[ VkExtensionProperties
+        extensionName = boost_value_to_vk(boost_struct.extension_name),
+        specVersion = boost_value_to_vk(boost_struct.spec_version)
+    ]]
+
+def vk_view_destroy(var boost_struct : ExtensionProperties)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+def vk_value_to_boost(vk_struct : VkExtensionProperties) : ExtensionProperties
+    return <- [[ExtensionProperties
+        extension_name = vk_value_to_boost(vk_struct.extensionName),
+        spec_version = vk_value_to_boost(vk_struct.specVersion)
     ]]
 
 //
@@ -2274,20 +2305,6 @@ def vk_value_to_boost(vk_struct : VkViewport) : Viewport
         height = vk_value_to_boost(vk_struct.height),
         min_depth = vk_value_to_boost(vk_struct.minDepth),
         max_depth = vk_value_to_boost(vk_struct.maxDepth)
-    ]]
-
-//
-// ExtensionProperties
-//
-
-struct ExtensionProperties
-    extension_name : string
-    spec_version : uint
-
-def vk_value_to_boost(vk_struct : VkExtensionProperties) : ExtensionProperties
-    return <- [[ExtensionProperties
-        extension_name = vk_value_to_boost(vk_struct.extensionName),
-        spec_version = vk_value_to_boost(vk_struct.specVersion)
     ]]
 
 //

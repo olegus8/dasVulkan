@@ -156,6 +156,7 @@ def add_boost_content(g):
         'VkAttachmentDescription',
         'VkAttachmentReference',
         'VkComponentMapping',
+        'VkExtensionProperties',
         'VkExtent2D',
         'VkExtent3D',
         'VkImageSubresourceRange',
@@ -176,7 +177,6 @@ def add_boost_content(g):
         g.add_gen_struct(name = name)
 
     for name in [
-        'VkExtensionProperties',
         'VkMemoryHeap',
         'VkMemoryType',
         'VkPhysicalDeviceProperties',

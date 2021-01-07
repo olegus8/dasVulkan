@@ -38,6 +38,10 @@ def vk_value_to_boost(v : int8[]) : string
     unsafe
         return <- clone_string(reinterpret<string>(addr(v[0])))
 
+def vk_value_to_boost(v : string]) : string
+    unsafe
+        return clone_string(v)
+
 def array_addr_unsafe(var ar : array<auto(T)>) : T?
     unsafe
         return length(ar) > 0 ? addr(ar[0]) : [[T ?]]
