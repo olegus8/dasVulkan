@@ -38,11 +38,11 @@ def create_timestamp_query_pool(device : Device; query_count : int
     ]]
     pool.queries |> reserve <| query_count
     for i in range(query_count)
-        pool.queries.emplace([[TimestampQuery
+        pool.queries |> emplace <| [[TimestampQuery
             _index = uint(i),
             _query_pool = weak_copy(pool._query_pool._query_pool),
             _device = weak_copy(device)
-        ]])
+        ]]
     return <- pool
 
 
