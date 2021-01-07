@@ -17,7 +17,6 @@ struct TimestampQuery
     ns : uint64
     available : bool
     _index : uint
-    _device : Device
     _query_pool : QueryPool
 
 
@@ -41,7 +40,6 @@ def create_timestamp_query_pool(device : Device; query_count : int
         pool.queries |> emplace <| [[TimestampQuery
             _index = uint(i),
             _query_pool = weak_copy(pool._query_pool),
-            _device = weak_copy(device)
         ]]
     return <- pool
 
@@ -79,3 +77,12 @@ def update(var pool : TimestampQueryPool)
     assert(result == VkResult VK_SUCCESS || result == VkResult VK_NOT_READY)
 
     //TODO: fill available timestamp data, convert to nanoseconds
+
+
+def cmd_write(command_buffer : CommandBuffer; query : TimestampQuery)
+    vkCmdWriteTimestamp(
+        boost_value_to_vk(command_buffer),
+        boost_value_to_vk(pipeline_stage),
+        boost_value_to_vk(query_pool),
+        boost_value_to_vk(query)
+    )
