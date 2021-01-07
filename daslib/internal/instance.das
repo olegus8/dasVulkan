@@ -19,7 +19,10 @@ def to_string(v : VulkanVersion) : string
 
 def vk_version_to_boost(v : uint) : VulkanVersion
     return [[VulkanVersion
-        major = v >> 22u, minor = (v >> 12u) & 0x3ff, patch = v & 0xfff]]
+        major = int(v >> 22u),
+        minor = int((v >> 12u) & 0x3ff),
+        patch = int(v & 0xfff)
+    ]]
 
 
 def boost_value_to_vk(b : VulkanVersion) : uint
