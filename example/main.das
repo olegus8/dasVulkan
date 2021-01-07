@@ -681,6 +681,7 @@ struct SwapchainDependentState
     img_avail_sems      : array<Semaphore>
     render_done_sems    : array<Semaphore>
     frame_fences        : array<Fence>
+    frame_submitted     : array<bool>
     timestamp_pools     : array<TimestampQueryPool>
     uniform_bufs        : array<MemoryBackedBuffer>
     desc_pool           : DescriptorPool
@@ -719,6 +720,7 @@ def create_swapchain_dependent_state(
         sis.device |> create_fence([[FenceCreateInfo
             flags=uint(VkFenceCreateFlagBits VK_FENCE_CREATE_SIGNALED_BIT)
     ]]) }]
+    sds.frame_submitted <- [{for x in range(MAX_FRAMES_IN_FLIGHT); false}]
     sds.timestamp_pools <- [{for x in range(MAX_FRAMES_IN_FLIGHT);
         sis.device |> create_timestamp_query_pool(2)
     }]
