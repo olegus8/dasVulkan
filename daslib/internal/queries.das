@@ -64,11 +64,6 @@ def cmd_reset(
         pool._query_pool, 0u, uint(pool.queries |> length()))
 
 
-def to_ns(pool : TimestampQueryPool; raw: TimestampQueryResult) : double
-    return pool._timestamp_valid_bits == 0u ? double(0) : (
-        double(raw.value) * double(pool._timestamp_period))
-
-
 def update(var pool : TimestampQueryPool)
     var data : array<TimestampQueryResult>
     defer() <| { delete data; }
@@ -93,7 +88,7 @@ def update(var pool : TimestampQueryPool)
     )
     assert(result == VkResult VK_SUCCESS || result == VkResult VK_NOT_READY)
     for datum, query in data, pool.queries
-        query.ns = pool |> to_ns <| datum
+        query.ticks = datum.ticks
         query.available = datum.available != uint64(0)
 
 

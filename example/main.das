@@ -924,6 +924,8 @@ def draw_frame(
         sis.device |> reset_fence(sds.frame_fences[frame])
         if sds.draw_submitted[img_i]
             sds.timestamp_pools[img_i] |> update
+            with sds.timestamp_pools[img_i]
+                print("{queries[0] |> diff_ns <| queries[1]}\n")
         sis.device |> submit_draw(sis.queue,
             sds.draw_cmds.command_buffers[img_i],
             sds.img_avail_sems[frame], sds.render_done_sems[frame],
