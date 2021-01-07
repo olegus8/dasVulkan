@@ -553,7 +553,8 @@ def get_suitability_score(device : PhysicalDevice; surface : SurfaceKHR)
     )
         score += 1000
     if props.api_version < VK_API_VERSION_1_1
-        print("Api version too low: {props.api_version} < {VK_API_VERSION_1_1}\n")
+        print("Api version too low: " +
+            "{props.api_version |> vk_version_to_boost |> to_string} < 1.1\n")
         return 0
 
     print("point 100\n")
