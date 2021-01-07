@@ -545,12 +545,6 @@ def enumerate_device_extension_properties(
 
     var vk_pPropertyCount : uint
     var properties : array<ExtensionProperties>
-    var vk_properties <- [{ for item in properties ;
-        item |> vk_view_create_unsafe() }]
-    defer() <|
-        for item in properties
-            item |> vk_view_destroy()
-        delete vk_properties
     var result_ = VkResult VK_SUCCESS
 
     result ?? result_ = vkEnumerateDeviceExtensionProperties(
@@ -562,7 +556,13 @@ def enumerate_device_extension_properties(
     assert(result_ == VkResult VK_SUCCESS)
     if result_ != VkResult VK_SUCCESS
         return <- [[ array<ExtensionProperties> ]]
-    vk_properties |> resize(int(vk_pPropertyCount))
+    properties |> resize(int(vk_pPropertyCount))
+    var vk_properties <- [{ for item in properties ;
+        item |> vk_view_create_unsafe() }]
+    defer() <|
+        for item in properties
+            item |> vk_view_destroy()
+        delete vk_properties
     result ?? result_ = vkEnumerateDeviceExtensionProperties(
         boost_value_to_vk(physical_device),
         boost_value_to_vk(layer_name),
@@ -774,19 +774,19 @@ def get_physical_device_queue_family_properties(
 
     var vk_pQueueFamilyPropertyCount : uint
     var queue_family_properties : array<QueueFamilyProperties>
-    var vk_queue_family_properties <- [{ for item in queue_family_properties ;
-        item |> vk_view_create_unsafe() }]
-    defer() <|
-        for item in queue_family_properties
-            item |> vk_view_destroy()
-        delete vk_queue_family_properties
 
     vkGetPhysicalDeviceQueueFamilyProperties(
         boost_value_to_vk(physical_device),
         safe_addr(vk_pQueueFamilyPropertyCount),
         [[ VkQueueFamilyProperties ? ]]
     )
-    vk_queue_family_properties |> resize(int(vk_pQueueFamilyPropertyCount))
+    queue_family_properties |> resize(int(vk_pQueueFamilyPropertyCount))
+    var vk_queue_family_properties <- [{ for item in queue_family_properties ;
+        item |> vk_view_create_unsafe() }]
+    defer() <|
+        for item in queue_family_properties
+            item |> vk_view_destroy()
+        delete vk_queue_family_properties
     vkGetPhysicalDeviceQueueFamilyProperties(
         boost_value_to_vk(physical_device),
         safe_addr(vk_pQueueFamilyPropertyCount),
@@ -802,12 +802,6 @@ def get_physical_device_surface_formats_khr(
 
     var vk_pSurfaceFormatCount : uint
     var surface_formats : array<SurfaceFormatKHR>
-    var vk_surface_formats <- [{ for item in surface_formats ;
-        item |> vk_view_create_unsafe() }]
-    defer() <|
-        for item in surface_formats
-            item |> vk_view_destroy()
-        delete vk_surface_formats
     var result_ = VkResult VK_SUCCESS
 
     result ?? result_ = vkGetPhysicalDeviceSurfaceFormatsKHR(
@@ -819,7 +813,13 @@ def get_physical_device_surface_formats_khr(
     assert(result_ == VkResult VK_SUCCESS)
     if result_ != VkResult VK_SUCCESS
         return <- [[ array<SurfaceFormatKHR> ]]
-    vk_surface_formats |> resize(int(vk_pSurfaceFormatCount))
+    surface_formats |> resize(int(vk_pSurfaceFormatCount))
+    var vk_surface_formats <- [{ for item in surface_formats ;
+        item |> vk_view_create_unsafe() }]
+    defer() <|
+        for item in surface_formats
+            item |> vk_view_destroy()
+        delete vk_surface_formats
     result ?? result_ = vkGetPhysicalDeviceSurfaceFormatsKHR(
         boost_value_to_vk(physical_device),
         boost_value_to_vk(surface),
