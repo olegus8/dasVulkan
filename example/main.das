@@ -756,7 +756,6 @@ def create_example_timestamp_query_pools(
         create_timestamp_query_pool([
             phys_dev = sis.phys_dev,
             device = sis.device,
-            queue_family = sis.graphics_family,
             query_count = 2
         ])
     }]
