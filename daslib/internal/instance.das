@@ -4,6 +4,7 @@ options no_aot = true
 require daslib/defer
 require generated
 require glfw
+require vulkan
 
 
 def create_default_instance()
