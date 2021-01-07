@@ -69,7 +69,7 @@ def update(var pool : TimestampQueryPool)
         pool._device.device,
         pool._query_pool.query_pool,
         0u,
-        uint(pool.timestamps |> length()),
+        uint(pool.queries |> length()),
         uint64(typeinfo(sizeof type<TimestampQueryResult>)*length(data)),
         pdata,
         uint64(typeinfo(sizeof type<TimestampQueryResult>)),
