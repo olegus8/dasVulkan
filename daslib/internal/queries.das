@@ -9,6 +9,7 @@ require vulkan
 
 struct TimestampQueryPool
     queries : array<TimestampQuery>
+    
     _query_pool : QueryPool
     _device : Device
 
@@ -18,6 +19,7 @@ struct TimestampQuery
     available : bool
     _index : uint
     _query_pool : QueryPool
+    _timestamp_valid_bits : uint
 
 
 [private]
@@ -26,7 +28,11 @@ struct TimestampQueryResult
     available : uint64
 
 
-def create_timestamp_query_pool(device : Device; query_count : int
+def create_timestamp_query_pool(
+    phys_dev : PhysicalDevice;
+    device : Device;
+    queue_family : uint;
+    query_count : int;
 ) : TimestampQueryPool
     var pool <- [[ TimestampQueryPool
         _device <- weak_copy(device),
@@ -41,6 +47,12 @@ def create_timestamp_query_pool(device : Device; query_count : int
             _index = uint(i),
             _query_pool = weak_copy(pool._query_pool)
         ]]
+
+    let props <- phys_dev |> get_physical_device_properties
+    var qprops <- phys_dev |> get_physical_device_queue_family_properties
+    defer() <| { delete qprops; }
+    pool._timestamp_valid_bits = qprops[queue_family].timestamp_valid_bits
+
     return <- pool
 
 
