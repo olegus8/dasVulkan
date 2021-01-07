@@ -901,10 +901,14 @@ def draw_frame(
             sds.frames_since_start)
 
         sis.device |> reset_fence(sds.frame_fences[frame])
+        if sds.frame_submitted[frame]
+            sds.timestamp_pools[frame] |> update
+            sds.timestamp_pools[frame] |> reset
         sis.device |> submit_draw(sis.queue,
             sds.draw_cmds.command_buffers[img_i],
             sds.img_avail_sems[frame], sds.render_done_sems[frame],
             sds.frame_fences[frame])
+        sds.frame_submitted[frame] = true
 
         presented = sis.device |> present(sis.queue, sds.swapchain.swapchain,
             img_i, sds.render_done_sems[frame])
