@@ -88,8 +88,8 @@ def update(var pool : TimestampQueryPool)
         uint(VkQueryResultFlagBits VK_QUERY_RESULT_WITH_AVAILABILITY_BIT)
     )
     assert(result == VkResult VK_SUCCESS || result == VkResult VK_NOT_READY)
-    for raw, processed in data, pool.queries
-        processed.available = (data.available != uint64(0))
+    for datum, query in data, pool.queries
+        query.available = datum.available != uint64(0)
     print("{data}\n")
 
 
