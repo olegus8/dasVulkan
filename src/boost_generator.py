@@ -1472,7 +1472,7 @@ class ParamFixedString(ParamBase):
         lines = []
         lines += [
            f'var vk_{bname} : {vtype}',
-           f'for i in min(length(vk_{bname}), length({bname}))',
+           f'for i in range(min(vk_{bname} |> length(), {bname} |> length()))',
            f'  vk_{bname}[i] = {bname} |> character_at <| i',
         ]
         return lines
