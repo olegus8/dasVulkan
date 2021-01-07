@@ -526,7 +526,8 @@ def find_best_physical_device(
     for device in devices
         var props <- device |> get_physical_device_properties()
         defer() <| { delete props ; }
-        print("Considering {props.device_name}\n")
+        let version = props.api_version |> vk_version_to_boost |> to_string
+        print("Considering {props.device_name} (supports vulkan {version})\n")
         var score = device |> get_suitability_score(surface)
         if score > best_score
             print("Found new best device.\n")
@@ -552,14 +553,8 @@ def get_suitability_score(device : PhysicalDevice; surface : SurfaceKHR)
         VkPhysicalDeviceType VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU
     )
         score += 1000
-    if props.api_version < VK_API_VERSION_1_1
-        print("Api version too low: " +
-            "{props.api_version |> vk_version_to_boost |> to_string} < 1.1\n")
-        return 0
 
-    print("point 100\n")
-    var feats <- device |> get_physical_device_features_2()
-    print("point 101\n")
+    var feats <- device |> get_physical_device_features()
     if feats.features.sampler_anisotropy == 0u
         print("No anisotropy. No go.\n")
         return 0
