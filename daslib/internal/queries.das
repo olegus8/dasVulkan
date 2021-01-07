@@ -9,7 +9,7 @@ require vulkan
 
 struct TimestampQueryPool
     queries : array<TimestampQuery>
-    _timestamp_period : double
+    _period : double
     _query_pool : QueryPool
     _device : Device
 
