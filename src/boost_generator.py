@@ -404,7 +404,7 @@ class GenStruct(object):
         lines = []
         lines += [
             '',
-           f'def vk_view_create_unsafe(var boost_struct : {btype}',
+           f'def vk_view_create_unsafe(var boost_struct : {btype} &',
            f') : {vtype}',
             '',
             '    assert(!boost_struct._vk_view__active)',
@@ -427,7 +427,7 @@ class GenStruct(object):
     def __generate_vk_view_destroy(self):
         return [
             '',
-           f'def vk_view_destroy(var boost_struct : {self.boost_type_name})',
+           f'def vk_view_destroy(var boost_struct : {self.boost_type_name} &)',
             '    assert(boost_struct._vk_view__active)',
         ] + [
            f'    {line}' for field in self.__fields for line in
@@ -625,7 +625,7 @@ class GenHandleDtor(GenFunc):
         lines = super(GenHandleDtor, self).generate()
         lines += [
             '',
-           f'def finalize(var handle : {bh_type} explicit)',
+           f'def finalize(var handle : {bh_type} & explicit)',
            f'    if handle._needs_delete',
            f'        {self._boost_func_name}(',
         ] + [

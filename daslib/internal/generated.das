@@ -713,14 +713,21 @@ def get_physical_device_features_2(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]]
 ) : PhysicalDeviceFeatures2
 
+    print("point 200\n")
     var features : PhysicalDeviceFeatures2
+    print("point 201\n")
     var vk_features <- features |> vk_view_create_unsafe()
     defer() <| { features |> vk_view_destroy(); }
 
+    print("point 202\n")
+    print("{features}\n")
+    print("{vk_features}\n")
+    print("point 203\n")
     vkGetPhysicalDeviceFeatures2(
         boost_value_to_vk(physical_device),
         safe_addr(vk_features)
     )
+    print("point 204\n")
     return <- vk_value_to_boost(vk_features)
 
 def get_physical_device_properties(
