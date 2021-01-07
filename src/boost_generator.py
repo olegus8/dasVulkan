@@ -301,7 +301,7 @@ class GenStruct(object):
         self.__vk_type_name = name
         self.__boost_to_vk = boost_to_vk
         self.__vk_to_boost = vk_to_boost
-        self.__next_in_chain = next_in_chain
+        self.next_in_chain = next_in_chain
 
         self.__fields = [field for field in
             self.__generator.create_struct_fields(self.__c_struct)
@@ -366,9 +366,6 @@ class GenStruct(object):
         ]
         lines += [f'    {line}' for field in self.__fields
             for line in field.generate_boost_struct_field_decl()]
-        if self.__next_in_chain:
-            nbtype = self.__next_in_chain.boost_type_name
-            lines += [f'    next_in_chain : {nbtype}']
 
         if self.__boost_to_vk:
             lines += [f'    {line}' for field in self.__fields
