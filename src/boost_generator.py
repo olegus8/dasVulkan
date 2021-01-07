@@ -1459,12 +1459,61 @@ class ParamFixedString(ParamBase):
             return cls(c_param=c_param, **kwargs)
 
     @property
-    def _vk_is_fixed_array(self):
-        return False
-
-    @property
-    def vk_unqual_type(self):
+    def _boost_struct_field_type(self):
         return 'string'
+
+    def generate_boost_struct_view_create_init(self):
+        bname = self._boost_struct_field_name
+        vtype = self._vk_type
+        lines = []
+        lines += [
+           f'var vk_{bname} : {vtype}',
+           f'for i in min(length(vk_{bname}), length({bname}))',
+           f'  vk_{bname}[i] = {bname} |> character_at <| i',
+        ]
+        return lines
+
+    def generate_boost_struct_v2b_vars(self):
+        bname = self._boost_struct_field_name
+        btype = self._boost_struct_field_type
+        vname = self.vk_name
+        if self.vk_is_dyn_array_items:
+            vk_count = self._dyn_array_count.vk_name
+            if self.vk_is_pointer:
+                return [
+                   f'var b_{bname} : {btype}',
+                   # for optional arrays vk pointer can be null, but
+                   # counter can be non-zero because it is shared with other
+                   # array(s).
+                   f'if vk_struct.{vname} != null',
+                   f'    b_{bname} |> resize(int(vk_struct.{vk_count}))',
+                   f'    for b, i in b_{bname}, range(INT_MAX)',
+                   f'        unsafe',
+                   f'            b <- vk_value_to_boost('
+                                        f'*(vk_struct.{vname}+i))',
+                ]
+            else:
+                assert self._vk_is_fixed_array
+                return [
+                   f'var b_{bname} : {btype}',
+                   f'b_{bname} |> resize(int(vk_struct.{vk_count}))',
+                   f'for b, i in b_{bname}, range(INT_MAX)',
+                   f'    b <- vk_value_to_boost(vk_struct.{vname}[i])',
+                ]
+        if self.vk_is_pointer:
+            if self._optional:
+                bdtype = deref_das_type(self._boost_struct_field_type)
+                return [
+                   f'var b_{bname} = new {bdtype}',
+                   f'if vk_struct.{vname} != null',
+                   f'    (*b_{bname}) <- '
+                         f'vk_value_to_boost(*(vk_struct.{vname}))',
+                ]
+            else:
+                return [
+                   f'assert(vk_struct.{vname} != null)',
+                ]
+        return []
 
 
 class ParamString(ParamBase):
