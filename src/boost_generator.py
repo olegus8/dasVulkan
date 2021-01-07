@@ -1396,8 +1396,11 @@ class ParamVkStruct(ParamBase):
         bname = self._boost_struct_field_name
         vname = self.vk_name
         if self.vk_is_dyn_array_items:
-            return [f'{vname} = array_addr_unsafe('
-                f'boost_struct._vk_view_{bname}),']
+            if self._vk_is_fixed_array:
+                return [f'{vname} := boost_struct._vk_view_{bname},']
+            else:
+                return [f'{vname} = array_addr_unsafe('
+                    f'boost_struct._vk_view_{bname}),']
         if self.vk_is_pointer:
             if self._optional:
                 return [f'{vname} = boost_struct._vk_view_{bname},']
