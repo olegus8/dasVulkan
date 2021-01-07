@@ -1460,7 +1460,7 @@ class ParamFixedString(ParamBase):
 
     @property
     def vk_unqual_type(self):
-        return 'int8'
+        return 'uint8'
 
     @property
     def _boost_struct_field_type(self):
@@ -1474,7 +1474,8 @@ class ParamFixedString(ParamBase):
            f'var vk_{bname} : {vtype}',
            f'for i in range(min(vk_{bname} |> length(), '
                                 f'boost_struct.{bname} |> length()))',
-           f'    vk_{bname}[i] = boost_struct.{bname} |> character_at <| i',
+           f'    vk_{bname}[i] = {vtype}('
+                        f'boost_struct.{bname} |> character_at <| i)',
         ]
         return lines
 
