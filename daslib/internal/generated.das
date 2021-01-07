@@ -4931,6 +4931,7 @@ def vk_value_to_boost(vk_struct : VkPhysicalDeviceVulkan12Features) : PhysicalDe
 //
 
 struct PhysicalDeviceVulkan11Features
+    next_in_chain : PhysicalDeviceVulkan12Features
     storage_buffer_16bit_access : uint
     uniform_and_storage_buffer_16bit_access : uint
     storage_push_constant_16 : uint
@@ -4943,7 +4944,6 @@ struct PhysicalDeviceVulkan11Features
     protected_memory : uint
     sampler_ycbcr_conversion : uint
     shader_draw_parameters : uint
-    next_in_chain : PhysicalDeviceVulkan12Features
     _vk_view__active : bool
 
 def vk_view_create_unsafe(var boost_struct : PhysicalDeviceVulkan11Features
@@ -4992,8 +4992,8 @@ def vk_value_to_boost(vk_struct : VkPhysicalDeviceVulkan11Features) : PhysicalDe
 //
 
 struct PhysicalDeviceFeatures2
-    features : PhysicalDeviceFeatures
     next_in_chain : PhysicalDeviceVulkan11Features
+    features : PhysicalDeviceFeatures
     _vk_view_p_features : VkPhysicalDeviceFeatures ?
     _vk_view__active : bool
 
