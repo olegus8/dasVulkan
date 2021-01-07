@@ -1138,9 +1138,13 @@ class ParamVk_pNext(ParamBase):
         return self._gen_struct.next_in_chain
 
     def generate_boost_struct_field_decl(self):
-        bname = self._boost_struct_field_name
         if self.__next:
             return [f'next : {self.__next.boost_type_name}']
+        return []
+
+    def generate_boost_struct_field_view_decl(self):
+        if self.__next:
+            return [f'_vk_p_next : {self.__next.vk_type_name} ?']
         return []
 
     def generate_boost_struct_v2b_field(self):
