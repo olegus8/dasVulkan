@@ -44,12 +44,12 @@ def create_timestamp_query_pool(device : Device; query_count : int
     return <- pool
 
 
-def reset(var pool : TimestampQueryPool)
-    pool._device |> reset_query_pool(
+def cmd_reset(
+    command_buffer : CommandBuffer;
+    pool : TimestampQueryPool
+)
+    command_buffer |> cmd_reset_query_pool(
         pool._query_pool, 0u, uint(pool.queries |> length()))
-    for query in pool.queries
-        query.ns = uint64(0)
-        query.available = false
 
 
 def update(var pool : TimestampQueryPool)

@@ -519,6 +519,20 @@ def cmd_pipeline_barrier(
         array_addr_unsafe(vk_image_memory_barriers)
     )
 
+def cmd_reset_query_pool(
+    command_buffer : CommandBuffer = [[ CommandBuffer ]];
+    query_pool : QueryPool = [[ QueryPool ]];
+    first_query : uint = [[ uint ]];
+    query_count : uint = [[ uint ]]
+) : void
+
+    vkCmdResetQueryPool(
+        boost_value_to_vk(command_buffer),
+        boost_value_to_vk(query_pool),
+        boost_value_to_vk(first_query),
+        boost_value_to_vk(query_count)
+    )
+
 def device_wait_idle(
     device : Device = [[ Device ]];
     var result : VkResult? = [[VkResult?]]
