@@ -75,8 +75,9 @@ def update(var pool : TimestampQueryPool)
         uint(VkQueryResultFlagBits VK_QUERY_RESULT_WITH_AVAILABILITY_BIT)
     )
     assert(result == VkResult VK_SUCCESS || result == VkResult VK_NOT_READY)
-
-    //TODO: fill available timestamp data, convert to nanoseconds
+    for raw, processed in data, pool.queries
+        processed.available = data.available != uint64(0)
+    print("{data}\n")
 
 
 def cmd_write(
