@@ -7,6 +7,7 @@ require daslib/safe_addr
 require vulkan
 require window
 require math
+require strings
 
 //
 // Helpers
