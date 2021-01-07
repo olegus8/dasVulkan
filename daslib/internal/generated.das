@@ -4944,6 +4944,7 @@ struct PhysicalDeviceVulkan11Features
     protected_memory : uint
     sampler_ycbcr_conversion : uint
     shader_draw_parameters : uint
+    _vk_p_next : VkPhysicalDeviceVulkan12Features ?
     _vk_view__active : bool
 
 def vk_view_create_unsafe(var boost_struct : PhysicalDeviceVulkan11Features
@@ -4951,8 +4952,12 @@ def vk_view_create_unsafe(var boost_struct : PhysicalDeviceVulkan11Features
 
     assert(!boost_struct._vk_view__active)
     boost_struct._vk_view__active = true
+    boost_struct._vk_view_p_next = new VkPhysicalDeviceVulkan12Features
+    *(boost_struct._vk_view_p_next) <- (
+        boost_struct.next |> vk_view_create_unsafe())
     return <- [[ VkPhysicalDeviceVulkan11Features
         sType = VkStructureType VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VULKAN_1_1_FEATURES,
+        pNext = boost_struct._vk_view_p_next,
         storageBuffer16BitAccess = boost_value_to_vk(boost_struct.storage_buffer_16bit_access),
         uniformAndStorageBuffer16BitAccess = boost_value_to_vk(boost_struct.uniform_and_storage_buffer_16bit_access),
         storagePushConstant16 = boost_value_to_vk(boost_struct.storage_push_constant_16),
@@ -4969,6 +4974,9 @@ def vk_view_create_unsafe(var boost_struct : PhysicalDeviceVulkan11Features
 
 def vk_view_destroy(var boost_struct : PhysicalDeviceVulkan11Features)
     assert(boost_struct._vk_view__active)
+    boost_struct.next |> vk_view_destroy()
+    unsafe
+        delete boost_struct._vk_view_p_next
     boost_struct._vk_view__active = false
 
 def vk_value_to_boost(vk_struct : VkPhysicalDeviceVulkan11Features) : PhysicalDeviceVulkan11Features
@@ -4994,6 +5002,7 @@ def vk_value_to_boost(vk_struct : VkPhysicalDeviceVulkan11Features) : PhysicalDe
 struct PhysicalDeviceFeatures2
     next : PhysicalDeviceVulkan11Features
     features : PhysicalDeviceFeatures
+    _vk_p_next : VkPhysicalDeviceVulkan11Features ?
     _vk_view_p_features : VkPhysicalDeviceFeatures ?
     _vk_view__active : bool
 
@@ -5002,16 +5011,23 @@ def vk_view_create_unsafe(var boost_struct : PhysicalDeviceFeatures2
 
     assert(!boost_struct._vk_view__active)
     boost_struct._vk_view__active = true
+    boost_struct._vk_view_p_next = new VkPhysicalDeviceVulkan11Features
+    *(boost_struct._vk_view_p_next) <- (
+        boost_struct.next |> vk_view_create_unsafe())
     boost_struct._vk_view_p_features = new VkPhysicalDeviceFeatures
     *(boost_struct._vk_view_p_features) <- (
         boost_struct.features |> vk_view_create_unsafe())
     return <- [[ VkPhysicalDeviceFeatures2
         sType = VkStructureType VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FEATURES_2,
+        pNext = boost_struct._vk_view_p_next,
         features = *(boost_struct._vk_view_p_features)
     ]]
 
 def vk_view_destroy(var boost_struct : PhysicalDeviceFeatures2)
     assert(boost_struct._vk_view__active)
+    boost_struct.next |> vk_view_destroy()
+    unsafe
+        delete boost_struct._vk_view_p_next
     boost_struct.features |> vk_view_destroy()
     unsafe
         delete boost_struct._vk_view_p_features

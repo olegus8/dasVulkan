@@ -1146,7 +1146,7 @@ class ParamVk_pNext(ParamBase):
     def generate_boost_struct_field_view_decl(self):
         if self.__next:
             nvtype = self.__next.vk_type_name
-            return [f'_vk_p_next : {nvtype} ?']
+            return [f'_vk_view_p_next : {nvtype} ?']
         return []
 
     def generate_boost_struct_v2b_field(self):
