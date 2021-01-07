@@ -1355,6 +1355,35 @@ def vk_value_to_boost(vk_struct : VkImageSubresourceRange) : ImageSubresourceRan
     ]]
 
 //
+// MemoryHeap
+//
+
+struct MemoryHeap
+    size : uint64
+    flags : uint
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : MemoryHeap
+) : VkMemoryHeap
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    return <- [[ VkMemoryHeap
+        size = boost_value_to_vk(boost_struct.size),
+        flags = boost_value_to_vk(boost_struct.flags)
+    ]]
+
+def vk_view_destroy(var boost_struct : MemoryHeap)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+def vk_value_to_boost(vk_struct : VkMemoryHeap) : MemoryHeap
+    return <- [[MemoryHeap
+        size = vk_value_to_boost(vk_struct.size),
+        flags = vk_value_to_boost(vk_struct.flags)
+    ]]
+
+//
 // MemoryRequirements
 //
 
@@ -1384,6 +1413,35 @@ def vk_value_to_boost(vk_struct : VkMemoryRequirements) : MemoryRequirements
         size = vk_value_to_boost(vk_struct.size),
         alignment = vk_value_to_boost(vk_struct.alignment),
         memory_type_bits = vk_value_to_boost(vk_struct.memoryTypeBits)
+    ]]
+
+//
+// MemoryType
+//
+
+struct MemoryType
+    property_flags : uint
+    heap_index : uint
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : MemoryType
+) : VkMemoryType
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    return <- [[ VkMemoryType
+        propertyFlags = boost_value_to_vk(boost_struct.property_flags),
+        heapIndex = boost_value_to_vk(boost_struct.heap_index)
+    ]]
+
+def vk_view_destroy(var boost_struct : MemoryType)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+def vk_value_to_boost(vk_struct : VkMemoryType) : MemoryType
+    return <- [[MemoryType
+        property_flags = vk_value_to_boost(vk_struct.propertyFlags),
+        heap_index = vk_value_to_boost(vk_struct.heapIndex)
     ]]
 
 //
@@ -1977,6 +2035,70 @@ def vk_value_to_boost(vk_struct : VkPhysicalDeviceLimits) : PhysicalDeviceLimits
     ]]
 
 //
+// PhysicalDeviceProperties
+//
+
+struct PhysicalDeviceProperties
+    api_version : uint
+    driver_version : uint
+    vendor_id : uint
+    device_id : uint
+    device_type : VkPhysicalDeviceType
+    device_name : string
+    pipeline_cache_uuid : uint8 [16]
+    limits : PhysicalDeviceLimits
+    sparse_properties : PhysicalDeviceSparseProperties
+    _vk_view_p_limits : VkPhysicalDeviceLimits ?
+    _vk_view_p_sparse_properties : VkPhysicalDeviceSparseProperties ?
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : PhysicalDeviceProperties
+) : VkPhysicalDeviceProperties
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    boost_struct._vk_view_p_limits = new VkPhysicalDeviceLimits
+    *(boost_struct._vk_view_p_limits) <- (
+        boost_struct.limits |> vk_view_create_unsafe())
+    boost_struct._vk_view_p_sparse_properties = new VkPhysicalDeviceSparseProperties
+    *(boost_struct._vk_view_p_sparse_properties) <- (
+        boost_struct.sparse_properties |> vk_view_create_unsafe())
+    return <- [[ VkPhysicalDeviceProperties
+        apiVersion = boost_value_to_vk(boost_struct.api_version),
+        driverVersion = boost_value_to_vk(boost_struct.driver_version),
+        vendorID = boost_value_to_vk(boost_struct.vendor_id),
+        deviceID = boost_value_to_vk(boost_struct.device_id),
+        deviceType = boost_value_to_vk(boost_struct.device_type),
+        deviceName = boost_value_to_vk(boost_struct.device_name),
+        pipelineCacheUUID = boost_value_to_vk(boost_struct.pipeline_cache_uuid),
+        limits = *(boost_struct._vk_view_p_limits),
+        sparseProperties = *(boost_struct._vk_view_p_sparse_properties)
+    ]]
+
+def vk_view_destroy(var boost_struct : PhysicalDeviceProperties)
+    assert(boost_struct._vk_view__active)
+    boost_struct.limits |> vk_view_destroy()
+    unsafe
+        delete boost_struct._vk_view_p_limits
+    boost_struct.sparse_properties |> vk_view_destroy()
+    unsafe
+        delete boost_struct._vk_view_p_sparse_properties
+    boost_struct._vk_view__active = false
+
+def vk_value_to_boost(vk_struct : VkPhysicalDeviceProperties) : PhysicalDeviceProperties
+    return <- [[PhysicalDeviceProperties
+        api_version = vk_value_to_boost(vk_struct.apiVersion),
+        driver_version = vk_value_to_boost(vk_struct.driverVersion),
+        vendor_id = vk_value_to_boost(vk_struct.vendorID),
+        device_id = vk_value_to_boost(vk_struct.deviceID),
+        device_type = vk_value_to_boost(vk_struct.deviceType),
+        device_name = vk_value_to_boost(vk_struct.deviceName),
+        pipeline_cache_uuid = vk_value_to_boost(vk_struct.pipelineCacheUUID),
+        limits <- vk_value_to_boost(vk_struct.limits),
+        sparse_properties <- vk_value_to_boost(vk_struct.sparseProperties)
+    ]]
+
+//
 // PhysicalDeviceSparseProperties
 //
 
@@ -2317,62 +2439,6 @@ def vk_value_to_boost(vk_struct : VkViewport) : Viewport
         height = vk_value_to_boost(vk_struct.height),
         min_depth = vk_value_to_boost(vk_struct.minDepth),
         max_depth = vk_value_to_boost(vk_struct.maxDepth)
-    ]]
-
-//
-// MemoryHeap
-//
-
-struct MemoryHeap
-    size : uint64
-    flags : uint
-
-def vk_value_to_boost(vk_struct : VkMemoryHeap) : MemoryHeap
-    return <- [[MemoryHeap
-        size = vk_value_to_boost(vk_struct.size),
-        flags = vk_value_to_boost(vk_struct.flags)
-    ]]
-
-//
-// MemoryType
-//
-
-struct MemoryType
-    property_flags : uint
-    heap_index : uint
-
-def vk_value_to_boost(vk_struct : VkMemoryType) : MemoryType
-    return <- [[MemoryType
-        property_flags = vk_value_to_boost(vk_struct.propertyFlags),
-        heap_index = vk_value_to_boost(vk_struct.heapIndex)
-    ]]
-
-//
-// PhysicalDeviceProperties
-//
-
-struct PhysicalDeviceProperties
-    api_version : uint
-    driver_version : uint
-    vendor_id : uint
-    device_id : uint
-    device_type : VkPhysicalDeviceType
-    device_name : string
-    pipeline_cache_uuid : uint8 [16]
-    limits : PhysicalDeviceLimits
-    sparse_properties : PhysicalDeviceSparseProperties
-
-def vk_value_to_boost(vk_struct : VkPhysicalDeviceProperties) : PhysicalDeviceProperties
-    return <- [[PhysicalDeviceProperties
-        api_version = vk_value_to_boost(vk_struct.apiVersion),
-        driver_version = vk_value_to_boost(vk_struct.driverVersion),
-        vendor_id = vk_value_to_boost(vk_struct.vendorID),
-        device_id = vk_value_to_boost(vk_struct.deviceID),
-        device_type = vk_value_to_boost(vk_struct.deviceType),
-        device_name = vk_value_to_boost(vk_struct.deviceName),
-        pipeline_cache_uuid = vk_value_to_boost(vk_struct.pipelineCacheUUID),
-        limits <- vk_value_to_boost(vk_struct.limits),
-        sparse_properties <- vk_value_to_boost(vk_struct.sparseProperties)
     ]]
 
 //
