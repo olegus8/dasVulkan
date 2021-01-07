@@ -1473,7 +1473,11 @@ class ParamFixedString(ParamBase):
         ]
         return lines
 
+    def generate_boost_struct_view_create_field(self):
+        return [f'{vname} := vk_{bname},']
+
     def generate_boost_struct_v2b_vars(self):
+        raise Exception('TODO')
         bname = self._boost_struct_field_name
         btype = self._boost_struct_field_type
         vname = self.vk_name
