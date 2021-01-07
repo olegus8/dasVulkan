@@ -16,7 +16,7 @@ struct TimestampQueryPool
 
 
 struct TimestampQuery
-    ns : uint64
+    ns : double
     available : bool
     _index : uint
     _query_pool : QueryPool
@@ -65,6 +65,9 @@ def cmd_reset(
         pool._query_pool, 0u, uint(pool.queries |> length()))
 
 
+def to_ns(pool : TimestampQueryPool; raw: TimestampQueryResult) : double
+
+
 def update(var pool : TimestampQueryPool)
     var data : array<TimestampQueryResult>
     defer() <| { delete data; }
@@ -89,8 +92,9 @@ def update(var pool : TimestampQueryPool)
     )
     assert(result == VkResult VK_SUCCESS || result == VkResult VK_NOT_READY)
     for datum, query in data, pool.queries
+        query.ns = pool |> to_ns <| datum
         query.available = datum.available != uint64(0)
-        print("{query.available}\n")
+        print("{query.ns} {query.available}\n")
 
 
 def cmd_write(
