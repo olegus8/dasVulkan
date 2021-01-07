@@ -4104,10 +4104,8 @@ def vk_view_destroy(var boost_struct : PhysicalDeviceMemoryProperties)
     assert(boost_struct._vk_view__active)
     for item in boost_struct.memory_types
         item |> vk_view_destroy()
-    delete boost_struct._vk_view_memory_types
     for item in boost_struct.memory_heaps
         item |> vk_view_destroy()
-    delete boost_struct._vk_view_memory_heaps
     boost_struct._vk_view__active = false
 
 def vk_value_to_boost(vk_struct : VkPhysicalDeviceMemoryProperties) : PhysicalDeviceMemoryProperties
