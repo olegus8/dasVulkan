@@ -1153,6 +1153,8 @@ class ParamVk_pNext(ParamBase):
         return []
 
     def generate_boost_struct_v2b_vars(self):
+        if self.__next:
+            return [f'assert(vk_struct.pNext != null)']
         return []
 
     def generate_boost_struct_view_create_init(self):

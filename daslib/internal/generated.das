@@ -4944,7 +4944,7 @@ struct PhysicalDeviceVulkan11Features
     protected_memory : uint
     sampler_ycbcr_conversion : uint
     shader_draw_parameters : uint
-    _vk_p_next : VkPhysicalDeviceVulkan12Features ?
+    _vk_view_p_next : VkPhysicalDeviceVulkan12Features ?
     _vk_view__active : bool
 
 def vk_view_create_unsafe(var boost_struct : PhysicalDeviceVulkan11Features
@@ -5002,7 +5002,7 @@ def vk_value_to_boost(vk_struct : VkPhysicalDeviceVulkan11Features) : PhysicalDe
 struct PhysicalDeviceFeatures2
     next : PhysicalDeviceVulkan11Features
     features : PhysicalDeviceFeatures
-    _vk_p_next : VkPhysicalDeviceVulkan11Features ?
+    _vk_view_p_next : VkPhysicalDeviceVulkan11Features ?
     _vk_view_p_features : VkPhysicalDeviceFeatures ?
     _vk_view__active : bool
 
