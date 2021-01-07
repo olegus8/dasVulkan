@@ -90,7 +90,7 @@ def update(var pool : TimestampQueryPool)
     assert(result == VkResult VK_SUCCESS || result == VkResult VK_NOT_READY)
     for datum, query in data, pool.queries
         query.available = datum.available != uint64(0)
-    print("{data}\n")
+        print("{query.available}\n")
 
 
 def cmd_write(
