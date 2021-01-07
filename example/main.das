@@ -733,7 +733,7 @@ def create_swapchain_dependent_state(
         sis.surface, sis.window, sis.surf_fmt, sis.present_mode,
         sis.render_pass)
     sds.draw_submitted <- [{for fbuf in sds.swapchain.framebuffers; false}]
-    sds.timestamp_pools <- sis |> create_timestamp_query_pools(
+    sds.timestamp_pools <- sis |> create_example_timestamp_query_pools(
         sds.swapchain.framebuffers)
     sds.uniform_bufs <- sis |> create_example_uniform_buffers(
         sds.swapchain.framebuffers)
