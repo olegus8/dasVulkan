@@ -366,6 +366,9 @@ class GenStruct(object):
         ]
         lines += [f'    {line}' for field in self.__fields
             for line in field.generate_boost_struct_field_decl()]
+        if self.__next_in_chain:
+            nbtype = self.__next_in_chain.boost_type_name
+            lines += [f'    next_in_chain : {nbtype}']
 
         if self.__boost_to_vk:
             lines += [f'    {line}' for field in self.__fields
