@@ -160,11 +160,14 @@ def add_boost_content(g):
         'VkExtent2D',
         'VkExtent3D',
         'VkImageSubresourceRange',
+        'VkMemoryHeap',
         'VkMemoryRequirements',
+        'VkMemoryType',
         'VkOffset2D',
         'VkOffset3D',
         'VkPhysicalDeviceFeatures',
         'VkPhysicalDeviceLimits',
+        'VkPhysicalDeviceProperties',
         'VkPhysicalDeviceSparseProperties',
         'VkPushConstantRange',
         'VkQueueFamilyProperties',
@@ -175,13 +178,6 @@ def add_boost_content(g):
         'VkViewport',
     ]:
         g.add_gen_struct(name = name)
-
-    for name in [
-        'VkMemoryHeap',
-        'VkMemoryType',
-        'VkPhysicalDeviceProperties',
-    ]:
-        g.add_gen_struct(name=name, boost_to_vk=False)
 
     for name in [
         'VkBufferCopy',
