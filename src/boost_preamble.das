@@ -43,6 +43,10 @@ def vk_value_to_boost(v : string) : string
     unsafe
         return <- clone_string(v)
 
+def copy_to_array(src : string; var auto(T)[] & dst)
+    for s, d in src, dst:
+        d = T(s)
+
 def array_addr_unsafe(var ar : array<auto(T)>) : T?
     unsafe
         return length(ar) > 0 ? addr(ar[0]) : [[T ?]]
