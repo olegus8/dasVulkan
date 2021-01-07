@@ -1134,6 +1134,10 @@ class ParamVk_pNext(ParamBase):
         return self._c_unqual_type
 
     def generate_boost_struct_field_decl(self):
+        next_ = self._gen_struct.next_in_chain
+        bname = self._boost_struct_field_name
+        if next_:
+            return [f'{bname} : {next_.boost_type_name}']
         return []
 
     def generate_boost_struct_v2b_field(self):
