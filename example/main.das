@@ -682,7 +682,7 @@ struct SwapchainDependentState
     img_avail_sems      : array<Semaphore>
     render_done_sems    : array<Semaphore>
     frame_fences        : array<Fence>
-    frame_submitted     : array<bool>
+    draw_submitted     : array<bool>
     timestamp_pools     : array<TimestampQueryPool>
     uniform_bufs        : array<MemoryBackedBuffer>
     desc_pool           : DescriptorPool
@@ -701,10 +701,10 @@ def finalize(var s : SwapchainDependentState explicit)
     delete s.desc_sets
     delete s.desc_pool
     delete s.uniform_bufs
+    delete s.draw_submitted
+    delete s.timestamp_pools
     delete s.swapchain
     delete s.frame_fences
-    delete s.frame_submitted
-    delete s.timestamp_pools
     delete s.render_done_sems
     delete s.img_avail_sems
     memzero(s)
@@ -722,13 +722,13 @@ def create_swapchain_dependent_state(
         sis.device |> create_fence([[FenceCreateInfo
             flags=uint(VkFenceCreateFlagBits VK_FENCE_CREATE_SIGNALED_BIT)
     ]]) }]
-    sds.frame_submitted <- [{for x in range(MAX_FRAMES_IN_FLIGHT); false}]
-    sds.timestamp_pools <- [{for x in range(MAX_FRAMES_IN_FLIGHT);
-        sis.device |> create_timestamp_query_pool(2)
-    }]
     sds.swapchain <- sis.device |> create_swapchain_ex(sis.phys_dev,
         sis.surface, sis.window, sis.surf_fmt, sis.present_mode,
         sis.render_pass)
+    sds.draw_submitted <- [{for fbuf in sds.swapchain.framebuffers; false}]
+    sds.timestamp_pools <- [{for fbuf in sds.swapchain.framebuffers;
+        sis.device |> create_timestamp_query_pool(2)
+    }]
     sds.uniform_bufs <- sis |> create_example_uniform_buffers(
         sds.swapchain.framebuffers)
     sds.desc_pool <- sis |> create_example_descriptor_pool(
@@ -903,13 +903,13 @@ def draw_frame(
             sds.frames_since_start)
 
         sis.device |> reset_fence(sds.frame_fences[frame])
-        if sds.frame_submitted[frame]
-            sds.timestamp_pools[frame] |> update
+        if sds.draw_submitted[img_i]
+            sds.timestamp_pools[img_i] |> update
         sis.device |> submit_draw(sis.queue,
             sds.draw_cmds.command_buffers[img_i],
             sds.img_avail_sems[frame], sds.render_done_sems[frame],
             sds.frame_fences[frame])
-        sds.frame_submitted[frame] = true
+        sds.draw_submitted[img_i] = true
 
         presented = sis.device |> present(sis.queue, sds.swapchain.swapchain,
             img_i, sds.render_done_sems[frame])
