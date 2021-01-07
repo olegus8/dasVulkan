@@ -20,6 +20,7 @@ struct TimestampQuery
     _index : uint
     _query_pool : QueryPool
     _timestamp_valid_bits : uint
+    _timestamp_period : float
 
 
 [private]
@@ -52,6 +53,7 @@ def create_timestamp_query_pool(
     var qprops <- phys_dev |> get_physical_device_queue_family_properties
     defer() <| { delete qprops; }
     pool._timestamp_valid_bits = qprops[queue_family].timestamp_valid_bits
+    pool._timestamp_period = props.limits.timestamp_period
 
     return <- pool
 
