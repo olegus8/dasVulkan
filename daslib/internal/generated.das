@@ -509,34 +509,6 @@ def cmd_pipeline_barrier(
         array_addr_unsafe(vk_image_memory_barriers)
     )
 
-def cmd_reset_query_pool(
-    command_buffer : CommandBuffer = [[ CommandBuffer ]];
-    query_pool : QueryPool = [[ QueryPool ]];
-    first_query : uint = [[ uint ]];
-    query_count : uint = [[ uint ]]
-) : void
-
-    vkCmdResetQueryPool(
-        boost_value_to_vk(command_buffer),
-        boost_value_to_vk(query_pool),
-        boost_value_to_vk(first_query),
-        boost_value_to_vk(query_count)
-    )
-
-def cmd_write_timestamp(
-    command_buffer : CommandBuffer = [[ CommandBuffer ]];
-    pipeline_stage : VkPipelineStageFlagBits = [[ VkPipelineStageFlagBits ]];
-    query_pool : QueryPool = [[ QueryPool ]];
-    query : uint = [[ uint ]]
-) : void
-
-    vkCmdWriteTimestamp(
-        boost_value_to_vk(command_buffer),
-        boost_value_to_vk(pipeline_stage),
-        boost_value_to_vk(query_pool),
-        boost_value_to_vk(query)
-    )
-
 def device_wait_idle(
     device : Device = [[ Device ]];
     var result : VkResult? = [[VkResult?]]
