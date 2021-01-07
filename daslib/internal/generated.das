@@ -1246,7 +1246,7 @@ def vk_view_create_unsafe(var boost_struct : ExtensionProperties
 
     assert(!boost_struct._vk_view__active)
     boost_struct._vk_view__active = true
-    var vk_extension_name : uint8 [256]
+    var vk_extension_name : int8 [256]
     boost_struct.extension_name |> copy_to_array <| vk_extension_name
     return <- [[ VkExtensionProperties
         extensionName := vk_extension_name,
@@ -2065,7 +2065,7 @@ def vk_view_create_unsafe(var boost_struct : PhysicalDeviceProperties
 
     assert(!boost_struct._vk_view__active)
     boost_struct._vk_view__active = true
-    var vk_device_name : uint8 [256]
+    var vk_device_name : int8 [256]
     boost_struct.device_name |> copy_to_array <| vk_device_name
     boost_struct._vk_view_p_limits = new VkPhysicalDeviceLimits
     *(boost_struct._vk_view_p_limits) <- (

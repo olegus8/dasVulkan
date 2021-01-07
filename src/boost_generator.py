@@ -1351,9 +1351,13 @@ class ParamVkStruct(ParamBase):
 
     def generate_boost_struct_field_view_decl(self):
         bname = self._boost_struct_field_name
+        vtype = self.vk_type
         vutype = self.vk_unqual_type
         if self.vk_is_dyn_array_items:
-            return [f'_vk_view_{bname} : array<{vutype}>']
+            if self._vk_is_fixed_array:
+                return [f'_vk_view_{bname} : {vtype}']
+            else:
+                return [f'_vk_view_{bname} : array<{vutype}>']
         if self.vk_is_pointer and self._optional:
             return [f'_vk_view_{bname} : {vutype} ?']
         return [f'_vk_view_p_{bname} : {vutype} ?']
@@ -1362,11 +1366,18 @@ class ParamVkStruct(ParamBase):
         bname = self._boost_struct_field_name
         vutype = self.vk_unqual_type
         if self.vk_is_dyn_array_items:
-            return [
-               f'boost_struct._vk_view_{bname} <- [{{',
-               f'    for item in boost_struct.{bname} ;',
-               f'    item |> vk_view_create_unsafe()}}]',
-            ]
+            if self._vk_is_fixed_array:
+                return [
+                    f'for dst, src in boost_struct._vk_view_{bname}, '
+                            f'boost_struct.{bname}',
+                    f'    dst <- src |> vk_view_create_unsafe',
+                ]
+            else:
+                return [
+                   f'boost_struct._vk_view_{bname} <- [{{',
+                   f'    for item in boost_struct.{bname} ;',
+                   f'    item |> vk_view_create_unsafe()}}]',
+                ]
         if self.vk_is_pointer and self._optional:
             return [
                f'if boost_struct.{bname} != null',
