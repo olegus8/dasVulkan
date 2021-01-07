@@ -298,7 +298,7 @@ class GenStruct(object):
     ):
         ignore_fields = ignore_fields or []
         self.__generator = generator
-        self.__vk_type_name = name
+        self.vk_type_name = name
         self.__boost_to_vk = boost_to_vk
         self.__vk_to_boost = vk_to_boost
         self.next_in_chain = next_in_chain
@@ -313,11 +313,11 @@ class GenStruct(object):
 
     @property
     def __c_struct(self):
-        return self.__generator.structs[self.__vk_type_name]
+        return self.__generator.structs[self.vk_type_name]
 
     @property
     def boost_type_name(self):
-        return vk_struct_type_to_boost(self.__vk_type_name)
+        return vk_struct_type_to_boost(self.vk_type_name)
 
     def __get_field(self, vk_name):
         for field in self.__fields:
@@ -377,7 +377,7 @@ class GenStruct(object):
         lines = []
         lines += [
             '',
-           f'def vk_value_to_boost(vk_struct : {self.__vk_type_name}) '
+           f'def vk_value_to_boost(vk_struct : {self.vk_type_name}) '
                 f': {self.boost_type_name}',
         ] + [
            f'    {line}' for field in self.__fields for line in
@@ -400,7 +400,7 @@ class GenStruct(object):
 
     def __generate_vk_view_create(self):
         btype = self.boost_type_name
-        vtype = self.__vk_type_name
+        vtype = self.vk_type_name
         lines = []
         lines += [
             '',
