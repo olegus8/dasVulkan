@@ -713,21 +713,14 @@ def get_physical_device_features_2(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]]
 ) : PhysicalDeviceFeatures2
 
-    print("point 200\n")
     var features : PhysicalDeviceFeatures2
-    print("point 201\n")
     var vk_features <- features |> vk_view_create_unsafe()
     defer() <| { features |> vk_view_destroy(); }
 
-    print("point 202\n")
-    print("{features}\n")
-    print("{vk_features}\n")
-    print("point 203\n")
     vkGetPhysicalDeviceFeatures2(
         boost_value_to_vk(physical_device),
         safe_addr(vk_features)
     )
-    print("point 204\n")
     return <- vk_value_to_boost(vk_features)
 
 def get_physical_device_properties(
@@ -1101,7 +1094,7 @@ struct ApplicationInfo
     api_version : uint
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : ApplicationInfo
+def vk_view_create_unsafe(var boost_struct : ApplicationInfo &
 ) : VkApplicationInfo
 
     assert(!boost_struct._vk_view__active)
@@ -1115,7 +1108,7 @@ def vk_view_create_unsafe(var boost_struct : ApplicationInfo
         apiVersion = boost_value_to_vk(boost_struct.api_version)
     ]]
 
-def vk_view_destroy(var boost_struct : ApplicationInfo)
+def vk_view_destroy(var boost_struct : ApplicationInfo &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -1144,7 +1137,7 @@ struct AttachmentDescription
     final_layout : VkImageLayout
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : AttachmentDescription
+def vk_view_create_unsafe(var boost_struct : AttachmentDescription &
 ) : VkAttachmentDescription
 
     assert(!boost_struct._vk_view__active)
@@ -1161,7 +1154,7 @@ def vk_view_create_unsafe(var boost_struct : AttachmentDescription
         finalLayout = boost_value_to_vk(boost_struct.final_layout)
     ]]
 
-def vk_view_destroy(var boost_struct : AttachmentDescription)
+def vk_view_destroy(var boost_struct : AttachmentDescription &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -1187,7 +1180,7 @@ struct AttachmentReference
     layout : VkImageLayout
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : AttachmentReference
+def vk_view_create_unsafe(var boost_struct : AttachmentReference &
 ) : VkAttachmentReference
 
     assert(!boost_struct._vk_view__active)
@@ -1197,7 +1190,7 @@ def vk_view_create_unsafe(var boost_struct : AttachmentReference
         layout = boost_value_to_vk(boost_struct.layout)
     ]]
 
-def vk_view_destroy(var boost_struct : AttachmentReference)
+def vk_view_destroy(var boost_struct : AttachmentReference &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -1218,7 +1211,7 @@ struct ComponentMapping
     a : VkComponentSwizzle
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : ComponentMapping
+def vk_view_create_unsafe(var boost_struct : ComponentMapping &
 ) : VkComponentMapping
 
     assert(!boost_struct._vk_view__active)
@@ -1230,7 +1223,7 @@ def vk_view_create_unsafe(var boost_struct : ComponentMapping
         a = boost_value_to_vk(boost_struct.a)
     ]]
 
-def vk_view_destroy(var boost_struct : ComponentMapping)
+def vk_view_destroy(var boost_struct : ComponentMapping &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -1251,7 +1244,7 @@ struct ExtensionProperties
     spec_version : uint
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : ExtensionProperties
+def vk_view_create_unsafe(var boost_struct : ExtensionProperties &
 ) : VkExtensionProperties
 
     assert(!boost_struct._vk_view__active)
@@ -1263,7 +1256,7 @@ def vk_view_create_unsafe(var boost_struct : ExtensionProperties
         specVersion = boost_value_to_vk(boost_struct.spec_version)
     ]]
 
-def vk_view_destroy(var boost_struct : ExtensionProperties)
+def vk_view_destroy(var boost_struct : ExtensionProperties &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -1282,7 +1275,7 @@ struct Extent2D
     height : uint
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : Extent2D
+def vk_view_create_unsafe(var boost_struct : Extent2D &
 ) : VkExtent2D
 
     assert(!boost_struct._vk_view__active)
@@ -1292,7 +1285,7 @@ def vk_view_create_unsafe(var boost_struct : Extent2D
         height = boost_value_to_vk(boost_struct.height)
     ]]
 
-def vk_view_destroy(var boost_struct : Extent2D)
+def vk_view_destroy(var boost_struct : Extent2D &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -1312,7 +1305,7 @@ struct Extent3D
     depth : uint
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : Extent3D
+def vk_view_create_unsafe(var boost_struct : Extent3D &
 ) : VkExtent3D
 
     assert(!boost_struct._vk_view__active)
@@ -1323,7 +1316,7 @@ def vk_view_create_unsafe(var boost_struct : Extent3D
         depth = boost_value_to_vk(boost_struct.depth)
     ]]
 
-def vk_view_destroy(var boost_struct : Extent3D)
+def vk_view_destroy(var boost_struct : Extent3D &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -1346,7 +1339,7 @@ struct ImageSubresourceRange
     layer_count : uint
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : ImageSubresourceRange
+def vk_view_create_unsafe(var boost_struct : ImageSubresourceRange &
 ) : VkImageSubresourceRange
 
     assert(!boost_struct._vk_view__active)
@@ -1359,7 +1352,7 @@ def vk_view_create_unsafe(var boost_struct : ImageSubresourceRange
         layerCount = boost_value_to_vk(boost_struct.layer_count)
     ]]
 
-def vk_view_destroy(var boost_struct : ImageSubresourceRange)
+def vk_view_destroy(var boost_struct : ImageSubresourceRange &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -1381,7 +1374,7 @@ struct MemoryHeap
     flags : uint
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : MemoryHeap
+def vk_view_create_unsafe(var boost_struct : MemoryHeap &
 ) : VkMemoryHeap
 
     assert(!boost_struct._vk_view__active)
@@ -1391,7 +1384,7 @@ def vk_view_create_unsafe(var boost_struct : MemoryHeap
         flags = boost_value_to_vk(boost_struct.flags)
     ]]
 
-def vk_view_destroy(var boost_struct : MemoryHeap)
+def vk_view_destroy(var boost_struct : MemoryHeap &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -1411,7 +1404,7 @@ struct MemoryRequirements
     memory_type_bits : uint
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : MemoryRequirements
+def vk_view_create_unsafe(var boost_struct : MemoryRequirements &
 ) : VkMemoryRequirements
 
     assert(!boost_struct._vk_view__active)
@@ -1422,7 +1415,7 @@ def vk_view_create_unsafe(var boost_struct : MemoryRequirements
         memoryTypeBits = boost_value_to_vk(boost_struct.memory_type_bits)
     ]]
 
-def vk_view_destroy(var boost_struct : MemoryRequirements)
+def vk_view_destroy(var boost_struct : MemoryRequirements &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -1442,7 +1435,7 @@ struct MemoryType
     heap_index : uint
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : MemoryType
+def vk_view_create_unsafe(var boost_struct : MemoryType &
 ) : VkMemoryType
 
     assert(!boost_struct._vk_view__active)
@@ -1452,7 +1445,7 @@ def vk_view_create_unsafe(var boost_struct : MemoryType
         heapIndex = boost_value_to_vk(boost_struct.heap_index)
     ]]
 
-def vk_view_destroy(var boost_struct : MemoryType)
+def vk_view_destroy(var boost_struct : MemoryType &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -1471,7 +1464,7 @@ struct Offset2D
     y : int
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : Offset2D
+def vk_view_create_unsafe(var boost_struct : Offset2D &
 ) : VkOffset2D
 
     assert(!boost_struct._vk_view__active)
@@ -1481,7 +1474,7 @@ def vk_view_create_unsafe(var boost_struct : Offset2D
         y = boost_value_to_vk(boost_struct.y)
     ]]
 
-def vk_view_destroy(var boost_struct : Offset2D)
+def vk_view_destroy(var boost_struct : Offset2D &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -1501,7 +1494,7 @@ struct Offset3D
     z : int
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : Offset3D
+def vk_view_create_unsafe(var boost_struct : Offset3D &
 ) : VkOffset3D
 
     assert(!boost_struct._vk_view__active)
@@ -1512,7 +1505,7 @@ def vk_view_create_unsafe(var boost_struct : Offset3D
         z = boost_value_to_vk(boost_struct.z)
     ]]
 
-def vk_view_destroy(var boost_struct : Offset3D)
+def vk_view_destroy(var boost_struct : Offset3D &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -1585,7 +1578,7 @@ struct PhysicalDeviceFeatures
     inherited_queries : uint
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : PhysicalDeviceFeatures
+def vk_view_create_unsafe(var boost_struct : PhysicalDeviceFeatures &
 ) : VkPhysicalDeviceFeatures
 
     assert(!boost_struct._vk_view__active)
@@ -1648,7 +1641,7 @@ def vk_view_create_unsafe(var boost_struct : PhysicalDeviceFeatures
         inheritedQueries = boost_value_to_vk(boost_struct.inherited_queries)
     ]]
 
-def vk_view_destroy(var boost_struct : PhysicalDeviceFeatures)
+def vk_view_destroy(var boost_struct : PhysicalDeviceFeatures &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -1824,7 +1817,7 @@ struct PhysicalDeviceLimits
     non_coherent_atom_size : uint64
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : PhysicalDeviceLimits
+def vk_view_create_unsafe(var boost_struct : PhysicalDeviceLimits &
 ) : VkPhysicalDeviceLimits
 
     assert(!boost_struct._vk_view__active)
@@ -1938,7 +1931,7 @@ def vk_view_create_unsafe(var boost_struct : PhysicalDeviceLimits
         nonCoherentAtomSize = boost_value_to_vk(boost_struct.non_coherent_atom_size)
     ]]
 
-def vk_view_destroy(var boost_struct : PhysicalDeviceLimits)
+def vk_view_destroy(var boost_struct : PhysicalDeviceLimits &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -2070,7 +2063,7 @@ struct PhysicalDeviceProperties
     _vk_view_p_sparse_properties : VkPhysicalDeviceSparseProperties ?
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : PhysicalDeviceProperties
+def vk_view_create_unsafe(var boost_struct : PhysicalDeviceProperties &
 ) : VkPhysicalDeviceProperties
 
     assert(!boost_struct._vk_view__active)
@@ -2095,7 +2088,7 @@ def vk_view_create_unsafe(var boost_struct : PhysicalDeviceProperties
         sparseProperties = *(boost_struct._vk_view_p_sparse_properties)
     ]]
 
-def vk_view_destroy(var boost_struct : PhysicalDeviceProperties)
+def vk_view_destroy(var boost_struct : PhysicalDeviceProperties &)
     assert(boost_struct._vk_view__active)
     boost_struct.limits |> vk_view_destroy()
     unsafe
@@ -2130,7 +2123,7 @@ struct PhysicalDeviceSparseProperties
     residency_non_resident_strict : uint
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : PhysicalDeviceSparseProperties
+def vk_view_create_unsafe(var boost_struct : PhysicalDeviceSparseProperties &
 ) : VkPhysicalDeviceSparseProperties
 
     assert(!boost_struct._vk_view__active)
@@ -2143,7 +2136,7 @@ def vk_view_create_unsafe(var boost_struct : PhysicalDeviceSparseProperties
         residencyNonResidentStrict = boost_value_to_vk(boost_struct.residency_non_resident_strict)
     ]]
 
-def vk_view_destroy(var boost_struct : PhysicalDeviceSparseProperties)
+def vk_view_destroy(var boost_struct : PhysicalDeviceSparseProperties &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -2166,7 +2159,7 @@ struct PushConstantRange
     size : uint
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : PushConstantRange
+def vk_view_create_unsafe(var boost_struct : PushConstantRange &
 ) : VkPushConstantRange
 
     assert(!boost_struct._vk_view__active)
@@ -2177,7 +2170,7 @@ def vk_view_create_unsafe(var boost_struct : PushConstantRange
         size = boost_value_to_vk(boost_struct.size)
     ]]
 
-def vk_view_destroy(var boost_struct : PushConstantRange)
+def vk_view_destroy(var boost_struct : PushConstantRange &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -2200,7 +2193,7 @@ struct QueueFamilyProperties
     _vk_view_p_min_image_transfer_granularity : VkExtent3D ?
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : QueueFamilyProperties
+def vk_view_create_unsafe(var boost_struct : QueueFamilyProperties &
 ) : VkQueueFamilyProperties
 
     assert(!boost_struct._vk_view__active)
@@ -2215,7 +2208,7 @@ def vk_view_create_unsafe(var boost_struct : QueueFamilyProperties
         minImageTransferGranularity = *(boost_struct._vk_view_p_min_image_transfer_granularity)
     ]]
 
-def vk_view_destroy(var boost_struct : QueueFamilyProperties)
+def vk_view_destroy(var boost_struct : QueueFamilyProperties &)
     assert(boost_struct._vk_view__active)
     boost_struct.min_image_transfer_granularity |> vk_view_destroy()
     unsafe
@@ -2241,7 +2234,7 @@ struct Rect2D
     _vk_view_p_extent : VkExtent2D ?
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : Rect2D
+def vk_view_create_unsafe(var boost_struct : Rect2D &
 ) : VkRect2D
 
     assert(!boost_struct._vk_view__active)
@@ -2257,7 +2250,7 @@ def vk_view_create_unsafe(var boost_struct : Rect2D
         extent = *(boost_struct._vk_view_p_extent)
     ]]
 
-def vk_view_destroy(var boost_struct : Rect2D)
+def vk_view_destroy(var boost_struct : Rect2D &)
     assert(boost_struct._vk_view__active)
     boost_struct.offset |> vk_view_destroy()
     unsafe
@@ -2287,7 +2280,7 @@ struct SubpassDependency
     dependency_flags : uint
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : SubpassDependency
+def vk_view_create_unsafe(var boost_struct : SubpassDependency &
 ) : VkSubpassDependency
 
     assert(!boost_struct._vk_view__active)
@@ -2302,7 +2295,7 @@ def vk_view_create_unsafe(var boost_struct : SubpassDependency
         dependencyFlags = boost_value_to_vk(boost_struct.dependency_flags)
     ]]
 
-def vk_view_destroy(var boost_struct : SubpassDependency)
+def vk_view_destroy(var boost_struct : SubpassDependency &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -2337,7 +2330,7 @@ struct SurfaceCapabilitiesKHR
     _vk_view_p_max_image_extent : VkExtent2D ?
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : SurfaceCapabilitiesKHR
+def vk_view_create_unsafe(var boost_struct : SurfaceCapabilitiesKHR &
 ) : VkSurfaceCapabilitiesKHR
 
     assert(!boost_struct._vk_view__active)
@@ -2364,7 +2357,7 @@ def vk_view_create_unsafe(var boost_struct : SurfaceCapabilitiesKHR
         supportedUsageFlags = boost_value_to_vk(boost_struct.supported_usage_flags)
     ]]
 
-def vk_view_destroy(var boost_struct : SurfaceCapabilitiesKHR)
+def vk_view_destroy(var boost_struct : SurfaceCapabilitiesKHR &)
     assert(boost_struct._vk_view__active)
     boost_struct.current_extent |> vk_view_destroy()
     unsafe
@@ -2400,7 +2393,7 @@ struct SurfaceFormatKHR
     color_space : VkColorSpaceKHR
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : SurfaceFormatKHR
+def vk_view_create_unsafe(var boost_struct : SurfaceFormatKHR &
 ) : VkSurfaceFormatKHR
 
     assert(!boost_struct._vk_view__active)
@@ -2410,7 +2403,7 @@ def vk_view_create_unsafe(var boost_struct : SurfaceFormatKHR
         colorSpace = boost_value_to_vk(boost_struct.color_space)
     ]]
 
-def vk_view_destroy(var boost_struct : SurfaceFormatKHR)
+def vk_view_destroy(var boost_struct : SurfaceFormatKHR &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -2433,7 +2426,7 @@ struct Viewport
     max_depth : float
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : Viewport
+def vk_view_create_unsafe(var boost_struct : Viewport &
 ) : VkViewport
 
     assert(!boost_struct._vk_view__active)
@@ -2447,7 +2440,7 @@ def vk_view_create_unsafe(var boost_struct : Viewport
         maxDepth = boost_value_to_vk(boost_struct.max_depth)
     ]]
 
-def vk_view_destroy(var boost_struct : Viewport)
+def vk_view_destroy(var boost_struct : Viewport &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -2471,7 +2464,7 @@ struct BufferCopy
     size : uint64
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : BufferCopy
+def vk_view_create_unsafe(var boost_struct : BufferCopy &
 ) : VkBufferCopy
 
     assert(!boost_struct._vk_view__active)
@@ -2482,7 +2475,7 @@ def vk_view_create_unsafe(var boost_struct : BufferCopy
         size = boost_value_to_vk(boost_struct.size)
     ]]
 
-def vk_view_destroy(var boost_struct : BufferCopy)
+def vk_view_destroy(var boost_struct : BufferCopy &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -2502,7 +2495,7 @@ struct BufferImageCopy
     _vk_view_p_image_extent : VkExtent3D ?
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : BufferImageCopy
+def vk_view_create_unsafe(var boost_struct : BufferImageCopy &
 ) : VkBufferImageCopy
 
     assert(!boost_struct._vk_view__active)
@@ -2525,7 +2518,7 @@ def vk_view_create_unsafe(var boost_struct : BufferImageCopy
         imageExtent = *(boost_struct._vk_view_p_image_extent)
     ]]
 
-def vk_view_destroy(var boost_struct : BufferImageCopy)
+def vk_view_destroy(var boost_struct : BufferImageCopy &)
     assert(boost_struct._vk_view__active)
     boost_struct.image_subresource |> vk_view_destroy()
     unsafe
@@ -2552,7 +2545,7 @@ struct BufferMemoryBarrier
     size : uint64
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : BufferMemoryBarrier
+def vk_view_create_unsafe(var boost_struct : BufferMemoryBarrier &
 ) : VkBufferMemoryBarrier
 
     assert(!boost_struct._vk_view__active)
@@ -2568,7 +2561,7 @@ def vk_view_create_unsafe(var boost_struct : BufferMemoryBarrier
         size = boost_value_to_vk(boost_struct.size)
     ]]
 
-def vk_view_destroy(var boost_struct : BufferMemoryBarrier)
+def vk_view_destroy(var boost_struct : BufferMemoryBarrier &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -2584,7 +2577,7 @@ struct BufferViewCreateInfo
     range_ : uint64
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : BufferViewCreateInfo
+def vk_view_create_unsafe(var boost_struct : BufferViewCreateInfo &
 ) : VkBufferViewCreateInfo
 
     assert(!boost_struct._vk_view__active)
@@ -2598,7 +2591,7 @@ def vk_view_create_unsafe(var boost_struct : BufferViewCreateInfo
         range_ = boost_value_to_vk(boost_struct.range_)
     ]]
 
-def vk_view_destroy(var boost_struct : BufferViewCreateInfo)
+def vk_view_destroy(var boost_struct : BufferViewCreateInfo &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -2611,7 +2604,7 @@ struct ClearDepthStencilValue
     stencil : uint
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : ClearDepthStencilValue
+def vk_view_create_unsafe(var boost_struct : ClearDepthStencilValue &
 ) : VkClearDepthStencilValue
 
     assert(!boost_struct._vk_view__active)
@@ -2621,7 +2614,7 @@ def vk_view_create_unsafe(var boost_struct : ClearDepthStencilValue
         stencil = boost_value_to_vk(boost_struct.stencil)
     ]]
 
-def vk_view_destroy(var boost_struct : ClearDepthStencilValue)
+def vk_view_destroy(var boost_struct : ClearDepthStencilValue &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -2635,7 +2628,7 @@ struct CommandBufferAllocateInfo
     command_buffer_count : uint
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : CommandBufferAllocateInfo
+def vk_view_create_unsafe(var boost_struct : CommandBufferAllocateInfo &
 ) : VkCommandBufferAllocateInfo
 
     assert(!boost_struct._vk_view__active)
@@ -2647,7 +2640,7 @@ def vk_view_create_unsafe(var boost_struct : CommandBufferAllocateInfo
         commandBufferCount = boost_value_to_vk(boost_struct.command_buffer_count)
     ]]
 
-def vk_view_destroy(var boost_struct : CommandBufferAllocateInfo)
+def vk_view_destroy(var boost_struct : CommandBufferAllocateInfo &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -2661,7 +2654,7 @@ struct CommandBufferBeginInfo
     _vk_view_p_inheritance_info : VkCommandBufferInheritanceInfo ?
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : CommandBufferBeginInfo
+def vk_view_create_unsafe(var boost_struct : CommandBufferBeginInfo &
 ) : VkCommandBufferBeginInfo
 
     assert(!boost_struct._vk_view__active)
@@ -2676,7 +2669,7 @@ def vk_view_create_unsafe(var boost_struct : CommandBufferBeginInfo
         pInheritanceInfo = boost_struct._vk_view_p_inheritance_info
     ]]
 
-def vk_view_destroy(var boost_struct : CommandBufferBeginInfo)
+def vk_view_destroy(var boost_struct : CommandBufferBeginInfo &)
     assert(boost_struct._vk_view__active)
     if boost_struct.p_inheritance_info != null
         *(boost_struct.p_inheritance_info) |> vk_view_destroy()
@@ -2697,7 +2690,7 @@ struct CommandBufferInheritanceInfo
     pipeline_statistics : uint
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : CommandBufferInheritanceInfo
+def vk_view_create_unsafe(var boost_struct : CommandBufferInheritanceInfo &
 ) : VkCommandBufferInheritanceInfo
 
     assert(!boost_struct._vk_view__active)
@@ -2712,7 +2705,7 @@ def vk_view_create_unsafe(var boost_struct : CommandBufferInheritanceInfo
         pipelineStatistics = boost_value_to_vk(boost_struct.pipeline_statistics)
     ]]
 
-def vk_view_destroy(var boost_struct : CommandBufferInheritanceInfo)
+def vk_view_destroy(var boost_struct : CommandBufferInheritanceInfo &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -2725,7 +2718,7 @@ struct CommandPoolCreateInfo
     queue_family_index : uint
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : CommandPoolCreateInfo
+def vk_view_create_unsafe(var boost_struct : CommandPoolCreateInfo &
 ) : VkCommandPoolCreateInfo
 
     assert(!boost_struct._vk_view__active)
@@ -2736,7 +2729,7 @@ def vk_view_create_unsafe(var boost_struct : CommandPoolCreateInfo
         queueFamilyIndex = boost_value_to_vk(boost_struct.queue_family_index)
     ]]
 
-def vk_view_destroy(var boost_struct : CommandPoolCreateInfo)
+def vk_view_destroy(var boost_struct : CommandPoolCreateInfo &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -2754,7 +2747,7 @@ struct CopyDescriptorSet
     descriptor_count : uint
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : CopyDescriptorSet
+def vk_view_create_unsafe(var boost_struct : CopyDescriptorSet &
 ) : VkCopyDescriptorSet
 
     assert(!boost_struct._vk_view__active)
@@ -2770,7 +2763,7 @@ def vk_view_create_unsafe(var boost_struct : CopyDescriptorSet
         descriptorCount = boost_value_to_vk(boost_struct.descriptor_count)
     ]]
 
-def vk_view_destroy(var boost_struct : CopyDescriptorSet)
+def vk_view_destroy(var boost_struct : CopyDescriptorSet &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -2784,7 +2777,7 @@ struct DescriptorBufferInfo
     range_ : uint64
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : DescriptorBufferInfo
+def vk_view_create_unsafe(var boost_struct : DescriptorBufferInfo &
 ) : VkDescriptorBufferInfo
 
     assert(!boost_struct._vk_view__active)
@@ -2795,7 +2788,7 @@ def vk_view_create_unsafe(var boost_struct : DescriptorBufferInfo
         range_ = boost_value_to_vk(boost_struct.range_)
     ]]
 
-def vk_view_destroy(var boost_struct : DescriptorBufferInfo)
+def vk_view_destroy(var boost_struct : DescriptorBufferInfo &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -2809,7 +2802,7 @@ struct DescriptorImageInfo
     image_layout : VkImageLayout
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : DescriptorImageInfo
+def vk_view_create_unsafe(var boost_struct : DescriptorImageInfo &
 ) : VkDescriptorImageInfo
 
     assert(!boost_struct._vk_view__active)
@@ -2820,7 +2813,7 @@ def vk_view_create_unsafe(var boost_struct : DescriptorImageInfo
         imageLayout = boost_value_to_vk(boost_struct.image_layout)
     ]]
 
-def vk_view_destroy(var boost_struct : DescriptorImageInfo)
+def vk_view_destroy(var boost_struct : DescriptorImageInfo &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -2833,7 +2826,7 @@ struct DescriptorPoolSize
     descriptor_count : uint
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : DescriptorPoolSize
+def vk_view_create_unsafe(var boost_struct : DescriptorPoolSize &
 ) : VkDescriptorPoolSize
 
     assert(!boost_struct._vk_view__active)
@@ -2843,7 +2836,7 @@ def vk_view_create_unsafe(var boost_struct : DescriptorPoolSize
         descriptorCount = boost_value_to_vk(boost_struct.descriptor_count)
     ]]
 
-def vk_view_destroy(var boost_struct : DescriptorPoolSize)
+def vk_view_destroy(var boost_struct : DescriptorPoolSize &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -2855,7 +2848,7 @@ struct FenceCreateInfo
     flags : uint
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : FenceCreateInfo
+def vk_view_create_unsafe(var boost_struct : FenceCreateInfo &
 ) : VkFenceCreateInfo
 
     assert(!boost_struct._vk_view__active)
@@ -2865,7 +2858,7 @@ def vk_view_create_unsafe(var boost_struct : FenceCreateInfo
         flags = boost_value_to_vk(boost_struct.flags)
     ]]
 
-def vk_view_destroy(var boost_struct : FenceCreateInfo)
+def vk_view_destroy(var boost_struct : FenceCreateInfo &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -2885,7 +2878,7 @@ struct ImageMemoryBarrier
     _vk_view_p_subresource_range : VkImageSubresourceRange ?
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : ImageMemoryBarrier
+def vk_view_create_unsafe(var boost_struct : ImageMemoryBarrier &
 ) : VkImageMemoryBarrier
 
     assert(!boost_struct._vk_view__active)
@@ -2905,7 +2898,7 @@ def vk_view_create_unsafe(var boost_struct : ImageMemoryBarrier
         subresourceRange = *(boost_struct._vk_view_p_subresource_range)
     ]]
 
-def vk_view_destroy(var boost_struct : ImageMemoryBarrier)
+def vk_view_destroy(var boost_struct : ImageMemoryBarrier &)
     assert(boost_struct._vk_view__active)
     boost_struct.subresource_range |> vk_view_destroy()
     unsafe
@@ -2923,7 +2916,7 @@ struct ImageSubresourceLayers
     layer_count : uint
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : ImageSubresourceLayers
+def vk_view_create_unsafe(var boost_struct : ImageSubresourceLayers &
 ) : VkImageSubresourceLayers
 
     assert(!boost_struct._vk_view__active)
@@ -2935,7 +2928,7 @@ def vk_view_create_unsafe(var boost_struct : ImageSubresourceLayers
         layerCount = boost_value_to_vk(boost_struct.layer_count)
     ]]
 
-def vk_view_destroy(var boost_struct : ImageSubresourceLayers)
+def vk_view_destroy(var boost_struct : ImageSubresourceLayers &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -2954,7 +2947,7 @@ struct ImageViewCreateInfo
     _vk_view_p_subresource_range : VkImageSubresourceRange ?
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : ImageViewCreateInfo
+def vk_view_create_unsafe(var boost_struct : ImageViewCreateInfo &
 ) : VkImageViewCreateInfo
 
     assert(!boost_struct._vk_view__active)
@@ -2975,7 +2968,7 @@ def vk_view_create_unsafe(var boost_struct : ImageViewCreateInfo
         subresourceRange = *(boost_struct._vk_view_p_subresource_range)
     ]]
 
-def vk_view_destroy(var boost_struct : ImageViewCreateInfo)
+def vk_view_destroy(var boost_struct : ImageViewCreateInfo &)
     assert(boost_struct._vk_view__active)
     boost_struct.components |> vk_view_destroy()
     unsafe
@@ -2994,7 +2987,7 @@ struct MemoryAllocateInfo
     memory_type_index : uint
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : MemoryAllocateInfo
+def vk_view_create_unsafe(var boost_struct : MemoryAllocateInfo &
 ) : VkMemoryAllocateInfo
 
     assert(!boost_struct._vk_view__active)
@@ -3005,7 +2998,7 @@ def vk_view_create_unsafe(var boost_struct : MemoryAllocateInfo
         memoryTypeIndex = boost_value_to_vk(boost_struct.memory_type_index)
     ]]
 
-def vk_view_destroy(var boost_struct : MemoryAllocateInfo)
+def vk_view_destroy(var boost_struct : MemoryAllocateInfo &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -3018,7 +3011,7 @@ struct MemoryBarrier
     dst_access_mask : uint
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : MemoryBarrier
+def vk_view_create_unsafe(var boost_struct : MemoryBarrier &
 ) : VkMemoryBarrier
 
     assert(!boost_struct._vk_view__active)
@@ -3029,7 +3022,7 @@ def vk_view_create_unsafe(var boost_struct : MemoryBarrier
         dstAccessMask = boost_value_to_vk(boost_struct.dst_access_mask)
     ]]
 
-def vk_view_destroy(var boost_struct : MemoryBarrier)
+def vk_view_destroy(var boost_struct : MemoryBarrier &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -3048,7 +3041,7 @@ struct PipelineColorBlendAttachmentState
     color_write_mask : uint
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : PipelineColorBlendAttachmentState
+def vk_view_create_unsafe(var boost_struct : PipelineColorBlendAttachmentState &
 ) : VkPipelineColorBlendAttachmentState
 
     assert(!boost_struct._vk_view__active)
@@ -3064,7 +3057,7 @@ def vk_view_create_unsafe(var boost_struct : PipelineColorBlendAttachmentState
         colorWriteMask = boost_value_to_vk(boost_struct.color_write_mask)
     ]]
 
-def vk_view_destroy(var boost_struct : PipelineColorBlendAttachmentState)
+def vk_view_destroy(var boost_struct : PipelineColorBlendAttachmentState &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -3087,7 +3080,7 @@ struct PipelineDepthStencilStateCreateInfo
     _vk_view_p_back : VkStencilOpState ?
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : PipelineDepthStencilStateCreateInfo
+def vk_view_create_unsafe(var boost_struct : PipelineDepthStencilStateCreateInfo &
 ) : VkPipelineDepthStencilStateCreateInfo
 
     assert(!boost_struct._vk_view__active)
@@ -3112,7 +3105,7 @@ def vk_view_create_unsafe(var boost_struct : PipelineDepthStencilStateCreateInfo
         maxDepthBounds = boost_value_to_vk(boost_struct.max_depth_bounds)
     ]]
 
-def vk_view_destroy(var boost_struct : PipelineDepthStencilStateCreateInfo)
+def vk_view_destroy(var boost_struct : PipelineDepthStencilStateCreateInfo &)
     assert(boost_struct._vk_view__active)
     boost_struct.front |> vk_view_destroy()
     unsafe
@@ -3132,7 +3125,7 @@ struct PipelineInputAssemblyStateCreateInfo
     primitive_restart_enable : uint
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : PipelineInputAssemblyStateCreateInfo
+def vk_view_create_unsafe(var boost_struct : PipelineInputAssemblyStateCreateInfo &
 ) : VkPipelineInputAssemblyStateCreateInfo
 
     assert(!boost_struct._vk_view__active)
@@ -3144,7 +3137,7 @@ def vk_view_create_unsafe(var boost_struct : PipelineInputAssemblyStateCreateInf
         primitiveRestartEnable = boost_value_to_vk(boost_struct.primitive_restart_enable)
     ]]
 
-def vk_view_destroy(var boost_struct : PipelineInputAssemblyStateCreateInfo)
+def vk_view_destroy(var boost_struct : PipelineInputAssemblyStateCreateInfo &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -3162,7 +3155,7 @@ struct PipelineMultisampleStateCreateInfo
     alpha_to_one_enable : uint
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : PipelineMultisampleStateCreateInfo
+def vk_view_create_unsafe(var boost_struct : PipelineMultisampleStateCreateInfo &
 ) : VkPipelineMultisampleStateCreateInfo
 
     assert(!boost_struct._vk_view__active)
@@ -3178,7 +3171,7 @@ def vk_view_create_unsafe(var boost_struct : PipelineMultisampleStateCreateInfo
         alphaToOneEnable = boost_value_to_vk(boost_struct.alpha_to_one_enable)
     ]]
 
-def vk_view_destroy(var boost_struct : PipelineMultisampleStateCreateInfo)
+def vk_view_destroy(var boost_struct : PipelineMultisampleStateCreateInfo &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -3200,7 +3193,7 @@ struct PipelineRasterizationStateCreateInfo
     line_width : float
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : PipelineRasterizationStateCreateInfo
+def vk_view_create_unsafe(var boost_struct : PipelineRasterizationStateCreateInfo &
 ) : VkPipelineRasterizationStateCreateInfo
 
     assert(!boost_struct._vk_view__active)
@@ -3220,7 +3213,7 @@ def vk_view_create_unsafe(var boost_struct : PipelineRasterizationStateCreateInf
         lineWidth = boost_value_to_vk(boost_struct.line_width)
     ]]
 
-def vk_view_destroy(var boost_struct : PipelineRasterizationStateCreateInfo)
+def vk_view_destroy(var boost_struct : PipelineRasterizationStateCreateInfo &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -3237,7 +3230,7 @@ struct PipelineShaderStageCreateInfo
     _vk_view_p_specialization_info : VkSpecializationInfo ?
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : PipelineShaderStageCreateInfo
+def vk_view_create_unsafe(var boost_struct : PipelineShaderStageCreateInfo &
 ) : VkPipelineShaderStageCreateInfo
 
     assert(!boost_struct._vk_view__active)
@@ -3255,7 +3248,7 @@ def vk_view_create_unsafe(var boost_struct : PipelineShaderStageCreateInfo
         pSpecializationInfo = boost_struct._vk_view_p_specialization_info
     ]]
 
-def vk_view_destroy(var boost_struct : PipelineShaderStageCreateInfo)
+def vk_view_destroy(var boost_struct : PipelineShaderStageCreateInfo &)
     assert(boost_struct._vk_view__active)
     if boost_struct.p_specialization_info != null
         *(boost_struct.p_specialization_info) |> vk_view_destroy()
@@ -3272,7 +3265,7 @@ struct PipelineTessellationStateCreateInfo
     patch_control_points : uint
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : PipelineTessellationStateCreateInfo
+def vk_view_create_unsafe(var boost_struct : PipelineTessellationStateCreateInfo &
 ) : VkPipelineTessellationStateCreateInfo
 
     assert(!boost_struct._vk_view__active)
@@ -3283,7 +3276,7 @@ def vk_view_create_unsafe(var boost_struct : PipelineTessellationStateCreateInfo
         patchControlPoints = boost_value_to_vk(boost_struct.patch_control_points)
     ]]
 
-def vk_view_destroy(var boost_struct : PipelineTessellationStateCreateInfo)
+def vk_view_destroy(var boost_struct : PipelineTessellationStateCreateInfo &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -3298,7 +3291,7 @@ struct QueryPoolCreateInfo
     pipeline_statistics : uint
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : QueryPoolCreateInfo
+def vk_view_create_unsafe(var boost_struct : QueryPoolCreateInfo &
 ) : VkQueryPoolCreateInfo
 
     assert(!boost_struct._vk_view__active)
@@ -3311,7 +3304,7 @@ def vk_view_create_unsafe(var boost_struct : QueryPoolCreateInfo
         pipelineStatistics = boost_value_to_vk(boost_struct.pipeline_statistics)
     ]]
 
-def vk_view_destroy(var boost_struct : QueryPoolCreateInfo)
+def vk_view_destroy(var boost_struct : QueryPoolCreateInfo &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -3338,7 +3331,7 @@ struct SamplerCreateInfo
     unnormalized_coordinates : uint
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : SamplerCreateInfo
+def vk_view_create_unsafe(var boost_struct : SamplerCreateInfo &
 ) : VkSamplerCreateInfo
 
     assert(!boost_struct._vk_view__active)
@@ -3363,7 +3356,7 @@ def vk_view_create_unsafe(var boost_struct : SamplerCreateInfo
         unnormalizedCoordinates = boost_value_to_vk(boost_struct.unnormalized_coordinates)
     ]]
 
-def vk_view_destroy(var boost_struct : SamplerCreateInfo)
+def vk_view_destroy(var boost_struct : SamplerCreateInfo &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -3375,7 +3368,7 @@ struct SemaphoreCreateInfo
     flags : uint
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : SemaphoreCreateInfo
+def vk_view_create_unsafe(var boost_struct : SemaphoreCreateInfo &
 ) : VkSemaphoreCreateInfo
 
     assert(!boost_struct._vk_view__active)
@@ -3385,7 +3378,7 @@ def vk_view_create_unsafe(var boost_struct : SemaphoreCreateInfo
         flags = boost_value_to_vk(boost_struct.flags)
     ]]
 
-def vk_view_destroy(var boost_struct : SemaphoreCreateInfo)
+def vk_view_destroy(var boost_struct : SemaphoreCreateInfo &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -3399,7 +3392,7 @@ struct SpecializationMapEntry
     size : uint64
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : SpecializationMapEntry
+def vk_view_create_unsafe(var boost_struct : SpecializationMapEntry &
 ) : VkSpecializationMapEntry
 
     assert(!boost_struct._vk_view__active)
@@ -3410,7 +3403,7 @@ def vk_view_create_unsafe(var boost_struct : SpecializationMapEntry
         size = boost_value_to_vk(boost_struct.size)
     ]]
 
-def vk_view_destroy(var boost_struct : SpecializationMapEntry)
+def vk_view_destroy(var boost_struct : SpecializationMapEntry &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -3428,7 +3421,7 @@ struct StencilOpState
     reference : uint
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : StencilOpState
+def vk_view_create_unsafe(var boost_struct : StencilOpState &
 ) : VkStencilOpState
 
     assert(!boost_struct._vk_view__active)
@@ -3443,7 +3436,7 @@ def vk_view_create_unsafe(var boost_struct : StencilOpState
         reference = boost_value_to_vk(boost_struct.reference)
     ]]
 
-def vk_view_destroy(var boost_struct : StencilOpState)
+def vk_view_destroy(var boost_struct : StencilOpState &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -3458,7 +3451,7 @@ struct VertexInputAttributeDescription
     offset : uint
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : VertexInputAttributeDescription
+def vk_view_create_unsafe(var boost_struct : VertexInputAttributeDescription &
 ) : VkVertexInputAttributeDescription
 
     assert(!boost_struct._vk_view__active)
@@ -3470,7 +3463,7 @@ def vk_view_create_unsafe(var boost_struct : VertexInputAttributeDescription
         offset = boost_value_to_vk(boost_struct.offset)
     ]]
 
-def vk_view_destroy(var boost_struct : VertexInputAttributeDescription)
+def vk_view_destroy(var boost_struct : VertexInputAttributeDescription &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -3484,7 +3477,7 @@ struct VertexInputBindingDescription
     input_rate : VkVertexInputRate
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : VertexInputBindingDescription
+def vk_view_create_unsafe(var boost_struct : VertexInputBindingDescription &
 ) : VkVertexInputBindingDescription
 
     assert(!boost_struct._vk_view__active)
@@ -3495,7 +3488,7 @@ def vk_view_create_unsafe(var boost_struct : VertexInputBindingDescription
         inputRate = boost_value_to_vk(boost_struct.input_rate)
     ]]
 
-def vk_view_destroy(var boost_struct : VertexInputBindingDescription)
+def vk_view_destroy(var boost_struct : VertexInputBindingDescription &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -3511,7 +3504,7 @@ struct BufferCreateInfo
     queue_family_indices : array<uint>
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : BufferCreateInfo
+def vk_view_create_unsafe(var boost_struct : BufferCreateInfo &
 ) : VkBufferCreateInfo
 
     assert(!boost_struct._vk_view__active)
@@ -3528,7 +3521,7 @@ def vk_view_create_unsafe(var boost_struct : BufferCreateInfo
         pQueueFamilyIndices = vk_p_queue_family_indices
     ]]
 
-def vk_view_destroy(var boost_struct : BufferCreateInfo)
+def vk_view_destroy(var boost_struct : BufferCreateInfo &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -3545,7 +3538,7 @@ struct ComputePipelineCreateInfo
     _vk_view_p_stage : VkPipelineShaderStageCreateInfo ?
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : ComputePipelineCreateInfo
+def vk_view_create_unsafe(var boost_struct : ComputePipelineCreateInfo &
 ) : VkComputePipelineCreateInfo
 
     assert(!boost_struct._vk_view__active)
@@ -3562,7 +3555,7 @@ def vk_view_create_unsafe(var boost_struct : ComputePipelineCreateInfo
         basePipelineIndex = boost_value_to_vk(boost_struct.base_pipeline_index)
     ]]
 
-def vk_view_destroy(var boost_struct : ComputePipelineCreateInfo)
+def vk_view_destroy(var boost_struct : ComputePipelineCreateInfo &)
     assert(boost_struct._vk_view__active)
     boost_struct.stage |> vk_view_destroy()
     unsafe
@@ -3580,7 +3573,7 @@ struct DescriptorPoolCreateInfo
     _vk_view_pool_sizes : array<VkDescriptorPoolSize>
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : DescriptorPoolCreateInfo
+def vk_view_create_unsafe(var boost_struct : DescriptorPoolCreateInfo &
 ) : VkDescriptorPoolCreateInfo
 
     assert(!boost_struct._vk_view__active)
@@ -3597,7 +3590,7 @@ def vk_view_create_unsafe(var boost_struct : DescriptorPoolCreateInfo
         pPoolSizes = array_addr_unsafe(boost_struct._vk_view_pool_sizes)
     ]]
 
-def vk_view_destroy(var boost_struct : DescriptorPoolCreateInfo)
+def vk_view_destroy(var boost_struct : DescriptorPoolCreateInfo &)
     assert(boost_struct._vk_view__active)
     for item in boost_struct.pool_sizes
         item |> vk_view_destroy()
@@ -3614,7 +3607,7 @@ struct DescriptorSetAllocateInfo
     _vk_view_set_layouts : array<VkDescriptorSetLayout>
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : DescriptorSetAllocateInfo
+def vk_view_create_unsafe(var boost_struct : DescriptorSetAllocateInfo &
 ) : VkDescriptorSetAllocateInfo
 
     assert(!boost_struct._vk_view__active)
@@ -3630,7 +3623,7 @@ def vk_view_create_unsafe(var boost_struct : DescriptorSetAllocateInfo
         pSetLayouts = array_addr_unsafe(boost_struct._vk_view_set_layouts)
     ]]
 
-def vk_view_destroy(var boost_struct : DescriptorSetAllocateInfo)
+def vk_view_destroy(var boost_struct : DescriptorSetAllocateInfo &)
     assert(boost_struct._vk_view__active)
     delete boost_struct._vk_view_set_layouts
     boost_struct._vk_view__active = false
@@ -3648,7 +3641,7 @@ struct DescriptorSetLayoutBinding
     _vk_view_immutable_samplers : array<VkSampler>
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : DescriptorSetLayoutBinding
+def vk_view_create_unsafe(var boost_struct : DescriptorSetLayoutBinding &
 ) : VkDescriptorSetLayoutBinding
 
     assert(!boost_struct._vk_view__active)
@@ -3664,7 +3657,7 @@ def vk_view_create_unsafe(var boost_struct : DescriptorSetLayoutBinding
         pImmutableSamplers = array_addr_unsafe(boost_struct._vk_view_immutable_samplers)
     ]]
 
-def vk_view_destroy(var boost_struct : DescriptorSetLayoutBinding)
+def vk_view_destroy(var boost_struct : DescriptorSetLayoutBinding &)
     assert(boost_struct._vk_view__active)
     delete boost_struct._vk_view_immutable_samplers
     boost_struct._vk_view__active = false
@@ -3679,7 +3672,7 @@ struct DescriptorSetLayoutCreateInfo
     _vk_view_bindings : array<VkDescriptorSetLayoutBinding>
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : DescriptorSetLayoutCreateInfo
+def vk_view_create_unsafe(var boost_struct : DescriptorSetLayoutCreateInfo &
 ) : VkDescriptorSetLayoutCreateInfo
 
     assert(!boost_struct._vk_view__active)
@@ -3695,7 +3688,7 @@ def vk_view_create_unsafe(var boost_struct : DescriptorSetLayoutCreateInfo
         pBindings = array_addr_unsafe(boost_struct._vk_view_bindings)
     ]]
 
-def vk_view_destroy(var boost_struct : DescriptorSetLayoutCreateInfo)
+def vk_view_destroy(var boost_struct : DescriptorSetLayoutCreateInfo &)
     assert(boost_struct._vk_view__active)
     for item in boost_struct.bindings
         item |> vk_view_destroy()
@@ -3716,7 +3709,7 @@ struct DeviceCreateInfo
     _vk_view_p_enabled_features : VkPhysicalDeviceFeatures ?
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : DeviceCreateInfo
+def vk_view_create_unsafe(var boost_struct : DeviceCreateInfo &
 ) : VkDeviceCreateInfo
 
     assert(!boost_struct._vk_view__active)
@@ -3745,7 +3738,7 @@ def vk_view_create_unsafe(var boost_struct : DeviceCreateInfo
         pEnabledFeatures = boost_struct._vk_view_p_enabled_features
     ]]
 
-def vk_view_destroy(var boost_struct : DeviceCreateInfo)
+def vk_view_destroy(var boost_struct : DeviceCreateInfo &)
     assert(boost_struct._vk_view__active)
     for item in boost_struct.queue_create_infos
         item |> vk_view_destroy()
@@ -3766,7 +3759,7 @@ struct DeviceQueueCreateInfo
     queue_priorities : array<float>
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : DeviceQueueCreateInfo
+def vk_view_create_unsafe(var boost_struct : DeviceQueueCreateInfo &
 ) : VkDeviceQueueCreateInfo
 
     assert(!boost_struct._vk_view__active)
@@ -3781,7 +3774,7 @@ def vk_view_create_unsafe(var boost_struct : DeviceQueueCreateInfo
         pQueuePriorities = vk_p_queue_priorities
     ]]
 
-def vk_view_destroy(var boost_struct : DeviceQueueCreateInfo)
+def vk_view_destroy(var boost_struct : DeviceQueueCreateInfo &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -3799,7 +3792,7 @@ struct FramebufferCreateInfo
     _vk_view_attachments : array<VkImageView>
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : FramebufferCreateInfo
+def vk_view_create_unsafe(var boost_struct : FramebufferCreateInfo &
 ) : VkFramebufferCreateInfo
 
     assert(!boost_struct._vk_view__active)
@@ -3819,7 +3812,7 @@ def vk_view_create_unsafe(var boost_struct : FramebufferCreateInfo
         layers = boost_value_to_vk(boost_struct.layers)
     ]]
 
-def vk_view_destroy(var boost_struct : FramebufferCreateInfo)
+def vk_view_destroy(var boost_struct : FramebufferCreateInfo &)
     assert(boost_struct._vk_view__active)
     delete boost_struct._vk_view_attachments
     boost_struct._vk_view__active = false
@@ -3857,7 +3850,7 @@ struct GraphicsPipelineCreateInfo
     _vk_view_p_dynamic_state : VkPipelineDynamicStateCreateInfo ?
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : GraphicsPipelineCreateInfo
+def vk_view_create_unsafe(var boost_struct : GraphicsPipelineCreateInfo &
 ) : VkGraphicsPipelineCreateInfo
 
     assert(!boost_struct._vk_view__active)
@@ -3915,7 +3908,7 @@ def vk_view_create_unsafe(var boost_struct : GraphicsPipelineCreateInfo
         basePipelineIndex = boost_value_to_vk(boost_struct.base_pipeline_index)
     ]]
 
-def vk_view_destroy(var boost_struct : GraphicsPipelineCreateInfo)
+def vk_view_destroy(var boost_struct : GraphicsPipelineCreateInfo &)
     assert(boost_struct._vk_view__active)
     for item in boost_struct.stages
         item |> vk_view_destroy()
@@ -3970,7 +3963,7 @@ struct ImageCreateInfo
     _vk_view_p_extent : VkExtent3D ?
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : ImageCreateInfo
+def vk_view_create_unsafe(var boost_struct : ImageCreateInfo &
 ) : VkImageCreateInfo
 
     assert(!boost_struct._vk_view__active)
@@ -3997,7 +3990,7 @@ def vk_view_create_unsafe(var boost_struct : ImageCreateInfo
         initialLayout = boost_value_to_vk(boost_struct.initial_layout)
     ]]
 
-def vk_view_destroy(var boost_struct : ImageCreateInfo)
+def vk_view_destroy(var boost_struct : ImageCreateInfo &)
     assert(boost_struct._vk_view__active)
     boost_struct.extent |> vk_view_destroy()
     unsafe
@@ -4016,7 +4009,7 @@ struct InstanceCreateInfo
     _vk_view_p_application_info : VkApplicationInfo ?
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : InstanceCreateInfo
+def vk_view_create_unsafe(var boost_struct : InstanceCreateInfo &
 ) : VkInstanceCreateInfo
 
     assert(!boost_struct._vk_view__active)
@@ -4039,7 +4032,7 @@ def vk_view_create_unsafe(var boost_struct : InstanceCreateInfo
         ppEnabledExtensionNames = vk_p_enabled_extension_names
     ]]
 
-def vk_view_destroy(var boost_struct : InstanceCreateInfo)
+def vk_view_destroy(var boost_struct : InstanceCreateInfo &)
     assert(boost_struct._vk_view__active)
     if boost_struct.p_application_info != null
         *(boost_struct.p_application_info) |> vk_view_destroy()
@@ -4058,7 +4051,7 @@ struct PhysicalDeviceMemoryProperties
     _vk_view_memory_heaps : VkMemoryHeap [16]
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : PhysicalDeviceMemoryProperties
+def vk_view_create_unsafe(var boost_struct : PhysicalDeviceMemoryProperties &
 ) : VkPhysicalDeviceMemoryProperties
 
     assert(!boost_struct._vk_view__active)
@@ -4076,7 +4069,7 @@ def vk_view_create_unsafe(var boost_struct : PhysicalDeviceMemoryProperties
         memoryHeaps := boost_struct._vk_view_memory_heaps
     ]]
 
-def vk_view_destroy(var boost_struct : PhysicalDeviceMemoryProperties)
+def vk_view_destroy(var boost_struct : PhysicalDeviceMemoryProperties &)
     assert(boost_struct._vk_view__active)
     for item in boost_struct.memory_types
         item |> vk_view_destroy()
@@ -4107,7 +4100,7 @@ struct PipelineCacheCreateInfo
     initial_data : array<uint8>
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : PipelineCacheCreateInfo
+def vk_view_create_unsafe(var boost_struct : PipelineCacheCreateInfo &
 ) : VkPipelineCacheCreateInfo
 
     assert(!boost_struct._vk_view__active)
@@ -4123,7 +4116,7 @@ def vk_view_create_unsafe(var boost_struct : PipelineCacheCreateInfo
         pInitialData = vk_p_initial_data
     ]]
 
-def vk_view_destroy(var boost_struct : PipelineCacheCreateInfo)
+def vk_view_destroy(var boost_struct : PipelineCacheCreateInfo &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -4140,7 +4133,7 @@ struct PipelineColorBlendStateCreateInfo
     _vk_view_attachments : array<VkPipelineColorBlendAttachmentState>
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : PipelineColorBlendStateCreateInfo
+def vk_view_create_unsafe(var boost_struct : PipelineColorBlendStateCreateInfo &
 ) : VkPipelineColorBlendStateCreateInfo
 
     assert(!boost_struct._vk_view__active)
@@ -4159,7 +4152,7 @@ def vk_view_create_unsafe(var boost_struct : PipelineColorBlendStateCreateInfo
         blendConstants = boost_value_to_vk(boost_struct.blend_constants)
     ]]
 
-def vk_view_destroy(var boost_struct : PipelineColorBlendStateCreateInfo)
+def vk_view_destroy(var boost_struct : PipelineColorBlendStateCreateInfo &)
     assert(boost_struct._vk_view__active)
     for item in boost_struct.attachments
         item |> vk_view_destroy()
@@ -4175,7 +4168,7 @@ struct PipelineDynamicStateCreateInfo
     dynamic_states : array<VkDynamicState>
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : PipelineDynamicStateCreateInfo
+def vk_view_create_unsafe(var boost_struct : PipelineDynamicStateCreateInfo &
 ) : VkPipelineDynamicStateCreateInfo
 
     assert(!boost_struct._vk_view__active)
@@ -4189,7 +4182,7 @@ def vk_view_create_unsafe(var boost_struct : PipelineDynamicStateCreateInfo
         pDynamicStates = vk_p_dynamic_states
     ]]
 
-def vk_view_destroy(var boost_struct : PipelineDynamicStateCreateInfo)
+def vk_view_destroy(var boost_struct : PipelineDynamicStateCreateInfo &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -4205,7 +4198,7 @@ struct PipelineLayoutCreateInfo
     _vk_view_push_constant_ranges : array<VkPushConstantRange>
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : PipelineLayoutCreateInfo
+def vk_view_create_unsafe(var boost_struct : PipelineLayoutCreateInfo &
 ) : VkPipelineLayoutCreateInfo
 
     assert(!boost_struct._vk_view__active)
@@ -4227,7 +4220,7 @@ def vk_view_create_unsafe(var boost_struct : PipelineLayoutCreateInfo
         pPushConstantRanges = array_addr_unsafe(boost_struct._vk_view_push_constant_ranges)
     ]]
 
-def vk_view_destroy(var boost_struct : PipelineLayoutCreateInfo)
+def vk_view_destroy(var boost_struct : PipelineLayoutCreateInfo &)
     assert(boost_struct._vk_view__active)
     delete boost_struct._vk_view_set_layouts
     for item in boost_struct.push_constant_ranges
@@ -4247,7 +4240,7 @@ struct PipelineVertexInputStateCreateInfo
     _vk_view_vertex_attribute_descriptions : array<VkVertexInputAttributeDescription>
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : PipelineVertexInputStateCreateInfo
+def vk_view_create_unsafe(var boost_struct : PipelineVertexInputStateCreateInfo &
 ) : VkPipelineVertexInputStateCreateInfo
 
     assert(!boost_struct._vk_view__active)
@@ -4269,7 +4262,7 @@ def vk_view_create_unsafe(var boost_struct : PipelineVertexInputStateCreateInfo
         pVertexAttributeDescriptions = array_addr_unsafe(boost_struct._vk_view_vertex_attribute_descriptions)
     ]]
 
-def vk_view_destroy(var boost_struct : PipelineVertexInputStateCreateInfo)
+def vk_view_destroy(var boost_struct : PipelineVertexInputStateCreateInfo &)
     assert(boost_struct._vk_view__active)
     for item in boost_struct.vertex_binding_descriptions
         item |> vk_view_destroy()
@@ -4291,7 +4284,7 @@ struct PipelineViewportStateCreateInfo
     _vk_view_scissors : array<VkRect2D>
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : PipelineViewportStateCreateInfo
+def vk_view_create_unsafe(var boost_struct : PipelineViewportStateCreateInfo &
 ) : VkPipelineViewportStateCreateInfo
 
     assert(!boost_struct._vk_view__active)
@@ -4313,7 +4306,7 @@ def vk_view_create_unsafe(var boost_struct : PipelineViewportStateCreateInfo
         pScissors = array_addr_unsafe(boost_struct._vk_view_scissors)
     ]]
 
-def vk_view_destroy(var boost_struct : PipelineViewportStateCreateInfo)
+def vk_view_destroy(var boost_struct : PipelineViewportStateCreateInfo &)
     assert(boost_struct._vk_view__active)
     for item in boost_struct.viewports
         item |> vk_view_destroy()
@@ -4336,7 +4329,7 @@ struct PresentInfoKHR
     _vk_view_swapchains : array<VkSwapchainKHR>
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : PresentInfoKHR
+def vk_view_create_unsafe(var boost_struct : PresentInfoKHR &
 ) : VkPresentInfoKHR
 
     assert(!boost_struct._vk_view__active)
@@ -4363,7 +4356,7 @@ def vk_view_create_unsafe(var boost_struct : PresentInfoKHR
         pResults = vk_p_results
     ]]
 
-def vk_view_destroy(var boost_struct : PresentInfoKHR)
+def vk_view_destroy(var boost_struct : PresentInfoKHR &)
     assert(boost_struct._vk_view__active)
     delete boost_struct._vk_view_wait_semaphores
     delete boost_struct._vk_view_swapchains
@@ -4383,7 +4376,7 @@ struct RenderPassCreateInfo
     _vk_view_dependencies : array<VkSubpassDependency>
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : RenderPassCreateInfo
+def vk_view_create_unsafe(var boost_struct : RenderPassCreateInfo &
 ) : VkRenderPassCreateInfo
 
     assert(!boost_struct._vk_view__active)
@@ -4411,7 +4404,7 @@ def vk_view_create_unsafe(var boost_struct : RenderPassCreateInfo
         pDependencies = array_addr_unsafe(boost_struct._vk_view_dependencies)
     ]]
 
-def vk_view_destroy(var boost_struct : RenderPassCreateInfo)
+def vk_view_destroy(var boost_struct : RenderPassCreateInfo &)
     assert(boost_struct._vk_view__active)
     for item in boost_struct.attachments
         item |> vk_view_destroy()
@@ -4433,7 +4426,7 @@ struct ShaderModuleCreateInfo
     code : array<uint8>
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : ShaderModuleCreateInfo
+def vk_view_create_unsafe(var boost_struct : ShaderModuleCreateInfo &
 ) : VkShaderModuleCreateInfo
 
     assert(!boost_struct._vk_view__active)
@@ -4449,7 +4442,7 @@ def vk_view_create_unsafe(var boost_struct : ShaderModuleCreateInfo
         pCode = vk_p_code
     ]]
 
-def vk_view_destroy(var boost_struct : ShaderModuleCreateInfo)
+def vk_view_destroy(var boost_struct : ShaderModuleCreateInfo &)
     assert(boost_struct._vk_view__active)
     boost_struct._vk_view__active = false
 
@@ -4463,7 +4456,7 @@ struct SpecializationInfo
     _vk_view_map_entries : array<VkSpecializationMapEntry>
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : SpecializationInfo
+def vk_view_create_unsafe(var boost_struct : SpecializationInfo &
 ) : VkSpecializationInfo
 
     assert(!boost_struct._vk_view__active)
@@ -4483,7 +4476,7 @@ def vk_view_create_unsafe(var boost_struct : SpecializationInfo
         pData = vk_p_data
     ]]
 
-def vk_view_destroy(var boost_struct : SpecializationInfo)
+def vk_view_destroy(var boost_struct : SpecializationInfo &)
     assert(boost_struct._vk_view__active)
     for item in boost_struct.map_entries
         item |> vk_view_destroy()
@@ -4504,7 +4497,7 @@ struct SubmitInfo
     _vk_view_signal_semaphores : array<VkSemaphore>
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : SubmitInfo
+def vk_view_create_unsafe(var boost_struct : SubmitInfo &
 ) : VkSubmitInfo
 
     assert(!boost_struct._vk_view__active)
@@ -4534,7 +4527,7 @@ def vk_view_create_unsafe(var boost_struct : SubmitInfo
         pSignalSemaphores = array_addr_unsafe(boost_struct._vk_view_signal_semaphores)
     ]]
 
-def vk_view_destroy(var boost_struct : SubmitInfo)
+def vk_view_destroy(var boost_struct : SubmitInfo &)
     assert(boost_struct._vk_view__active)
     delete boost_struct._vk_view_wait_semaphores
     delete boost_struct._vk_view_command_buffers
@@ -4559,7 +4552,7 @@ struct SubpassDescription
     _vk_view_p_depth_stencil_attachment : VkAttachmentReference ?
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : SubpassDescription
+def vk_view_create_unsafe(var boost_struct : SubpassDescription &
 ) : VkSubpassDescription
 
     assert(!boost_struct._vk_view__active)
@@ -4595,7 +4588,7 @@ def vk_view_create_unsafe(var boost_struct : SubpassDescription
         pPreserveAttachments = vk_p_preserve_attachments
     ]]
 
-def vk_view_destroy(var boost_struct : SubpassDescription)
+def vk_view_destroy(var boost_struct : SubpassDescription &)
     assert(boost_struct._vk_view__active)
     for item in boost_struct.input_attachments
         item |> vk_view_destroy()
@@ -4635,7 +4628,7 @@ struct SwapchainCreateInfoKHR
     _vk_view_p_image_extent : VkExtent2D ?
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : SwapchainCreateInfoKHR
+def vk_view_create_unsafe(var boost_struct : SwapchainCreateInfoKHR &
 ) : VkSwapchainCreateInfoKHR
 
     assert(!boost_struct._vk_view__active)
@@ -4665,7 +4658,7 @@ def vk_view_create_unsafe(var boost_struct : SwapchainCreateInfoKHR
         oldSwapchain = boost_value_to_vk(boost_struct.old_swapchain)
     ]]
 
-def vk_view_destroy(var boost_struct : SwapchainCreateInfoKHR)
+def vk_view_destroy(var boost_struct : SwapchainCreateInfoKHR &)
     assert(boost_struct._vk_view__active)
     boost_struct.image_extent |> vk_view_destroy()
     unsafe
@@ -4684,7 +4677,7 @@ struct RenderPassBeginInfo
     _vk_view_p_render_area : VkRect2D ?
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : RenderPassBeginInfo
+def vk_view_create_unsafe(var boost_struct : RenderPassBeginInfo &
 ) : VkRenderPassBeginInfo
 
     assert(!boost_struct._vk_view__active)
@@ -4703,7 +4696,7 @@ def vk_view_create_unsafe(var boost_struct : RenderPassBeginInfo
         pClearValues = vk_p_clear_values
     ]]
 
-def vk_view_destroy(var boost_struct : RenderPassBeginInfo)
+def vk_view_destroy(var boost_struct : RenderPassBeginInfo &)
     assert(boost_struct._vk_view__active)
     boost_struct.render_area |> vk_view_destroy()
     unsafe
@@ -4727,7 +4720,7 @@ struct WriteDescriptorSet
     _vk_view_texel_buffer_view : array<VkBufferView>
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : WriteDescriptorSet
+def vk_view_create_unsafe(var boost_struct : WriteDescriptorSet &
 ) : VkWriteDescriptorSet
 
     assert(!boost_struct._vk_view__active)
@@ -4757,7 +4750,7 @@ def vk_view_create_unsafe(var boost_struct : WriteDescriptorSet
         pTexelBufferView = array_addr_unsafe(boost_struct._vk_view_texel_buffer_view)
     ]]
 
-def vk_view_destroy(var boost_struct : WriteDescriptorSet)
+def vk_view_destroy(var boost_struct : WriteDescriptorSet &)
     assert(boost_struct._vk_view__active)
     for item in boost_struct.image_info
         item |> vk_view_destroy()
@@ -4769,176 +4762,10 @@ def vk_view_destroy(var boost_struct : WriteDescriptorSet)
     boost_struct._vk_view__active = false
 
 //
-// PhysicalDeviceVulkan12Features
-//
-
-struct PhysicalDeviceVulkan12Features
-    sampler_mirror_clamp_to_edge : uint
-    draw_indirect_count : uint
-    storage_buffer_8bit_access : uint
-    uniform_and_storage_buffer_8bit_access : uint
-    storage_push_constant_8 : uint
-    shader_buffer_int_64atomics : uint
-    shader_shared_int_64atomics : uint
-    shader_float_16 : uint
-    shader_int_8 : uint
-    descriptor_indexing : uint
-    shader_input_attachment_array_dynamic_indexing : uint
-    shader_uniform_texel_buffer_array_dynamic_indexing : uint
-    shader_storage_texel_buffer_array_dynamic_indexing : uint
-    shader_uniform_buffer_array_non_uniform_indexing : uint
-    shader_sampled_image_array_non_uniform_indexing : uint
-    shader_storage_buffer_array_non_uniform_indexing : uint
-    shader_storage_image_array_non_uniform_indexing : uint
-    shader_input_attachment_array_non_uniform_indexing : uint
-    shader_uniform_texel_buffer_array_non_uniform_indexing : uint
-    shader_storage_texel_buffer_array_non_uniform_indexing : uint
-    descriptor_binding_uniform_buffer_update_after_bind : uint
-    descriptor_binding_sampled_image_update_after_bind : uint
-    descriptor_binding_storage_image_update_after_bind : uint
-    descriptor_binding_storage_buffer_update_after_bind : uint
-    descriptor_binding_uniform_texel_buffer_update_after_bind : uint
-    descriptor_binding_storage_texel_buffer_update_after_bind : uint
-    descriptor_binding_update_unused_while_pending : uint
-    descriptor_binding_partially_bound : uint
-    descriptor_binding_variable_descriptor_count : uint
-    runtime_descriptor_array : uint
-    sampler_filter_minmax : uint
-    scalar_block_layout : uint
-    imageless_framebuffer : uint
-    uniform_buffer_standard_layout : uint
-    shader_subgroup_extended_types : uint
-    separate_depth_stencil_layouts : uint
-    host_query_reset : uint
-    timeline_semaphore : uint
-    buffer_device_address : uint
-    buffer_device_address_capture_replay : uint
-    buffer_device_address_multi_device : uint
-    vulkan_memory_model : uint
-    vulkan_memory_model_device_scope : uint
-    vulkan_memory_model_availability_visibility_chains : uint
-    shader_output_viewport_index : uint
-    shader_output_layer : uint
-    subgroup_broadcast_dynamic_id : uint
-    _vk_view__active : bool
-
-def vk_view_create_unsafe(var boost_struct : PhysicalDeviceVulkan12Features
-) : VkPhysicalDeviceVulkan12Features
-
-    assert(!boost_struct._vk_view__active)
-    boost_struct._vk_view__active = true
-    return <- [[ VkPhysicalDeviceVulkan12Features
-        sType = VkStructureType VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VULKAN_1_2_FEATURES,
-        samplerMirrorClampToEdge = boost_value_to_vk(boost_struct.sampler_mirror_clamp_to_edge),
-        drawIndirectCount = boost_value_to_vk(boost_struct.draw_indirect_count),
-        storageBuffer8BitAccess = boost_value_to_vk(boost_struct.storage_buffer_8bit_access),
-        uniformAndStorageBuffer8BitAccess = boost_value_to_vk(boost_struct.uniform_and_storage_buffer_8bit_access),
-        storagePushConstant8 = boost_value_to_vk(boost_struct.storage_push_constant_8),
-        shaderBufferInt64Atomics = boost_value_to_vk(boost_struct.shader_buffer_int_64atomics),
-        shaderSharedInt64Atomics = boost_value_to_vk(boost_struct.shader_shared_int_64atomics),
-        shaderFloat16 = boost_value_to_vk(boost_struct.shader_float_16),
-        shaderInt8 = boost_value_to_vk(boost_struct.shader_int_8),
-        descriptorIndexing = boost_value_to_vk(boost_struct.descriptor_indexing),
-        shaderInputAttachmentArrayDynamicIndexing = boost_value_to_vk(boost_struct.shader_input_attachment_array_dynamic_indexing),
-        shaderUniformTexelBufferArrayDynamicIndexing = boost_value_to_vk(boost_struct.shader_uniform_texel_buffer_array_dynamic_indexing),
-        shaderStorageTexelBufferArrayDynamicIndexing = boost_value_to_vk(boost_struct.shader_storage_texel_buffer_array_dynamic_indexing),
-        shaderUniformBufferArrayNonUniformIndexing = boost_value_to_vk(boost_struct.shader_uniform_buffer_array_non_uniform_indexing),
-        shaderSampledImageArrayNonUniformIndexing = boost_value_to_vk(boost_struct.shader_sampled_image_array_non_uniform_indexing),
-        shaderStorageBufferArrayNonUniformIndexing = boost_value_to_vk(boost_struct.shader_storage_buffer_array_non_uniform_indexing),
-        shaderStorageImageArrayNonUniformIndexing = boost_value_to_vk(boost_struct.shader_storage_image_array_non_uniform_indexing),
-        shaderInputAttachmentArrayNonUniformIndexing = boost_value_to_vk(boost_struct.shader_input_attachment_array_non_uniform_indexing),
-        shaderUniformTexelBufferArrayNonUniformIndexing = boost_value_to_vk(boost_struct.shader_uniform_texel_buffer_array_non_uniform_indexing),
-        shaderStorageTexelBufferArrayNonUniformIndexing = boost_value_to_vk(boost_struct.shader_storage_texel_buffer_array_non_uniform_indexing),
-        descriptorBindingUniformBufferUpdateAfterBind = boost_value_to_vk(boost_struct.descriptor_binding_uniform_buffer_update_after_bind),
-        descriptorBindingSampledImageUpdateAfterBind = boost_value_to_vk(boost_struct.descriptor_binding_sampled_image_update_after_bind),
-        descriptorBindingStorageImageUpdateAfterBind = boost_value_to_vk(boost_struct.descriptor_binding_storage_image_update_after_bind),
-        descriptorBindingStorageBufferUpdateAfterBind = boost_value_to_vk(boost_struct.descriptor_binding_storage_buffer_update_after_bind),
-        descriptorBindingUniformTexelBufferUpdateAfterBind = boost_value_to_vk(boost_struct.descriptor_binding_uniform_texel_buffer_update_after_bind),
-        descriptorBindingStorageTexelBufferUpdateAfterBind = boost_value_to_vk(boost_struct.descriptor_binding_storage_texel_buffer_update_after_bind),
-        descriptorBindingUpdateUnusedWhilePending = boost_value_to_vk(boost_struct.descriptor_binding_update_unused_while_pending),
-        descriptorBindingPartiallyBound = boost_value_to_vk(boost_struct.descriptor_binding_partially_bound),
-        descriptorBindingVariableDescriptorCount = boost_value_to_vk(boost_struct.descriptor_binding_variable_descriptor_count),
-        runtimeDescriptorArray = boost_value_to_vk(boost_struct.runtime_descriptor_array),
-        samplerFilterMinmax = boost_value_to_vk(boost_struct.sampler_filter_minmax),
-        scalarBlockLayout = boost_value_to_vk(boost_struct.scalar_block_layout),
-        imagelessFramebuffer = boost_value_to_vk(boost_struct.imageless_framebuffer),
-        uniformBufferStandardLayout = boost_value_to_vk(boost_struct.uniform_buffer_standard_layout),
-        shaderSubgroupExtendedTypes = boost_value_to_vk(boost_struct.shader_subgroup_extended_types),
-        separateDepthStencilLayouts = boost_value_to_vk(boost_struct.separate_depth_stencil_layouts),
-        hostQueryReset = boost_value_to_vk(boost_struct.host_query_reset),
-        timelineSemaphore = boost_value_to_vk(boost_struct.timeline_semaphore),
-        bufferDeviceAddress = boost_value_to_vk(boost_struct.buffer_device_address),
-        bufferDeviceAddressCaptureReplay = boost_value_to_vk(boost_struct.buffer_device_address_capture_replay),
-        bufferDeviceAddressMultiDevice = boost_value_to_vk(boost_struct.buffer_device_address_multi_device),
-        vulkanMemoryModel = boost_value_to_vk(boost_struct.vulkan_memory_model),
-        vulkanMemoryModelDeviceScope = boost_value_to_vk(boost_struct.vulkan_memory_model_device_scope),
-        vulkanMemoryModelAvailabilityVisibilityChains = boost_value_to_vk(boost_struct.vulkan_memory_model_availability_visibility_chains),
-        shaderOutputViewportIndex = boost_value_to_vk(boost_struct.shader_output_viewport_index),
-        shaderOutputLayer = boost_value_to_vk(boost_struct.shader_output_layer),
-        subgroupBroadcastDynamicId = boost_value_to_vk(boost_struct.subgroup_broadcast_dynamic_id)
-    ]]
-
-def vk_view_destroy(var boost_struct : PhysicalDeviceVulkan12Features)
-    assert(boost_struct._vk_view__active)
-    boost_struct._vk_view__active = false
-
-def vk_value_to_boost(vk_struct : VkPhysicalDeviceVulkan12Features) : PhysicalDeviceVulkan12Features
-    return <- [[PhysicalDeviceVulkan12Features
-        sampler_mirror_clamp_to_edge = vk_value_to_boost(vk_struct.samplerMirrorClampToEdge),
-        draw_indirect_count = vk_value_to_boost(vk_struct.drawIndirectCount),
-        storage_buffer_8bit_access = vk_value_to_boost(vk_struct.storageBuffer8BitAccess),
-        uniform_and_storage_buffer_8bit_access = vk_value_to_boost(vk_struct.uniformAndStorageBuffer8BitAccess),
-        storage_push_constant_8 = vk_value_to_boost(vk_struct.storagePushConstant8),
-        shader_buffer_int_64atomics = vk_value_to_boost(vk_struct.shaderBufferInt64Atomics),
-        shader_shared_int_64atomics = vk_value_to_boost(vk_struct.shaderSharedInt64Atomics),
-        shader_float_16 = vk_value_to_boost(vk_struct.shaderFloat16),
-        shader_int_8 = vk_value_to_boost(vk_struct.shaderInt8),
-        descriptor_indexing = vk_value_to_boost(vk_struct.descriptorIndexing),
-        shader_input_attachment_array_dynamic_indexing = vk_value_to_boost(vk_struct.shaderInputAttachmentArrayDynamicIndexing),
-        shader_uniform_texel_buffer_array_dynamic_indexing = vk_value_to_boost(vk_struct.shaderUniformTexelBufferArrayDynamicIndexing),
-        shader_storage_texel_buffer_array_dynamic_indexing = vk_value_to_boost(vk_struct.shaderStorageTexelBufferArrayDynamicIndexing),
-        shader_uniform_buffer_array_non_uniform_indexing = vk_value_to_boost(vk_struct.shaderUniformBufferArrayNonUniformIndexing),
-        shader_sampled_image_array_non_uniform_indexing = vk_value_to_boost(vk_struct.shaderSampledImageArrayNonUniformIndexing),
-        shader_storage_buffer_array_non_uniform_indexing = vk_value_to_boost(vk_struct.shaderStorageBufferArrayNonUniformIndexing),
-        shader_storage_image_array_non_uniform_indexing = vk_value_to_boost(vk_struct.shaderStorageImageArrayNonUniformIndexing),
-        shader_input_attachment_array_non_uniform_indexing = vk_value_to_boost(vk_struct.shaderInputAttachmentArrayNonUniformIndexing),
-        shader_uniform_texel_buffer_array_non_uniform_indexing = vk_value_to_boost(vk_struct.shaderUniformTexelBufferArrayNonUniformIndexing),
-        shader_storage_texel_buffer_array_non_uniform_indexing = vk_value_to_boost(vk_struct.shaderStorageTexelBufferArrayNonUniformIndexing),
-        descriptor_binding_uniform_buffer_update_after_bind = vk_value_to_boost(vk_struct.descriptorBindingUniformBufferUpdateAfterBind),
-        descriptor_binding_sampled_image_update_after_bind = vk_value_to_boost(vk_struct.descriptorBindingSampledImageUpdateAfterBind),
-        descriptor_binding_storage_image_update_after_bind = vk_value_to_boost(vk_struct.descriptorBindingStorageImageUpdateAfterBind),
-        descriptor_binding_storage_buffer_update_after_bind = vk_value_to_boost(vk_struct.descriptorBindingStorageBufferUpdateAfterBind),
-        descriptor_binding_uniform_texel_buffer_update_after_bind = vk_value_to_boost(vk_struct.descriptorBindingUniformTexelBufferUpdateAfterBind),
-        descriptor_binding_storage_texel_buffer_update_after_bind = vk_value_to_boost(vk_struct.descriptorBindingStorageTexelBufferUpdateAfterBind),
-        descriptor_binding_update_unused_while_pending = vk_value_to_boost(vk_struct.descriptorBindingUpdateUnusedWhilePending),
-        descriptor_binding_partially_bound = vk_value_to_boost(vk_struct.descriptorBindingPartiallyBound),
-        descriptor_binding_variable_descriptor_count = vk_value_to_boost(vk_struct.descriptorBindingVariableDescriptorCount),
-        runtime_descriptor_array = vk_value_to_boost(vk_struct.runtimeDescriptorArray),
-        sampler_filter_minmax = vk_value_to_boost(vk_struct.samplerFilterMinmax),
-        scalar_block_layout = vk_value_to_boost(vk_struct.scalarBlockLayout),
-        imageless_framebuffer = vk_value_to_boost(vk_struct.imagelessFramebuffer),
-        uniform_buffer_standard_layout = vk_value_to_boost(vk_struct.uniformBufferStandardLayout),
-        shader_subgroup_extended_types = vk_value_to_boost(vk_struct.shaderSubgroupExtendedTypes),
-        separate_depth_stencil_layouts = vk_value_to_boost(vk_struct.separateDepthStencilLayouts),
-        host_query_reset = vk_value_to_boost(vk_struct.hostQueryReset),
-        timeline_semaphore = vk_value_to_boost(vk_struct.timelineSemaphore),
-        buffer_device_address = vk_value_to_boost(vk_struct.bufferDeviceAddress),
-        buffer_device_address_capture_replay = vk_value_to_boost(vk_struct.bufferDeviceAddressCaptureReplay),
-        buffer_device_address_multi_device = vk_value_to_boost(vk_struct.bufferDeviceAddressMultiDevice),
-        vulkan_memory_model = vk_value_to_boost(vk_struct.vulkanMemoryModel),
-        vulkan_memory_model_device_scope = vk_value_to_boost(vk_struct.vulkanMemoryModelDeviceScope),
-        vulkan_memory_model_availability_visibility_chains = vk_value_to_boost(vk_struct.vulkanMemoryModelAvailabilityVisibilityChains),
-        shader_output_viewport_index = vk_value_to_boost(vk_struct.shaderOutputViewportIndex),
-        shader_output_layer = vk_value_to_boost(vk_struct.shaderOutputLayer),
-        subgroup_broadcast_dynamic_id = vk_value_to_boost(vk_struct.subgroupBroadcastDynamicId)
-    ]]
-
-//
 // PhysicalDeviceVulkan11Features
 //
 
 struct PhysicalDeviceVulkan11Features
-    next : PhysicalDeviceVulkan12Features
     storage_buffer_16bit_access : uint
     uniform_and_storage_buffer_16bit_access : uint
     storage_push_constant_16 : uint
@@ -4951,20 +4778,15 @@ struct PhysicalDeviceVulkan11Features
     protected_memory : uint
     sampler_ycbcr_conversion : uint
     shader_draw_parameters : uint
-    _vk_view_p_next : VkPhysicalDeviceVulkan12Features ?
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : PhysicalDeviceVulkan11Features
+def vk_view_create_unsafe(var boost_struct : PhysicalDeviceVulkan11Features &
 ) : VkPhysicalDeviceVulkan11Features
 
     assert(!boost_struct._vk_view__active)
     boost_struct._vk_view__active = true
-    boost_struct._vk_view_p_next = new VkPhysicalDeviceVulkan12Features
-    *(boost_struct._vk_view_p_next) <- (
-        boost_struct.next |> vk_view_create_unsafe())
     return <- [[ VkPhysicalDeviceVulkan11Features
         sType = VkStructureType VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VULKAN_1_1_FEATURES,
-        pNext = boost_struct._vk_view_p_next,
         storageBuffer16BitAccess = boost_value_to_vk(boost_struct.storage_buffer_16bit_access),
         uniformAndStorageBuffer16BitAccess = boost_value_to_vk(boost_struct.uniform_and_storage_buffer_16bit_access),
         storagePushConstant16 = boost_value_to_vk(boost_struct.storage_push_constant_16),
@@ -4979,20 +4801,12 @@ def vk_view_create_unsafe(var boost_struct : PhysicalDeviceVulkan11Features
         shaderDrawParameters = boost_value_to_vk(boost_struct.shader_draw_parameters)
     ]]
 
-def vk_view_destroy(var boost_struct : PhysicalDeviceVulkan11Features)
+def vk_view_destroy(var boost_struct : PhysicalDeviceVulkan11Features &)
     assert(boost_struct._vk_view__active)
-    boost_struct.next |> vk_view_destroy()
-    unsafe
-        delete boost_struct._vk_view_p_next
     boost_struct._vk_view__active = false
 
 def vk_value_to_boost(vk_struct : VkPhysicalDeviceVulkan11Features) : PhysicalDeviceVulkan11Features
-    assert(vk_struct.pNext != null)
-    var vk_p_next : VkPhysicalDeviceVulkan12Features ?
-    unsafe
-        vk_p_next = reinterpret<VkPhysicalDeviceVulkan12Features ?>(vk_struct.pNext)
     return <- [[PhysicalDeviceVulkan11Features
-        next <- vk_value_to_boost(*vk_p_next),
         storage_buffer_16bit_access = vk_value_to_boost(vk_struct.storageBuffer16BitAccess),
         uniform_and_storage_buffer_16bit_access = vk_value_to_boost(vk_struct.uniformAndStorageBuffer16BitAccess),
         storage_push_constant_16 = vk_value_to_boost(vk_struct.storagePushConstant16),
@@ -5018,7 +4832,7 @@ struct PhysicalDeviceFeatures2
     _vk_view_p_features : VkPhysicalDeviceFeatures ?
     _vk_view__active : bool
 
-def vk_view_create_unsafe(var boost_struct : PhysicalDeviceFeatures2
+def vk_view_create_unsafe(var boost_struct : PhysicalDeviceFeatures2 &
 ) : VkPhysicalDeviceFeatures2
 
     assert(!boost_struct._vk_view__active)
@@ -5035,7 +4849,7 @@ def vk_view_create_unsafe(var boost_struct : PhysicalDeviceFeatures2
         features = *(boost_struct._vk_view_p_features)
     ]]
 
-def vk_view_destroy(var boost_struct : PhysicalDeviceFeatures2)
+def vk_view_destroy(var boost_struct : PhysicalDeviceFeatures2 &)
     assert(boost_struct._vk_view__active)
     boost_struct.next |> vk_view_destroy()
     unsafe
@@ -5121,7 +4935,7 @@ def destroy_buffer(
         null
     )
 
-def finalize(var handle : Buffer explicit)
+def finalize(var handle : Buffer & explicit)
     if handle._needs_delete
         destroy_buffer(
             vk_value_to_boost(handle._device),
@@ -5195,7 +5009,7 @@ def destroy_buffer_view(
         null
     )
 
-def finalize(var handle : BufferView explicit)
+def finalize(var handle : BufferView & explicit)
     if handle._needs_delete
         destroy_buffer_view(
             vk_value_to_boost(handle._device),
@@ -5286,7 +5100,7 @@ def destroy_command_pool(
         null
     )
 
-def finalize(var handle : CommandPool explicit)
+def finalize(var handle : CommandPool & explicit)
     if handle._needs_delete
         destroy_command_pool(
             vk_value_to_boost(handle._device),
@@ -5360,7 +5174,7 @@ def destroy_descriptor_pool(
         null
     )
 
-def finalize(var handle : DescriptorPool explicit)
+def finalize(var handle : DescriptorPool & explicit)
     if handle._needs_delete
         destroy_descriptor_pool(
             vk_value_to_boost(handle._device),
@@ -5451,7 +5265,7 @@ def destroy_descriptor_set_layout(
         null
     )
 
-def finalize(var handle : DescriptorSetLayout explicit)
+def finalize(var handle : DescriptorSetLayout & explicit)
     if handle._needs_delete
         destroy_descriptor_set_layout(
             vk_value_to_boost(handle._device),
@@ -5521,7 +5335,7 @@ def destroy_device(
         null
     )
 
-def finalize(var handle : Device explicit)
+def finalize(var handle : Device & explicit)
     if handle._needs_delete
         destroy_device(
             vk_value_to_boost(handle.device)
@@ -5594,7 +5408,7 @@ def destroy_fence(
         null
     )
 
-def finalize(var handle : Fence explicit)
+def finalize(var handle : Fence & explicit)
     if handle._needs_delete
         destroy_fence(
             vk_value_to_boost(handle._device),
@@ -5668,7 +5482,7 @@ def destroy_framebuffer(
         null
     )
 
-def finalize(var handle : Framebuffer explicit)
+def finalize(var handle : Framebuffer & explicit)
     if handle._needs_delete
         destroy_framebuffer(
             vk_value_to_boost(handle._device),
@@ -5742,7 +5556,7 @@ def destroy_image(
         null
     )
 
-def finalize(var handle : Image explicit)
+def finalize(var handle : Image & explicit)
     if handle._needs_delete
         destroy_image(
             vk_value_to_boost(handle._device),
@@ -5816,7 +5630,7 @@ def destroy_image_view(
         null
     )
 
-def finalize(var handle : ImageView explicit)
+def finalize(var handle : ImageView & explicit)
     if handle._needs_delete
         destroy_image_view(
             vk_value_to_boost(handle._device),
@@ -5882,7 +5696,7 @@ def destroy_instance(
         null
     )
 
-def finalize(var handle : Instance explicit)
+def finalize(var handle : Instance & explicit)
     if handle._needs_delete
         destroy_instance(
             vk_value_to_boost(handle.instance)
@@ -5972,7 +5786,7 @@ def destroy_pipeline_cache(
         null
     )
 
-def finalize(var handle : PipelineCache explicit)
+def finalize(var handle : PipelineCache & explicit)
     if handle._needs_delete
         destroy_pipeline_cache(
             vk_value_to_boost(handle._device),
@@ -6046,7 +5860,7 @@ def destroy_pipeline_layout(
         null
     )
 
-def finalize(var handle : PipelineLayout explicit)
+def finalize(var handle : PipelineLayout & explicit)
     if handle._needs_delete
         destroy_pipeline_layout(
             vk_value_to_boost(handle._device),
@@ -6120,7 +5934,7 @@ def destroy_query_pool(
         null
     )
 
-def finalize(var handle : QueryPool explicit)
+def finalize(var handle : QueryPool & explicit)
     if handle._needs_delete
         destroy_query_pool(
             vk_value_to_boost(handle._device),
@@ -6211,7 +6025,7 @@ def destroy_render_pass(
         null
     )
 
-def finalize(var handle : RenderPass explicit)
+def finalize(var handle : RenderPass & explicit)
     if handle._needs_delete
         destroy_render_pass(
             vk_value_to_boost(handle._device),
@@ -6285,7 +6099,7 @@ def destroy_sampler(
         null
     )
 
-def finalize(var handle : Sampler explicit)
+def finalize(var handle : Sampler & explicit)
     if handle._needs_delete
         destroy_sampler(
             vk_value_to_boost(handle._device),
@@ -6359,7 +6173,7 @@ def destroy_semaphore(
         null
     )
 
-def finalize(var handle : Semaphore explicit)
+def finalize(var handle : Semaphore & explicit)
     if handle._needs_delete
         destroy_semaphore(
             vk_value_to_boost(handle._device),
@@ -6433,7 +6247,7 @@ def destroy_shader_module(
         null
     )
 
-def finalize(var handle : ShaderModule explicit)
+def finalize(var handle : ShaderModule & explicit)
     if handle._needs_delete
         destroy_shader_module(
             vk_value_to_boost(handle._device),
@@ -6507,7 +6321,7 @@ def destroy_swapchain_khr(
         null
     )
 
-def finalize(var handle : SwapchainKHR explicit)
+def finalize(var handle : SwapchainKHR & explicit)
     if handle._needs_delete
         destroy_swapchain_khr(
             vk_value_to_boost(handle._device),
@@ -6643,7 +6457,7 @@ def destroy_pipeline(
         null
     )
 
-def finalize(var handle : Pipeline explicit)
+def finalize(var handle : Pipeline & explicit)
     if handle._needs_delete
         destroy_pipeline(
             vk_value_to_boost(handle._device),
@@ -6717,7 +6531,7 @@ def free_memory(
         null
     )
 
-def finalize(var handle : DeviceMemory explicit)
+def finalize(var handle : DeviceMemory & explicit)
     if handle._needs_delete
         free_memory(
             vk_value_to_boost(handle._device),

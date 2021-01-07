@@ -552,6 +552,9 @@ def get_suitability_score(device : PhysicalDevice; surface : SurfaceKHR)
         VkPhysicalDeviceType VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU
     )
         score += 1000
+    if props.api_version < VK_API_VERSION_1_1
+        print("Api version too low: {props.api_version}\n")
+        return 0
 
     print("point 100\n")
     var feats <- device |> get_physical_device_features_2()

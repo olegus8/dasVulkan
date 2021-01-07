@@ -304,9 +304,7 @@ def add_boost_content(g):
     g.add_gen_struct(
         name = 'VkPhysicalDeviceFeatures2',
         next_in_chain = g.add_gen_struct(
-            name = 'VkPhysicalDeviceVulkan11Features',
-            next_in_chain = g.add_gen_struct(
-                name = 'VkPhysicalDeviceVulkan12Features')))
+            name = 'VkPhysicalDeviceVulkan11Features'))
 
     #
     # Functions
