@@ -254,6 +254,7 @@ def add_boost_content(g):
     g.add_gen_struct(name = 'VkInstanceCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'enabledLayerCount', items = 'ppEnabledLayerNames',
         ).declare_array(count = 'enabledExtensionCount', items = 'ppEnabledExtensionNames')
+    g.add_gen_struct(name = 'VkPhysicalDeviceFeatures2')
     g.add_gen_struct(name = 'VkPhysicalDeviceMemoryProperties', boost_to_vk=False,
         ).declare_array(count = 'memoryTypeCount', items = 'memoryTypes',
         ).declare_array(count = 'memoryHeapCount', items = 'memoryHeaps')
@@ -359,6 +360,8 @@ def add_boost_content(g):
     g.add_gen_func(name = 'vkGetImageMemoryRequirements',
         ).declare_output(name = 'pMemoryRequirements')
     g.add_gen_func(name = 'vkGetPhysicalDeviceFeatures',
+        ).declare_output(name = 'pFeatures')
+    g.add_gen_func(name = 'vkGetPhysicalDeviceFeatures2',
         ).declare_output(name = 'pFeatures')
     g.add_gen_func(name = 'vkGetPhysicalDeviceProperties',
         ).declare_output(name = 'pProperties')
