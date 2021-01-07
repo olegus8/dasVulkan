@@ -294,7 +294,7 @@ class GenFunc(object):
 class GenStruct(object):
 
     def __init__(self, generator, name, boost_to_vk=True, vk_to_boost=True,
-        ignore_fields=None
+        ignore_fields=None, next_in_chain=None
     ):
         ignore_fields = ignore_fields or []
         self.__generator = generator
