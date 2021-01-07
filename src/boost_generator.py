@@ -1300,12 +1300,7 @@ class ParamVkStruct(ParamBase):
         btype = self._boost_func_param_type
         lines = []
         if self._is_boost_func_output:
-            if self.vk_is_dyn_array_items:
-                return [
-                    f'var {bname} : {btype}',
-                    f'defer() <| {{ delete {bname}; }}',
-                ]
-            elif self.vk_is_pointer:
+            if self.vk_is_pointer:
                 return [
                     f'var {bname} : {btype}',
                     f'var vk_{bname} <- {bname} |> vk_view_create_unsafe()',
@@ -1339,7 +1334,10 @@ class ParamVkStruct(ParamBase):
                 count_expr = f'vk_{self._dyn_array_count.vk_name}'
             else:
                 count_expr = self._dyn_array_count_expr
-            return [
+            lines += [
+                f'',
+                f'var {bname} : {btype}',
+                f'defer() <| {{ delete {bname}; }}',
                 f'{bname} |> resize(int({count_expr}))',
                 f'var vk_{bname} <- [{{ for item in {bname} ;',
                 f'    item |> vk_view_create_unsafe() }}]',
@@ -1348,7 +1346,7 @@ class ParamVkStruct(ParamBase):
                 f'        item |> vk_view_destroy()',
                 f'    delete vk_{bname}',
             ]
-        return []
+        return lines
 
     def generate_boost_struct_field_view_decl(self):
         bname = self._boost_struct_field_name
