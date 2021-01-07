@@ -1298,29 +1298,26 @@ class ParamVkStruct(ParamBase):
     def generate_boost_func_temp_vars_init(self):
         bname = self._boost_func_param_name
         btype = self._boost_func_param_type
+        lines = []
         if self._is_boost_func_output:
-            if self.vk_is_pointer:
-                return [
-                    f'var {bname} : {btype}',
-                    f'var vk_{bname} <- {bname} |> vk_view_create_unsafe()',
-                    f'defer() <| {{ {bname} |> vk_view_destroy(); }}',
-                ]
-        else:
-            if self.vk_is_dyn_array_items:
-                return [
-                    f'var vk_{bname} <- [{{ for item in {bname} ;',
-                    f'    item |> vk_view_create_unsafe() }}]',
-                    f'defer() <|',
-                    f'    for item in {bname}',
-                    f'        item |> vk_view_destroy()',
-                    f'    delete vk_{bname}',
-                ]
-            elif self.vk_is_pointer:
-                assert not self._optional #TODO: add support when needed
-                return [
-                    f'var vk_{bname} <- {bname} |> vk_view_create_unsafe()',
-                    f'defer() <| {{ {bname} |> vk_view_destroy(); }}',
-                ]
+            lines += [f'var {bname} : {btype}']
+        if self.vk_is_dyn_array_items:
+            lines += [
+                f'var vk_{bname} <- [{{ for item in {bname} ;',
+                f'    item |> vk_view_create_unsafe() }}]',
+                f'defer() <|',
+                f'    for item in {bname}',
+                f'        item |> vk_view_destroy()',
+                f'    delete vk_{bname}',
+            ]
+            return lines
+        elif self.vk_is_pointer:
+            assert not self._optional #TODO: add support when needed
+            lines += [
+                f'var vk_{bname} <- {bname} |> vk_view_create_unsafe()',
+                f'defer() <| {{ {bname} |> vk_view_destroy(); }}',
+            ]
+            return lines
         return super(ParamVkStruct, self).generate_boost_func_temp_vars_init()
 
     def generate_boost_struct_field_view_decl(self):
