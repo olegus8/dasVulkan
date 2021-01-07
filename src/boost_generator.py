@@ -1411,11 +1411,16 @@ class ParamVkStruct(ParamBase):
     def generate_boost_struct_view_destroy(self):
         bname = self._boost_struct_field_name
         if self.vk_is_dyn_array_items:
-            return [
+            lines = []
+            lines += [
                f'for item in boost_struct.{bname}',
                f'    item |> vk_view_destroy()',
-               f'delete boost_struct._vk_view_{bname}',
             ]
+            if not self._vk_is_fixed_array:
+                lines += [
+                   f'delete boost_struct._vk_view_{bname}',
+                ]
+            return lines
         if self.vk_is_pointer and self._optional:
             return [
                f'if boost_struct.{bname} != null',
