@@ -614,6 +614,7 @@ struct SwapchainIndependentState
     texture         : MemoryBackedImage
     texture_view    : ImageView
     sampler         : Sampler
+    graphics_family : uint
 
 
 def finalize(var s : SwapchainIndependentState explicit)
@@ -649,10 +650,11 @@ def create_swapchain_independent_state(
     s.phys_dev <- s.instance |> find_best_physical_device(s.surface)
     s.present_mode <- s.phys_dev |> find_present_mode_like_mailbox(s.surface)
     s.surf_fmt <- s.phys_dev |> find_format_like_srgb_bgra8(s.surface)
-    let qfam <- s.phys_dev |> get_graphics_queue_family(s.surface)
-    s.device <- s.phys_dev |> create_example_device(qfam)
-    s.queue <- s.device |> get_device_queue(qfam)
-    s.cmd_pool <- create_command_pool([device=s.device, queue_family=qfam])
+    s.graphics_family <- s.phys_dev |> get_graphics_queue_family(s.surface)
+    s.device <- s.phys_dev |> create_example_device(s.graphics_family)
+    s.queue <- s.device |> get_device_queue(s.graphics_family)
+    s.cmd_pool <- create_command_pool([device=s.device,
+        queue_family=s.graphics_family])
     s.vert_shmod <- s.device |> create_shader_module_from_file(
         "{get_das_root()}/modules/dasVulkan/example/vert.spv")
     s.frag_shmod <- s.device |> create_shader_module_from_file(
@@ -745,6 +747,19 @@ def create_swapchain_dependent_state(
     sds.imgs_used_by_frames <- [{for x in sds.swapchain.framebuffers; -1}]
 
     return <- sds
+
+
+def create_example_timestamp_query_pools(
+    sis : SwapchainIndependentState;
+    framebuffers : array<Framebuffer>
+) : array<TimestampQueryPool>
+    return <- [{for fbuf in framebuffers;
+        create_timestamp_query_pool([
+            phys_dev = sis.phys_dev,
+            device = sis.device,
+            queue_family = 
+        ])
+    }]
 
 
 def create_example_descriptor_sets(
