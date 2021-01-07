@@ -9,6 +9,7 @@ require daslib/safe_addr
 require vulkan
 require window
 require math
+require strings
 
 //
 // Helpers
@@ -1241,8 +1242,8 @@ def vk_view_create_unsafe(var boost_struct : ExtensionProperties
     assert(!boost_struct._vk_view__active)
     boost_struct._vk_view__active = true
     var vk_extension_name : int8 [256]
-    for i in min(length(vk_extension_name), length(extension_name))
-      vk_extension_name[i] = extension_name |> character_at <| i
+    for i in range(min(vk_extension_name |> length(), extension_name |> length()))
+        vk_extension_name[i] = boost_struct.extension_name |> character_at <| i
     return <- [[ VkExtensionProperties
         extensionName := vk_extension_name,
         specVersion = boost_value_to_vk(boost_struct.spec_version)
@@ -2061,8 +2062,8 @@ def vk_view_create_unsafe(var boost_struct : PhysicalDeviceProperties
     assert(!boost_struct._vk_view__active)
     boost_struct._vk_view__active = true
     var vk_device_name : int8 [256]
-    for i in min(length(vk_device_name), length(device_name))
-      vk_device_name[i] = device_name |> character_at <| i
+    for i in range(min(vk_device_name |> length(), device_name |> length()))
+        vk_device_name[i] = boost_struct.device_name |> character_at <| i
     boost_struct._vk_view_p_limits = new VkPhysicalDeviceLimits
     *(boost_struct._vk_view_p_limits) <- (
         boost_struct.limits |> vk_view_create_unsafe())

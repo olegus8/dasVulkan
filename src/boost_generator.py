@@ -1473,7 +1473,7 @@ class ParamFixedString(ParamBase):
         lines += [
            f'var vk_{bname} : {vtype}',
            f'for i in range(min(vk_{bname} |> length(), {bname} |> length()))',
-           f'  vk_{bname}[i] = {bname} |> character_at <| i',
+           f'    vk_{bname}[i] = boost_struct.{bname} |> character_at <| i',
         ]
         return lines
 
