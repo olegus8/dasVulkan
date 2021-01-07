@@ -1478,7 +1478,8 @@ class ParamFixedString(ParamBase):
         return lines
 
     def generate_boost_struct_view_create_field(self):
-        return [f'{vname} := vk_{bname},']
+        bname = self._boost_struct_field_name
+        return [f'{self.vk_name} := vk_{bname},']
 
     def generate_boost_struct_v2b_vars(self):
         return []
