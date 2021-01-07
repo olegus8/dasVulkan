@@ -1139,12 +1139,14 @@ class ParamVk_pNext(ParamBase):
 
     def generate_boost_struct_field_decl(self):
         if self.__next:
-            return [f'next : {self.__next.boost_type_name}']
+            nbtype = self.__next.boost_type_name
+            return [f'next : {nbtype}']
         return []
 
     def generate_boost_struct_field_view_decl(self):
         if self.__next:
-            return [f'_vk_p_next : {self.__next.vk_type_name} ?']
+            nvtype = self.__next.vk_type_name
+            return [f'_vk_p_next : {nvtype} ?']
         return []
 
     def generate_boost_struct_v2b_field(self):
@@ -1154,6 +1156,12 @@ class ParamVk_pNext(ParamBase):
         return []
 
     def generate_boost_struct_view_create_init(self):
+        if self.__next:
+            return [
+               f'boost_struct._vk_view_p_next = new {vutype}',
+               f'*(boost_struct._vk_view_p_{bname}) <- (',
+               f'    boost_struct.{bname} |> vk_view_create_unsafe())',
+            ]
         return []
 
     def generate_boost_struct_view_create_field(self):
