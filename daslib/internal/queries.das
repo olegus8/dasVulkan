@@ -66,6 +66,8 @@ def cmd_reset(
 
 
 def to_ns(pool : TimestampQueryPool; raw: TimestampQueryResult) : double
+    return pool._timestamp_valid_bits == 0u ? double(0) : (
+        double(raw.value) * double(pool._timestamp_period))
 
 
 def update(var pool : TimestampQueryPool)
