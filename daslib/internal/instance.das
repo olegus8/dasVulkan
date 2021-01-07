@@ -22,7 +22,7 @@ def vk_version_to_boost(v : uint) : VulkanVersion
 
 
 def boost_value_to_vk(b : VulkanVersion) : uint
-    pass
+    return (b.major << 22u) | (b.minor << 12u) | b.patch
 
 
 def create_default_instance()
