@@ -559,8 +559,8 @@ def get_suitability_score(device : PhysicalDevice; surface : SurfaceKHR)
     )
         score += 1000
 
-    var feats <- device |> get_physical_device_features()
-    if feats.sampler_anisotropy == 0u
+    var feats <- device |> get_physical_device_features_2()
+    if feats.features.sampler_anisotropy == 0u
         print("No anisotropy. No go.\n")
         return 0
 
