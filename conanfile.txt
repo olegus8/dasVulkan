@@ -2,4 +2,4 @@
 glfw/3.3.2
 
 [generators]
-cmake
+cmake_find_package
