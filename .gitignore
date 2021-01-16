@@ -1,6 +1,6 @@
 *.ast.json
 module_generated.inc
-Findglfw.cmake
+Findglfw3.cmake
 conan.lock
 conanbuildinfo.txt
 conaninfo.txt
