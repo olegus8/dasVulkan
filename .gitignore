@@ -1,2 +1,3 @@
 *.ast.json
 module_generated.inc
+conanbuildinfo.cmake
