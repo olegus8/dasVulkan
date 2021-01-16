@@ -6,6 +6,10 @@ IF(NOT DAS_VULKAN_INCLUDED)
         INCLUDE(${CMAKE_SOURCE_DIR}/modules/dasBinder/CMakeLists.txt)
     ENDIF()
 
+    SET(DAS_VULKAN_DIR ${CMAKE_SOURCE_DIR}/modules/dasVulkan)
+
+    INCLUDE(${DAS_VULKAN_DIR}/conanbuildinfo.cmake)
+
     FIND_PACKAGE(Vulkan)
     FIND_PACKAGE(glfw3)
     FIND_PROGRAM(DAS_VULKAN_GLSL_EXE glslc)
@@ -32,8 +36,6 @@ IF(NOT DAS_VULKAN_INCLUDED)
     IF(NOT Vulkan_FOUND OR NOT glfw3_FOUND OR NOT DAS_VULKAN_GLSL_EXE)
         MESSAGE(STATUS "Prerequisites not found. Not building dasVulkan.")
     ELSE()
-        SET(DAS_VULKAN_DIR ${CMAKE_SOURCE_DIR}/modules/dasVulkan)
-
         SET(DAS_VULKAN_MODULE_SRC
             ${DAS_VULKAN_DIR}/src/headers_to_bind.h
             ${DAS_VULKAN_DIR}/src/custom.cpp
