@@ -144,6 +144,7 @@ VkResult vk_create_debug_utils_messenger_ex(
     (*debug_ctx)->ctx = ctx;
     (*debug_ctx)->callback = ctx->getFunction(callback.index-1);
     if ( ! (*debug_ctx)->callback ) {
+        delete *debug_ctx;
         ctx->throw_error("callback function not found");
     }
     VkDebugUtilsMessengerCreateInfoEXT final_info = *create_info;
