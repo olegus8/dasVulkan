@@ -194,6 +194,9 @@ public:
         addExtern<DAS_BIND_FUN(vk_create_debug_utils_messenger)>(
             *this, lib, "vkCreateDebugUtilsMessengerEx",
             SideEffects::worstDefault, "vkCreateDebugUtilsMessengerEx");
+        addExtern<DAS_BIND_FUN(vk_destroy_debug_utils_messenger)>(
+            *this, lib, "vkDestroyDebugUtilsMessengerEx",
+            SideEffects::worstDefault, "vkDestroyDebugUtilsMessengerEx");
     }
 };
 
