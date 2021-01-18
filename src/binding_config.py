@@ -57,7 +57,7 @@ class Config(ConfigBase):
         if field.name.startswith('pfn'):
             field.ignore()
 
-        if field.struct.name == 'VkDebugUtilsMessengerCreateInfoEXT'
+        if (field.struct.name == 'VkDebugUtilsMessengerCreateInfoEXT'
         and field.name == 'pUserData'
         ):
             field.ignore()
