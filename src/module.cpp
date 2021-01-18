@@ -136,8 +136,8 @@ VkResult vk_create_debug_utils_messenger(
     const VkDebugUtilsMessengerCreateInfoEXT*   create_info,
     const VkAllocationCallbacks*                allocator,
     Func                                        callback,
-    DebugMsgContextHandle*                      debug_ctx,
     VkDebugUtilsMessengerEXT*                   messenger,
+    DebugMsgContext**                           debug_ctx,
     Context *                                   ctx
 ) {
     auto debug_ctx = new DebugMsgContext();
@@ -147,6 +147,14 @@ VkResult vk_create_debug_utils_messenger(
         ctx->throw_error("callback function not found");
     }
     return debug_ctx;
+}
+
+void vkDestroyDebugUtilsMessengerEXT(
+    VkInstance                                  instance,
+    VkDebugUtilsMessengerEXT                    messenger,
+    DebugMsgContext*                            debug_ctx,
+    const VkAllocationCallbacks*                allocator
+) {
 }
 
 
