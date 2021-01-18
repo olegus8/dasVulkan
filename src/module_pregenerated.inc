@@ -24984,6 +24984,8 @@ protected:
             SideEffects::worstDefault, "vkCreateQueryPool");
         addExtern<DAS_BIND_FUN(vkDestroyQueryPool)>(*this, lib, "vkDestroyQueryPool",
             SideEffects::worstDefault, "vkDestroyQueryPool");
+        addExtern<DAS_BIND_FUN(vkGetQueryPoolResults)>(*this, lib, "vkGetQueryPoolResults",
+            SideEffects::worstDefault, "vkGetQueryPoolResults");
         addExtern<DAS_BIND_FUN(vkCreateBuffer)>(*this, lib, "vkCreateBuffer",
             SideEffects::worstDefault, "vkCreateBuffer");
         addExtern<DAS_BIND_FUN(vkDestroyBuffer)>(*this, lib, "vkDestroyBuffer",
@@ -25010,6 +25012,8 @@ protected:
             SideEffects::worstDefault, "vkCreatePipelineCache");
         addExtern<DAS_BIND_FUN(vkDestroyPipelineCache)>(*this, lib, "vkDestroyPipelineCache",
             SideEffects::worstDefault, "vkDestroyPipelineCache");
+        addExtern<DAS_BIND_FUN(vkGetPipelineCacheData)>(*this, lib, "vkGetPipelineCacheData",
+            SideEffects::worstDefault, "vkGetPipelineCacheData");
         addExtern<DAS_BIND_FUN(vkMergePipelineCaches)>(*this, lib, "vkMergePipelineCaches",
             SideEffects::worstDefault, "vkMergePipelineCaches");
         addExtern<DAS_BIND_FUN(vkCreateGraphicsPipelines)>(*this, lib, "vkCreateGraphicsPipelines",

@@ -294,13 +294,14 @@ class GenFunc(object):
 class GenStruct(object):
 
     def __init__(self, generator, name, boost_to_vk=True, vk_to_boost=True,
-        ignore_fields=None
+        ignore_fields=None, next_in_chain=None
     ):
         ignore_fields = ignore_fields or []
         self.__generator = generator
-        self.__vk_type_name = name
+        self.vk_type_name = name
         self.__boost_to_vk = boost_to_vk
         self.__vk_to_boost = vk_to_boost
+        self.next_in_chain = next_in_chain
 
         self.__fields = [field for field in
             self.__generator.create_struct_fields(self.__c_struct)
@@ -312,11 +313,11 @@ class GenStruct(object):
 
     @property
     def __c_struct(self):
-        return self.__generator.structs[self.__vk_type_name]
+        return self.__generator.structs[self.vk_type_name]
 
     @property
     def boost_type_name(self):
-        return vk_struct_type_to_boost(self.__vk_type_name)
+        return vk_struct_type_to_boost(self.vk_type_name)
 
     def __get_field(self, vk_name):
         for field in self.__fields:
@@ -376,7 +377,7 @@ class GenStruct(object):
         lines = []
         lines += [
             '',
-           f'def vk_value_to_boost(vk_struct : {self.__vk_type_name}) '
+           f'def vk_value_to_boost(vk_struct : {self.vk_type_name}) '
                 f': {self.boost_type_name}',
         ] + [
            f'    {line}' for field in self.__fields for line in
@@ -399,11 +400,11 @@ class GenStruct(object):
 
     def __generate_vk_view_create(self):
         btype = self.boost_type_name
-        vtype = self.__vk_type_name
+        vtype = self.vk_type_name
         lines = []
         lines += [
             '',
-           f'def vk_view_create_unsafe(var boost_struct : {btype}',
+           f'def vk_view_create_unsafe(var boost_struct : {btype} &',
            f') : {vtype}',
             '',
             '    assert(!boost_struct._vk_view__active)',
@@ -426,7 +427,7 @@ class GenStruct(object):
     def __generate_vk_view_destroy(self):
         return [
             '',
-           f'def vk_view_destroy(var boost_struct : {self.boost_type_name})',
+           f'def vk_view_destroy(var boost_struct : {self.boost_type_name} &)',
             '    assert(boost_struct._vk_view__active)',
         ] + [
            f'    {line}' for field in self.__fields for line in
@@ -624,7 +625,7 @@ class GenHandleDtor(GenFunc):
         lines = super(GenHandleDtor, self).generate()
         lines += [
             '',
-           f'def finalize(var handle : {bh_type} explicit)',
+           f'def finalize(var handle : {bh_type} & explicit)',
            f'    if handle._needs_delete',
            f'        {self._boost_func_name}(',
         ] + [
@@ -1132,19 +1133,60 @@ class ParamVk_pNext(ParamBase):
     def vk_unqual_type(self):
         return self._c_unqual_type
 
+    @property
+    def __next(self):
+        return self._gen_struct.next_in_chain
+
     def generate_boost_struct_field_decl(self):
+        if self.__next:
+            nbtype = self.__next.boost_type_name
+            return [f'next : {nbtype}']
         return []
 
-    def generate_boost_struct_v2b_field(self):
+    def generate_boost_struct_field_view_decl(self):
+        if self.__next:
+            nvtype = self.__next.vk_type_name
+            return [f'_vk_view_p_next : {nvtype} ?']
         return []
 
     def generate_boost_struct_v2b_vars(self):
+        if self.__next:
+            nvtype = self.__next.vk_type_name
+            return [
+                f'assert(vk_struct.pNext != null)',
+                f'var vk_p_next : {nvtype} ?',
+                f'unsafe',
+                f'    vk_p_next = reinterpret<{nvtype} ?>(vk_struct.pNext)',
+            ]
+        return []
+
+    def generate_boost_struct_v2b_field(self):
+        if self.__next:
+            return [f'next <- vk_value_to_boost(*vk_p_next),']
         return []
 
     def generate_boost_struct_view_create_init(self):
+        if self.__next:
+            nvtype = self.__next.vk_type_name
+            return [
+               f'boost_struct._vk_view_p_next = new {nvtype}',
+               f'*(boost_struct._vk_view_p_next) <- (',
+               f'    boost_struct.next |> vk_view_create_unsafe())',
+            ]
         return []
 
     def generate_boost_struct_view_create_field(self):
+        if self.__next:
+            return [f'pNext = boost_struct._vk_view_p_next,']
+        return []
+
+    def generate_boost_struct_view_destroy(self):
+        if self.__next:
+            return [
+               f'boost_struct.next |> vk_view_destroy()',
+               f'unsafe',
+               f'    delete boost_struct._vk_view_p_next',
+            ]
         return []
 
 
@@ -1297,7 +1339,21 @@ class ParamVkStruct(ParamBase):
 
     def generate_boost_func_temp_vars_init(self):
         bname = self._boost_func_param_name
-        if not self._is_boost_func_output:
+        btype = self._boost_func_param_type
+        lines = []
+        if self._is_boost_func_output:
+            if self.vk_is_dyn_array_items:
+                return [
+                    f'var {bname} : {btype}',
+                    f'defer() <| {{ delete {bname}; }}',
+                ]
+            elif self.vk_is_pointer:
+                return [
+                    f'var {bname} : {btype}',
+                    f'var vk_{bname} <- {bname} |> vk_view_create_unsafe()',
+                    f'defer() <| {{ {bname} |> vk_view_destroy(); }}',
+                ]
+        else:
             if self.vk_is_dyn_array_items:
                 return [
                     f'var vk_{bname} <- [{{ for item in {bname} ;',
@@ -1313,13 +1369,38 @@ class ParamVkStruct(ParamBase):
                     f'var vk_{bname} <- {bname} |> vk_view_create_unsafe()',
                     f'defer() <| {{ {bname} |> vk_view_destroy(); }}',
                 ]
-        return super(ParamVkStruct, self).generate_boost_func_temp_vars_init()
+        return []
+
+    def generate_boost_func_temp_vars_update(self):
+        lines = []
+        if self.vk_is_dyn_array_items and self._is_boost_func_output:
+            bname = self._boost_func_param_name
+            btype = self._boost_func_param_type
+            vtype = self.vk_unqual_type
+            if self._dyn_array_count:
+                count_expr = f'vk_{self._dyn_array_count.vk_name}'
+            else:
+                count_expr = self._dyn_array_count_expr
+            return [
+                f'{bname} |> resize(int({count_expr}))',
+                f'var vk_{bname} <- [{{ for item in {bname} ;',
+                f'    item |> vk_view_create_unsafe() }}]',
+                f'defer() <|',
+                f'    for item in {bname}',
+                f'        item |> vk_view_destroy()',
+                f'    delete vk_{bname}',
+            ]
+        return []
 
     def generate_boost_struct_field_view_decl(self):
         bname = self._boost_struct_field_name
+        vtype = self._vk_type
         vutype = self.vk_unqual_type
         if self.vk_is_dyn_array_items:
-            return [f'_vk_view_{bname} : array<{vutype}>']
+            if self._vk_is_fixed_array:
+                return [f'_vk_view_{bname} : {vtype}']
+            else:
+                return [f'_vk_view_{bname} : array<{vutype}>']
         if self.vk_is_pointer and self._optional:
             return [f'_vk_view_{bname} : {vutype} ?']
         return [f'_vk_view_p_{bname} : {vutype} ?']
@@ -1328,11 +1409,18 @@ class ParamVkStruct(ParamBase):
         bname = self._boost_struct_field_name
         vutype = self.vk_unqual_type
         if self.vk_is_dyn_array_items:
-            return [
-               f'boost_struct._vk_view_{bname} <- [{{',
-               f'    for item in boost_struct.{bname} ;',
-               f'    item |> vk_view_create_unsafe()}}]',
-            ]
+            if self._vk_is_fixed_array:
+                return [
+                    f'for dst, src in boost_struct._vk_view_{bname}, '
+                            f'boost_struct.{bname}',
+                    f'    dst <- src |> vk_view_create_unsafe',
+                ]
+            else:
+                return [
+                   f'boost_struct._vk_view_{bname} <- [{{',
+                   f'    for item in boost_struct.{bname} ;',
+                   f'    item |> vk_view_create_unsafe()}}]',
+                ]
         if self.vk_is_pointer and self._optional:
             return [
                f'if boost_struct.{bname} != null',
@@ -1351,8 +1439,11 @@ class ParamVkStruct(ParamBase):
         bname = self._boost_struct_field_name
         vname = self.vk_name
         if self.vk_is_dyn_array_items:
-            return [f'{vname} = array_addr_unsafe('
-                f'boost_struct._vk_view_{bname}),']
+            if self._vk_is_fixed_array:
+                return [f'{vname} := boost_struct._vk_view_{bname},']
+            else:
+                return [f'{vname} = array_addr_unsafe('
+                    f'boost_struct._vk_view_{bname}),']
         if self.vk_is_pointer:
             if self._optional:
                 return [f'{vname} = boost_struct._vk_view_{bname},']
@@ -1363,11 +1454,16 @@ class ParamVkStruct(ParamBase):
     def generate_boost_struct_view_destroy(self):
         bname = self._boost_struct_field_name
         if self.vk_is_dyn_array_items:
-            return [
+            lines = []
+            lines += [
                f'for item in boost_struct.{bname}',
                f'    item |> vk_view_destroy()',
-               f'delete boost_struct._vk_view_{bname}',
             ]
+            if not self._vk_is_fixed_array:
+                lines += [
+                   f'delete boost_struct._vk_view_{bname}',
+                ]
+            return lines
         if self.vk_is_pointer and self._optional:
             return [
                f'if boost_struct.{bname} != null',
@@ -1425,12 +1521,29 @@ class ParamFixedString(ParamBase):
             return cls(c_param=c_param, **kwargs)
 
     @property
-    def _vk_is_fixed_array(self):
-        return False
+    def vk_unqual_type(self):
+        return 'int8'
 
     @property
-    def vk_unqual_type(self):
+    def _boost_struct_field_type(self):
         return 'string'
+
+    def generate_boost_struct_view_create_init(self):
+        bname = self._boost_struct_field_name
+        vtype = self._vk_type
+        lines = []
+        lines += [
+           f'var vk_{bname} : {vtype}',
+           f'boost_struct.{bname} |> copy_to_array <| vk_{bname}',
+        ]
+        return lines
+
+    def generate_boost_struct_view_create_field(self):
+        bname = self._boost_struct_field_name
+        return [f'{self.vk_name} := vk_{bname},']
+
+    def generate_boost_struct_v2b_vars(self):
+        return []
 
 
 class ParamString(ParamBase):
@@ -1639,8 +1752,16 @@ class ParamUnknown(ParamBase):
 
 def boost_camel_to_lower(camel):
     result = ''
+
     for force_sep_after in ['2D', '3D', '4D']:
         camel = camel.replace(force_sep_after, force_sep_after + '_')
+
+    for src, dst in [
+        ('Vulkan11', 'Vulkan_1_1_'),
+        ('Vulkan12', 'Vulkan_1_2_'),
+    ]:
+        camel = camel.replace(src, dst)
+
     state = None
     for c in camel:
         if c.islower():

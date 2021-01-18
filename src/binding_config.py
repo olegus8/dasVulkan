@@ -74,8 +74,7 @@ class Config(ConfigBase):
             return
 
         #TODO: make these work
-        if ('size_t' in func.type
-        or  'PFN_' in func.type
+        if ('PFN_' in func.type
         or  func.name.endswith('KHR')
         or  func.name.endswith('EXT')
         or  func.name.endswith('INTEL')
@@ -126,6 +125,7 @@ def add_boost_content(g):
         'VkPhysicalDevice',
         'VkPipelineCache',
         'VkPipelineLayout',
+        'VkQueryPool',
         'VkQueue',
         'VkRenderPass',
         'VkSampler',
@@ -156,14 +156,18 @@ def add_boost_content(g):
         'VkAttachmentDescription',
         'VkAttachmentReference',
         'VkComponentMapping',
+        'VkExtensionProperties',
         'VkExtent2D',
         'VkExtent3D',
         'VkImageSubresourceRange',
+        'VkMemoryHeap',
         'VkMemoryRequirements',
+        'VkMemoryType',
         'VkOffset2D',
         'VkOffset3D',
         'VkPhysicalDeviceFeatures',
         'VkPhysicalDeviceLimits',
+        'VkPhysicalDeviceProperties',
         'VkPhysicalDeviceSparseProperties',
         'VkPushConstantRange',
         'VkQueueFamilyProperties',
@@ -174,14 +178,6 @@ def add_boost_content(g):
         'VkViewport',
     ]:
         g.add_gen_struct(name = name)
-
-    for name in [
-        'VkExtensionProperties',
-        'VkMemoryHeap',
-        'VkMemoryType',
-        'VkPhysicalDeviceProperties',
-    ]:
-        g.add_gen_struct(name=name, boost_to_vk=False)
 
     for name in [
         'VkBufferCopy',
@@ -210,6 +206,7 @@ def add_boost_content(g):
         'VkPipelineRasterizationStateCreateInfo',
         'VkPipelineShaderStageCreateInfo',
         'VkPipelineTessellationStateCreateInfo',
+        'VkQueryPoolCreateInfo',
         'VkSamplerCreateInfo',
         'VkSemaphoreCreateInfo',
         'VkSpecializationMapEntry',
@@ -253,7 +250,7 @@ def add_boost_content(g):
     g.add_gen_struct(name = 'VkInstanceCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'enabledLayerCount', items = 'ppEnabledLayerNames',
         ).declare_array(count = 'enabledExtensionCount', items = 'ppEnabledExtensionNames')
-    g.add_gen_struct(name = 'VkPhysicalDeviceMemoryProperties', boost_to_vk=False,
+    g.add_gen_struct(name = 'VkPhysicalDeviceMemoryProperties',
         ).declare_array(count = 'memoryTypeCount', items = 'memoryTypes',
         ).declare_array(count = 'memoryHeapCount', items = 'memoryHeaps')
     g.add_gen_struct(name = 'VkPipelineCacheCreateInfo', vk_to_boost=False,
@@ -304,6 +301,11 @@ def add_boost_content(g):
         ).declare_array(count = 'descriptorCount', items = 'pBufferInfo', optional=True,
         ).declare_array(count = 'descriptorCount', items = 'pTexelBufferView', optional=True)
 
+    g.add_gen_struct(
+        name = 'VkPhysicalDeviceFeatures2',
+        next_in_chain = g.add_gen_struct(
+            name = 'VkPhysicalDeviceVulkan11Features'))
+
     #
     # Functions
     #
@@ -339,6 +341,7 @@ def add_boost_content(g):
         ).declare_array(count = 'memoryBarrierCount', items = 'pMemoryBarriers',
         ).declare_array(count = 'bufferMemoryBarrierCount', items = 'pBufferMemoryBarriers',
         ).declare_array(count = 'imageMemoryBarrierCount', items = 'pImageMemoryBarriers')
+    g.add_gen_func(name = 'vkCmdResetQueryPool')
     g.add_gen_func(name = 'vkDeviceWaitIdle')
     g.add_gen_func(name = 'vkEndCommandBuffer')
     g.add_gen_func(name = 'vkEnumerateDeviceExtensionProperties',
@@ -358,6 +361,8 @@ def add_boost_content(g):
     g.add_gen_func(name = 'vkGetImageMemoryRequirements',
         ).declare_output(name = 'pMemoryRequirements')
     g.add_gen_func(name = 'vkGetPhysicalDeviceFeatures',
+        ).declare_output(name = 'pFeatures')
+    g.add_gen_func(name = 'vkGetPhysicalDeviceFeatures2',
         ).declare_output(name = 'pFeatures')
     g.add_gen_func(name = 'vkGetPhysicalDeviceProperties',
         ).declare_output(name = 'pProperties')
@@ -387,6 +392,7 @@ def add_boost_content(g):
     g.add_gen_func(name = 'vkQueueWaitIdle')
     g.add_gen_func(name = 'vkResetFences',
         ).declare_array(count = 'fenceCount', items = 'pFences')
+    g.add_gen_func(name = 'vkResetQueryPool')
     g.add_gen_func(name = 'vkUnmapMemory')
     g.add_gen_func(name = 'vkUpdateDescriptorSets',
         ).declare_array(count = 'descriptorWriteCount', items = 'pDescriptorWrites',

@@ -7,6 +7,7 @@ require daslib/safe_addr
 require vulkan
 require window
 require math
+require strings
 
 //
 // Helpers
@@ -37,6 +38,15 @@ def vk_value_to_boost(v : auto(T)) : T
 def vk_value_to_boost(v : int8[]) : string
     unsafe
         return <- clone_string(reinterpret<string>(addr(v[0])))
+
+def vk_value_to_boost(v : string) : string
+    unsafe
+        return <- clone_string(v)
+
+def copy_to_array(src : string; var dst : int8[] &)
+    for s, d in src, dst
+        unsafe
+            d = reinterpret<int8>(uint8(s))
 
 def array_addr_unsafe(var ar : array<auto(T)>) : T?
     unsafe

@@ -526,7 +526,8 @@ def find_best_physical_device(
     for device in devices
         var props <- device |> get_physical_device_properties()
         defer() <| { delete props ; }
-        print("Considering {props.device_name}\n")
+        let version = props.api_version |> vk_version_to_boost |> to_string
+        print("Considering {props.device_name} (supports vulkan {version})\n")
         var score = device |> get_suitability_score(surface)
         if score > best_score
             print("Found new best device.\n")
@@ -608,6 +609,7 @@ struct SwapchainIndependentState
     texture         : MemoryBackedImage
     texture_view    : ImageView
     sampler         : Sampler
+    graphics_family : uint
 
 
 def finalize(var s : SwapchainIndependentState explicit)
@@ -641,12 +643,13 @@ def create_swapchain_independent_state(
     s.instance <- create_default_instance()
     s.surface <- s.instance |> create_window_surface(s.window)
     s.phys_dev <- s.instance |> find_best_physical_device(s.surface)
-    s.present_mode <- s.phys_dev |> find_present_mode_like_mailbox(s.surface)
+    s.present_mode = VkPresentModeKHR VK_PRESENT_MODE_FIFO_KHR
     s.surf_fmt <- s.phys_dev |> find_format_like_srgb_bgra8(s.surface)
-    let qfam <- s.phys_dev |> get_graphics_queue_family(s.surface)
-    s.device <- s.phys_dev |> create_example_device(qfam)
-    s.queue <- s.device |> get_device_queue(qfam)
-    s.cmd_pool <- create_command_pool([device=s.device, queue_family=qfam])
+    s.graphics_family <- s.phys_dev |> get_graphics_queue_family(s.surface)
+    s.device <- s.phys_dev |> create_example_device(s.graphics_family)
+    s.queue <- s.device |> get_device_queue(s.graphics_family)
+    s.cmd_pool <- create_command_pool([device=s.device,
+        queue_family=s.graphics_family])
     s.vert_shmod <- s.device |> create_shader_module_from_file(
         "{get_das_root()}/modules/dasVulkan/example/vert.spv")
     s.frag_shmod <- s.device |> create_shader_module_from_file(
