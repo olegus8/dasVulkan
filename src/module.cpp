@@ -140,20 +140,24 @@ VkResult vk_create_debug_utils_messenger(
     DebugMsgContext**                           debug_ctx,
     Context *                                   ctx
 ) {
-    auto debug_ctx = new DebugMsgContext();
-    debug_ctx->ctx = ctx;
-    debug_ctx->callback = ctx->getFunction(fn.index-1);
-    if ( ! ctx->callback ) {
+    *debug_ctx = new DebugMsgContext();
+    (*debug_ctx)->ctx = ctx;
+    (*debug_ctx)->callback = ctx->getFunction(callback.index-1);
+    if ( ! (*debug_ctx)->callback ) {
         ctx->throw_error("callback function not found");
     }
-    return debug_ctx;
+    VkDebugUtilsMessengerCreateInfoEXT final_info = *create_info;
+    final_info.pfnUserCallback = vk_debug_msg_callback;
+    final_info.pUserData = *debug_ctx;
+    auto result = vk
 }
 
-void vkDestroyDebugUtilsMessengerEXT(
+void vk_destroy_debug_utils_messenger(
     VkInstance                                  instance,
     VkDebugUtilsMessengerEXT                    messenger,
     DebugMsgContext*                            debug_ctx,
-    const VkAllocationCallbacks*                allocator
+    const VkAllocationCallbacks*                allocator,
+    Context *                                   ctx
 ) {
 }
 
