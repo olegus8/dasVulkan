@@ -191,10 +191,10 @@ public:
         addExtern<DAS_BIND_FUN(glfw_set_key_callback)>(
             *this, lib, "glfwSetKeyCallback",
             SideEffects::worstDefault, "glfwSetKeyCallback");
-        addExtern<DAS_BIND_FUN(vk_create_debug_utils_messenger)>(
+        addExtern<DAS_BIND_FUN(vk_create_debug_utils_messenger_ex)>(
             *this, lib, "vkCreateDebugUtilsMessengerEx",
             SideEffects::worstDefault, "vkCreateDebugUtilsMessengerEx");
-        addExtern<DAS_BIND_FUN(vk_destroy_debug_utils_messenger)>(
+        addExtern<DAS_BIND_FUN(vk_destroy_debug_utils_messenger_ex)>(
             *this, lib, "vkDestroyDebugUtilsMessengerEx",
             SideEffects::worstDefault, "vkDestroyDebugUtilsMessengerEx");
     }
