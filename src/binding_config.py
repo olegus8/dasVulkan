@@ -191,6 +191,7 @@ def add_boost_content(g):
         'VkCommandBufferInheritanceInfo',
         'VkCommandPoolCreateInfo',
         'VkCopyDescriptorSet',
+        'VkDebugUtilsMessengerCreateInfoEXT',
         'VkDescriptorBufferInfo',
         'VkDescriptorImageInfo',
         'VkDescriptorPoolSize',
