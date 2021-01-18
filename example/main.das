@@ -132,11 +132,8 @@ def create_example_draw_commands(
         sis.cmd_pool, sds.swapchain.framebuffers |> length())
     var clear_values <- [{ auto[] [[VkClearValue]] }]
     defer() <| { delete clear_values; }
-    for cmd_buf, fbuf, dset, tspool in cmd_bufs.command_buffers, sds.swapchain.framebuffers, sds.desc_sets.descriptor_sets, sds.timestamp_pools
+    for cmd_buf, fbuf, dset in cmd_bufs.command_buffers, sds.swapchain.framebuffers, sds.desc_sets.descriptor_sets
         cmd_buf |> record_command_buffer() <|
-            cmd_buf |> cmd_reset <| tspool
-            cmd_buf |> cmd_write(tspool.queries[0],
-                VkPipelineStageFlagBits VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT)
             cmd_buf |> record_render_pass(
                 sis.phys_dev, sis.window, sis.surface, sis.render_pass,
                 fbuf, clear_values
@@ -157,8 +154,6 @@ def create_example_draw_commands(
                 cmd_draw_indexed([command_buffer = cmd_buf,
                     index_count = uint(sis.indices |> length()),
                     instance_count = 1u])
-            cmd_buf |> cmd_write(tspool.queries[1],
-                VkPipelineStageFlagBits VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT)
     return <- cmd_bufs
 
 
@@ -689,8 +684,6 @@ struct SwapchainDependentState
     img_avail_sems      : array<Semaphore>
     render_done_sems    : array<Semaphore>
     frame_fences        : array<Fence>
-    draw_submitted     : array<bool>
-    timestamp_pools     : array<TimestampQueryPool>
     uniform_bufs        : array<MemoryBackedBuffer>
     desc_pool           : DescriptorPool
     desc_sets           : DescriptorSets
@@ -708,8 +701,6 @@ def finalize(var s : SwapchainDependentState explicit)
     delete s.desc_sets
     delete s.desc_pool
     delete s.uniform_bufs
-    delete s.draw_submitted
-    delete s.timestamp_pools
     delete s.swapchain
     delete s.frame_fences
     delete s.render_done_sems
@@ -732,9 +723,6 @@ def create_swapchain_dependent_state(
     sds.swapchain <- sis.device |> create_swapchain_ex(sis.phys_dev,
         sis.surface, sis.window, sis.surf_fmt, sis.present_mode,
         sis.render_pass)
-    sds.draw_submitted <- [{for fbuf in sds.swapchain.framebuffers; false}]
-    sds.timestamp_pools <- sis |> create_example_timestamp_query_pools(
-        sds.swapchain.framebuffers)
     sds.uniform_bufs <- sis |> create_example_uniform_buffers(
         sds.swapchain.framebuffers)
     sds.desc_pool <- sis |> create_example_descriptor_pool(
@@ -746,19 +734,6 @@ def create_swapchain_dependent_state(
     sds.imgs_used_by_frames <- [{for x in sds.swapchain.framebuffers; -1}]
 
     return <- sds
-
-
-def create_example_timestamp_query_pools(
-    sis : SwapchainIndependentState;
-    framebuffers : array<Framebuffer>
-) : array<TimestampQueryPool>
-    return <- [{for fbuf in framebuffers;
-        create_timestamp_query_pool([
-            phys_dev = sis.phys_dev,
-            device = sis.device,
-            query_count = 2
-        ])
-    }]
 
 
 def create_example_descriptor_sets(
@@ -922,15 +897,10 @@ def draw_frame(
             sds.frames_since_start)
 
         sis.device |> reset_fence(sds.frame_fences[frame])
-        if sds.draw_submitted[img_i]
-            sds.timestamp_pools[img_i] |> update
-            with sds.timestamp_pools[img_i]
-                print("{queries[0].period} {queries[0] |> diff_ns <| queries[1]} {int64(queries[0].ticks)} {int64(queries[1].ticks)}\n")
         sis.device |> submit_draw(sis.queue,
             sds.draw_cmds.command_buffers[img_i],
             sds.img_avail_sems[frame], sds.render_done_sems[frame],
             sds.frame_fences[frame])
-        sds.draw_submitted[img_i] = true
 
         presented = sis.device |> present(sis.queue, sds.swapchain.swapchain,
             img_i, sds.render_done_sems[frame])
