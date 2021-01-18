@@ -21,6 +21,11 @@ struct VkHandleAnnotation : public ManagedValueAnnotation<OT> {
 
 void addVulkanCustom(Module &, ModuleLibrary &);
 
+struct DebugMsgContext {
+    Context * ctx = nullptr;
+    SimFunction * callback = nullptr;
+};
+
 struct WindowContext {
     Context * ctx = nullptr;
     SimFunction * framebuffer_size_callback = nullptr;
@@ -102,8 +107,50 @@ void glfw_set_key_callback(GLFWwindow * window, Func fn, Context * ctx) {
     }
     window_ctx->key_callback = window_ctx->ctx->getFunction(fn.index-1);
     if ( ! window_ctx->key_callback ) {
-        window_ctx->ctx->throw_error("callback function  not found");
+        window_ctx->ctx->throw_error("callback function not found");
     }
+}
+
+DebugMsgContext* vk_create_debug_msg_context(Func fn, Context * ctx) {
+    auto debug_ctx = new DebugMsgContext();
+    debug_ctx->ctx = ctx;
+    debug_ctx->callback = ctx->getFunction(fn.index-1);
+    if ( ! ctx->callback ) {
+        ctx->throw_error("callback function not found");
+    }
+    return debug_ctx;
+}
+
+void vk_destroy_debug_msg_context(DebugMsgContext * debug_ctx, Context * ctx) {
+    if ( debub_ctx == nullptr )
+        ctx->throw_error("cannot destroy null debug msg context");
+    if ( debub_ctx->ctx != ctx )
+        ctx->throw_error("must call from same context as was created");
+    delete debug_msg_ctx;
+    auto debug_msg_ctx = new DebugMsgContext();
+    debug_msg_ctx->ctx = ctx;
+    debug_msg_ctx->callback = ctx->getFunction(fn.index-1);
+    if ( ! ctx->callback ) {
+        ctx->throw_error("callback function not found");
+    }
+    return debug_msg_ctx;
+}
+
+static VKAPI_ATTR VkBool32 VKAPI_CALL vk_debug_msg_callback(
+    VkDebugUtilsMessageSeverityFlagBitsEXT msg_severity,
+    VkDebugUtilsMessageTypeFlagsEXT msg_type,
+    const VkDebugUtilsMessengerCallbackDataEXT* callback_data,
+    void* user_data
+) {
+    auto ctx = reinterpret_cast<DebugMsgContext*>(user_data);
+    vec4f args[5] = {
+        cast<GLFWwindow *>::from(window),
+        cast<int32_t>::from(key),
+        cast<int32_t>::from(scancode),
+        cast<int32_t>::from(action),
+        cast<int32_t>::from(mods)
+    };
+    window_ctx->ctx->eval(window_ctx->key_callback, args);
 }
 
 class Module_vulkan : public GeneratedModule_vulkan {
