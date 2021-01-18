@@ -166,7 +166,7 @@ void vk_destroy_debug_utils_messenger(
     if ( debug_ctx->ctx != ctx ) {
         ctx->throw_error("must call from same context as was created");
     }
-    DestroyDebugUtilsMessengerEXT(instance, messenger, allocator);
+    vkDestroyDebugUtilsMessengerEXT(instance, messenger, allocator);
     delete debug_ctx;
 }
 
