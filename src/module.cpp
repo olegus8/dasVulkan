@@ -126,7 +126,7 @@ static VKAPI_ATTR VkBool32 VKAPI_CALL vk_debug_msg_callback(
     vec4f args[3] = {
         cast<VkDebugUtilsMessageSeverityFlagBitsEXT>::from(msg_severity),
         cast<VkDebugUtilsMessageTypeFlagsEXT>::from(msg_type),
-        cast<VkDebugUtilsMessengerCallbackDataEXT *>::from(callback_data)
+        cast<const VkDebugUtilsMessengerCallbackDataEXT *>::from(callback_data)
     };
     debug_ctx->ctx->eval(debug_ctx->callback, args);
 }
