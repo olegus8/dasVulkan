@@ -171,6 +171,11 @@ void vk_destroy_debug_utils_messenger_ex(
     const VkAllocationCallbacks*                allocator,
     Context *                                   ctx
 ) {
+    auto vk_func = (PFN_vkDestroyDebugUtilsMessengerEXT)
+        vkGetInstanceProcAddr(instance, "vkDestroyDebugUtilsMessengerEXT");
+    if (vk_func == nullptr) {
+        ctx->throw_error("vkDestroyDebugUtilsMessengerEXT not found");
+    }
     if ( debug_ctx == nullptr ) {
         ctx->throw_error("debug_ctx must not be null");
     }
