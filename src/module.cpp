@@ -140,6 +140,12 @@ VkResult vk_create_debug_utils_messenger_ex(
     DebugMsgContext**                           debug_ctx,
     Context *                                   ctx
 ) {
+    auto vk_func = (PFN_vkCreateDebugUtilsMessengerEXT)
+        vkGetInstanceProcAddr(instance, "vkCreateDebugUtilsMessengerEXT");
+    if (vk_func == nullptr) {
+        return VK_ERROR_EXTENSION_NOT_PRESENT;
+    }
+
     *debug_ctx = new DebugMsgContext();
     (*debug_ctx)->ctx = ctx;
     (*debug_ctx)->callback = ctx->getFunction(callback.index-1);
@@ -150,9 +156,7 @@ VkResult vk_create_debug_utils_messenger_ex(
     VkDebugUtilsMessengerCreateInfoEXT final_info = *create_info;
     final_info.pfnUserCallback = vk_debug_msg_callback;
     final_info.pUserData = *debug_ctx;
-    auto result = vkCreateDebugUtilsMessengerEXT(
-        instance, &final_info, allocator, messenger
-    );
+    auto result = vk_func(instance, &final_info, allocator, messenger);
     if ( result != VK_SUCCESS ) {
         delete *debug_ctx;
         *debug_ctx = nullptr;
