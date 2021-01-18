@@ -160,6 +160,7 @@ def add_boost_content(g):
         'VkExtent2D',
         'VkExtent3D',
         'VkImageSubresourceRange',
+        'VkLayerProperties',
         'VkMemoryHeap',
         'VkMemoryRequirements',
         'VkMemoryType',
@@ -345,6 +346,9 @@ def add_boost_content(g):
     g.add_gen_func(name = 'vkDeviceWaitIdle')
     g.add_gen_func(name = 'vkEndCommandBuffer')
     g.add_gen_func(name = 'vkEnumerateDeviceExtensionProperties',
+        ).declare_array(count = 'pPropertyCount', items = 'pProperties',
+        ).declare_output(name = 'pProperties')
+    g.add_gen_func(name = 'vkEnumerateInstanceLayerProperties',
         ).declare_array(count = 'pPropertyCount', items = 'pProperties',
         ).declare_output(name = 'pProperties')
     g.add_gen_func(name = 'vkEnumeratePhysicalDevices',
