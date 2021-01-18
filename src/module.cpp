@@ -156,7 +156,7 @@ VkResult vk_create_debug_utils_messenger_ex(
         delete *debug_ctx;
         *debug_ctx = nullptr;
     }
-    return result
+    return result;
 }
 
 void vk_destroy_debug_utils_messenger_ex(
