@@ -26,6 +26,9 @@ struct DebugMsgContext {
     SimFunction * callback = nullptr;
 };
 
+typedef DebugMsgContext * DebugMsgContext_DasHandle;
+MAKE_TYPE_FACTORY(DebugMsgContext_DasHandle, DebugMsgContext_DasHandle)
+
 struct WindowContext {
     Context * ctx = nullptr;
     SimFunction * framebuffer_size_callback = nullptr;
@@ -144,11 +147,11 @@ VkResult vk_create_debug_utils_messenger_ex(
     final_info.pfnUserCallback = vk_debug_msg_callback;
     final_info.pUserData = *debug_ctx;
     auto result = vkCreateDebugUtilsMessengerEXT(
-      instance, &final_info, allocator, messenger
+        instance, &final_info, allocator, messenger
     );
     if ( result != VK_SUCCESS ) {
-      delete *debug_ctx;
-      *debug_ctx = nullptr;
+        delete *debug_ctx;
+        *debug_ctx = nullptr;
     }
     return result
 }
@@ -179,6 +182,11 @@ public:
         lib.addBuiltInModule();
         addGenerated(lib);
         addVulkanCustom(*this, lib);
+
+        addAnnotation(make_smart<VkHandleAnnotation<
+            DebugMsgContext_DasHandle> >(
+                "DebugMsgContext_DasHandle", "DebugMsgContext_DasHandle"));
+
         addExtern<DAS_BIND_FUN(glfw_create_window)>(
             *this, lib, "glfwCreateWindow",
             SideEffects::worstDefault, "glfwCreateWindow");
