@@ -128,7 +128,8 @@ static VKAPI_ATTR VkBool32 VKAPI_CALL vk_debug_msg_callback(
         cast<VkDebugUtilsMessageTypeFlagsEXT>::from(msg_type),
         cast<const VkDebugUtilsMessengerCallbackDataEXT *>::from(callback_data)
     };
-    return debug_ctx->ctx->eval(debug_ctx->callback, args);
+    auto result = debug_ctx->ctx->eval(debug_ctx->callback, args);
+    return cast<VkBool32>::to(result);
 }
 
 VkResult vk_create_debug_utils_messenger_ex(
