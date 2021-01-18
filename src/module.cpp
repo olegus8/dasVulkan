@@ -149,7 +149,14 @@ VkResult vk_create_debug_utils_messenger(
     VkDebugUtilsMessengerCreateInfoEXT final_info = *create_info;
     final_info.pfnUserCallback = vk_debug_msg_callback;
     final_info.pUserData = *debug_ctx;
-    auto result = vk
+    auto result = vkCreateDebugUtilsMessengerEXT(
+      instance, &final_info, allocator, messenger
+    );
+    if ( result != VK_SUCCESS ) {
+      delete *debug_ctx;
+      *debug_ctx = nullptr;
+    }
+    return result
 }
 
 void vk_destroy_debug_utils_messenger(
