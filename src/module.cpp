@@ -111,16 +111,6 @@ void glfw_set_key_callback(GLFWwindow * window, Func fn, Context * ctx) {
     }
 }
 
-DebugMsgContext* vk_create_debug_msg_context(Func fn, Context * ctx) {
-    auto debug_ctx = new DebugMsgContext();
-    debug_ctx->ctx = ctx;
-    debug_ctx->callback = ctx->getFunction(fn.index-1);
-    if ( ! ctx->callback ) {
-        ctx->throw_error("callback function not found");
-    }
-    return debug_ctx;
-}
-
 void vk_destroy_debug_msg_context(DebugMsgContext * debug_ctx, Context * ctx) {
     if ( debub_ctx == nullptr )
         ctx->throw_error("cannot destroy null debug msg context");
@@ -130,10 +120,10 @@ void vk_destroy_debug_msg_context(DebugMsgContext * debug_ctx, Context * ctx) {
 }
 
 static VKAPI_ATTR VkBool32 VKAPI_CALL vk_debug_msg_callback(
-    VkDebugUtilsMessageSeverityFlagBitsEXT msg_severity,
-    VkDebugUtilsMessageTypeFlagsEXT msg_type,
+    VkDebugUtilsMessageSeverityFlagBitsEXT      msg_severity,
+    VkDebugUtilsMessageTypeFlagsEXT             msg_type,
     const VkDebugUtilsMessengerCallbackDataEXT* callback_data,
-    void* user_data
+    void*                                       user_data
 ) {
     auto debug_ctx = reinterpret_cast<DebugMsgContext*>(user_data);
     vec4f args[1] = { cast<VkDebugUtilsMessengerCallbackDataEXT *>::from(
@@ -143,10 +133,20 @@ static VKAPI_ATTR VkBool32 VKAPI_CALL vk_debug_msg_callback(
 
 VkResult vk_create_debug_utils_messenger(
     VkInstance                                  instance,
-    const VkDebugUtilsMessengerCreateInfoEXT*   pCreateInfo,
-    const VkAllocationCallbacks*                pAllocator,
-    VkDebugUtilsMessengerEXT*                   pMessenger
+    const VkDebugUtilsMessengerCreateInfoEXT*   create_info,
+    const VkAllocationCallbacks*                allocator,
+    Func                                        callback,
+    DebugMsgContextHandle*                      debug_ctx,
+    VkDebugUtilsMessengerEXT*                   messenger,
+    Context *                                   ctx
 ) {
+    auto debug_ctx = new DebugMsgContext();
+    debug_ctx->ctx = ctx;
+    debug_ctx->callback = ctx->getFunction(fn.index-1);
+    if ( ! ctx->callback ) {
+        ctx->throw_error("callback function not found");
+    }
+    return debug_ctx;
 }
 
 
