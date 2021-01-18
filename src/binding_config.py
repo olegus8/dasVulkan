@@ -57,6 +57,11 @@ class Config(ConfigBase):
         if field.name.startswith('pfn'):
             field.ignore()
 
+        if field.struct.name == 'VkDebugUtilsMessengerCreateInfoEXT'
+        and field.name == 'pUserData'
+        ):
+            field.ignore()
+
     def configure_function(self, func):
         # whitelist
         if func.name in [
