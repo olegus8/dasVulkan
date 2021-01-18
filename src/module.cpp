@@ -125,7 +125,7 @@ static VKAPI_ATTR VkBool32 VKAPI_CALL vk_debug_msg_callback(
     debug_ctx->ctx->eval(debug_ctx->callback, args);
 }
 
-VkResult vk_create_debug_utils_messenger(
+VkResult vk_create_debug_utils_messenger_ex(
     VkInstance                                  instance,
     const VkDebugUtilsMessengerCreateInfoEXT*   create_info,
     const VkAllocationCallbacks*                allocator,
@@ -153,7 +153,7 @@ VkResult vk_create_debug_utils_messenger(
     return result
 }
 
-void vk_destroy_debug_utils_messenger(
+void vk_destroy_debug_utils_messenger_ex(
     VkInstance                                  instance,
     VkDebugUtilsMessengerEXT                    messenger,
     DebugMsgContext*                            debug_ctx,
@@ -191,6 +191,9 @@ public:
         addExtern<DAS_BIND_FUN(glfw_set_key_callback)>(
             *this, lib, "glfwSetKeyCallback",
             SideEffects::worstDefault, "glfwSetKeyCallback");
+        addExtern<DAS_BIND_FUN(vk_create_debug_utils_messenger)>(
+            *this, lib, "vkCreateDebugUtilsMessengerEx",
+            SideEffects::worstDefault, "vkCreateDebugUtilsMessengerEx");
     }
 };
 
