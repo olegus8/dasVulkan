@@ -141,6 +141,15 @@ static VKAPI_ATTR VkBool32 VKAPI_CALL vk_debug_msg_callback(
     debug_ctx->ctx->eval(debug_ctx->callback, args);
 }
 
+VkResult vk_create_debug_utils_messenger(
+    VkInstance                                  instance,
+    const VkDebugUtilsMessengerCreateInfoEXT*   pCreateInfo,
+    const VkAllocationCallbacks*                pAllocator,
+    VkDebugUtilsMessengerEXT*                   pMessenger
+) {
+}
+
+
 class Module_vulkan : public GeneratedModule_vulkan {
 public:
     Module_vulkan() : GeneratedModule_vulkan() {
