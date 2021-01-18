@@ -123,8 +123,11 @@ static VKAPI_ATTR VkBool32 VKAPI_CALL vk_debug_msg_callback(
     void*                                       user_data
 ) {
     auto debug_ctx = reinterpret_cast<DebugMsgContext*>(user_data);
-    vec4f args[1] = { cast<VkDebugUtilsMessengerCallbackDataEXT *>::from(
-        callback_data) };
+    vec4f args[3] = {
+        cast<VkDebugUtilsMessageSeverityFlagBitsEXT>::from(msg_severity),
+        cast<VkDebugUtilsMessageTypeFlagsEXT>::from(msg_type),
+        cast<VkDebugUtilsMessengerCallbackDataEXT *>::from(callback_data)
+    };
     debug_ctx->ctx->eval(debug_ctx->callback, args);
 }
 
