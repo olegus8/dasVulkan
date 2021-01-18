@@ -223,6 +223,26 @@ def add_boost_content(g):
     ]:
         g.add_gen_struct(name=name, vk_to_boost=False)
 
+typedef struct VkDebugUtilsMessengerCallbackDataEXT {
+    VkStructureType                              sType;
+    const void*                                  pNext;
+    VkDebugUtilsMessengerCallbackDataFlagsEXT    flags;
+    const char*                                  pMessageIdName;
+    int32_t                                      messageIdNumber;
+    const char*                                  pMessage;
+    uint32_t                                     queueLabelCount;
+    const VkDebugUtilsLabelEXT*                  pQueueLabels;
+    uint32_t                                     cmdBufLabelCount;
+    const VkDebugUtilsLabelEXT*                  pCmdBufLabels;
+    uint32_t                                     objectCount;
+    const VkDebugUtilsObjectNameInfoEXT*         pObjects;
+} VkDebugUtilsMessengerCallbackDataEXT;
+
+
+    g.add_gen_struct(name = 'VkDebugUtilsMessengerCallbackDataEXT',
+        ).declare_array(count = 'queueLabelCount', items = 'pQueueLabels'
+        ).declare_array(count = 'cmdBufLabelCount', items = 'pCmdBufLabels'
+        ).declare_array(count = 'objectCount', items = 'pObjects')
     g.add_gen_struct(name = 'VkBufferCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'queueFamilyIndexCount', items = 'pQueueFamilyIndices')
     g.add_gen_struct(name='VkComputePipelineCreateInfo', vk_to_boost=False)
