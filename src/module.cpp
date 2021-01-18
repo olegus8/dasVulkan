@@ -69,8 +69,9 @@ void glfw_set_framebuffer_size_callback(
 ) {
     auto window_ctx = reinterpret_cast<WindowContext*>(
         glfwGetWindowUserPointer(window));
-    if ( window_ctx->ctx != ctx )
+    if ( window_ctx->ctx != ctx ) {
         ctx->throw_error("must call from same context as was window created");
+    }
     if ( ! window_ctx->framebuffer_size_callback ) {
         glfwSetFramebufferSizeCallback(
             window, glfw_framebuffer_size_callback);
@@ -100,8 +101,9 @@ void glfw_key_callback(
 void glfw_set_key_callback(GLFWwindow * window, Func fn, Context * ctx) {
     auto window_ctx = reinterpret_cast<WindowContext*>(
         glfwGetWindowUserPointer(window));
-    if ( window_ctx->ctx != ctx )
+    if ( window_ctx->ctx != ctx ) {
         ctx->throw_error("must call from same context as was window created");
+    }
     if ( ! window_ctx->key_callback ) {
         glfwSetKeyCallback(window, glfw_key_callback);
     }
@@ -109,14 +111,6 @@ void glfw_set_key_callback(GLFWwindow * window, Func fn, Context * ctx) {
     if ( ! window_ctx->key_callback ) {
         window_ctx->ctx->throw_error("callback function not found");
     }
-}
-
-void vk_destroy_debug_msg_context(DebugMsgContext * debug_ctx, Context * ctx) {
-    if ( debub_ctx == nullptr )
-        ctx->throw_error("cannot destroy null debug msg context");
-    if ( debub_ctx->ctx != ctx )
-        ctx->throw_error("must call from same context as was created");
-    delete debug_ctx;
 }
 
 static VKAPI_ATTR VkBool32 VKAPI_CALL vk_debug_msg_callback(
@@ -166,6 +160,14 @@ void vk_destroy_debug_utils_messenger(
     const VkAllocationCallbacks*                allocator,
     Context *                                   ctx
 ) {
+    if ( debug_ctx == nullptr ) {
+        ctx->throw_error("debug_ctx must not be null");
+    }
+    if ( debug_ctx->ctx != ctx ) {
+        ctx->throw_error("must call from same context as was created");
+    }
+    DestroyDebugUtilsMessengerEXT(instance, messenger, allocator);
+    delete debug_ctx;
 }
 
 
