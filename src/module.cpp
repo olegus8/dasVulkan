@@ -127,13 +127,6 @@ void vk_destroy_debug_msg_context(DebugMsgContext * debug_ctx, Context * ctx) {
     if ( debub_ctx->ctx != ctx )
         ctx->throw_error("must call from same context as was created");
     delete debug_msg_ctx;
-    auto debug_msg_ctx = new DebugMsgContext();
-    debug_msg_ctx->ctx = ctx;
-    debug_msg_ctx->callback = ctx->getFunction(fn.index-1);
-    if ( ! ctx->callback ) {
-        ctx->throw_error("callback function not found");
-    }
-    return debug_msg_ctx;
 }
 
 static VKAPI_ATTR VkBool32 VKAPI_CALL vk_debug_msg_callback(
@@ -142,15 +135,10 @@ static VKAPI_ATTR VkBool32 VKAPI_CALL vk_debug_msg_callback(
     const VkDebugUtilsMessengerCallbackDataEXT* callback_data,
     void* user_data
 ) {
-    auto ctx = reinterpret_cast<DebugMsgContext*>(user_data);
-    vec4f args[5] = {
-        cast<GLFWwindow *>::from(window),
-        cast<int32_t>::from(key),
-        cast<int32_t>::from(scancode),
-        cast<int32_t>::from(action),
-        cast<int32_t>::from(mods)
-    };
-    window_ctx->ctx->eval(window_ctx->key_callback, args);
+    auto debug_ctx = reinterpret_cast<DebugMsgContext*>(user_data);
+    vec4f args[1] = { cast<VkDebugUtilsMessengerCallbackDataEXT *>::from(
+      callback_data) };
+    debug_ctx->ctx->eval(debug_ctx->callback, args);
 }
 
 class Module_vulkan : public GeneratedModule_vulkan {
