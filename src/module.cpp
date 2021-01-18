@@ -126,7 +126,7 @@ void vk_destroy_debug_msg_context(DebugMsgContext * debug_ctx, Context * ctx) {
         ctx->throw_error("cannot destroy null debug msg context");
     if ( debub_ctx->ctx != ctx )
         ctx->throw_error("must call from same context as was created");
-    delete debug_msg_ctx;
+    delete debug_ctx;
 }
 
 static VKAPI_ATTR VkBool32 VKAPI_CALL vk_debug_msg_callback(
@@ -137,7 +137,7 @@ static VKAPI_ATTR VkBool32 VKAPI_CALL vk_debug_msg_callback(
 ) {
     auto debug_ctx = reinterpret_cast<DebugMsgContext*>(user_data);
     vec4f args[1] = { cast<VkDebugUtilsMessengerCallbackDataEXT *>::from(
-      callback_data) };
+        callback_data) };
     debug_ctx->ctx->eval(debug_ctx->callback, args);
 }
 
