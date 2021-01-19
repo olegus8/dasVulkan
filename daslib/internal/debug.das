@@ -25,7 +25,8 @@ def create_debug_utils_messenger(
         msg_severity : VkDebugUtilsMessageSeverityFlagBitsEXT;
         msg_type : uint;
         data : DebugUtilsMessengerCallbackDataEXT
-    ): uint>
+    ): uint>;
+    var result : VkResult? = [[VkResult?]]
 )
     var vk_callback  <- @ <| [[<- callback]] (
         msg_severity : VkDebugUtilsMessageSeverityFlagBitsEXT;
@@ -46,7 +47,10 @@ def create_debug_utils_messenger(
     var vk_create_info <- create_info |> vk_view_create_unsafe()
     defer() <| { create_info |> vk_view_destroy(); }
 
-    var result = VkCreateDebugUtilsMessengerEx(
+    var vk_messenger : VkDebugUtilsMessengerEXT
+    var debug_ctx : DebugMsgContext_DasHandle
+
+    var result_ = VkResult VK_SUCCESS
 
 /*
 def create_timestamp_query_pool(
