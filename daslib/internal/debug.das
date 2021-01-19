@@ -9,10 +9,18 @@ require vulkan
 
 struct DebugUtilsMessenger
     VkDebugUtilsMessengerEXT messenger
-    DebugMsgContext_DasHandle debug_ctx
+    DebugMsgContext_DasHandle _debug_ctx
     _instance : Instance
     _needs_delete : bool
 
+def boost_value_to_vk(b : DebugUtilsMessenger) : VkDebugUtilsMessenerEXT
+    return b.messenger
+
+def boost_value_to_vk(b : DebugUtilsMessenger ?) : VkDebugUtilsMessengerEXT ?
+    return b?.messenger
+
+def vk_value_to_boost(v : VkDebugUtilsMessengerEXT) : DebugUtilsMessenger
+    return [[ DebugUtilsMessenver messenger=v ]]
 
 def create_debug_utils_messenger(
     instance : Instance;
@@ -51,7 +59,7 @@ def create_debug_utils_messenger(
         null,
         <- vk_callback,
         safe_addr(messenger.messenger),
-        safe_addr(messenger.debug_ctx)
+        safe_addr(messenger._debug_ctx)
     )
     assert(result_ == VkResult VK_SUCCESS)
 
@@ -59,6 +67,12 @@ def create_debug_utils_messenger(
 
 
 def finalize(var handle : DebugUtilsMessengerCreateInfoEXT & explicit)
+    if handle._needs_delete
+        vkDestroyDebugUtilsMessengerEx(
+            boost_value_to_vk(handle._instance),
+            
+        pass
+    memzero(handle)
 
 /*
 def create_timestamp_query_pool(
