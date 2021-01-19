@@ -9,7 +9,7 @@ require vulkan
 
 struct DebugUtilsMessenger
     messenger : VkDebugUtilsMessengerEXT
-    _debug_cts : DebugMsgContext_DasHandle
+    _debug_ctx : DebugMsgContext_DasHandle
     _instance : Instance
     _needs_delete : bool
 
