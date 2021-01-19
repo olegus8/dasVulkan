@@ -34,7 +34,7 @@ def create_debug_utils_messenger(
     ): uint>;
     var result : VkResult? = [[VkResult?]]
 )
-    var vk_callback <- @ <| [[<- callback]] (
+    var vk_callback <- @ <| [[:= callback]] (
         msg_severity : VkDebugUtilsMessageSeverityFlagBitsEXT;
         msg_type : uint;
         data : VkDebugUtilsMessengerCallbackDataEXT
