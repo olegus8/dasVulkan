@@ -42,7 +42,7 @@ def create_debug_utils_messenger(
         return callback(
             msg_severity,
             msg_type,
-            <- vk_value_to_boost(data)
+            vk_value_to_boost(data)
         )
 
     var messenger <- [[DebugUtilsMessenger
