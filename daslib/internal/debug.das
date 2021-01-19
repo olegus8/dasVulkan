@@ -31,7 +31,7 @@ def create_debug_utils_messenger(
         return callback(
             msg_severity,
             msg_type,
-            <- data |> vk_value_to_boost
+            <- vk_value_to_boost(data)
         )
 
     var messenger <- [[DebugUtilsMessenger _instance = instance |> weak_copy]]
@@ -42,7 +42,7 @@ def create_debug_utils_messenger(
     var result_ = VkResult VK_SUCCESS
 
     result ?? result_ = vkCreateDebugUtilsMessengerEx(
-        instance |> boost_value_to_vk,
+        boost_value_to_vk(instance),
         vk_create_info,
         null,
         <- vk_callback,
