@@ -13,6 +13,7 @@ struct DebugUtilsMessenger
     _instance : Instance
     _needs_delete : bool
 
+
 def boost_value_to_vk(b : DebugUtilsMessenger) : VkDebugUtilsMessenerEXT
     return b.messenger
 
@@ -21,6 +22,7 @@ def boost_value_to_vk(b : DebugUtilsMessenger ?) : VkDebugUtilsMessengerEXT ?
 
 def vk_value_to_boost(v : VkDebugUtilsMessengerEXT) : DebugUtilsMessenger
     return [[ DebugUtilsMessenver messenger=v ]]
+
 
 def create_debug_utils_messenger(
     instance : Instance;
