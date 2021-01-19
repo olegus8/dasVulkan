@@ -70,8 +70,10 @@ def finalize(var handle : DebugUtilsMessengerCreateInfoEXT & explicit)
     if handle._needs_delete
         vkDestroyDebugUtilsMessengerEx(
             boost_value_to_vk(handle._instance),
-            
-        pass
+            handle.messenger,
+            handle._debug_ctx,
+            null
+        )
     memzero(handle)
 
 /*
