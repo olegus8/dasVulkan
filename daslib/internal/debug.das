@@ -39,11 +39,9 @@ def create_debug_utils_messenger(
         msg_type : uint;
         data : VkDebugUtilsMessengerCallbackDataEXT
     ) : uint
-        return callback(
-            msg_severity,
-            msg_type,
-            vk_value_to_boost(data)
-        )
+        var boost_data <- vk_value_to_boost(data)
+        defer() <| { delete boost_data; }
+        return callback(msg_severity, msg_type, boost_data)
 
     var messenger <- [[DebugUtilsMessenger
         _instance = instance |> weak_copy,
