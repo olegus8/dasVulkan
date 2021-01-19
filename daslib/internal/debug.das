@@ -46,10 +46,8 @@ def create_debug_utils_messenger(
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
     defer() <| { create_info |> vk_view_destroy(); }
-
     var vk_messenger : VkDebugUtilsMessengerEXT
     var debug_ctx : DebugMsgContext_DasHandle
-
     var result_ = VkResult VK_SUCCESS
 
 /*
