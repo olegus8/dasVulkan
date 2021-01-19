@@ -40,9 +40,8 @@ def create_debug_utils_messenger(
         data : VkDebugUtilsMessengerCallbackDataEXT
     ) : uint
         var boost_data <- vk_value_to_boost(data)
-        let result = callback |> invoke(msg_severity, msg_type, boost_data)
-        delete boost_data;
-        return result
+        defer <| { delete boost_data ; }
+        return callback |> invoke(msg_severity, msg_type, boost_data)
 
     defer <| { delete vk_callback; }
 
