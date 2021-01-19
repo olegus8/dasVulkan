@@ -14,7 +14,7 @@ struct DebugUtilsMessenger
     _needs_delete : bool
 
 
-def boost_value_to_vk(b : DebugUtilsMessenger) : VkDebugUtilsMessenerEXT
+def boost_value_to_vk(b : DebugUtilsMessenger) : VkDebugUtilsMessengerEXT
     return b.messenger
 
 def boost_value_to_vk(b : DebugUtilsMessenger ?) : VkDebugUtilsMessengerEXT ?
