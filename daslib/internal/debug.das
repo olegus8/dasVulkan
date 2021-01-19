@@ -67,7 +67,7 @@ def create_debug_utils_messenger(
     return <- messenger
 
 
-def finalize(var handle : DebugUtilsMessengerCreateInfoEXT & explicit)
+def finalize(var handle : DebugUtilsMessenger & explicit)
     if handle._needs_delete
         vkDestroyDebugUtilsMessengerEx(
             boost_value_to_vk(handle._instance),
