@@ -7,24 +7,24 @@ require generated
 require vulkan
 
 
-struct DebugUtilsMessenger
+struct DebugUtilsMessengerEXT
     messenger : VkDebugUtilsMessengerEXT
     _debug_ctx : DebugMsgContext_DasHandle
     _instance : Instance
     _needs_delete : bool
 
 
-def boost_value_to_vk(b : DebugUtilsMessenger) : VkDebugUtilsMessengerEXT
+def boost_value_to_vk(b : DebugUtilsMessengerEXT) : VkDebugUtilsMessengerEXT
     return b.messenger
 
-def boost_value_to_vk(b : DebugUtilsMessenger ?) : VkDebugUtilsMessengerEXT ?
+def boost_value_to_vk(b : DebugUtilsMessengerEXT ?) : VkDebugUtilsMessengerEXT?
     return b?.messenger
 
-def vk_value_to_boost(v : VkDebugUtilsMessengerEXT) : DebugUtilsMessenger
-    return [[ DebugUtilsMessenger messenger=v ]]
+def vk_value_to_boost(v : VkDebugUtilsMessengerEXT) : DebugUtilsMessengerEXT
+    return [[ DebugUtilsMessengerEXT messenger=v ]]
 
 
-def create_debug_utils_messenger(
+def create_debug_utils_messenger_ext(
     instance : Instance;
     var create_info : DebugUtilsMessengerCreateInfoEXT;
     callback : lambda<(
@@ -44,7 +44,7 @@ def create_debug_utils_messenger(
         return callback(msg_severity, msg_type, boost_data)
     defer <| { delete vk_callback; }
 
-    var messenger <- [[DebugUtilsMessenger
+    var messenger <- [[DebugUtilsMessengerEXT
         _instance = instance |> weak_copy,
         _needs_delete = true
     ]]
