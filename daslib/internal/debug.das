@@ -27,14 +27,14 @@ def vk_value_to_boost(v : VkDebugUtilsMessengerEXT) : DebugUtilsMessenger
 def create_debug_utils_messenger(
     instance : Instance;
     var create_info : DebugUtilsMessengerCreateInfoEXT;
-    var callback : lambda<(
+    callback : function<(
         msg_severity : VkDebugUtilsMessageSeverityFlagBitsEXT;
         msg_type : uint;
         data : DebugUtilsMessengerCallbackDataEXT
     ): uint>;
     var result : VkResult? = [[VkResult?]]
 )
-    var vk_callback <- @ <| [[:= callback]] (
+    var vk_callback <- @ <| [[callback]] (
         msg_severity : VkDebugUtilsMessageSeverityFlagBitsEXT;
         msg_type : uint;
         data : VkDebugUtilsMessengerCallbackDataEXT
