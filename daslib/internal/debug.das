@@ -34,13 +34,13 @@ def create_debug_utils_messenger(
     ): uint>;
     var result : VkResult? = [[VkResult?]]
 )
-    var vk_callback <- @ <| [[callback]] (
+    var vk_callback <- @ <| [[:= callback]] (
         msg_severity : VkDebugUtilsMessageSeverityFlagBitsEXT;
         msg_type : uint;
         data : VkDebugUtilsMessengerCallbackDataEXT
     ) : uint
         var boost_data <- vk_value_to_boost(data)
-        let result = callback |> invoke(msg_severity, msg_type, boost_data)
+        let result = callback(msg_severity, msg_type, boost_data)
         delete boost_data;
         return result
 
