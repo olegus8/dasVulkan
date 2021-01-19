@@ -42,6 +42,7 @@ def create_debug_utils_messenger(
         var boost_data <- vk_value_to_boost(data)
         defer() <| { delete boost_data; }
         return callback(msg_severity, msg_type, boost_data)
+    defer <| { delete vk_callback; }
 
     var messenger <- [[DebugUtilsMessenger
         _instance = instance |> weak_copy,
@@ -49,7 +50,7 @@ def create_debug_utils_messenger(
     ]]
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
-    defer() <| { create_info |> vk_view_destroy(); }
+    defer <| { create_info |> vk_view_destroy(); }
 
     var result_ = VkResult VK_SUCCESS
 
@@ -57,7 +58,7 @@ def create_debug_utils_messenger(
         boost_value_to_vk(instance),
         vk_create_info,
         null,
-        <- vk_callback,
+        vk_callback,
         safe_addr(messenger.messenger),
         safe_addr(messenger._debug_ctx)
     )
