@@ -11,6 +11,7 @@ struct DebugUtilsMessenger
     VkDebugUtilsMessengerEXT messenger
     DebugMsgContext_DasHandle debug_ctx
     _instance : Instance
+    _needs_delete : bool
 
 
 def create_debug_utils_messenger(
@@ -34,7 +35,10 @@ def create_debug_utils_messenger(
             <- vk_value_to_boost(data)
         )
 
-    var messenger <- [[DebugUtilsMessenger _instance = instance |> weak_copy]]
+    var messenger <- [[DebugUtilsMessenger
+        _instance = instance |> weak_copy,
+        _needs_delete = true
+    ]]
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
     defer() <| { create_info |> vk_view_destroy(); }
@@ -52,6 +56,9 @@ def create_debug_utils_messenger(
     assert(result_ == VkResult VK_SUCCESS)
 
     return <- messenger
+
+
+def finalize(var handle : DebugUtilsMessengerCreateInfoEXT & explicit)
 
 /*
 def create_timestamp_query_pool(
