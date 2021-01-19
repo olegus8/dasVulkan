@@ -27,8 +27,21 @@ def create_debug_utils_messenger(
         data : DebugUtilsMessengerCallbackDataEXT
     ): uint>
 )
-    pass
-    
+    var vk_callback  <- @ <| [[<- callback]] (
+        msg_severity : VkDebugUtilsMessageSeverityFlagBitsEXT;
+        msg_type : uint;
+        data : VkDebugUtilsMessengerCallbackDataEXT
+    ) : uint
+        return callback(
+            msg_severity,
+            msg_type,
+            <- data |> vk_value_to_boost
+        )
+
+    var messenger <- [[ DebugUtilsMessenger
+        _instance = instance |> weak_copy,
+        callback <- vk_callback
+    ]]
 
 /*
 def create_timestamp_query_pool(
