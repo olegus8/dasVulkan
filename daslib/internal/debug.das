@@ -40,7 +40,7 @@ def create_debug_utils_messenger(
         data : VkDebugUtilsMessengerCallbackDataEXT
     ) : uint
         var boost_data <- vk_value_to_boost(data)
-        defer() <| { delete boost_data; }
+        defer <| { delete boost_data; }
         return callback(msg_severity, msg_type, boost_data)
     defer <| { delete vk_callback; }
 
@@ -56,7 +56,7 @@ def create_debug_utils_messenger(
 
     result ?? result_ = vkCreateDebugUtilsMessengerEx(
         boost_value_to_vk(instance),
-        vk_create_info,
+        safe_addr(vk_create_info),
         null,
         vk_callback,
         safe_addr(messenger.messenger),
