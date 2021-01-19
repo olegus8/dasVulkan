@@ -38,12 +38,20 @@ def create_debug_utils_messenger(
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
     defer() <| { create_info |> vk_view_destroy(); }
-    var vk_messenger : VkDebugUtilsMessengerEXT
-    var debug_ctx : DebugMsgContext_DasHandle
+
     var result_ = VkResult VK_SUCCESS
 
     result ?? result_ = vkCreateDebugUtilsMessengerEx(
-        
+        instance |> boost_value_to_vk,
+        vk_create_info,
+        null,
+        <- vk_callback,
+        safe_addr(messenger.messenger),
+        safe_addr(messenger.debug_ctx)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+
+    return <- messenger
 
 /*
 def create_timestamp_query_pool(
