@@ -10,11 +10,6 @@ require vulkan
 struct DebugUtilsMessenger
     VkDebugUtilsMessengerEXT messenger
     DebugMsgContext_DasHandle debug_ctx
-    callback : lambda<(
-        msg_severity : VkDebugUtilsMessageSeverityFlagBitsEXT;
-        msg_type : uint;
-        data : VkDebugUtilsMessengerCallbackDataEXT
-    ): uint>
     _instance : Instance
 
 
@@ -39,16 +34,16 @@ def create_debug_utils_messenger(
             <- data |> vk_value_to_boost
         )
 
-    var messenger <- [[ DebugUtilsMessenger
-        _instance = instance |> weak_copy,
-        callback <- vk_callback
-    ]]
+    var messenger <- [[DebugUtilsMessenger _instance = instance |> weak_copy]]
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
     defer() <| { create_info |> vk_view_destroy(); }
     var vk_messenger : VkDebugUtilsMessengerEXT
     var debug_ctx : DebugMsgContext_DasHandle
     var result_ = VkResult VK_SUCCESS
+
+    result ?? result_ = vkCreateDebugUtilsMessengerEx(
+        
 
 /*
 def create_timestamp_query_pool(
