@@ -23,7 +23,8 @@ void addVulkanCustom(Module &, ModuleLibrary &);
 
 struct DebugMsgContext {
     Context * ctx = nullptr;
-    SimFunction * callback = nullptr;
+    SimFunction * cb_func = nullptr;
+    Lambda cb_lambda;
 };
 
 typedef DebugMsgContext * DebugMsgContext_DasHandle;
@@ -136,7 +137,7 @@ VkResult vk_create_debug_utils_messenger_ex(
     VkInstance                                  instance,
     const VkDebugUtilsMessengerCreateInfoEXT*   create_info,
     const VkAllocationCallbacks*                allocator,
-    Func                                        callback,
+    Lambda                                      callback,
     VkDebugUtilsMessengerEXT*                   messenger,
     DebugMsgContext**                           debug_ctx,
     Context *                                   ctx
@@ -149,11 +150,18 @@ VkResult vk_create_debug_utils_messenger_ex(
 
     *debug_ctx = new DebugMsgContext();
     (*debug_ctx)->ctx = ctx;
-    (*debug_ctx)->callback = ctx->getFunction(callback.index-1);
-    if ( ! (*debug_ctx)->callback ) {
+    int32_t * fn_index = (int32_t *) callback.capture;
+    if ( ! fn_index ) {
+        delete *debug_ctx;
+        ctx->throw_error("null callback lambda");
+    }
+    (*debug_ctx)->cb_func = ctx->getFunction(*fn_index-1);
+    if ( ! (*debug_ctx)->cb_func ) {
         delete *debug_ctx;
         ctx->throw_error("callback function not found");
     }
+    (*debug_ctx)->cb_lambda = callback;
+
     VkDebugUtilsMessengerCreateInfoEXT final_info = *create_info;
     final_info.pfnUserCallback = vk_debug_msg_callback;
     final_info.pUserData = *debug_ctx;

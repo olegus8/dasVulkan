@@ -21,7 +21,7 @@ struct DebugUtilsMessenger
 def create_debug_utils_messenger(
     instance : Instance;
     create_info : VkDebugUtilsMessengerCreateInfoEXT;
-    callback : function<(
+    callback : lambda<(
         msg_severity : VkDebugUtilsMessageSeverityFlagBitsEXT;
         msg_type : uint;
         data : DebugUtilsMessengerCallbackDataEXT
