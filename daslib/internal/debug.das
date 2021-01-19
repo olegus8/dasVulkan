@@ -20,7 +20,7 @@ struct DebugUtilsMessenger
 
 def create_debug_utils_messenger(
     instance : Instance;
-    create_info : VkDebugUtilsMessengerCreateInfoEXT;
+    var create_info : DebugUtilsMessengerCreateInfoEXT;
     callback : lambda<(
         msg_severity : VkDebugUtilsMessageSeverityFlagBitsEXT;
         msg_type : uint;
@@ -42,6 +42,11 @@ def create_debug_utils_messenger(
         _instance = instance |> weak_copy,
         callback <- vk_callback
     ]]
+
+    var vk_create_info <- create_info |> vk_view_create_unsafe()
+    defer() <| { create_info |> vk_view_destroy(); }
+
+    var result = VkCreateDebugUtilsMessengerEx(
 
 /*
 def create_timestamp_query_pool(
