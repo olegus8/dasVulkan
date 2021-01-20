@@ -215,8 +215,7 @@ public:
         lib.addModule(this);
         lib.addBuiltInModule();
 
-        addAnnotation(make_smart<VkHandleAnnotation<
-            PFN_vkDebugUtilsMessengerCallbackEXT> >(
+        addAnnotation(make_smart<VkHandleAnnotation<void*> >(
               "PFN_vkDebugUtilsMessengerCallbackEXT",
               "PFN_vkDebugUtilsMessengerCallbackEXT"
         ));
