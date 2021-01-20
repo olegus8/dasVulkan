@@ -3,13 +3,6 @@
 
 using namespace std;
 
-struct DebugMsgContext {
-    Context *     ctx = nullptr;
-    SimFunction * cb_func = nullptr;
-    Lambda        cb_lambda;
-    thread::id    thread_id;
-};
-
 typedef DebugMsgContext * DebugMsgContext_DasHandle;
 MAKE_TYPE_FACTORY(DebugMsgContext_DasHandle, DebugMsgContext_DasHandle)
 

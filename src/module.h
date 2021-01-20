@@ -17,3 +17,10 @@ struct VkHandleAnnotation : public ManagedValueAnnotation<OT> {
         return ManagedValueAnnotation<OT>::simulateCopy(context, at, l, r);
     }
 };
+
+struct DebugMsgContext {
+    Context *     ctx = nullptr;
+    SimFunction * cb_func = nullptr;
+    Lambda        cb_lambda;
+    thread::id    thread_id;
+};
