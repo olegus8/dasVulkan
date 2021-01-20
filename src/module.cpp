@@ -166,20 +166,20 @@ public:
         addGenerated(lib);
         addVulkanCustomAfterGenerated(*this, lib);
 
-        //addConstant(module, "vk_debug_msg_callback",
+        //addConstant(*this, "vk_debug_msg_callback",
         //    (void*)(&vk_debug_msg_callback));
 
         addExtern<DAS_BIND_FUN(glfw_create_window)>(
-            module, lib, "glfwCreateWindow",
+            *this, lib, "glfwCreateWindow",
             SideEffects::worstDefault, "glfwCreateWindow");
         addExtern<DAS_BIND_FUN(glfw_destroy_window)>(
-            module, lib, "glfwDestroyWindow",
+            *this, lib, "glfwDestroyWindow",
             SideEffects::worstDefault, "glfwDestroyWindow");
         addExtern<DAS_BIND_FUN(glfw_set_framebuffer_size_callback)>(
-            module, lib, "glfwSetFramebufferSizeCallback",
+            *this, lib, "glfwSetFramebufferSizeCallback",
             SideEffects::worstDefault, "glfwSetFramebufferSizeCallback");
         addExtern<DAS_BIND_FUN(glfw_set_key_callback)>(
-            module, lib, "glfwSetKeyCallback",
+            *this, lib, "glfwSetKeyCallback",
             SideEffects::worstDefault, "glfwSetKeyCallback");
     }
 };
