@@ -19,11 +19,7 @@ struct VkHandleAnnotation : public ManagedValueAnnotation<OT> {
     }
 };
 
-template <> struct typeName<PFN_vkDebugUtilsMessengerCallbackEXT> {
-    constexpr static const char * name() {
-        return "PFN_vkDebugUtilsMessengerCallbackEXT";
-    }
-};
+MAKE_TYPE_FACTORY(PFN_vkDebugUtilsMessengerCallbackEXT, PFN_vkDebugUtilsMessengerCallbackEXT);
 
 #include "module_generated.inc"
 
