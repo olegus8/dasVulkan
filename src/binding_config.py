@@ -14,7 +14,7 @@ class Config(ConfigBase):
 
     @property
     def save_ast(self):
-        return False
+        return True
 
     @property
     def c_headers_to_extract_macro_consts_from(self):
@@ -52,6 +52,12 @@ class Config(ConfigBase):
             struct.define_ptr_type(ptr_type)
 
     def configure_struct_field(self, field):
+        # whitelist
+        if (field.struct.name == 'VkDebugUtilsMessengerCreateInfoEXT'
+        and field.name == 'pfnUserCallback'
+        ):
+          return
+
         # These structs have function pointers, but we can probably
         # live without them for a time being.
         if field.name.startswith('pfn'):
@@ -72,6 +78,9 @@ class Config(ConfigBase):
             'vkQueuePresentKHR',
         ]:
             return
+
+        if 'PFN_vkDebugUtilsMessengerCallbackEXT' in func.type:
+          return
 
         #TODO: make these work
         if ('PFN_' in func.type
