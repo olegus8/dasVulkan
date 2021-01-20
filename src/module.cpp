@@ -172,6 +172,38 @@ void destroy_debug_msg_context(DebugMsgContext * debug_ctx, Context * ctx) {
 }
 
 
+VkResult vk_create_debug_utils_messenger_ext(
+    VkInstance                                  instance,
+    const VkDebugUtilsMessengerCreateInfoEXT*   create_info,
+    const VkAllocationCallbacks*                allocator,
+    VkDebugUtilsMessengerEXT*                   messenger,
+    Context *                                   ctx
+) {
+    //TODO: use real vulkan loader with ptr cache
+    auto vk_func = (PFN_vkCreateDebugUtilsMessengerEXT)
+        vkGetInstanceProcAddr(instance, "vkCreateDebugUtilsMessengerEXT");
+    if (vk_func == nullptr) {
+        return VK_ERROR_EXTENSION_NOT_PRESENT;
+    }
+    return vk_func(instance, create_info, allocator, messenger);
+}
+
+
+void vk_destroy_debug_utils_messenger_ext(
+    VkInstance                    instance,
+    VkDebugUtilsMessengerEXT      messenger,
+    const VkAllocationCallbacks*  allocator
+) {
+    //TODO: use real vulkan loader with ptr cache
+    auto vk_func = (PFN_vkDestroyDebugUtilsMessengerEXT)
+        vkGetInstanceProcAddr(instance, "vkDestroyDebugUtilsMessengerEXT");
+    if (vk_func == nullptr) {
+        ctx->throw_error("vkDestroyDebugUtilsMessengerEXT not found");
+    }
+    vk_func(instance, messenger, allocator);
+}
+
+
 class Module_vulkan : public GeneratedModule_vulkan {
 public:
     Module_vulkan() : GeneratedModule_vulkan() {
@@ -213,6 +245,12 @@ public:
         addExtern<DAS_BIND_FUN(destroy_debug_msg_context)>(
             *this, lib, "destroy_debug_msg_context",
             SideEffects::worstDefault, "destroy_debug_msg_context");
+        addExtern<DAS_BIND_FUN(vk_create_debug_utils_messenger_ext)>(
+            *this, lib, "vkCreateDebugUtilsMessengerEXT",
+            SideEffects::worstDefault, "vkCreateDebugUtilsMessengerEXT");
+        addExtern<DAS_BIND_FUN(vk_destroy_debug_utils_messenger_ext)>(
+            *this, lib, "vkDestroyDebugUtilsMessengerEXT",
+            SideEffects::worstDefault, "vkDestroyDebugUtilsMessengerEXT");
     }
 };
 
@@ -221,35 +259,39 @@ REGISTER_MODULE(Module_vulkan);
 /*
 
 
-VkResult vk_create_debug_utils_messenger_ext(
-    VkInstance                                  instance,
-    const VkDebugUtilsMessengerCreateInfoEXT*   create_info,
-    const VkAllocationCallbacks*                allocator,
-    VkDebugUtilsMessengerEXT*                   messenger,
-    Context *                                   ctx
-) {
-    auto vk_func = (PFN_vkCreateDebugUtilsMessengerEXT)
-        vkGetInstanceProcAddr(instance, "vkCreateDebugUtilsMessengerEXT");
-    if (vk_func == nullptr) {
-        return VK_ERROR_EXTENSION_NOT_PRESENT;
+class Module_vulkan : public GeneratedModule_vulkan {
+public:
+    Module_vulkan() : GeneratedModule_vulkan() {
+        ModuleLibrary lib;
+        lib.addModule(this);
+        lib.addBuiltInModule();
+        addGenerated(lib);
+        addVulkanCustom(*this, lib);
+
+        addAnnotation(make_smart<VkHandleAnnotation<
+            DebugMsgContext_DasHandle> >(
+                "DebugMsgContext_DasHandle", "DebugMsgContext_DasHandle"));
+
+        addExtern<DAS_BIND_FUN(glfw_create_window)>(
+            *this, lib, "glfwCreateWindow",
+            SideEffects::worstDefault, "glfwCreateWindow");
+        addExtern<DAS_BIND_FUN(glfw_destroy_window)>(
+            *this, lib, "glfwDestroyWindow",
+            SideEffects::worstDefault, "glfwDestroyWindow");
+        addExtern<DAS_BIND_FUN(glfw_set_framebuffer_size_callback)>(
+            *this, lib, "glfwSetFramebufferSizeCallback",
+            SideEffects::worstDefault, "glfwSetFramebufferSizeCallback");
+        addExtern<DAS_BIND_FUN(glfw_set_key_callback)>(
+            *this, lib, "glfwSetKeyCallback",
+            SideEffects::worstDefault, "glfwSetKeyCallback");
+        addExtern<DAS_BIND_FUN(create_debug_msg_context)>(
+            *this, lib, "create_debug_msg_context",
+            SideEffects::worstDefault, "create_debug_msg_context");
+        addExtern<DAS_BIND_FUN(destroy_debug_msg_context)>(
+            *this, lib, "destroy_debug_msg_context",
+            SideEffects::worstDefault, "destroy_debug_msg_context");
     }
+};
 
-    VkDebugUtilsMessengerCreateInfoEXT final_info = *create_info;
-    final_info.pfnUserCallback = vk_debug_msg_callback;
-    return vk_func(instance, &final_info, allocator, messenger);
-}
-
-
-void vk_destroy_debug_utils_messenger_ext(
-    VkInstance                    instance,
-    VkDebugUtilsMessengerEXT      messenger,
-    const VkAllocationCallbacks*  allocator
-) {
-    auto vk_func = (PFN_vkDestroyDebugUtilsMessengerEXT)
-        vkGetInstanceProcAddr(instance, "vkDestroyDebugUtilsMessengerEXT");
-    if (vk_func == nullptr) {
-        ctx->throw_error("vkDestroyDebugUtilsMessengerEXT not found");
-    }
-    vk_func(instance, messenger, allocator);
-}
+REGISTER_MODULE(Module_vulkan);
 */
