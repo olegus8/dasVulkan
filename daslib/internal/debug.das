@@ -19,16 +19,6 @@ struct DebugUtilsMessenger
     ) : uint >
 
 
-def boost_value_to_vk(b : DebugUtilsMessenger) : VkDebugUtilsMessengerEXT
-    return b.messenger
-
-def boost_value_to_vk(b : DebugUtilsMessenger ?) : VkDebugUtilsMessengerEXT ?
-    return b?.messenger
-
-def vk_value_to_boost(v : VkDebugUtilsMessengerEXT) : DebugUtilsMessenger
-    return <- [[ DebugUtilsMessenger messenger=v ]]
-
-
 def create_debug_utils_messenger(
     instance : Instance;
     var create_info : DebugUtilsMessengerCreateInfoEXT;
