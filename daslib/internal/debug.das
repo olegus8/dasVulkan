@@ -39,7 +39,7 @@ def create_debug_utils_messenger(
     //TODO: DO NOT COMMIT!!!
     print("create_debug_utils_messenger callback : {callback}\n")
 
-    var vk_callback <- @ <| [[&callback]] (
+    var vk_callback <- @ <| [[:=callback]] (
         msg_severity : VkDebugUtilsMessageSeverityFlagBitsEXT;
         msg_type : uint;
         data : VkDebugUtilsMessengerCallbackDataEXT
