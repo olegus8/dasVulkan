@@ -185,7 +185,7 @@ void vkDestroyDebugUtilsMessengerEXT(
     vk_func(instance, messenger, allocator);
 }
 
-void addVulkanCustomBeforeGenerated(Module &, ModuleLibrary &) {
+void addVulkanCustomBeforeGenerated(Module & module, ModuleLibrary & lib) {
     addAnnotation(make_smart<VkHandleAnnotation<
         PFN_vkDebugUtilsMessengerCallbackEXT> >(
           "PFN_vkDebugUtilsMessengerCallbackEXT",
@@ -198,25 +198,28 @@ void addVulkanCustomBeforeGenerated(Module &, ModuleLibrary &) {
             "DebugMsgContext_DasHandle"
     ));
 
-    //addConstant(*this, "vk_debug_msg_callback",
+    //addConstant(module, "vk_debug_msg_callback",
     //    (void*)(&vk_debug_msg_callback));
 
     addExtern<DAS_BIND_FUN(glfw_create_window)>(
-        *this, lib, "glfwCreateWindow",
+        module, lib, "glfwCreateWindow",
         SideEffects::worstDefault, "glfwCreateWindow");
     addExtern<DAS_BIND_FUN(glfw_destroy_window)>(
-        *this, lib, "glfwDestroyWindow",
+        module, lib, "glfwDestroyWindow",
         SideEffects::worstDefault, "glfwDestroyWindow");
     addExtern<DAS_BIND_FUN(glfw_set_framebuffer_size_callback)>(
-        *this, lib, "glfwSetFramebufferSizeCallback",
+        module, lib, "glfwSetFramebufferSizeCallback",
         SideEffects::worstDefault, "glfwSetFramebufferSizeCallback");
     addExtern<DAS_BIND_FUN(glfw_set_key_callback)>(
-        *this, lib, "glfwSetKeyCallback",
+        module, lib, "glfwSetKeyCallback",
         SideEffects::worstDefault, "glfwSetKeyCallback");
     addExtern<DAS_BIND_FUN(create_debug_msg_context)>(
-        *this, lib, "create_debug_msg_context",
+        module, lib, "create_debug_msg_context",
         SideEffects::worstDefault, "create_debug_msg_context");
     addExtern<DAS_BIND_FUN(destroy_debug_msg_context)>(
-        *this, lib, "destroy_debug_msg_context",
+        module, lib, "destroy_debug_msg_context",
         SideEffects::worstDefault, "destroy_debug_msg_context");
+}
+
+void addVulkanCustomAfterGenerated(Module &, ModuleLibrary &) {
 }
