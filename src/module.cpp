@@ -172,7 +172,7 @@ void destroy_debug_msg_context(DebugMsgContext * debug_ctx, Context * ctx) {
 }
 
 
-VkResult vk_create_debug_utils_messenger_ext(
+VkResult vkCreateDebugUtilsMessengerEXT(
     VkInstance                                  instance,
     const VkDebugUtilsMessengerCreateInfoEXT*   create_info,
     const VkAllocationCallbacks*                allocator,
@@ -189,7 +189,7 @@ VkResult vk_create_debug_utils_messenger_ext(
 }
 
 
-void vk_destroy_debug_utils_messenger_ext(
+void vkDestroyDebugUtilsMessengerEXT(
     VkInstance                    instance,
     VkDebugUtilsMessengerEXT      messenger,
     const VkAllocationCallbacks*  allocator
@@ -245,12 +245,6 @@ public:
         addExtern<DAS_BIND_FUN(destroy_debug_msg_context)>(
             *this, lib, "destroy_debug_msg_context",
             SideEffects::worstDefault, "destroy_debug_msg_context");
-        addExtern<DAS_BIND_FUN(vk_create_debug_utils_messenger_ext)>(
-            *this, lib, "vkCreateDebugUtilsMessengerEXT",
-            SideEffects::worstDefault, "vkCreateDebugUtilsMessengerEXT");
-        addExtern<DAS_BIND_FUN(vk_destroy_debug_utils_messenger_ext)>(
-            *this, lib, "vkDestroyDebugUtilsMessengerEXT",
-            SideEffects::worstDefault, "vkDestroyDebugUtilsMessengerEXT");
     }
 };
 
