@@ -225,7 +225,7 @@ public:
               "PFN_vkDebugUtilsMessengerCallbackEXT"
         ));
 
-        addConstant(*this, "vk_debug_msg_callback", vk_debug_msg_callback);
+        addConstant(*this, "vk_debug_msg_callback", &vk_debug_msg_callback);
 
         addExtern<DAS_BIND_FUN(glfw_create_window)>(
             *this, lib, "glfwCreateWindow",
