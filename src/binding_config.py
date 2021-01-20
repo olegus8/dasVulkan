@@ -53,10 +53,10 @@ class Config(ConfigBase):
 
     def configure_struct_field(self, field):
         # whitelist
-        #if (field.struct.name == 'VkDebugUtilsMessengerCreateInfoEXT'
-        #and field.name == 'pfnUserCallback'
-        #):
-        #  return
+        if (field.struct.name == 'VkDebugUtilsMessengerCreateInfoEXT'
+        and field.name == 'pfnUserCallback'
+        ):
+          return
 
         # These structs have function pointers, but we can probably
         # live without them for a time being.
@@ -67,9 +67,9 @@ class Config(ConfigBase):
         # whitelist
         if func.name in [
             'vkAcquireNextImageKHR',
-            #'vkCreateDebugUtilsMessengerEXT',
+            'vkCreateDebugUtilsMessengerEXT',
             'vkCreateSwapchainKHR',
-            #'vkDestroyDebugUtilsMessengerEXT',
+            'vkDestroyDebugUtilsMessengerEXT',
             'vkDestroySurfaceKHR',
             'vkDestroySwapchainKHR',
             'vkGetPhysicalDeviceSurfaceCapabilitiesKHR',
@@ -121,7 +121,7 @@ def add_boost_content(g):
         'VkBufferView',
         'VkCommandBuffer',
         'VkCommandPool',
-        #'VkDebugUtilsMessengerEXT',
+        'VkDebugUtilsMessengerEXT',
         'VkDescriptorPool',
         'VkDescriptorSet',
         'VkDescriptorSetLayout',

@@ -19,7 +19,7 @@ struct VkHandleAnnotation : public ManagedValueAnnotation<OT> {
     }
 };
 
-//MAKE_TYPE_FACTORY(PFN_vkDebugUtilsMessengerCallbackEXT, PFN_vkDebugUtilsMessengerCallbackEXT);
+MAKE_TYPE_FACTORY(PFN_vkDebugUtilsMessengerCallbackEXT, PFN_vkDebugUtilsMessengerCallbackEXT);
 
 #include "module_generated.inc"
 
@@ -215,13 +215,11 @@ public:
         lib.addModule(this);
         lib.addBuiltInModule();
 
-/*
         addAnnotation(make_smart<VkHandleAnnotation<
             PFN_vkDebugUtilsMessengerCallbackEXT> >(
               "PFN_vkDebugUtilsMessengerCallbackEXT",
               "PFN_vkDebugUtilsMessengerCallbackEXT"
         ));
-*/
 
         addGenerated(lib);
         addVulkanCustom(*this, lib);
