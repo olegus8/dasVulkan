@@ -163,7 +163,7 @@ void destroy_debug_msg_context(DebugMsgContext * debug_ctx, Context * ctx) {
     delete debug_ctx;
 }
 
-VkResult vk_create_debug_utils_messenger_ex(
+VkResult vk_create_debug_utils_messenger_ext(
     VkInstance                                  instance,
     const VkDebugUtilsMessengerCreateInfoEXT*   create_info,
     const VkAllocationCallbacks*                allocator,
@@ -181,7 +181,7 @@ VkResult vk_create_debug_utils_messenger_ex(
     return vk_func(instance, &final_info, allocator, messenger);
 }
 
-void vk_destroy_debug_utils_messenger_ex(
+void vk_destroy_debug_utils_messenger_ext(
     VkInstance                                  instance,
     VkDebugUtilsMessengerEXT                    messenger,
     const VkAllocationCallbacks*                allocator,
@@ -220,12 +220,18 @@ public:
         addExtern<DAS_BIND_FUN(glfw_set_key_callback)>(
             *this, lib, "glfwSetKeyCallback",
             SideEffects::worstDefault, "glfwSetKeyCallback");
-        addExtern<DAS_BIND_FUN(vk_create_debug_utils_messenger_ex)>(
-            *this, lib, "vkCreateDebugUtilsMessengerEx",
-            SideEffects::worstDefault, "vkCreateDebugUtilsMessengerEx");
-        addExtern<DAS_BIND_FUN(vk_destroy_debug_utils_messenger_ex)>(
-            *this, lib, "vkDestroyDebugUtilsMessengerEx",
-            SideEffects::worstDefault, "vkDestroyDebugUtilsMessengerEx");
+        addExtern<DAS_BIND_FUN(vk_create_debug_utils_messenger_ext)>(
+            *this, lib, "vkCreateDebugUtilsMessengerEXT",
+            SideEffects::worstDefault, "vkCreateDebugUtilsMessengerEXT");
+        addExtern<DAS_BIND_FUN(vk_destroy_debug_utils_messenger_ext)>(
+            *this, lib, "vkDestroyDebugUtilsMessengerEXT",
+            SideEffects::worstDefault, "vkDestroyDebugUtilsMessengerEXT");
+        addExtern<DAS_BIND_FUN(create_debug_msg_context)>(
+            *this, lib, "create_debug_msg_context",
+            SideEffects::worstDefault, "create_debug_msg_context");
+        addExtern<DAS_BIND_FUN(destroy_debug_msg_context)>(
+            *this, lib, "destroy_debug_msg_context",
+            SideEffects::worstDefault, "destroy_debug_msg_context");
     }
 };
 
