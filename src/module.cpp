@@ -1,3 +1,4 @@
+
 #include "daScript/daScript.h"
 #include "headers_to_bind.h"
 #include <thread>
@@ -15,6 +16,12 @@ struct VkHandleAnnotation : public ManagedValueAnnotation<OT> {
     }
     virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
         return ManagedValueAnnotation<OT>::simulateCopy(context, at, l, r);
+    }
+};
+
+template <> struct typeName<PFN_vkDebugUtilsMessengerCallbackEXT> {
+    constexpr static const char * name() {
+        return "PFN_vkDebugUtilsMessengerCallbackEXT";
     }
 };
 
