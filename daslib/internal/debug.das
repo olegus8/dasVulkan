@@ -66,12 +66,7 @@ def create_debug_utils_messenger(
 
 def finalize(var handle : DebugUtilsMessenger & explicit)
     if handle._needs_delete
-        vkDestroyDebugUtilsMessengerEx(
-            boost_value_to_vk(handle._instance),
-            handle.messenger,
-            handle._debug_ctx,
-            null
-        )
+        delete handle.messenger
         handle._debug_ctx |> destroy_debug_msg_context
         delete handle._callback
     memzero(handle)
