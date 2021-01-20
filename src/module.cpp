@@ -1,6 +1,6 @@
 #include "daScript/daScript.h"
 #include "headers_to_bind.h"
-#include <threads>
+#include <thread>
 
 using namespace std;
 using namespace das;
