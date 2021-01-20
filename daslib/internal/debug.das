@@ -8,7 +8,7 @@ require vulkan
 
 
 struct DebugUtilsMessenger
-    messenger : VkDebugUtilsMessengerEXT
+    messenger : DebugUtilsMessengerEXT
     _debug_ctx : DebugMsgContext_DasHandle
     _instance : Instance
     _needs_delete : bool
@@ -38,7 +38,8 @@ def create_debug_utils_messenger(
         data : DebugUtilsMessengerCallbackDataEXT
     ): uint>;
     var result : VkResult? = [[VkResult?]]
-)
+) : DebugUtilsMessenger
+
     var vk_callback <- @ <| [[:=callback]] (
         msg_severity : VkDebugUtilsMessageSeverityFlagBitsEXT;
         msg_type : uint;
@@ -49,30 +50,18 @@ def create_debug_utils_messenger(
         delete boost_data;
         return result
 
-    var messenger <- [[DebugUtilsMessenger
+    unsafe
+        create_info.p_user_data = reinterpret<void ?>(messenger._debug_ctx)
+        create_info.pfn_user_callback = vk_debug_msg_callback
+
+    return <- [[DebugUtilsMessenger
         _instance = instance |> weak_copy,
         _callback <- vk_callback,
         _needs_delete = true,
         _debug_ctx = create_debug_msg_context(vk_callback)
+        messenger <- create_debug_utils_messenger_ext(
+            instance, create_info, result)
     ]]
-
-    unsafe
-        create_info.p_user_data = reinterpret<void ?>(messenger._debug_ctx)
-
-    var vk_create_info <- create_info |> vk_view_create_unsafe()
-    defer <| { create_info |> vk_view_destroy(); }
-
-    var result_ = VkResult VK_SUCCESS
-
-    result ?? result_ = vkCreateDebugUtilsMessengerEx(
-        boost_value_to_vk(instance),
-        safe_addr(vk_create_info),
-        null,
-        safe_addr(messenger.messenger)
-    )
-    assert(result_ == VkResult VK_SUCCESS)
-
-    return <- messenger
 
 
 def finalize(var handle : DebugUtilsMessenger & explicit)
