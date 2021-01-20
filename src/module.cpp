@@ -182,9 +182,9 @@ VkResult vk_create_debug_utils_messenger_ext(
 }
 
 void vk_destroy_debug_utils_messenger_ext(
-    VkInstance                                  instance,
-    VkDebugUtilsMessengerEXT                    messenger,
-    const VkAllocationCallbacks*                allocator,
+    VkInstance                    instance,
+    VkDebugUtilsMessengerEXT      messenger,
+    const VkAllocationCallbacks*  allocator
 ) {
     auto vk_func = (PFN_vkDestroyDebugUtilsMessengerEXT)
         vkGetInstanceProcAddr(instance, "vkDestroyDebugUtilsMessengerEXT");
