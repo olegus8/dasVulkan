@@ -81,9 +81,6 @@ class Config(ConfigBase):
         ]:
             return
 
-        if 'PFN_vkDebugUtilsMessengerCallbackEXT' in func.type:
-          return
-
         #TODO: make these work
         if ('PFN_' in func.type
         or  func.name.endswith('KHR')
