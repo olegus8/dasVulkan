@@ -86,6 +86,7 @@ class BoostGenerator(LoggingObject):
             ParamVkSampleMask,
             ParamVkDeviceSize,
             ParamVkFlags,
+            ParamFuncPtr,
             ParamVoidPtr,
             ParamVoidPtrPtr,
             ParamUnknown,
@@ -1708,6 +1709,20 @@ class ParamVkFlags(ParamBase):
     @property
     def vk_unqual_type(self):
         return 'uint'
+
+
+class ParamFuncPtr(ParamBase):
+
+    @classmethod
+    def maybe_create(cls, c_param, **kwargs):
+        if c_param.type.unqual_name in [
+            'PFN_vkDebugUtilsMessengerCallbackEXT'
+        ]:
+            return cls(c_param=c_param, **kwargs)
+
+    @property
+    def vk_unqual_type(self):
+        return 'PFN_vkDebugUtilsMessengerCallbackEXT'
 
 
 class ParamVoidPtr(ParamBase):
