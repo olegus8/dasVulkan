@@ -134,13 +134,40 @@ static VKAPI_ATTR VkBool32 VKAPI_CALL vk_debug_msg_callback(
     return cast<VkBool32>::to(result);
 }
 
+DebugMsgContext * create_debug_msg_context(Lambda callback, Context * ctx) {
+    auto debug_ctx = new DebugMsgContext();
+    debug_ctx->ctx = ctx;
+    int32_t * fn_index = (int32_t *) callback.capture;
+    if ( ! fn_index ) {
+        delete debug_ctx;
+        ctx->throw_error("null callback lambda");
+        return nullptr;
+    }
+    debug_ctx->cb_func = ctx->getFunction(*fn_index-1);
+    if ( ! debug_ctx->cb_func ) {
+        delete debug_ctx;
+        ctx->throw_error("callback function not found");
+        return nullptr;
+    }
+    debug_ctx->cb_lambda = callback;
+    return debug_ctx;
+}
+
+void destroy_debug_msg_context(DebugMsgContext * debug_ctx, Context * ctx) {
+    if ( debug_ctx == nullptr ) {
+        ctx->throw_error("debug_ctx must not be null");
+    }
+    if ( debug_ctx->ctx != ctx ) {
+        ctx->throw_error("must call from same context as was created");
+    }
+    delete debug_ctx;
+}
+
 VkResult vk_create_debug_utils_messenger_ex(
     VkInstance                                  instance,
     const VkDebugUtilsMessengerCreateInfoEXT*   create_info,
     const VkAllocationCallbacks*                allocator,
-    Lambda                                      callback,
     VkDebugUtilsMessengerEXT*                   messenger,
-    DebugMsgContext**                           debug_ctx,
     Context *                                   ctx
 ) {
     auto vk_func = (PFN_vkCreateDebugUtilsMessengerEXT)
@@ -149,29 +176,9 @@ VkResult vk_create_debug_utils_messenger_ex(
         return VK_ERROR_EXTENSION_NOT_PRESENT;
     }
 
-    *debug_ctx = new DebugMsgContext();
-    (*debug_ctx)->ctx = ctx;
-    int32_t * fn_index = (int32_t *) callback.capture;
-    if ( ! fn_index ) {
-        delete *debug_ctx;
-        ctx->throw_error("null callback lambda");
-    }
-    (*debug_ctx)->cb_func = ctx->getFunction(*fn_index-1);
-    if ( ! (*debug_ctx)->cb_func ) {
-        delete *debug_ctx;
-        ctx->throw_error("callback function not found");
-    }
-    (*debug_ctx)->cb_lambda = callback;
-
     VkDebugUtilsMessengerCreateInfoEXT final_info = *create_info;
     final_info.pfnUserCallback = vk_debug_msg_callback;
-    final_info.pUserData = *debug_ctx;
-    auto result = vk_func(instance, &final_info, allocator, messenger);
-    if ( result != VK_SUCCESS ) {
-        delete *debug_ctx;
-        *debug_ctx = nullptr;
-    }
-    return result;
+    return vk_func(instance, &final_info, allocator, messenger);
 }
 
 void vk_destroy_debug_utils_messenger_ex(
