@@ -22,9 +22,10 @@ struct VkHandleAnnotation : public ManagedValueAnnotation<OT> {
 void addVulkanCustom(Module &, ModuleLibrary &);
 
 struct DebugMsgContext {
-    Context * ctx = nullptr;
+    Context *     ctx = nullptr;
     SimFunction * cb_func = nullptr;
-    Lambda cb_lambda;
+    Lambda        cb_lambda;
+    thread::id    thread_id;
 };
 
 typedef DebugMsgContext * DebugMsgContext_DasHandle;
@@ -124,6 +125,12 @@ static VKAPI_ATTR VkBool32 VKAPI_CALL vk_debug_msg_callback(
     void*                                       user_data
 ) {
     auto debug_ctx = reinterpret_cast<DebugMsgContext*>(user_data);
+
+    //TODO: make it thread safe one day
+    if ( this_thread::get_id() != debug_ctx->thread_id ) {
+      DAS_FATAL_ERROR
+    }
+
     vec4f args[5] = {
         cast<Lambda>::from(debug_ctx->cb_lambda),
         cast<VkDebugUtilsMessageSeverityFlagBitsEXT>::from(msg_severity),
@@ -137,6 +144,7 @@ static VKAPI_ATTR VkBool32 VKAPI_CALL vk_debug_msg_callback(
 DebugMsgContext * create_debug_msg_context(Lambda callback, Context * ctx) {
     auto debug_ctx = new DebugMsgContext();
     debug_ctx->ctx = ctx;
+    debug_ctx->thread_id = this_thread::get_id();
     int32_t * fn_index = (int32_t *) callback.capture;
     if ( ! fn_index ) {
         delete debug_ctx;
@@ -175,7 +183,17 @@ public:
 
         addAnnotation(make_smart<VkHandleAnnotation<
             DebugMsgContext_DasHandle> >(
-                "DebugMsgContext_DasHandle", "DebugMsgContext_DasHandle"));
+                "DebugMsgContext_DasHandle",
+                "DebugMsgContext_DasHandle"
+        ));
+
+        addAnnotation(make_smart<VkHandleAnnotation<
+            PFN_vkDebugUtilsMessengerCallbackEXT> >(
+              "PFN_vkDebugUtilsMessengerCallbackEXT",
+              "PFN_vkDebugUtilsMessengerCallbackEXT"
+        ));
+
+        addConstant(*this, "vk_debug_msg_callback", vk_debug_msg_callback);
 
         addExtern<DAS_BIND_FUN(glfw_create_window)>(
             *this, lib, "glfwCreateWindow",
@@ -189,12 +207,6 @@ public:
         addExtern<DAS_BIND_FUN(glfw_set_key_callback)>(
             *this, lib, "glfwSetKeyCallback",
             SideEffects::worstDefault, "glfwSetKeyCallback");
-        addExtern<DAS_BIND_FUN(vk_create_debug_utils_messenger_ext)>(
-            *this, lib, "vkCreateDebugUtilsMessengerEXT",
-            SideEffects::worstDefault, "vkCreateDebugUtilsMessengerEXT");
-        addExtern<DAS_BIND_FUN(vk_destroy_debug_utils_messenger_ext)>(
-            *this, lib, "vkDestroyDebugUtilsMessengerEXT",
-            SideEffects::worstDefault, "vkDestroyDebugUtilsMessengerEXT");
         addExtern<DAS_BIND_FUN(create_debug_msg_context)>(
             *this, lib, "create_debug_msg_context",
             SideEffects::worstDefault, "create_debug_msg_context");
