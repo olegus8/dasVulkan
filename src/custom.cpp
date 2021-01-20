@@ -1,7 +1,4 @@
 #include "module.h"
-#include <thread>
-
-using namespace std;
 
 typedef DebugMsgContext * DebugMsgContext_DasHandle;
 MAKE_TYPE_FACTORY(DebugMsgContext_DasHandle, DebugMsgContext_DasHandle)

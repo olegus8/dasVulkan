@@ -2,8 +2,10 @@
 
 #include "daScript/daScript.h"
 #include "headers_to_bind.h"
+#include <thread>
 
 using namespace das;
+using namespace std;
 
 template <typename OT>
 struct VkHandleAnnotation : public ManagedValueAnnotation<OT> {
