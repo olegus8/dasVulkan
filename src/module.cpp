@@ -184,23 +184,14 @@ VkResult vk_create_debug_utils_messenger_ex(
 void vk_destroy_debug_utils_messenger_ex(
     VkInstance                                  instance,
     VkDebugUtilsMessengerEXT                    messenger,
-    DebugMsgContext*                            debug_ctx,
     const VkAllocationCallbacks*                allocator,
-    Context *                                   ctx
 ) {
     auto vk_func = (PFN_vkDestroyDebugUtilsMessengerEXT)
         vkGetInstanceProcAddr(instance, "vkDestroyDebugUtilsMessengerEXT");
     if (vk_func == nullptr) {
         ctx->throw_error("vkDestroyDebugUtilsMessengerEXT not found");
     }
-    if ( debug_ctx == nullptr ) {
-        ctx->throw_error("debug_ctx must not be null");
-    }
-    if ( debug_ctx->ctx != ctx ) {
-        ctx->throw_error("must call from same context as was created");
-    }
     vk_func(instance, messenger, allocator);
-    delete debug_ctx;
 }
 
 
