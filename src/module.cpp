@@ -217,3 +217,39 @@ public:
 };
 
 REGISTER_MODULE(Module_vulkan);
+
+/*
+
+
+VkResult vk_create_debug_utils_messenger_ext(
+    VkInstance                                  instance,
+    const VkDebugUtilsMessengerCreateInfoEXT*   create_info,
+    const VkAllocationCallbacks*                allocator,
+    VkDebugUtilsMessengerEXT*                   messenger,
+    Context *                                   ctx
+) {
+    auto vk_func = (PFN_vkCreateDebugUtilsMessengerEXT)
+        vkGetInstanceProcAddr(instance, "vkCreateDebugUtilsMessengerEXT");
+    if (vk_func == nullptr) {
+        return VK_ERROR_EXTENSION_NOT_PRESENT;
+    }
+
+    VkDebugUtilsMessengerCreateInfoEXT final_info = *create_info;
+    final_info.pfnUserCallback = vk_debug_msg_callback;
+    return vk_func(instance, &final_info, allocator, messenger);
+}
+
+
+void vk_destroy_debug_utils_messenger_ext(
+    VkInstance                    instance,
+    VkDebugUtilsMessengerEXT      messenger,
+    const VkAllocationCallbacks*  allocator
+) {
+    auto vk_func = (PFN_vkDestroyDebugUtilsMessengerEXT)
+        vkGetInstanceProcAddr(instance, "vkDestroyDebugUtilsMessengerEXT");
+    if (vk_func == nullptr) {
+        ctx->throw_error("vkDestroyDebugUtilsMessengerEXT not found");
+    }
+    vk_func(instance, messenger, allocator);
+}
+*/
