@@ -198,8 +198,8 @@ void vkDestroyDebugUtilsMessengerEXT(
     auto vk_func = (PFN_vkDestroyDebugUtilsMessengerEXT)
         vkGetInstanceProcAddr(instance, "vkDestroyDebugUtilsMessengerEXT");
     if (vk_func == nullptr) {
-        DAS_FATAL_LOG("vkDestroyDebugUtilsMessengerEXT not found\n");
-        DAS_FATAL_ERROR
+        DAS_ASSERTF(0, "vkDestroyDebugUtilsMessengerEXT not found");
+        return;
     }
     vk_func(instance, messenger, allocator);
 }
