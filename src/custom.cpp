@@ -45,15 +45,15 @@ void destroy_debug_msg_context(DebugMsgContext * debug_ctx, Context * ctx) {
 
 void addVulkanCustomBeforeGenerated(Module & module, ModuleLibrary & lib) {
 
-    addAnnotation(make_smart<VkHandleAnnotation<
+    module.addAnnotation(make_smart<VkHandleAnnotation<
         DebugMsgContext_DasHandle> >(
             "DebugMsgContext_DasHandle",
             "DebugMsgContext_DasHandle"
     ));
-    addExtern<DAS_BIND_FUN(create_debug_msg_context)>(
+    module.addExtern<DAS_BIND_FUN(create_debug_msg_context)>(
         module, lib, "create_debug_msg_context",
         SideEffects::worstDefault, "create_debug_msg_context");
-    addExtern<DAS_BIND_FUN(destroy_debug_msg_context)>(
+    module.addExtern<DAS_BIND_FUN(destroy_debug_msg_context)>(
         module, lib, "destroy_debug_msg_context",
         SideEffects::worstDefault, "destroy_debug_msg_context");
 }
