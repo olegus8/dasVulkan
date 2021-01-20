@@ -34,12 +34,24 @@ def create_debug_utils_messenger(
     ): uint>;
     var result : VkResult? = [[VkResult?]]
 )
+    //TODO: DO NOT COMMIT!!!
+    //TODO: DO NOT COMMIT!!!
+    //TODO: DO NOT COMMIT!!!
+    print("create_debug_utils_messenger callback : {callback}\n")
+
     var vk_callback <- @ <| [[=callback]] (
         msg_severity : VkDebugUtilsMessageSeverityFlagBitsEXT;
         msg_type : uint;
         data : VkDebugUtilsMessengerCallbackDataEXT
     ) : uint
         var boost_data <- vk_value_to_boost(data)
+
+        //TODO: DO NOT COMMIT!!!
+        //TODO: DO NOT COMMIT!!!
+        //TODO: DO NOT COMMIT!!!
+        print("vk_callback message : {boost_data.message}\n")
+        print("vk_callback callback : {callback}\n")
+
         let result = callback |> invoke(msg_severity, msg_type, boost_data)
         delete boost_data;
         return result
