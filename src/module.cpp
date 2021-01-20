@@ -214,6 +214,13 @@ public:
         ModuleLibrary lib;
         lib.addModule(this);
         lib.addBuiltInModule();
+
+        addAnnotation(make_smart<VkHandleAnnotation<
+            PFN_vkDebugUtilsMessengerCallbackEXT> >(
+              "PFN_vkDebugUtilsMessengerCallbackEXT",
+              "PFN_vkDebugUtilsMessengerCallbackEXT"
+        ));
+
         addGenerated(lib);
         addVulkanCustom(*this, lib);
 
@@ -221,12 +228,6 @@ public:
             DebugMsgContext_DasHandle> >(
                 "DebugMsgContext_DasHandle",
                 "DebugMsgContext_DasHandle"
-        ));
-
-        addAnnotation(make_smart<VkHandleAnnotation<
-            PFN_vkDebugUtilsMessengerCallbackEXT> >(
-              "PFN_vkDebugUtilsMessengerCallbackEXT",
-              "PFN_vkDebugUtilsMessengerCallbackEXT"
         ));
 
         addConstant(*this, "vk_debug_msg_callback",
