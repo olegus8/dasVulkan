@@ -153,7 +153,6 @@ void destroy_debug_msg_context(DebugMsgContext * debug_ctx, Context * ctx) {
     delete debug_ctx;
 }
 
-
 VkResult vkCreateDebugUtilsMessengerEXT(
     VkInstance                                  instance,
     const VkDebugUtilsMessengerCreateInfoEXT*   create_info,
@@ -168,7 +167,6 @@ VkResult vkCreateDebugUtilsMessengerEXT(
     }
     return vk_func(instance, create_info, allocator, messenger);
 }
-
 
 void vkDestroyDebugUtilsMessengerEXT(
     VkInstance                    instance,
