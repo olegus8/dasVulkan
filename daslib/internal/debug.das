@@ -12,6 +12,11 @@ struct DebugUtilsMessenger
     _debug_ctx : DebugMsgContext_DasHandle
     _instance : Instance
     _needs_delete : bool
+    _callback : lambda<(
+        msg_severity : VkDebugUtilsMessageSeverityFlagBitsEXT;
+        msg_type : uint;
+        data : VkDebugUtilsMessengerCallbackDataEXT
+    ) : uint >
 
 
 def boost_value_to_vk(b : DebugUtilsMessenger) : VkDebugUtilsMessengerEXT
@@ -56,10 +61,9 @@ def create_debug_utils_messenger(
         delete boost_data;
         return result
 
-    defer <| { delete vk_callback; }
-
     var messenger <- [[DebugUtilsMessenger
         _instance = instance |> weak_copy,
+        _callback <- vk_callback,
         _needs_delete = true
     ]]
 
@@ -89,4 +93,5 @@ def finalize(var handle : DebugUtilsMessenger & explicit)
             handle._debug_ctx,
             null
         )
+        delete handle._callback
     memzero(handle)
