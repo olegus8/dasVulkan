@@ -1,7 +1,8 @@
 #include "daScript/daScript.h"
-
 #include "headers_to_bind.h"
+#include <threads>
 
+using namespace std;
 using namespace das;
 
 template <typename OT>
