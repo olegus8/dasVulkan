@@ -67,9 +67,9 @@ class Config(ConfigBase):
         # whitelist
         if func.name in [
             'vkAcquireNextImageKHR',
-            'vkCreateDebugUtilsMessengerEXT',
+            #'vkCreateDebugUtilsMessengerEXT',
             'vkCreateSwapchainKHR',
-            'vkDestroyDebugUtilsMessengerEXT',
+            #'vkDestroyDebugUtilsMessengerEXT',
             'vkDestroySurfaceKHR',
             'vkDestroySwapchainKHR',
             'vkGetPhysicalDeviceSurfaceCapabilitiesKHR',
@@ -121,7 +121,7 @@ def add_boost_content(g):
         'VkBufferView',
         'VkCommandBuffer',
         'VkCommandPool',
-        'VkDebugUtilsMessengerEXT',
+        #'VkDebugUtilsMessengerEXT',
         'VkDescriptorPool',
         'VkDescriptorSet',
         'VkDescriptorSetLayout',
