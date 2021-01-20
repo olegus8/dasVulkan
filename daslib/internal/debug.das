@@ -76,7 +76,7 @@ def create_debug_utils_messenger(
         boost_value_to_vk(instance),
         safe_addr(vk_create_info),
         null,
-        vk_callback,
+        messenger._callback,
         safe_addr(messenger.messenger),
         safe_addr(messenger._debug_ctx)
     )
