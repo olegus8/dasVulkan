@@ -177,8 +177,7 @@ VkResult vkCreateDebugUtilsMessengerEXT(
     VkInstance                                  instance,
     const VkDebugUtilsMessengerCreateInfoEXT*   create_info,
     const VkAllocationCallbacks*                allocator,
-    VkDebugUtilsMessengerEXT*                   messenger,
-    Context *                                   ctx
+    VkDebugUtilsMessengerEXT*                   messenger
 ) {
     //TODO: use real vulkan loader with ptr cache
     auto vk_func = (PFN_vkCreateDebugUtilsMessengerEXT)
@@ -199,7 +198,8 @@ void vkDestroyDebugUtilsMessengerEXT(
     auto vk_func = (PFN_vkDestroyDebugUtilsMessengerEXT)
         vkGetInstanceProcAddr(instance, "vkDestroyDebugUtilsMessengerEXT");
     if (vk_func == nullptr) {
-        ctx->throw_error("vkDestroyDebugUtilsMessengerEXT not found");
+        DAS_FATAL_LOG("vkDestroyDebugUtilsMessengerEXT not found\n");
+        DAS_FATAL_ERROR
     }
     vk_func(instance, messenger, allocator);
 }
