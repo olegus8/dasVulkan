@@ -52,8 +52,12 @@ def create_debug_utils_messenger(
     var messenger <- [[DebugUtilsMessenger
         _instance = instance |> weak_copy,
         _callback <- vk_callback,
-        _needs_delete = true
+        _needs_delete = true,
+        _debug_ctx = create_debug_msg_context(vk_callback)
     ]]
+
+    unsafe
+        create_info.p_user_data = reinterpret<void ?>(messenger._debug_ctx)
 
     var vk_create_info <- create_info |> vk_view_create_unsafe()
     defer <| { create_info |> vk_view_destroy(); }
@@ -64,9 +68,7 @@ def create_debug_utils_messenger(
         boost_value_to_vk(instance),
         safe_addr(vk_create_info),
         null,
-        messenger._callback,
-        safe_addr(messenger.messenger),
-        safe_addr(messenger._debug_ctx)
+        safe_addr(messenger.messenger)
     )
     assert(result_ == VkResult VK_SUCCESS)
 
@@ -81,5 +83,6 @@ def finalize(var handle : DebugUtilsMessenger & explicit)
             handle._debug_ctx,
             null
         )
+        handle._debug_ctx |> destroy_debug_msg_context
         delete handle._callback
     memzero(handle)
