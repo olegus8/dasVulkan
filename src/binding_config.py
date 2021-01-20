@@ -67,7 +67,9 @@ class Config(ConfigBase):
         # whitelist
         if func.name in [
             'vkAcquireNextImageKHR',
+            'vkCreateDebugUtilsMessengerEXT',
             'vkCreateSwapchainKHR',
+            'vkDestroyDebugUtilsMessengerEXT',
             'vkDestroySurfaceKHR',
             'vkDestroySwapchainKHR',
             'vkGetPhysicalDeviceSurfaceCapabilitiesKHR',
