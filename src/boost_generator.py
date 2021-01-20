@@ -1736,6 +1736,11 @@ class ParamVoidPtr(ParamBase):
     def vk_unqual_type(self):
         return 'void'
 
+    def generate_boost_struct_view_create_field(self):
+        bname = self._boost_struct_field_name
+        vname = self.vk_name
+        return [f'{vname} = boost_struct.{bname},']
+
 
 class ParamVoidPtrPtr(ParamBase):
 
