@@ -50,10 +50,10 @@ void addVulkanCustomBeforeGenerated(Module & module, ModuleLibrary & lib) {
             "DebugMsgContext_DasHandle",
             "DebugMsgContext_DasHandle"
     ));
-    module.addExtern<DAS_BIND_FUN(create_debug_msg_context)>(
+    addExtern<DAS_BIND_FUN(create_debug_msg_context)>(
         module, lib, "create_debug_msg_context",
         SideEffects::worstDefault, "create_debug_msg_context");
-    module.addExtern<DAS_BIND_FUN(destroy_debug_msg_context)>(
+    addExtern<DAS_BIND_FUN(destroy_debug_msg_context)>(
         module, lib, "destroy_debug_msg_context",
         SideEffects::worstDefault, "destroy_debug_msg_context");
 }
