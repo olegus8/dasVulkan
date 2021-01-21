@@ -8,6 +8,11 @@ require vulkan
 require debug
 
 
+let
+    DEFAULT_INSTANCE_EXTENSIONS = [{auto[] "VK_EXT_debug_utils"}]
+    DEFAULT_INSTANCE_LAYERS = [{auto[] "VK_LAYER_KHRONOS_validation"}]
+
+
 struct VulkanVersion
     major : int
     minor : int
@@ -40,10 +45,10 @@ def boost_value_to_vk(b : VulkanVersion) : uint
     return (uint(b.major) << 22u) | (uint(b.minor) << 12u) | uint(b.patch)
 
 
-def create_default_instance(
+def create_instance(
+    api_version : uint = VK_API_VERSION_1_0;
     extensions : array<string> = [[ array<string> ]];
     layers : array<string> = [[ array<string> ]];
-    api_version : uint = VK_API_VERSION_1_0;
     debug_msg_severity : uint = DEBUG_UTILS_MESSENGER_DEFAULT_SEVERITY;
     debug_msg_type : uint = DEBUG_UTILS_MESSENGER_DEFAULT_TYPE;
     var callback : function<(
