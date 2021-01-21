@@ -15,6 +15,13 @@ struct VulkanVersion
 
 
 struct InstanceEx
+    instance : Instance
+    _debug_ctx : DebugMsgContext_DasHandle
+    _callback : lambda<(
+        msg_severity : VkDebugUtilsMessageSeverityFlagBitsEXT;
+        msg_type : uint;
+        data : VkDebugUtilsMessengerCallbackDataEXT
+    ) : uint >
 
 
 def to_string(v : VulkanVersion) : string
@@ -38,12 +45,21 @@ def create_default_instance(
     layers : array<string> = [[ array<string> ]];
     api_version : uint = VK_API_VERSION_1_0;
     debug_msg_severity : uint = DEBUG_UTILS_MESSENGER_DEFAULT_SEVERITY;
-    debug_msg_type : uint = DEBUG_UTILS_MESSENGER_DEFAULT_TYPE
+    debug_msg_type : uint = DEBUG_UTILS_MESSENGER_DEFAULT_TYPE;
+    var callback : function<(
+        msg_severity : VkDebugUtilsMessageSeverityFlagBitsEXT;
+        msg_type : uint;
+        data : DebugUtilsMessengerCallbackDataEXT
+    ): uint> = @@debug_utils_messenger_default_callback
 )
+    var all_extensions <- get_required_instance_extensions()
+    for ext in extensions
+        all_extensions |> push(clone_string(ext))
     var create_info <- [[InstanceCreateInfo
-        enabled_extension_names <- get_required_instance_extensions(),
+        enabled_extension_names <- all_extensions,
+        enabled_layer_names := layers,
         p_application_info = new [[ApplicationInfo
-            api_version = VK_API_VERSION_1_0
+            api_version = api_version
         ]]
     ]]
     defer() <| { delete create_info; }
