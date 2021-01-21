@@ -7,6 +7,23 @@ require generated
 require vulkan
 
 
+let
+    DEBUG_UTILS_MESSENGER_DEFAULT_SEVERITY : uint = (
+        uint(VkDebugUtilsMessageSeverityFlagBitsEXT
+            VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT) |
+        uint(VkDebugUtilsMessageSeverityFlagBitsEXT
+            VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT))
+
+let
+    DEBUG_UTILS_MESSENGER_DEFAULT_TYPE : uint = (
+        uint(VkDebugUtilsMessageTypeFlagBitsEXT
+            VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT) |
+        uint(VkDebugUtilsMessageTypeFlagBitsEXT
+            VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT) |
+        uint(VkDebugUtilsMessageTypeFlagBitsEXT
+            VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT))
+
+
 struct DebugUtilsMessenger
     messenger : DebugUtilsMessengerEXT
     _debug_ctx : DebugMsgContext_DasHandle
@@ -25,20 +42,6 @@ def debug_utils_messenger_default_callback(
 ): uint
     print("vk_debug_utils_messenger: {data.message}\n")
     return 0u
-
-let
-    DEBUG_UTILS_MESSENGER_DEFAULT_SEVERITY : uint = (
-        uint(VkDebugUtilsMessageSeverityFlagBitsEXT
-            VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT) |
-        uint(VkDebugUtilsMessageSeverityFlagBitsEXT
-            VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT))
-    DEBUG_UTILS_MESSENGER_DEFAULT_TYPE : uint = (
-        uint(VkDebugUtilsMessageTypeFlagBitsEXT
-            VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT) |
-        uint(VkDebugUtilsMessageTypeFlagBitsEXT
-            VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT) |
-        uint(VkDebugUtilsMessageTypeFlagBitsEXT
-            VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT))
 
 
 def create_debug_utils_messenger(
