@@ -78,7 +78,7 @@ def create_debug_msg_context(
 
 
 def debug_utils_messenger_create_info(
-    var debug_ctx : DebugMsgContext;
+    debug_ctx : DebugMsgContext;
     message_severity : uint = DEBUG_UTILS_MESSENGER_DEFAULT_SEVERITY;
     message_type : uint = DEBUG_UTILS_MESSENGER_DEFAULT_TYPE;
 ) : DebugUtilsMessengerCreateInfoEXT
@@ -107,30 +107,15 @@ def create_debug_utils_messenger(
     var result : VkResult? = [[VkResult?]]
 ) : DebugUtilsMessenger
 
-    var vk_callback <- @ <| [[:=callback]] (
-        msg_severity : VkDebugUtilsMessageSeverityFlagBitsEXT;
-        msg_type : uint;
-        data : VkDebugUtilsMessengerCallbackDataEXT
-    ) : uint
-        var boost_data <- vk_value_to_boost(data)
-        let result = callback |> invoke(msg_severity, msg_type, boost_data)
-        delete boost_data
-        return result
-
-    var messenger <-[[ DebugUtilsMessenger _callback <- vk_callback ]]
-    messenger._debug_ctx = create_debug_msg_context(messenger._callback)
-
-    var create_info <- [[ DebugUtilsMessengerCreateInfoEXT
+    var messenger <- [[ DebugUtilsMessenger
+        _debug_ctx <- create_debug_msg_context(callback)
+    ]]
+    var create_info <- debug_utils_messenger_create_info([
+        debug_ctx = messenger._debug_ctx,
         message_severity = message_severity,
         message_type = message_type
-    ]]
-
-    unsafe
-        create_info.p_user_data = reinterpret<void ?>(messenger._debug_ctx)
-
-        create_info.pfn_user_callback = (
-            reinterpret<PFN_vkDebugUtilsMessengerCallbackEXT>(
-                vk_debug_msg_callback))
+    ])
+    defer <| { delete create_info; }
 
     messenger.messenger <- create_debug_utils_messenger_ext(
         instance, create_info, result)
