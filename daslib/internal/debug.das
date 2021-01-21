@@ -93,8 +93,8 @@ def create_debug_msg_context(
 
 def debug_utils_messenger_create_info(
     debug_ctx : DebugMsgContext;
-    message_severity : uint = DEBUG_UTILS_MESSENGER_DEFAULT_SEVERITY;
-    message_type : uint = DEBUG_UTILS_MESSENGER_DEFAULT_TYPE;
+    message_severity : uint;
+    message_type : uint
 ) : DebugUtilsMessengerCreateInfoEXT
 
     var create_info <- [[ DebugUtilsMessengerCreateInfoEXT
