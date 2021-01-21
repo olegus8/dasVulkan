@@ -44,7 +44,7 @@ def create_debug_utils_messenger(
         _instance = instance |> weak_copy,
         _callback <- vk_callback,
         _needs_delete = true,
-        _debug_ctx = create_debug_msg_context(vk_callback),
+        _debug_ctx = create_debug_msg_context(vk_callback)
     ]]
 
     unsafe
