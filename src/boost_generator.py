@@ -923,6 +923,11 @@ class ParamBase(object):
         and self._boost_unqual_type == self.vk_unqual_type
         ):
             return [f'{vname} = vk_p_{bname},']
+        return self._generate_boost_struct_view_create_field_plain()
+
+    def _generate_boost_struct_view_create_field_plain(self):
+        bname = self._boost_struct_field_name
+        vname = self.vk_name
         return [f'{vname} = boost_value_to_vk(boost_struct.{bname}),']
 
     def generate_boost_struct_view_destroy(self):
@@ -1736,7 +1741,7 @@ class ParamVoidPtr(ParamBase):
     def vk_unqual_type(self):
         return 'void'
 
-    def generate_boost_struct_view_create_field(self):
+    def _generate_boost_struct_view_create_field_plain(self):
         bname = self._boost_struct_field_name
         vname = self.vk_name
         return [f'{vname} = boost_struct.{bname},']
