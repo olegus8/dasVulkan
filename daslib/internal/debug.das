@@ -77,6 +77,24 @@ def create_debug_msg_context(
     return <- debug_ctx
 
 
+def debug_utils_messenger_create_info(
+    var debug_ctx : DebugMsgContext;
+    message_severity : uint = DEBUG_UTILS_MESSENGER_DEFAULT_SEVERITY;
+    message_type : uint = DEBUG_UTILS_MESSENGER_DEFAULT_TYPE;
+) : DebugUtilsMessengerCreateInfoEXT
+
+    var create_info <- [[ DebugUtilsMessengerCreateInfoEXT
+        message_severity = message_severity,
+        message_type = message_type
+    ]]
+    unsafe
+        create_info.p_user_data = reinterpret<void ?>(debug_ctx.debug_ctx)
+        create_info.pfn_user_callback = (
+            reinterpret<PFN_vkDebugUtilsMessengerCallbackEXT>(
+                vk_debug_msg_callback))
+    return <- create_info
+
+
 def create_debug_utils_messenger(
     instance : Instance;
     message_severity : uint = DEBUG_UTILS_MESSENGER_DEFAULT_SEVERITY;
