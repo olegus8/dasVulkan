@@ -18,6 +18,15 @@ struct DebugUtilsMessenger
     ) : uint >
 
 
+def debug_utils_messenger_default_callback(
+    msg_severity : VkDebugUtilsMessageSeverityFlagBitsEXT;
+    msg_type : uint;
+    data : DebugUtilsMessengerCallbackDataEXT
+): uint
+    print("vk_debug_utils_messenger: {data.message}\n")
+    return 0u
+
+
 def create_debug_utils_messenger(
     instance : Instance;
     var create_info : DebugUtilsMessengerCreateInfoEXT;
@@ -25,7 +34,7 @@ def create_debug_utils_messenger(
         msg_severity : VkDebugUtilsMessageSeverityFlagBitsEXT;
         msg_type : uint;
         data : DebugUtilsMessengerCallbackDataEXT
-    ): uint>;
+    ): uint> = @@debug_utils_messenger_default_callback;
     var result : VkResult? = [[VkResult?]]
 ) : DebugUtilsMessenger
 
@@ -36,7 +45,7 @@ def create_debug_utils_messenger(
     ) : uint
         var boost_data <- vk_value_to_boost(data)
         let result = callback |> invoke(msg_severity, msg_type, boost_data)
-        delete boost_data;
+        delete boost_data
         return result
 
     var messenger <-[[DebugUtilsMessenger

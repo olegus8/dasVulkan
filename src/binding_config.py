@@ -202,7 +202,6 @@ def add_boost_content(g):
         'VkCommandBufferInheritanceInfo',
         'VkCommandPoolCreateInfo',
         'VkCopyDescriptorSet',
-        'VkDebugUtilsMessengerCreateInfoEXT',
         'VkDescriptorBufferInfo',
         'VkDescriptorImageInfo',
         'VkDescriptorPoolSize',
@@ -228,6 +227,9 @@ def add_boost_content(g):
         'VkVertexInputBindingDescription',
     ]:
         g.add_gen_struct(name=name, vk_to_boost=False)
+
+    debug_msg_create_info = g.add_gen_struct(
+        name='VkDebugUtilsMessengerCreateInfoEXT', vk_to_boost=False)
 
     g.add_gen_struct(name = 'VkBufferCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'queueFamilyIndexCount', items = 'pQueueFamilyIndices')
@@ -265,6 +267,7 @@ def add_boost_content(g):
     g.add_gen_struct(name = 'VkImageCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'queueFamilyIndexCount', items = 'pQueueFamilyIndices')
     g.add_gen_struct(name = 'VkInstanceCreateInfo', vk_to_boost=False,
+        next_in_chain = debug_msg_create_info
         ).declare_array(count = 'enabledLayerCount', items = 'ppEnabledLayerNames',
         ).declare_array(count = 'enabledExtensionCount', items = 'ppEnabledExtensionNames')
     g.add_gen_struct(name = 'VkPhysicalDeviceMemoryProperties',
