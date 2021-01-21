@@ -42,8 +42,9 @@ def create_debug_utils_messenger(
     var messenger <-[[DebugUtilsMessenger
         _callback <- vk_callback,
         _needs_delete = true,
-        _debug_ctx = create_debug_msg_context(vk_callback)
     ]]
+
+    messenger._debug_ctx = create_debug_msg_context(messenger._callback)
 
     unsafe
         create_info.p_user_data = reinterpret<void ?>(messenger._debug_ctx)
