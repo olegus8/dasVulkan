@@ -58,15 +58,26 @@ def create_instance(
         data : DebugUtilsMessengerCallbackDataEXT
     ): uint> = @@debug_utils_messenger_default_callback
 )
+    var instance <- [[ InstanceEx
+        _debug_ctx <- create_debug_msg_context(callback)
+    ]]
+
+    var debug_msg_create_info <- debug_utils_messenger_create_info([
+        debug_ctx = instance._debug_ctx,
+        message_severity = message_severity,
+        message_type = message_type
+    ])
+
     var all_extensions <- get_required_instance_extensions()
     for ext in extensions
         all_extensions |> push(clone_string(ext))
     var create_info <- [[InstanceCreateInfo
+        next <- debug_msg_create_info,
         enabled_extension_names <- all_extensions,
         enabled_layer_names := layers,
-        p_application_info = new [[ApplicationInfo
-            api_version = api_version
-        ]]
+        p_application_info = new [[ApplicationInfo api_version=api_version]]
     ]]
     defer() <| { delete create_info; }
-    return <- create_instance(create_info)
+
+    instance.instance <- create_instance(create_info)
+    return <- instance
