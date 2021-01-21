@@ -40,18 +40,21 @@ def create_debug_utils_messenger(
         delete boost_data;
         return result
 
-    unsafe
-        create_info.p_user_data = reinterpret<void ?>(messenger._debug_ctx)
-        create_info.pfn_user_callback = vk_debug_msg_callback
-
-    return <- [[DebugUtilsMessenger
+    var messenger <-[[DebugUtilsMessenger
         _instance = instance |> weak_copy,
         _callback <- vk_callback,
         _needs_delete = true,
         _debug_ctx = create_debug_msg_context(vk_callback),
-        messenger <- create_debug_utils_messenger_ext(
-            instance, create_info, result)
     ]]
+
+    unsafe
+        create_info.p_user_data = reinterpret<void ?>(messenger._debug_ctx)
+        create_info.pfn_user_callback = vk_debug_msg_callback
+
+    messenger.messenger <- create_debug_utils_messenger_ext(
+        instance, create_info, result)
+
+    return <- messenger
 
 
 def finalize(var handle : DebugUtilsMessenger & explicit)
