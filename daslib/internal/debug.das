@@ -48,7 +48,6 @@ def create_debug_utils_messenger(
     instance : Instance;
     message_severity : uint = DEBUG_UTILS_MESSENGER_DEFAULT_SEVERITY;
     message_type : uint = DEBUG_UTILS_MESSENGER_DEFAULT_TYPE;
-    var create_info : DebugUtilsMessengerCreateInfoEXT;
     var callback : function<(
         msg_severity : VkDebugUtilsMessageSeverityFlagBitsEXT;
         msg_type : uint;
@@ -73,6 +72,11 @@ def create_debug_utils_messenger(
     ]]
 
     messenger._debug_ctx = create_debug_msg_context(messenger._callback)
+
+    var create_info <- [[ DebugUtilsMessengerCreateInfoEXT
+        message_severity = message_severity,
+        message_type = message_type
+    ]]
 
     unsafe
         create_info.p_user_data = reinterpret<void ?>(messenger._debug_ctx)
