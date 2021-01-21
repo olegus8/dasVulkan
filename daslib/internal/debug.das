@@ -10,7 +10,6 @@ require vulkan
 struct DebugUtilsMessenger
     messenger : DebugUtilsMessengerEXT
     _debug_ctx : DebugMsgContext_DasHandle
-    _instance : Instance
     _needs_delete : bool
     _callback : lambda<(
         msg_severity : VkDebugUtilsMessageSeverityFlagBitsEXT;
@@ -41,7 +40,6 @@ def create_debug_utils_messenger(
         return result
 
     var messenger <-[[DebugUtilsMessenger
-        _instance = instance |> weak_copy,
         _callback <- vk_callback,
         _needs_delete = true,
         _debug_ctx = create_debug_msg_context(vk_callback)
