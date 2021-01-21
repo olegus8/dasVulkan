@@ -53,7 +53,7 @@ def create_instance(
     debug_msg_severity : uint   = DEBUG_UTILS_MESSENGER_DEFAULT_SEVERITY;
     debug_msg_type : uint       = DEBUG_UTILS_MESSENGER_DEFAULT_TYPE;
     var callback : debug_msg_callback_fn = (
-        @@debug_utils_messenger_default_callback)
+                                  @@debug_utils_messenger_default_callback)
 )
     var instance <- [[ InstanceEx
         _debug_ctx <- create_debug_msg_context(callback)
