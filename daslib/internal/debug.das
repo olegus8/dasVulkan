@@ -41,7 +41,7 @@ def create_debug_utils_messenger(
 
     var messenger <-[[DebugUtilsMessenger
         _callback <- vk_callback,
-        _needs_delete = true,
+        _needs_delete = true
     ]]
 
     messenger._debug_ctx = create_debug_msg_context(messenger._callback)
