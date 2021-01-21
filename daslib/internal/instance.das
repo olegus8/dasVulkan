@@ -21,12 +21,13 @@ struct VulkanVersion
 
 struct InstanceEx
     instance : Instance
-    _debug_ctx : DebugMsgContext_DasHandle
-    _callback : lambda<(
-        msg_severity : VkDebugUtilsMessageSeverityFlagBitsEXT;
-        msg_type : uint;
-        data : VkDebugUtilsMessengerCallbackDataEXT
-    ) : uint >
+    _debug_ctx : DebugMsgContext
+
+
+def finalize(var handle : InstanceEx & explicit)
+    delete handle.instance
+    delete handle._debug_ctx
+    memzero(handle)
 
 
 def to_string(v : VulkanVersion) : string

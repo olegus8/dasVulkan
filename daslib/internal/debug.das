@@ -44,6 +44,12 @@ struct DebugUtilsMessenger
     _debug_ctx : DebugMsgContext
 
 
+def finalize(var handle : DebugUtilsMessenger & explicit)
+    delete handle.messenger
+    delete handle._debug_ctx
+    memzero(handle)
+
+
 def debug_utils_messenger_default_callback(
     msg_severity : VkDebugUtilsMessageSeverityFlagBitsEXT;
     msg_type : uint;
