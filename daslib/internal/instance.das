@@ -47,7 +47,7 @@ def boost_value_to_vk(b : VulkanVersion) : uint
 
 
 def create_instance(
-    api_version : uint          = VK_API_VERSION_1_2;
+    api_version : VulkanVersion = [[ VulkanVersion major=1, minor=2 ]];
     extensions : array<string>  = DEFAULT_INSTANCE_EXTENSIONS;
     layers : array<string>      = DEFAULT_INSTANCE_LAYERS;
     debug_msg_severity : uint   = DEBUG_UTILS_MESSENGER_DEFAULT_SEVERITY;
@@ -75,7 +75,8 @@ def create_instance(
         next <- debug_msg_create_info,
         enabled_extension_names <- all_extensions,
         enabled_layer_names := layers,
-        p_application_info = new [[ApplicationInfo api_version=api_version]]
+        p_application_info = new [[ApplicationInfo
+            api_version=boost_value_to_vk(api_version)]]
     ]]
     defer() <| { delete create_info; }
 
