@@ -46,11 +46,11 @@ def boost_value_to_vk(b : VulkanVersion) : uint
 
 
 def create_instance(
-    api_version : uint = VK_API_VERSION_1_0;
-    extensions : array<string> = [[ array<string> ]];
-    layers : array<string> = [[ array<string> ]];
-    debug_msg_severity : uint = DEBUG_UTILS_MESSENGER_DEFAULT_SEVERITY;
-    debug_msg_type : uint = DEBUG_UTILS_MESSENGER_DEFAULT_TYPE;
+    api_version : uint          = VK_API_VERSION_1_2;
+    extensions : array<string>  = DEFAULT_INSTANCE_EXTENSIONS;
+    layers : array<string>      = DEFAULT_INSTANCE_LAYERS;
+    debug_msg_severity : uint   = DEBUG_UTILS_MESSENGER_DEFAULT_SEVERITY;
+    debug_msg_type : uint       = DEBUG_UTILS_MESSENGER_DEFAULT_TYPE;
     var callback : function<(
         msg_severity : VkDebugUtilsMessageSeverityFlagBitsEXT;
         msg_type : uint;
