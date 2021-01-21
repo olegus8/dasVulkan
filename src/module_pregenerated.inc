@@ -19096,6 +19096,7 @@ struct VkDebugUtilsMessengerCreateInfoEXTAnnotation
         addField<DAS_BIND_MANAGED_FIELD(flags)>("flags");
         addField<DAS_BIND_MANAGED_FIELD(messageSeverity)>("messageSeverity");
         addField<DAS_BIND_MANAGED_FIELD(messageType)>("messageType");
+        addField<DAS_BIND_MANAGED_FIELD(pfnUserCallback)>("pfnUserCallback");
         addField<DAS_BIND_MANAGED_FIELD(pUserData)>("pUserData");
     }
     void init() {
@@ -25262,6 +25263,10 @@ protected:
             SideEffects::worstDefault, "vkAcquireNextImageKHR");
         addExtern<DAS_BIND_FUN(vkQueuePresentKHR)>(*this, lib, "vkQueuePresentKHR",
             SideEffects::worstDefault, "vkQueuePresentKHR");
+        addExtern<DAS_BIND_FUN(vkCreateDebugUtilsMessengerEXT)>(*this, lib, "vkCreateDebugUtilsMessengerEXT",
+            SideEffects::worstDefault, "vkCreateDebugUtilsMessengerEXT");
+        addExtern<DAS_BIND_FUN(vkDestroyDebugUtilsMessengerEXT)>(*this, lib, "vkDestroyDebugUtilsMessengerEXT",
+            SideEffects::worstDefault, "vkDestroyDebugUtilsMessengerEXT");
         addExtern<DAS_BIND_FUN(glfwInit)>(*this, lib, "glfwInit",
             SideEffects::worstDefault, "glfwInit");
         addExtern<DAS_BIND_FUN(glfwTerminate)>(*this, lib, "glfwTerminate",

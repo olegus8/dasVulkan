@@ -593,6 +593,36 @@ def enumerate_device_extension_properties(
     assert(result_ == VkResult VK_SUCCESS)
     return <- [{for x in vk_properties; vk_value_to_boost(x)}]
 
+def enumerate_instance_layer_properties(
+    var result : VkResult? = [[VkResult?]]
+) : array<LayerProperties>
+
+    var vk_pPropertyCount : uint
+    var properties : array<LayerProperties>
+    defer() <| { delete properties; }
+    var result_ = VkResult VK_SUCCESS
+
+    result ?? result_ = vkEnumerateInstanceLayerProperties(
+        safe_addr(vk_pPropertyCount),
+        [[ VkLayerProperties ? ]]
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+    if result_ != VkResult VK_SUCCESS
+        return <- [[ array<LayerProperties> ]]
+    properties |> resize(int(vk_pPropertyCount))
+    var vk_properties <- [{ for item in properties ;
+        item |> vk_view_create_unsafe() }]
+    defer() <|
+        for item in properties
+            item |> vk_view_destroy()
+        delete vk_properties
+    result ?? result_ = vkEnumerateInstanceLayerProperties(
+        safe_addr(vk_pPropertyCount),
+        array_addr_unsafe(vk_properties)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+    return <- [{for x in vk_properties; vk_value_to_boost(x)}]
+
 def enumerate_physical_devices(
     instance : Instance = [[ Instance ]];
     var result : VkResult? = [[VkResult?]]
@@ -1250,6 +1280,69 @@ def vk_value_to_boost(vk_struct : VkComponentMapping) : ComponentMapping
     ]]
 
 //
+// DebugUtilsLabelEXT
+//
+
+struct DebugUtilsLabelEXT
+    label_name : string
+    color : float [4]
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : DebugUtilsLabelEXT &
+) : VkDebugUtilsLabelEXT
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    return <- [[ VkDebugUtilsLabelEXT
+        sType = VkStructureType VK_STRUCTURE_TYPE_DEBUG_UTILS_LABEL_EXT,
+        pLabelName = boost_value_to_vk(boost_struct.label_name),
+        color = boost_value_to_vk(boost_struct.color)
+    ]]
+
+def vk_view_destroy(var boost_struct : DebugUtilsLabelEXT &)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+def vk_value_to_boost(vk_struct : VkDebugUtilsLabelEXT) : DebugUtilsLabelEXT
+    return <- [[DebugUtilsLabelEXT
+        label_name = vk_value_to_boost(vk_struct.pLabelName),
+        color = vk_value_to_boost(vk_struct.color)
+    ]]
+
+//
+// DebugUtilsObjectNameInfoEXT
+//
+
+struct DebugUtilsObjectNameInfoEXT
+    object_type : VkObjectType
+    object_handle : uint64
+    object_name : string
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : DebugUtilsObjectNameInfoEXT &
+) : VkDebugUtilsObjectNameInfoEXT
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    return <- [[ VkDebugUtilsObjectNameInfoEXT
+        sType = VkStructureType VK_STRUCTURE_TYPE_DEBUG_UTILS_OBJECT_NAME_INFO_EXT,
+        objectType = boost_value_to_vk(boost_struct.object_type),
+        objectHandle = boost_value_to_vk(boost_struct.object_handle),
+        pObjectName = boost_value_to_vk(boost_struct.object_name)
+    ]]
+
+def vk_view_destroy(var boost_struct : DebugUtilsObjectNameInfoEXT &)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+def vk_value_to_boost(vk_struct : VkDebugUtilsObjectNameInfoEXT) : DebugUtilsObjectNameInfoEXT
+    return <- [[DebugUtilsObjectNameInfoEXT
+        object_type = vk_value_to_boost(vk_struct.objectType),
+        object_handle = vk_value_to_boost(vk_struct.objectHandle),
+        object_name = vk_value_to_boost(vk_struct.pObjectName)
+    ]]
+
+//
 // ExtensionProperties
 //
 
@@ -1377,6 +1470,45 @@ def vk_value_to_boost(vk_struct : VkImageSubresourceRange) : ImageSubresourceRan
         level_count = vk_value_to_boost(vk_struct.levelCount),
         base_array_layer = vk_value_to_boost(vk_struct.baseArrayLayer),
         layer_count = vk_value_to_boost(vk_struct.layerCount)
+    ]]
+
+//
+// LayerProperties
+//
+
+struct LayerProperties
+    layer_name : string
+    spec_version : uint
+    implementation_version : uint
+    description : string
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : LayerProperties &
+) : VkLayerProperties
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    var vk_layer_name : int8 [256]
+    boost_struct.layer_name |> copy_to_array <| vk_layer_name
+    var vk_description : int8 [256]
+    boost_struct.description |> copy_to_array <| vk_description
+    return <- [[ VkLayerProperties
+        layerName := vk_layer_name,
+        specVersion = boost_value_to_vk(boost_struct.spec_version),
+        implementationVersion = boost_value_to_vk(boost_struct.implementation_version),
+        description := vk_description
+    ]]
+
+def vk_view_destroy(var boost_struct : LayerProperties &)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+def vk_value_to_boost(vk_struct : VkLayerProperties) : LayerProperties
+    return <- [[LayerProperties
+        layer_name = vk_value_to_boost(vk_struct.layerName),
+        spec_version = vk_value_to_boost(vk_struct.specVersion),
+        implementation_version = vk_value_to_boost(vk_struct.implementationVersion),
+        description = vk_value_to_boost(vk_struct.description)
     ]]
 
 //
@@ -2782,6 +2914,36 @@ def vk_view_destroy(var boost_struct : CopyDescriptorSet &)
     boost_struct._vk_view__active = false
 
 //
+// DebugUtilsMessengerCreateInfoEXT
+//
+
+struct DebugUtilsMessengerCreateInfoEXT
+    flags : uint
+    message_severity : uint
+    message_type : uint
+    pfn_user_callback : PFN_vkDebugUtilsMessengerCallbackEXT
+    p_user_data : void ?
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : DebugUtilsMessengerCreateInfoEXT &
+) : VkDebugUtilsMessengerCreateInfoEXT
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    return <- [[ VkDebugUtilsMessengerCreateInfoEXT
+        sType = VkStructureType VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT,
+        flags = boost_value_to_vk(boost_struct.flags),
+        messageSeverity = boost_value_to_vk(boost_struct.message_severity),
+        messageType = boost_value_to_vk(boost_struct.message_type),
+        pfnUserCallback = boost_value_to_vk(boost_struct.pfn_user_callback),
+        pUserData = boost_struct.p_user_data
+    ]]
+
+def vk_view_destroy(var boost_struct : DebugUtilsMessengerCreateInfoEXT &)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+//
 // DescriptorBufferInfo
 //
 
@@ -3575,6 +3737,96 @@ def vk_view_destroy(var boost_struct : ComputePipelineCreateInfo &)
     unsafe
         delete boost_struct._vk_view_p_stage
     boost_struct._vk_view__active = false
+
+//
+// DebugUtilsMessengerCallbackDataEXT
+//
+
+struct DebugUtilsMessengerCallbackDataEXT
+    flags : uint
+    message_id_name : string
+    message_id_number : int
+    message : string
+    queue_labels : array<DebugUtilsLabelEXT>
+    cmd_buf_labels : array<DebugUtilsLabelEXT>
+    objects : array<DebugUtilsObjectNameInfoEXT>
+    _vk_view_queue_labels : array<VkDebugUtilsLabelEXT>
+    _vk_view_cmd_buf_labels : array<VkDebugUtilsLabelEXT>
+    _vk_view_objects : array<VkDebugUtilsObjectNameInfoEXT>
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : DebugUtilsMessengerCallbackDataEXT &
+) : VkDebugUtilsMessengerCallbackDataEXT
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    let vk_queue_label_count = uint(boost_struct.queue_labels |> length())
+    boost_struct._vk_view_queue_labels <- [{
+        for item in boost_struct.queue_labels ;
+        item |> vk_view_create_unsafe()}]
+    let vk_cmd_buf_label_count = uint(boost_struct.cmd_buf_labels |> length())
+    boost_struct._vk_view_cmd_buf_labels <- [{
+        for item in boost_struct.cmd_buf_labels ;
+        item |> vk_view_create_unsafe()}]
+    let vk_object_count = uint(boost_struct.objects |> length())
+    boost_struct._vk_view_objects <- [{
+        for item in boost_struct.objects ;
+        item |> vk_view_create_unsafe()}]
+    return <- [[ VkDebugUtilsMessengerCallbackDataEXT
+        sType = VkStructureType VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CALLBACK_DATA_EXT,
+        flags = boost_value_to_vk(boost_struct.flags),
+        pMessageIdName = boost_value_to_vk(boost_struct.message_id_name),
+        messageIdNumber = boost_value_to_vk(boost_struct.message_id_number),
+        pMessage = boost_value_to_vk(boost_struct.message),
+        queueLabelCount = vk_queue_label_count,
+        pQueueLabels = array_addr_unsafe(boost_struct._vk_view_queue_labels),
+        cmdBufLabelCount = vk_cmd_buf_label_count,
+        pCmdBufLabels = array_addr_unsafe(boost_struct._vk_view_cmd_buf_labels),
+        objectCount = vk_object_count,
+        pObjects = array_addr_unsafe(boost_struct._vk_view_objects)
+    ]]
+
+def vk_view_destroy(var boost_struct : DebugUtilsMessengerCallbackDataEXT &)
+    assert(boost_struct._vk_view__active)
+    for item in boost_struct.queue_labels
+        item |> vk_view_destroy()
+    delete boost_struct._vk_view_queue_labels
+    for item in boost_struct.cmd_buf_labels
+        item |> vk_view_destroy()
+    delete boost_struct._vk_view_cmd_buf_labels
+    for item in boost_struct.objects
+        item |> vk_view_destroy()
+    delete boost_struct._vk_view_objects
+    boost_struct._vk_view__active = false
+
+def vk_value_to_boost(vk_struct : VkDebugUtilsMessengerCallbackDataEXT) : DebugUtilsMessengerCallbackDataEXT
+    var b_queue_labels : array<DebugUtilsLabelEXT>
+    if vk_struct.pQueueLabels != null
+        b_queue_labels |> resize(int(vk_struct.queueLabelCount))
+        for b, i in b_queue_labels, range(INT_MAX)
+            unsafe
+                b <- vk_value_to_boost(*(vk_struct.pQueueLabels+i))
+    var b_cmd_buf_labels : array<DebugUtilsLabelEXT>
+    if vk_struct.pCmdBufLabels != null
+        b_cmd_buf_labels |> resize(int(vk_struct.cmdBufLabelCount))
+        for b, i in b_cmd_buf_labels, range(INT_MAX)
+            unsafe
+                b <- vk_value_to_boost(*(vk_struct.pCmdBufLabels+i))
+    var b_objects : array<DebugUtilsObjectNameInfoEXT>
+    if vk_struct.pObjects != null
+        b_objects |> resize(int(vk_struct.objectCount))
+        for b, i in b_objects, range(INT_MAX)
+            unsafe
+                b <- vk_value_to_boost(*(vk_struct.pObjects+i))
+    return <- [[DebugUtilsMessengerCallbackDataEXT
+        flags = vk_value_to_boost(vk_struct.flags),
+        message_id_name = vk_value_to_boost(vk_struct.pMessageIdName),
+        message_id_number = vk_value_to_boost(vk_struct.messageIdNumber),
+        message = vk_value_to_boost(vk_struct.pMessage),
+        queue_labels <- b_queue_labels,
+        cmd_buf_labels <- b_cmd_buf_labels,
+        objects <- b_objects
+    ]]
 
 //
 // DescriptorPoolCreateInfo
@@ -5119,6 +5371,80 @@ def finalize(var handle : CommandPool & explicit)
         destroy_command_pool(
             vk_value_to_boost(handle._device),
             vk_value_to_boost(handle.command_pool)
+        )
+    memzero(handle)
+
+//
+// DebugUtilsMessengerEXT
+//
+
+struct DebugUtilsMessengerEXT
+    debug_utils_messenger_ext : VkDebugUtilsMessengerEXT
+    _needs_delete : bool
+    _instance : VkInstance
+
+def boost_value_to_vk(b : DebugUtilsMessengerEXT) : VkDebugUtilsMessengerEXT
+    return b.debug_utils_messenger_ext
+
+def boost_value_to_vk(b : DebugUtilsMessengerEXT ?) : VkDebugUtilsMessengerEXT ?
+    return b?.debug_utils_messenger_ext
+
+def vk_value_to_boost(v : VkDebugUtilsMessengerEXT) : DebugUtilsMessengerEXT
+    return [[ DebugUtilsMessengerEXT debug_utils_messenger_ext=v ]]
+
+[private]
+def create_debug_utils_messenger_ext__inner(
+    instance : Instance = [[ Instance ]];
+    var create_info : DebugUtilsMessengerCreateInfoEXT = [[ DebugUtilsMessengerCreateInfoEXT ]];
+    var result : VkResult? = [[VkResult?]]
+) : DebugUtilsMessengerEXT
+
+    var vk_create_info <- create_info |> vk_view_create_unsafe()
+    defer() <| { create_info |> vk_view_destroy(); }
+    var vk_messenger : VkDebugUtilsMessengerEXT
+    var result_ = VkResult VK_SUCCESS
+
+    result ?? result_ = vkCreateDebugUtilsMessengerEXT(
+        boost_value_to_vk(instance),
+        safe_addr(vk_create_info),
+        null,
+        safe_addr(vk_messenger)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+    return vk_value_to_boost(vk_messenger)
+
+def create_debug_utils_messenger_ext(
+    instance : Instance = [[ Instance ]];
+    var create_info : DebugUtilsMessengerCreateInfoEXT = [[ DebugUtilsMessengerCreateInfoEXT ]];
+    var result : VkResult? = [[VkResult?]]
+) : DebugUtilsMessengerEXT
+
+    var handle <- create_debug_utils_messenger_ext__inner(
+        instance,
+        create_info,
+        result
+    )
+    handle._needs_delete = true
+    handle._instance = boost_value_to_vk(instance)
+    return <- handle
+
+[private]
+def destroy_debug_utils_messenger_ext(
+    instance : Instance = [[ Instance ]];
+    messenger : DebugUtilsMessengerEXT = [[ DebugUtilsMessengerEXT ]]
+) : void
+
+    vkDestroyDebugUtilsMessengerEXT(
+        boost_value_to_vk(instance),
+        boost_value_to_vk(messenger),
+        null
+    )
+
+def finalize(var handle : DebugUtilsMessengerEXT & explicit)
+    if handle._needs_delete
+        destroy_debug_utils_messenger_ext(
+            vk_value_to_boost(handle._instance),
+            vk_value_to_boost(handle.debug_utils_messenger_ext)
         )
     memzero(handle)
 
