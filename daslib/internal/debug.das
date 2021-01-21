@@ -47,7 +47,7 @@ def create_debug_utils_messenger(
 
     unsafe
         create_info.p_user_data = reinterpret<void ?>(messenger._debug_ctx)
-        create_info.pfn_user_callback = reinterpret<void ?)(
+        create_info.pfn_user_callback = reinterpret<void ?>(
             vk_debug_msg_callback)
 
     messenger.messenger <- create_debug_utils_messenger_ext(
