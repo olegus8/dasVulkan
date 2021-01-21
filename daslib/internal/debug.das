@@ -72,7 +72,7 @@ def create_debug_msg_context(
         msg_severity : VkDebugUtilsMessageSeverityFlagBitsEXT;
         msg_type : uint;
         data : DebugUtilsMessengerCallbackDataEXT
-    ): uint> = @@debug_utils_messenger_default_callback;
+    ): uint>
 ) : DebugMsgContext
 
     var vk_callback <- @ <| [[:=callback]] (
