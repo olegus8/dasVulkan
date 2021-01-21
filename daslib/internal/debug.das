@@ -33,6 +33,12 @@ struct DebugMsgContext
     ) : uint >
 
 
+def finalize(var handle : DebugMsgContext & explicit)
+    handle.debug_ctx |> destroy_debug_msg_context
+    delete handle.callback
+    memzero(handle)
+
+
 struct DebugUtilsMessenger
     messenger : DebugUtilsMessengerEXT
     _debug_ctx : DebugMsgContext
@@ -112,10 +118,3 @@ def create_debug_utils_messenger(
         instance, create_info, result)
 
     return <- messenger
-
-
-def finalize(var handle : DebugUtilsMessenger & explicit)
-    delete handle.messenger
-    handle._debug_ctx |> destroy_debug_msg_context
-    delete handle._callback
-    memzero(handle)
