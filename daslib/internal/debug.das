@@ -23,6 +23,14 @@ let
         uint(VkDebugUtilsMessageTypeFlagBitsEXT
             VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT))
 
+typedef
+    debug_msg_callback_fn = function<(
+        msg_severity : VkDebugUtilsMessageSeverityFlagBitsEXT;
+        msg_type : uint;
+        data : DebugUtilsMessengerCallbackDataEXT
+    ): uint>
+    
+
 
 struct DebugMsgContext
     debug_ctx : DebugMsgContext_DasHandle
@@ -105,11 +113,8 @@ def create_debug_utils_messenger(
     instance : Instance;
     message_severity : uint = DEBUG_UTILS_MESSENGER_DEFAULT_SEVERITY;
     message_type : uint = DEBUG_UTILS_MESSENGER_DEFAULT_TYPE;
-    var callback : function<(
-        msg_severity : VkDebugUtilsMessageSeverityFlagBitsEXT;
-        msg_type : uint;
-        data : DebugUtilsMessengerCallbackDataEXT
-    ): uint> = @@debug_utils_messenger_default_callback;
+    var callback : debug_msg_callback_fn = (
+        @@debug_utils_messenger_default_callback);
     var result : VkResult? = [[VkResult?]]
 ) : DebugUtilsMessenger
 
