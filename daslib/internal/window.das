@@ -16,7 +16,7 @@ def create_window(width : int; height : int; title : string;
     glfwWindowHint(GLFW_RESIZABLE, resizable ? GLFW_TRUE : GLFW_FALSE)
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API)
     return <- [[Window window = glfwCreateWindow(width, height, title,
-            [[GLFWmonitor_DasHandle]], [[GLFWwindow_DasHandle]]
+        [[GLFWmonitor_DasHandle]], [[GLFWwindow_DasHandle]]
     )]]
 
 
@@ -24,7 +24,14 @@ def create_fullscreen_window(title : string) : Window
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API)
     glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE)
     var monitor = glfwGetPrimaryMonitor()
-    var vidmode = monitor |> glfwGetVideoMode
+    var mode = monitor |> glfwGetVideoMode
+    glfwWindowHint(GLFW_RED_BITS, mode.redBits)
+    glfwWindowHint(GLFW_GREEN_BITS, mode.greenBits)
+    glfwWindowHint(GLFW_BLUE_BITS, mode.blueBits)
+    glfwWindowHint(GLFW_REFRESH_RATE, mode.refreshRate)
+    return <- [[Window window = glfwCreateWindow(mode.width, mode.height,
+        title, monitor, [[GLFWwindow_DasHandle]]
+    )]]
 
 
 def finalize(var window : Window explicit)
