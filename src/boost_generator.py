@@ -130,6 +130,11 @@ class BoostGenerator(LoggingObject):
         m = re.match(r'VK_MAKE_VERSION\((\d+), (\d+), (\d+)\)', v)
         return '.'.join(m.groups())
 
+    @property
+    def __functions_to_link(self):
+        return [fn for fn in self.functions.values()
+            if fn.name.endswith('EXT')]
+
     def __generate_cpp(self):
         lines = []
         lines += [
@@ -139,18 +144,11 @@ class BoostGenerator(LoggingObject):
             f'',
             f'static VkInstance vk_get_linked_instance() {{',
             f'    return g_vk_linked_instance;',
-            f'}}',
+            f'}}'] + [
+            f'{line}' for fn in self.__functions_to_link
+            for line in self.__decl_linked_vk_function(fn)] + [
             f'',
-        ]
-        for fn in self.functions.values():
-            if not fn.name.endswith('EXT'):
-                continue
-            lines += [
-                f'static PFN_{fn.name} g_vk_linked_{fn.name} = nullptr;',
-            ]
-        lines += [
-            f'',
-            f'static VkInstance vk_link_instance(VkInstance instance) {{',
+            f'static void vk_link_instance(VkInstance instance) {{',
             f'    g_vk_linked_instance = instance;'] + [
             f'    {line}' for fn in self.functions.values()
                   for line in self.__link_vk_function(fn)] + [
@@ -158,9 +156,30 @@ class BoostGenerator(LoggingObject):
             f'',
             f'void addVulkanBoostGenerated(Module & module, '
                         f'ModuleLibrary & lib) {{',
+            f'    addExtern<DAS_BIND_FUN(vk_link_instance)>(',
+            f'        *this, lib, "vk_link_instance",',
+            f'        SideEffects::worstDefault, "vk_link_instance");',
+            f'    addExtern<DAS_BIND_FUN(vk_get_linked_instance)>(',
+            f'        *this, lib, "vk_get_linked_instance",',
+            f'        SideEffects::worstDefault, "vk_get_linked_instance");',
             f'}}',
         ]
         return lines
+
+    def __decl_linked_vk_function(self, fn):
+        lines = []
+        lines += [
+            f'',
+            f'static PFN_{fn.name} g_vk_linked_{fn.name} = nullptr;',
+            f'',
+        ]
+        for fn in self.functions.values():
+            if not fn.name.endswith('EXT'):
+                continue
+            lines += 
+            lines += [
+            ]
+        lines += [
 
     def __link_vk_function(self, func):
         fn = func.name
