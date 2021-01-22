@@ -146,7 +146,7 @@ class BoostGenerator(LoggingObject):
             if not fn.name.endswith('EXT'):
                 continue
             lines += [
-                f'static PFN_{{fn.name}} g_linked_{{fn.name}} = nullptr;',
+                f'static PFN_{fn.name} g_linked_{fn.name} = nullptr;',
             ]
         lines += [
             f'',
