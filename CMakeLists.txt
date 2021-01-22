@@ -74,7 +74,7 @@ IF(NOT DAS_VULKAN_INCLUDED)
             ${DAS_VULKAN_DIR}/src/boost_preamble.das
         )
         SET(DAS_VULKAN_BINDER_EXTRA_OUTPUTS
-            ${DAS_VULKAN_DIR}/daslib/generated.das
+            ${DAS_VULKAN_DIR}/daslib/internal/generated.das
         )
 
         IF(DAS_BINDER_INCLUDED)
