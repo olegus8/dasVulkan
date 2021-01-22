@@ -46,7 +46,7 @@ def boost_value_to_vk(b : VulkanVersion) : uint
     return (uint(b.major) << 22u) | (uint(b.minor) << 12u) | uint(b.patch)
 
 
-def create_instance(
+def create_instance_ex(
     api_version : VulkanVersion = [[ VulkanVersion major=1, minor=2 ]];
     extensions : array<string>  = DEFAULT_INSTANCE_EXTENSIONS;
     layers : array<string>      = DEFAULT_INSTANCE_LAYERS;
