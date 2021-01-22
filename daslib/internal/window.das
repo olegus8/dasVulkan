@@ -10,10 +10,21 @@ struct Window
     _needs_delete : bool
 
 
-def create_window(width : int; height : int; title : string) : Window
+def create_window(width : int; height : int; title : string;
+    resizable : bool = true
+) : Window
+    glfwWindowHint(GLFW_RESIZABLE, resizable ? GLFW_TRUE : GLFW_FALSE)
+    glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API)
     return <- [[Window window = glfwCreateWindow(width, height, title,
             [[GLFWmonitor_DasHandle]], [[GLFWwindow_DasHandle]]
     )]]
+
+
+def create_fullscreen_window(title : string) : Window
+    glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API)
+    glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE)
+    var monitor = glfwGetPrimaryMonitor()
+    var vidmode = monitor |> glfwGetVideoMode
 
 
 def finalize(var window : Window explicit)
