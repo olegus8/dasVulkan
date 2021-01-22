@@ -61,8 +61,8 @@ def create_instance(
 
     var debug_msg_create_info <- debug_utils_messenger_create_info([
         debug_ctx = instance._debug_ctx,
-        message_severity = message_severity,
-        message_type = message_type
+        message_severity = debug_msg_severity,
+        message_type = debug_msg_type
     ])
 
     var all_extensions <- get_required_instance_extensions()
