@@ -152,8 +152,8 @@ class BoostGenerator(LoggingObject):
             f'',
             f'static VkInstance vk_link_instance(VkInstance instance) {{',
             f'    g_vk_linked_instance = instance;'] + [
-            f'    g_vk_linked_{fn} = vkGetInstanceProcAddr(instance, "{fn}");'
-                  for fn in self.functions.keys()] + [
+            f'    {line}' for fn in self.functions.values()
+                  for line in self.__link_vk_function(fn)] + [
             f'}}',
             f'',
             f'void addVulkanBoostGenerated(Module & module, '
