@@ -171,15 +171,11 @@ class BoostGenerator(LoggingObject):
         lines += [
             f'',
             f'static PFN_{fn.name} g_vk_linked_{fn.name} = nullptr;',
-            f'',
+            f'{fn.return_type} {fn.name}('] + [
+            f'    {p.type} {p.name},' for p in fn.params] + [
+            f') {{',
         ]
-        for fn in self.functions.values():
-            if not fn.name.endswith('EXT'):
-                continue
-            lines += 
-            lines += [
-            ]
-        lines += [
+        return lines
 
     def __link_vk_function(self, func):
         fn = func.name
