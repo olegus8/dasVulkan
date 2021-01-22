@@ -73,6 +73,9 @@ IF(NOT DAS_VULKAN_INCLUDED)
             ${DAS_VULKAN_DIR}/src/boost_generator.py
             ${DAS_VULKAN_DIR}/src/boost_preamble.das
         )
+        SET(DAS_VULKAN_BINDER_EXTRA_OUTPUTS
+            ${DAS_VULKAN_DIR}/daslib/generated.das
+        )
 
         IF(DAS_BINDER_INCLUDED)
             DAS_BINDER(
@@ -81,6 +84,7 @@ IF(NOT DAS_VULKAN_INCLUDED)
                 ${DAS_VULKAN_DIR}/src/binding_config.py
                 "${DAS_VULKAN_INCLUDE_DIRS}"
                 "${DAS_VULKAN_BINDER_DEPS}"
+                "${DAS_VULKAN_BINDER_EXTRA_OUTPUTS}"
             )
             ADD_CUSTOM_COMMAND(
                 DEPENDS ${DAS_VULKAN_DIR}/src/module_generated.inc
