@@ -8,7 +8,7 @@ static VkInstance vk_get_linked_instance() {
 
 static PFN_vkCreateDebugUtilsMessengerEXT
     g_vk_linked_vkCreateDebugUtilsMessengerEXT = nullptr;
-VkResult vkCreateDebugUtilsMessengerEXT(
+VKAPI_ATTR VkResult VKAPI_CALL vkCreateDebugUtilsMessengerEXT(
     struct VkInstance_T * instance,
     const VkDebugUtilsMessengerCreateInfoEXT * pCreateInfo,
     const VkAllocationCallbacks * pAllocator,
@@ -28,7 +28,7 @@ VkResult vkCreateDebugUtilsMessengerEXT(
 
 static PFN_vkDestroyDebugUtilsMessengerEXT
     g_vk_linked_vkDestroyDebugUtilsMessengerEXT = nullptr;
-void vkDestroyDebugUtilsMessengerEXT(
+VKAPI_ATTR void VKAPI_CALL vkDestroyDebugUtilsMessengerEXT(
     struct VkInstance_T * instance,
     struct VkDebugUtilsMessengerEXT_T * messenger,
     const VkAllocationCallbacks * pAllocator
