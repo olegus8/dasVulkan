@@ -189,14 +189,9 @@ class BoostGenerator(LoggingObject):
 
     def __link_vk_function(self, func):
         fn = func.name
-        return [
-            f'',
-            f'g_vk_linked_{fn} = (PFN_{fn}) vkGetInstanceProcAddr('
-                f'instance, "{fn}");',
-            f'if ( g_vk_linked_{fn} == nullptr ) {{',
-            f'    DAS_ASSERTF(0, "{fn} not found");',
-            f'    DAS_FATAL_ERROR',
-            f'}}']
+        return [f'g_vk_linked_{fn} = (PFN_{fn}) vkGetInstanceProcAddr('
+            f'instance, "{fn}");',
+        ]
 
     def __generate_das(self):
         return [
