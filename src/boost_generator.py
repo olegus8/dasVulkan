@@ -181,7 +181,6 @@ class BoostGenerator(LoggingObject):
             f'        DAS_ASSERTF(0, "{fn.name} not found");',
             f'        DAS_FATAL_ERROR',
             f'    }}',
-            f'',
             f'    return (*g_vk_linked_{fn.name})('] + [
             f'        {p.name},' for p in fn.params
         ]
