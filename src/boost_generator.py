@@ -156,7 +156,7 @@ class BoostGenerator(LoggingObject):
             f'',
             f'static void vk_unlink_instance(VkInstance instance) {{',
             f'    g_vk_linked_instance = VK_NULL_HANDLE;'] + [
-            f'    g_vk_linked_{fn.name} = nullptr'
+            f'    g_vk_linked_{fn.name} = nullptr;'
                   for fn in self.__functions_to_link] + [
             f'}}',
             f'',
@@ -179,7 +179,8 @@ class BoostGenerator(LoggingObject):
         lines = []
         lines += [
             f'',
-            f'static PFN_{fn.name} g_vk_linked_{fn.name} = nullptr;',
+            f'static PFN_{fn.name}',
+            f'    g_vk_linked_{fn.name} = nullptr;',
             f'{fn.return_type} {fn.name}('] + [
             f'    {p.type} {p.name},' for p in fn.params
         ]

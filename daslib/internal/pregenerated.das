@@ -5162,6 +5162,10 @@ def boost_value_to_vk(b : Buffer ?) : VkBuffer ?
 def vk_value_to_boost(v : VkBuffer) : Buffer
     return [[ Buffer buffer=v ]]
 
+def operator == (a, b : VkBuffer) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
+
 [private]
 def create_buffer__inner(
     device : Device = [[ Device ]];
@@ -5236,6 +5240,10 @@ def boost_value_to_vk(b : BufferView ?) : VkBufferView ?
 def vk_value_to_boost(v : VkBufferView) : BufferView
     return [[ BufferView buffer_view=v ]]
 
+def operator == (a, b : VkBufferView) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
+
 [private]
 def create_buffer_view__inner(
     device : Device = [[ Device ]];
@@ -5309,6 +5317,10 @@ def boost_value_to_vk(b : CommandBuffer ?) : VkCommandBuffer ?
 def vk_value_to_boost(v : VkCommandBuffer) : CommandBuffer
     return [[ CommandBuffer command_buffer=v ]]
 
+def operator == (a, b : VkCommandBuffer) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
+
 //
 // CommandPool
 //
@@ -5326,6 +5338,10 @@ def boost_value_to_vk(b : CommandPool ?) : VkCommandPool ?
 
 def vk_value_to_boost(v : VkCommandPool) : CommandPool
     return [[ CommandPool command_pool=v ]]
+
+def operator == (a, b : VkCommandPool) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
 
 [private]
 def create_command_pool__inner(
@@ -5401,6 +5417,10 @@ def boost_value_to_vk(b : DebugUtilsMessengerEXT ?) : VkDebugUtilsMessengerEXT ?
 def vk_value_to_boost(v : VkDebugUtilsMessengerEXT) : DebugUtilsMessengerEXT
     return [[ DebugUtilsMessengerEXT debug_utils_messenger_ext=v ]]
 
+def operator == (a, b : VkDebugUtilsMessengerEXT) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
+
 [private]
 def create_debug_utils_messenger_ext__inner(
     instance : Instance = [[ Instance ]];
@@ -5475,6 +5495,10 @@ def boost_value_to_vk(b : DescriptorPool ?) : VkDescriptorPool ?
 def vk_value_to_boost(v : VkDescriptorPool) : DescriptorPool
     return [[ DescriptorPool descriptor_pool=v ]]
 
+def operator == (a, b : VkDescriptorPool) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
+
 [private]
 def create_descriptor_pool__inner(
     device : Device = [[ Device ]];
@@ -5548,6 +5572,10 @@ def boost_value_to_vk(b : DescriptorSet ?) : VkDescriptorSet ?
 def vk_value_to_boost(v : VkDescriptorSet) : DescriptorSet
     return [[ DescriptorSet descriptor_set=v ]]
 
+def operator == (a, b : VkDescriptorSet) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
+
 //
 // DescriptorSetLayout
 //
@@ -5565,6 +5593,10 @@ def boost_value_to_vk(b : DescriptorSetLayout ?) : VkDescriptorSetLayout ?
 
 def vk_value_to_boost(v : VkDescriptorSetLayout) : DescriptorSetLayout
     return [[ DescriptorSetLayout descriptor_set_layout=v ]]
+
+def operator == (a, b : VkDescriptorSetLayout) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
 
 [private]
 def create_descriptor_set_layout__inner(
@@ -5639,6 +5671,10 @@ def boost_value_to_vk(b : Device ?) : VkDevice ?
 def vk_value_to_boost(v : VkDevice) : Device
     return [[ Device device=v ]]
 
+def operator == (a, b : VkDevice) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
+
 [private]
 def create_device__inner(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]];
@@ -5708,6 +5744,10 @@ def boost_value_to_vk(b : Fence ?) : VkFence ?
 
 def vk_value_to_boost(v : VkFence) : Fence
     return [[ Fence fence=v ]]
+
+def operator == (a, b : VkFence) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
 
 [private]
 def create_fence__inner(
@@ -5783,6 +5823,10 @@ def boost_value_to_vk(b : Framebuffer ?) : VkFramebuffer ?
 def vk_value_to_boost(v : VkFramebuffer) : Framebuffer
     return [[ Framebuffer framebuffer=v ]]
 
+def operator == (a, b : VkFramebuffer) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
+
 [private]
 def create_framebuffer__inner(
     device : Device = [[ Device ]];
@@ -5856,6 +5900,10 @@ def boost_value_to_vk(b : Image ?) : VkImage ?
 
 def vk_value_to_boost(v : VkImage) : Image
     return [[ Image image=v ]]
+
+def operator == (a, b : VkImage) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
 
 [private]
 def create_image__inner(
@@ -5931,6 +5979,10 @@ def boost_value_to_vk(b : ImageView ?) : VkImageView ?
 def vk_value_to_boost(v : VkImageView) : ImageView
     return [[ ImageView image_view=v ]]
 
+def operator == (a, b : VkImageView) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
+
 [private]
 def create_image_view__inner(
     device : Device = [[ Device ]];
@@ -6004,6 +6056,10 @@ def boost_value_to_vk(b : Instance ?) : VkInstance ?
 def vk_value_to_boost(v : VkInstance) : Instance
     return [[ Instance instance=v ]]
 
+def operator == (a, b : VkInstance) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
+
 [private]
 def create_instance__inner(
     var create_info : InstanceCreateInfo = [[ InstanceCreateInfo ]];
@@ -6069,6 +6125,10 @@ def boost_value_to_vk(b : PhysicalDevice ?) : VkPhysicalDevice ?
 def vk_value_to_boost(v : VkPhysicalDevice) : PhysicalDevice
     return [[ PhysicalDevice physical_device=v ]]
 
+def operator == (a, b : VkPhysicalDevice) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
+
 //
 // PipelineCache
 //
@@ -6086,6 +6146,10 @@ def boost_value_to_vk(b : PipelineCache ?) : VkPipelineCache ?
 
 def vk_value_to_boost(v : VkPipelineCache) : PipelineCache
     return [[ PipelineCache pipeline_cache=v ]]
+
+def operator == (a, b : VkPipelineCache) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
 
 [private]
 def create_pipeline_cache__inner(
@@ -6161,6 +6225,10 @@ def boost_value_to_vk(b : PipelineLayout ?) : VkPipelineLayout ?
 def vk_value_to_boost(v : VkPipelineLayout) : PipelineLayout
     return [[ PipelineLayout pipeline_layout=v ]]
 
+def operator == (a, b : VkPipelineLayout) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
+
 [private]
 def create_pipeline_layout__inner(
     device : Device = [[ Device ]];
@@ -6235,6 +6303,10 @@ def boost_value_to_vk(b : QueryPool ?) : VkQueryPool ?
 def vk_value_to_boost(v : VkQueryPool) : QueryPool
     return [[ QueryPool query_pool=v ]]
 
+def operator == (a, b : VkQueryPool) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
+
 [private]
 def create_query_pool__inner(
     device : Device = [[ Device ]];
@@ -6308,6 +6380,10 @@ def boost_value_to_vk(b : Queue ?) : VkQueue ?
 def vk_value_to_boost(v : VkQueue) : Queue
     return [[ Queue queue=v ]]
 
+def operator == (a, b : VkQueue) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
+
 //
 // RenderPass
 //
@@ -6325,6 +6401,10 @@ def boost_value_to_vk(b : RenderPass ?) : VkRenderPass ?
 
 def vk_value_to_boost(v : VkRenderPass) : RenderPass
     return [[ RenderPass render_pass=v ]]
+
+def operator == (a, b : VkRenderPass) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
 
 [private]
 def create_render_pass__inner(
@@ -6400,6 +6480,10 @@ def boost_value_to_vk(b : Sampler ?) : VkSampler ?
 def vk_value_to_boost(v : VkSampler) : Sampler
     return [[ Sampler sampler=v ]]
 
+def operator == (a, b : VkSampler) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
+
 [private]
 def create_sampler__inner(
     device : Device = [[ Device ]];
@@ -6473,6 +6557,10 @@ def boost_value_to_vk(b : Semaphore ?) : VkSemaphore ?
 
 def vk_value_to_boost(v : VkSemaphore) : Semaphore
     return [[ Semaphore semaphore=v ]]
+
+def operator == (a, b : VkSemaphore) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
 
 [private]
 def create_semaphore__inner(
@@ -6548,6 +6636,10 @@ def boost_value_to_vk(b : ShaderModule ?) : VkShaderModule ?
 def vk_value_to_boost(v : VkShaderModule) : ShaderModule
     return [[ ShaderModule shader_module=v ]]
 
+def operator == (a, b : VkShaderModule) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
+
 [private]
 def create_shader_module__inner(
     device : Device = [[ Device ]];
@@ -6622,6 +6714,10 @@ def boost_value_to_vk(b : SwapchainKHR ?) : VkSwapchainKHR ?
 def vk_value_to_boost(v : VkSwapchainKHR) : SwapchainKHR
     return [[ SwapchainKHR swapchain_khr=v ]]
 
+def operator == (a, b : VkSwapchainKHR) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
+
 [private]
 def create_swapchain_khr__inner(
     device : Device = [[ Device ]];
@@ -6695,6 +6791,10 @@ def boost_value_to_vk(b : Pipeline ?) : VkPipeline ?
 
 def vk_value_to_boost(v : VkPipeline) : Pipeline
     return [[ Pipeline pipeline=v ]]
+
+def operator == (a, b : VkPipeline) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
 
 [private]
 def create_graphics_pipelines__inner(
@@ -6831,6 +6931,10 @@ def boost_value_to_vk(b : DeviceMemory ?) : VkDeviceMemory ?
 
 def vk_value_to_boost(v : VkDeviceMemory) : DeviceMemory
     return [[ DeviceMemory device_memory=v ]]
+
+def operator == (a, b : VkDeviceMemory) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
 
 [private]
 def allocate_memory__inner(
