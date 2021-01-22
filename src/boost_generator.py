@@ -135,13 +135,19 @@ class BoostGenerator(LoggingObject):
         lines += [
             self.title,
             f'',
-            f'static VkInstance g_vk_linked_instance{};',
+            f'static VkInstance g_vk_linked_instance{{}};',
             f'',
             f'static VkInstance vk_get_linked_instance() {{',
             f'    return g_vk_linked_instance;',
             f'}}',
             f'',
         ]
+        for fn in self.functions.values():
+            if not fn.endswith('EXT'):
+                continue
+            lines += [
+                f'static PFN_{{fn.name}} g_linked_{{fn.name}} = nullptr;',
+            ]
         return lines
 
     def __generate_das(self):
