@@ -3,6 +3,7 @@
 MAKE_TYPE_FACTORY(PFN_vkDebugUtilsMessengerCallbackEXT, PFN_vkDebugUtilsMessengerCallbackEXT);
 
 #include "module_generated.inc"
+#include "module_boost_generated.inc"
 
 void addVulkanCustomBeforeGenerated(Module &, ModuleLibrary &);
 void addVulkanCustomAfterGenerated(Module &, ModuleLibrary &);
@@ -164,6 +165,7 @@ public:
 
         addVulkanCustomBeforeGenerated(*this, lib);
         addGenerated(lib);
+        addBoostGenerated(*this, lib);
         addVulkanCustomAfterGenerated(*this, lib);
 
         addConstant(*this, "vk_debug_msg_callback",
@@ -181,9 +183,6 @@ public:
         addExtern<DAS_BIND_FUN(glfw_set_key_callback)>(
             *this, lib, "glfwSetKeyCallback",
             SideEffects::worstDefault, "glfwSetKeyCallback");
-        addExtern<DAS_BIND_FUN(vk_link_extensions)>(
-            *this, lib, "vk_link_extensions",
-            SideEffects::worstDefault, "vk_link_extensions");
     }
 };
 

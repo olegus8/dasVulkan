@@ -75,6 +75,7 @@ IF(NOT DAS_VULKAN_INCLUDED)
         )
         SET(DAS_VULKAN_BINDER_EXTRA_OUTPUTS
             ${DAS_VULKAN_DIR}/daslib/internal/generated.das
+            ${DAS_VULKAN_DIR}/src/module_boost_generated.inc
         )
 
         IF(DAS_BINDER_INCLUDED)
