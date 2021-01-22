@@ -3,9 +3,9 @@
 typedef DebugMsgContext * DebugMsgContext_DasHandle;
 MAKE_TYPE_FACTORY(DebugMsgContext_DasHandle, DebugMsgContext_DasHandle)
 
-typedef DebugMsgContext * (pfn_create_debug_msg_context)(Lambda callback, Context * ctx);
+typedef DebugMsgContext * (*pfn_create_debug_msg_context)(Lambda callback, Context * ctx);
 
-pfn_create_debug_msg_context g_p_create_debug_msg_context{};
+pfn_create_debug_msg_context g_p_create_debug_msg_context = nullptr;
 
 DebugMsgContext * create_debug_msg_context(Lambda callback, Context * ctx) {
     auto debug_ctx = new DebugMsgContext();
