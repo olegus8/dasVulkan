@@ -140,7 +140,7 @@ class BoostGenerator(LoggingObject):
         lines += [
             self.title,
             f'',
-            f'static VkInstance g_vk_linked_instance{{}};',
+            f'static VkInstance g_vk_linked_instance = VK_NULL_HANDLE;',
             f'',
             f'static VkInstance vk_get_linked_instance() {{',
             f'    return g_vk_linked_instance;',
@@ -150,6 +150,12 @@ class BoostGenerator(LoggingObject):
             f'',
             f'static void vk_link_instance(VkInstance instance) {{',
             f'    g_vk_linked_instance = instance;'] + [
+            f'    {line}' for fn in self.__functions_to_link
+                  for line in self.__link_vk_function(fn)] + [
+            f'}}',
+            f'',
+            f'static void vk_unlink_instance(VkInstance instance) {{',
+            f'    g_vk_linked_instance = VK_NULL_HANDLE;'] + [
             f'    {line}' for fn in self.__functions_to_link
                   for line in self.__link_vk_function(fn)] + [
             f'}}',
