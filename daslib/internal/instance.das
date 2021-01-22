@@ -78,5 +78,5 @@ def create_instance_ex(
     defer() <| { delete create_info; }
 
     instance.instance <- create_instance(create_info)
-    instance.instance.instance |> link_extensions
+    instance.instance.instance |> vk_link_extensions
     return <- instance

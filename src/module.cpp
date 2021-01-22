@@ -181,6 +181,9 @@ public:
         addExtern<DAS_BIND_FUN(glfw_set_key_callback)>(
             *this, lib, "glfwSetKeyCallback",
             SideEffects::worstDefault, "glfwSetKeyCallback");
+        addExtern<DAS_BIND_FUN(vk_link_extensions)>(
+            *this, lib, "vk_link_extensions",
+            SideEffects::worstDefault, "vk_link_extensions");
     }
 };
 
