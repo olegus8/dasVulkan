@@ -202,8 +202,10 @@ class BoostGenerator(LoggingObject):
 
     def __link_vk_function(self, func):
         fn = func.name
-        return [f'g_vk_linked_{fn} = (PFN_{fn}) vkGetInstanceProcAddr('
-            f'instance, "{fn}");',
+        return [
+            f'g_vk_linked_{fn} =',
+            f'    (PFN_{fn}) vkGetInstanceProcAddr(',
+            f'        instance, "{fn}");',
         ]
 
     def __generate_das(self):
