@@ -43,6 +43,8 @@ IF(NOT DAS_VULKAN_INCLUDED)
             ${DAS_VULKAN_DIR}/src/module.cpp
             ${DAS_VULKAN_DIR}/src/module_generated.inc
             ${DAS_VULKAN_DIR}/src/module_pregenerated.inc
+            ${DAS_VULKAN_DIR}/src/module_boost_generated.inc
+            ${DAS_VULKAN_DIR}/src/module_boost_pregenerated.inc
             ${DAS_VULKAN_DIR}/daslib/internal/generated.das
             ${DAS_VULKAN_DIR}/daslib/internal/pregenerated.das
         )
@@ -94,6 +96,12 @@ IF(NOT DAS_VULKAN_INCLUDED)
                 COMMAND ${CMAKE_COMMAND} -E copy_if_different ${DAS_VULKAN_DIR}/src/module_generated.inc ${DAS_VULKAN_DIR}/src/module_pregenerated.inc
             )
             ADD_CUSTOM_COMMAND(
+                DEPENDS ${DAS_VULKAN_DIR}/src/module_boost_generated.inc
+                OUTPUT ${DAS_VULKAN_DIR}/src/module_boost_pregenerated.inc
+                VERBATIM
+                COMMAND ${CMAKE_COMMAND} -E copy_if_different ${DAS_VULKAN_DIR}/src/module_boost_generated.inc ${DAS_VULKAN_DIR}/src/module_boost_pregenerated.inc
+            )
+            ADD_CUSTOM_COMMAND(
                 DEPENDS ${DAS_VULKAN_DIR}/daslib/internal/generated.das
                 OUTPUT ${DAS_VULKAN_DIR}/daslib/internal/pregenerated.das
                 VERBATIM
@@ -106,6 +114,12 @@ IF(NOT DAS_VULKAN_INCLUDED)
                 OUTPUT ${DAS_VULKAN_DIR}/src/module_generated.inc
                 VERBATIM
                 COMMAND ${CMAKE_COMMAND} -E copy_if_different ${DAS_VULKAN_DIR}/src/module_pregenerated.inc ${DAS_VULKAN_DIR}/src/module_generated.inc
+            )
+            ADD_CUSTOM_COMMAND(
+                DEPENDS ${DAS_VULKAN_DIR}/src/module_boost_pregenerated.inc
+                OUTPUT ${DAS_VULKAN_DIR}/src/module_boost_generated.inc
+                VERBATIM
+                COMMAND ${CMAKE_COMMAND} -E copy_if_different ${DAS_VULKAN_DIR}/src/module_boost_pregenerated.inc ${DAS_VULKAN_DIR}/src/module_boost_generated.inc
             )
             ADD_CUSTOM_COMMAND(
                 DEPENDS ${DAS_VULKAN_DIR}/daslib/internal/pregenerated.das
