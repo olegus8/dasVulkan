@@ -13,7 +13,7 @@ VkResult vkCreateDebugUtilsMessengerEXT(
     const VkAllocationCallbacks * pAllocator,
     VkDebugUtilsMessengerEXT * pMessenger
 ) {
-    return (*g_vk_linkedvkCreateDebugUtilsMessengerEXT)(
+    return (*g_vk_linked_vkCreateDebugUtilsMessengerEXT)(
         instance,
         pCreateInfo,
         pAllocator,
@@ -27,7 +27,7 @@ void vkDestroyDebugUtilsMessengerEXT(
     struct VkDebugUtilsMessengerEXT_T * messenger,
     const VkAllocationCallbacks * pAllocator
 ) {
-    return (*g_vk_linkedvkDestroyDebugUtilsMessengerEXT)(
+    return (*g_vk_linked_vkDestroyDebugUtilsMessengerEXT)(
         instance,
         messenger,
         pAllocator
@@ -37,12 +37,14 @@ void vkDestroyDebugUtilsMessengerEXT(
 static void vk_link_instance(VkInstance instance) {
     g_vk_linked_instance = instance;
     
-    g_vk_linked_vkCreateDebugUtilsMessengerEXT = vkGetInstanceProcAddr(instance, "vkCreateDebugUtilsMessengerEXT");if ( g_vk_linked_vkCreateDebugUtilsMessengerEXT == nullptr ) {
+    g_vk_linked_vkCreateDebugUtilsMessengerEXT = vkGetInstanceProcAddr(instance, "vkCreateDebugUtilsMessengerEXT");
+    if ( g_vk_linked_vkCreateDebugUtilsMessengerEXT == nullptr ) {
         DAS_ASSERTF(0, "vkCreateDebugUtilsMessengerEXT not found");
         DAS_FATAL_ERROR
     }
     
-    g_vk_linked_vkDestroyDebugUtilsMessengerEXT = vkGetInstanceProcAddr(instance, "vkDestroyDebugUtilsMessengerEXT");if ( g_vk_linked_vkDestroyDebugUtilsMessengerEXT == nullptr ) {
+    g_vk_linked_vkDestroyDebugUtilsMessengerEXT = vkGetInstanceProcAddr(instance, "vkDestroyDebugUtilsMessengerEXT");
+    if ( g_vk_linked_vkDestroyDebugUtilsMessengerEXT == nullptr ) {
         DAS_ASSERTF(0, "vkDestroyDebugUtilsMessengerEXT not found");
         DAS_FATAL_ERROR
     }
