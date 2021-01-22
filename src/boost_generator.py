@@ -182,6 +182,7 @@ class BoostGenerator(LoggingObject):
         ]
         remove_last_char(lines, ',')
         lines += [
+            f'    )',
             f'}}',
         ]
         return lines
