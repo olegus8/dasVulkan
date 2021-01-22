@@ -96,7 +96,6 @@ void glfw_set_key_callback(GLFWwindow * window, Func fn, Context * ctx) {
     }
 }
 
-
 static VKAPI_ATTR VkBool32 VKAPI_CALL vk_debug_msg_callback(
     VkDebugUtilsMessageSeverityFlagBitsEXT      msg_severity,
     VkDebugUtilsMessageTypeFlagsEXT             msg_type,
@@ -119,37 +118,7 @@ static VKAPI_ATTR VkBool32 VKAPI_CALL vk_debug_msg_callback(
     auto result = debug_ctx->ctx->call(debug_ctx->cb_func, args, 0);
     return cast<VkBool32>::to(result);
 }
-/*
-VkResult vkCreateDebugUtilsMessengerEXT(
-    VkInstance                                  instance,
-    const VkDebugUtilsMessengerCreateInfoEXT*   create_info,
-    const VkAllocationCallbacks*                allocator,
-    VkDebugUtilsMessengerEXT*                   messenger
-) {
-    //TODO: use real vulkan loader with ptr cache
-    auto vk_func = (PFN_vkCreateDebugUtilsMessengerEXT)
-        vkGetInstanceProcAddr(instance, "vkCreateDebugUtilsMessengerEXT");
-    if (vk_func == nullptr) {
-        return VK_ERROR_EXTENSION_NOT_PRESENT;
-    }
-    return vk_func(instance, create_info, allocator, messenger);
-}
 
-void vkDestroyDebugUtilsMessengerEXT(
-    VkInstance                    instance,
-    VkDebugUtilsMessengerEXT      messenger,
-    const VkAllocationCallbacks*  allocator
-) {
-    //TODO: use real vulkan loader with ptr cache
-    auto vk_func = (PFN_vkDestroyDebugUtilsMessengerEXT)
-        vkGetInstanceProcAddr(instance, "vkDestroyDebugUtilsMessengerEXT");
-    if (vk_func == nullptr) {
-        DAS_ASSERTF(0, "vkDestroyDebugUtilsMessengerEXT not found");
-        return;
-    }
-    vk_func(instance, messenger, allocator);
-}
-*/
 class Module_vulkan : public GeneratedModule_vulkan {
 public:
     Module_vulkan() : GeneratedModule_vulkan() {
