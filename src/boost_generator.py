@@ -174,6 +174,9 @@ class BoostGenerator(LoggingObject):
             f'{fn.return_type} {fn.name}('] + [
             f'    {p.type} {p.name},' for p in fn.params] + [
             f') {{',
+            f'    return (*g_vk_linked{fn.name})('] + [
+            f'        {p.name},' for p in fn.params] + [
+            f'}}',
         ]
         return lines
 
