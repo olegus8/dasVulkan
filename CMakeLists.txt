@@ -43,6 +43,8 @@ IF(NOT DAS_VULKAN_INCLUDED)
             ${DAS_VULKAN_DIR}/src/module.cpp
             ${DAS_VULKAN_DIR}/src/module_generated.inc
             ${DAS_VULKAN_DIR}/src/module_pregenerated.inc
+            ${DAS_VULKAN_DIR}/daslib/internal/generated.das
+            ${DAS_VULKAN_DIR}/daslib/internal/pregenerated.das
         )
 
         ADD_MODULE_LIB(libDasModuleVulkan)
@@ -86,6 +88,12 @@ IF(NOT DAS_VULKAN_INCLUDED)
                 VERBATIM
                 COMMAND ${CMAKE_COMMAND} -E copy_if_different ${DAS_VULKAN_DIR}/src/module_generated.inc ${DAS_VULKAN_DIR}/src/module_pregenerated.inc
             )
+            ADD_CUSTOM_COMMAND(
+                DEPENDS ${DAS_VULKAN_DIR}/src/module_generated.inc
+                OUTPUT ${DAS_VULKAN_DIR}/daslib/internal/pregenerated.das
+                VERBATIM
+                COMMAND ${CMAKE_COMMAND} -E copy_if_different ${DAS_VULKAN_DIR}/daslib/internal/generated.das ${DAS_VULKAN_DIR}/daslib/internal/pregenerated.das
+            )
         ELSE()
             MESSAGE(STATUS "dasBinder not found. Using pre-generated Vulkan bindings.")
             ADD_CUSTOM_COMMAND(
@@ -93,6 +101,12 @@ IF(NOT DAS_VULKAN_INCLUDED)
                 OUTPUT ${DAS_VULKAN_DIR}/src/module_generated.inc
                 VERBATIM
                 COMMAND ${CMAKE_COMMAND} -E copy_if_different ${DAS_VULKAN_DIR}/src/module_pregenerated.inc ${DAS_VULKAN_DIR}/src/module_generated.inc
+            )
+            ADD_CUSTOM_COMMAND(
+                DEPENDS ${DAS_VULKAN_DIR}/src/module_pregenerated.inc
+                OUTPUT ${DAS_VULKAN_DIR}/daslib/internal/generated.das
+                VERBATIM
+                COMMAND ${CMAKE_COMMAND} -E copy_if_different ${DAS_VULKAN_DIR}/daslib/internal/pregenerated.das ${DAS_VULKAN_DIR}/daslib/internal/generated.das
             )
         ENDIF()
 
