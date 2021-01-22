@@ -78,7 +78,7 @@ def create_instance_ex(
     defer() <| { delete create_info; }
 
     instance.instance <- create_instance(create_info)
-    assert(vk_get_linked_instance() == [[ VkInstance ]])
-    instance.instance.instance |> vk_link_extensions
-    assert(vk_get_linked_instance() == instance.instance.instance)
+    //assert(vk_get_linked_instance() == [[ VkInstance ]])
+    //instance.instance.instance |> vk_link_extensions
+    //assert(vk_get_linked_instance() == instance.instance.instance)
     return <- instance

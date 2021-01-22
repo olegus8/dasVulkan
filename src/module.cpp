@@ -120,7 +120,6 @@ static VKAPI_ATTR VkBool32 VKAPI_CALL vk_debug_msg_callback(
     return cast<VkBool32>::to(result);
 }
 
-/*
 VkResult vkCreateDebugUtilsMessengerEXT(
     VkInstance                                  instance,
     const VkDebugUtilsMessengerCreateInfoEXT*   create_info,
@@ -150,7 +149,6 @@ void vkDestroyDebugUtilsMessengerEXT(
     }
     vk_func(instance, messenger, allocator);
 }
-*/
 
 class Module_vulkan : public GeneratedModule_vulkan {
 public:
