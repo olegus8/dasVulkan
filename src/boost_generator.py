@@ -157,10 +157,10 @@ class BoostGenerator(LoggingObject):
             f'void addVulkanBoostGenerated(Module & module, '
                         f'ModuleLibrary & lib) {{',
             f'    addExtern<DAS_BIND_FUN(vk_link_instance)>(',
-            f'        *this, lib, "vk_link_instance",',
+            f'        module, lib, "vk_link_instance",',
             f'        SideEffects::worstDefault, "vk_link_instance");',
             f'    addExtern<DAS_BIND_FUN(vk_get_linked_instance)>(',
-            f'        *this, lib, "vk_get_linked_instance",',
+            f'        module, lib, "vk_get_linked_instance",',
             f'        SideEffects::worstDefault, "vk_get_linked_instance");',
             f'}}',
         ]
