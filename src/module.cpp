@@ -165,7 +165,7 @@ public:
 
         addVulkanCustomBeforeGenerated(*this, lib);
         addGenerated(lib);
-        addBoostGenerated(*this, lib);
+        addVulkanBoostGenerated(*this, lib);
         addVulkanCustomAfterGenerated(*this, lib);
 
         addConstant(*this, "vk_debug_msg_callback",

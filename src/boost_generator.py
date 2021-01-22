@@ -148,6 +148,12 @@ class BoostGenerator(LoggingObject):
             lines += [
                 f'static PFN_{{fn.name}} g_linked_{{fn.name}} = nullptr;',
             ]
+        lines += [
+            f'',
+            f'void addVulkanBoostGenerated(Module & module, '
+                        f'ModuleLibrary & lib) {{',
+            f'}}',
+        ]
         return lines
 
     def __generate_das(self):
