@@ -13,6 +13,10 @@ VkResult vkCreateDebugUtilsMessengerEXT(
     const VkAllocationCallbacks * pAllocator,
     VkDebugUtilsMessengerEXT * pMessenger
 ) {
+    if ( g_vk_linked_vkCreateDebugUtilsMessengerEXT == nullptr ) {
+        DAS_ASSERTF(0, "vkCreateDebugUtilsMessengerEXT not found");
+        DAS_FATAL_ERROR
+    }
     return (*g_vk_linked_vkCreateDebugUtilsMessengerEXT)(
         instance,
         pCreateInfo,
@@ -27,6 +31,10 @@ void vkDestroyDebugUtilsMessengerEXT(
     struct VkDebugUtilsMessengerEXT_T * messenger,
     const VkAllocationCallbacks * pAllocator
 ) {
+    if ( g_vk_linked_vkDestroyDebugUtilsMessengerEXT == nullptr ) {
+        DAS_ASSERTF(0, "vkDestroyDebugUtilsMessengerEXT not found");
+        DAS_FATAL_ERROR
+    }
     return (*g_vk_linked_vkDestroyDebugUtilsMessengerEXT)(
         instance,
         messenger,
@@ -36,18 +44,8 @@ void vkDestroyDebugUtilsMessengerEXT(
 
 static void vk_link_instance(VkInstance instance) {
     g_vk_linked_instance = instance;
-    
     g_vk_linked_vkCreateDebugUtilsMessengerEXT = (PFN_vkCreateDebugUtilsMessengerEXT) vkGetInstanceProcAddr(instance, "vkCreateDebugUtilsMessengerEXT");
-    if ( g_vk_linked_vkCreateDebugUtilsMessengerEXT == nullptr ) {
-        DAS_ASSERTF(0, "vkCreateDebugUtilsMessengerEXT not found");
-        DAS_FATAL_ERROR
-    }
-    
     g_vk_linked_vkDestroyDebugUtilsMessengerEXT = (PFN_vkDestroyDebugUtilsMessengerEXT) vkGetInstanceProcAddr(instance, "vkDestroyDebugUtilsMessengerEXT");
-    if ( g_vk_linked_vkDestroyDebugUtilsMessengerEXT == nullptr ) {
-        DAS_ASSERTF(0, "vkDestroyDebugUtilsMessengerEXT not found");
-        DAS_FATAL_ERROR
-    }
 }
 
 void addVulkanBoostGenerated(Module & module, ModuleLibrary & lib) {
