@@ -9,8 +9,8 @@ require debug
 
 
 let
-    DEFAULT_INSTANCE_EXTENSIONS = [{auto[] "VK_EXT_debug_utils"}]
-    DEFAULT_INSTANCE_LAYERS = [{auto[] "VK_LAYER_KHRONOS_validation"}]
+    DEFAULT_INSTANCE_EXTENSIONS <- [{auto[] "VK_EXT_debug_utils"}]
+    DEFAULT_INSTANCE_LAYERS <- [{auto[] "VK_LAYER_KHRONOS_validation"}]
 
 
 struct VulkanVersion
