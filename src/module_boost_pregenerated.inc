@@ -18,7 +18,7 @@ VkResult vkCreateDebugUtilsMessengerEXT(
         pCreateInfo,
         pAllocator,
         pMessenger
-    )
+    );
 }
 
 static PFN_vkDestroyDebugUtilsMessengerEXT g_vk_linked_vkDestroyDebugUtilsMessengerEXT = nullptr;
@@ -31,7 +31,7 @@ void vkDestroyDebugUtilsMessengerEXT(
         instance,
         messenger,
         pAllocator
-    )
+    );
 }
 
 static void vk_link_instance(VkInstance instance) {
