@@ -181,7 +181,7 @@ class BoostGenerator(LoggingObject):
             f'',
             f'static PFN_{fn.name}',
             f'    g_vk_linked_{fn.name} = nullptr;',
-            f'{fn.return_type} {fn.name}('] + [
+            f'VKAPI_ATTR {fn.return_type} VKAPI_CALL {fn.name}('] + [
             f'    {p.type} {p.name},' for p in fn.params
         ]
         remove_last_char(lines, ',')

@@ -6,7 +6,8 @@ static VkInstance vk_get_linked_instance() {
     return g_vk_linked_instance;
 }
 
-static PFN_vkCreateDebugUtilsMessengerEXT g_vk_linked_vkCreateDebugUtilsMessengerEXT = nullptr;
+static PFN_vkCreateDebugUtilsMessengerEXT
+    g_vk_linked_vkCreateDebugUtilsMessengerEXT = nullptr;
 VkResult vkCreateDebugUtilsMessengerEXT(
     struct VkInstance_T * instance,
     const VkDebugUtilsMessengerCreateInfoEXT * pCreateInfo,
@@ -25,7 +26,8 @@ VkResult vkCreateDebugUtilsMessengerEXT(
     );
 }
 
-static PFN_vkDestroyDebugUtilsMessengerEXT g_vk_linked_vkDestroyDebugUtilsMessengerEXT = nullptr;
+static PFN_vkDestroyDebugUtilsMessengerEXT
+    g_vk_linked_vkDestroyDebugUtilsMessengerEXT = nullptr;
 void vkDestroyDebugUtilsMessengerEXT(
     struct VkInstance_T * instance,
     struct VkDebugUtilsMessengerEXT_T * messenger,
@@ -54,8 +56,8 @@ static void vk_link_instance(VkInstance instance) {
 
 static void vk_unlink_instance(VkInstance instance) {
     g_vk_linked_instance = VK_NULL_HANDLE;
-    g_vk_linked_vkCreateDebugUtilsMessengerEXT = nullptr
-    g_vk_linked_vkDestroyDebugUtilsMessengerEXT = nullptr
+    g_vk_linked_vkCreateDebugUtilsMessengerEXT = nullptr;
+    g_vk_linked_vkDestroyDebugUtilsMessengerEXT = nullptr;
 }
 
 void addVulkanBoostGenerated(Module & module, ModuleLibrary & lib) {
