@@ -93,7 +93,7 @@ IF(NOT DAS_VULKAN_INCLUDED)
                 COMMAND ${CMAKE_COMMAND} -E copy_if_different ${DAS_VULKAN_DIR}/src/module_generated.inc ${DAS_VULKAN_DIR}/src/module_pregenerated.inc
             )
             ADD_CUSTOM_COMMAND(
-                DEPENDS ${DAS_VULKAN_DIR}/src/module_generated.inc
+                DEPENDS ${DAS_VULKAN_DIR}/daslib/internal/generated.das
                 OUTPUT ${DAS_VULKAN_DIR}/daslib/internal/pregenerated.das
                 VERBATIM
                 COMMAND ${CMAKE_COMMAND} -E copy_if_different ${DAS_VULKAN_DIR}/daslib/internal/generated.das ${DAS_VULKAN_DIR}/daslib/internal/pregenerated.das
@@ -107,7 +107,7 @@ IF(NOT DAS_VULKAN_INCLUDED)
                 COMMAND ${CMAKE_COMMAND} -E copy_if_different ${DAS_VULKAN_DIR}/src/module_pregenerated.inc ${DAS_VULKAN_DIR}/src/module_generated.inc
             )
             ADD_CUSTOM_COMMAND(
-                DEPENDS ${DAS_VULKAN_DIR}/src/module_pregenerated.inc
+                DEPENDS ${DAS_VULKAN_DIR}/daslib/internal/pregenerated.das
                 OUTPUT ${DAS_VULKAN_DIR}/daslib/internal/generated.das
                 VERBATIM
                 COMMAND ${CMAKE_COMMAND} -E copy_if_different ${DAS_VULKAN_DIR}/daslib/internal/pregenerated.das ${DAS_VULKAN_DIR}/daslib/internal/generated.das
