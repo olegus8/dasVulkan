@@ -29,9 +29,10 @@ def create_fullscreen_window(title : string) : Window
     glfwWindowHint(GLFW_GREEN_BITS, mode.greenBits)
     glfwWindowHint(GLFW_BLUE_BITS, mode.blueBits)
     glfwWindowHint(GLFW_REFRESH_RATE, mode.refreshRate)
-    return <- [[Window window = glfwCreateWindow(mode.width, mode.height,
-        title, monitor, [[GLFWwindow_DasHandle]]
-    )]]
+    var window = glfwCreateWindow(mode.width, mode.height,
+        title, monitor, [[GLFWwindow_DasHandle]])
+    window |> glfwSetInputMode(GLFW_CURSOR, GLFW_CURSOR_DISABLED)
+    return <- [[Window window=window]]
 
 
 def finalize(var window : Window explicit)
