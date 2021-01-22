@@ -78,7 +78,11 @@ def create_instance_ex(
     defer() <| { delete create_info; }
 
     instance.instance <- create_instance(create_info)
-    assert(vk_get_linked_instance() == [[ VkInstance ]])
+    unsafe
+        assert(reinterpret<void?>(vk_get_linked_instance()) ==
+            reinterpret<void?>([[VkInstance]]))
     instance.instance.instance |> vk_link_extensions
-    assert(vk_get_linked_instance() == instance.instance.instance)
+    unsafe
+        assert(reinterpret<void?>(vk_get_linked_instance()) ==
+            reinterpret<void?>(instance.instance.instance))
     return <- instance
