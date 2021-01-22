@@ -6,4 +6,5 @@ conanbuildinfo.txt
 conaninfo.txt
 graph_info.json
 module_generated.inc
+module_boost_generated.inc
 generated.das
