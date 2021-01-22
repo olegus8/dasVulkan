@@ -146,11 +146,11 @@ class BoostGenerator(LoggingObject):
             f'    return g_vk_linked_instance;',
             f'}}'] + [
             f'{line}' for fn in self.__functions_to_link
-            for line in self.__decl_linked_vk_function(fn)] + [
+                for line in self.__decl_linked_vk_function(fn)] + [
             f'',
             f'static void vk_link_instance(VkInstance instance) {{',
             f'    g_vk_linked_instance = instance;'] + [
-            f'    {line}' for fn in self.functions.values()
+            f'    {line}' for fn in self.__functions_to_link
                   for line in self.__link_vk_function(fn)] + [
             f'}}',
             f'',

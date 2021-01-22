@@ -6,8 +6,1451 @@ static VkInstance vk_get_linked_instance() {
     return g_vk_linked_instance;
 }
 
-static PFN_vkCreateDebugUtilsMessengerEXT g_linked_vkCreateDebugUtilsMessengerEXT = nullptr;
-static PFN_vkDestroyDebugUtilsMessengerEXT g_linked_vkDestroyDebugUtilsMessengerEXT = nullptr;
+static PFN_vkCreateDebugUtilsMessengerEXT g_vk_linked_vkCreateDebugUtilsMessengerEXT = nullptr;
+VkResult vkCreateDebugUtilsMessengerEXT(
+    struct VkInstance_T * instance,
+    const VkDebugUtilsMessengerCreateInfoEXT * pCreateInfo,
+    const VkAllocationCallbacks * pAllocator,
+    VkDebugUtilsMessengerEXT * pMessenger,
+) {
+    return (*g_vk_linkedvkCreateDebugUtilsMessengerEXT)(
+        instance,
+        pCreateInfo,
+        pAllocator,
+        pMessenger,
+}
+
+static PFN_vkDestroyDebugUtilsMessengerEXT g_vk_linked_vkDestroyDebugUtilsMessengerEXT = nullptr;
+void vkDestroyDebugUtilsMessengerEXT(
+    struct VkInstance_T * instance,
+    struct VkDebugUtilsMessengerEXT_T * messenger,
+    const VkAllocationCallbacks * pAllocator,
+) {
+    return (*g_vk_linkedvkDestroyDebugUtilsMessengerEXT)(
+        instance,
+        messenger,
+        pAllocator,
+}
+
+static void vk_link_instance(VkInstance instance) {
+    g_vk_linked_instance = instance;
+    
+    g_vk_linked_vkCreateInstance = vkGetInstanceProcAddr(instance, "vkCreateInstance");if ( g_vk_linked_vkCreateInstance == nullptr ) {
+        DAS_ASSERTF(0, "vkCreateInstance not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkDestroyInstance = vkGetInstanceProcAddr(instance, "vkDestroyInstance");if ( g_vk_linked_vkDestroyInstance == nullptr ) {
+        DAS_ASSERTF(0, "vkDestroyInstance not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkEnumeratePhysicalDevices = vkGetInstanceProcAddr(instance, "vkEnumeratePhysicalDevices");if ( g_vk_linked_vkEnumeratePhysicalDevices == nullptr ) {
+        DAS_ASSERTF(0, "vkEnumeratePhysicalDevices not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkGetPhysicalDeviceFeatures = vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceFeatures");if ( g_vk_linked_vkGetPhysicalDeviceFeatures == nullptr ) {
+        DAS_ASSERTF(0, "vkGetPhysicalDeviceFeatures not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkGetPhysicalDeviceFormatProperties = vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceFormatProperties");if ( g_vk_linked_vkGetPhysicalDeviceFormatProperties == nullptr ) {
+        DAS_ASSERTF(0, "vkGetPhysicalDeviceFormatProperties not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkGetPhysicalDeviceImageFormatProperties = vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceImageFormatProperties");if ( g_vk_linked_vkGetPhysicalDeviceImageFormatProperties == nullptr ) {
+        DAS_ASSERTF(0, "vkGetPhysicalDeviceImageFormatProperties not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkGetPhysicalDeviceProperties = vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceProperties");if ( g_vk_linked_vkGetPhysicalDeviceProperties == nullptr ) {
+        DAS_ASSERTF(0, "vkGetPhysicalDeviceProperties not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkGetPhysicalDeviceQueueFamilyProperties = vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceQueueFamilyProperties");if ( g_vk_linked_vkGetPhysicalDeviceQueueFamilyProperties == nullptr ) {
+        DAS_ASSERTF(0, "vkGetPhysicalDeviceQueueFamilyProperties not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkGetPhysicalDeviceMemoryProperties = vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceMemoryProperties");if ( g_vk_linked_vkGetPhysicalDeviceMemoryProperties == nullptr ) {
+        DAS_ASSERTF(0, "vkGetPhysicalDeviceMemoryProperties not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCreateDevice = vkGetInstanceProcAddr(instance, "vkCreateDevice");if ( g_vk_linked_vkCreateDevice == nullptr ) {
+        DAS_ASSERTF(0, "vkCreateDevice not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkDestroyDevice = vkGetInstanceProcAddr(instance, "vkDestroyDevice");if ( g_vk_linked_vkDestroyDevice == nullptr ) {
+        DAS_ASSERTF(0, "vkDestroyDevice not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkEnumerateInstanceExtensionProperties = vkGetInstanceProcAddr(instance, "vkEnumerateInstanceExtensionProperties");if ( g_vk_linked_vkEnumerateInstanceExtensionProperties == nullptr ) {
+        DAS_ASSERTF(0, "vkEnumerateInstanceExtensionProperties not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkEnumerateDeviceExtensionProperties = vkGetInstanceProcAddr(instance, "vkEnumerateDeviceExtensionProperties");if ( g_vk_linked_vkEnumerateDeviceExtensionProperties == nullptr ) {
+        DAS_ASSERTF(0, "vkEnumerateDeviceExtensionProperties not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkEnumerateInstanceLayerProperties = vkGetInstanceProcAddr(instance, "vkEnumerateInstanceLayerProperties");if ( g_vk_linked_vkEnumerateInstanceLayerProperties == nullptr ) {
+        DAS_ASSERTF(0, "vkEnumerateInstanceLayerProperties not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkEnumerateDeviceLayerProperties = vkGetInstanceProcAddr(instance, "vkEnumerateDeviceLayerProperties");if ( g_vk_linked_vkEnumerateDeviceLayerProperties == nullptr ) {
+        DAS_ASSERTF(0, "vkEnumerateDeviceLayerProperties not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkGetDeviceQueue = vkGetInstanceProcAddr(instance, "vkGetDeviceQueue");if ( g_vk_linked_vkGetDeviceQueue == nullptr ) {
+        DAS_ASSERTF(0, "vkGetDeviceQueue not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkQueueSubmit = vkGetInstanceProcAddr(instance, "vkQueueSubmit");if ( g_vk_linked_vkQueueSubmit == nullptr ) {
+        DAS_ASSERTF(0, "vkQueueSubmit not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkQueueWaitIdle = vkGetInstanceProcAddr(instance, "vkQueueWaitIdle");if ( g_vk_linked_vkQueueWaitIdle == nullptr ) {
+        DAS_ASSERTF(0, "vkQueueWaitIdle not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkDeviceWaitIdle = vkGetInstanceProcAddr(instance, "vkDeviceWaitIdle");if ( g_vk_linked_vkDeviceWaitIdle == nullptr ) {
+        DAS_ASSERTF(0, "vkDeviceWaitIdle not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkAllocateMemory = vkGetInstanceProcAddr(instance, "vkAllocateMemory");if ( g_vk_linked_vkAllocateMemory == nullptr ) {
+        DAS_ASSERTF(0, "vkAllocateMemory not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkFreeMemory = vkGetInstanceProcAddr(instance, "vkFreeMemory");if ( g_vk_linked_vkFreeMemory == nullptr ) {
+        DAS_ASSERTF(0, "vkFreeMemory not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkMapMemory = vkGetInstanceProcAddr(instance, "vkMapMemory");if ( g_vk_linked_vkMapMemory == nullptr ) {
+        DAS_ASSERTF(0, "vkMapMemory not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkUnmapMemory = vkGetInstanceProcAddr(instance, "vkUnmapMemory");if ( g_vk_linked_vkUnmapMemory == nullptr ) {
+        DAS_ASSERTF(0, "vkUnmapMemory not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkFlushMappedMemoryRanges = vkGetInstanceProcAddr(instance, "vkFlushMappedMemoryRanges");if ( g_vk_linked_vkFlushMappedMemoryRanges == nullptr ) {
+        DAS_ASSERTF(0, "vkFlushMappedMemoryRanges not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkInvalidateMappedMemoryRanges = vkGetInstanceProcAddr(instance, "vkInvalidateMappedMemoryRanges");if ( g_vk_linked_vkInvalidateMappedMemoryRanges == nullptr ) {
+        DAS_ASSERTF(0, "vkInvalidateMappedMemoryRanges not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkGetDeviceMemoryCommitment = vkGetInstanceProcAddr(instance, "vkGetDeviceMemoryCommitment");if ( g_vk_linked_vkGetDeviceMemoryCommitment == nullptr ) {
+        DAS_ASSERTF(0, "vkGetDeviceMemoryCommitment not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkBindBufferMemory = vkGetInstanceProcAddr(instance, "vkBindBufferMemory");if ( g_vk_linked_vkBindBufferMemory == nullptr ) {
+        DAS_ASSERTF(0, "vkBindBufferMemory not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkBindImageMemory = vkGetInstanceProcAddr(instance, "vkBindImageMemory");if ( g_vk_linked_vkBindImageMemory == nullptr ) {
+        DAS_ASSERTF(0, "vkBindImageMemory not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkGetBufferMemoryRequirements = vkGetInstanceProcAddr(instance, "vkGetBufferMemoryRequirements");if ( g_vk_linked_vkGetBufferMemoryRequirements == nullptr ) {
+        DAS_ASSERTF(0, "vkGetBufferMemoryRequirements not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkGetImageMemoryRequirements = vkGetInstanceProcAddr(instance, "vkGetImageMemoryRequirements");if ( g_vk_linked_vkGetImageMemoryRequirements == nullptr ) {
+        DAS_ASSERTF(0, "vkGetImageMemoryRequirements not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkGetImageSparseMemoryRequirements = vkGetInstanceProcAddr(instance, "vkGetImageSparseMemoryRequirements");if ( g_vk_linked_vkGetImageSparseMemoryRequirements == nullptr ) {
+        DAS_ASSERTF(0, "vkGetImageSparseMemoryRequirements not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkGetPhysicalDeviceSparseImageFormatProperties = vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceSparseImageFormatProperties");if ( g_vk_linked_vkGetPhysicalDeviceSparseImageFormatProperties == nullptr ) {
+        DAS_ASSERTF(0, "vkGetPhysicalDeviceSparseImageFormatProperties not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkQueueBindSparse = vkGetInstanceProcAddr(instance, "vkQueueBindSparse");if ( g_vk_linked_vkQueueBindSparse == nullptr ) {
+        DAS_ASSERTF(0, "vkQueueBindSparse not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCreateFence = vkGetInstanceProcAddr(instance, "vkCreateFence");if ( g_vk_linked_vkCreateFence == nullptr ) {
+        DAS_ASSERTF(0, "vkCreateFence not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkDestroyFence = vkGetInstanceProcAddr(instance, "vkDestroyFence");if ( g_vk_linked_vkDestroyFence == nullptr ) {
+        DAS_ASSERTF(0, "vkDestroyFence not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkResetFences = vkGetInstanceProcAddr(instance, "vkResetFences");if ( g_vk_linked_vkResetFences == nullptr ) {
+        DAS_ASSERTF(0, "vkResetFences not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkGetFenceStatus = vkGetInstanceProcAddr(instance, "vkGetFenceStatus");if ( g_vk_linked_vkGetFenceStatus == nullptr ) {
+        DAS_ASSERTF(0, "vkGetFenceStatus not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkWaitForFences = vkGetInstanceProcAddr(instance, "vkWaitForFences");if ( g_vk_linked_vkWaitForFences == nullptr ) {
+        DAS_ASSERTF(0, "vkWaitForFences not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCreateSemaphore = vkGetInstanceProcAddr(instance, "vkCreateSemaphore");if ( g_vk_linked_vkCreateSemaphore == nullptr ) {
+        DAS_ASSERTF(0, "vkCreateSemaphore not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkDestroySemaphore = vkGetInstanceProcAddr(instance, "vkDestroySemaphore");if ( g_vk_linked_vkDestroySemaphore == nullptr ) {
+        DAS_ASSERTF(0, "vkDestroySemaphore not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCreateEvent = vkGetInstanceProcAddr(instance, "vkCreateEvent");if ( g_vk_linked_vkCreateEvent == nullptr ) {
+        DAS_ASSERTF(0, "vkCreateEvent not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkDestroyEvent = vkGetInstanceProcAddr(instance, "vkDestroyEvent");if ( g_vk_linked_vkDestroyEvent == nullptr ) {
+        DAS_ASSERTF(0, "vkDestroyEvent not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkGetEventStatus = vkGetInstanceProcAddr(instance, "vkGetEventStatus");if ( g_vk_linked_vkGetEventStatus == nullptr ) {
+        DAS_ASSERTF(0, "vkGetEventStatus not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkSetEvent = vkGetInstanceProcAddr(instance, "vkSetEvent");if ( g_vk_linked_vkSetEvent == nullptr ) {
+        DAS_ASSERTF(0, "vkSetEvent not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkResetEvent = vkGetInstanceProcAddr(instance, "vkResetEvent");if ( g_vk_linked_vkResetEvent == nullptr ) {
+        DAS_ASSERTF(0, "vkResetEvent not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCreateQueryPool = vkGetInstanceProcAddr(instance, "vkCreateQueryPool");if ( g_vk_linked_vkCreateQueryPool == nullptr ) {
+        DAS_ASSERTF(0, "vkCreateQueryPool not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkDestroyQueryPool = vkGetInstanceProcAddr(instance, "vkDestroyQueryPool");if ( g_vk_linked_vkDestroyQueryPool == nullptr ) {
+        DAS_ASSERTF(0, "vkDestroyQueryPool not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkGetQueryPoolResults = vkGetInstanceProcAddr(instance, "vkGetQueryPoolResults");if ( g_vk_linked_vkGetQueryPoolResults == nullptr ) {
+        DAS_ASSERTF(0, "vkGetQueryPoolResults not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCreateBuffer = vkGetInstanceProcAddr(instance, "vkCreateBuffer");if ( g_vk_linked_vkCreateBuffer == nullptr ) {
+        DAS_ASSERTF(0, "vkCreateBuffer not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkDestroyBuffer = vkGetInstanceProcAddr(instance, "vkDestroyBuffer");if ( g_vk_linked_vkDestroyBuffer == nullptr ) {
+        DAS_ASSERTF(0, "vkDestroyBuffer not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCreateBufferView = vkGetInstanceProcAddr(instance, "vkCreateBufferView");if ( g_vk_linked_vkCreateBufferView == nullptr ) {
+        DAS_ASSERTF(0, "vkCreateBufferView not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkDestroyBufferView = vkGetInstanceProcAddr(instance, "vkDestroyBufferView");if ( g_vk_linked_vkDestroyBufferView == nullptr ) {
+        DAS_ASSERTF(0, "vkDestroyBufferView not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCreateImage = vkGetInstanceProcAddr(instance, "vkCreateImage");if ( g_vk_linked_vkCreateImage == nullptr ) {
+        DAS_ASSERTF(0, "vkCreateImage not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkDestroyImage = vkGetInstanceProcAddr(instance, "vkDestroyImage");if ( g_vk_linked_vkDestroyImage == nullptr ) {
+        DAS_ASSERTF(0, "vkDestroyImage not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkGetImageSubresourceLayout = vkGetInstanceProcAddr(instance, "vkGetImageSubresourceLayout");if ( g_vk_linked_vkGetImageSubresourceLayout == nullptr ) {
+        DAS_ASSERTF(0, "vkGetImageSubresourceLayout not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCreateImageView = vkGetInstanceProcAddr(instance, "vkCreateImageView");if ( g_vk_linked_vkCreateImageView == nullptr ) {
+        DAS_ASSERTF(0, "vkCreateImageView not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkDestroyImageView = vkGetInstanceProcAddr(instance, "vkDestroyImageView");if ( g_vk_linked_vkDestroyImageView == nullptr ) {
+        DAS_ASSERTF(0, "vkDestroyImageView not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCreateShaderModule = vkGetInstanceProcAddr(instance, "vkCreateShaderModule");if ( g_vk_linked_vkCreateShaderModule == nullptr ) {
+        DAS_ASSERTF(0, "vkCreateShaderModule not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkDestroyShaderModule = vkGetInstanceProcAddr(instance, "vkDestroyShaderModule");if ( g_vk_linked_vkDestroyShaderModule == nullptr ) {
+        DAS_ASSERTF(0, "vkDestroyShaderModule not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCreatePipelineCache = vkGetInstanceProcAddr(instance, "vkCreatePipelineCache");if ( g_vk_linked_vkCreatePipelineCache == nullptr ) {
+        DAS_ASSERTF(0, "vkCreatePipelineCache not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkDestroyPipelineCache = vkGetInstanceProcAddr(instance, "vkDestroyPipelineCache");if ( g_vk_linked_vkDestroyPipelineCache == nullptr ) {
+        DAS_ASSERTF(0, "vkDestroyPipelineCache not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkGetPipelineCacheData = vkGetInstanceProcAddr(instance, "vkGetPipelineCacheData");if ( g_vk_linked_vkGetPipelineCacheData == nullptr ) {
+        DAS_ASSERTF(0, "vkGetPipelineCacheData not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkMergePipelineCaches = vkGetInstanceProcAddr(instance, "vkMergePipelineCaches");if ( g_vk_linked_vkMergePipelineCaches == nullptr ) {
+        DAS_ASSERTF(0, "vkMergePipelineCaches not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCreateGraphicsPipelines = vkGetInstanceProcAddr(instance, "vkCreateGraphicsPipelines");if ( g_vk_linked_vkCreateGraphicsPipelines == nullptr ) {
+        DAS_ASSERTF(0, "vkCreateGraphicsPipelines not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCreateComputePipelines = vkGetInstanceProcAddr(instance, "vkCreateComputePipelines");if ( g_vk_linked_vkCreateComputePipelines == nullptr ) {
+        DAS_ASSERTF(0, "vkCreateComputePipelines not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkDestroyPipeline = vkGetInstanceProcAddr(instance, "vkDestroyPipeline");if ( g_vk_linked_vkDestroyPipeline == nullptr ) {
+        DAS_ASSERTF(0, "vkDestroyPipeline not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCreatePipelineLayout = vkGetInstanceProcAddr(instance, "vkCreatePipelineLayout");if ( g_vk_linked_vkCreatePipelineLayout == nullptr ) {
+        DAS_ASSERTF(0, "vkCreatePipelineLayout not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkDestroyPipelineLayout = vkGetInstanceProcAddr(instance, "vkDestroyPipelineLayout");if ( g_vk_linked_vkDestroyPipelineLayout == nullptr ) {
+        DAS_ASSERTF(0, "vkDestroyPipelineLayout not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCreateSampler = vkGetInstanceProcAddr(instance, "vkCreateSampler");if ( g_vk_linked_vkCreateSampler == nullptr ) {
+        DAS_ASSERTF(0, "vkCreateSampler not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkDestroySampler = vkGetInstanceProcAddr(instance, "vkDestroySampler");if ( g_vk_linked_vkDestroySampler == nullptr ) {
+        DAS_ASSERTF(0, "vkDestroySampler not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCreateDescriptorSetLayout = vkGetInstanceProcAddr(instance, "vkCreateDescriptorSetLayout");if ( g_vk_linked_vkCreateDescriptorSetLayout == nullptr ) {
+        DAS_ASSERTF(0, "vkCreateDescriptorSetLayout not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkDestroyDescriptorSetLayout = vkGetInstanceProcAddr(instance, "vkDestroyDescriptorSetLayout");if ( g_vk_linked_vkDestroyDescriptorSetLayout == nullptr ) {
+        DAS_ASSERTF(0, "vkDestroyDescriptorSetLayout not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCreateDescriptorPool = vkGetInstanceProcAddr(instance, "vkCreateDescriptorPool");if ( g_vk_linked_vkCreateDescriptorPool == nullptr ) {
+        DAS_ASSERTF(0, "vkCreateDescriptorPool not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkDestroyDescriptorPool = vkGetInstanceProcAddr(instance, "vkDestroyDescriptorPool");if ( g_vk_linked_vkDestroyDescriptorPool == nullptr ) {
+        DAS_ASSERTF(0, "vkDestroyDescriptorPool not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkResetDescriptorPool = vkGetInstanceProcAddr(instance, "vkResetDescriptorPool");if ( g_vk_linked_vkResetDescriptorPool == nullptr ) {
+        DAS_ASSERTF(0, "vkResetDescriptorPool not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkAllocateDescriptorSets = vkGetInstanceProcAddr(instance, "vkAllocateDescriptorSets");if ( g_vk_linked_vkAllocateDescriptorSets == nullptr ) {
+        DAS_ASSERTF(0, "vkAllocateDescriptorSets not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkFreeDescriptorSets = vkGetInstanceProcAddr(instance, "vkFreeDescriptorSets");if ( g_vk_linked_vkFreeDescriptorSets == nullptr ) {
+        DAS_ASSERTF(0, "vkFreeDescriptorSets not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkUpdateDescriptorSets = vkGetInstanceProcAddr(instance, "vkUpdateDescriptorSets");if ( g_vk_linked_vkUpdateDescriptorSets == nullptr ) {
+        DAS_ASSERTF(0, "vkUpdateDescriptorSets not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCreateFramebuffer = vkGetInstanceProcAddr(instance, "vkCreateFramebuffer");if ( g_vk_linked_vkCreateFramebuffer == nullptr ) {
+        DAS_ASSERTF(0, "vkCreateFramebuffer not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkDestroyFramebuffer = vkGetInstanceProcAddr(instance, "vkDestroyFramebuffer");if ( g_vk_linked_vkDestroyFramebuffer == nullptr ) {
+        DAS_ASSERTF(0, "vkDestroyFramebuffer not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCreateRenderPass = vkGetInstanceProcAddr(instance, "vkCreateRenderPass");if ( g_vk_linked_vkCreateRenderPass == nullptr ) {
+        DAS_ASSERTF(0, "vkCreateRenderPass not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkDestroyRenderPass = vkGetInstanceProcAddr(instance, "vkDestroyRenderPass");if ( g_vk_linked_vkDestroyRenderPass == nullptr ) {
+        DAS_ASSERTF(0, "vkDestroyRenderPass not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkGetRenderAreaGranularity = vkGetInstanceProcAddr(instance, "vkGetRenderAreaGranularity");if ( g_vk_linked_vkGetRenderAreaGranularity == nullptr ) {
+        DAS_ASSERTF(0, "vkGetRenderAreaGranularity not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCreateCommandPool = vkGetInstanceProcAddr(instance, "vkCreateCommandPool");if ( g_vk_linked_vkCreateCommandPool == nullptr ) {
+        DAS_ASSERTF(0, "vkCreateCommandPool not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkDestroyCommandPool = vkGetInstanceProcAddr(instance, "vkDestroyCommandPool");if ( g_vk_linked_vkDestroyCommandPool == nullptr ) {
+        DAS_ASSERTF(0, "vkDestroyCommandPool not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkResetCommandPool = vkGetInstanceProcAddr(instance, "vkResetCommandPool");if ( g_vk_linked_vkResetCommandPool == nullptr ) {
+        DAS_ASSERTF(0, "vkResetCommandPool not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkAllocateCommandBuffers = vkGetInstanceProcAddr(instance, "vkAllocateCommandBuffers");if ( g_vk_linked_vkAllocateCommandBuffers == nullptr ) {
+        DAS_ASSERTF(0, "vkAllocateCommandBuffers not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkFreeCommandBuffers = vkGetInstanceProcAddr(instance, "vkFreeCommandBuffers");if ( g_vk_linked_vkFreeCommandBuffers == nullptr ) {
+        DAS_ASSERTF(0, "vkFreeCommandBuffers not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkBeginCommandBuffer = vkGetInstanceProcAddr(instance, "vkBeginCommandBuffer");if ( g_vk_linked_vkBeginCommandBuffer == nullptr ) {
+        DAS_ASSERTF(0, "vkBeginCommandBuffer not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkEndCommandBuffer = vkGetInstanceProcAddr(instance, "vkEndCommandBuffer");if ( g_vk_linked_vkEndCommandBuffer == nullptr ) {
+        DAS_ASSERTF(0, "vkEndCommandBuffer not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkResetCommandBuffer = vkGetInstanceProcAddr(instance, "vkResetCommandBuffer");if ( g_vk_linked_vkResetCommandBuffer == nullptr ) {
+        DAS_ASSERTF(0, "vkResetCommandBuffer not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdBindPipeline = vkGetInstanceProcAddr(instance, "vkCmdBindPipeline");if ( g_vk_linked_vkCmdBindPipeline == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdBindPipeline not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdSetViewport = vkGetInstanceProcAddr(instance, "vkCmdSetViewport");if ( g_vk_linked_vkCmdSetViewport == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdSetViewport not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdSetScissor = vkGetInstanceProcAddr(instance, "vkCmdSetScissor");if ( g_vk_linked_vkCmdSetScissor == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdSetScissor not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdSetLineWidth = vkGetInstanceProcAddr(instance, "vkCmdSetLineWidth");if ( g_vk_linked_vkCmdSetLineWidth == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdSetLineWidth not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdSetDepthBias = vkGetInstanceProcAddr(instance, "vkCmdSetDepthBias");if ( g_vk_linked_vkCmdSetDepthBias == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdSetDepthBias not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdSetBlendConstants = vkGetInstanceProcAddr(instance, "vkCmdSetBlendConstants");if ( g_vk_linked_vkCmdSetBlendConstants == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdSetBlendConstants not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdSetDepthBounds = vkGetInstanceProcAddr(instance, "vkCmdSetDepthBounds");if ( g_vk_linked_vkCmdSetDepthBounds == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdSetDepthBounds not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdSetStencilCompareMask = vkGetInstanceProcAddr(instance, "vkCmdSetStencilCompareMask");if ( g_vk_linked_vkCmdSetStencilCompareMask == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdSetStencilCompareMask not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdSetStencilWriteMask = vkGetInstanceProcAddr(instance, "vkCmdSetStencilWriteMask");if ( g_vk_linked_vkCmdSetStencilWriteMask == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdSetStencilWriteMask not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdSetStencilReference = vkGetInstanceProcAddr(instance, "vkCmdSetStencilReference");if ( g_vk_linked_vkCmdSetStencilReference == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdSetStencilReference not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdBindDescriptorSets = vkGetInstanceProcAddr(instance, "vkCmdBindDescriptorSets");if ( g_vk_linked_vkCmdBindDescriptorSets == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdBindDescriptorSets not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdBindIndexBuffer = vkGetInstanceProcAddr(instance, "vkCmdBindIndexBuffer");if ( g_vk_linked_vkCmdBindIndexBuffer == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdBindIndexBuffer not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdBindVertexBuffers = vkGetInstanceProcAddr(instance, "vkCmdBindVertexBuffers");if ( g_vk_linked_vkCmdBindVertexBuffers == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdBindVertexBuffers not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdDraw = vkGetInstanceProcAddr(instance, "vkCmdDraw");if ( g_vk_linked_vkCmdDraw == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdDraw not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdDrawIndexed = vkGetInstanceProcAddr(instance, "vkCmdDrawIndexed");if ( g_vk_linked_vkCmdDrawIndexed == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdDrawIndexed not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdDrawIndirect = vkGetInstanceProcAddr(instance, "vkCmdDrawIndirect");if ( g_vk_linked_vkCmdDrawIndirect == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdDrawIndirect not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdDrawIndexedIndirect = vkGetInstanceProcAddr(instance, "vkCmdDrawIndexedIndirect");if ( g_vk_linked_vkCmdDrawIndexedIndirect == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdDrawIndexedIndirect not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdDispatch = vkGetInstanceProcAddr(instance, "vkCmdDispatch");if ( g_vk_linked_vkCmdDispatch == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdDispatch not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdDispatchIndirect = vkGetInstanceProcAddr(instance, "vkCmdDispatchIndirect");if ( g_vk_linked_vkCmdDispatchIndirect == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdDispatchIndirect not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdCopyBuffer = vkGetInstanceProcAddr(instance, "vkCmdCopyBuffer");if ( g_vk_linked_vkCmdCopyBuffer == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdCopyBuffer not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdCopyImage = vkGetInstanceProcAddr(instance, "vkCmdCopyImage");if ( g_vk_linked_vkCmdCopyImage == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdCopyImage not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdBlitImage = vkGetInstanceProcAddr(instance, "vkCmdBlitImage");if ( g_vk_linked_vkCmdBlitImage == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdBlitImage not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdCopyBufferToImage = vkGetInstanceProcAddr(instance, "vkCmdCopyBufferToImage");if ( g_vk_linked_vkCmdCopyBufferToImage == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdCopyBufferToImage not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdCopyImageToBuffer = vkGetInstanceProcAddr(instance, "vkCmdCopyImageToBuffer");if ( g_vk_linked_vkCmdCopyImageToBuffer == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdCopyImageToBuffer not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdUpdateBuffer = vkGetInstanceProcAddr(instance, "vkCmdUpdateBuffer");if ( g_vk_linked_vkCmdUpdateBuffer == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdUpdateBuffer not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdFillBuffer = vkGetInstanceProcAddr(instance, "vkCmdFillBuffer");if ( g_vk_linked_vkCmdFillBuffer == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdFillBuffer not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdClearColorImage = vkGetInstanceProcAddr(instance, "vkCmdClearColorImage");if ( g_vk_linked_vkCmdClearColorImage == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdClearColorImage not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdClearDepthStencilImage = vkGetInstanceProcAddr(instance, "vkCmdClearDepthStencilImage");if ( g_vk_linked_vkCmdClearDepthStencilImage == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdClearDepthStencilImage not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdClearAttachments = vkGetInstanceProcAddr(instance, "vkCmdClearAttachments");if ( g_vk_linked_vkCmdClearAttachments == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdClearAttachments not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdResolveImage = vkGetInstanceProcAddr(instance, "vkCmdResolveImage");if ( g_vk_linked_vkCmdResolveImage == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdResolveImage not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdSetEvent = vkGetInstanceProcAddr(instance, "vkCmdSetEvent");if ( g_vk_linked_vkCmdSetEvent == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdSetEvent not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdResetEvent = vkGetInstanceProcAddr(instance, "vkCmdResetEvent");if ( g_vk_linked_vkCmdResetEvent == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdResetEvent not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdWaitEvents = vkGetInstanceProcAddr(instance, "vkCmdWaitEvents");if ( g_vk_linked_vkCmdWaitEvents == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdWaitEvents not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdPipelineBarrier = vkGetInstanceProcAddr(instance, "vkCmdPipelineBarrier");if ( g_vk_linked_vkCmdPipelineBarrier == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdPipelineBarrier not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdBeginQuery = vkGetInstanceProcAddr(instance, "vkCmdBeginQuery");if ( g_vk_linked_vkCmdBeginQuery == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdBeginQuery not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdEndQuery = vkGetInstanceProcAddr(instance, "vkCmdEndQuery");if ( g_vk_linked_vkCmdEndQuery == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdEndQuery not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdResetQueryPool = vkGetInstanceProcAddr(instance, "vkCmdResetQueryPool");if ( g_vk_linked_vkCmdResetQueryPool == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdResetQueryPool not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdWriteTimestamp = vkGetInstanceProcAddr(instance, "vkCmdWriteTimestamp");if ( g_vk_linked_vkCmdWriteTimestamp == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdWriteTimestamp not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdCopyQueryPoolResults = vkGetInstanceProcAddr(instance, "vkCmdCopyQueryPoolResults");if ( g_vk_linked_vkCmdCopyQueryPoolResults == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdCopyQueryPoolResults not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdPushConstants = vkGetInstanceProcAddr(instance, "vkCmdPushConstants");if ( g_vk_linked_vkCmdPushConstants == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdPushConstants not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdBeginRenderPass = vkGetInstanceProcAddr(instance, "vkCmdBeginRenderPass");if ( g_vk_linked_vkCmdBeginRenderPass == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdBeginRenderPass not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdNextSubpass = vkGetInstanceProcAddr(instance, "vkCmdNextSubpass");if ( g_vk_linked_vkCmdNextSubpass == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdNextSubpass not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdEndRenderPass = vkGetInstanceProcAddr(instance, "vkCmdEndRenderPass");if ( g_vk_linked_vkCmdEndRenderPass == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdEndRenderPass not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdExecuteCommands = vkGetInstanceProcAddr(instance, "vkCmdExecuteCommands");if ( g_vk_linked_vkCmdExecuteCommands == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdExecuteCommands not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkEnumerateInstanceVersion = vkGetInstanceProcAddr(instance, "vkEnumerateInstanceVersion");if ( g_vk_linked_vkEnumerateInstanceVersion == nullptr ) {
+        DAS_ASSERTF(0, "vkEnumerateInstanceVersion not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkBindBufferMemory2 = vkGetInstanceProcAddr(instance, "vkBindBufferMemory2");if ( g_vk_linked_vkBindBufferMemory2 == nullptr ) {
+        DAS_ASSERTF(0, "vkBindBufferMemory2 not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkBindImageMemory2 = vkGetInstanceProcAddr(instance, "vkBindImageMemory2");if ( g_vk_linked_vkBindImageMemory2 == nullptr ) {
+        DAS_ASSERTF(0, "vkBindImageMemory2 not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkGetDeviceGroupPeerMemoryFeatures = vkGetInstanceProcAddr(instance, "vkGetDeviceGroupPeerMemoryFeatures");if ( g_vk_linked_vkGetDeviceGroupPeerMemoryFeatures == nullptr ) {
+        DAS_ASSERTF(0, "vkGetDeviceGroupPeerMemoryFeatures not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdSetDeviceMask = vkGetInstanceProcAddr(instance, "vkCmdSetDeviceMask");if ( g_vk_linked_vkCmdSetDeviceMask == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdSetDeviceMask not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdDispatchBase = vkGetInstanceProcAddr(instance, "vkCmdDispatchBase");if ( g_vk_linked_vkCmdDispatchBase == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdDispatchBase not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkEnumeratePhysicalDeviceGroups = vkGetInstanceProcAddr(instance, "vkEnumeratePhysicalDeviceGroups");if ( g_vk_linked_vkEnumeratePhysicalDeviceGroups == nullptr ) {
+        DAS_ASSERTF(0, "vkEnumeratePhysicalDeviceGroups not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkGetImageMemoryRequirements2 = vkGetInstanceProcAddr(instance, "vkGetImageMemoryRequirements2");if ( g_vk_linked_vkGetImageMemoryRequirements2 == nullptr ) {
+        DAS_ASSERTF(0, "vkGetImageMemoryRequirements2 not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkGetBufferMemoryRequirements2 = vkGetInstanceProcAddr(instance, "vkGetBufferMemoryRequirements2");if ( g_vk_linked_vkGetBufferMemoryRequirements2 == nullptr ) {
+        DAS_ASSERTF(0, "vkGetBufferMemoryRequirements2 not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkGetImageSparseMemoryRequirements2 = vkGetInstanceProcAddr(instance, "vkGetImageSparseMemoryRequirements2");if ( g_vk_linked_vkGetImageSparseMemoryRequirements2 == nullptr ) {
+        DAS_ASSERTF(0, "vkGetImageSparseMemoryRequirements2 not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkGetPhysicalDeviceFeatures2 = vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceFeatures2");if ( g_vk_linked_vkGetPhysicalDeviceFeatures2 == nullptr ) {
+        DAS_ASSERTF(0, "vkGetPhysicalDeviceFeatures2 not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkGetPhysicalDeviceProperties2 = vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceProperties2");if ( g_vk_linked_vkGetPhysicalDeviceProperties2 == nullptr ) {
+        DAS_ASSERTF(0, "vkGetPhysicalDeviceProperties2 not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkGetPhysicalDeviceFormatProperties2 = vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceFormatProperties2");if ( g_vk_linked_vkGetPhysicalDeviceFormatProperties2 == nullptr ) {
+        DAS_ASSERTF(0, "vkGetPhysicalDeviceFormatProperties2 not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkGetPhysicalDeviceImageFormatProperties2 = vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceImageFormatProperties2");if ( g_vk_linked_vkGetPhysicalDeviceImageFormatProperties2 == nullptr ) {
+        DAS_ASSERTF(0, "vkGetPhysicalDeviceImageFormatProperties2 not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkGetPhysicalDeviceQueueFamilyProperties2 = vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceQueueFamilyProperties2");if ( g_vk_linked_vkGetPhysicalDeviceQueueFamilyProperties2 == nullptr ) {
+        DAS_ASSERTF(0, "vkGetPhysicalDeviceQueueFamilyProperties2 not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkGetPhysicalDeviceMemoryProperties2 = vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceMemoryProperties2");if ( g_vk_linked_vkGetPhysicalDeviceMemoryProperties2 == nullptr ) {
+        DAS_ASSERTF(0, "vkGetPhysicalDeviceMemoryProperties2 not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkGetPhysicalDeviceSparseImageFormatProperties2 = vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceSparseImageFormatProperties2");if ( g_vk_linked_vkGetPhysicalDeviceSparseImageFormatProperties2 == nullptr ) {
+        DAS_ASSERTF(0, "vkGetPhysicalDeviceSparseImageFormatProperties2 not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkTrimCommandPool = vkGetInstanceProcAddr(instance, "vkTrimCommandPool");if ( g_vk_linked_vkTrimCommandPool == nullptr ) {
+        DAS_ASSERTF(0, "vkTrimCommandPool not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkGetDeviceQueue2 = vkGetInstanceProcAddr(instance, "vkGetDeviceQueue2");if ( g_vk_linked_vkGetDeviceQueue2 == nullptr ) {
+        DAS_ASSERTF(0, "vkGetDeviceQueue2 not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCreateSamplerYcbcrConversion = vkGetInstanceProcAddr(instance, "vkCreateSamplerYcbcrConversion");if ( g_vk_linked_vkCreateSamplerYcbcrConversion == nullptr ) {
+        DAS_ASSERTF(0, "vkCreateSamplerYcbcrConversion not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkDestroySamplerYcbcrConversion = vkGetInstanceProcAddr(instance, "vkDestroySamplerYcbcrConversion");if ( g_vk_linked_vkDestroySamplerYcbcrConversion == nullptr ) {
+        DAS_ASSERTF(0, "vkDestroySamplerYcbcrConversion not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCreateDescriptorUpdateTemplate = vkGetInstanceProcAddr(instance, "vkCreateDescriptorUpdateTemplate");if ( g_vk_linked_vkCreateDescriptorUpdateTemplate == nullptr ) {
+        DAS_ASSERTF(0, "vkCreateDescriptorUpdateTemplate not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkDestroyDescriptorUpdateTemplate = vkGetInstanceProcAddr(instance, "vkDestroyDescriptorUpdateTemplate");if ( g_vk_linked_vkDestroyDescriptorUpdateTemplate == nullptr ) {
+        DAS_ASSERTF(0, "vkDestroyDescriptorUpdateTemplate not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkUpdateDescriptorSetWithTemplate = vkGetInstanceProcAddr(instance, "vkUpdateDescriptorSetWithTemplate");if ( g_vk_linked_vkUpdateDescriptorSetWithTemplate == nullptr ) {
+        DAS_ASSERTF(0, "vkUpdateDescriptorSetWithTemplate not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkGetPhysicalDeviceExternalBufferProperties = vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceExternalBufferProperties");if ( g_vk_linked_vkGetPhysicalDeviceExternalBufferProperties == nullptr ) {
+        DAS_ASSERTF(0, "vkGetPhysicalDeviceExternalBufferProperties not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkGetPhysicalDeviceExternalFenceProperties = vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceExternalFenceProperties");if ( g_vk_linked_vkGetPhysicalDeviceExternalFenceProperties == nullptr ) {
+        DAS_ASSERTF(0, "vkGetPhysicalDeviceExternalFenceProperties not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkGetPhysicalDeviceExternalSemaphoreProperties = vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceExternalSemaphoreProperties");if ( g_vk_linked_vkGetPhysicalDeviceExternalSemaphoreProperties == nullptr ) {
+        DAS_ASSERTF(0, "vkGetPhysicalDeviceExternalSemaphoreProperties not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkGetDescriptorSetLayoutSupport = vkGetInstanceProcAddr(instance, "vkGetDescriptorSetLayoutSupport");if ( g_vk_linked_vkGetDescriptorSetLayoutSupport == nullptr ) {
+        DAS_ASSERTF(0, "vkGetDescriptorSetLayoutSupport not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdDrawIndirectCount = vkGetInstanceProcAddr(instance, "vkCmdDrawIndirectCount");if ( g_vk_linked_vkCmdDrawIndirectCount == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdDrawIndirectCount not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdDrawIndexedIndirectCount = vkGetInstanceProcAddr(instance, "vkCmdDrawIndexedIndirectCount");if ( g_vk_linked_vkCmdDrawIndexedIndirectCount == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdDrawIndexedIndirectCount not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCreateRenderPass2 = vkGetInstanceProcAddr(instance, "vkCreateRenderPass2");if ( g_vk_linked_vkCreateRenderPass2 == nullptr ) {
+        DAS_ASSERTF(0, "vkCreateRenderPass2 not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdBeginRenderPass2 = vkGetInstanceProcAddr(instance, "vkCmdBeginRenderPass2");if ( g_vk_linked_vkCmdBeginRenderPass2 == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdBeginRenderPass2 not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdNextSubpass2 = vkGetInstanceProcAddr(instance, "vkCmdNextSubpass2");if ( g_vk_linked_vkCmdNextSubpass2 == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdNextSubpass2 not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCmdEndRenderPass2 = vkGetInstanceProcAddr(instance, "vkCmdEndRenderPass2");if ( g_vk_linked_vkCmdEndRenderPass2 == nullptr ) {
+        DAS_ASSERTF(0, "vkCmdEndRenderPass2 not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkResetQueryPool = vkGetInstanceProcAddr(instance, "vkResetQueryPool");if ( g_vk_linked_vkResetQueryPool == nullptr ) {
+        DAS_ASSERTF(0, "vkResetQueryPool not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkGetSemaphoreCounterValue = vkGetInstanceProcAddr(instance, "vkGetSemaphoreCounterValue");if ( g_vk_linked_vkGetSemaphoreCounterValue == nullptr ) {
+        DAS_ASSERTF(0, "vkGetSemaphoreCounterValue not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkWaitSemaphores = vkGetInstanceProcAddr(instance, "vkWaitSemaphores");if ( g_vk_linked_vkWaitSemaphores == nullptr ) {
+        DAS_ASSERTF(0, "vkWaitSemaphores not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkSignalSemaphore = vkGetInstanceProcAddr(instance, "vkSignalSemaphore");if ( g_vk_linked_vkSignalSemaphore == nullptr ) {
+        DAS_ASSERTF(0, "vkSignalSemaphore not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkGetBufferDeviceAddress = vkGetInstanceProcAddr(instance, "vkGetBufferDeviceAddress");if ( g_vk_linked_vkGetBufferDeviceAddress == nullptr ) {
+        DAS_ASSERTF(0, "vkGetBufferDeviceAddress not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkGetBufferOpaqueCaptureAddress = vkGetInstanceProcAddr(instance, "vkGetBufferOpaqueCaptureAddress");if ( g_vk_linked_vkGetBufferOpaqueCaptureAddress == nullptr ) {
+        DAS_ASSERTF(0, "vkGetBufferOpaqueCaptureAddress not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkGetDeviceMemoryOpaqueCaptureAddress = vkGetInstanceProcAddr(instance, "vkGetDeviceMemoryOpaqueCaptureAddress");if ( g_vk_linked_vkGetDeviceMemoryOpaqueCaptureAddress == nullptr ) {
+        DAS_ASSERTF(0, "vkGetDeviceMemoryOpaqueCaptureAddress not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkDestroySurfaceKHR = vkGetInstanceProcAddr(instance, "vkDestroySurfaceKHR");if ( g_vk_linked_vkDestroySurfaceKHR == nullptr ) {
+        DAS_ASSERTF(0, "vkDestroySurfaceKHR not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkGetPhysicalDeviceSurfaceSupportKHR = vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceSurfaceSupportKHR");if ( g_vk_linked_vkGetPhysicalDeviceSurfaceSupportKHR == nullptr ) {
+        DAS_ASSERTF(0, "vkGetPhysicalDeviceSurfaceSupportKHR not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkGetPhysicalDeviceSurfaceCapabilitiesKHR = vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceSurfaceCapabilitiesKHR");if ( g_vk_linked_vkGetPhysicalDeviceSurfaceCapabilitiesKHR == nullptr ) {
+        DAS_ASSERTF(0, "vkGetPhysicalDeviceSurfaceCapabilitiesKHR not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkGetPhysicalDeviceSurfaceFormatsKHR = vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceSurfaceFormatsKHR");if ( g_vk_linked_vkGetPhysicalDeviceSurfaceFormatsKHR == nullptr ) {
+        DAS_ASSERTF(0, "vkGetPhysicalDeviceSurfaceFormatsKHR not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkGetPhysicalDeviceSurfacePresentModesKHR = vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceSurfacePresentModesKHR");if ( g_vk_linked_vkGetPhysicalDeviceSurfacePresentModesKHR == nullptr ) {
+        DAS_ASSERTF(0, "vkGetPhysicalDeviceSurfacePresentModesKHR not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCreateSwapchainKHR = vkGetInstanceProcAddr(instance, "vkCreateSwapchainKHR");if ( g_vk_linked_vkCreateSwapchainKHR == nullptr ) {
+        DAS_ASSERTF(0, "vkCreateSwapchainKHR not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkDestroySwapchainKHR = vkGetInstanceProcAddr(instance, "vkDestroySwapchainKHR");if ( g_vk_linked_vkDestroySwapchainKHR == nullptr ) {
+        DAS_ASSERTF(0, "vkDestroySwapchainKHR not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkGetSwapchainImagesKHR = vkGetInstanceProcAddr(instance, "vkGetSwapchainImagesKHR");if ( g_vk_linked_vkGetSwapchainImagesKHR == nullptr ) {
+        DAS_ASSERTF(0, "vkGetSwapchainImagesKHR not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkAcquireNextImageKHR = vkGetInstanceProcAddr(instance, "vkAcquireNextImageKHR");if ( g_vk_linked_vkAcquireNextImageKHR == nullptr ) {
+        DAS_ASSERTF(0, "vkAcquireNextImageKHR not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkQueuePresentKHR = vkGetInstanceProcAddr(instance, "vkQueuePresentKHR");if ( g_vk_linked_vkQueuePresentKHR == nullptr ) {
+        DAS_ASSERTF(0, "vkQueuePresentKHR not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkCreateDebugUtilsMessengerEXT = vkGetInstanceProcAddr(instance, "vkCreateDebugUtilsMessengerEXT");if ( g_vk_linked_vkCreateDebugUtilsMessengerEXT == nullptr ) {
+        DAS_ASSERTF(0, "vkCreateDebugUtilsMessengerEXT not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_vkDestroyDebugUtilsMessengerEXT = vkGetInstanceProcAddr(instance, "vkDestroyDebugUtilsMessengerEXT");if ( g_vk_linked_vkDestroyDebugUtilsMessengerEXT == nullptr ) {
+        DAS_ASSERTF(0, "vkDestroyDebugUtilsMessengerEXT not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwInit = vkGetInstanceProcAddr(instance, "glfwInit");if ( g_vk_linked_glfwInit == nullptr ) {
+        DAS_ASSERTF(0, "glfwInit not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwTerminate = vkGetInstanceProcAddr(instance, "glfwTerminate");if ( g_vk_linked_glfwTerminate == nullptr ) {
+        DAS_ASSERTF(0, "glfwTerminate not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwInitHint = vkGetInstanceProcAddr(instance, "glfwInitHint");if ( g_vk_linked_glfwInitHint == nullptr ) {
+        DAS_ASSERTF(0, "glfwInitHint not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwGetVersion = vkGetInstanceProcAddr(instance, "glfwGetVersion");if ( g_vk_linked_glfwGetVersion == nullptr ) {
+        DAS_ASSERTF(0, "glfwGetVersion not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwGetVersionString = vkGetInstanceProcAddr(instance, "glfwGetVersionString");if ( g_vk_linked_glfwGetVersionString == nullptr ) {
+        DAS_ASSERTF(0, "glfwGetVersionString not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwGetError = vkGetInstanceProcAddr(instance, "glfwGetError");if ( g_vk_linked_glfwGetError == nullptr ) {
+        DAS_ASSERTF(0, "glfwGetError not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwGetMonitors = vkGetInstanceProcAddr(instance, "glfwGetMonitors");if ( g_vk_linked_glfwGetMonitors == nullptr ) {
+        DAS_ASSERTF(0, "glfwGetMonitors not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwGetPrimaryMonitor = vkGetInstanceProcAddr(instance, "glfwGetPrimaryMonitor");if ( g_vk_linked_glfwGetPrimaryMonitor == nullptr ) {
+        DAS_ASSERTF(0, "glfwGetPrimaryMonitor not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwGetMonitorPos = vkGetInstanceProcAddr(instance, "glfwGetMonitorPos");if ( g_vk_linked_glfwGetMonitorPos == nullptr ) {
+        DAS_ASSERTF(0, "glfwGetMonitorPos not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwGetMonitorWorkarea = vkGetInstanceProcAddr(instance, "glfwGetMonitorWorkarea");if ( g_vk_linked_glfwGetMonitorWorkarea == nullptr ) {
+        DAS_ASSERTF(0, "glfwGetMonitorWorkarea not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwGetMonitorPhysicalSize = vkGetInstanceProcAddr(instance, "glfwGetMonitorPhysicalSize");if ( g_vk_linked_glfwGetMonitorPhysicalSize == nullptr ) {
+        DAS_ASSERTF(0, "glfwGetMonitorPhysicalSize not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwGetMonitorContentScale = vkGetInstanceProcAddr(instance, "glfwGetMonitorContentScale");if ( g_vk_linked_glfwGetMonitorContentScale == nullptr ) {
+        DAS_ASSERTF(0, "glfwGetMonitorContentScale not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwGetMonitorName = vkGetInstanceProcAddr(instance, "glfwGetMonitorName");if ( g_vk_linked_glfwGetMonitorName == nullptr ) {
+        DAS_ASSERTF(0, "glfwGetMonitorName not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwSetMonitorUserPointer = vkGetInstanceProcAddr(instance, "glfwSetMonitorUserPointer");if ( g_vk_linked_glfwSetMonitorUserPointer == nullptr ) {
+        DAS_ASSERTF(0, "glfwSetMonitorUserPointer not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwGetMonitorUserPointer = vkGetInstanceProcAddr(instance, "glfwGetMonitorUserPointer");if ( g_vk_linked_glfwGetMonitorUserPointer == nullptr ) {
+        DAS_ASSERTF(0, "glfwGetMonitorUserPointer not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwGetVideoModes = vkGetInstanceProcAddr(instance, "glfwGetVideoModes");if ( g_vk_linked_glfwGetVideoModes == nullptr ) {
+        DAS_ASSERTF(0, "glfwGetVideoModes not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwGetVideoMode = vkGetInstanceProcAddr(instance, "glfwGetVideoMode");if ( g_vk_linked_glfwGetVideoMode == nullptr ) {
+        DAS_ASSERTF(0, "glfwGetVideoMode not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwSetGamma = vkGetInstanceProcAddr(instance, "glfwSetGamma");if ( g_vk_linked_glfwSetGamma == nullptr ) {
+        DAS_ASSERTF(0, "glfwSetGamma not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwGetGammaRamp = vkGetInstanceProcAddr(instance, "glfwGetGammaRamp");if ( g_vk_linked_glfwGetGammaRamp == nullptr ) {
+        DAS_ASSERTF(0, "glfwGetGammaRamp not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwSetGammaRamp = vkGetInstanceProcAddr(instance, "glfwSetGammaRamp");if ( g_vk_linked_glfwSetGammaRamp == nullptr ) {
+        DAS_ASSERTF(0, "glfwSetGammaRamp not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwDefaultWindowHints = vkGetInstanceProcAddr(instance, "glfwDefaultWindowHints");if ( g_vk_linked_glfwDefaultWindowHints == nullptr ) {
+        DAS_ASSERTF(0, "glfwDefaultWindowHints not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwWindowHint = vkGetInstanceProcAddr(instance, "glfwWindowHint");if ( g_vk_linked_glfwWindowHint == nullptr ) {
+        DAS_ASSERTF(0, "glfwWindowHint not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwWindowHintString = vkGetInstanceProcAddr(instance, "glfwWindowHintString");if ( g_vk_linked_glfwWindowHintString == nullptr ) {
+        DAS_ASSERTF(0, "glfwWindowHintString not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwWindowShouldClose = vkGetInstanceProcAddr(instance, "glfwWindowShouldClose");if ( g_vk_linked_glfwWindowShouldClose == nullptr ) {
+        DAS_ASSERTF(0, "glfwWindowShouldClose not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwSetWindowShouldClose = vkGetInstanceProcAddr(instance, "glfwSetWindowShouldClose");if ( g_vk_linked_glfwSetWindowShouldClose == nullptr ) {
+        DAS_ASSERTF(0, "glfwSetWindowShouldClose not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwSetWindowTitle = vkGetInstanceProcAddr(instance, "glfwSetWindowTitle");if ( g_vk_linked_glfwSetWindowTitle == nullptr ) {
+        DAS_ASSERTF(0, "glfwSetWindowTitle not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwSetWindowIcon = vkGetInstanceProcAddr(instance, "glfwSetWindowIcon");if ( g_vk_linked_glfwSetWindowIcon == nullptr ) {
+        DAS_ASSERTF(0, "glfwSetWindowIcon not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwGetWindowPos = vkGetInstanceProcAddr(instance, "glfwGetWindowPos");if ( g_vk_linked_glfwGetWindowPos == nullptr ) {
+        DAS_ASSERTF(0, "glfwGetWindowPos not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwSetWindowPos = vkGetInstanceProcAddr(instance, "glfwSetWindowPos");if ( g_vk_linked_glfwSetWindowPos == nullptr ) {
+        DAS_ASSERTF(0, "glfwSetWindowPos not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwGetWindowSize = vkGetInstanceProcAddr(instance, "glfwGetWindowSize");if ( g_vk_linked_glfwGetWindowSize == nullptr ) {
+        DAS_ASSERTF(0, "glfwGetWindowSize not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwSetWindowSizeLimits = vkGetInstanceProcAddr(instance, "glfwSetWindowSizeLimits");if ( g_vk_linked_glfwSetWindowSizeLimits == nullptr ) {
+        DAS_ASSERTF(0, "glfwSetWindowSizeLimits not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwSetWindowAspectRatio = vkGetInstanceProcAddr(instance, "glfwSetWindowAspectRatio");if ( g_vk_linked_glfwSetWindowAspectRatio == nullptr ) {
+        DAS_ASSERTF(0, "glfwSetWindowAspectRatio not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwSetWindowSize = vkGetInstanceProcAddr(instance, "glfwSetWindowSize");if ( g_vk_linked_glfwSetWindowSize == nullptr ) {
+        DAS_ASSERTF(0, "glfwSetWindowSize not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwGetFramebufferSize = vkGetInstanceProcAddr(instance, "glfwGetFramebufferSize");if ( g_vk_linked_glfwGetFramebufferSize == nullptr ) {
+        DAS_ASSERTF(0, "glfwGetFramebufferSize not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwGetWindowFrameSize = vkGetInstanceProcAddr(instance, "glfwGetWindowFrameSize");if ( g_vk_linked_glfwGetWindowFrameSize == nullptr ) {
+        DAS_ASSERTF(0, "glfwGetWindowFrameSize not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwGetWindowContentScale = vkGetInstanceProcAddr(instance, "glfwGetWindowContentScale");if ( g_vk_linked_glfwGetWindowContentScale == nullptr ) {
+        DAS_ASSERTF(0, "glfwGetWindowContentScale not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwGetWindowOpacity = vkGetInstanceProcAddr(instance, "glfwGetWindowOpacity");if ( g_vk_linked_glfwGetWindowOpacity == nullptr ) {
+        DAS_ASSERTF(0, "glfwGetWindowOpacity not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwSetWindowOpacity = vkGetInstanceProcAddr(instance, "glfwSetWindowOpacity");if ( g_vk_linked_glfwSetWindowOpacity == nullptr ) {
+        DAS_ASSERTF(0, "glfwSetWindowOpacity not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwIconifyWindow = vkGetInstanceProcAddr(instance, "glfwIconifyWindow");if ( g_vk_linked_glfwIconifyWindow == nullptr ) {
+        DAS_ASSERTF(0, "glfwIconifyWindow not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwRestoreWindow = vkGetInstanceProcAddr(instance, "glfwRestoreWindow");if ( g_vk_linked_glfwRestoreWindow == nullptr ) {
+        DAS_ASSERTF(0, "glfwRestoreWindow not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwMaximizeWindow = vkGetInstanceProcAddr(instance, "glfwMaximizeWindow");if ( g_vk_linked_glfwMaximizeWindow == nullptr ) {
+        DAS_ASSERTF(0, "glfwMaximizeWindow not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwShowWindow = vkGetInstanceProcAddr(instance, "glfwShowWindow");if ( g_vk_linked_glfwShowWindow == nullptr ) {
+        DAS_ASSERTF(0, "glfwShowWindow not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwHideWindow = vkGetInstanceProcAddr(instance, "glfwHideWindow");if ( g_vk_linked_glfwHideWindow == nullptr ) {
+        DAS_ASSERTF(0, "glfwHideWindow not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwFocusWindow = vkGetInstanceProcAddr(instance, "glfwFocusWindow");if ( g_vk_linked_glfwFocusWindow == nullptr ) {
+        DAS_ASSERTF(0, "glfwFocusWindow not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwRequestWindowAttention = vkGetInstanceProcAddr(instance, "glfwRequestWindowAttention");if ( g_vk_linked_glfwRequestWindowAttention == nullptr ) {
+        DAS_ASSERTF(0, "glfwRequestWindowAttention not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwGetWindowMonitor = vkGetInstanceProcAddr(instance, "glfwGetWindowMonitor");if ( g_vk_linked_glfwGetWindowMonitor == nullptr ) {
+        DAS_ASSERTF(0, "glfwGetWindowMonitor not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwSetWindowMonitor = vkGetInstanceProcAddr(instance, "glfwSetWindowMonitor");if ( g_vk_linked_glfwSetWindowMonitor == nullptr ) {
+        DAS_ASSERTF(0, "glfwSetWindowMonitor not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwGetWindowAttrib = vkGetInstanceProcAddr(instance, "glfwGetWindowAttrib");if ( g_vk_linked_glfwGetWindowAttrib == nullptr ) {
+        DAS_ASSERTF(0, "glfwGetWindowAttrib not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwSetWindowAttrib = vkGetInstanceProcAddr(instance, "glfwSetWindowAttrib");if ( g_vk_linked_glfwSetWindowAttrib == nullptr ) {
+        DAS_ASSERTF(0, "glfwSetWindowAttrib not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwGetWindowUserPointer = vkGetInstanceProcAddr(instance, "glfwGetWindowUserPointer");if ( g_vk_linked_glfwGetWindowUserPointer == nullptr ) {
+        DAS_ASSERTF(0, "glfwGetWindowUserPointer not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwPollEvents = vkGetInstanceProcAddr(instance, "glfwPollEvents");if ( g_vk_linked_glfwPollEvents == nullptr ) {
+        DAS_ASSERTF(0, "glfwPollEvents not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwWaitEvents = vkGetInstanceProcAddr(instance, "glfwWaitEvents");if ( g_vk_linked_glfwWaitEvents == nullptr ) {
+        DAS_ASSERTF(0, "glfwWaitEvents not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwWaitEventsTimeout = vkGetInstanceProcAddr(instance, "glfwWaitEventsTimeout");if ( g_vk_linked_glfwWaitEventsTimeout == nullptr ) {
+        DAS_ASSERTF(0, "glfwWaitEventsTimeout not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwPostEmptyEvent = vkGetInstanceProcAddr(instance, "glfwPostEmptyEvent");if ( g_vk_linked_glfwPostEmptyEvent == nullptr ) {
+        DAS_ASSERTF(0, "glfwPostEmptyEvent not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwGetInputMode = vkGetInstanceProcAddr(instance, "glfwGetInputMode");if ( g_vk_linked_glfwGetInputMode == nullptr ) {
+        DAS_ASSERTF(0, "glfwGetInputMode not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwSetInputMode = vkGetInstanceProcAddr(instance, "glfwSetInputMode");if ( g_vk_linked_glfwSetInputMode == nullptr ) {
+        DAS_ASSERTF(0, "glfwSetInputMode not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwRawMouseMotionSupported = vkGetInstanceProcAddr(instance, "glfwRawMouseMotionSupported");if ( g_vk_linked_glfwRawMouseMotionSupported == nullptr ) {
+        DAS_ASSERTF(0, "glfwRawMouseMotionSupported not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwGetKeyName = vkGetInstanceProcAddr(instance, "glfwGetKeyName");if ( g_vk_linked_glfwGetKeyName == nullptr ) {
+        DAS_ASSERTF(0, "glfwGetKeyName not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwGetKeyScancode = vkGetInstanceProcAddr(instance, "glfwGetKeyScancode");if ( g_vk_linked_glfwGetKeyScancode == nullptr ) {
+        DAS_ASSERTF(0, "glfwGetKeyScancode not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwGetKey = vkGetInstanceProcAddr(instance, "glfwGetKey");if ( g_vk_linked_glfwGetKey == nullptr ) {
+        DAS_ASSERTF(0, "glfwGetKey not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwGetMouseButton = vkGetInstanceProcAddr(instance, "glfwGetMouseButton");if ( g_vk_linked_glfwGetMouseButton == nullptr ) {
+        DAS_ASSERTF(0, "glfwGetMouseButton not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwGetCursorPos = vkGetInstanceProcAddr(instance, "glfwGetCursorPos");if ( g_vk_linked_glfwGetCursorPos == nullptr ) {
+        DAS_ASSERTF(0, "glfwGetCursorPos not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwSetCursorPos = vkGetInstanceProcAddr(instance, "glfwSetCursorPos");if ( g_vk_linked_glfwSetCursorPos == nullptr ) {
+        DAS_ASSERTF(0, "glfwSetCursorPos not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwCreateCursor = vkGetInstanceProcAddr(instance, "glfwCreateCursor");if ( g_vk_linked_glfwCreateCursor == nullptr ) {
+        DAS_ASSERTF(0, "glfwCreateCursor not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwCreateStandardCursor = vkGetInstanceProcAddr(instance, "glfwCreateStandardCursor");if ( g_vk_linked_glfwCreateStandardCursor == nullptr ) {
+        DAS_ASSERTF(0, "glfwCreateStandardCursor not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwDestroyCursor = vkGetInstanceProcAddr(instance, "glfwDestroyCursor");if ( g_vk_linked_glfwDestroyCursor == nullptr ) {
+        DAS_ASSERTF(0, "glfwDestroyCursor not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwSetCursor = vkGetInstanceProcAddr(instance, "glfwSetCursor");if ( g_vk_linked_glfwSetCursor == nullptr ) {
+        DAS_ASSERTF(0, "glfwSetCursor not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwJoystickPresent = vkGetInstanceProcAddr(instance, "glfwJoystickPresent");if ( g_vk_linked_glfwJoystickPresent == nullptr ) {
+        DAS_ASSERTF(0, "glfwJoystickPresent not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwGetJoystickAxes = vkGetInstanceProcAddr(instance, "glfwGetJoystickAxes");if ( g_vk_linked_glfwGetJoystickAxes == nullptr ) {
+        DAS_ASSERTF(0, "glfwGetJoystickAxes not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwGetJoystickButtons = vkGetInstanceProcAddr(instance, "glfwGetJoystickButtons");if ( g_vk_linked_glfwGetJoystickButtons == nullptr ) {
+        DAS_ASSERTF(0, "glfwGetJoystickButtons not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwGetJoystickHats = vkGetInstanceProcAddr(instance, "glfwGetJoystickHats");if ( g_vk_linked_glfwGetJoystickHats == nullptr ) {
+        DAS_ASSERTF(0, "glfwGetJoystickHats not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwGetJoystickName = vkGetInstanceProcAddr(instance, "glfwGetJoystickName");if ( g_vk_linked_glfwGetJoystickName == nullptr ) {
+        DAS_ASSERTF(0, "glfwGetJoystickName not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwGetJoystickGUID = vkGetInstanceProcAddr(instance, "glfwGetJoystickGUID");if ( g_vk_linked_glfwGetJoystickGUID == nullptr ) {
+        DAS_ASSERTF(0, "glfwGetJoystickGUID not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwSetJoystickUserPointer = vkGetInstanceProcAddr(instance, "glfwSetJoystickUserPointer");if ( g_vk_linked_glfwSetJoystickUserPointer == nullptr ) {
+        DAS_ASSERTF(0, "glfwSetJoystickUserPointer not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwGetJoystickUserPointer = vkGetInstanceProcAddr(instance, "glfwGetJoystickUserPointer");if ( g_vk_linked_glfwGetJoystickUserPointer == nullptr ) {
+        DAS_ASSERTF(0, "glfwGetJoystickUserPointer not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwJoystickIsGamepad = vkGetInstanceProcAddr(instance, "glfwJoystickIsGamepad");if ( g_vk_linked_glfwJoystickIsGamepad == nullptr ) {
+        DAS_ASSERTF(0, "glfwJoystickIsGamepad not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwUpdateGamepadMappings = vkGetInstanceProcAddr(instance, "glfwUpdateGamepadMappings");if ( g_vk_linked_glfwUpdateGamepadMappings == nullptr ) {
+        DAS_ASSERTF(0, "glfwUpdateGamepadMappings not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwGetGamepadName = vkGetInstanceProcAddr(instance, "glfwGetGamepadName");if ( g_vk_linked_glfwGetGamepadName == nullptr ) {
+        DAS_ASSERTF(0, "glfwGetGamepadName not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwGetGamepadState = vkGetInstanceProcAddr(instance, "glfwGetGamepadState");if ( g_vk_linked_glfwGetGamepadState == nullptr ) {
+        DAS_ASSERTF(0, "glfwGetGamepadState not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwSetClipboardString = vkGetInstanceProcAddr(instance, "glfwSetClipboardString");if ( g_vk_linked_glfwSetClipboardString == nullptr ) {
+        DAS_ASSERTF(0, "glfwSetClipboardString not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwGetClipboardString = vkGetInstanceProcAddr(instance, "glfwGetClipboardString");if ( g_vk_linked_glfwGetClipboardString == nullptr ) {
+        DAS_ASSERTF(0, "glfwGetClipboardString not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwGetTime = vkGetInstanceProcAddr(instance, "glfwGetTime");if ( g_vk_linked_glfwGetTime == nullptr ) {
+        DAS_ASSERTF(0, "glfwGetTime not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwSetTime = vkGetInstanceProcAddr(instance, "glfwSetTime");if ( g_vk_linked_glfwSetTime == nullptr ) {
+        DAS_ASSERTF(0, "glfwSetTime not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwGetTimerValue = vkGetInstanceProcAddr(instance, "glfwGetTimerValue");if ( g_vk_linked_glfwGetTimerValue == nullptr ) {
+        DAS_ASSERTF(0, "glfwGetTimerValue not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwGetTimerFrequency = vkGetInstanceProcAddr(instance, "glfwGetTimerFrequency");if ( g_vk_linked_glfwGetTimerFrequency == nullptr ) {
+        DAS_ASSERTF(0, "glfwGetTimerFrequency not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwMakeContextCurrent = vkGetInstanceProcAddr(instance, "glfwMakeContextCurrent");if ( g_vk_linked_glfwMakeContextCurrent == nullptr ) {
+        DAS_ASSERTF(0, "glfwMakeContextCurrent not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwGetCurrentContext = vkGetInstanceProcAddr(instance, "glfwGetCurrentContext");if ( g_vk_linked_glfwGetCurrentContext == nullptr ) {
+        DAS_ASSERTF(0, "glfwGetCurrentContext not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwSwapBuffers = vkGetInstanceProcAddr(instance, "glfwSwapBuffers");if ( g_vk_linked_glfwSwapBuffers == nullptr ) {
+        DAS_ASSERTF(0, "glfwSwapBuffers not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwSwapInterval = vkGetInstanceProcAddr(instance, "glfwSwapInterval");if ( g_vk_linked_glfwSwapInterval == nullptr ) {
+        DAS_ASSERTF(0, "glfwSwapInterval not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwExtensionSupported = vkGetInstanceProcAddr(instance, "glfwExtensionSupported");if ( g_vk_linked_glfwExtensionSupported == nullptr ) {
+        DAS_ASSERTF(0, "glfwExtensionSupported not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwVulkanSupported = vkGetInstanceProcAddr(instance, "glfwVulkanSupported");if ( g_vk_linked_glfwVulkanSupported == nullptr ) {
+        DAS_ASSERTF(0, "glfwVulkanSupported not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwGetRequiredInstanceExtensions = vkGetInstanceProcAddr(instance, "glfwGetRequiredInstanceExtensions");if ( g_vk_linked_glfwGetRequiredInstanceExtensions == nullptr ) {
+        DAS_ASSERTF(0, "glfwGetRequiredInstanceExtensions not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwGetPhysicalDevicePresentationSupport = vkGetInstanceProcAddr(instance, "glfwGetPhysicalDevicePresentationSupport");if ( g_vk_linked_glfwGetPhysicalDevicePresentationSupport == nullptr ) {
+        DAS_ASSERTF(0, "glfwGetPhysicalDevicePresentationSupport not found");
+        DAS_FATAL_ERROR
+    }
+    
+    g_vk_linked_glfwCreateWindowSurface = vkGetInstanceProcAddr(instance, "glfwCreateWindowSurface");if ( g_vk_linked_glfwCreateWindowSurface == nullptr ) {
+        DAS_ASSERTF(0, "glfwCreateWindowSurface not found");
+        DAS_FATAL_ERROR
+    }
+}
 
 void addVulkanBoostGenerated(Module & module, ModuleLibrary & lib) {
+    addExtern<DAS_BIND_FUN(vk_link_instance)>(
+        *this, lib, "vk_link_instance",
+        SideEffects::worstDefault, "vk_link_instance");
+    addExtern<DAS_BIND_FUN(vk_get_linked_instance)>(
+        *this, lib, "vk_get_linked_instance",
+        SideEffects::worstDefault, "vk_get_linked_instance");
 }
