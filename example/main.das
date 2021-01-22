@@ -640,7 +640,7 @@ def create_swapchain_independent_state(
 ) : SwapchainIndependentState
     var s : SwapchainIndependentState
     s.window <- create_window(width, height, title)
-    s.instance <- create_default_instance()
+    s.instance <- create_instance_ex()
     s.surface <- s.instance |> create_window_surface(s.window)
     s.phys_dev <- s.instance |> find_best_physical_device(s.surface)
     s.present_mode = VkPresentModeKHR VK_PRESENT_MODE_FIFO_KHR
