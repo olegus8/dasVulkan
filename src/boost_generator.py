@@ -177,7 +177,7 @@ class BoostGenerator(LoggingObject):
         remove_last_char(lines, ',')
         lines += [
             f') {{',
-            f'    return (*g_vk_linked{fn.name})('] + [
+            f'    return (*g_vk_linked_{fn.name})('] + [
             f'        {p.name},' for p in fn.params
         ]
         remove_last_char(lines, ',')

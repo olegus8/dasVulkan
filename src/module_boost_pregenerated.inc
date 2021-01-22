@@ -11,25 +11,27 @@ VkResult vkCreateDebugUtilsMessengerEXT(
     struct VkInstance_T * instance,
     const VkDebugUtilsMessengerCreateInfoEXT * pCreateInfo,
     const VkAllocationCallbacks * pAllocator,
-    VkDebugUtilsMessengerEXT * pMessenger,
+    VkDebugUtilsMessengerEXT * pMessenger
 ) {
     return (*g_vk_linkedvkCreateDebugUtilsMessengerEXT)(
         instance,
         pCreateInfo,
         pAllocator,
-        pMessenger,
+        pMessenger
+    )
 }
 
 static PFN_vkDestroyDebugUtilsMessengerEXT g_vk_linked_vkDestroyDebugUtilsMessengerEXT = nullptr;
 void vkDestroyDebugUtilsMessengerEXT(
     struct VkInstance_T * instance,
     struct VkDebugUtilsMessengerEXT_T * messenger,
-    const VkAllocationCallbacks * pAllocator,
+    const VkAllocationCallbacks * pAllocator
 ) {
     return (*g_vk_linkedvkDestroyDebugUtilsMessengerEXT)(
         instance,
         messenger,
-        pAllocator,
+        pAllocator
+    )
 }
 
 static void vk_link_instance(VkInstance instance) {
@@ -48,9 +50,9 @@ static void vk_link_instance(VkInstance instance) {
 
 void addVulkanBoostGenerated(Module & module, ModuleLibrary & lib) {
     addExtern<DAS_BIND_FUN(vk_link_instance)>(
-        *this, lib, "vk_link_instance",
+        module, lib, "vk_link_instance",
         SideEffects::worstDefault, "vk_link_instance");
     addExtern<DAS_BIND_FUN(vk_get_linked_instance)>(
-        *this, lib, "vk_get_linked_instance",
+        module, lib, "vk_get_linked_instance",
         SideEffects::worstDefault, "vk_get_linked_instance");
 }
