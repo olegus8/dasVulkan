@@ -25,7 +25,7 @@ struct InstanceEx
 
 
 def finalize(var handle : InstanceEx & explicit)
-    assert(vk_get_linked_instance() == handle.instance.instance)
+    verify(vk_get_linked_instance() == handle.instance.instance)
     vk_unlink_instance()
 
     delete handle.instance
