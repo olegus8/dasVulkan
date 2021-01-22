@@ -154,7 +154,7 @@ class BoostGenerator(LoggingObject):
                   for line in self.__link_vk_function(fn)] + [
             f'}}',
             f'',
-            f'static void vk_unlink_instance(VkInstance instance) {{',
+            f'static void vk_unlink_instance() {{',
             f'    g_vk_linked_instance = VK_NULL_HANDLE;'] + [
             f'    g_vk_linked_{fn.name} = nullptr;'
                   for fn in self.__functions_to_link] + [
