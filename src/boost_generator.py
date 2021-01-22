@@ -146,9 +146,15 @@ class BoostGenerator(LoggingObject):
             if not fn.name.endswith('EXT'):
                 continue
             lines += [
-                f'static PFN_{fn.name} g_linked_{fn.name} = nullptr;',
+                f'static PFN_{fn.name} g_vk_linked_{fn.name} = nullptr;',
             ]
         lines += [
+            f'',
+            f'static VkInstance vk_link_instance(VkInstance instance) {{',
+            f'    g_vk_linked_instance = instance;'] + [
+            f'    g_vk_linked_{fn} = vkGetInstanceProcAddr(instance, "{fn}");'
+                  for fn in self.functions.keys()] + [
+            f'}}',
             f'',
             f'void addVulkanBoostGenerated(Module & module, '
                         f'ModuleLibrary & lib) {{',
