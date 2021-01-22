@@ -103,7 +103,7 @@ class BoostGenerator(LoggingObject):
     def write(self):
         for fname, content in [
             ('../daslib/internal/generated.das', self.__generate_das()),
-            ('../src/module_generated.inc', self.__generate_cpp()),
+            ('../src/module_boost_generated.inc', self.__generate_cpp()),
         ]:
             fpath = full_path(path.join(path.dirname(__file__), fname))
             self._log_info(f'Writing to: {fpath}')
