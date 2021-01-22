@@ -191,7 +191,7 @@ class BoostGenerator(LoggingObject):
         fn = func.name
         return [
             f'',
-            f'g_vk_linked_{fn} = vkGetInstanceProcAddr(instance, "{fn}");'
+            f'g_vk_linked_{fn} = vkGetInstanceProcAddr(instance, "{fn}");',
             f'if ( g_vk_linked_{fn} == nullptr ) {{',
             f'    DAS_ASSERTF(0, "{fn} not found");',
             f'    DAS_FATAL_ERROR',
