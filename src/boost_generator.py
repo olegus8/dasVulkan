@@ -143,7 +143,7 @@ class BoostGenerator(LoggingObject):
             f'',
         ]
         for fn in self.functions.values():
-            if not fn.endswith('EXT'):
+            if not fn.name.endswith('EXT'):
                 continue
             lines += [
                 f'static PFN_{{fn.name}} g_linked_{{fn.name}} = nullptr;',
