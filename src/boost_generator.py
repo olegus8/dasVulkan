@@ -172,10 +172,16 @@ class BoostGenerator(LoggingObject):
             f'',
             f'static PFN_{fn.name} g_vk_linked_{fn.name} = nullptr;',
             f'{fn.return_type} {fn.name}('] + [
-            f'    {p.type} {p.name},' for p in fn.params] + [
+            f'    {p.type} {p.name},' for p in fn.params
+        ]
+        remove_last_char(lines, ',')
+        lines += [
             f') {{',
             f'    return (*g_vk_linked{fn.name})('] + [
-            f'        {p.name},' for p in fn.params] + [
+            f'        {p.name},' for p in fn.params
+        ]
+        remove_last_char(lines, ',')
+        lines += [
             f'}}',
         ]
         return lines
