@@ -21,10 +21,10 @@ def create_window(width : int; height : int; title : string;
 
 
 def create_fullscreen_window(title : string) : Window
-    glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API)
-    glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE)
     var monitor = glfwGetPrimaryMonitor()
     var mode = monitor |> glfwGetVideoMode
+    glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API)
+    glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE)
     glfwWindowHint(GLFW_RED_BITS, mode.redBits)
     glfwWindowHint(GLFW_GREEN_BITS, mode.greenBits)
     glfwWindowHint(GLFW_BLUE_BITS, mode.blueBits)
