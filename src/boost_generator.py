@@ -101,11 +101,14 @@ class BoostGenerator(LoggingObject):
         return self.create_param(c_node.das_name, c_node.type)
 
     def write(self):
-        fpath = full_path(path.join(path.dirname(__file__),
-            '../daslib/internal/generated.das'))
-        self._log_info(f'Writing to: {fpath}')
-        write_to_file(fpath=fpath,
-            content='\n'.join(self.__generate() + ['']))
+        for fname, content in [
+            ('../daslib/internal/generated.das', self.__generate_das()),
+            ('../src/module_generated.inc', self.__generate_cpp()),
+        ]:
+            fpath = full_path(path.join(path.dirname(__file__), fname))
+            self._log_info(f'Writing to: {fpath}')
+            write_to_file(fpath=fpath,
+                content='\n'.join(content + ['']))
 
     @property
     def title(self):
@@ -127,7 +130,21 @@ class BoostGenerator(LoggingObject):
         m = re.match(r'VK_MAKE_VERSION\((\d+), (\d+), (\d+)\)', v)
         return '.'.join(m.groups())
 
-    def __generate(self):
+    def __generate_cpp(self):
+        lines = []
+        lines += [
+            self.title,
+            f'',
+            f'static VkInstance g_vk_linked_instance{};',
+            f'',
+            f'static VkInstance vk_get_linked_instance() {{',
+            f'    return g_vk_linked_instance;',
+            f'}}',
+            f'',
+        ]
+        return lines
+
+    def __generate_das(self):
         return [
             self.title,
             '',
