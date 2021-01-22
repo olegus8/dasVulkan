@@ -595,6 +595,10 @@ class GenHandle(object):
             '',
            f'def vk_value_to_boost(v : {vhtype}) : {bhtype}',
            f'    return [[ {bhtype} {attr}=v ]]',
+           f'',
+           f'def operator == (a, b : {vhtype}) : bool',
+           f'    unsafe',
+           f'        return reinterpret<void?>(a) == reinterpret<void?>(b)',
         ]
         return lines
 

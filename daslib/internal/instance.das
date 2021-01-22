@@ -25,6 +25,9 @@ struct InstanceEx
 
 
 def finalize(var handle : InstanceEx & explicit)
+    assert(vk_get_linked_instance() == handle.instance.instance)
+    vk_unlink_instance()
+
     delete handle.instance
     delete handle._debug_ctx
     memzero(handle)
@@ -78,11 +81,7 @@ def create_instance_ex(
     defer() <| { delete create_info; }
 
     instance.instance <- create_instance(create_info)
-    unsafe
-        assert(reinterpret<void?>(vk_get_linked_instance()) ==
-            reinterpret<void?>([[VkInstance]]))
-    instance.instance.instance |> vk_link_extensions
-    unsafe
-        assert(reinterpret<void?>(vk_get_linked_instance()) ==
-            reinterpret<void?>(instance.instance.instance))
+    assert(vk_get_linked_instance() == [[VkInstance]])
+    instance.instance.instance |> vk_link_instance
+    assert(vk_get_linked_instance() == instance.instance.instance)
     return <- instance
