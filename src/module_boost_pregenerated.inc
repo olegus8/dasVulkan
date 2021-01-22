@@ -54,7 +54,7 @@ static void vk_link_instance(VkInstance instance) {
             instance, "vkDestroyDebugUtilsMessengerEXT");
 }
 
-static void vk_unlink_instance(VkInstance instance) {
+static void vk_unlink_instance() {
     g_vk_linked_instance = VK_NULL_HANDLE;
     g_vk_linked_vkCreateDebugUtilsMessengerEXT = nullptr;
     g_vk_linked_vkDestroyDebugUtilsMessengerEXT = nullptr;
