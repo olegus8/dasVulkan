@@ -33,15 +33,6 @@ def create_swapchain_ex(
 
     for image, link in images, swaplinks:
         link.image <- image
-        link.view <- device |> create_swapchain_image_view(
-            link.image, surf_fmt)
-        link.framebuffer <- create_single_view_framebuffer([
-            device = device,
-            render_pass = render_pass,
-            view = link.view,
-            width = extent.width,
-            height = extent.height
-        ])
 
     return <- [[SwapchainEx
         swapchain <- swapchain,
