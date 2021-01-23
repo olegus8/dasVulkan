@@ -57,13 +57,8 @@ def create_swapchain_ex(
 
     for image, link in images, swaplinks:
         link.image <- image
-        link.view <- device |> create_image_view([[ ImageViewCreateInfo
-            image = link.image,
-            format = surf_fmt.format,
-            view_type = VkImageViewType VK_IMAGE_VIEW_TYPE_2D,
-            subresource_range = IMAGE_SUBRESOURCE_RANGE_SINGLE_COLOR,
-            components = COMPONENT_MAPPING_IDENTITY
-        ]])
+        link.view <- device |> create_swapchain_image_view(
+            link.image, surf_fmt)
         link.framebuffer <- create_single_view_framebuffer([
             device = device,
             render_pass = render_pass,
@@ -76,6 +71,20 @@ def create_swapchain_ex(
         swapchain <- swapchain,
         swaplinks <- swaplinks
     ]]
+
+
+def create_swapchain_image_view(
+    device      : Device;
+    image       : Image;
+    surf_fmt    : SurfaceFormatKHR
+) : ImageView
+    return <- device |> create_image_view([[ ImageViewCreateInfo
+        image = image,
+        format = surf_fmt.format,
+        view_type = VkImageViewType VK_IMAGE_VIEW_TYPE_2D,
+        subresource_range = IMAGE_SUBRESOURCE_RANGE_SINGLE_COLOR,
+        components = COMPONENT_MAPPING_IDENTITY
+    ]])
 
 
 def create_multibuffered_swapchain(
