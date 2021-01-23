@@ -13,10 +13,27 @@ require window
 
 
 struct SwapchainEx
-    swapchain       : SwapchainKHR
-    images          : array<Image>
-    views           : array<ImageView>
-    framebuffers    : array<Framebuffer>
+    swapchain : SwapchainKHR
+    swaplinks : array<Swaplink>
+
+
+struct Swaplink
+    image       : Image
+    view        : ImageView
+    framebuffer : Framebuffer
+
+
+def finalize(var sc : SwapchainEx)
+    delete sc.swaplinks
+    delete sc.swapchain
+    memzero(sc)
+
+
+def finalize(var s : Swaplink)
+    delete s.framebuffer
+    delete s.view
+    delete s.image
+    memzero(s)
 
 
 def create_swapchain_ex(
@@ -32,42 +49,33 @@ def create_swapchain_ex(
     var swapchain <- device |> create_multibuffered_swapchain(
         phys_dev, surface, window, surf_fmt, present_mode)
 
-    var images <- device |> get_swapchain_images_khr(swapchain)
+    let extent <- phys_dev |> get_swap_extent(surface, window)
 
-    var views <- [{ for image in images;
-        device |> create_image_view([[ ImageViewCreateInfo
-            image = image,
+    var images <- device |> get_swapchain_images_khr(swapchain)
+    var swaplinks : array<Swaplink>
+    swaplinks.resize(images |> length)
+
+    for image, link in images, swaplinks:
+        link.image <- image
+        link.view <- device |> create_image_view([[ ImageViewCreateInfo
+            image = link.image,
             format = surf_fmt.format,
             view_type = VkImageViewType VK_IMAGE_VIEW_TYPE_2D,
             subresource_range = IMAGE_SUBRESOURCE_RANGE_SINGLE_COLOR,
             components = COMPONENT_MAPPING_IDENTITY
-        ]])}]
-
-    let extent <- phys_dev |> get_swap_extent(surface, window)
-
-    var framebuffers <- [{ for view in views;
-        create_single_view_framebuffer([
+        ]])
+        link.framebuffer <- create_single_view_framebuffer([
             device = device,
             render_pass = render_pass,
-            view = view,
+            view = link.view,
             width = extent.width,
             height = extent.height
-        ])}]
+        ])
 
     return <- [[SwapchainEx
         swapchain <- swapchain,
-        images <- images,
-        views <- views,
-        framebuffers <- framebuffers
+        swaplinks <- swaplinks
     ]]
-
-
-def finalize(var sc : SwapchainEx)
-    delete sc.framebuffers
-    delete sc.views
-    delete sc.images
-    delete sc.swapchain
-    memzero(sc)
 
 
 def create_multibuffered_swapchain(
