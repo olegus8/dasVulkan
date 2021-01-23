@@ -18,22 +18,12 @@ struct SwapchainEx
 
 
 struct Swaplink
-    image       : Image
-    view        : ImageView
-    framebuffer : Framebuffer
 
 
 def finalize(var sc : SwapchainEx)
     delete sc.swaplinks
     delete sc.swapchain
     memzero(sc)
-
-
-def finalize(var s : Swaplink)
-    delete s.framebuffer
-    delete s.view
-    delete s.image
-    memzero(s)
 
 
 def create_swapchain_ex(
