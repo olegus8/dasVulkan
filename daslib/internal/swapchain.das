@@ -12,34 +12,6 @@ require framebuffer
 require window
 
 
-def create_swapchain_ex(
-    device          : Device;
-    phys_dev        : PhysicalDevice;
-    surface         : SurfaceKHR;
-    window          : Window;
-    surf_fmt        : SurfaceFormatKHR;
-    present_mode    : VkPresentModeKHR;
-    render_pass     : RenderPass
-) : SwapchainEx
-
-    var swapchain <- device |> create_multibuffered_swapchain(
-        phys_dev, surface, window, surf_fmt, present_mode)
-
-    let extent <- phys_dev |> get_swap_extent(surface, window)
-
-    var images <- device |> get_swapchain_images_khr(swapchain)
-    var swaplinks : array<Swaplink>
-    swaplinks.resize(images |> length)
-
-    for image, link in images, swaplinks:
-        link.image <- image
-
-    return <- [[SwapchainEx
-        swapchain <- swapchain,
-        swaplinks <- swaplinks
-    ]]
-
-
 def create_swapchain_image_view(
     device      : Device;
     image       : Image;
