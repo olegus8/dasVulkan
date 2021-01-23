@@ -12,20 +12,6 @@ require framebuffer
 require window
 
 
-struct SwapchainEx
-    swapchain : SwapchainKHR
-    swaplinks : array<Swaplink>
-
-
-struct Swaplink
-
-
-def finalize(var sc : SwapchainEx)
-    delete sc.swaplinks
-    delete sc.swapchain
-    memzero(sc)
-
-
 def create_swapchain_ex(
     device          : Device;
     phys_dev        : PhysicalDevice;
