@@ -767,6 +767,22 @@ def get_physical_device_features_2(
     )
     return <- vk_value_to_boost(vk_features)
 
+def get_physical_device_format_properties(
+    physical_device : PhysicalDevice = [[ PhysicalDevice ]];
+    format : VkFormat = [[ VkFormat ]]
+) : FormatProperties
+
+    var format_properties : FormatProperties
+    var vk_format_properties <- format_properties |> vk_view_create_unsafe()
+    defer() <| { format_properties |> vk_view_destroy(); }
+
+    vkGetPhysicalDeviceFormatProperties(
+        boost_value_to_vk(physical_device),
+        boost_value_to_vk(format),
+        safe_addr(vk_format_properties)
+    )
+    return <- vk_value_to_boost(vk_format_properties)
+
 def get_physical_device_properties(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]]
 ) : PhysicalDeviceProperties
@@ -1432,6 +1448,38 @@ def vk_value_to_boost(vk_struct : VkExtent3D) : Extent3D
         width = vk_value_to_boost(vk_struct.width),
         height = vk_value_to_boost(vk_struct.height),
         depth = vk_value_to_boost(vk_struct.depth)
+    ]]
+
+//
+// FormatProperties
+//
+
+struct FormatProperties
+    linear_tiling_features : uint
+    optimal_tiling_features : uint
+    buffer_features : uint
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : FormatProperties &
+) : VkFormatProperties
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    return <- [[ VkFormatProperties
+        linearTilingFeatures = boost_value_to_vk(boost_struct.linear_tiling_features),
+        optimalTilingFeatures = boost_value_to_vk(boost_struct.optimal_tiling_features),
+        bufferFeatures = boost_value_to_vk(boost_struct.buffer_features)
+    ]]
+
+def vk_view_destroy(var boost_struct : FormatProperties &)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+def vk_value_to_boost(vk_struct : VkFormatProperties) : FormatProperties
+    return <- [[FormatProperties
+        linear_tiling_features = vk_value_to_boost(vk_struct.linearTilingFeatures),
+        optimal_tiling_features = vk_value_to_boost(vk_struct.optimalTilingFeatures),
+        buffer_features = vk_value_to_boost(vk_struct.bufferFeatures)
     ]]
 
 //

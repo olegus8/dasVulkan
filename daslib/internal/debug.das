@@ -23,6 +23,9 @@ let
         uint(VkDebugUtilsMessageTypeFlagBitsEXT
             VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT))
 
+var
+    _all_handled_debug_msg_severities : uint = 0u
+
 typedef
     debug_msg_callback_fn = function<(
         msg_severity : VkDebugUtilsMessageSeverityFlagBitsEXT;
@@ -75,11 +78,12 @@ def create_debug_msg_context(
     ): uint>
 ) : DebugMsgContext
 
-    var vk_callback <- @ <| [[:=callback]] (
+    var vk_callback <- @ <| [[:=callback, &_all_handled_debug_msg_severities]](
         msg_severity : VkDebugUtilsMessageSeverityFlagBitsEXT;
         msg_type : uint;
         data : VkDebugUtilsMessengerCallbackDataEXT
     ) : uint
+        _all_handled_debug_msg_severities |= uint(msg_severity)
         var boost_data <- vk_value_to_boost(data)
         let result = callback |> invoke(msg_severity, msg_type, boost_data)
         delete boost_data
