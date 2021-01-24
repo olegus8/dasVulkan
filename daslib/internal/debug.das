@@ -61,6 +61,14 @@ def finalize(var handle : DebugUtilsMessenger & explicit)
     memzero(handle)
 
 
+def debug_msg_handled_any_warnings_or_errors()
+    return 0u != (_all_handled_debug_msg_severities & (
+        uint(VkDebugUtilsMessageSeverityFlagBitsEXT
+            VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT) |
+        uint(VkDebugUtilsMessageSeverityFlagBitsEXT
+            VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT)))
+
+
 def debug_utils_messenger_default_callback(
     msg_severity : VkDebugUtilsMessageSeverityFlagBitsEXT;
     msg_type : uint;
