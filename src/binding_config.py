@@ -170,6 +170,7 @@ def add_boost_content(g):
         'VkExtensionProperties',
         'VkExtent2D',
         'VkExtent3D',
+        'VkFormatProperties',
         'VkImageSubresourceRange',
         'VkLayerProperties',
         'VkMemoryHeap',
