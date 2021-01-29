@@ -37,18 +37,18 @@ IF(NOT DAS_VULKAN_INCLUDED)
         MESSAGE(STATUS "Prerequisites not found. Not building dasVulkan.")
     ELSE()
         SET(DAS_VULKAN_MODULE_SRC
-            ${DAS_VULKAN_DIR}/include/dasVulkan/headers_to_bind.h
-            ${DAS_VULKAN_DIR}/src/custom.cpp
-            ${DAS_VULKAN_DIR}/include/dasVulkan/module.h
-            ${DAS_VULKAN_DIR}/src/module.cpp
-            ${DAS_VULKAN_DIR}/src/module_generated.cpp.inc
-            ${DAS_VULKAN_DIR}/src/module_pregenerated.cpp.inc
-            ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated.h.inc
-            ${DAS_VULKAN_DIR}/include/dasVulkan/module_pregenerated.h.inc
-            ${DAS_VULKAN_DIR}/src/module_boost_generated.inc
-            ${DAS_VULKAN_DIR}/src/module_boost_pregenerated.inc
             ${DAS_VULKAN_DIR}/daslib/internal/generated.das
             ${DAS_VULKAN_DIR}/daslib/internal/pregenerated.das
+            ${DAS_VULKAN_DIR}/include/dasVulkan/headers_to_bind.h
+            ${DAS_VULKAN_DIR}/include/dasVulkan/module.h
+            ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated.h.inc
+            ${DAS_VULKAN_DIR}/include/dasVulkan/module_pregenerated.h.inc
+            ${DAS_VULKAN_DIR}/src/custom.cpp
+            ${DAS_VULKAN_DIR}/src/module.cpp
+            ${DAS_VULKAN_DIR}/src/module_boost_generated.inc
+            ${DAS_VULKAN_DIR}/src/module_boost_pregenerated.inc
+            ${DAS_VULKAN_DIR}/src/module_generated.cpp.inc
+            ${DAS_VULKAN_DIR}/src/module_pregenerated.cpp.inc
         )
 
         ADD_MODULE_LIB(libDasModuleVulkan)
