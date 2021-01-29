@@ -37,9 +37,9 @@ IF(NOT DAS_VULKAN_INCLUDED)
         MESSAGE(STATUS "Prerequisites not found. Not building dasVulkan.")
     ELSE()
         SET(DAS_VULKAN_MODULE_SRC
-            ${DAS_VULKAN_DIR}/src/headers_to_bind.h
+            ${DAS_VULKAN_DIR}/include/dasVulkan/headers_to_bind.h
             ${DAS_VULKAN_DIR}/src/custom.cpp
-            ${DAS_VULKAN_DIR}/src/module.h
+            ${DAS_VULKAN_DIR}/include/dasVulkan/module.h
             ${DAS_VULKAN_DIR}/src/module.cpp
             ${DAS_VULKAN_DIR}/src/module_generated.cpp.inc
             ${DAS_VULKAN_DIR}/src/module_pregenerated.cpp.inc
@@ -71,7 +71,7 @@ IF(NOT DAS_VULKAN_INCLUDED)
         GET_TARGET_PROPERTY(DAS_VULKAN_INCLUDE_DIRS libDasModuleVulkan INCLUDE_DIRECTORIES)
 
         SET(DAS_VULKAN_HEADERS_TO_BIND
-            ${DAS_VULKAN_DIR}/src/headers_to_bind.h
+            ${DAS_VULKAN_DIR}/include/dasVulkan/headers_to_bind.h
         )
 
         SET(DAS_VULKAN_BINDER_DEPS
@@ -85,7 +85,7 @@ IF(NOT DAS_VULKAN_INCLUDED)
 
         IF(DAS_BINDER_INCLUDED)
             DAS_BINDER(
-                ${DAS_VULKAN_DIR}/src/headers_to_bind.h
+                ${DAS_VULKAN_DIR}/include/dasVulkan/headers_to_bind.h
                 ${DAS_VULKAN_DIR}/src/module_generated.cpp.inc
                 ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated.h.inc
                 ${DAS_VULKAN_DIR}/src/binding_config.py
