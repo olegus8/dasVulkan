@@ -3,6 +3,8 @@
 using namespace das;
 using namespace std;
 
+IMPLEMENT_EXTERNAL_TYPE_FACTORY(DebugMsgContext_DasHandle, DebugMsgContext_DasHandle)
+
 DebugMsgContext * create_debug_msg_context(Lambda callback, Context * ctx) {
     auto debug_ctx = new DebugMsgContext();
     debug_ctx->ctx = ctx;

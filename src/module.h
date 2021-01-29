@@ -24,4 +24,7 @@ struct DebugMsgContext {
     std::thread::id    thread_id;
 };
 
+typedef DebugMsgContext * DebugMsgContext_DasHandle;
+MAKE_EXTERNAL_TYPE_FACTORY(DebugMsgContext_DasHandle, DebugMsgContext_DasHandle)
+
 #include "module_generated.h.inc"
