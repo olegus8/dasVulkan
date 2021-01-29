@@ -64,6 +64,7 @@ IF(NOT DAS_VULKAN_INCLUDED)
         TARGET_INCLUDE_DIRECTORIES(libDasModuleVulkan PUBLIC
             ${Vulkan_INCLUDE_DIR}
             ${glfw_INCLUDE_DIR}
+            ${DAS_VULKAN_DIR}/include
         )
         SETUP_CPP11(libDasModuleVulkan)
         
