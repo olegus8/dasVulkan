@@ -6,7 +6,7 @@
 
 template <typename OT>
 struct VkHandleAnnotation : public das::ManagedValueAnnotation<OT> {
-    VkHandleAnnotation(const string & n, const string & cpn = string())
+    VkHandleAnnotation(const std::string & n, const std::string & cpn = std::string())
     : das::ManagedValueAnnotation<OT>(n,cpn) {
     }
     virtual bool canClone() const override {
