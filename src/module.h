@@ -27,4 +27,6 @@ struct DebugMsgContext {
 typedef DebugMsgContext * DebugMsgContext_DasHandle;
 MAKE_EXTERNAL_TYPE_FACTORY(DebugMsgContext_DasHandle, DebugMsgContext_DasHandle)
 
+MAKE_EXTERNAL_TYPE_FACTORY(PFN_vkDebugUtilsMessengerCallbackEXT, PFN_vkDebugUtilsMessengerCallbackEXT);
+
 #include "module_generated.h.inc"
