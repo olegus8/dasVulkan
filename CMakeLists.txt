@@ -43,8 +43,8 @@ IF(NOT DAS_VULKAN_INCLUDED)
             ${DAS_VULKAN_DIR}/src/module.cpp
             ${DAS_VULKAN_DIR}/src/module_generated.cpp.inc
             ${DAS_VULKAN_DIR}/src/module_pregenerated.cpp.inc
-            ${DAS_VULKAN_DIR}/src/module_generated.h.inc
-            ${DAS_VULKAN_DIR}/src/module_pregenerated.h.inc
+            ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated.h.inc
+            ${DAS_VULKAN_DIR}/include/dasVulkan/module_pregenerated.h.inc
             ${DAS_VULKAN_DIR}/src/module_boost_generated.inc
             ${DAS_VULKAN_DIR}/src/module_boost_pregenerated.inc
             ${DAS_VULKAN_DIR}/daslib/internal/generated.das
@@ -86,7 +86,7 @@ IF(NOT DAS_VULKAN_INCLUDED)
             DAS_BINDER(
                 ${DAS_VULKAN_DIR}/src/headers_to_bind.h
                 ${DAS_VULKAN_DIR}/src/module_generated.cpp.inc
-                ${DAS_VULKAN_DIR}/src/module_generated.h.inc
+                ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated.h.inc
                 ${DAS_VULKAN_DIR}/src/binding_config.py
                 "${DAS_VULKAN_INCLUDE_DIRS}"
                 "${DAS_VULKAN_BINDER_DEPS}"
@@ -99,10 +99,10 @@ IF(NOT DAS_VULKAN_INCLUDED)
                 COMMAND ${CMAKE_COMMAND} -E copy_if_different ${DAS_VULKAN_DIR}/src/module_generated.cpp.inc ${DAS_VULKAN_DIR}/src/module_pregenerated.cpp.inc
             )
             ADD_CUSTOM_COMMAND(
-                DEPENDS ${DAS_VULKAN_DIR}/src/module_generated.h.inc
-                OUTPUT ${DAS_VULKAN_DIR}/src/module_pregenerated.h.inc
+                DEPENDS ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated.h.inc
+                OUTPUT ${DAS_VULKAN_DIR}/include/dasVulkan/module_pregenerated.h.inc
                 VERBATIM
-                COMMAND ${CMAKE_COMMAND} -E copy_if_different ${DAS_VULKAN_DIR}/src/module_generated.h.inc ${DAS_VULKAN_DIR}/src/module_pregenerated.h.inc
+                COMMAND ${CMAKE_COMMAND} -E copy_if_different ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated.h.inc ${DAS_VULKAN_DIR}/include/dasVulkan/module_pregenerated.h.inc
             )
             ADD_CUSTOM_COMMAND(
                 DEPENDS ${DAS_VULKAN_DIR}/src/module_boost_generated.inc
@@ -125,10 +125,10 @@ IF(NOT DAS_VULKAN_INCLUDED)
                 COMMAND ${CMAKE_COMMAND} -E copy_if_different ${DAS_VULKAN_DIR}/src/module_pregenerated.cpp.inc ${DAS_VULKAN_DIR}/src/module_generated.cpp.inc
             )
             ADD_CUSTOM_COMMAND(
-                DEPENDS ${DAS_VULKAN_DIR}/src/module_pregenerated.h.inc
-                OUTPUT ${DAS_VULKAN_DIR}/src/module_generated.h.inc
+                DEPENDS ${DAS_VULKAN_DIR}/include/dasVulkan/module_pregenerated.h.inc
+                OUTPUT ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated.h.inc
                 VERBATIM
-                COMMAND ${CMAKE_COMMAND} -E copy_if_different ${DAS_VULKAN_DIR}/src/module_pregenerated.h.inc ${DAS_VULKAN_DIR}/src/module_generated.h.inc
+                COMMAND ${CMAKE_COMMAND} -E copy_if_different ${DAS_VULKAN_DIR}/include/dasVulkan/module_pregenerated.h.inc ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated.h.inc
             )
             ADD_CUSTOM_COMMAND(
                 DEPENDS ${DAS_VULKAN_DIR}/src/module_boost_pregenerated.inc
