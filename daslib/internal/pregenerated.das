@@ -593,6 +593,36 @@ def enumerate_device_extension_properties(
     assert(result_ == VkResult VK_SUCCESS)
     return <- [{for x in vk_properties; vk_value_to_boost(x)}]
 
+def enumerate_instance_layer_properties(
+    var result : VkResult? = [[VkResult?]]
+) : array<LayerProperties>
+
+    var vk_pPropertyCount : uint
+    var properties : array<LayerProperties>
+    defer() <| { delete properties; }
+    var result_ = VkResult VK_SUCCESS
+
+    result ?? result_ = vkEnumerateInstanceLayerProperties(
+        safe_addr(vk_pPropertyCount),
+        [[ VkLayerProperties ? ]]
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+    if result_ != VkResult VK_SUCCESS
+        return <- [[ array<LayerProperties> ]]
+    properties |> resize(int(vk_pPropertyCount))
+    var vk_properties <- [{ for item in properties ;
+        item |> vk_view_create_unsafe() }]
+    defer() <|
+        for item in properties
+            item |> vk_view_destroy()
+        delete vk_properties
+    result ?? result_ = vkEnumerateInstanceLayerProperties(
+        safe_addr(vk_pPropertyCount),
+        array_addr_unsafe(vk_properties)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+    return <- [{for x in vk_properties; vk_value_to_boost(x)}]
+
 def enumerate_physical_devices(
     instance : Instance = [[ Instance ]];
     var result : VkResult? = [[VkResult?]]
@@ -736,6 +766,22 @@ def get_physical_device_features_2(
         safe_addr(vk_features)
     )
     return <- vk_value_to_boost(vk_features)
+
+def get_physical_device_format_properties(
+    physical_device : PhysicalDevice = [[ PhysicalDevice ]];
+    format : VkFormat = [[ VkFormat ]]
+) : FormatProperties
+
+    var format_properties : FormatProperties
+    var vk_format_properties <- format_properties |> vk_view_create_unsafe()
+    defer() <| { format_properties |> vk_view_destroy(); }
+
+    vkGetPhysicalDeviceFormatProperties(
+        boost_value_to_vk(physical_device),
+        boost_value_to_vk(format),
+        safe_addr(vk_format_properties)
+    )
+    return <- vk_value_to_boost(vk_format_properties)
 
 def get_physical_device_properties(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]]
@@ -1250,6 +1296,69 @@ def vk_value_to_boost(vk_struct : VkComponentMapping) : ComponentMapping
     ]]
 
 //
+// DebugUtilsLabelEXT
+//
+
+struct DebugUtilsLabelEXT
+    label_name : string
+    color : float [4]
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : DebugUtilsLabelEXT &
+) : VkDebugUtilsLabelEXT
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    return <- [[ VkDebugUtilsLabelEXT
+        sType = VkStructureType VK_STRUCTURE_TYPE_DEBUG_UTILS_LABEL_EXT,
+        pLabelName = boost_value_to_vk(boost_struct.label_name),
+        color = boost_value_to_vk(boost_struct.color)
+    ]]
+
+def vk_view_destroy(var boost_struct : DebugUtilsLabelEXT &)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+def vk_value_to_boost(vk_struct : VkDebugUtilsLabelEXT) : DebugUtilsLabelEXT
+    return <- [[DebugUtilsLabelEXT
+        label_name = vk_value_to_boost(vk_struct.pLabelName),
+        color = vk_value_to_boost(vk_struct.color)
+    ]]
+
+//
+// DebugUtilsObjectNameInfoEXT
+//
+
+struct DebugUtilsObjectNameInfoEXT
+    object_type : VkObjectType
+    object_handle : uint64
+    object_name : string
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : DebugUtilsObjectNameInfoEXT &
+) : VkDebugUtilsObjectNameInfoEXT
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    return <- [[ VkDebugUtilsObjectNameInfoEXT
+        sType = VkStructureType VK_STRUCTURE_TYPE_DEBUG_UTILS_OBJECT_NAME_INFO_EXT,
+        objectType = boost_value_to_vk(boost_struct.object_type),
+        objectHandle = boost_value_to_vk(boost_struct.object_handle),
+        pObjectName = boost_value_to_vk(boost_struct.object_name)
+    ]]
+
+def vk_view_destroy(var boost_struct : DebugUtilsObjectNameInfoEXT &)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+def vk_value_to_boost(vk_struct : VkDebugUtilsObjectNameInfoEXT) : DebugUtilsObjectNameInfoEXT
+    return <- [[DebugUtilsObjectNameInfoEXT
+        object_type = vk_value_to_boost(vk_struct.objectType),
+        object_handle = vk_value_to_boost(vk_struct.objectHandle),
+        object_name = vk_value_to_boost(vk_struct.pObjectName)
+    ]]
+
+//
 // ExtensionProperties
 //
 
@@ -1342,6 +1451,38 @@ def vk_value_to_boost(vk_struct : VkExtent3D) : Extent3D
     ]]
 
 //
+// FormatProperties
+//
+
+struct FormatProperties
+    linear_tiling_features : uint
+    optimal_tiling_features : uint
+    buffer_features : uint
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : FormatProperties &
+) : VkFormatProperties
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    return <- [[ VkFormatProperties
+        linearTilingFeatures = boost_value_to_vk(boost_struct.linear_tiling_features),
+        optimalTilingFeatures = boost_value_to_vk(boost_struct.optimal_tiling_features),
+        bufferFeatures = boost_value_to_vk(boost_struct.buffer_features)
+    ]]
+
+def vk_view_destroy(var boost_struct : FormatProperties &)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+def vk_value_to_boost(vk_struct : VkFormatProperties) : FormatProperties
+    return <- [[FormatProperties
+        linear_tiling_features = vk_value_to_boost(vk_struct.linearTilingFeatures),
+        optimal_tiling_features = vk_value_to_boost(vk_struct.optimalTilingFeatures),
+        buffer_features = vk_value_to_boost(vk_struct.bufferFeatures)
+    ]]
+
+//
 // ImageSubresourceRange
 //
 
@@ -1377,6 +1518,45 @@ def vk_value_to_boost(vk_struct : VkImageSubresourceRange) : ImageSubresourceRan
         level_count = vk_value_to_boost(vk_struct.levelCount),
         base_array_layer = vk_value_to_boost(vk_struct.baseArrayLayer),
         layer_count = vk_value_to_boost(vk_struct.layerCount)
+    ]]
+
+//
+// LayerProperties
+//
+
+struct LayerProperties
+    layer_name : string
+    spec_version : uint
+    implementation_version : uint
+    description : string
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : LayerProperties &
+) : VkLayerProperties
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    var vk_layer_name : int8 [256]
+    boost_struct.layer_name |> copy_to_array <| vk_layer_name
+    var vk_description : int8 [256]
+    boost_struct.description |> copy_to_array <| vk_description
+    return <- [[ VkLayerProperties
+        layerName := vk_layer_name,
+        specVersion = boost_value_to_vk(boost_struct.spec_version),
+        implementationVersion = boost_value_to_vk(boost_struct.implementation_version),
+        description := vk_description
+    ]]
+
+def vk_view_destroy(var boost_struct : LayerProperties &)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+def vk_value_to_boost(vk_struct : VkLayerProperties) : LayerProperties
+    return <- [[LayerProperties
+        layer_name = vk_value_to_boost(vk_struct.layerName),
+        spec_version = vk_value_to_boost(vk_struct.specVersion),
+        implementation_version = vk_value_to_boost(vk_struct.implementationVersion),
+        description = vk_value_to_boost(vk_struct.description)
     ]]
 
 //
@@ -3507,6 +3687,36 @@ def vk_view_destroy(var boost_struct : VertexInputBindingDescription &)
     boost_struct._vk_view__active = false
 
 //
+// DebugUtilsMessengerCreateInfoEXT
+//
+
+struct DebugUtilsMessengerCreateInfoEXT
+    flags : uint
+    message_severity : uint
+    message_type : uint
+    pfn_user_callback : PFN_vkDebugUtilsMessengerCallbackEXT
+    p_user_data : void ?
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : DebugUtilsMessengerCreateInfoEXT &
+) : VkDebugUtilsMessengerCreateInfoEXT
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    return <- [[ VkDebugUtilsMessengerCreateInfoEXT
+        sType = VkStructureType VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT,
+        flags = boost_value_to_vk(boost_struct.flags),
+        messageSeverity = boost_value_to_vk(boost_struct.message_severity),
+        messageType = boost_value_to_vk(boost_struct.message_type),
+        pfnUserCallback = boost_value_to_vk(boost_struct.pfn_user_callback),
+        pUserData = boost_struct.p_user_data
+    ]]
+
+def vk_view_destroy(var boost_struct : DebugUtilsMessengerCreateInfoEXT &)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+//
 // BufferCreateInfo
 //
 
@@ -3575,6 +3785,96 @@ def vk_view_destroy(var boost_struct : ComputePipelineCreateInfo &)
     unsafe
         delete boost_struct._vk_view_p_stage
     boost_struct._vk_view__active = false
+
+//
+// DebugUtilsMessengerCallbackDataEXT
+//
+
+struct DebugUtilsMessengerCallbackDataEXT
+    flags : uint
+    message_id_name : string
+    message_id_number : int
+    message : string
+    queue_labels : array<DebugUtilsLabelEXT>
+    cmd_buf_labels : array<DebugUtilsLabelEXT>
+    objects : array<DebugUtilsObjectNameInfoEXT>
+    _vk_view_queue_labels : array<VkDebugUtilsLabelEXT>
+    _vk_view_cmd_buf_labels : array<VkDebugUtilsLabelEXT>
+    _vk_view_objects : array<VkDebugUtilsObjectNameInfoEXT>
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : DebugUtilsMessengerCallbackDataEXT &
+) : VkDebugUtilsMessengerCallbackDataEXT
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    let vk_queue_label_count = uint(boost_struct.queue_labels |> length())
+    boost_struct._vk_view_queue_labels <- [{
+        for item in boost_struct.queue_labels ;
+        item |> vk_view_create_unsafe()}]
+    let vk_cmd_buf_label_count = uint(boost_struct.cmd_buf_labels |> length())
+    boost_struct._vk_view_cmd_buf_labels <- [{
+        for item in boost_struct.cmd_buf_labels ;
+        item |> vk_view_create_unsafe()}]
+    let vk_object_count = uint(boost_struct.objects |> length())
+    boost_struct._vk_view_objects <- [{
+        for item in boost_struct.objects ;
+        item |> vk_view_create_unsafe()}]
+    return <- [[ VkDebugUtilsMessengerCallbackDataEXT
+        sType = VkStructureType VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CALLBACK_DATA_EXT,
+        flags = boost_value_to_vk(boost_struct.flags),
+        pMessageIdName = boost_value_to_vk(boost_struct.message_id_name),
+        messageIdNumber = boost_value_to_vk(boost_struct.message_id_number),
+        pMessage = boost_value_to_vk(boost_struct.message),
+        queueLabelCount = vk_queue_label_count,
+        pQueueLabels = array_addr_unsafe(boost_struct._vk_view_queue_labels),
+        cmdBufLabelCount = vk_cmd_buf_label_count,
+        pCmdBufLabels = array_addr_unsafe(boost_struct._vk_view_cmd_buf_labels),
+        objectCount = vk_object_count,
+        pObjects = array_addr_unsafe(boost_struct._vk_view_objects)
+    ]]
+
+def vk_view_destroy(var boost_struct : DebugUtilsMessengerCallbackDataEXT &)
+    assert(boost_struct._vk_view__active)
+    for item in boost_struct.queue_labels
+        item |> vk_view_destroy()
+    delete boost_struct._vk_view_queue_labels
+    for item in boost_struct.cmd_buf_labels
+        item |> vk_view_destroy()
+    delete boost_struct._vk_view_cmd_buf_labels
+    for item in boost_struct.objects
+        item |> vk_view_destroy()
+    delete boost_struct._vk_view_objects
+    boost_struct._vk_view__active = false
+
+def vk_value_to_boost(vk_struct : VkDebugUtilsMessengerCallbackDataEXT) : DebugUtilsMessengerCallbackDataEXT
+    var b_queue_labels : array<DebugUtilsLabelEXT>
+    if vk_struct.pQueueLabels != null
+        b_queue_labels |> resize(int(vk_struct.queueLabelCount))
+        for b, i in b_queue_labels, range(INT_MAX)
+            unsafe
+                b <- vk_value_to_boost(*(vk_struct.pQueueLabels+i))
+    var b_cmd_buf_labels : array<DebugUtilsLabelEXT>
+    if vk_struct.pCmdBufLabels != null
+        b_cmd_buf_labels |> resize(int(vk_struct.cmdBufLabelCount))
+        for b, i in b_cmd_buf_labels, range(INT_MAX)
+            unsafe
+                b <- vk_value_to_boost(*(vk_struct.pCmdBufLabels+i))
+    var b_objects : array<DebugUtilsObjectNameInfoEXT>
+    if vk_struct.pObjects != null
+        b_objects |> resize(int(vk_struct.objectCount))
+        for b, i in b_objects, range(INT_MAX)
+            unsafe
+                b <- vk_value_to_boost(*(vk_struct.pObjects+i))
+    return <- [[DebugUtilsMessengerCallbackDataEXT
+        flags = vk_value_to_boost(vk_struct.flags),
+        message_id_name = vk_value_to_boost(vk_struct.pMessageIdName),
+        message_id_number = vk_value_to_boost(vk_struct.messageIdNumber),
+        message = vk_value_to_boost(vk_struct.pMessage),
+        queue_labels <- b_queue_labels,
+        cmd_buf_labels <- b_cmd_buf_labels,
+        objects <- b_objects
+    ]]
 
 //
 // DescriptorPoolCreateInfo
@@ -4016,10 +4316,12 @@ def vk_view_destroy(var boost_struct : ImageCreateInfo &)
 //
 
 struct InstanceCreateInfo
+    next : DebugUtilsMessengerCreateInfoEXT
     flags : uint
     p_application_info : ApplicationInfo ?
     enabled_layer_names : array<string>
     enabled_extension_names : array<string>
+    _vk_view_p_next : VkDebugUtilsMessengerCreateInfoEXT ?
     _vk_view_p_application_info : VkApplicationInfo ?
     _vk_view__active : bool
 
@@ -4028,6 +4330,9 @@ def vk_view_create_unsafe(var boost_struct : InstanceCreateInfo &
 
     assert(!boost_struct._vk_view__active)
     boost_struct._vk_view__active = true
+    boost_struct._vk_view_p_next = new VkDebugUtilsMessengerCreateInfoEXT
+    *(boost_struct._vk_view_p_next) <- (
+        boost_struct.next |> vk_view_create_unsafe())
     if boost_struct.p_application_info != null
         boost_struct._vk_view_p_application_info = new VkApplicationInfo
         *(boost_struct._vk_view_p_application_info) <- (
@@ -4038,6 +4343,7 @@ def vk_view_create_unsafe(var boost_struct : InstanceCreateInfo &
     let vk_p_enabled_extension_names = array_addr_unsafe(boost_struct.enabled_extension_names)
     return <- [[ VkInstanceCreateInfo
         sType = VkStructureType VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
+        pNext = boost_struct._vk_view_p_next,
         flags = boost_value_to_vk(boost_struct.flags),
         pApplicationInfo = boost_struct._vk_view_p_application_info,
         enabledLayerCount = vk_enabled_layer_count,
@@ -4048,6 +4354,9 @@ def vk_view_create_unsafe(var boost_struct : InstanceCreateInfo &
 
 def vk_view_destroy(var boost_struct : InstanceCreateInfo &)
     assert(boost_struct._vk_view__active)
+    boost_struct.next |> vk_view_destroy()
+    unsafe
+        delete boost_struct._vk_view_p_next
     if boost_struct.p_application_info != null
         *(boost_struct.p_application_info) |> vk_view_destroy()
         unsafe
@@ -4901,6 +5210,10 @@ def boost_value_to_vk(b : Buffer ?) : VkBuffer ?
 def vk_value_to_boost(v : VkBuffer) : Buffer
     return [[ Buffer buffer=v ]]
 
+def operator == (a, b : VkBuffer) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
+
 [private]
 def create_buffer__inner(
     device : Device = [[ Device ]];
@@ -4975,6 +5288,10 @@ def boost_value_to_vk(b : BufferView ?) : VkBufferView ?
 def vk_value_to_boost(v : VkBufferView) : BufferView
     return [[ BufferView buffer_view=v ]]
 
+def operator == (a, b : VkBufferView) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
+
 [private]
 def create_buffer_view__inner(
     device : Device = [[ Device ]];
@@ -5048,6 +5365,10 @@ def boost_value_to_vk(b : CommandBuffer ?) : VkCommandBuffer ?
 def vk_value_to_boost(v : VkCommandBuffer) : CommandBuffer
     return [[ CommandBuffer command_buffer=v ]]
 
+def operator == (a, b : VkCommandBuffer) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
+
 //
 // CommandPool
 //
@@ -5065,6 +5386,10 @@ def boost_value_to_vk(b : CommandPool ?) : VkCommandPool ?
 
 def vk_value_to_boost(v : VkCommandPool) : CommandPool
     return [[ CommandPool command_pool=v ]]
+
+def operator == (a, b : VkCommandPool) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
 
 [private]
 def create_command_pool__inner(
@@ -5123,6 +5448,84 @@ def finalize(var handle : CommandPool & explicit)
     memzero(handle)
 
 //
+// DebugUtilsMessengerEXT
+//
+
+struct DebugUtilsMessengerEXT
+    debug_utils_messenger_ext : VkDebugUtilsMessengerEXT
+    _needs_delete : bool
+    _instance : VkInstance
+
+def boost_value_to_vk(b : DebugUtilsMessengerEXT) : VkDebugUtilsMessengerEXT
+    return b.debug_utils_messenger_ext
+
+def boost_value_to_vk(b : DebugUtilsMessengerEXT ?) : VkDebugUtilsMessengerEXT ?
+    return b?.debug_utils_messenger_ext
+
+def vk_value_to_boost(v : VkDebugUtilsMessengerEXT) : DebugUtilsMessengerEXT
+    return [[ DebugUtilsMessengerEXT debug_utils_messenger_ext=v ]]
+
+def operator == (a, b : VkDebugUtilsMessengerEXT) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
+
+[private]
+def create_debug_utils_messenger_ext__inner(
+    instance : Instance = [[ Instance ]];
+    var create_info : DebugUtilsMessengerCreateInfoEXT = [[ DebugUtilsMessengerCreateInfoEXT ]];
+    var result : VkResult? = [[VkResult?]]
+) : DebugUtilsMessengerEXT
+
+    var vk_create_info <- create_info |> vk_view_create_unsafe()
+    defer() <| { create_info |> vk_view_destroy(); }
+    var vk_messenger : VkDebugUtilsMessengerEXT
+    var result_ = VkResult VK_SUCCESS
+
+    result ?? result_ = vkCreateDebugUtilsMessengerEXT(
+        boost_value_to_vk(instance),
+        safe_addr(vk_create_info),
+        null,
+        safe_addr(vk_messenger)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+    return vk_value_to_boost(vk_messenger)
+
+def create_debug_utils_messenger_ext(
+    instance : Instance = [[ Instance ]];
+    var create_info : DebugUtilsMessengerCreateInfoEXT = [[ DebugUtilsMessengerCreateInfoEXT ]];
+    var result : VkResult? = [[VkResult?]]
+) : DebugUtilsMessengerEXT
+
+    var handle <- create_debug_utils_messenger_ext__inner(
+        instance,
+        create_info,
+        result
+    )
+    handle._needs_delete = true
+    handle._instance = boost_value_to_vk(instance)
+    return <- handle
+
+[private]
+def destroy_debug_utils_messenger_ext(
+    instance : Instance = [[ Instance ]];
+    messenger : DebugUtilsMessengerEXT = [[ DebugUtilsMessengerEXT ]]
+) : void
+
+    vkDestroyDebugUtilsMessengerEXT(
+        boost_value_to_vk(instance),
+        boost_value_to_vk(messenger),
+        null
+    )
+
+def finalize(var handle : DebugUtilsMessengerEXT & explicit)
+    if handle._needs_delete
+        destroy_debug_utils_messenger_ext(
+            vk_value_to_boost(handle._instance),
+            vk_value_to_boost(handle.debug_utils_messenger_ext)
+        )
+    memzero(handle)
+
+//
 // DescriptorPool
 //
 
@@ -5139,6 +5542,10 @@ def boost_value_to_vk(b : DescriptorPool ?) : VkDescriptorPool ?
 
 def vk_value_to_boost(v : VkDescriptorPool) : DescriptorPool
     return [[ DescriptorPool descriptor_pool=v ]]
+
+def operator == (a, b : VkDescriptorPool) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
 
 [private]
 def create_descriptor_pool__inner(
@@ -5213,6 +5620,10 @@ def boost_value_to_vk(b : DescriptorSet ?) : VkDescriptorSet ?
 def vk_value_to_boost(v : VkDescriptorSet) : DescriptorSet
     return [[ DescriptorSet descriptor_set=v ]]
 
+def operator == (a, b : VkDescriptorSet) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
+
 //
 // DescriptorSetLayout
 //
@@ -5230,6 +5641,10 @@ def boost_value_to_vk(b : DescriptorSetLayout ?) : VkDescriptorSetLayout ?
 
 def vk_value_to_boost(v : VkDescriptorSetLayout) : DescriptorSetLayout
     return [[ DescriptorSetLayout descriptor_set_layout=v ]]
+
+def operator == (a, b : VkDescriptorSetLayout) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
 
 [private]
 def create_descriptor_set_layout__inner(
@@ -5304,6 +5719,10 @@ def boost_value_to_vk(b : Device ?) : VkDevice ?
 def vk_value_to_boost(v : VkDevice) : Device
     return [[ Device device=v ]]
 
+def operator == (a, b : VkDevice) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
+
 [private]
 def create_device__inner(
     physical_device : PhysicalDevice = [[ PhysicalDevice ]];
@@ -5373,6 +5792,10 @@ def boost_value_to_vk(b : Fence ?) : VkFence ?
 
 def vk_value_to_boost(v : VkFence) : Fence
     return [[ Fence fence=v ]]
+
+def operator == (a, b : VkFence) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
 
 [private]
 def create_fence__inner(
@@ -5448,6 +5871,10 @@ def boost_value_to_vk(b : Framebuffer ?) : VkFramebuffer ?
 def vk_value_to_boost(v : VkFramebuffer) : Framebuffer
     return [[ Framebuffer framebuffer=v ]]
 
+def operator == (a, b : VkFramebuffer) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
+
 [private]
 def create_framebuffer__inner(
     device : Device = [[ Device ]];
@@ -5521,6 +5948,10 @@ def boost_value_to_vk(b : Image ?) : VkImage ?
 
 def vk_value_to_boost(v : VkImage) : Image
     return [[ Image image=v ]]
+
+def operator == (a, b : VkImage) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
 
 [private]
 def create_image__inner(
@@ -5596,6 +6027,10 @@ def boost_value_to_vk(b : ImageView ?) : VkImageView ?
 def vk_value_to_boost(v : VkImageView) : ImageView
     return [[ ImageView image_view=v ]]
 
+def operator == (a, b : VkImageView) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
+
 [private]
 def create_image_view__inner(
     device : Device = [[ Device ]];
@@ -5669,6 +6104,10 @@ def boost_value_to_vk(b : Instance ?) : VkInstance ?
 def vk_value_to_boost(v : VkInstance) : Instance
     return [[ Instance instance=v ]]
 
+def operator == (a, b : VkInstance) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
+
 [private]
 def create_instance__inner(
     var create_info : InstanceCreateInfo = [[ InstanceCreateInfo ]];
@@ -5734,6 +6173,10 @@ def boost_value_to_vk(b : PhysicalDevice ?) : VkPhysicalDevice ?
 def vk_value_to_boost(v : VkPhysicalDevice) : PhysicalDevice
     return [[ PhysicalDevice physical_device=v ]]
 
+def operator == (a, b : VkPhysicalDevice) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
+
 //
 // PipelineCache
 //
@@ -5751,6 +6194,10 @@ def boost_value_to_vk(b : PipelineCache ?) : VkPipelineCache ?
 
 def vk_value_to_boost(v : VkPipelineCache) : PipelineCache
     return [[ PipelineCache pipeline_cache=v ]]
+
+def operator == (a, b : VkPipelineCache) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
 
 [private]
 def create_pipeline_cache__inner(
@@ -5826,6 +6273,10 @@ def boost_value_to_vk(b : PipelineLayout ?) : VkPipelineLayout ?
 def vk_value_to_boost(v : VkPipelineLayout) : PipelineLayout
     return [[ PipelineLayout pipeline_layout=v ]]
 
+def operator == (a, b : VkPipelineLayout) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
+
 [private]
 def create_pipeline_layout__inner(
     device : Device = [[ Device ]];
@@ -5900,6 +6351,10 @@ def boost_value_to_vk(b : QueryPool ?) : VkQueryPool ?
 def vk_value_to_boost(v : VkQueryPool) : QueryPool
     return [[ QueryPool query_pool=v ]]
 
+def operator == (a, b : VkQueryPool) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
+
 [private]
 def create_query_pool__inner(
     device : Device = [[ Device ]];
@@ -5973,6 +6428,10 @@ def boost_value_to_vk(b : Queue ?) : VkQueue ?
 def vk_value_to_boost(v : VkQueue) : Queue
     return [[ Queue queue=v ]]
 
+def operator == (a, b : VkQueue) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
+
 //
 // RenderPass
 //
@@ -5990,6 +6449,10 @@ def boost_value_to_vk(b : RenderPass ?) : VkRenderPass ?
 
 def vk_value_to_boost(v : VkRenderPass) : RenderPass
     return [[ RenderPass render_pass=v ]]
+
+def operator == (a, b : VkRenderPass) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
 
 [private]
 def create_render_pass__inner(
@@ -6065,6 +6528,10 @@ def boost_value_to_vk(b : Sampler ?) : VkSampler ?
 def vk_value_to_boost(v : VkSampler) : Sampler
     return [[ Sampler sampler=v ]]
 
+def operator == (a, b : VkSampler) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
+
 [private]
 def create_sampler__inner(
     device : Device = [[ Device ]];
@@ -6138,6 +6605,10 @@ def boost_value_to_vk(b : Semaphore ?) : VkSemaphore ?
 
 def vk_value_to_boost(v : VkSemaphore) : Semaphore
     return [[ Semaphore semaphore=v ]]
+
+def operator == (a, b : VkSemaphore) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
 
 [private]
 def create_semaphore__inner(
@@ -6213,6 +6684,10 @@ def boost_value_to_vk(b : ShaderModule ?) : VkShaderModule ?
 def vk_value_to_boost(v : VkShaderModule) : ShaderModule
     return [[ ShaderModule shader_module=v ]]
 
+def operator == (a, b : VkShaderModule) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
+
 [private]
 def create_shader_module__inner(
     device : Device = [[ Device ]];
@@ -6287,6 +6762,10 @@ def boost_value_to_vk(b : SwapchainKHR ?) : VkSwapchainKHR ?
 def vk_value_to_boost(v : VkSwapchainKHR) : SwapchainKHR
     return [[ SwapchainKHR swapchain_khr=v ]]
 
+def operator == (a, b : VkSwapchainKHR) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
+
 [private]
 def create_swapchain_khr__inner(
     device : Device = [[ Device ]];
@@ -6360,6 +6839,10 @@ def boost_value_to_vk(b : Pipeline ?) : VkPipeline ?
 
 def vk_value_to_boost(v : VkPipeline) : Pipeline
     return [[ Pipeline pipeline=v ]]
+
+def operator == (a, b : VkPipeline) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
 
 [private]
 def create_graphics_pipelines__inner(
@@ -6496,6 +6979,10 @@ def boost_value_to_vk(b : DeviceMemory ?) : VkDeviceMemory ?
 
 def vk_value_to_boost(v : VkDeviceMemory) : DeviceMemory
     return [[ DeviceMemory device_memory=v ]]
+
+def operator == (a, b : VkDeviceMemory) : bool
+    unsafe
+        return reinterpret<void?>(a) == reinterpret<void?>(b)
 
 [private]
 def allocate_memory__inner(

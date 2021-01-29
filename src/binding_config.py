@@ -14,7 +14,7 @@ class Config(ConfigBase):
 
     @property
     def save_ast(self):
-        return False
+        return True
 
     @property
     def c_headers_to_extract_macro_consts_from(self):
@@ -52,6 +52,12 @@ class Config(ConfigBase):
             struct.define_ptr_type(ptr_type)
 
     def configure_struct_field(self, field):
+        # whitelist
+        if (field.struct.name == 'VkDebugUtilsMessengerCreateInfoEXT'
+        and field.name == 'pfnUserCallback'
+        ):
+          return
+
         # These structs have function pointers, but we can probably
         # live without them for a time being.
         if field.name.startswith('pfn'):
@@ -61,7 +67,9 @@ class Config(ConfigBase):
         # whitelist
         if func.name in [
             'vkAcquireNextImageKHR',
+            'vkCreateDebugUtilsMessengerEXT',
             'vkCreateSwapchainKHR',
+            'vkDestroyDebugUtilsMessengerEXT',
             'vkDestroySurfaceKHR',
             'vkDestroySwapchainKHR',
             'vkGetPhysicalDeviceSurfaceCapabilitiesKHR',
@@ -113,6 +121,7 @@ def add_boost_content(g):
         'VkBufferView',
         'VkCommandBuffer',
         'VkCommandPool',
+        'VkDebugUtilsMessengerEXT',
         'VkDescriptorPool',
         'VkDescriptorSet',
         'VkDescriptorSetLayout',
@@ -156,10 +165,14 @@ def add_boost_content(g):
         'VkAttachmentDescription',
         'VkAttachmentReference',
         'VkComponentMapping',
+        'VkDebugUtilsLabelEXT',
+        'VkDebugUtilsObjectNameInfoEXT',
         'VkExtensionProperties',
         'VkExtent2D',
         'VkExtent3D',
+        'VkFormatProperties',
         'VkImageSubresourceRange',
+        'VkLayerProperties',
         'VkMemoryHeap',
         'VkMemoryRequirements',
         'VkMemoryType',
@@ -216,9 +229,16 @@ def add_boost_content(g):
     ]:
         g.add_gen_struct(name=name, vk_to_boost=False)
 
+    debug_msg_create_info = g.add_gen_struct(
+        name='VkDebugUtilsMessengerCreateInfoEXT', vk_to_boost=False)
+
     g.add_gen_struct(name = 'VkBufferCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'queueFamilyIndexCount', items = 'pQueueFamilyIndices')
     g.add_gen_struct(name='VkComputePipelineCreateInfo', vk_to_boost=False)
+    g.add_gen_struct(name = 'VkDebugUtilsMessengerCallbackDataEXT',
+        ).declare_array(count = 'queueLabelCount', items = 'pQueueLabels'
+        ).declare_array(count = 'cmdBufLabelCount', items = 'pCmdBufLabels'
+        ).declare_array(count = 'objectCount', items = 'pObjects')
     g.add_gen_struct(name = 'VkDescriptorPoolCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'poolSizeCount', items = 'pPoolSizes')
     g.add_gen_struct(name = 'VkDescriptorSetAllocateInfo', vk_to_boost=False,
@@ -248,6 +268,7 @@ def add_boost_content(g):
     g.add_gen_struct(name = 'VkImageCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'queueFamilyIndexCount', items = 'pQueueFamilyIndices')
     g.add_gen_struct(name = 'VkInstanceCreateInfo', vk_to_boost=False,
+        next_in_chain = debug_msg_create_info
         ).declare_array(count = 'enabledLayerCount', items = 'ppEnabledLayerNames',
         ).declare_array(count = 'enabledExtensionCount', items = 'ppEnabledExtensionNames')
     g.add_gen_struct(name = 'VkPhysicalDeviceMemoryProperties',
@@ -347,6 +368,9 @@ def add_boost_content(g):
     g.add_gen_func(name = 'vkEnumerateDeviceExtensionProperties',
         ).declare_array(count = 'pPropertyCount', items = 'pProperties',
         ).declare_output(name = 'pProperties')
+    g.add_gen_func(name = 'vkEnumerateInstanceLayerProperties',
+        ).declare_array(count = 'pPropertyCount', items = 'pProperties',
+        ).declare_output(name = 'pProperties')
     g.add_gen_func(name = 'vkEnumeratePhysicalDevices',
         ).declare_array(count = 'pPhysicalDeviceCount', items = 'pPhysicalDevices',
         ).declare_output(name = 'pPhysicalDevices')
@@ -364,6 +388,8 @@ def add_boost_content(g):
         ).declare_output(name = 'pFeatures')
     g.add_gen_func(name = 'vkGetPhysicalDeviceFeatures2',
         ).declare_output(name = 'pFeatures')
+    g.add_gen_func(name = 'vkGetPhysicalDeviceFormatProperties',
+        ).declare_output(name = 'pFormatProperties')
     g.add_gen_func(name = 'vkGetPhysicalDeviceProperties',
         ).declare_output(name = 'pProperties')
     g.add_gen_func(name = 'vkGetPhysicalDeviceSurfaceCapabilitiesKHR',

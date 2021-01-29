@@ -86,6 +86,7 @@ class BoostGenerator(LoggingObject):
             ParamVkSampleMask,
             ParamVkDeviceSize,
             ParamVkFlags,
+            ParamFuncPtr,
             ParamVoidPtr,
             ParamVoidPtrPtr,
             ParamUnknown,
@@ -100,11 +101,14 @@ class BoostGenerator(LoggingObject):
         return self.create_param(c_node.das_name, c_node.type)
 
     def write(self):
-        fpath = full_path(path.join(path.dirname(__file__),
-            '../daslib/internal/generated.das'))
-        self._log_info(f'Writing to: {fpath}')
-        write_to_file(fpath=fpath,
-            content='\n'.join(self.__generate() + ['']))
+        for fname, content in [
+            ('../daslib/internal/generated.das', self.__generate_das()),
+            ('../src/module_boost_generated.inc', self.__generate_cpp()),
+        ]:
+            fpath = full_path(path.join(path.dirname(__file__), fname))
+            self._log_info(f'Writing to: {fpath}')
+            write_to_file(fpath=fpath,
+                content='\n'.join(content + ['']))
 
     @property
     def title(self):
@@ -126,7 +130,86 @@ class BoostGenerator(LoggingObject):
         m = re.match(r'VK_MAKE_VERSION\((\d+), (\d+), (\d+)\)', v)
         return '.'.join(m.groups())
 
-    def __generate(self):
+    @property
+    def __functions_to_link(self):
+        return [fn for fn in self.functions.values()
+            if fn.name.endswith('EXT')]
+
+    def __generate_cpp(self):
+        lines = []
+        lines += [
+            self.title,
+            f'',
+            f'static VkInstance g_vk_linked_instance = VK_NULL_HANDLE;',
+            f'',
+            f'static VkInstance vk_get_linked_instance() {{',
+            f'    return g_vk_linked_instance;',
+            f'}}'] + [
+            f'{line}' for fn in self.__functions_to_link
+                for line in self.__decl_linked_vk_function(fn)] + [
+            f'',
+            f'static void vk_link_instance(VkInstance instance) {{',
+            f'    g_vk_linked_instance = instance;'] + [
+            f'    {line}' for fn in self.__functions_to_link
+                  for line in self.__link_vk_function(fn)] + [
+            f'}}',
+            f'',
+            f'static void vk_unlink_instance() {{',
+            f'    g_vk_linked_instance = VK_NULL_HANDLE;'] + [
+            f'    g_vk_linked_{fn.name} = nullptr;'
+                  for fn in self.__functions_to_link] + [
+            f'}}',
+            f'',
+            f'void addVulkanBoostGenerated(Module & module, '
+                        f'ModuleLibrary & lib) {{',
+            f'    addExtern<DAS_BIND_FUN(vk_link_instance)>(',
+            f'        module, lib, "vk_link_instance",',
+            f'        SideEffects::worstDefault, "vk_link_instance");',
+            f'    addExtern<DAS_BIND_FUN(vk_unlink_instance)>(',
+            f'        module, lib, "vk_unlink_instance",',
+            f'        SideEffects::worstDefault, "vk_unlink_instance");',
+            f'    addExtern<DAS_BIND_FUN(vk_get_linked_instance)>(',
+            f'        module, lib, "vk_get_linked_instance",',
+            f'        SideEffects::worstDefault, "vk_get_linked_instance");',
+            f'}}',
+        ]
+        return lines
+
+    def __decl_linked_vk_function(self, fn):
+        lines = []
+        lines += [
+            f'',
+            f'static PFN_{fn.name}',
+            f'    g_vk_linked_{fn.name} = nullptr;',
+            f'VKAPI_ATTR {fn.return_type} VKAPI_CALL {fn.name}('] + [
+            f'    {p.type} {p.name},' for p in fn.params
+        ]
+        remove_last_char(lines, ',')
+        lines += [
+            f') {{',
+            f'    if ( g_vk_linked_{fn.name} == nullptr ) {{',
+            f'        DAS_ASSERTF(0, "{fn.name} not found");',
+            f'        DAS_FATAL_ERROR',
+            f'    }}',
+            f'    return (*g_vk_linked_{fn.name})('] + [
+            f'        {p.name},' for p in fn.params
+        ]
+        remove_last_char(lines, ',')
+        lines += [
+            f'    );',
+            f'}}',
+        ]
+        return lines
+
+    def __link_vk_function(self, func):
+        fn = func.name
+        return [
+            f'g_vk_linked_{fn} =',
+            f'    (PFN_{fn}) vkGetInstanceProcAddr(',
+            f'        instance, "{fn}");',
+        ]
+
+    def __generate_das(self):
         return [
             self.title,
             '',
@@ -524,6 +607,10 @@ class GenHandle(object):
             '',
            f'def vk_value_to_boost(v : {vhtype}) : {bhtype}',
            f'    return [[ {bhtype} {attr}=v ]]',
+           f'',
+           f'def operator == (a, b : {vhtype}) : bool',
+           f'    unsafe',
+           f'        return reinterpret<void?>(a) == reinterpret<void?>(b)',
         ]
         return lines
 
@@ -698,6 +785,14 @@ class C_Type(object):
         unqual_name = {
             'const char *const *': 'char',
             'void **': 'void',
+
+            'VkBool32 (*)('
+                'VkDebugUtilsMessageSeverityFlagBitsEXT, '
+                'VkDebugUtilsMessageTypeFlagsEXT, '
+                'const VkDebugUtilsMessengerCallbackDataEXT *, '
+                'void *'
+            ') __attribute__((stdcall))'
+                : 'PFN_vkDebugUtilsMessengerCallbackEXT'
         }.get(self.name)
 
         if unqual_name:
@@ -914,6 +1009,11 @@ class ParamBase(object):
         and self._boost_unqual_type == self.vk_unqual_type
         ):
             return [f'{vname} = vk_p_{bname},']
+        return self._generate_boost_struct_view_create_field_plain()
+
+    def _generate_boost_struct_view_create_field_plain(self):
+        bname = self._boost_struct_field_name
+        vname = self.vk_name
         return [f'{vname} = boost_value_to_vk(boost_struct.{bname}),']
 
     def generate_boost_struct_view_destroy(self):
@@ -1702,16 +1802,35 @@ class ParamVkFlags(ParamBase):
         return 'uint'
 
 
+class ParamFuncPtr(ParamBase):
+
+    @classmethod
+    def maybe_create(cls, c_param, **kwargs):
+        if c_param.type.unqual_name in [
+            'PFN_vkDebugUtilsMessengerCallbackEXT'
+        ]:
+            return cls(c_param=c_param, **kwargs)
+
+    @property
+    def vk_unqual_type(self):
+        return 'PFN_vkDebugUtilsMessengerCallbackEXT'
+
+
 class ParamVoidPtr(ParamBase):
 
     @classmethod
     def maybe_create(cls, c_param, **kwargs):
-        if c_param.type.name == 'const void *':
+        if c_param.type.name in ['void *', 'const void *']:
             return cls(c_param=c_param, **kwargs)
 
     @property
     def vk_unqual_type(self):
         return 'void'
+
+    def _generate_boost_struct_view_create_field_plain(self):
+        bname = self._boost_struct_field_name
+        vname = self.vk_name
+        return [f'{vname} = boost_struct.{bname},']
 
 
 class ParamVoidPtrPtr(ParamBase):
@@ -1778,10 +1897,7 @@ def boost_camel_to_lower(camel):
     return result
 
 def returns_vk_result(func):
-    return get_c_func_return_type(func.type) == 'VkResult'
-
-def get_c_func_return_type(func_type):
-    return re.match(r'^([^(]+) \(.*', func_type).group(1).strip()
+    return func.return_type == 'VkResult'
 
 def deref_das_type(type_name):
     assert_ends_with(type_name, '?')

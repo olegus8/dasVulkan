@@ -9,6 +9,7 @@ require internal/generated      public
 require internal/buffer         public
 require internal/command        public
 require internal/core           public
+require internal/debug          public
 require internal/descriptor_set public
 require internal/device         public
 require internal/framebuffer    public

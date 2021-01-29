@@ -589,7 +589,7 @@ def get_suitability_score(device : PhysicalDevice; surface : SurfaceKHR)
 
 struct SwapchainIndependentState
     window          : Window
-    instance        : Instance
+    instance        : InstanceEx
     surface         : SurfaceKHR
     phys_dev        : PhysicalDevice
     device          : Device
@@ -640,9 +640,9 @@ def create_swapchain_independent_state(
 ) : SwapchainIndependentState
     var s : SwapchainIndependentState
     s.window <- create_window(width, height, title)
-    s.instance <- create_default_instance()
-    s.surface <- s.instance |> create_window_surface(s.window)
-    s.phys_dev <- s.instance |> find_best_physical_device(s.surface)
+    s.instance <- create_instance_ex()
+    s.surface <- s.instance.instance |> create_window_surface(s.window)
+    s.phys_dev <- s.instance.instance |> find_best_physical_device(s.surface)
     s.present_mode = VkPresentModeKHR VK_PRESENT_MODE_FIFO_KHR
     s.surf_fmt <- s.phys_dev |> find_format_like_srgb_bgra8(s.surface)
     s.graphics_family <- s.phys_dev |> get_graphics_queue_family(s.surface)
