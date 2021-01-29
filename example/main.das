@@ -23,6 +23,64 @@ struct UniformBufferObject
     offset : float2
 
 
+struct SwapchainEx
+    swapchain       : SwapchainKHR
+    images          : array<Image>
+    views           : array<ImageView>
+    framebuffers    : array<Framebuffer>
+
+
+def create_swapchain_ex(
+    device          : Device;
+    phys_dev        : PhysicalDevice;
+    surface         : SurfaceKHR;
+    window          : Window;
+    surf_fmt        : SurfaceFormatKHR;
+    present_mode    : VkPresentModeKHR;
+    render_pass     : RenderPass
+) : SwapchainEx
+
+    var swapchain <- device |> create_multibuffered_swapchain(
+        phys_dev, surface, window, surf_fmt, present_mode)
+
+    var images <- device |> get_swapchain_images_khr(swapchain)
+
+    var views <- [{ for image in images;
+        device |> create_image_view([[ ImageViewCreateInfo
+            image = image,
+            format = surf_fmt.format,
+            view_type = VkImageViewType VK_IMAGE_VIEW_TYPE_2D,
+            subresource_range = IMAGE_SUBRESOURCE_RANGE_SINGLE_COLOR,
+            components = COMPONENT_MAPPING_IDENTITY
+        ]])}]
+
+    let extent <- phys_dev |> get_swap_extent(surface, window)
+
+    var framebuffers <- [{ for view in views;
+        create_single_view_framebuffer([
+            device = device,
+            render_pass = render_pass,
+            view = view,
+            width = extent.width,
+            height = extent.height
+        ])}]
+
+    return <- [[SwapchainEx
+        swapchain <- swapchain,
+        images <- images,
+        views <- views,
+        framebuffers <- framebuffers
+    ]]
+
+
+def finalize(var sc : SwapchainEx)
+    delete sc.framebuffers
+    delete sc.views
+    delete sc.images
+    delete sc.swapchain
+    memzero(sc)
+
+
 def create_example_descriptor_set_layout(
     device : Device
 ) : DescriptorSetLayout
