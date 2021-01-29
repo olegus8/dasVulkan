@@ -1,7 +1,7 @@
 #include "module.h"
 
-typedef DebugMsgContext * DebugMsgContext_DasHandle;
-MAKE_TYPE_FACTORY(DebugMsgContext_DasHandle, DebugMsgContext_DasHandle)
+using namespace das;
+using namespace std;
 
 DebugMsgContext * create_debug_msg_context(Lambda callback, Context * ctx) {
     auto debug_ctx = new DebugMsgContext();

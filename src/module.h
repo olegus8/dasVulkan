@@ -4,25 +4,24 @@
 #include "headers_to_bind.h"
 #include <thread>
 
-using namespace das;
-using namespace std;
-
 template <typename OT>
-struct VkHandleAnnotation : public ManagedValueAnnotation<OT> {
+struct VkHandleAnnotation : public das::ManagedValueAnnotation<OT> {
     VkHandleAnnotation(const string & n, const string & cpn = string())
-    : ManagedValueAnnotation<OT>(n,cpn) {
+    : das::ManagedValueAnnotation<OT>(n,cpn) {
     }
     virtual bool canClone() const override {
         return true;
     }
-    virtual SimNode * simulateClone ( Context & context, const LineInfo & at, SimNode * l, SimNode * r ) const override {
-        return ManagedValueAnnotation<OT>::simulateCopy(context, at, l, r);
+    virtual das::SimNode * simulateClone ( das::Context & context, const das::LineInfo & at, das::SimNode * l, das::SimNode * r ) const override {
+        return das::ManagedValueAnnotation<OT>::simulateCopy(context, at, l, r);
     }
 };
 
 struct DebugMsgContext {
-    Context *     ctx = nullptr;
-    SimFunction * cb_func = nullptr;
-    Lambda        cb_lambda;
-    thread::id    thread_id;
+    das::Context *     ctx = nullptr;
+    das::SimFunction * cb_func = nullptr;
+    das::Lambda        cb_lambda;
+    std::thread::id    thread_id;
 };
+
+#include "module_generated.h.inc"

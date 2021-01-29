@@ -1,8 +1,11 @@
 #include "module.h"
 
+using namespace das;
+using namespace std;
+
 MAKE_TYPE_FACTORY(PFN_vkDebugUtilsMessengerCallbackEXT, PFN_vkDebugUtilsMessengerCallbackEXT);
 
-#include "module_generated.inc"
+#include "module_generated.cpp.inc"
 #include "module_boost_generated.inc"
 
 void addVulkanCustomBeforeGenerated(Module &, ModuleLibrary &);
