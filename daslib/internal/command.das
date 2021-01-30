@@ -23,7 +23,7 @@ def allocate_command_buffers_primary(
 
 def allocate_command_buffer_primary(
     device : Device;
-    pool : CommandPool;
+    pool : CommandPool
 ) : CommandBuffers
     return <- device |> allocate_command_buffers_primary(pool, 1)
 
