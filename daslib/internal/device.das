@@ -21,7 +21,8 @@ def get_graphics_queue_family(
     min_queue_count : int;
 ) : uint
     var found_index : uint = UINT_MAX
-    physical_device |> find_graphics_queue_family(surface) <| $(qfam)
+    physical_device |> find_graphics_queue_family(surface, min_queue_count
+    ) <| $(qfam)
         found_index = qfam
     assert(found_index != UINT_MAX)
     return found_index
