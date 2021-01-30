@@ -122,3 +122,17 @@ def get_swap_extent(
                 caps.min_image_extent.height,
                 caps.max_image_extent.height)
         ]]
+
+
+def allocate_descriptor_set(
+    device : Device;
+    descriptor_pool : DescriptorPool;
+    set_layout : DescriptorSetLayout;
+    var result : VkResult? = [[VkResult?]]
+) : DescriptorSets
+    var create_info <- [[ DescriptorSetAllocateInfo
+        descriptor_pool = weak_copy(descriptor_pool),
+        set_layouts <- [{ auto[] weak_copy(set_layout) }]
+    ]]
+    defer <| { delete create_info; }
+    return <- device |> allocate_descriptor_sets <| create_info
