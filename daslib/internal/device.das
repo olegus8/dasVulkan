@@ -17,7 +17,8 @@ let
 
 def get_graphics_queue_family(
     physical_device : PhysicalDevice;
-    surface : SurfaceKHR
+    surface : SurfaceKHR;
+    min_queue_count : int;
 ) : uint
     var found_index : uint = UINT_MAX
     physical_device |> find_graphics_queue_family(surface) <| $(qfam)
@@ -29,7 +30,7 @@ def get_graphics_queue_family(
 def find_graphics_queue_family(
     physical_device : PhysicalDevice;
     surface : SurfaceKHR;
-    min_queue_count : int = 1;
+    min_queue_count : int;
     b : block<(qfam:uint)>
 )
     var families <- (physical_device |>
