@@ -29,6 +29,7 @@ def get_graphics_queue_family(
 def find_graphics_queue_family(
     physical_device : PhysicalDevice;
     surface : SurfaceKHR;
+    min_queue_count : int = 1;
     b : block<(qfam:uint)>
 )
     var families <- (physical_device |>
@@ -44,7 +45,10 @@ def find_graphics_queue_family(
         if (family.queue_flags & graphics_bit) == 0u
             continue
 
-        if (family.timestamp_valid_bits == 0u)
+        if family.timestamp_valid_bits == 0u
+            continue
+
+        if family.queue_count < uint(min_queue_count)
             continue
 
         b |> invoke(uint(index))
