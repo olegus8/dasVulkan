@@ -28,6 +28,19 @@ def get_graphics_queue_family(
     return found_index
 
 
+def get_transfer_only_queue_family(
+    physical_device : PhysicalDevice;
+    surface : SurfaceKHR;
+    min_queue_count : int
+) : uint
+    var found_index : uint = UINT_MAX
+    physical_device |> find_transfer_only_queue_family(surface, min_queue_count
+    ) <| $(qfam)
+        found_index = qfam
+    assert(found_index != UINT_MAX)
+    return found_index
+
+
 def find_graphics_queue_family(
     physical_device : PhysicalDevice;
     surface : SurfaceKHR;
@@ -45,6 +58,29 @@ def find_graphics_queue_family(
 
         var graphics_bit = uint(VkQueueFlagBits VK_QUEUE_GRAPHICS_BIT)
         if (family.queue_flags & graphics_bit) == 0u
+            continue
+
+        if family.timestamp_valid_bits == 0u
+            continue
+
+        if family.queue_count < uint(min_queue_count)
+            continue
+
+        b |> invoke(uint(index))
+        break
+
+
+def find_transfer_only_queue_family(
+    physical_device : PhysicalDevice;
+    surface : SurfaceKHR;
+    min_queue_count : int;
+    b : block<(qfam:uint)>
+)
+    var families <- (physical_device |>
+        get_physical_device_queue_family_properties())
+    defer() <| ${ delete families; }
+    for family, index in families, range(INT_MAX)
+        if family.queue_flags != uint(VkQueueFlagBits VK_QUEUE_TRANSFER_BIT)
             continue
 
         if family.timestamp_valid_bits == 0u
