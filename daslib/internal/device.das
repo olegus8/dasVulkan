@@ -35,7 +35,7 @@ def get_exact_queue_family(
     queue_flags : uint
 ) : uint
     var found_index : uint = UINT_MAX
-    physical_device |> find_transfer_only_queue_family(
+    physical_device |> find_exact_queue_family(
         surface, min_queue_count, queue_flags
     ) <| $(qfam)
         found_index = qfam
