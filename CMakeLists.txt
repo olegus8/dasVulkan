@@ -52,6 +52,14 @@ IF(NOT DAS_VULKAN_INCLUDED)
             ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated.h.inc_enums_8
             ${DAS_VULKAN_DIR}/src/custom.cpp
             ${DAS_VULKAN_DIR}/src/module.cpp
+            ${DAS_VULKAN_DIR}/src/module_enums_1.cpp
+            ${DAS_VULKAN_DIR}/src/module_enums_2.cpp
+            ${DAS_VULKAN_DIR}/src/module_enums_3.cpp
+            ${DAS_VULKAN_DIR}/src/module_enums_4.cpp
+            ${DAS_VULKAN_DIR}/src/module_enums_5.cpp
+            ${DAS_VULKAN_DIR}/src/module_enums_6.cpp
+            ${DAS_VULKAN_DIR}/src/module_enums_7.cpp
+            ${DAS_VULKAN_DIR}/src/module_enums_8.cpp
             ${DAS_VULKAN_DIR}/src/module_boost_generated.inc
             ${DAS_VULKAN_DIR}/src/module_generated.cpp.inc
             ${DAS_VULKAN_DIR}/src/module_generated.cpp.inc_enums_1
