@@ -39,6 +39,7 @@ IF(NOT DAS_VULKAN_INCLUDED)
         SET(DAS_VULKAN_MODULE_SRC
             ${DAS_VULKAN_DIR}/daslib/internal/generated.das
             ${DAS_VULKAN_DIR}/include/dasVulkan/headers_to_bind.h
+            ${DAS_VULKAN_DIR}/include/dasVulkan/module_custom.h
             ${DAS_VULKAN_DIR}/include/dasVulkan/module.h
             ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated.h.inc
             ${DAS_VULKAN_DIR}/src/custom.cpp
