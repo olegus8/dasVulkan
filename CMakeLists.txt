@@ -41,35 +41,27 @@ IF(NOT DAS_VULKAN_INCLUDED)
             ${DAS_VULKAN_DIR}/include/dasVulkan/headers_to_bind.h
             ${DAS_VULKAN_DIR}/include/dasVulkan/module_custom.h
             ${DAS_VULKAN_DIR}/include/dasVulkan/module.h
-            ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated.h.inc
-            ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated.h.inc_enums_1
-            ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated.h.inc_enums_2
-            ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated.h.inc_enums_3
-            ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated.h.inc_enums_4
-            ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated.h.inc_enums_5
-            ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated.h.inc_enums_6
-            ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated.h.inc_enums_7
-            ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated.h.inc_enums_8
+            ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated.h
+            ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated_enums_1.h
+            ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated_enums_2.h
+            ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated_enums_3.h
+            ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated_enums_4.h
+            ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated_enums_5.h
+            ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated_enums_6.h
+            ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated_enums_7.h
+            ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated_enums_8.h
             ${DAS_VULKAN_DIR}/src/custom.cpp
             ${DAS_VULKAN_DIR}/src/module.cpp
-            ${DAS_VULKAN_DIR}/src/module_enums_1.cpp
-            ${DAS_VULKAN_DIR}/src/module_enums_2.cpp
-            ${DAS_VULKAN_DIR}/src/module_enums_3.cpp
-            ${DAS_VULKAN_DIR}/src/module_enums_4.cpp
-            ${DAS_VULKAN_DIR}/src/module_enums_5.cpp
-            ${DAS_VULKAN_DIR}/src/module_enums_6.cpp
-            ${DAS_VULKAN_DIR}/src/module_enums_7.cpp
-            ${DAS_VULKAN_DIR}/src/module_enums_8.cpp
             ${DAS_VULKAN_DIR}/src/module_boost_generated.inc
-            ${DAS_VULKAN_DIR}/src/module_generated.cpp.inc
-            ${DAS_VULKAN_DIR}/src/module_generated.cpp.inc_enums_1
-            ${DAS_VULKAN_DIR}/src/module_generated.cpp.inc_enums_2
-            ${DAS_VULKAN_DIR}/src/module_generated.cpp.inc_enums_3
-            ${DAS_VULKAN_DIR}/src/module_generated.cpp.inc_enums_4
-            ${DAS_VULKAN_DIR}/src/module_generated.cpp.inc_enums_5
-            ${DAS_VULKAN_DIR}/src/module_generated.cpp.inc_enums_6
-            ${DAS_VULKAN_DIR}/src/module_generated.cpp.inc_enums_7
-            ${DAS_VULKAN_DIR}/src/module_generated.cpp.inc_enums_8
+            ${DAS_VULKAN_DIR}/src/module_generated.cpp
+            ${DAS_VULKAN_DIR}/src/module_generated_enums_1.cpp
+            ${DAS_VULKAN_DIR}/src/module_generated_enums_2.cpp
+            ${DAS_VULKAN_DIR}/src/module_generated_enums_3.cpp
+            ${DAS_VULKAN_DIR}/src/module_generated_enums_4.cpp
+            ${DAS_VULKAN_DIR}/src/module_generated_enums_5.cpp
+            ${DAS_VULKAN_DIR}/src/module_generated_enums_6.cpp
+            ${DAS_VULKAN_DIR}/src/module_generated_enums_7.cpp
+            ${DAS_VULKAN_DIR}/src/module_generated_enums_8.cpp
         )
 
         ADD_MODULE_LIB(libDasModuleVulkan)
