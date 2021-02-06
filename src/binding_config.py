@@ -21,6 +21,10 @@ class Config(ConfigBase):
         return ['GLFW/glfw3.h', 'vulkan/vulkan_core.h']
 
     @property
+    def generated_enums_parts(self):
+        return 8
+
+    @property
     def title(self):
         return self.__title
 
