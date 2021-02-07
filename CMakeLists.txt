@@ -98,9 +98,10 @@ IF(NOT DAS_VULKAN_INCLUDED)
 
         IF(DAS_BINDER_INCLUDED)
             DAS_BINDER(
+                16
                 ${DAS_VULKAN_DIR}/include/dasVulkan/headers_to_bind.h
                 ${DAS_VULKAN_DIR}/src/module_generated
-                ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated
+                ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated.h
                 ${DAS_VULKAN_DIR}/src/binding_config.py
                 "${DAS_VULKAN_INCLUDE_DIRS}"
                 "${DAS_VULKAN_BINDER_DEPS}"
