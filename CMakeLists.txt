@@ -45,23 +45,23 @@ IF(NOT DAS_VULKAN_INCLUDED)
             ${DAS_VULKAN_DIR}/src/custom.cpp
             ${DAS_VULKAN_DIR}/src/module.cpp
             ${DAS_VULKAN_DIR}/src/module_boost_generated.inc
-            ${DAS_VULKAN_DIR}/src/module_generated_add.inc
-            ${DAS_VULKAN_DIR}/src/module_generated_add_1.cpp
-            ${DAS_VULKAN_DIR}/src/module_generated_add_2.cpp
-            ${DAS_VULKAN_DIR}/src/module_generated_add_3.cpp
-            ${DAS_VULKAN_DIR}/src/module_generated_add_4.cpp
-            ${DAS_VULKAN_DIR}/src/module_generated_add_5.cpp
-            ${DAS_VULKAN_DIR}/src/module_generated_add_6.cpp
-            ${DAS_VULKAN_DIR}/src/module_generated_add_7.cpp
-            ${DAS_VULKAN_DIR}/src/module_generated_add_8.cpp
-            ${DAS_VULKAN_DIR}/src/module_generated_add_9.cpp
-            ${DAS_VULKAN_DIR}/src/module_generated_add_10.cpp
-            ${DAS_VULKAN_DIR}/src/module_generated_add_11.cpp
-            ${DAS_VULKAN_DIR}/src/module_generated_add_12.cpp
-            ${DAS_VULKAN_DIR}/src/module_generated_add_13.cpp
-            ${DAS_VULKAN_DIR}/src/module_generated_add_14.cpp
-            ${DAS_VULKAN_DIR}/src/module_generated_add_15.cpp
-            ${DAS_VULKAN_DIR}/src/module_generated_add_16.cpp
+            ${DAS_VULKAN_DIR}/src/module_generated.inc
+            ${DAS_VULKAN_DIR}/src/module_generated_1.cpp
+            ${DAS_VULKAN_DIR}/src/module_generated_2.cpp
+            ${DAS_VULKAN_DIR}/src/module_generated_3.cpp
+            ${DAS_VULKAN_DIR}/src/module_generated_4.cpp
+            ${DAS_VULKAN_DIR}/src/module_generated_5.cpp
+            ${DAS_VULKAN_DIR}/src/module_generated_6.cpp
+            ${DAS_VULKAN_DIR}/src/module_generated_7.cpp
+            ${DAS_VULKAN_DIR}/src/module_generated_8.cpp
+            ${DAS_VULKAN_DIR}/src/module_generated_9.cpp
+            ${DAS_VULKAN_DIR}/src/module_generated_10.cpp
+            ${DAS_VULKAN_DIR}/src/module_generated_11.cpp
+            ${DAS_VULKAN_DIR}/src/module_generated_12.cpp
+            ${DAS_VULKAN_DIR}/src/module_generated_13.cpp
+            ${DAS_VULKAN_DIR}/src/module_generated_14.cpp
+            ${DAS_VULKAN_DIR}/src/module_generated_15.cpp
+            ${DAS_VULKAN_DIR}/src/module_generated_16.cpp
         )
 
         ADD_MODULE_LIB(libDasModuleVulkan)
