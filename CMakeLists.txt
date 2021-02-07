@@ -4,6 +4,8 @@ IF(NOT DAS_VULKAN_INCLUDED)
 
     IF(EXISTS ${CMAKE_SOURCE_DIR}/modules/dasBinder/CMakeLists.txt)
         INCLUDE(${CMAKE_SOURCE_DIR}/modules/dasBinder/CMakeLists.txt)
+    ELSE()
+        MESSAGE(FATAL_ERROR "dasBinder is required to use dasVulkan.")
     ENDIF()
 
     SET(DAS_VULKAN_DIR ${CMAKE_SOURCE_DIR}/modules/dasVulkan)
@@ -96,20 +98,16 @@ IF(NOT DAS_VULKAN_INCLUDED)
             ${DAS_VULKAN_DIR}/src/module_boost_generated.inc
         )
 
-        IF(DAS_BINDER_INCLUDED)
-            DAS_BINDER(
-                ${DAS_VULKAN_DIR}/include/dasVulkan/headers_to_bind.h
-                16
-                ${DAS_VULKAN_DIR}/src/module_generated
-                ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated.h
-                ${DAS_VULKAN_DIR}/src/binding_config.py
-                "${DAS_VULKAN_INCLUDE_DIRS}"
-                "${DAS_VULKAN_BINDER_DEPS}"
-                "${DAS_VULKAN_BINDER_EXTRA_OUTPUTS}"
-            )
-        ELSE()
-            MESSAGE(STATUS "dasBinder not found. Using pre-generated Vulkan bindings.")
-        ENDIF()
+        DAS_BINDER(
+            ${DAS_VULKAN_DIR}/include/dasVulkan/headers_to_bind.h
+            16
+            ${DAS_VULKAN_DIR}/src/module_generated
+            ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated.h
+            ${DAS_VULKAN_DIR}/src/binding_config.py
+            "${DAS_VULKAN_INCLUDE_DIRS}"
+            "${DAS_VULKAN_BINDER_DEPS}"
+            "${DAS_VULKAN_BINDER_EXTRA_OUTPUTS}"
+        )
 
         DAS_VULKAN_COMPILE_SHADER(${DAS_VULKAN_DIR}/example/vert.glsl vert)
         DAS_VULKAN_COMPILE_SHADER(${DAS_VULKAN_DIR}/example/frag.glsl frag)
