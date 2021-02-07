@@ -42,26 +42,26 @@ IF(NOT DAS_VULKAN_INCLUDED)
             ${DAS_VULKAN_DIR}/include/dasVulkan/module_custom.h
             ${DAS_VULKAN_DIR}/include/dasVulkan/module.h
             ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated.h
-            ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated_enums_1.h
-            ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated_enums_2.h
-            ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated_enums_3.h
-            ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated_enums_4.h
-            ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated_enums_5.h
-            ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated_enums_6.h
-            ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated_enums_7.h
-            ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated_enums_8.h
             ${DAS_VULKAN_DIR}/src/custom.cpp
             ${DAS_VULKAN_DIR}/src/module.cpp
             ${DAS_VULKAN_DIR}/src/module_boost_generated.inc
-            ${DAS_VULKAN_DIR}/src/module_generated.cpp
-            ${DAS_VULKAN_DIR}/src/module_generated_enums_1.cpp
-            ${DAS_VULKAN_DIR}/src/module_generated_enums_2.cpp
-            ${DAS_VULKAN_DIR}/src/module_generated_enums_3.cpp
-            ${DAS_VULKAN_DIR}/src/module_generated_enums_4.cpp
-            ${DAS_VULKAN_DIR}/src/module_generated_enums_5.cpp
-            ${DAS_VULKAN_DIR}/src/module_generated_enums_6.cpp
-            ${DAS_VULKAN_DIR}/src/module_generated_enums_7.cpp
-            ${DAS_VULKAN_DIR}/src/module_generated_enums_8.cpp
+            ${DAS_VULKAN_DIR}/src/module_generated_add.inc
+            ${DAS_VULKAN_DIR}/src/module_generated_add_1.cpp
+            ${DAS_VULKAN_DIR}/src/module_generated_add_2.cpp
+            ${DAS_VULKAN_DIR}/src/module_generated_add_3.cpp
+            ${DAS_VULKAN_DIR}/src/module_generated_add_4.cpp
+            ${DAS_VULKAN_DIR}/src/module_generated_add_5.cpp
+            ${DAS_VULKAN_DIR}/src/module_generated_add_6.cpp
+            ${DAS_VULKAN_DIR}/src/module_generated_add_7.cpp
+            ${DAS_VULKAN_DIR}/src/module_generated_add_8.cpp
+            ${DAS_VULKAN_DIR}/src/module_generated_add_9.cpp
+            ${DAS_VULKAN_DIR}/src/module_generated_add_10.cpp
+            ${DAS_VULKAN_DIR}/src/module_generated_add_11.cpp
+            ${DAS_VULKAN_DIR}/src/module_generated_add_12.cpp
+            ${DAS_VULKAN_DIR}/src/module_generated_add_13.cpp
+            ${DAS_VULKAN_DIR}/src/module_generated_add_14.cpp
+            ${DAS_VULKAN_DIR}/src/module_generated_add_15.cpp
+            ${DAS_VULKAN_DIR}/src/module_generated_add_16.cpp
         )
 
         ADD_MODULE_LIB(libDasModuleVulkan)
