@@ -38,6 +38,38 @@ IF(NOT DAS_VULKAN_INCLUDED)
     IF(NOT Vulkan_FOUND OR NOT glfw3_FOUND OR NOT DAS_VULKAN_GLSL_EXE)
         MESSAGE(STATUS "Prerequisites not found. Not building dasVulkan.")
     ELSE()
+        GET_TARGET_PROPERTY(DAS_VULKAN_INCLUDE_DIRS libDaScript INCLUDE_DIRECTORIES)
+        LIST(APPEND DAS_VULKAN_INCLUDE_DIRS
+            ${Vulkan_INCLUDE_DIR}
+            ${glfw_INCLUDE_DIR}
+        )
+
+        SET(DAS_VULKAN_HEADERS_TO_BIND
+            ${DAS_VULKAN_DIR}/include/dasVulkan/headers_to_bind.h
+        )
+
+        SET(DAS_VULKAN_BINDER_DEPS
+            ${DAS_VULKAN_DIR}/src/boost_generator.py
+            ${DAS_VULKAN_DIR}/src/boost_preamble.das
+        )
+        SET(DAS_VULKAN_BINDER_EXTRA_OUTPUTS
+            ${DAS_VULKAN_DIR}/daslib/internal/generated.das
+            ${DAS_VULKAN_DIR}/src/module_boost_generated.inc
+        )
+
+        SET(DAS_VULKAN_GENERATED_CPP)
+        DAS_BINDER(
+            ${DAS_VULKAN_DIR}/include/dasVulkan/headers_to_bind.h
+            16
+            ${DAS_VULKAN_DIR}/src/module_generated
+            DAS_VULKAN_GENERATED_CPP
+            ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated.h
+            ${DAS_VULKAN_DIR}/src/binding_config.py
+            "${DAS_VULKAN_INCLUDE_DIRS}"
+            "${DAS_VULKAN_BINDER_DEPS}"
+            "${DAS_VULKAN_BINDER_EXTRA_OUTPUTS}"
+        )
+
         SET(DAS_VULKAN_MODULE_SRC
             ${DAS_VULKAN_DIR}/daslib/internal/generated.das
             ${DAS_VULKAN_DIR}/include/dasVulkan/headers_to_bind.h
@@ -48,22 +80,7 @@ IF(NOT DAS_VULKAN_INCLUDED)
             ${DAS_VULKAN_DIR}/src/module.cpp
             ${DAS_VULKAN_DIR}/src/module_boost_generated.inc
             ${DAS_VULKAN_DIR}/src/module_generated.inc
-            ${DAS_VULKAN_DIR}/src/module_generated_1.cpp
-            ${DAS_VULKAN_DIR}/src/module_generated_2.cpp
-            ${DAS_VULKAN_DIR}/src/module_generated_3.cpp
-            ${DAS_VULKAN_DIR}/src/module_generated_4.cpp
-            ${DAS_VULKAN_DIR}/src/module_generated_5.cpp
-            ${DAS_VULKAN_DIR}/src/module_generated_6.cpp
-            ${DAS_VULKAN_DIR}/src/module_generated_7.cpp
-            ${DAS_VULKAN_DIR}/src/module_generated_8.cpp
-            ${DAS_VULKAN_DIR}/src/module_generated_9.cpp
-            ${DAS_VULKAN_DIR}/src/module_generated_10.cpp
-            ${DAS_VULKAN_DIR}/src/module_generated_11.cpp
-            ${DAS_VULKAN_DIR}/src/module_generated_12.cpp
-            ${DAS_VULKAN_DIR}/src/module_generated_13.cpp
-            ${DAS_VULKAN_DIR}/src/module_generated_14.cpp
-            ${DAS_VULKAN_DIR}/src/module_generated_15.cpp
-            ${DAS_VULKAN_DIR}/src/module_generated_16.cpp
+            ${DAS_VULKAN_GENERATED_CPP}
         )
 
         ADD_MODULE_LIB(libDasModuleVulkan)
@@ -83,31 +100,6 @@ IF(NOT DAS_VULKAN_INCLUDED)
         )
         SETUP_CPP11(libDasModuleVulkan)
         
-        GET_TARGET_PROPERTY(DAS_VULKAN_INCLUDE_DIRS libDasModuleVulkan INCLUDE_DIRECTORIES)
-
-        SET(DAS_VULKAN_HEADERS_TO_BIND
-            ${DAS_VULKAN_DIR}/include/dasVulkan/headers_to_bind.h
-        )
-
-        SET(DAS_VULKAN_BINDER_DEPS
-            ${DAS_VULKAN_DIR}/src/boost_generator.py
-            ${DAS_VULKAN_DIR}/src/boost_preamble.das
-        )
-        SET(DAS_VULKAN_BINDER_EXTRA_OUTPUTS
-            ${DAS_VULKAN_DIR}/daslib/internal/generated.das
-            ${DAS_VULKAN_DIR}/src/module_boost_generated.inc
-        )
-
-        DAS_BINDER(
-            ${DAS_VULKAN_DIR}/include/dasVulkan/headers_to_bind.h
-            16
-            ${DAS_VULKAN_DIR}/src/module_generated
-            ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated.h
-            ${DAS_VULKAN_DIR}/src/binding_config.py
-            "${DAS_VULKAN_INCLUDE_DIRS}"
-            "${DAS_VULKAN_BINDER_DEPS}"
-            "${DAS_VULKAN_BINDER_EXTRA_OUTPUTS}"
-        )
 
         DAS_VULKAN_COMPILE_SHADER(${DAS_VULKAN_DIR}/example/vert.glsl vert)
         DAS_VULKAN_COMPILE_SHADER(${DAS_VULKAN_DIR}/example/frag.glsl frag)
