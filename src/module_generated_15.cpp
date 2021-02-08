@@ -933,7 +933,7 @@ struct GLFWgamepadstateAnnotation
     }
 };
 
-void addVulkanGenerated_15(Module & module, ModuleLibrary & lib);
+void addVulkanGenerated_15(Module & module, ModuleLibrary & lib)
 
     //
     // enums

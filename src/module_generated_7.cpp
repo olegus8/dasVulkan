@@ -874,7 +874,7 @@ struct VkDisplayPlaneInfo2KHRAnnotation
     }
 };
 
-void addVulkanGenerated_7(Module & module, ModuleLibrary & lib);
+void addVulkanGenerated_7(Module & module, ModuleLibrary & lib)
 
     //
     // enums

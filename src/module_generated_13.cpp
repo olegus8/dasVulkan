@@ -893,7 +893,7 @@ struct VkPhysicalDeviceDeviceGeneratedCommandsPropertiesNVAnnotation
     }
 };
 
-void addVulkanGenerated_13(Module & module, ModuleLibrary & lib);
+void addVulkanGenerated_13(Module & module, ModuleLibrary & lib)
 
     //
     // enums

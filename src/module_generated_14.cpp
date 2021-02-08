@@ -885,7 +885,7 @@ struct VkPhysicalDeviceFragmentDensityMap2FeaturesEXTAnnotation
     }
 };
 
-void addVulkanGenerated_14(Module & module, ModuleLibrary & lib);
+void addVulkanGenerated_14(Module & module, ModuleLibrary & lib)
 
     //
     // enums

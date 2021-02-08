@@ -871,7 +871,7 @@ struct VkPhysicalDeviceMemoryProperties2Annotation
     }
 };
 
-void addVulkanGenerated_3(Module & module, ModuleLibrary & lib);
+void addVulkanGenerated_3(Module & module, ModuleLibrary & lib)
 
     //
     // enums
