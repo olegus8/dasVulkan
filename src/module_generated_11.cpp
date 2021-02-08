@@ -935,34 +935,34 @@ void addVulkanGenerated_11(Module & module, ModuleLibrary & lib) {{
     // structs
     //
 
-    addAnnotation(make_smart<VkPhysicalDeviceImageDrmFormatModifierInfoEXTAnnotation>(lib));
-    addAnnotation(make_smart<VkImageDrmFormatModifierListCreateInfoEXTAnnotation>(lib));
-    addAnnotation(make_smart<VkImageDrmFormatModifierExplicitCreateInfoEXTAnnotation>(lib));
-    addAnnotation(make_smart<VkImageDrmFormatModifierPropertiesEXTAnnotation>(lib));
-    addAnnotation(make_smart<VkValidationCacheCreateInfoEXTAnnotation>(lib));
-    addAnnotation(make_smart<VkShaderModuleValidationCacheCreateInfoEXTAnnotation>(lib));
-    addAnnotation(make_smart<VkShadingRatePaletteNVAnnotation>(lib));
-    addAnnotation(make_smart<VkPipelineViewportShadingRateImageStateCreateInfoNVAnnotation>(lib));
-    addAnnotation(make_smart<VkPhysicalDeviceShadingRateImageFeaturesNVAnnotation>(lib));
-    addAnnotation(make_smart<VkPhysicalDeviceShadingRateImagePropertiesNVAnnotation>(lib));
-    addAnnotation(make_smart<VkCoarseSampleLocationNVAnnotation>(lib));
-    addAnnotation(make_smart<VkCoarseSampleOrderCustomNVAnnotation>(lib));
-    addAnnotation(make_smart<VkPipelineViewportCoarseSampleOrderStateCreateInfoNVAnnotation>(lib));
-    addAnnotation(make_smart<VkRayTracingShaderGroupCreateInfoNVAnnotation>(lib));
-    addAnnotation(make_smart<VkRayTracingPipelineCreateInfoNVAnnotation>(lib));
-    addAnnotation(make_smart<VkGeometryTrianglesNVAnnotation>(lib));
-    addAnnotation(make_smart<VkGeometryAABBNVAnnotation>(lib));
-    addAnnotation(make_smart<VkGeometryDataNVAnnotation>(lib));
-    addAnnotation(make_smart<VkGeometryNVAnnotation>(lib));
-    addAnnotation(make_smart<VkAccelerationStructureInfoNVAnnotation>(lib));
-    addAnnotation(make_smart<VkAccelerationStructureCreateInfoNVAnnotation>(lib));
-    addAnnotation(make_smart<VkBindAccelerationStructureMemoryInfoNVAnnotation>(lib));
-    addAnnotation(make_smart<VkWriteDescriptorSetAccelerationStructureNVAnnotation>(lib));
-    addAnnotation(make_smart<VkAccelerationStructureMemoryRequirementsInfoNVAnnotation>(lib));
-    addAnnotation(make_smart<VkPhysicalDeviceRayTracingPropertiesNVAnnotation>(lib));
-    addAnnotation(make_smart<VkTransformMatrixKHRAnnotation>(lib));
-    addAnnotation(make_smart<VkAabbPositionsKHRAnnotation>(lib));
-    addAnnotation(make_smart<VkAccelerationStructureInstanceKHRAnnotation>(lib));
+    module.addAnnotation(make_smart<VkPhysicalDeviceImageDrmFormatModifierInfoEXTAnnotation>(lib));
+    module.addAnnotation(make_smart<VkImageDrmFormatModifierListCreateInfoEXTAnnotation>(lib));
+    module.addAnnotation(make_smart<VkImageDrmFormatModifierExplicitCreateInfoEXTAnnotation>(lib));
+    module.addAnnotation(make_smart<VkImageDrmFormatModifierPropertiesEXTAnnotation>(lib));
+    module.addAnnotation(make_smart<VkValidationCacheCreateInfoEXTAnnotation>(lib));
+    module.addAnnotation(make_smart<VkShaderModuleValidationCacheCreateInfoEXTAnnotation>(lib));
+    module.addAnnotation(make_smart<VkShadingRatePaletteNVAnnotation>(lib));
+    module.addAnnotation(make_smart<VkPipelineViewportShadingRateImageStateCreateInfoNVAnnotation>(lib));
+    module.addAnnotation(make_smart<VkPhysicalDeviceShadingRateImageFeaturesNVAnnotation>(lib));
+    module.addAnnotation(make_smart<VkPhysicalDeviceShadingRateImagePropertiesNVAnnotation>(lib));
+    module.addAnnotation(make_smart<VkCoarseSampleLocationNVAnnotation>(lib));
+    module.addAnnotation(make_smart<VkCoarseSampleOrderCustomNVAnnotation>(lib));
+    module.addAnnotation(make_smart<VkPipelineViewportCoarseSampleOrderStateCreateInfoNVAnnotation>(lib));
+    module.addAnnotation(make_smart<VkRayTracingShaderGroupCreateInfoNVAnnotation>(lib));
+    module.addAnnotation(make_smart<VkRayTracingPipelineCreateInfoNVAnnotation>(lib));
+    module.addAnnotation(make_smart<VkGeometryTrianglesNVAnnotation>(lib));
+    module.addAnnotation(make_smart<VkGeometryAABBNVAnnotation>(lib));
+    module.addAnnotation(make_smart<VkGeometryDataNVAnnotation>(lib));
+    module.addAnnotation(make_smart<VkGeometryNVAnnotation>(lib));
+    module.addAnnotation(make_smart<VkAccelerationStructureInfoNVAnnotation>(lib));
+    module.addAnnotation(make_smart<VkAccelerationStructureCreateInfoNVAnnotation>(lib));
+    module.addAnnotation(make_smart<VkBindAccelerationStructureMemoryInfoNVAnnotation>(lib));
+    module.addAnnotation(make_smart<VkWriteDescriptorSetAccelerationStructureNVAnnotation>(lib));
+    module.addAnnotation(make_smart<VkAccelerationStructureMemoryRequirementsInfoNVAnnotation>(lib));
+    module.addAnnotation(make_smart<VkPhysicalDeviceRayTracingPropertiesNVAnnotation>(lib));
+    module.addAnnotation(make_smart<VkTransformMatrixKHRAnnotation>(lib));
+    module.addAnnotation(make_smart<VkAabbPositionsKHRAnnotation>(lib));
+    module.addAnnotation(make_smart<VkAccelerationStructureInstanceKHRAnnotation>(lib));
     
     addExtern<DAS_BIND_FUN(VkAccelerationStructureInstanceKHR_get_instanceCustomIndex)>(*this, lib, "VkAccelerationStructureInstanceKHR_get_instanceCustomIndex",
         SideEffects::none, "{field.getter_name}");
@@ -983,12 +983,12 @@ void addVulkanGenerated_11(Module & module, ModuleLibrary & lib) {{
         SideEffects::none, "{field.getter_name}");
     addExtern<DAS_BIND_FUN(VkAccelerationStructureInstanceKHR_set_flags)>(*this, lib, "VkAccelerationStructureInstanceKHR_set_flags",
         SideEffects::modifyArgument, "{field.setter_name}");
-    addAnnotation(make_smart<VkPhysicalDeviceRepresentativeFragmentTestFeaturesNVAnnotation>(lib));
-    addAnnotation(make_smart<VkPipelineRepresentativeFragmentTestStateCreateInfoNVAnnotation>(lib));
-    addAnnotation(make_smart<VkPhysicalDeviceImageViewImageFormatInfoEXTAnnotation>(lib));
-    addAnnotation(make_smart<VkFilterCubicImageViewImageFormatPropertiesEXTAnnotation>(lib));
-    addAnnotation(make_smart<VkDeviceQueueGlobalPriorityCreateInfoEXTAnnotation>(lib));
-    addAnnotation(make_smart<VkImportMemoryHostPointerInfoEXTAnnotation>(lib));
+    module.addAnnotation(make_smart<VkPhysicalDeviceRepresentativeFragmentTestFeaturesNVAnnotation>(lib));
+    module.addAnnotation(make_smart<VkPipelineRepresentativeFragmentTestStateCreateInfoNVAnnotation>(lib));
+    module.addAnnotation(make_smart<VkPhysicalDeviceImageViewImageFormatInfoEXTAnnotation>(lib));
+    module.addAnnotation(make_smart<VkFilterCubicImageViewImageFormatPropertiesEXTAnnotation>(lib));
+    module.addAnnotation(make_smart<VkDeviceQueueGlobalPriorityCreateInfoEXTAnnotation>(lib));
+    module.addAnnotation(make_smart<VkImportMemoryHostPointerInfoEXTAnnotation>(lib));
 
     //
     // functions
