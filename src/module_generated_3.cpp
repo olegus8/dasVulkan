@@ -939,91 +939,91 @@ void addVulkanGenerated_3(Module & module, ModuleLibrary & lib) {{
     // functions
     //
 
-    addExtern<DAS_BIND_FUN(vkCreateImage)>(*this, lib, "vkCreateImage",
+    addExtern<DAS_BIND_FUN(vkCreateImage)>(module, lib, "vkCreateImage",
         SideEffects::worstDefault, "vkCreateImage");
-    addExtern<DAS_BIND_FUN(vkDestroyImage)>(*this, lib, "vkDestroyImage",
+    addExtern<DAS_BIND_FUN(vkDestroyImage)>(module, lib, "vkDestroyImage",
         SideEffects::worstDefault, "vkDestroyImage");
-    addExtern<DAS_BIND_FUN(vkGetImageSubresourceLayout)>(*this, lib, "vkGetImageSubresourceLayout",
+    addExtern<DAS_BIND_FUN(vkGetImageSubresourceLayout)>(module, lib, "vkGetImageSubresourceLayout",
         SideEffects::worstDefault, "vkGetImageSubresourceLayout");
-    addExtern<DAS_BIND_FUN(vkCreateImageView)>(*this, lib, "vkCreateImageView",
+    addExtern<DAS_BIND_FUN(vkCreateImageView)>(module, lib, "vkCreateImageView",
         SideEffects::worstDefault, "vkCreateImageView");
-    addExtern<DAS_BIND_FUN(vkDestroyImageView)>(*this, lib, "vkDestroyImageView",
+    addExtern<DAS_BIND_FUN(vkDestroyImageView)>(module, lib, "vkDestroyImageView",
         SideEffects::worstDefault, "vkDestroyImageView");
-    addExtern<DAS_BIND_FUN(vkCreateShaderModule)>(*this, lib, "vkCreateShaderModule",
+    addExtern<DAS_BIND_FUN(vkCreateShaderModule)>(module, lib, "vkCreateShaderModule",
         SideEffects::worstDefault, "vkCreateShaderModule");
-    addExtern<DAS_BIND_FUN(vkDestroyShaderModule)>(*this, lib, "vkDestroyShaderModule",
+    addExtern<DAS_BIND_FUN(vkDestroyShaderModule)>(module, lib, "vkDestroyShaderModule",
         SideEffects::worstDefault, "vkDestroyShaderModule");
-    addExtern<DAS_BIND_FUN(vkCreatePipelineCache)>(*this, lib, "vkCreatePipelineCache",
+    addExtern<DAS_BIND_FUN(vkCreatePipelineCache)>(module, lib, "vkCreatePipelineCache",
         SideEffects::worstDefault, "vkCreatePipelineCache");
-    addExtern<DAS_BIND_FUN(vkDestroyPipelineCache)>(*this, lib, "vkDestroyPipelineCache",
+    addExtern<DAS_BIND_FUN(vkDestroyPipelineCache)>(module, lib, "vkDestroyPipelineCache",
         SideEffects::worstDefault, "vkDestroyPipelineCache");
-    addExtern<DAS_BIND_FUN(vkGetPipelineCacheData)>(*this, lib, "vkGetPipelineCacheData",
+    addExtern<DAS_BIND_FUN(vkGetPipelineCacheData)>(module, lib, "vkGetPipelineCacheData",
         SideEffects::worstDefault, "vkGetPipelineCacheData");
-    addExtern<DAS_BIND_FUN(vkMergePipelineCaches)>(*this, lib, "vkMergePipelineCaches",
+    addExtern<DAS_BIND_FUN(vkMergePipelineCaches)>(module, lib, "vkMergePipelineCaches",
         SideEffects::worstDefault, "vkMergePipelineCaches");
-    addExtern<DAS_BIND_FUN(vkCreateGraphicsPipelines)>(*this, lib, "vkCreateGraphicsPipelines",
+    addExtern<DAS_BIND_FUN(vkCreateGraphicsPipelines)>(module, lib, "vkCreateGraphicsPipelines",
         SideEffects::worstDefault, "vkCreateGraphicsPipelines");
-    addExtern<DAS_BIND_FUN(vkCreateComputePipelines)>(*this, lib, "vkCreateComputePipelines",
+    addExtern<DAS_BIND_FUN(vkCreateComputePipelines)>(module, lib, "vkCreateComputePipelines",
         SideEffects::worstDefault, "vkCreateComputePipelines");
-    addExtern<DAS_BIND_FUN(vkDestroyPipeline)>(*this, lib, "vkDestroyPipeline",
+    addExtern<DAS_BIND_FUN(vkDestroyPipeline)>(module, lib, "vkDestroyPipeline",
         SideEffects::worstDefault, "vkDestroyPipeline");
-    addExtern<DAS_BIND_FUN(vkCreatePipelineLayout)>(*this, lib, "vkCreatePipelineLayout",
+    addExtern<DAS_BIND_FUN(vkCreatePipelineLayout)>(module, lib, "vkCreatePipelineLayout",
         SideEffects::worstDefault, "vkCreatePipelineLayout");
-    addExtern<DAS_BIND_FUN(vkDestroyPipelineLayout)>(*this, lib, "vkDestroyPipelineLayout",
+    addExtern<DAS_BIND_FUN(vkDestroyPipelineLayout)>(module, lib, "vkDestroyPipelineLayout",
         SideEffects::worstDefault, "vkDestroyPipelineLayout");
-    addExtern<DAS_BIND_FUN(vkCreateSampler)>(*this, lib, "vkCreateSampler",
+    addExtern<DAS_BIND_FUN(vkCreateSampler)>(module, lib, "vkCreateSampler",
         SideEffects::worstDefault, "vkCreateSampler");
-    addExtern<DAS_BIND_FUN(vkDestroySampler)>(*this, lib, "vkDestroySampler",
+    addExtern<DAS_BIND_FUN(vkDestroySampler)>(module, lib, "vkDestroySampler",
         SideEffects::worstDefault, "vkDestroySampler");
 
     //
     // macro constants
     //
 
-    addConstant(*this,"GLFW_KEY_RIGHT_ALT",346);
-    addConstant(*this,"GLFW_KEY_RIGHT_SUPER",347);
-    addConstant(*this,"GLFW_KEY_MENU",348);
-    addConstant(*this,"GLFW_KEY_LAST",GLFW_KEY_MENU);
-    addConstant(*this,"GLFW_MOD_SHIFT",0x0001);
-    addConstant(*this,"GLFW_MOD_CONTROL",0x0002);
-    addConstant(*this,"GLFW_MOD_ALT",0x0004);
-    addConstant(*this,"GLFW_MOD_SUPER",0x0008);
-    addConstant(*this,"GLFW_MOD_CAPS_LOCK",0x0010);
-    addConstant(*this,"GLFW_MOD_NUM_LOCK",0x0020);
-    addConstant(*this,"GLFW_MOUSE_BUTTON_1",0);
-    addConstant(*this,"GLFW_MOUSE_BUTTON_2",1);
-    addConstant(*this,"GLFW_MOUSE_BUTTON_3",2);
-    addConstant(*this,"GLFW_MOUSE_BUTTON_4",3);
-    addConstant(*this,"GLFW_MOUSE_BUTTON_5",4);
-    addConstant(*this,"GLFW_MOUSE_BUTTON_6",5);
-    addConstant(*this,"GLFW_MOUSE_BUTTON_7",6);
-    addConstant(*this,"GLFW_MOUSE_BUTTON_8",7);
-    addConstant(*this,"GLFW_MOUSE_BUTTON_LAST",GLFW_MOUSE_BUTTON_8);
-    addConstant(*this,"GLFW_MOUSE_BUTTON_LEFT",GLFW_MOUSE_BUTTON_1);
-    addConstant(*this,"GLFW_MOUSE_BUTTON_RIGHT",GLFW_MOUSE_BUTTON_2);
-    addConstant(*this,"GLFW_MOUSE_BUTTON_MIDDLE",GLFW_MOUSE_BUTTON_3);
-    addConstant(*this,"GLFW_JOYSTICK_1",0);
-    addConstant(*this,"GLFW_JOYSTICK_2",1);
-    addConstant(*this,"GLFW_JOYSTICK_3",2);
-    addConstant(*this,"GLFW_JOYSTICK_4",3);
-    addConstant(*this,"GLFW_JOYSTICK_5",4);
-    addConstant(*this,"GLFW_JOYSTICK_6",5);
-    addConstant(*this,"GLFW_JOYSTICK_7",6);
-    addConstant(*this,"GLFW_JOYSTICK_8",7);
-    addConstant(*this,"GLFW_JOYSTICK_9",8);
-    addConstant(*this,"GLFW_JOYSTICK_10",9);
-    addConstant(*this,"GLFW_JOYSTICK_11",10);
-    addConstant(*this,"GLFW_JOYSTICK_12",11);
-    addConstant(*this,"GLFW_JOYSTICK_13",12);
-    addConstant(*this,"GLFW_JOYSTICK_14",13);
-    addConstant(*this,"GLFW_JOYSTICK_15",14);
-    addConstant(*this,"GLFW_JOYSTICK_16",15);
-    addConstant(*this,"GLFW_JOYSTICK_LAST",GLFW_JOYSTICK_16);
-    addConstant(*this,"GLFW_GAMEPAD_BUTTON_A",0);
-    addConstant(*this,"GLFW_GAMEPAD_BUTTON_B",1);
-    addConstant(*this,"GLFW_GAMEPAD_BUTTON_X",2);
-    addConstant(*this,"GLFW_GAMEPAD_BUTTON_Y",3);
-    addConstant(*this,"GLFW_GAMEPAD_BUTTON_LEFT_BUMPER",4);
-    addConstant(*this,"GLFW_GAMEPAD_BUTTON_RIGHT_BUMPER",5);
-    addConstant(*this,"GLFW_GAMEPAD_BUTTON_BACK",6);
+    addConstant(module, "GLFW_KEY_RIGHT_ALT", 346);
+    addConstant(module, "GLFW_KEY_RIGHT_SUPER", 347);
+    addConstant(module, "GLFW_KEY_MENU", 348);
+    addConstant(module, "GLFW_KEY_LAST", GLFW_KEY_MENU);
+    addConstant(module, "GLFW_MOD_SHIFT", 0x0001);
+    addConstant(module, "GLFW_MOD_CONTROL", 0x0002);
+    addConstant(module, "GLFW_MOD_ALT", 0x0004);
+    addConstant(module, "GLFW_MOD_SUPER", 0x0008);
+    addConstant(module, "GLFW_MOD_CAPS_LOCK", 0x0010);
+    addConstant(module, "GLFW_MOD_NUM_LOCK", 0x0020);
+    addConstant(module, "GLFW_MOUSE_BUTTON_1", 0);
+    addConstant(module, "GLFW_MOUSE_BUTTON_2", 1);
+    addConstant(module, "GLFW_MOUSE_BUTTON_3", 2);
+    addConstant(module, "GLFW_MOUSE_BUTTON_4", 3);
+    addConstant(module, "GLFW_MOUSE_BUTTON_5", 4);
+    addConstant(module, "GLFW_MOUSE_BUTTON_6", 5);
+    addConstant(module, "GLFW_MOUSE_BUTTON_7", 6);
+    addConstant(module, "GLFW_MOUSE_BUTTON_8", 7);
+    addConstant(module, "GLFW_MOUSE_BUTTON_LAST", GLFW_MOUSE_BUTTON_8);
+    addConstant(module, "GLFW_MOUSE_BUTTON_LEFT", GLFW_MOUSE_BUTTON_1);
+    addConstant(module, "GLFW_MOUSE_BUTTON_RIGHT", GLFW_MOUSE_BUTTON_2);
+    addConstant(module, "GLFW_MOUSE_BUTTON_MIDDLE", GLFW_MOUSE_BUTTON_3);
+    addConstant(module, "GLFW_JOYSTICK_1", 0);
+    addConstant(module, "GLFW_JOYSTICK_2", 1);
+    addConstant(module, "GLFW_JOYSTICK_3", 2);
+    addConstant(module, "GLFW_JOYSTICK_4", 3);
+    addConstant(module, "GLFW_JOYSTICK_5", 4);
+    addConstant(module, "GLFW_JOYSTICK_6", 5);
+    addConstant(module, "GLFW_JOYSTICK_7", 6);
+    addConstant(module, "GLFW_JOYSTICK_8", 7);
+    addConstant(module, "GLFW_JOYSTICK_9", 8);
+    addConstant(module, "GLFW_JOYSTICK_10", 9);
+    addConstant(module, "GLFW_JOYSTICK_11", 10);
+    addConstant(module, "GLFW_JOYSTICK_12", 11);
+    addConstant(module, "GLFW_JOYSTICK_13", 12);
+    addConstant(module, "GLFW_JOYSTICK_14", 13);
+    addConstant(module, "GLFW_JOYSTICK_15", 14);
+    addConstant(module, "GLFW_JOYSTICK_16", 15);
+    addConstant(module, "GLFW_JOYSTICK_LAST", GLFW_JOYSTICK_16);
+    addConstant(module, "GLFW_GAMEPAD_BUTTON_A", 0);
+    addConstant(module, "GLFW_GAMEPAD_BUTTON_B", 1);
+    addConstant(module, "GLFW_GAMEPAD_BUTTON_X", 2);
+    addConstant(module, "GLFW_GAMEPAD_BUTTON_Y", 3);
+    addConstant(module, "GLFW_GAMEPAD_BUTTON_LEFT_BUMPER", 4);
+    addConstant(module, "GLFW_GAMEPAD_BUTTON_RIGHT_BUMPER", 5);
+    addConstant(module, "GLFW_GAMEPAD_BUTTON_BACK", 6);
 };

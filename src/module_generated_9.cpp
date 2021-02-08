@@ -937,91 +937,91 @@ void addVulkanGenerated_9(Module & module, ModuleLibrary & lib) {{
     // functions
     //
 
-    addExtern<DAS_BIND_FUN(vkUpdateDescriptorSetWithTemplate)>(*this, lib, "vkUpdateDescriptorSetWithTemplate",
+    addExtern<DAS_BIND_FUN(vkUpdateDescriptorSetWithTemplate)>(module, lib, "vkUpdateDescriptorSetWithTemplate",
         SideEffects::worstDefault, "vkUpdateDescriptorSetWithTemplate");
-    addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceExternalBufferProperties)>(*this, lib, "vkGetPhysicalDeviceExternalBufferProperties",
+    addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceExternalBufferProperties)>(module, lib, "vkGetPhysicalDeviceExternalBufferProperties",
         SideEffects::worstDefault, "vkGetPhysicalDeviceExternalBufferProperties");
-    addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceExternalFenceProperties)>(*this, lib, "vkGetPhysicalDeviceExternalFenceProperties",
+    addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceExternalFenceProperties)>(module, lib, "vkGetPhysicalDeviceExternalFenceProperties",
         SideEffects::worstDefault, "vkGetPhysicalDeviceExternalFenceProperties");
-    addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceExternalSemaphoreProperties)>(*this, lib, "vkGetPhysicalDeviceExternalSemaphoreProperties",
+    addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceExternalSemaphoreProperties)>(module, lib, "vkGetPhysicalDeviceExternalSemaphoreProperties",
         SideEffects::worstDefault, "vkGetPhysicalDeviceExternalSemaphoreProperties");
-    addExtern<DAS_BIND_FUN(vkGetDescriptorSetLayoutSupport)>(*this, lib, "vkGetDescriptorSetLayoutSupport",
+    addExtern<DAS_BIND_FUN(vkGetDescriptorSetLayoutSupport)>(module, lib, "vkGetDescriptorSetLayoutSupport",
         SideEffects::worstDefault, "vkGetDescriptorSetLayoutSupport");
-    addExtern<DAS_BIND_FUN(vkCmdDrawIndirectCount)>(*this, lib, "vkCmdDrawIndirectCount",
+    addExtern<DAS_BIND_FUN(vkCmdDrawIndirectCount)>(module, lib, "vkCmdDrawIndirectCount",
         SideEffects::worstDefault, "vkCmdDrawIndirectCount");
-    addExtern<DAS_BIND_FUN(vkCmdDrawIndexedIndirectCount)>(*this, lib, "vkCmdDrawIndexedIndirectCount",
+    addExtern<DAS_BIND_FUN(vkCmdDrawIndexedIndirectCount)>(module, lib, "vkCmdDrawIndexedIndirectCount",
         SideEffects::worstDefault, "vkCmdDrawIndexedIndirectCount");
-    addExtern<DAS_BIND_FUN(vkCreateRenderPass2)>(*this, lib, "vkCreateRenderPass2",
+    addExtern<DAS_BIND_FUN(vkCreateRenderPass2)>(module, lib, "vkCreateRenderPass2",
         SideEffects::worstDefault, "vkCreateRenderPass2");
-    addExtern<DAS_BIND_FUN(vkCmdBeginRenderPass2)>(*this, lib, "vkCmdBeginRenderPass2",
+    addExtern<DAS_BIND_FUN(vkCmdBeginRenderPass2)>(module, lib, "vkCmdBeginRenderPass2",
         SideEffects::worstDefault, "vkCmdBeginRenderPass2");
-    addExtern<DAS_BIND_FUN(vkCmdNextSubpass2)>(*this, lib, "vkCmdNextSubpass2",
+    addExtern<DAS_BIND_FUN(vkCmdNextSubpass2)>(module, lib, "vkCmdNextSubpass2",
         SideEffects::worstDefault, "vkCmdNextSubpass2");
-    addExtern<DAS_BIND_FUN(vkCmdEndRenderPass2)>(*this, lib, "vkCmdEndRenderPass2",
+    addExtern<DAS_BIND_FUN(vkCmdEndRenderPass2)>(module, lib, "vkCmdEndRenderPass2",
         SideEffects::worstDefault, "vkCmdEndRenderPass2");
-    addExtern<DAS_BIND_FUN(vkResetQueryPool)>(*this, lib, "vkResetQueryPool",
+    addExtern<DAS_BIND_FUN(vkResetQueryPool)>(module, lib, "vkResetQueryPool",
         SideEffects::worstDefault, "vkResetQueryPool");
-    addExtern<DAS_BIND_FUN(vkGetSemaphoreCounterValue)>(*this, lib, "vkGetSemaphoreCounterValue",
+    addExtern<DAS_BIND_FUN(vkGetSemaphoreCounterValue)>(module, lib, "vkGetSemaphoreCounterValue",
         SideEffects::worstDefault, "vkGetSemaphoreCounterValue");
-    addExtern<DAS_BIND_FUN(vkWaitSemaphores)>(*this, lib, "vkWaitSemaphores",
+    addExtern<DAS_BIND_FUN(vkWaitSemaphores)>(module, lib, "vkWaitSemaphores",
         SideEffects::worstDefault, "vkWaitSemaphores");
-    addExtern<DAS_BIND_FUN(vkSignalSemaphore)>(*this, lib, "vkSignalSemaphore",
+    addExtern<DAS_BIND_FUN(vkSignalSemaphore)>(module, lib, "vkSignalSemaphore",
         SideEffects::worstDefault, "vkSignalSemaphore");
-    addExtern<DAS_BIND_FUN(vkGetBufferDeviceAddress)>(*this, lib, "vkGetBufferDeviceAddress",
+    addExtern<DAS_BIND_FUN(vkGetBufferDeviceAddress)>(module, lib, "vkGetBufferDeviceAddress",
         SideEffects::worstDefault, "vkGetBufferDeviceAddress");
-    addExtern<DAS_BIND_FUN(vkGetBufferOpaqueCaptureAddress)>(*this, lib, "vkGetBufferOpaqueCaptureAddress",
+    addExtern<DAS_BIND_FUN(vkGetBufferOpaqueCaptureAddress)>(module, lib, "vkGetBufferOpaqueCaptureAddress",
         SideEffects::worstDefault, "vkGetBufferOpaqueCaptureAddress");
-    addExtern<DAS_BIND_FUN(vkGetDeviceMemoryOpaqueCaptureAddress)>(*this, lib, "vkGetDeviceMemoryOpaqueCaptureAddress",
+    addExtern<DAS_BIND_FUN(vkGetDeviceMemoryOpaqueCaptureAddress)>(module, lib, "vkGetDeviceMemoryOpaqueCaptureAddress",
         SideEffects::worstDefault, "vkGetDeviceMemoryOpaqueCaptureAddress");
 
     //
     // macro constants
     //
 
-    addConstant(*this,"VK_KHR_DRAW_INDIRECT_COUNT_SPEC_VERSION",1);
-    addConstant(*this,"VK_KHR_shader_subgroup_extended_types",1);
-    addConstant(*this,"VK_KHR_SHADER_SUBGROUP_EXTENDED_TYPES_SPEC_VERSION",1);
-    addConstant(*this,"VK_KHR_8bit_storage",1);
-    addConstant(*this,"VK_KHR_8BIT_STORAGE_SPEC_VERSION",1);
-    addConstant(*this,"VK_KHR_shader_atomic_int64",1);
-    addConstant(*this,"VK_KHR_SHADER_ATOMIC_INT64_SPEC_VERSION",1);
-    addConstant(*this,"VK_KHR_shader_clock",1);
-    addConstant(*this,"VK_KHR_SHADER_CLOCK_SPEC_VERSION",1);
-    addConstant(*this,"VK_KHR_driver_properties",1);
-    addConstant(*this,"VK_KHR_DRIVER_PROPERTIES_SPEC_VERSION",1);
-    addConstant(*this,"VK_MAX_DRIVER_NAME_SIZE_KHR",VK_MAX_DRIVER_NAME_SIZE);
-    addConstant(*this,"VK_MAX_DRIVER_INFO_SIZE_KHR",VK_MAX_DRIVER_INFO_SIZE);
-    addConstant(*this,"VK_KHR_shader_float_controls",1);
-    addConstant(*this,"VK_KHR_SHADER_FLOAT_CONTROLS_SPEC_VERSION",4);
-    addConstant(*this,"VK_KHR_depth_stencil_resolve",1);
-    addConstant(*this,"VK_KHR_DEPTH_STENCIL_RESOLVE_SPEC_VERSION",1);
-    addConstant(*this,"VK_KHR_swapchain_mutable_format",1);
-    addConstant(*this,"VK_KHR_SWAPCHAIN_MUTABLE_FORMAT_SPEC_VERSION",1);
-    addConstant(*this,"VK_KHR_timeline_semaphore",1);
-    addConstant(*this,"VK_KHR_TIMELINE_SEMAPHORE_SPEC_VERSION",2);
-    addConstant(*this,"VK_KHR_vulkan_memory_model",1);
-    addConstant(*this,"VK_KHR_VULKAN_MEMORY_MODEL_SPEC_VERSION",3);
-    addConstant(*this,"VK_KHR_shader_terminate_invocation",1);
-    addConstant(*this,"VK_KHR_SHADER_TERMINATE_INVOCATION_SPEC_VERSION",1);
-    addConstant(*this,"VK_KHR_fragment_shading_rate",1);
-    addConstant(*this,"VK_KHR_FRAGMENT_SHADING_RATE_SPEC_VERSION",1);
-    addConstant(*this,"VK_KHR_spirv_1_4",1);
-    addConstant(*this,"VK_KHR_SPIRV_1_4_SPEC_VERSION",1);
-    addConstant(*this,"VK_KHR_surface_protected_capabilities",1);
-    addConstant(*this,"VK_KHR_SURFACE_PROTECTED_CAPABILITIES_SPEC_VERSION",1);
-    addConstant(*this,"VK_KHR_separate_depth_stencil_layouts",1);
-    addConstant(*this,"VK_KHR_SEPARATE_DEPTH_STENCIL_LAYOUTS_SPEC_VERSION",1);
-    addConstant(*this,"VK_KHR_uniform_buffer_standard_layout",1);
-    addConstant(*this,"VK_KHR_UNIFORM_BUFFER_STANDARD_LAYOUT_SPEC_VERSION",1);
-    addConstant(*this,"VK_KHR_buffer_device_address",1);
-    addConstant(*this,"VK_KHR_BUFFER_DEVICE_ADDRESS_SPEC_VERSION",1);
-    addConstant(*this,"VK_KHR_deferred_host_operations",1);
-    addConstant(*this,"VK_KHR_DEFERRED_HOST_OPERATIONS_SPEC_VERSION",4);
-    addConstant(*this,"VK_KHR_pipeline_executable_properties",1);
-    addConstant(*this,"VK_KHR_PIPELINE_EXECUTABLE_PROPERTIES_SPEC_VERSION",1);
-    addConstant(*this,"VK_KHR_pipeline_library",1);
-    addConstant(*this,"VK_KHR_PIPELINE_LIBRARY_SPEC_VERSION",1);
-    addConstant(*this,"VK_KHR_shader_non_semantic_info",1);
-    addConstant(*this,"VK_KHR_SHADER_NON_SEMANTIC_INFO_SPEC_VERSION",1);
-    addConstant(*this,"VK_KHR_copy_commands2",1);
+    addConstant(module, "VK_KHR_DRAW_INDIRECT_COUNT_SPEC_VERSION", 1);
+    addConstant(module, "VK_KHR_shader_subgroup_extended_types", 1);
+    addConstant(module, "VK_KHR_SHADER_SUBGROUP_EXTENDED_TYPES_SPEC_VERSION", 1);
+    addConstant(module, "VK_KHR_8bit_storage", 1);
+    addConstant(module, "VK_KHR_8BIT_STORAGE_SPEC_VERSION", 1);
+    addConstant(module, "VK_KHR_shader_atomic_int64", 1);
+    addConstant(module, "VK_KHR_SHADER_ATOMIC_INT64_SPEC_VERSION", 1);
+    addConstant(module, "VK_KHR_shader_clock", 1);
+    addConstant(module, "VK_KHR_SHADER_CLOCK_SPEC_VERSION", 1);
+    addConstant(module, "VK_KHR_driver_properties", 1);
+    addConstant(module, "VK_KHR_DRIVER_PROPERTIES_SPEC_VERSION", 1);
+    addConstant(module, "VK_MAX_DRIVER_NAME_SIZE_KHR", VK_MAX_DRIVER_NAME_SIZE);
+    addConstant(module, "VK_MAX_DRIVER_INFO_SIZE_KHR", VK_MAX_DRIVER_INFO_SIZE);
+    addConstant(module, "VK_KHR_shader_float_controls", 1);
+    addConstant(module, "VK_KHR_SHADER_FLOAT_CONTROLS_SPEC_VERSION", 4);
+    addConstant(module, "VK_KHR_depth_stencil_resolve", 1);
+    addConstant(module, "VK_KHR_DEPTH_STENCIL_RESOLVE_SPEC_VERSION", 1);
+    addConstant(module, "VK_KHR_swapchain_mutable_format", 1);
+    addConstant(module, "VK_KHR_SWAPCHAIN_MUTABLE_FORMAT_SPEC_VERSION", 1);
+    addConstant(module, "VK_KHR_timeline_semaphore", 1);
+    addConstant(module, "VK_KHR_TIMELINE_SEMAPHORE_SPEC_VERSION", 2);
+    addConstant(module, "VK_KHR_vulkan_memory_model", 1);
+    addConstant(module, "VK_KHR_VULKAN_MEMORY_MODEL_SPEC_VERSION", 3);
+    addConstant(module, "VK_KHR_shader_terminate_invocation", 1);
+    addConstant(module, "VK_KHR_SHADER_TERMINATE_INVOCATION_SPEC_VERSION", 1);
+    addConstant(module, "VK_KHR_fragment_shading_rate", 1);
+    addConstant(module, "VK_KHR_FRAGMENT_SHADING_RATE_SPEC_VERSION", 1);
+    addConstant(module, "VK_KHR_spirv_1_4", 1);
+    addConstant(module, "VK_KHR_SPIRV_1_4_SPEC_VERSION", 1);
+    addConstant(module, "VK_KHR_surface_protected_capabilities", 1);
+    addConstant(module, "VK_KHR_SURFACE_PROTECTED_CAPABILITIES_SPEC_VERSION", 1);
+    addConstant(module, "VK_KHR_separate_depth_stencil_layouts", 1);
+    addConstant(module, "VK_KHR_SEPARATE_DEPTH_STENCIL_LAYOUTS_SPEC_VERSION", 1);
+    addConstant(module, "VK_KHR_uniform_buffer_standard_layout", 1);
+    addConstant(module, "VK_KHR_UNIFORM_BUFFER_STANDARD_LAYOUT_SPEC_VERSION", 1);
+    addConstant(module, "VK_KHR_buffer_device_address", 1);
+    addConstant(module, "VK_KHR_BUFFER_DEVICE_ADDRESS_SPEC_VERSION", 1);
+    addConstant(module, "VK_KHR_deferred_host_operations", 1);
+    addConstant(module, "VK_KHR_DEFERRED_HOST_OPERATIONS_SPEC_VERSION", 4);
+    addConstant(module, "VK_KHR_pipeline_executable_properties", 1);
+    addConstant(module, "VK_KHR_PIPELINE_EXECUTABLE_PROPERTIES_SPEC_VERSION", 1);
+    addConstant(module, "VK_KHR_pipeline_library", 1);
+    addConstant(module, "VK_KHR_PIPELINE_LIBRARY_SPEC_VERSION", 1);
+    addConstant(module, "VK_KHR_shader_non_semantic_info", 1);
+    addConstant(module, "VK_KHR_SHADER_NON_SEMANTIC_INFO_SPEC_VERSION", 1);
+    addConstant(module, "VK_KHR_copy_commands2", 1);
 };

@@ -962,88 +962,88 @@ void addVulkanGenerated_13(Module & module, ModuleLibrary & lib) {{
     // functions
     //
 
-    addExtern<DAS_BIND_FUN(glfwShowWindow)>(*this, lib, "glfwShowWindow",
+    addExtern<DAS_BIND_FUN(glfwShowWindow)>(module, lib, "glfwShowWindow",
         SideEffects::worstDefault, "glfwShowWindow");
-    addExtern<DAS_BIND_FUN(glfwHideWindow)>(*this, lib, "glfwHideWindow",
+    addExtern<DAS_BIND_FUN(glfwHideWindow)>(module, lib, "glfwHideWindow",
         SideEffects::worstDefault, "glfwHideWindow");
-    addExtern<DAS_BIND_FUN(glfwFocusWindow)>(*this, lib, "glfwFocusWindow",
+    addExtern<DAS_BIND_FUN(glfwFocusWindow)>(module, lib, "glfwFocusWindow",
         SideEffects::worstDefault, "glfwFocusWindow");
-    addExtern<DAS_BIND_FUN(glfwRequestWindowAttention)>(*this, lib, "glfwRequestWindowAttention",
+    addExtern<DAS_BIND_FUN(glfwRequestWindowAttention)>(module, lib, "glfwRequestWindowAttention",
         SideEffects::worstDefault, "glfwRequestWindowAttention");
-    addExtern<DAS_BIND_FUN(glfwGetWindowMonitor)>(*this, lib, "glfwGetWindowMonitor",
+    addExtern<DAS_BIND_FUN(glfwGetWindowMonitor)>(module, lib, "glfwGetWindowMonitor",
         SideEffects::worstDefault, "glfwGetWindowMonitor");
-    addExtern<DAS_BIND_FUN(glfwSetWindowMonitor)>(*this, lib, "glfwSetWindowMonitor",
+    addExtern<DAS_BIND_FUN(glfwSetWindowMonitor)>(module, lib, "glfwSetWindowMonitor",
         SideEffects::worstDefault, "glfwSetWindowMonitor");
-    addExtern<DAS_BIND_FUN(glfwGetWindowAttrib)>(*this, lib, "glfwGetWindowAttrib",
+    addExtern<DAS_BIND_FUN(glfwGetWindowAttrib)>(module, lib, "glfwGetWindowAttrib",
         SideEffects::worstDefault, "glfwGetWindowAttrib");
-    addExtern<DAS_BIND_FUN(glfwSetWindowAttrib)>(*this, lib, "glfwSetWindowAttrib",
+    addExtern<DAS_BIND_FUN(glfwSetWindowAttrib)>(module, lib, "glfwSetWindowAttrib",
         SideEffects::worstDefault, "glfwSetWindowAttrib");
-    addExtern<DAS_BIND_FUN(glfwGetWindowUserPointer)>(*this, lib, "glfwGetWindowUserPointer",
+    addExtern<DAS_BIND_FUN(glfwGetWindowUserPointer)>(module, lib, "glfwGetWindowUserPointer",
         SideEffects::worstDefault, "glfwGetWindowUserPointer");
-    addExtern<DAS_BIND_FUN(glfwPollEvents)>(*this, lib, "glfwPollEvents",
+    addExtern<DAS_BIND_FUN(glfwPollEvents)>(module, lib, "glfwPollEvents",
         SideEffects::worstDefault, "glfwPollEvents");
-    addExtern<DAS_BIND_FUN(glfwWaitEvents)>(*this, lib, "glfwWaitEvents",
+    addExtern<DAS_BIND_FUN(glfwWaitEvents)>(module, lib, "glfwWaitEvents",
         SideEffects::worstDefault, "glfwWaitEvents");
-    addExtern<DAS_BIND_FUN(glfwWaitEventsTimeout)>(*this, lib, "glfwWaitEventsTimeout",
+    addExtern<DAS_BIND_FUN(glfwWaitEventsTimeout)>(module, lib, "glfwWaitEventsTimeout",
         SideEffects::worstDefault, "glfwWaitEventsTimeout");
-    addExtern<DAS_BIND_FUN(glfwPostEmptyEvent)>(*this, lib, "glfwPostEmptyEvent",
+    addExtern<DAS_BIND_FUN(glfwPostEmptyEvent)>(module, lib, "glfwPostEmptyEvent",
         SideEffects::worstDefault, "glfwPostEmptyEvent");
-    addExtern<DAS_BIND_FUN(glfwGetInputMode)>(*this, lib, "glfwGetInputMode",
+    addExtern<DAS_BIND_FUN(glfwGetInputMode)>(module, lib, "glfwGetInputMode",
         SideEffects::worstDefault, "glfwGetInputMode");
-    addExtern<DAS_BIND_FUN(glfwSetInputMode)>(*this, lib, "glfwSetInputMode",
+    addExtern<DAS_BIND_FUN(glfwSetInputMode)>(module, lib, "glfwSetInputMode",
         SideEffects::worstDefault, "glfwSetInputMode");
-    addExtern<DAS_BIND_FUN(glfwRawMouseMotionSupported)>(*this, lib, "glfwRawMouseMotionSupported",
+    addExtern<DAS_BIND_FUN(glfwRawMouseMotionSupported)>(module, lib, "glfwRawMouseMotionSupported",
         SideEffects::worstDefault, "glfwRawMouseMotionSupported");
-    addExtern<DAS_BIND_FUN(glfwGetKeyName)>(*this, lib, "glfwGetKeyName",
+    addExtern<DAS_BIND_FUN(glfwGetKeyName)>(module, lib, "glfwGetKeyName",
         SideEffects::worstDefault, "glfwGetKeyName");
 
     //
     // macro constants
     //
 
-    addConstant(*this,"VK_NV_representative_fragment_test",1);
-    addConstant(*this,"VK_NV_REPRESENTATIVE_FRAGMENT_TEST_SPEC_VERSION",2);
-    addConstant(*this,"VK_EXT_filter_cubic",1);
-    addConstant(*this,"VK_EXT_FILTER_CUBIC_SPEC_VERSION",3);
-    addConstant(*this,"VK_QCOM_render_pass_shader_resolve",1);
-    addConstant(*this,"VK_QCOM_RENDER_PASS_SHADER_RESOLVE_SPEC_VERSION",4);
-    addConstant(*this,"VK_EXT_global_priority",1);
-    addConstant(*this,"VK_EXT_GLOBAL_PRIORITY_SPEC_VERSION",2);
-    addConstant(*this,"VK_EXT_external_memory_host",1);
-    addConstant(*this,"VK_EXT_EXTERNAL_MEMORY_HOST_SPEC_VERSION",1);
-    addConstant(*this,"VK_AMD_buffer_marker",1);
-    addConstant(*this,"VK_AMD_BUFFER_MARKER_SPEC_VERSION",1);
-    addConstant(*this,"VK_AMD_pipeline_compiler_control",1);
-    addConstant(*this,"VK_AMD_PIPELINE_COMPILER_CONTROL_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_calibrated_timestamps",1);
-    addConstant(*this,"VK_EXT_CALIBRATED_TIMESTAMPS_SPEC_VERSION",1);
-    addConstant(*this,"VK_AMD_shader_core_properties",1);
-    addConstant(*this,"VK_AMD_SHADER_CORE_PROPERTIES_SPEC_VERSION",2);
-    addConstant(*this,"VK_AMD_memory_overallocation_behavior",1);
-    addConstant(*this,"VK_AMD_MEMORY_OVERALLOCATION_BEHAVIOR_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_vertex_attribute_divisor",1);
-    addConstant(*this,"VK_EXT_VERTEX_ATTRIBUTE_DIVISOR_SPEC_VERSION",3);
-    addConstant(*this,"VK_EXT_pipeline_creation_feedback",1);
-    addConstant(*this,"VK_EXT_PIPELINE_CREATION_FEEDBACK_SPEC_VERSION",1);
-    addConstant(*this,"VK_NV_shader_subgroup_partitioned",1);
-    addConstant(*this,"VK_NV_SHADER_SUBGROUP_PARTITIONED_SPEC_VERSION",1);
-    addConstant(*this,"VK_NV_compute_shader_derivatives",1);
-    addConstant(*this,"VK_NV_COMPUTE_SHADER_DERIVATIVES_SPEC_VERSION",1);
-    addConstant(*this,"VK_NV_mesh_shader",1);
-    addConstant(*this,"VK_NV_MESH_SHADER_SPEC_VERSION",1);
-    addConstant(*this,"VK_NV_fragment_shader_barycentric",1);
-    addConstant(*this,"VK_NV_FRAGMENT_SHADER_BARYCENTRIC_SPEC_VERSION",1);
-    addConstant(*this,"VK_NV_shader_image_footprint",1);
-    addConstant(*this,"VK_NV_SHADER_IMAGE_FOOTPRINT_SPEC_VERSION",2);
-    addConstant(*this,"VK_NV_scissor_exclusive",1);
-    addConstant(*this,"VK_NV_SCISSOR_EXCLUSIVE_SPEC_VERSION",1);
-    addConstant(*this,"VK_NV_device_diagnostic_checkpoints",1);
-    addConstant(*this,"VK_NV_DEVICE_DIAGNOSTIC_CHECKPOINTS_SPEC_VERSION",2);
-    addConstant(*this,"VK_INTEL_shader_integer_functions2",1);
-    addConstant(*this,"VK_INTEL_SHADER_INTEGER_FUNCTIONS_2_SPEC_VERSION",1);
-    addConstant(*this,"VK_INTEL_performance_query",1);
-    addConstant(*this,"VK_INTEL_PERFORMANCE_QUERY_SPEC_VERSION",2);
-    addConstant(*this,"VK_EXT_pci_bus_info",1);
-    addConstant(*this,"VK_EXT_PCI_BUS_INFO_SPEC_VERSION",2);
-    addConstant(*this,"VK_AMD_display_native_hdr",1);
+    addConstant(module, "VK_NV_representative_fragment_test", 1);
+    addConstant(module, "VK_NV_REPRESENTATIVE_FRAGMENT_TEST_SPEC_VERSION", 2);
+    addConstant(module, "VK_EXT_filter_cubic", 1);
+    addConstant(module, "VK_EXT_FILTER_CUBIC_SPEC_VERSION", 3);
+    addConstant(module, "VK_QCOM_render_pass_shader_resolve", 1);
+    addConstant(module, "VK_QCOM_RENDER_PASS_SHADER_RESOLVE_SPEC_VERSION", 4);
+    addConstant(module, "VK_EXT_global_priority", 1);
+    addConstant(module, "VK_EXT_GLOBAL_PRIORITY_SPEC_VERSION", 2);
+    addConstant(module, "VK_EXT_external_memory_host", 1);
+    addConstant(module, "VK_EXT_EXTERNAL_MEMORY_HOST_SPEC_VERSION", 1);
+    addConstant(module, "VK_AMD_buffer_marker", 1);
+    addConstant(module, "VK_AMD_BUFFER_MARKER_SPEC_VERSION", 1);
+    addConstant(module, "VK_AMD_pipeline_compiler_control", 1);
+    addConstant(module, "VK_AMD_PIPELINE_COMPILER_CONTROL_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_calibrated_timestamps", 1);
+    addConstant(module, "VK_EXT_CALIBRATED_TIMESTAMPS_SPEC_VERSION", 1);
+    addConstant(module, "VK_AMD_shader_core_properties", 1);
+    addConstant(module, "VK_AMD_SHADER_CORE_PROPERTIES_SPEC_VERSION", 2);
+    addConstant(module, "VK_AMD_memory_overallocation_behavior", 1);
+    addConstant(module, "VK_AMD_MEMORY_OVERALLOCATION_BEHAVIOR_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_vertex_attribute_divisor", 1);
+    addConstant(module, "VK_EXT_VERTEX_ATTRIBUTE_DIVISOR_SPEC_VERSION", 3);
+    addConstant(module, "VK_EXT_pipeline_creation_feedback", 1);
+    addConstant(module, "VK_EXT_PIPELINE_CREATION_FEEDBACK_SPEC_VERSION", 1);
+    addConstant(module, "VK_NV_shader_subgroup_partitioned", 1);
+    addConstant(module, "VK_NV_SHADER_SUBGROUP_PARTITIONED_SPEC_VERSION", 1);
+    addConstant(module, "VK_NV_compute_shader_derivatives", 1);
+    addConstant(module, "VK_NV_COMPUTE_SHADER_DERIVATIVES_SPEC_VERSION", 1);
+    addConstant(module, "VK_NV_mesh_shader", 1);
+    addConstant(module, "VK_NV_MESH_SHADER_SPEC_VERSION", 1);
+    addConstant(module, "VK_NV_fragment_shader_barycentric", 1);
+    addConstant(module, "VK_NV_FRAGMENT_SHADER_BARYCENTRIC_SPEC_VERSION", 1);
+    addConstant(module, "VK_NV_shader_image_footprint", 1);
+    addConstant(module, "VK_NV_SHADER_IMAGE_FOOTPRINT_SPEC_VERSION", 2);
+    addConstant(module, "VK_NV_scissor_exclusive", 1);
+    addConstant(module, "VK_NV_SCISSOR_EXCLUSIVE_SPEC_VERSION", 1);
+    addConstant(module, "VK_NV_device_diagnostic_checkpoints", 1);
+    addConstant(module, "VK_NV_DEVICE_DIAGNOSTIC_CHECKPOINTS_SPEC_VERSION", 2);
+    addConstant(module, "VK_INTEL_shader_integer_functions2", 1);
+    addConstant(module, "VK_INTEL_SHADER_INTEGER_FUNCTIONS_2_SPEC_VERSION", 1);
+    addConstant(module, "VK_INTEL_performance_query", 1);
+    addConstant(module, "VK_INTEL_PERFORMANCE_QUERY_SPEC_VERSION", 2);
+    addConstant(module, "VK_EXT_pci_bus_info", 1);
+    addConstant(module, "VK_EXT_PCI_BUS_INFO_SPEC_VERSION", 2);
+    addConstant(module, "VK_AMD_display_native_hdr", 1);
 };

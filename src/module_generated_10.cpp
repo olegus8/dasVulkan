@@ -997,88 +997,88 @@ void addVulkanGenerated_10(Module & module, ModuleLibrary & lib) {{
     // functions
     //
 
-    addExtern<DAS_BIND_FUN(vkDestroySurfaceKHR)>(*this, lib, "vkDestroySurfaceKHR",
+    addExtern<DAS_BIND_FUN(vkDestroySurfaceKHR)>(module, lib, "vkDestroySurfaceKHR",
         SideEffects::worstDefault, "vkDestroySurfaceKHR");
-    addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceSurfaceSupportKHR)>(*this, lib, "vkGetPhysicalDeviceSurfaceSupportKHR",
+    addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceSurfaceSupportKHR)>(module, lib, "vkGetPhysicalDeviceSurfaceSupportKHR",
         SideEffects::worstDefault, "vkGetPhysicalDeviceSurfaceSupportKHR");
-    addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceSurfaceCapabilitiesKHR)>(*this, lib, "vkGetPhysicalDeviceSurfaceCapabilitiesKHR",
+    addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceSurfaceCapabilitiesKHR)>(module, lib, "vkGetPhysicalDeviceSurfaceCapabilitiesKHR",
         SideEffects::worstDefault, "vkGetPhysicalDeviceSurfaceCapabilitiesKHR");
-    addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceSurfaceFormatsKHR)>(*this, lib, "vkGetPhysicalDeviceSurfaceFormatsKHR",
+    addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceSurfaceFormatsKHR)>(module, lib, "vkGetPhysicalDeviceSurfaceFormatsKHR",
         SideEffects::worstDefault, "vkGetPhysicalDeviceSurfaceFormatsKHR");
-    addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceSurfacePresentModesKHR)>(*this, lib, "vkGetPhysicalDeviceSurfacePresentModesKHR",
+    addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceSurfacePresentModesKHR)>(module, lib, "vkGetPhysicalDeviceSurfacePresentModesKHR",
         SideEffects::worstDefault, "vkGetPhysicalDeviceSurfacePresentModesKHR");
-    addExtern<DAS_BIND_FUN(vkCreateSwapchainKHR)>(*this, lib, "vkCreateSwapchainKHR",
+    addExtern<DAS_BIND_FUN(vkCreateSwapchainKHR)>(module, lib, "vkCreateSwapchainKHR",
         SideEffects::worstDefault, "vkCreateSwapchainKHR");
-    addExtern<DAS_BIND_FUN(vkDestroySwapchainKHR)>(*this, lib, "vkDestroySwapchainKHR",
+    addExtern<DAS_BIND_FUN(vkDestroySwapchainKHR)>(module, lib, "vkDestroySwapchainKHR",
         SideEffects::worstDefault, "vkDestroySwapchainKHR");
-    addExtern<DAS_BIND_FUN(vkGetSwapchainImagesKHR)>(*this, lib, "vkGetSwapchainImagesKHR",
+    addExtern<DAS_BIND_FUN(vkGetSwapchainImagesKHR)>(module, lib, "vkGetSwapchainImagesKHR",
         SideEffects::worstDefault, "vkGetSwapchainImagesKHR");
-    addExtern<DAS_BIND_FUN(vkAcquireNextImageKHR)>(*this, lib, "vkAcquireNextImageKHR",
+    addExtern<DAS_BIND_FUN(vkAcquireNextImageKHR)>(module, lib, "vkAcquireNextImageKHR",
         SideEffects::worstDefault, "vkAcquireNextImageKHR");
-    addExtern<DAS_BIND_FUN(vkQueuePresentKHR)>(*this, lib, "vkQueuePresentKHR",
+    addExtern<DAS_BIND_FUN(vkQueuePresentKHR)>(module, lib, "vkQueuePresentKHR",
         SideEffects::worstDefault, "vkQueuePresentKHR");
-    addExtern<DAS_BIND_FUN(vkCreateDebugUtilsMessengerEXT)>(*this, lib, "vkCreateDebugUtilsMessengerEXT",
+    addExtern<DAS_BIND_FUN(vkCreateDebugUtilsMessengerEXT)>(module, lib, "vkCreateDebugUtilsMessengerEXT",
         SideEffects::worstDefault, "vkCreateDebugUtilsMessengerEXT");
-    addExtern<DAS_BIND_FUN(vkDestroyDebugUtilsMessengerEXT)>(*this, lib, "vkDestroyDebugUtilsMessengerEXT",
+    addExtern<DAS_BIND_FUN(vkDestroyDebugUtilsMessengerEXT)>(module, lib, "vkDestroyDebugUtilsMessengerEXT",
         SideEffects::worstDefault, "vkDestroyDebugUtilsMessengerEXT");
-    addExtern<DAS_BIND_FUN(glfwInit)>(*this, lib, "glfwInit",
+    addExtern<DAS_BIND_FUN(glfwInit)>(module, lib, "glfwInit",
         SideEffects::worstDefault, "glfwInit");
-    addExtern<DAS_BIND_FUN(glfwTerminate)>(*this, lib, "glfwTerminate",
+    addExtern<DAS_BIND_FUN(glfwTerminate)>(module, lib, "glfwTerminate",
         SideEffects::worstDefault, "glfwTerminate");
-    addExtern<DAS_BIND_FUN(glfwInitHint)>(*this, lib, "glfwInitHint",
+    addExtern<DAS_BIND_FUN(glfwInitHint)>(module, lib, "glfwInitHint",
         SideEffects::worstDefault, "glfwInitHint");
-    addExtern<DAS_BIND_FUN(glfwGetVersion)>(*this, lib, "glfwGetVersion",
+    addExtern<DAS_BIND_FUN(glfwGetVersion)>(module, lib, "glfwGetVersion",
         SideEffects::worstDefault, "glfwGetVersion");
-    addExtern<DAS_BIND_FUN(glfwGetVersionString)>(*this, lib, "glfwGetVersionString",
+    addExtern<DAS_BIND_FUN(glfwGetVersionString)>(module, lib, "glfwGetVersionString",
         SideEffects::worstDefault, "glfwGetVersionString");
 
     //
     // macro constants
     //
 
-    addConstant(*this,"VK_KHR_COPY_COMMANDS_2_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_debug_report",1);
-    addConstant(*this,"VK_EXT_DEBUG_REPORT_SPEC_VERSION",9);
-    addConstant(*this,"VK_NV_glsl_shader",1);
-    addConstant(*this,"VK_NV_GLSL_SHADER_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_depth_range_unrestricted",1);
-    addConstant(*this,"VK_EXT_DEPTH_RANGE_UNRESTRICTED_SPEC_VERSION",1);
-    addConstant(*this,"VK_IMG_filter_cubic",1);
-    addConstant(*this,"VK_IMG_FILTER_CUBIC_SPEC_VERSION",1);
-    addConstant(*this,"VK_AMD_rasterization_order",1);
-    addConstant(*this,"VK_AMD_RASTERIZATION_ORDER_SPEC_VERSION",1);
-    addConstant(*this,"VK_AMD_shader_trinary_minmax",1);
-    addConstant(*this,"VK_AMD_SHADER_TRINARY_MINMAX_SPEC_VERSION",1);
-    addConstant(*this,"VK_AMD_shader_explicit_vertex_parameter",1);
-    addConstant(*this,"VK_AMD_SHADER_EXPLICIT_VERTEX_PARAMETER_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_debug_marker",1);
-    addConstant(*this,"VK_EXT_DEBUG_MARKER_SPEC_VERSION",4);
-    addConstant(*this,"VK_AMD_gcn_shader",1);
-    addConstant(*this,"VK_AMD_GCN_SHADER_SPEC_VERSION",1);
-    addConstant(*this,"VK_NV_dedicated_allocation",1);
-    addConstant(*this,"VK_NV_DEDICATED_ALLOCATION_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_transform_feedback",1);
-    addConstant(*this,"VK_EXT_TRANSFORM_FEEDBACK_SPEC_VERSION",1);
-    addConstant(*this,"VK_NVX_image_view_handle",1);
-    addConstant(*this,"VK_NVX_IMAGE_VIEW_HANDLE_SPEC_VERSION",2);
-    addConstant(*this,"VK_AMD_draw_indirect_count",1);
-    addConstant(*this,"VK_AMD_DRAW_INDIRECT_COUNT_SPEC_VERSION",2);
-    addConstant(*this,"VK_AMD_negative_viewport_height",1);
-    addConstant(*this,"VK_AMD_NEGATIVE_VIEWPORT_HEIGHT_SPEC_VERSION",1);
-    addConstant(*this,"VK_AMD_gpu_shader_half_float",1);
-    addConstant(*this,"VK_AMD_GPU_SHADER_HALF_FLOAT_SPEC_VERSION",2);
-    addConstant(*this,"VK_AMD_shader_ballot",1);
-    addConstant(*this,"VK_AMD_SHADER_BALLOT_SPEC_VERSION",1);
-    addConstant(*this,"VK_AMD_texture_gather_bias_lod",1);
-    addConstant(*this,"VK_AMD_TEXTURE_GATHER_BIAS_LOD_SPEC_VERSION",1);
-    addConstant(*this,"VK_AMD_shader_info",1);
-    addConstant(*this,"VK_AMD_SHADER_INFO_SPEC_VERSION",1);
-    addConstant(*this,"VK_AMD_shader_image_load_store_lod",1);
-    addConstant(*this,"VK_AMD_SHADER_IMAGE_LOAD_STORE_LOD_SPEC_VERSION",1);
-    addConstant(*this,"VK_NV_corner_sampled_image",1);
-    addConstant(*this,"VK_NV_CORNER_SAMPLED_IMAGE_SPEC_VERSION",2);
-    addConstant(*this,"VK_IMG_format_pvrtc",1);
-    addConstant(*this,"VK_IMG_FORMAT_PVRTC_SPEC_VERSION",1);
-    addConstant(*this,"VK_NV_external_memory_capabilities",1);
-    addConstant(*this,"VK_NV_EXTERNAL_MEMORY_CAPABILITIES_SPEC_VERSION",1);
+    addConstant(module, "VK_KHR_COPY_COMMANDS_2_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_debug_report", 1);
+    addConstant(module, "VK_EXT_DEBUG_REPORT_SPEC_VERSION", 9);
+    addConstant(module, "VK_NV_glsl_shader", 1);
+    addConstant(module, "VK_NV_GLSL_SHADER_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_depth_range_unrestricted", 1);
+    addConstant(module, "VK_EXT_DEPTH_RANGE_UNRESTRICTED_SPEC_VERSION", 1);
+    addConstant(module, "VK_IMG_filter_cubic", 1);
+    addConstant(module, "VK_IMG_FILTER_CUBIC_SPEC_VERSION", 1);
+    addConstant(module, "VK_AMD_rasterization_order", 1);
+    addConstant(module, "VK_AMD_RASTERIZATION_ORDER_SPEC_VERSION", 1);
+    addConstant(module, "VK_AMD_shader_trinary_minmax", 1);
+    addConstant(module, "VK_AMD_SHADER_TRINARY_MINMAX_SPEC_VERSION", 1);
+    addConstant(module, "VK_AMD_shader_explicit_vertex_parameter", 1);
+    addConstant(module, "VK_AMD_SHADER_EXPLICIT_VERTEX_PARAMETER_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_debug_marker", 1);
+    addConstant(module, "VK_EXT_DEBUG_MARKER_SPEC_VERSION", 4);
+    addConstant(module, "VK_AMD_gcn_shader", 1);
+    addConstant(module, "VK_AMD_GCN_SHADER_SPEC_VERSION", 1);
+    addConstant(module, "VK_NV_dedicated_allocation", 1);
+    addConstant(module, "VK_NV_DEDICATED_ALLOCATION_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_transform_feedback", 1);
+    addConstant(module, "VK_EXT_TRANSFORM_FEEDBACK_SPEC_VERSION", 1);
+    addConstant(module, "VK_NVX_image_view_handle", 1);
+    addConstant(module, "VK_NVX_IMAGE_VIEW_HANDLE_SPEC_VERSION", 2);
+    addConstant(module, "VK_AMD_draw_indirect_count", 1);
+    addConstant(module, "VK_AMD_DRAW_INDIRECT_COUNT_SPEC_VERSION", 2);
+    addConstant(module, "VK_AMD_negative_viewport_height", 1);
+    addConstant(module, "VK_AMD_NEGATIVE_VIEWPORT_HEIGHT_SPEC_VERSION", 1);
+    addConstant(module, "VK_AMD_gpu_shader_half_float", 1);
+    addConstant(module, "VK_AMD_GPU_SHADER_HALF_FLOAT_SPEC_VERSION", 2);
+    addConstant(module, "VK_AMD_shader_ballot", 1);
+    addConstant(module, "VK_AMD_SHADER_BALLOT_SPEC_VERSION", 1);
+    addConstant(module, "VK_AMD_texture_gather_bias_lod", 1);
+    addConstant(module, "VK_AMD_TEXTURE_GATHER_BIAS_LOD_SPEC_VERSION", 1);
+    addConstant(module, "VK_AMD_shader_info", 1);
+    addConstant(module, "VK_AMD_SHADER_INFO_SPEC_VERSION", 1);
+    addConstant(module, "VK_AMD_shader_image_load_store_lod", 1);
+    addConstant(module, "VK_AMD_SHADER_IMAGE_LOAD_STORE_LOD_SPEC_VERSION", 1);
+    addConstant(module, "VK_NV_corner_sampled_image", 1);
+    addConstant(module, "VK_NV_CORNER_SAMPLED_IMAGE_SPEC_VERSION", 2);
+    addConstant(module, "VK_IMG_format_pvrtc", 1);
+    addConstant(module, "VK_IMG_FORMAT_PVRTC_SPEC_VERSION", 1);
+    addConstant(module, "VK_NV_external_memory_capabilities", 1);
+    addConstant(module, "VK_NV_EXTERNAL_MEMORY_CAPABILITIES_SPEC_VERSION", 1);
 };

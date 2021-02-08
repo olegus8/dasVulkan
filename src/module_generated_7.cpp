@@ -943,90 +943,90 @@ void addVulkanGenerated_7(Module & module, ModuleLibrary & lib) {{
     // functions
     //
 
-    addExtern<DAS_BIND_FUN(vkCmdWaitEvents)>(*this, lib, "vkCmdWaitEvents",
+    addExtern<DAS_BIND_FUN(vkCmdWaitEvents)>(module, lib, "vkCmdWaitEvents",
         SideEffects::worstDefault, "vkCmdWaitEvents");
-    addExtern<DAS_BIND_FUN(vkCmdPipelineBarrier)>(*this, lib, "vkCmdPipelineBarrier",
+    addExtern<DAS_BIND_FUN(vkCmdPipelineBarrier)>(module, lib, "vkCmdPipelineBarrier",
         SideEffects::worstDefault, "vkCmdPipelineBarrier");
-    addExtern<DAS_BIND_FUN(vkCmdBeginQuery)>(*this, lib, "vkCmdBeginQuery",
+    addExtern<DAS_BIND_FUN(vkCmdBeginQuery)>(module, lib, "vkCmdBeginQuery",
         SideEffects::worstDefault, "vkCmdBeginQuery");
-    addExtern<DAS_BIND_FUN(vkCmdEndQuery)>(*this, lib, "vkCmdEndQuery",
+    addExtern<DAS_BIND_FUN(vkCmdEndQuery)>(module, lib, "vkCmdEndQuery",
         SideEffects::worstDefault, "vkCmdEndQuery");
-    addExtern<DAS_BIND_FUN(vkCmdResetQueryPool)>(*this, lib, "vkCmdResetQueryPool",
+    addExtern<DAS_BIND_FUN(vkCmdResetQueryPool)>(module, lib, "vkCmdResetQueryPool",
         SideEffects::worstDefault, "vkCmdResetQueryPool");
-    addExtern<DAS_BIND_FUN(vkCmdWriteTimestamp)>(*this, lib, "vkCmdWriteTimestamp",
+    addExtern<DAS_BIND_FUN(vkCmdWriteTimestamp)>(module, lib, "vkCmdWriteTimestamp",
         SideEffects::worstDefault, "vkCmdWriteTimestamp");
-    addExtern<DAS_BIND_FUN(vkCmdCopyQueryPoolResults)>(*this, lib, "vkCmdCopyQueryPoolResults",
+    addExtern<DAS_BIND_FUN(vkCmdCopyQueryPoolResults)>(module, lib, "vkCmdCopyQueryPoolResults",
         SideEffects::worstDefault, "vkCmdCopyQueryPoolResults");
-    addExtern<DAS_BIND_FUN(vkCmdPushConstants)>(*this, lib, "vkCmdPushConstants",
+    addExtern<DAS_BIND_FUN(vkCmdPushConstants)>(module, lib, "vkCmdPushConstants",
         SideEffects::worstDefault, "vkCmdPushConstants");
-    addExtern<DAS_BIND_FUN(vkCmdBeginRenderPass)>(*this, lib, "vkCmdBeginRenderPass",
+    addExtern<DAS_BIND_FUN(vkCmdBeginRenderPass)>(module, lib, "vkCmdBeginRenderPass",
         SideEffects::worstDefault, "vkCmdBeginRenderPass");
-    addExtern<DAS_BIND_FUN(vkCmdNextSubpass)>(*this, lib, "vkCmdNextSubpass",
+    addExtern<DAS_BIND_FUN(vkCmdNextSubpass)>(module, lib, "vkCmdNextSubpass",
         SideEffects::worstDefault, "vkCmdNextSubpass");
-    addExtern<DAS_BIND_FUN(vkCmdEndRenderPass)>(*this, lib, "vkCmdEndRenderPass",
+    addExtern<DAS_BIND_FUN(vkCmdEndRenderPass)>(module, lib, "vkCmdEndRenderPass",
         SideEffects::worstDefault, "vkCmdEndRenderPass");
-    addExtern<DAS_BIND_FUN(vkCmdExecuteCommands)>(*this, lib, "vkCmdExecuteCommands",
+    addExtern<DAS_BIND_FUN(vkCmdExecuteCommands)>(module, lib, "vkCmdExecuteCommands",
         SideEffects::worstDefault, "vkCmdExecuteCommands");
-    addExtern<DAS_BIND_FUN(vkEnumerateInstanceVersion)>(*this, lib, "vkEnumerateInstanceVersion",
+    addExtern<DAS_BIND_FUN(vkEnumerateInstanceVersion)>(module, lib, "vkEnumerateInstanceVersion",
         SideEffects::worstDefault, "vkEnumerateInstanceVersion");
-    addExtern<DAS_BIND_FUN(vkBindBufferMemory2)>(*this, lib, "vkBindBufferMemory2",
+    addExtern<DAS_BIND_FUN(vkBindBufferMemory2)>(module, lib, "vkBindBufferMemory2",
         SideEffects::worstDefault, "vkBindBufferMemory2");
-    addExtern<DAS_BIND_FUN(vkBindImageMemory2)>(*this, lib, "vkBindImageMemory2",
+    addExtern<DAS_BIND_FUN(vkBindImageMemory2)>(module, lib, "vkBindImageMemory2",
         SideEffects::worstDefault, "vkBindImageMemory2");
-    addExtern<DAS_BIND_FUN(vkGetDeviceGroupPeerMemoryFeatures)>(*this, lib, "vkGetDeviceGroupPeerMemoryFeatures",
+    addExtern<DAS_BIND_FUN(vkGetDeviceGroupPeerMemoryFeatures)>(module, lib, "vkGetDeviceGroupPeerMemoryFeatures",
         SideEffects::worstDefault, "vkGetDeviceGroupPeerMemoryFeatures");
-    addExtern<DAS_BIND_FUN(vkCmdSetDeviceMask)>(*this, lib, "vkCmdSetDeviceMask",
+    addExtern<DAS_BIND_FUN(vkCmdSetDeviceMask)>(module, lib, "vkCmdSetDeviceMask",
         SideEffects::worstDefault, "vkCmdSetDeviceMask");
-    addExtern<DAS_BIND_FUN(vkCmdDispatchBase)>(*this, lib, "vkCmdDispatchBase",
+    addExtern<DAS_BIND_FUN(vkCmdDispatchBase)>(module, lib, "vkCmdDispatchBase",
         SideEffects::worstDefault, "vkCmdDispatchBase");
 
     //
     // macro constants
     //
 
-    addConstant(*this,"VK_VERSION_1_2",1);
-    addConstant(*this,"VK_API_VERSION_1_2",VK_MAKE_VERSION(1, 2, 0));
-    addConstant(*this,"VK_MAX_DRIVER_NAME_SIZE",256);
-    addConstant(*this,"VK_MAX_DRIVER_INFO_SIZE",256);
-    addConstant(*this,"VK_KHR_surface",1);
-    addConstant(*this,"VK_KHR_SURFACE_SPEC_VERSION",25);
-    addConstant(*this,"VK_KHR_swapchain",1);
-    addConstant(*this,"VK_KHR_SWAPCHAIN_SPEC_VERSION",70);
-    addConstant(*this,"VK_KHR_display",1);
-    addConstant(*this,"VK_KHR_DISPLAY_SPEC_VERSION",23);
-    addConstant(*this,"VK_KHR_display_swapchain",1);
-    addConstant(*this,"VK_KHR_DISPLAY_SWAPCHAIN_SPEC_VERSION",10);
-    addConstant(*this,"VK_KHR_sampler_mirror_clamp_to_edge",1);
-    addConstant(*this,"VK_KHR_SAMPLER_MIRROR_CLAMP_TO_EDGE_SPEC_VERSION",3);
-    addConstant(*this,"VK_KHR_multiview",1);
-    addConstant(*this,"VK_KHR_MULTIVIEW_SPEC_VERSION",1);
-    addConstant(*this,"VK_KHR_get_physical_device_properties2",1);
-    addConstant(*this,"VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_SPEC_VERSION",2);
-    addConstant(*this,"VK_KHR_device_group",1);
-    addConstant(*this,"VK_KHR_DEVICE_GROUP_SPEC_VERSION",4);
-    addConstant(*this,"VK_KHR_shader_draw_parameters",1);
-    addConstant(*this,"VK_KHR_SHADER_DRAW_PARAMETERS_SPEC_VERSION",1);
-    addConstant(*this,"VK_KHR_maintenance1",1);
-    addConstant(*this,"VK_KHR_MAINTENANCE1_SPEC_VERSION",2);
-    addConstant(*this,"VK_KHR_device_group_creation",1);
-    addConstant(*this,"VK_KHR_DEVICE_GROUP_CREATION_SPEC_VERSION",1);
-    addConstant(*this,"VK_MAX_DEVICE_GROUP_SIZE_KHR",VK_MAX_DEVICE_GROUP_SIZE);
-    addConstant(*this,"VK_KHR_external_memory_capabilities",1);
-    addConstant(*this,"VK_KHR_EXTERNAL_MEMORY_CAPABILITIES_SPEC_VERSION",1);
-    addConstant(*this,"VK_LUID_SIZE_KHR",VK_LUID_SIZE);
-    addConstant(*this,"VK_KHR_external_memory",1);
-    addConstant(*this,"VK_KHR_EXTERNAL_MEMORY_SPEC_VERSION",1);
-    addConstant(*this,"VK_QUEUE_FAMILY_EXTERNAL_KHR",VK_QUEUE_FAMILY_EXTERNAL);
-    addConstant(*this,"VK_KHR_external_memory_fd",1);
-    addConstant(*this,"VK_KHR_EXTERNAL_MEMORY_FD_SPEC_VERSION",1);
-    addConstant(*this,"VK_KHR_external_semaphore_capabilities",1);
-    addConstant(*this,"VK_KHR_EXTERNAL_SEMAPHORE_CAPABILITIES_SPEC_VERSION",1);
-    addConstant(*this,"VK_KHR_external_semaphore",1);
-    addConstant(*this,"VK_KHR_EXTERNAL_SEMAPHORE_SPEC_VERSION",1);
-    addConstant(*this,"VK_KHR_external_semaphore_fd",1);
-    addConstant(*this,"VK_KHR_EXTERNAL_SEMAPHORE_FD_SPEC_VERSION",1);
-    addConstant(*this,"VK_KHR_push_descriptor",1);
-    addConstant(*this,"VK_KHR_PUSH_DESCRIPTOR_SPEC_VERSION",2);
-    addConstant(*this,"VK_KHR_shader_float16_int8",1);
-    addConstant(*this,"VK_KHR_SHADER_FLOAT16_INT8_SPEC_VERSION",1);
+    addConstant(module, "VK_VERSION_1_2", 1);
+    addConstant(module, "VK_API_VERSION_1_2", VK_MAKE_VERSION(1, 2, 0));
+    addConstant(module, "VK_MAX_DRIVER_NAME_SIZE", 256);
+    addConstant(module, "VK_MAX_DRIVER_INFO_SIZE", 256);
+    addConstant(module, "VK_KHR_surface", 1);
+    addConstant(module, "VK_KHR_SURFACE_SPEC_VERSION", 25);
+    addConstant(module, "VK_KHR_swapchain", 1);
+    addConstant(module, "VK_KHR_SWAPCHAIN_SPEC_VERSION", 70);
+    addConstant(module, "VK_KHR_display", 1);
+    addConstant(module, "VK_KHR_DISPLAY_SPEC_VERSION", 23);
+    addConstant(module, "VK_KHR_display_swapchain", 1);
+    addConstant(module, "VK_KHR_DISPLAY_SWAPCHAIN_SPEC_VERSION", 10);
+    addConstant(module, "VK_KHR_sampler_mirror_clamp_to_edge", 1);
+    addConstant(module, "VK_KHR_SAMPLER_MIRROR_CLAMP_TO_EDGE_SPEC_VERSION", 3);
+    addConstant(module, "VK_KHR_multiview", 1);
+    addConstant(module, "VK_KHR_MULTIVIEW_SPEC_VERSION", 1);
+    addConstant(module, "VK_KHR_get_physical_device_properties2", 1);
+    addConstant(module, "VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_SPEC_VERSION", 2);
+    addConstant(module, "VK_KHR_device_group", 1);
+    addConstant(module, "VK_KHR_DEVICE_GROUP_SPEC_VERSION", 4);
+    addConstant(module, "VK_KHR_shader_draw_parameters", 1);
+    addConstant(module, "VK_KHR_SHADER_DRAW_PARAMETERS_SPEC_VERSION", 1);
+    addConstant(module, "VK_KHR_maintenance1", 1);
+    addConstant(module, "VK_KHR_MAINTENANCE1_SPEC_VERSION", 2);
+    addConstant(module, "VK_KHR_device_group_creation", 1);
+    addConstant(module, "VK_KHR_DEVICE_GROUP_CREATION_SPEC_VERSION", 1);
+    addConstant(module, "VK_MAX_DEVICE_GROUP_SIZE_KHR", VK_MAX_DEVICE_GROUP_SIZE);
+    addConstant(module, "VK_KHR_external_memory_capabilities", 1);
+    addConstant(module, "VK_KHR_EXTERNAL_MEMORY_CAPABILITIES_SPEC_VERSION", 1);
+    addConstant(module, "VK_LUID_SIZE_KHR", VK_LUID_SIZE);
+    addConstant(module, "VK_KHR_external_memory", 1);
+    addConstant(module, "VK_KHR_EXTERNAL_MEMORY_SPEC_VERSION", 1);
+    addConstant(module, "VK_QUEUE_FAMILY_EXTERNAL_KHR", VK_QUEUE_FAMILY_EXTERNAL);
+    addConstant(module, "VK_KHR_external_memory_fd", 1);
+    addConstant(module, "VK_KHR_EXTERNAL_MEMORY_FD_SPEC_VERSION", 1);
+    addConstant(module, "VK_KHR_external_semaphore_capabilities", 1);
+    addConstant(module, "VK_KHR_EXTERNAL_SEMAPHORE_CAPABILITIES_SPEC_VERSION", 1);
+    addConstant(module, "VK_KHR_external_semaphore", 1);
+    addConstant(module, "VK_KHR_EXTERNAL_SEMAPHORE_SPEC_VERSION", 1);
+    addConstant(module, "VK_KHR_external_semaphore_fd", 1);
+    addConstant(module, "VK_KHR_EXTERNAL_SEMAPHORE_FD_SPEC_VERSION", 1);
+    addConstant(module, "VK_KHR_push_descriptor", 1);
+    addConstant(module, "VK_KHR_PUSH_DESCRIPTOR_SPEC_VERSION", 2);
+    addConstant(module, "VK_KHR_shader_float16_int8", 1);
+    addConstant(module, "VK_KHR_SHADER_FLOAT16_INT8_SPEC_VERSION", 1);
 };

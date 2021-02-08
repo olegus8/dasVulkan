@@ -954,90 +954,90 @@ void addVulkanGenerated_14(Module & module, ModuleLibrary & lib) {{
     // functions
     //
 
-    addExtern<DAS_BIND_FUN(glfwGetKeyScancode)>(*this, lib, "glfwGetKeyScancode",
+    addExtern<DAS_BIND_FUN(glfwGetKeyScancode)>(module, lib, "glfwGetKeyScancode",
         SideEffects::worstDefault, "glfwGetKeyScancode");
-    addExtern<DAS_BIND_FUN(glfwGetKey)>(*this, lib, "glfwGetKey",
+    addExtern<DAS_BIND_FUN(glfwGetKey)>(module, lib, "glfwGetKey",
         SideEffects::worstDefault, "glfwGetKey");
-    addExtern<DAS_BIND_FUN(glfwGetMouseButton)>(*this, lib, "glfwGetMouseButton",
+    addExtern<DAS_BIND_FUN(glfwGetMouseButton)>(module, lib, "glfwGetMouseButton",
         SideEffects::worstDefault, "glfwGetMouseButton");
-    addExtern<DAS_BIND_FUN(glfwGetCursorPos)>(*this, lib, "glfwGetCursorPos",
+    addExtern<DAS_BIND_FUN(glfwGetCursorPos)>(module, lib, "glfwGetCursorPos",
         SideEffects::worstDefault, "glfwGetCursorPos");
-    addExtern<DAS_BIND_FUN(glfwSetCursorPos)>(*this, lib, "glfwSetCursorPos",
+    addExtern<DAS_BIND_FUN(glfwSetCursorPos)>(module, lib, "glfwSetCursorPos",
         SideEffects::worstDefault, "glfwSetCursorPos");
-    addExtern<DAS_BIND_FUN(glfwCreateCursor)>(*this, lib, "glfwCreateCursor",
+    addExtern<DAS_BIND_FUN(glfwCreateCursor)>(module, lib, "glfwCreateCursor",
         SideEffects::worstDefault, "glfwCreateCursor");
-    addExtern<DAS_BIND_FUN(glfwCreateStandardCursor)>(*this, lib, "glfwCreateStandardCursor",
+    addExtern<DAS_BIND_FUN(glfwCreateStandardCursor)>(module, lib, "glfwCreateStandardCursor",
         SideEffects::worstDefault, "glfwCreateStandardCursor");
-    addExtern<DAS_BIND_FUN(glfwDestroyCursor)>(*this, lib, "glfwDestroyCursor",
+    addExtern<DAS_BIND_FUN(glfwDestroyCursor)>(module, lib, "glfwDestroyCursor",
         SideEffects::worstDefault, "glfwDestroyCursor");
-    addExtern<DAS_BIND_FUN(glfwSetCursor)>(*this, lib, "glfwSetCursor",
+    addExtern<DAS_BIND_FUN(glfwSetCursor)>(module, lib, "glfwSetCursor",
         SideEffects::worstDefault, "glfwSetCursor");
-    addExtern<DAS_BIND_FUN(glfwJoystickPresent)>(*this, lib, "glfwJoystickPresent",
+    addExtern<DAS_BIND_FUN(glfwJoystickPresent)>(module, lib, "glfwJoystickPresent",
         SideEffects::worstDefault, "glfwJoystickPresent");
-    addExtern<DAS_BIND_FUN(glfwGetJoystickAxes)>(*this, lib, "glfwGetJoystickAxes",
+    addExtern<DAS_BIND_FUN(glfwGetJoystickAxes)>(module, lib, "glfwGetJoystickAxes",
         SideEffects::worstDefault, "glfwGetJoystickAxes");
-    addExtern<DAS_BIND_FUN(glfwGetJoystickButtons)>(*this, lib, "glfwGetJoystickButtons",
+    addExtern<DAS_BIND_FUN(glfwGetJoystickButtons)>(module, lib, "glfwGetJoystickButtons",
         SideEffects::worstDefault, "glfwGetJoystickButtons");
-    addExtern<DAS_BIND_FUN(glfwGetJoystickHats)>(*this, lib, "glfwGetJoystickHats",
+    addExtern<DAS_BIND_FUN(glfwGetJoystickHats)>(module, lib, "glfwGetJoystickHats",
         SideEffects::worstDefault, "glfwGetJoystickHats");
-    addExtern<DAS_BIND_FUN(glfwGetJoystickName)>(*this, lib, "glfwGetJoystickName",
+    addExtern<DAS_BIND_FUN(glfwGetJoystickName)>(module, lib, "glfwGetJoystickName",
         SideEffects::worstDefault, "glfwGetJoystickName");
-    addExtern<DAS_BIND_FUN(glfwGetJoystickGUID)>(*this, lib, "glfwGetJoystickGUID",
+    addExtern<DAS_BIND_FUN(glfwGetJoystickGUID)>(module, lib, "glfwGetJoystickGUID",
         SideEffects::worstDefault, "glfwGetJoystickGUID");
-    addExtern<DAS_BIND_FUN(glfwSetJoystickUserPointer)>(*this, lib, "glfwSetJoystickUserPointer",
+    addExtern<DAS_BIND_FUN(glfwSetJoystickUserPointer)>(module, lib, "glfwSetJoystickUserPointer",
         SideEffects::worstDefault, "glfwSetJoystickUserPointer");
-    addExtern<DAS_BIND_FUN(glfwGetJoystickUserPointer)>(*this, lib, "glfwGetJoystickUserPointer",
+    addExtern<DAS_BIND_FUN(glfwGetJoystickUserPointer)>(module, lib, "glfwGetJoystickUserPointer",
         SideEffects::worstDefault, "glfwGetJoystickUserPointer");
-    addExtern<DAS_BIND_FUN(glfwJoystickIsGamepad)>(*this, lib, "glfwJoystickIsGamepad",
+    addExtern<DAS_BIND_FUN(glfwJoystickIsGamepad)>(module, lib, "glfwJoystickIsGamepad",
         SideEffects::worstDefault, "glfwJoystickIsGamepad");
 
     //
     // macro constants
     //
 
-    addConstant(*this,"VK_AMD_DISPLAY_NATIVE_HDR_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_fragment_density_map",1);
-    addConstant(*this,"VK_EXT_FRAGMENT_DENSITY_MAP_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_scalar_block_layout",1);
-    addConstant(*this,"VK_EXT_SCALAR_BLOCK_LAYOUT_SPEC_VERSION",1);
-    addConstant(*this,"VK_GOOGLE_hlsl_functionality1",1);
-    addConstant(*this,"VK_GOOGLE_HLSL_FUNCTIONALITY1_SPEC_VERSION",1);
-    addConstant(*this,"VK_GOOGLE_decorate_string",1);
-    addConstant(*this,"VK_GOOGLE_DECORATE_STRING_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_subgroup_size_control",1);
-    addConstant(*this,"VK_EXT_SUBGROUP_SIZE_CONTROL_SPEC_VERSION",2);
-    addConstant(*this,"VK_AMD_shader_core_properties2",1);
-    addConstant(*this,"VK_AMD_SHADER_CORE_PROPERTIES_2_SPEC_VERSION",1);
-    addConstant(*this,"VK_AMD_device_coherent_memory",1);
-    addConstant(*this,"VK_AMD_DEVICE_COHERENT_MEMORY_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_shader_image_atomic_int64",1);
-    addConstant(*this,"VK_EXT_SHADER_IMAGE_ATOMIC_INT64_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_memory_budget",1);
-    addConstant(*this,"VK_EXT_MEMORY_BUDGET_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_memory_priority",1);
-    addConstant(*this,"VK_EXT_MEMORY_PRIORITY_SPEC_VERSION",1);
-    addConstant(*this,"VK_NV_dedicated_allocation_image_aliasing",1);
-    addConstant(*this,"VK_NV_DEDICATED_ALLOCATION_IMAGE_ALIASING_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_buffer_device_address",1);
-    addConstant(*this,"VK_EXT_BUFFER_DEVICE_ADDRESS_SPEC_VERSION",2);
-    addConstant(*this,"VK_EXT_tooling_info",1);
-    addConstant(*this,"VK_EXT_TOOLING_INFO_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_separate_stencil_usage",1);
-    addConstant(*this,"VK_EXT_SEPARATE_STENCIL_USAGE_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_validation_features",1);
-    addConstant(*this,"VK_EXT_VALIDATION_FEATURES_SPEC_VERSION",4);
-    addConstant(*this,"VK_NV_cooperative_matrix",1);
-    addConstant(*this,"VK_NV_COOPERATIVE_MATRIX_SPEC_VERSION",1);
-    addConstant(*this,"VK_NV_coverage_reduction_mode",1);
-    addConstant(*this,"VK_NV_COVERAGE_REDUCTION_MODE_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_fragment_shader_interlock",1);
-    addConstant(*this,"VK_EXT_FRAGMENT_SHADER_INTERLOCK_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_ycbcr_image_arrays",1);
-    addConstant(*this,"VK_EXT_YCBCR_IMAGE_ARRAYS_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_headless_surface",1);
-    addConstant(*this,"VK_EXT_HEADLESS_SURFACE_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_line_rasterization",1);
-    addConstant(*this,"VK_EXT_LINE_RASTERIZATION_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_shader_atomic_float",1);
-    addConstant(*this,"VK_EXT_SHADER_ATOMIC_FLOAT_SPEC_VERSION",1);
+    addConstant(module, "VK_AMD_DISPLAY_NATIVE_HDR_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_fragment_density_map", 1);
+    addConstant(module, "VK_EXT_FRAGMENT_DENSITY_MAP_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_scalar_block_layout", 1);
+    addConstant(module, "VK_EXT_SCALAR_BLOCK_LAYOUT_SPEC_VERSION", 1);
+    addConstant(module, "VK_GOOGLE_hlsl_functionality1", 1);
+    addConstant(module, "VK_GOOGLE_HLSL_FUNCTIONALITY1_SPEC_VERSION", 1);
+    addConstant(module, "VK_GOOGLE_decorate_string", 1);
+    addConstant(module, "VK_GOOGLE_DECORATE_STRING_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_subgroup_size_control", 1);
+    addConstant(module, "VK_EXT_SUBGROUP_SIZE_CONTROL_SPEC_VERSION", 2);
+    addConstant(module, "VK_AMD_shader_core_properties2", 1);
+    addConstant(module, "VK_AMD_SHADER_CORE_PROPERTIES_2_SPEC_VERSION", 1);
+    addConstant(module, "VK_AMD_device_coherent_memory", 1);
+    addConstant(module, "VK_AMD_DEVICE_COHERENT_MEMORY_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_shader_image_atomic_int64", 1);
+    addConstant(module, "VK_EXT_SHADER_IMAGE_ATOMIC_INT64_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_memory_budget", 1);
+    addConstant(module, "VK_EXT_MEMORY_BUDGET_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_memory_priority", 1);
+    addConstant(module, "VK_EXT_MEMORY_PRIORITY_SPEC_VERSION", 1);
+    addConstant(module, "VK_NV_dedicated_allocation_image_aliasing", 1);
+    addConstant(module, "VK_NV_DEDICATED_ALLOCATION_IMAGE_ALIASING_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_buffer_device_address", 1);
+    addConstant(module, "VK_EXT_BUFFER_DEVICE_ADDRESS_SPEC_VERSION", 2);
+    addConstant(module, "VK_EXT_tooling_info", 1);
+    addConstant(module, "VK_EXT_TOOLING_INFO_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_separate_stencil_usage", 1);
+    addConstant(module, "VK_EXT_SEPARATE_STENCIL_USAGE_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_validation_features", 1);
+    addConstant(module, "VK_EXT_VALIDATION_FEATURES_SPEC_VERSION", 4);
+    addConstant(module, "VK_NV_cooperative_matrix", 1);
+    addConstant(module, "VK_NV_COOPERATIVE_MATRIX_SPEC_VERSION", 1);
+    addConstant(module, "VK_NV_coverage_reduction_mode", 1);
+    addConstant(module, "VK_NV_COVERAGE_REDUCTION_MODE_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_fragment_shader_interlock", 1);
+    addConstant(module, "VK_EXT_FRAGMENT_SHADER_INTERLOCK_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_ycbcr_image_arrays", 1);
+    addConstant(module, "VK_EXT_YCBCR_IMAGE_ARRAYS_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_headless_surface", 1);
+    addConstant(module, "VK_EXT_HEADLESS_SURFACE_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_line_rasterization", 1);
+    addConstant(module, "VK_EXT_LINE_RASTERIZATION_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_shader_atomic_float", 1);
+    addConstant(module, "VK_EXT_SHADER_ATOMIC_FLOAT_SPEC_VERSION", 1);
 };

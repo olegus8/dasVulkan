@@ -987,90 +987,90 @@ void addVulkanGenerated_1(Module & module, ModuleLibrary & lib) {{
     // functions
     //
 
-    addExtern<DAS_BIND_FUN(vkQueueWaitIdle)>(*this, lib, "vkQueueWaitIdle",
+    addExtern<DAS_BIND_FUN(vkQueueWaitIdle)>(module, lib, "vkQueueWaitIdle",
         SideEffects::worstDefault, "vkQueueWaitIdle");
-    addExtern<DAS_BIND_FUN(vkDeviceWaitIdle)>(*this, lib, "vkDeviceWaitIdle",
+    addExtern<DAS_BIND_FUN(vkDeviceWaitIdle)>(module, lib, "vkDeviceWaitIdle",
         SideEffects::worstDefault, "vkDeviceWaitIdle");
-    addExtern<DAS_BIND_FUN(vkAllocateMemory)>(*this, lib, "vkAllocateMemory",
+    addExtern<DAS_BIND_FUN(vkAllocateMemory)>(module, lib, "vkAllocateMemory",
         SideEffects::worstDefault, "vkAllocateMemory");
-    addExtern<DAS_BIND_FUN(vkFreeMemory)>(*this, lib, "vkFreeMemory",
+    addExtern<DAS_BIND_FUN(vkFreeMemory)>(module, lib, "vkFreeMemory",
         SideEffects::worstDefault, "vkFreeMemory");
-    addExtern<DAS_BIND_FUN(vkMapMemory)>(*this, lib, "vkMapMemory",
+    addExtern<DAS_BIND_FUN(vkMapMemory)>(module, lib, "vkMapMemory",
         SideEffects::worstDefault, "vkMapMemory");
-    addExtern<DAS_BIND_FUN(vkUnmapMemory)>(*this, lib, "vkUnmapMemory",
+    addExtern<DAS_BIND_FUN(vkUnmapMemory)>(module, lib, "vkUnmapMemory",
         SideEffects::worstDefault, "vkUnmapMemory");
-    addExtern<DAS_BIND_FUN(vkFlushMappedMemoryRanges)>(*this, lib, "vkFlushMappedMemoryRanges",
+    addExtern<DAS_BIND_FUN(vkFlushMappedMemoryRanges)>(module, lib, "vkFlushMappedMemoryRanges",
         SideEffects::worstDefault, "vkFlushMappedMemoryRanges");
-    addExtern<DAS_BIND_FUN(vkInvalidateMappedMemoryRanges)>(*this, lib, "vkInvalidateMappedMemoryRanges",
+    addExtern<DAS_BIND_FUN(vkInvalidateMappedMemoryRanges)>(module, lib, "vkInvalidateMappedMemoryRanges",
         SideEffects::worstDefault, "vkInvalidateMappedMemoryRanges");
-    addExtern<DAS_BIND_FUN(vkGetDeviceMemoryCommitment)>(*this, lib, "vkGetDeviceMemoryCommitment",
+    addExtern<DAS_BIND_FUN(vkGetDeviceMemoryCommitment)>(module, lib, "vkGetDeviceMemoryCommitment",
         SideEffects::worstDefault, "vkGetDeviceMemoryCommitment");
-    addExtern<DAS_BIND_FUN(vkBindBufferMemory)>(*this, lib, "vkBindBufferMemory",
+    addExtern<DAS_BIND_FUN(vkBindBufferMemory)>(module, lib, "vkBindBufferMemory",
         SideEffects::worstDefault, "vkBindBufferMemory");
-    addExtern<DAS_BIND_FUN(vkBindImageMemory)>(*this, lib, "vkBindImageMemory",
+    addExtern<DAS_BIND_FUN(vkBindImageMemory)>(module, lib, "vkBindImageMemory",
         SideEffects::worstDefault, "vkBindImageMemory");
-    addExtern<DAS_BIND_FUN(vkGetBufferMemoryRequirements)>(*this, lib, "vkGetBufferMemoryRequirements",
+    addExtern<DAS_BIND_FUN(vkGetBufferMemoryRequirements)>(module, lib, "vkGetBufferMemoryRequirements",
         SideEffects::worstDefault, "vkGetBufferMemoryRequirements");
-    addExtern<DAS_BIND_FUN(vkGetImageMemoryRequirements)>(*this, lib, "vkGetImageMemoryRequirements",
+    addExtern<DAS_BIND_FUN(vkGetImageMemoryRequirements)>(module, lib, "vkGetImageMemoryRequirements",
         SideEffects::worstDefault, "vkGetImageMemoryRequirements");
-    addExtern<DAS_BIND_FUN(vkGetImageSparseMemoryRequirements)>(*this, lib, "vkGetImageSparseMemoryRequirements",
+    addExtern<DAS_BIND_FUN(vkGetImageSparseMemoryRequirements)>(module, lib, "vkGetImageSparseMemoryRequirements",
         SideEffects::worstDefault, "vkGetImageSparseMemoryRequirements");
-    addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceSparseImageFormatProperties)>(*this, lib, "vkGetPhysicalDeviceSparseImageFormatProperties",
+    addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceSparseImageFormatProperties)>(module, lib, "vkGetPhysicalDeviceSparseImageFormatProperties",
         SideEffects::worstDefault, "vkGetPhysicalDeviceSparseImageFormatProperties");
-    addExtern<DAS_BIND_FUN(vkQueueBindSparse)>(*this, lib, "vkQueueBindSparse",
+    addExtern<DAS_BIND_FUN(vkQueueBindSparse)>(module, lib, "vkQueueBindSparse",
         SideEffects::worstDefault, "vkQueueBindSparse");
-    addExtern<DAS_BIND_FUN(vkCreateFence)>(*this, lib, "vkCreateFence",
+    addExtern<DAS_BIND_FUN(vkCreateFence)>(module, lib, "vkCreateFence",
         SideEffects::worstDefault, "vkCreateFence");
-    addExtern<DAS_BIND_FUN(vkDestroyFence)>(*this, lib, "vkDestroyFence",
+    addExtern<DAS_BIND_FUN(vkDestroyFence)>(module, lib, "vkDestroyFence",
         SideEffects::worstDefault, "vkDestroyFence");
 
     //
     // macro constants
     //
 
-    addConstant(*this,"GLFW_KEY_J",74);
-    addConstant(*this,"GLFW_KEY_K",75);
-    addConstant(*this,"GLFW_KEY_L",76);
-    addConstant(*this,"GLFW_KEY_M",77);
-    addConstant(*this,"GLFW_KEY_N",78);
-    addConstant(*this,"GLFW_KEY_O",79);
-    addConstant(*this,"GLFW_KEY_P",80);
-    addConstant(*this,"GLFW_KEY_Q",81);
-    addConstant(*this,"GLFW_KEY_R",82);
-    addConstant(*this,"GLFW_KEY_S",83);
-    addConstant(*this,"GLFW_KEY_T",84);
-    addConstant(*this,"GLFW_KEY_U",85);
-    addConstant(*this,"GLFW_KEY_V",86);
-    addConstant(*this,"GLFW_KEY_W",87);
-    addConstant(*this,"GLFW_KEY_X",88);
-    addConstant(*this,"GLFW_KEY_Y",89);
-    addConstant(*this,"GLFW_KEY_Z",90);
-    addConstant(*this,"GLFW_KEY_LEFT_BRACKET",91  /* [ */);
-    addConstant(*this,"GLFW_KEY_BACKSLASH",92  /* \ */);
-    addConstant(*this,"GLFW_KEY_RIGHT_BRACKET",93  /* ] */);
-    addConstant(*this,"GLFW_KEY_GRAVE_ACCENT",96  /* ` */);
-    addConstant(*this,"GLFW_KEY_WORLD_1",161 /* non-US #1 */);
-    addConstant(*this,"GLFW_KEY_WORLD_2",162 /* non-US #2 */);
-    addConstant(*this,"GLFW_KEY_ESCAPE",256);
-    addConstant(*this,"GLFW_KEY_ENTER",257);
-    addConstant(*this,"GLFW_KEY_TAB",258);
-    addConstant(*this,"GLFW_KEY_BACKSPACE",259);
-    addConstant(*this,"GLFW_KEY_INSERT",260);
-    addConstant(*this,"GLFW_KEY_DELETE",261);
-    addConstant(*this,"GLFW_KEY_RIGHT",262);
-    addConstant(*this,"GLFW_KEY_LEFT",263);
-    addConstant(*this,"GLFW_KEY_DOWN",264);
-    addConstant(*this,"GLFW_KEY_UP",265);
-    addConstant(*this,"GLFW_KEY_PAGE_UP",266);
-    addConstant(*this,"GLFW_KEY_PAGE_DOWN",267);
-    addConstant(*this,"GLFW_KEY_HOME",268);
-    addConstant(*this,"GLFW_KEY_END",269);
-    addConstant(*this,"GLFW_KEY_CAPS_LOCK",280);
-    addConstant(*this,"GLFW_KEY_SCROLL_LOCK",281);
-    addConstant(*this,"GLFW_KEY_NUM_LOCK",282);
-    addConstant(*this,"GLFW_KEY_PRINT_SCREEN",283);
-    addConstant(*this,"GLFW_KEY_PAUSE",284);
-    addConstant(*this,"GLFW_KEY_F1",290);
-    addConstant(*this,"GLFW_KEY_F2",291);
-    addConstant(*this,"GLFW_KEY_F3",292);
+    addConstant(module, "GLFW_KEY_J", 74);
+    addConstant(module, "GLFW_KEY_K", 75);
+    addConstant(module, "GLFW_KEY_L", 76);
+    addConstant(module, "GLFW_KEY_M", 77);
+    addConstant(module, "GLFW_KEY_N", 78);
+    addConstant(module, "GLFW_KEY_O", 79);
+    addConstant(module, "GLFW_KEY_P", 80);
+    addConstant(module, "GLFW_KEY_Q", 81);
+    addConstant(module, "GLFW_KEY_R", 82);
+    addConstant(module, "GLFW_KEY_S", 83);
+    addConstant(module, "GLFW_KEY_T", 84);
+    addConstant(module, "GLFW_KEY_U", 85);
+    addConstant(module, "GLFW_KEY_V", 86);
+    addConstant(module, "GLFW_KEY_W", 87);
+    addConstant(module, "GLFW_KEY_X", 88);
+    addConstant(module, "GLFW_KEY_Y", 89);
+    addConstant(module, "GLFW_KEY_Z", 90);
+    addConstant(module, "GLFW_KEY_LEFT_BRACKET", 91  /* [ */);
+    addConstant(module, "GLFW_KEY_BACKSLASH", 92  /* \ */);
+    addConstant(module, "GLFW_KEY_RIGHT_BRACKET", 93  /* ] */);
+    addConstant(module, "GLFW_KEY_GRAVE_ACCENT", 96  /* ` */);
+    addConstant(module, "GLFW_KEY_WORLD_1", 161 /* non-US #1 */);
+    addConstant(module, "GLFW_KEY_WORLD_2", 162 /* non-US #2 */);
+    addConstant(module, "GLFW_KEY_ESCAPE", 256);
+    addConstant(module, "GLFW_KEY_ENTER", 257);
+    addConstant(module, "GLFW_KEY_TAB", 258);
+    addConstant(module, "GLFW_KEY_BACKSPACE", 259);
+    addConstant(module, "GLFW_KEY_INSERT", 260);
+    addConstant(module, "GLFW_KEY_DELETE", 261);
+    addConstant(module, "GLFW_KEY_RIGHT", 262);
+    addConstant(module, "GLFW_KEY_LEFT", 263);
+    addConstant(module, "GLFW_KEY_DOWN", 264);
+    addConstant(module, "GLFW_KEY_UP", 265);
+    addConstant(module, "GLFW_KEY_PAGE_UP", 266);
+    addConstant(module, "GLFW_KEY_PAGE_DOWN", 267);
+    addConstant(module, "GLFW_KEY_HOME", 268);
+    addConstant(module, "GLFW_KEY_END", 269);
+    addConstant(module, "GLFW_KEY_CAPS_LOCK", 280);
+    addConstant(module, "GLFW_KEY_SCROLL_LOCK", 281);
+    addConstant(module, "GLFW_KEY_NUM_LOCK", 282);
+    addConstant(module, "GLFW_KEY_PRINT_SCREEN", 283);
+    addConstant(module, "GLFW_KEY_PAUSE", 284);
+    addConstant(module, "GLFW_KEY_F1", 290);
+    addConstant(module, "GLFW_KEY_F2", 291);
+    addConstant(module, "GLFW_KEY_F3", 292);
 };

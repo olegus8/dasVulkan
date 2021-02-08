@@ -954,91 +954,91 @@ void addVulkanGenerated_6(Module & module, ModuleLibrary & lib) {{
     // functions
     //
 
-    addExtern<DAS_BIND_FUN(vkCmdDrawIndexed)>(*this, lib, "vkCmdDrawIndexed",
+    addExtern<DAS_BIND_FUN(vkCmdDrawIndexed)>(module, lib, "vkCmdDrawIndexed",
         SideEffects::worstDefault, "vkCmdDrawIndexed");
-    addExtern<DAS_BIND_FUN(vkCmdDrawIndirect)>(*this, lib, "vkCmdDrawIndirect",
+    addExtern<DAS_BIND_FUN(vkCmdDrawIndirect)>(module, lib, "vkCmdDrawIndirect",
         SideEffects::worstDefault, "vkCmdDrawIndirect");
-    addExtern<DAS_BIND_FUN(vkCmdDrawIndexedIndirect)>(*this, lib, "vkCmdDrawIndexedIndirect",
+    addExtern<DAS_BIND_FUN(vkCmdDrawIndexedIndirect)>(module, lib, "vkCmdDrawIndexedIndirect",
         SideEffects::worstDefault, "vkCmdDrawIndexedIndirect");
-    addExtern<DAS_BIND_FUN(vkCmdDispatch)>(*this, lib, "vkCmdDispatch",
+    addExtern<DAS_BIND_FUN(vkCmdDispatch)>(module, lib, "vkCmdDispatch",
         SideEffects::worstDefault, "vkCmdDispatch");
-    addExtern<DAS_BIND_FUN(vkCmdDispatchIndirect)>(*this, lib, "vkCmdDispatchIndirect",
+    addExtern<DAS_BIND_FUN(vkCmdDispatchIndirect)>(module, lib, "vkCmdDispatchIndirect",
         SideEffects::worstDefault, "vkCmdDispatchIndirect");
-    addExtern<DAS_BIND_FUN(vkCmdCopyBuffer)>(*this, lib, "vkCmdCopyBuffer",
+    addExtern<DAS_BIND_FUN(vkCmdCopyBuffer)>(module, lib, "vkCmdCopyBuffer",
         SideEffects::worstDefault, "vkCmdCopyBuffer");
-    addExtern<DAS_BIND_FUN(vkCmdCopyImage)>(*this, lib, "vkCmdCopyImage",
+    addExtern<DAS_BIND_FUN(vkCmdCopyImage)>(module, lib, "vkCmdCopyImage",
         SideEffects::worstDefault, "vkCmdCopyImage");
-    addExtern<DAS_BIND_FUN(vkCmdBlitImage)>(*this, lib, "vkCmdBlitImage",
+    addExtern<DAS_BIND_FUN(vkCmdBlitImage)>(module, lib, "vkCmdBlitImage",
         SideEffects::worstDefault, "vkCmdBlitImage");
-    addExtern<DAS_BIND_FUN(vkCmdCopyBufferToImage)>(*this, lib, "vkCmdCopyBufferToImage",
+    addExtern<DAS_BIND_FUN(vkCmdCopyBufferToImage)>(module, lib, "vkCmdCopyBufferToImage",
         SideEffects::worstDefault, "vkCmdCopyBufferToImage");
-    addExtern<DAS_BIND_FUN(vkCmdCopyImageToBuffer)>(*this, lib, "vkCmdCopyImageToBuffer",
+    addExtern<DAS_BIND_FUN(vkCmdCopyImageToBuffer)>(module, lib, "vkCmdCopyImageToBuffer",
         SideEffects::worstDefault, "vkCmdCopyImageToBuffer");
-    addExtern<DAS_BIND_FUN(vkCmdUpdateBuffer)>(*this, lib, "vkCmdUpdateBuffer",
+    addExtern<DAS_BIND_FUN(vkCmdUpdateBuffer)>(module, lib, "vkCmdUpdateBuffer",
         SideEffects::worstDefault, "vkCmdUpdateBuffer");
-    addExtern<DAS_BIND_FUN(vkCmdFillBuffer)>(*this, lib, "vkCmdFillBuffer",
+    addExtern<DAS_BIND_FUN(vkCmdFillBuffer)>(module, lib, "vkCmdFillBuffer",
         SideEffects::worstDefault, "vkCmdFillBuffer");
-    addExtern<DAS_BIND_FUN(vkCmdClearColorImage)>(*this, lib, "vkCmdClearColorImage",
+    addExtern<DAS_BIND_FUN(vkCmdClearColorImage)>(module, lib, "vkCmdClearColorImage",
         SideEffects::worstDefault, "vkCmdClearColorImage");
-    addExtern<DAS_BIND_FUN(vkCmdClearDepthStencilImage)>(*this, lib, "vkCmdClearDepthStencilImage",
+    addExtern<DAS_BIND_FUN(vkCmdClearDepthStencilImage)>(module, lib, "vkCmdClearDepthStencilImage",
         SideEffects::worstDefault, "vkCmdClearDepthStencilImage");
-    addExtern<DAS_BIND_FUN(vkCmdClearAttachments)>(*this, lib, "vkCmdClearAttachments",
+    addExtern<DAS_BIND_FUN(vkCmdClearAttachments)>(module, lib, "vkCmdClearAttachments",
         SideEffects::worstDefault, "vkCmdClearAttachments");
-    addExtern<DAS_BIND_FUN(vkCmdResolveImage)>(*this, lib, "vkCmdResolveImage",
+    addExtern<DAS_BIND_FUN(vkCmdResolveImage)>(module, lib, "vkCmdResolveImage",
         SideEffects::worstDefault, "vkCmdResolveImage");
-    addExtern<DAS_BIND_FUN(vkCmdSetEvent)>(*this, lib, "vkCmdSetEvent",
+    addExtern<DAS_BIND_FUN(vkCmdSetEvent)>(module, lib, "vkCmdSetEvent",
         SideEffects::worstDefault, "vkCmdSetEvent");
-    addExtern<DAS_BIND_FUN(vkCmdResetEvent)>(*this, lib, "vkCmdResetEvent",
+    addExtern<DAS_BIND_FUN(vkCmdResetEvent)>(module, lib, "vkCmdResetEvent",
         SideEffects::worstDefault, "vkCmdResetEvent");
 
     //
     // macro constants
     //
 
-    addConstant(*this,"GLFW_CURSOR_NORMAL",0x00034001);
-    addConstant(*this,"GLFW_CURSOR_HIDDEN",0x00034002);
-    addConstant(*this,"GLFW_CURSOR_DISABLED",0x00034003);
-    addConstant(*this,"GLFW_ANY_RELEASE_BEHAVIOR",0);
-    addConstant(*this,"GLFW_RELEASE_BEHAVIOR_FLUSH",0x00035001);
-    addConstant(*this,"GLFW_RELEASE_BEHAVIOR_NONE",0x00035002);
-    addConstant(*this,"GLFW_NATIVE_CONTEXT_API",0x00036001);
-    addConstant(*this,"GLFW_EGL_CONTEXT_API",0x00036002);
-    addConstant(*this,"GLFW_OSMESA_CONTEXT_API",0x00036003);
-    addConstant(*this,"GLFW_ARROW_CURSOR",0x00036001);
-    addConstant(*this,"GLFW_IBEAM_CURSOR",0x00036002);
-    addConstant(*this,"GLFW_CROSSHAIR_CURSOR",0x00036003);
-    addConstant(*this,"GLFW_HAND_CURSOR",0x00036004);
-    addConstant(*this,"GLFW_HRESIZE_CURSOR",0x00036005);
-    addConstant(*this,"GLFW_VRESIZE_CURSOR",0x00036006);
-    addConstant(*this,"GLFW_CONNECTED",0x00040001);
-    addConstant(*this,"GLFW_DISCONNECTED",0x00040002);
-    addConstant(*this,"GLFW_JOYSTICK_HAT_BUTTONS",0x00050001);
-    addConstant(*this,"GLFW_COCOA_CHDIR_RESOURCES",0x00051001);
-    addConstant(*this,"GLFW_COCOA_MENUBAR",0x00051002);
-    addConstant(*this,"GLFW_DONT_CARE",-1);
-    addConstant(*this,"VK_VERSION_1_0",1);
-    addConstant(*this,"VK_API_VERSION_1_0",VK_MAKE_VERSION(1, 0, 0));
-    addConstant(*this,"VK_HEADER_VERSION",162);
-    addConstant(*this,"VK_HEADER_VERSION_COMPLETE",VK_MAKE_VERSION(1, 2, VK_HEADER_VERSION));
-    addConstant(*this,"VK_NULL_HANDLE",0);
-    addConstant(*this,"VK_ATTACHMENT_UNUSED",(~0U));
-    addConstant(*this,"VK_FALSE",0);
-    addConstant(*this,"VK_LOD_CLAMP_NONE",1000.0f);
-    addConstant(*this,"VK_QUEUE_FAMILY_IGNORED",(~0U));
-    addConstant(*this,"VK_REMAINING_ARRAY_LAYERS",(~0U));
-    addConstant(*this,"VK_REMAINING_MIP_LEVELS",(~0U));
-    addConstant(*this,"VK_SUBPASS_EXTERNAL",(~0U));
-    addConstant(*this,"VK_TRUE",1);
-    addConstant(*this,"VK_WHOLE_SIZE",(~0ULL));
-    addConstant(*this,"VK_MAX_MEMORY_TYPES",32);
-    addConstant(*this,"VK_MAX_MEMORY_HEAPS",16);
-    addConstant(*this,"VK_MAX_PHYSICAL_DEVICE_NAME_SIZE",256);
-    addConstant(*this,"VK_UUID_SIZE",16);
-    addConstant(*this,"VK_MAX_EXTENSION_NAME_SIZE",256);
-    addConstant(*this,"VK_MAX_DESCRIPTION_SIZE",256);
-    addConstant(*this,"VK_VERSION_1_1",1);
-    addConstant(*this,"VK_API_VERSION_1_1",VK_MAKE_VERSION(1, 1, 0));
-    addConstant(*this,"VK_MAX_DEVICE_GROUP_SIZE",32);
-    addConstant(*this,"VK_LUID_SIZE",8);
-    addConstant(*this,"VK_QUEUE_FAMILY_EXTERNAL",(~0U-1));
+    addConstant(module, "GLFW_CURSOR_NORMAL", 0x00034001);
+    addConstant(module, "GLFW_CURSOR_HIDDEN", 0x00034002);
+    addConstant(module, "GLFW_CURSOR_DISABLED", 0x00034003);
+    addConstant(module, "GLFW_ANY_RELEASE_BEHAVIOR", 0);
+    addConstant(module, "GLFW_RELEASE_BEHAVIOR_FLUSH", 0x00035001);
+    addConstant(module, "GLFW_RELEASE_BEHAVIOR_NONE", 0x00035002);
+    addConstant(module, "GLFW_NATIVE_CONTEXT_API", 0x00036001);
+    addConstant(module, "GLFW_EGL_CONTEXT_API", 0x00036002);
+    addConstant(module, "GLFW_OSMESA_CONTEXT_API", 0x00036003);
+    addConstant(module, "GLFW_ARROW_CURSOR", 0x00036001);
+    addConstant(module, "GLFW_IBEAM_CURSOR", 0x00036002);
+    addConstant(module, "GLFW_CROSSHAIR_CURSOR", 0x00036003);
+    addConstant(module, "GLFW_HAND_CURSOR", 0x00036004);
+    addConstant(module, "GLFW_HRESIZE_CURSOR", 0x00036005);
+    addConstant(module, "GLFW_VRESIZE_CURSOR", 0x00036006);
+    addConstant(module, "GLFW_CONNECTED", 0x00040001);
+    addConstant(module, "GLFW_DISCONNECTED", 0x00040002);
+    addConstant(module, "GLFW_JOYSTICK_HAT_BUTTONS", 0x00050001);
+    addConstant(module, "GLFW_COCOA_CHDIR_RESOURCES", 0x00051001);
+    addConstant(module, "GLFW_COCOA_MENUBAR", 0x00051002);
+    addConstant(module, "GLFW_DONT_CARE", -1);
+    addConstant(module, "VK_VERSION_1_0", 1);
+    addConstant(module, "VK_API_VERSION_1_0", VK_MAKE_VERSION(1, 0, 0));
+    addConstant(module, "VK_HEADER_VERSION", 162);
+    addConstant(module, "VK_HEADER_VERSION_COMPLETE", VK_MAKE_VERSION(1, 2, VK_HEADER_VERSION));
+    addConstant(module, "VK_NULL_HANDLE", 0);
+    addConstant(module, "VK_ATTACHMENT_UNUSED", (~0U));
+    addConstant(module, "VK_FALSE", 0);
+    addConstant(module, "VK_LOD_CLAMP_NONE", 1000.0f);
+    addConstant(module, "VK_QUEUE_FAMILY_IGNORED", (~0U));
+    addConstant(module, "VK_REMAINING_ARRAY_LAYERS", (~0U));
+    addConstant(module, "VK_REMAINING_MIP_LEVELS", (~0U));
+    addConstant(module, "VK_SUBPASS_EXTERNAL", (~0U));
+    addConstant(module, "VK_TRUE", 1);
+    addConstant(module, "VK_WHOLE_SIZE", (~0ULL));
+    addConstant(module, "VK_MAX_MEMORY_TYPES", 32);
+    addConstant(module, "VK_MAX_MEMORY_HEAPS", 16);
+    addConstant(module, "VK_MAX_PHYSICAL_DEVICE_NAME_SIZE", 256);
+    addConstant(module, "VK_UUID_SIZE", 16);
+    addConstant(module, "VK_MAX_EXTENSION_NAME_SIZE", 256);
+    addConstant(module, "VK_MAX_DESCRIPTION_SIZE", 256);
+    addConstant(module, "VK_VERSION_1_1", 1);
+    addConstant(module, "VK_API_VERSION_1_1", VK_MAKE_VERSION(1, 1, 0));
+    addConstant(module, "VK_MAX_DEVICE_GROUP_SIZE", 32);
+    addConstant(module, "VK_LUID_SIZE", 8);
+    addConstant(module, "VK_QUEUE_FAMILY_EXTERNAL", (~0U-1));
 };

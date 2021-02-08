@@ -1003,91 +1003,91 @@ void addVulkanGenerated_15(Module & module, ModuleLibrary & lib) {{
     // functions
     //
 
-    addExtern<DAS_BIND_FUN(glfwUpdateGamepadMappings)>(*this, lib, "glfwUpdateGamepadMappings",
+    addExtern<DAS_BIND_FUN(glfwUpdateGamepadMappings)>(module, lib, "glfwUpdateGamepadMappings",
         SideEffects::worstDefault, "glfwUpdateGamepadMappings");
-    addExtern<DAS_BIND_FUN(glfwGetGamepadName)>(*this, lib, "glfwGetGamepadName",
+    addExtern<DAS_BIND_FUN(glfwGetGamepadName)>(module, lib, "glfwGetGamepadName",
         SideEffects::worstDefault, "glfwGetGamepadName");
-    addExtern<DAS_BIND_FUN(glfwGetGamepadState)>(*this, lib, "glfwGetGamepadState",
+    addExtern<DAS_BIND_FUN(glfwGetGamepadState)>(module, lib, "glfwGetGamepadState",
         SideEffects::worstDefault, "glfwGetGamepadState");
-    addExtern<DAS_BIND_FUN(glfwSetClipboardString)>(*this, lib, "glfwSetClipboardString",
+    addExtern<DAS_BIND_FUN(glfwSetClipboardString)>(module, lib, "glfwSetClipboardString",
         SideEffects::worstDefault, "glfwSetClipboardString");
-    addExtern<DAS_BIND_FUN(glfwGetClipboardString)>(*this, lib, "glfwGetClipboardString",
+    addExtern<DAS_BIND_FUN(glfwGetClipboardString)>(module, lib, "glfwGetClipboardString",
         SideEffects::worstDefault, "glfwGetClipboardString");
-    addExtern<DAS_BIND_FUN(glfwGetTime)>(*this, lib, "glfwGetTime",
+    addExtern<DAS_BIND_FUN(glfwGetTime)>(module, lib, "glfwGetTime",
         SideEffects::worstDefault, "glfwGetTime");
-    addExtern<DAS_BIND_FUN(glfwSetTime)>(*this, lib, "glfwSetTime",
+    addExtern<DAS_BIND_FUN(glfwSetTime)>(module, lib, "glfwSetTime",
         SideEffects::worstDefault, "glfwSetTime");
-    addExtern<DAS_BIND_FUN(glfwGetTimerValue)>(*this, lib, "glfwGetTimerValue",
+    addExtern<DAS_BIND_FUN(glfwGetTimerValue)>(module, lib, "glfwGetTimerValue",
         SideEffects::worstDefault, "glfwGetTimerValue");
-    addExtern<DAS_BIND_FUN(glfwGetTimerFrequency)>(*this, lib, "glfwGetTimerFrequency",
+    addExtern<DAS_BIND_FUN(glfwGetTimerFrequency)>(module, lib, "glfwGetTimerFrequency",
         SideEffects::worstDefault, "glfwGetTimerFrequency");
-    addExtern<DAS_BIND_FUN(glfwMakeContextCurrent)>(*this, lib, "glfwMakeContextCurrent",
+    addExtern<DAS_BIND_FUN(glfwMakeContextCurrent)>(module, lib, "glfwMakeContextCurrent",
         SideEffects::worstDefault, "glfwMakeContextCurrent");
-    addExtern<DAS_BIND_FUN(glfwGetCurrentContext)>(*this, lib, "glfwGetCurrentContext",
+    addExtern<DAS_BIND_FUN(glfwGetCurrentContext)>(module, lib, "glfwGetCurrentContext",
         SideEffects::worstDefault, "glfwGetCurrentContext");
-    addExtern<DAS_BIND_FUN(glfwSwapBuffers)>(*this, lib, "glfwSwapBuffers",
+    addExtern<DAS_BIND_FUN(glfwSwapBuffers)>(module, lib, "glfwSwapBuffers",
         SideEffects::worstDefault, "glfwSwapBuffers");
-    addExtern<DAS_BIND_FUN(glfwSwapInterval)>(*this, lib, "glfwSwapInterval",
+    addExtern<DAS_BIND_FUN(glfwSwapInterval)>(module, lib, "glfwSwapInterval",
         SideEffects::worstDefault, "glfwSwapInterval");
-    addExtern<DAS_BIND_FUN(glfwExtensionSupported)>(*this, lib, "glfwExtensionSupported",
+    addExtern<DAS_BIND_FUN(glfwExtensionSupported)>(module, lib, "glfwExtensionSupported",
         SideEffects::worstDefault, "glfwExtensionSupported");
-    addExtern<DAS_BIND_FUN(glfwVulkanSupported)>(*this, lib, "glfwVulkanSupported",
+    addExtern<DAS_BIND_FUN(glfwVulkanSupported)>(module, lib, "glfwVulkanSupported",
         SideEffects::worstDefault, "glfwVulkanSupported");
-    addExtern<DAS_BIND_FUN(glfwGetRequiredInstanceExtensions)>(*this, lib, "glfwGetRequiredInstanceExtensions",
+    addExtern<DAS_BIND_FUN(glfwGetRequiredInstanceExtensions)>(module, lib, "glfwGetRequiredInstanceExtensions",
         SideEffects::worstDefault, "glfwGetRequiredInstanceExtensions");
-    addExtern<DAS_BIND_FUN(glfwGetPhysicalDevicePresentationSupport)>(*this, lib, "glfwGetPhysicalDevicePresentationSupport",
+    addExtern<DAS_BIND_FUN(glfwGetPhysicalDevicePresentationSupport)>(module, lib, "glfwGetPhysicalDevicePresentationSupport",
         SideEffects::worstDefault, "glfwGetPhysicalDevicePresentationSupport");
-    addExtern<DAS_BIND_FUN(glfwCreateWindowSurface)>(*this, lib, "glfwCreateWindowSurface",
+    addExtern<DAS_BIND_FUN(glfwCreateWindowSurface)>(module, lib, "glfwCreateWindowSurface",
         SideEffects::worstDefault, "glfwCreateWindowSurface");
 
     //
     // macro constants
     //
 
-    addConstant(*this,"VK_EXT_host_query_reset",1);
-    addConstant(*this,"VK_EXT_HOST_QUERY_RESET_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_index_type_uint8",1);
-    addConstant(*this,"VK_EXT_INDEX_TYPE_UINT8_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_extended_dynamic_state",1);
-    addConstant(*this,"VK_EXT_EXTENDED_DYNAMIC_STATE_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_shader_demote_to_helper_invocation",1);
-    addConstant(*this,"VK_EXT_SHADER_DEMOTE_TO_HELPER_INVOCATION_SPEC_VERSION",1);
-    addConstant(*this,"VK_NV_device_generated_commands",1);
-    addConstant(*this,"VK_NV_DEVICE_GENERATED_COMMANDS_SPEC_VERSION",3);
-    addConstant(*this,"VK_EXT_texel_buffer_alignment",1);
-    addConstant(*this,"VK_EXT_TEXEL_BUFFER_ALIGNMENT_SPEC_VERSION",1);
-    addConstant(*this,"VK_QCOM_render_pass_transform",1);
-    addConstant(*this,"VK_QCOM_RENDER_PASS_TRANSFORM_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_device_memory_report",1);
-    addConstant(*this,"VK_EXT_DEVICE_MEMORY_REPORT_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_robustness2",1);
-    addConstant(*this,"VK_EXT_ROBUSTNESS_2_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_custom_border_color",1);
-    addConstant(*this,"VK_EXT_CUSTOM_BORDER_COLOR_SPEC_VERSION",12);
-    addConstant(*this,"VK_GOOGLE_user_type",1);
-    addConstant(*this,"VK_GOOGLE_USER_TYPE_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_private_data",1);
-    addConstant(*this,"VK_EXT_PRIVATE_DATA_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_pipeline_creation_cache_control",1);
-    addConstant(*this,"VK_EXT_PIPELINE_CREATION_CACHE_CONTROL_SPEC_VERSION",3);
-    addConstant(*this,"VK_NV_device_diagnostics_config",1);
-    addConstant(*this,"VK_NV_DEVICE_DIAGNOSTICS_CONFIG_SPEC_VERSION",1);
-    addConstant(*this,"VK_QCOM_render_pass_store_ops",1);
-    addConstant(*this,"VK_QCOM_render_pass_store_ops_SPEC_VERSION",2);
-    addConstant(*this,"VK_NV_fragment_shading_rate_enums",1);
-    addConstant(*this,"VK_NV_FRAGMENT_SHADING_RATE_ENUMS_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_fragment_density_map2",1);
-    addConstant(*this,"VK_EXT_FRAGMENT_DENSITY_MAP_2_SPEC_VERSION",1);
-    addConstant(*this,"VK_QCOM_rotated_copy_commands",1);
-    addConstant(*this,"VK_QCOM_rotated_copy_commands_SPEC_VERSION",0);
-    addConstant(*this,"VK_EXT_image_robustness",1);
-    addConstant(*this,"VK_EXT_IMAGE_ROBUSTNESS_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_4444_formats",1);
-    addConstant(*this,"VK_EXT_4444_FORMATS_SPEC_VERSION",1);
-    addConstant(*this,"VK_KHR_acceleration_structure",1);
-    addConstant(*this,"VK_KHR_ACCELERATION_STRUCTURE_SPEC_VERSION",11);
-    addConstant(*this,"VK_KHR_ray_tracing_pipeline",1);
-    addConstant(*this,"VK_KHR_RAY_TRACING_PIPELINE_SPEC_VERSION",1);
-    addConstant(*this,"VK_KHR_ray_query",1);
-    addConstant(*this,"VK_KHR_RAY_QUERY_SPEC_VERSION",1);
+    addConstant(module, "VK_EXT_host_query_reset", 1);
+    addConstant(module, "VK_EXT_HOST_QUERY_RESET_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_index_type_uint8", 1);
+    addConstant(module, "VK_EXT_INDEX_TYPE_UINT8_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_extended_dynamic_state", 1);
+    addConstant(module, "VK_EXT_EXTENDED_DYNAMIC_STATE_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_shader_demote_to_helper_invocation", 1);
+    addConstant(module, "VK_EXT_SHADER_DEMOTE_TO_HELPER_INVOCATION_SPEC_VERSION", 1);
+    addConstant(module, "VK_NV_device_generated_commands", 1);
+    addConstant(module, "VK_NV_DEVICE_GENERATED_COMMANDS_SPEC_VERSION", 3);
+    addConstant(module, "VK_EXT_texel_buffer_alignment", 1);
+    addConstant(module, "VK_EXT_TEXEL_BUFFER_ALIGNMENT_SPEC_VERSION", 1);
+    addConstant(module, "VK_QCOM_render_pass_transform", 1);
+    addConstant(module, "VK_QCOM_RENDER_PASS_TRANSFORM_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_device_memory_report", 1);
+    addConstant(module, "VK_EXT_DEVICE_MEMORY_REPORT_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_robustness2", 1);
+    addConstant(module, "VK_EXT_ROBUSTNESS_2_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_custom_border_color", 1);
+    addConstant(module, "VK_EXT_CUSTOM_BORDER_COLOR_SPEC_VERSION", 12);
+    addConstant(module, "VK_GOOGLE_user_type", 1);
+    addConstant(module, "VK_GOOGLE_USER_TYPE_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_private_data", 1);
+    addConstant(module, "VK_EXT_PRIVATE_DATA_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_pipeline_creation_cache_control", 1);
+    addConstant(module, "VK_EXT_PIPELINE_CREATION_CACHE_CONTROL_SPEC_VERSION", 3);
+    addConstant(module, "VK_NV_device_diagnostics_config", 1);
+    addConstant(module, "VK_NV_DEVICE_DIAGNOSTICS_CONFIG_SPEC_VERSION", 1);
+    addConstant(module, "VK_QCOM_render_pass_store_ops", 1);
+    addConstant(module, "VK_QCOM_render_pass_store_ops_SPEC_VERSION", 2);
+    addConstant(module, "VK_NV_fragment_shading_rate_enums", 1);
+    addConstant(module, "VK_NV_FRAGMENT_SHADING_RATE_ENUMS_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_fragment_density_map2", 1);
+    addConstant(module, "VK_EXT_FRAGMENT_DENSITY_MAP_2_SPEC_VERSION", 1);
+    addConstant(module, "VK_QCOM_rotated_copy_commands", 1);
+    addConstant(module, "VK_QCOM_rotated_copy_commands_SPEC_VERSION", 0);
+    addConstant(module, "VK_EXT_image_robustness", 1);
+    addConstant(module, "VK_EXT_IMAGE_ROBUSTNESS_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_4444_formats", 1);
+    addConstant(module, "VK_EXT_4444_FORMATS_SPEC_VERSION", 1);
+    addConstant(module, "VK_KHR_acceleration_structure", 1);
+    addConstant(module, "VK_KHR_ACCELERATION_STRUCTURE_SPEC_VERSION", 11);
+    addConstant(module, "VK_KHR_ray_tracing_pipeline", 1);
+    addConstant(module, "VK_KHR_RAY_TRACING_PIPELINE_SPEC_VERSION", 1);
+    addConstant(module, "VK_KHR_ray_query", 1);
+    addConstant(module, "VK_KHR_RAY_QUERY_SPEC_VERSION", 1);
 };

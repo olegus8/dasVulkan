@@ -1158,88 +1158,88 @@ void addVulkanGenerated_5(Module & module, ModuleLibrary & lib) {{
     // functions
     //
 
-    addExtern<DAS_BIND_FUN(vkBeginCommandBuffer)>(*this, lib, "vkBeginCommandBuffer",
+    addExtern<DAS_BIND_FUN(vkBeginCommandBuffer)>(module, lib, "vkBeginCommandBuffer",
         SideEffects::worstDefault, "vkBeginCommandBuffer");
-    addExtern<DAS_BIND_FUN(vkEndCommandBuffer)>(*this, lib, "vkEndCommandBuffer",
+    addExtern<DAS_BIND_FUN(vkEndCommandBuffer)>(module, lib, "vkEndCommandBuffer",
         SideEffects::worstDefault, "vkEndCommandBuffer");
-    addExtern<DAS_BIND_FUN(vkResetCommandBuffer)>(*this, lib, "vkResetCommandBuffer",
+    addExtern<DAS_BIND_FUN(vkResetCommandBuffer)>(module, lib, "vkResetCommandBuffer",
         SideEffects::worstDefault, "vkResetCommandBuffer");
-    addExtern<DAS_BIND_FUN(vkCmdBindPipeline)>(*this, lib, "vkCmdBindPipeline",
+    addExtern<DAS_BIND_FUN(vkCmdBindPipeline)>(module, lib, "vkCmdBindPipeline",
         SideEffects::worstDefault, "vkCmdBindPipeline");
-    addExtern<DAS_BIND_FUN(vkCmdSetViewport)>(*this, lib, "vkCmdSetViewport",
+    addExtern<DAS_BIND_FUN(vkCmdSetViewport)>(module, lib, "vkCmdSetViewport",
         SideEffects::worstDefault, "vkCmdSetViewport");
-    addExtern<DAS_BIND_FUN(vkCmdSetScissor)>(*this, lib, "vkCmdSetScissor",
+    addExtern<DAS_BIND_FUN(vkCmdSetScissor)>(module, lib, "vkCmdSetScissor",
         SideEffects::worstDefault, "vkCmdSetScissor");
-    addExtern<DAS_BIND_FUN(vkCmdSetLineWidth)>(*this, lib, "vkCmdSetLineWidth",
+    addExtern<DAS_BIND_FUN(vkCmdSetLineWidth)>(module, lib, "vkCmdSetLineWidth",
         SideEffects::worstDefault, "vkCmdSetLineWidth");
-    addExtern<DAS_BIND_FUN(vkCmdSetDepthBias)>(*this, lib, "vkCmdSetDepthBias",
+    addExtern<DAS_BIND_FUN(vkCmdSetDepthBias)>(module, lib, "vkCmdSetDepthBias",
         SideEffects::worstDefault, "vkCmdSetDepthBias");
-    addExtern<DAS_BIND_FUN(vkCmdSetBlendConstants)>(*this, lib, "vkCmdSetBlendConstants",
+    addExtern<DAS_BIND_FUN(vkCmdSetBlendConstants)>(module, lib, "vkCmdSetBlendConstants",
         SideEffects::worstDefault, "vkCmdSetBlendConstants");
-    addExtern<DAS_BIND_FUN(vkCmdSetDepthBounds)>(*this, lib, "vkCmdSetDepthBounds",
+    addExtern<DAS_BIND_FUN(vkCmdSetDepthBounds)>(module, lib, "vkCmdSetDepthBounds",
         SideEffects::worstDefault, "vkCmdSetDepthBounds");
-    addExtern<DAS_BIND_FUN(vkCmdSetStencilCompareMask)>(*this, lib, "vkCmdSetStencilCompareMask",
+    addExtern<DAS_BIND_FUN(vkCmdSetStencilCompareMask)>(module, lib, "vkCmdSetStencilCompareMask",
         SideEffects::worstDefault, "vkCmdSetStencilCompareMask");
-    addExtern<DAS_BIND_FUN(vkCmdSetStencilWriteMask)>(*this, lib, "vkCmdSetStencilWriteMask",
+    addExtern<DAS_BIND_FUN(vkCmdSetStencilWriteMask)>(module, lib, "vkCmdSetStencilWriteMask",
         SideEffects::worstDefault, "vkCmdSetStencilWriteMask");
-    addExtern<DAS_BIND_FUN(vkCmdSetStencilReference)>(*this, lib, "vkCmdSetStencilReference",
+    addExtern<DAS_BIND_FUN(vkCmdSetStencilReference)>(module, lib, "vkCmdSetStencilReference",
         SideEffects::worstDefault, "vkCmdSetStencilReference");
-    addExtern<DAS_BIND_FUN(vkCmdBindDescriptorSets)>(*this, lib, "vkCmdBindDescriptorSets",
+    addExtern<DAS_BIND_FUN(vkCmdBindDescriptorSets)>(module, lib, "vkCmdBindDescriptorSets",
         SideEffects::worstDefault, "vkCmdBindDescriptorSets");
-    addExtern<DAS_BIND_FUN(vkCmdBindIndexBuffer)>(*this, lib, "vkCmdBindIndexBuffer",
+    addExtern<DAS_BIND_FUN(vkCmdBindIndexBuffer)>(module, lib, "vkCmdBindIndexBuffer",
         SideEffects::worstDefault, "vkCmdBindIndexBuffer");
-    addExtern<DAS_BIND_FUN(vkCmdBindVertexBuffers)>(*this, lib, "vkCmdBindVertexBuffers",
+    addExtern<DAS_BIND_FUN(vkCmdBindVertexBuffers)>(module, lib, "vkCmdBindVertexBuffers",
         SideEffects::worstDefault, "vkCmdBindVertexBuffers");
-    addExtern<DAS_BIND_FUN(vkCmdDraw)>(*this, lib, "vkCmdDraw",
+    addExtern<DAS_BIND_FUN(vkCmdDraw)>(module, lib, "vkCmdDraw",
         SideEffects::worstDefault, "vkCmdDraw");
 
     //
     // macro constants
     //
 
-    addConstant(*this,"GLFW_BLUE_BITS",0x00021003);
-    addConstant(*this,"GLFW_ALPHA_BITS",0x00021004);
-    addConstant(*this,"GLFW_DEPTH_BITS",0x00021005);
-    addConstant(*this,"GLFW_STENCIL_BITS",0x00021006);
-    addConstant(*this,"GLFW_ACCUM_RED_BITS",0x00021007);
-    addConstant(*this,"GLFW_ACCUM_GREEN_BITS",0x00021008);
-    addConstant(*this,"GLFW_ACCUM_BLUE_BITS",0x00021009);
-    addConstant(*this,"GLFW_ACCUM_ALPHA_BITS",0x0002100A);
-    addConstant(*this,"GLFW_AUX_BUFFERS",0x0002100B);
-    addConstant(*this,"GLFW_STEREO",0x0002100C);
-    addConstant(*this,"GLFW_SAMPLES",0x0002100D);
-    addConstant(*this,"GLFW_SRGB_CAPABLE",0x0002100E);
-    addConstant(*this,"GLFW_REFRESH_RATE",0x0002100F);
-    addConstant(*this,"GLFW_DOUBLEBUFFER",0x00021010);
-    addConstant(*this,"GLFW_CLIENT_API",0x00022001);
-    addConstant(*this,"GLFW_CONTEXT_VERSION_MAJOR",0x00022002);
-    addConstant(*this,"GLFW_CONTEXT_VERSION_MINOR",0x00022003);
-    addConstant(*this,"GLFW_CONTEXT_REVISION",0x00022004);
-    addConstant(*this,"GLFW_CONTEXT_ROBUSTNESS",0x00022005);
-    addConstant(*this,"GLFW_OPENGL_FORWARD_COMPAT",0x00022006);
-    addConstant(*this,"GLFW_OPENGL_DEBUG_CONTEXT",0x00022007);
-    addConstant(*this,"GLFW_OPENGL_PROFILE",0x00022008);
-    addConstant(*this,"GLFW_CONTEXT_RELEASE_BEHAVIOR",0x00022009);
-    addConstant(*this,"GLFW_CONTEXT_NO_ERROR",0x0002200A);
-    addConstant(*this,"GLFW_CONTEXT_CREATION_API",0x0002200B);
-    addConstant(*this,"GLFW_SCALE_TO_MONITOR",0x0002200C);
-    addConstant(*this,"GLFW_COCOA_RETINA_FRAMEBUFFER",0x00023001);
-    addConstant(*this,"GLFW_COCOA_FRAME_NAME",0x00023002);
-    addConstant(*this,"GLFW_COCOA_GRAPHICS_SWITCHING",0x00023003);
-    addConstant(*this,"GLFW_X11_CLASS_NAME",0x00024001);
-    addConstant(*this,"GLFW_X11_INSTANCE_NAME",0x00024002);
-    addConstant(*this,"GLFW_NO_API",0);
-    addConstant(*this,"GLFW_OPENGL_API",0x00030001);
-    addConstant(*this,"GLFW_OPENGL_ES_API",0x00030002);
-    addConstant(*this,"GLFW_NO_ROBUSTNESS",0);
-    addConstant(*this,"GLFW_NO_RESET_NOTIFICATION",0x00031001);
-    addConstant(*this,"GLFW_LOSE_CONTEXT_ON_RESET",0x00031002);
-    addConstant(*this,"GLFW_OPENGL_ANY_PROFILE",0);
-    addConstant(*this,"GLFW_OPENGL_CORE_PROFILE",0x00032001);
-    addConstant(*this,"GLFW_OPENGL_COMPAT_PROFILE",0x00032002);
-    addConstant(*this,"GLFW_CURSOR",0x00033001);
-    addConstant(*this,"GLFW_STICKY_KEYS",0x00033002);
-    addConstant(*this,"GLFW_STICKY_MOUSE_BUTTONS",0x00033003);
-    addConstant(*this,"GLFW_LOCK_KEY_MODS",0x00033004);
-    addConstant(*this,"GLFW_RAW_MOUSE_MOTION",0x00033005);
+    addConstant(module, "GLFW_BLUE_BITS", 0x00021003);
+    addConstant(module, "GLFW_ALPHA_BITS", 0x00021004);
+    addConstant(module, "GLFW_DEPTH_BITS", 0x00021005);
+    addConstant(module, "GLFW_STENCIL_BITS", 0x00021006);
+    addConstant(module, "GLFW_ACCUM_RED_BITS", 0x00021007);
+    addConstant(module, "GLFW_ACCUM_GREEN_BITS", 0x00021008);
+    addConstant(module, "GLFW_ACCUM_BLUE_BITS", 0x00021009);
+    addConstant(module, "GLFW_ACCUM_ALPHA_BITS", 0x0002100A);
+    addConstant(module, "GLFW_AUX_BUFFERS", 0x0002100B);
+    addConstant(module, "GLFW_STEREO", 0x0002100C);
+    addConstant(module, "GLFW_SAMPLES", 0x0002100D);
+    addConstant(module, "GLFW_SRGB_CAPABLE", 0x0002100E);
+    addConstant(module, "GLFW_REFRESH_RATE", 0x0002100F);
+    addConstant(module, "GLFW_DOUBLEBUFFER", 0x00021010);
+    addConstant(module, "GLFW_CLIENT_API", 0x00022001);
+    addConstant(module, "GLFW_CONTEXT_VERSION_MAJOR", 0x00022002);
+    addConstant(module, "GLFW_CONTEXT_VERSION_MINOR", 0x00022003);
+    addConstant(module, "GLFW_CONTEXT_REVISION", 0x00022004);
+    addConstant(module, "GLFW_CONTEXT_ROBUSTNESS", 0x00022005);
+    addConstant(module, "GLFW_OPENGL_FORWARD_COMPAT", 0x00022006);
+    addConstant(module, "GLFW_OPENGL_DEBUG_CONTEXT", 0x00022007);
+    addConstant(module, "GLFW_OPENGL_PROFILE", 0x00022008);
+    addConstant(module, "GLFW_CONTEXT_RELEASE_BEHAVIOR", 0x00022009);
+    addConstant(module, "GLFW_CONTEXT_NO_ERROR", 0x0002200A);
+    addConstant(module, "GLFW_CONTEXT_CREATION_API", 0x0002200B);
+    addConstant(module, "GLFW_SCALE_TO_MONITOR", 0x0002200C);
+    addConstant(module, "GLFW_COCOA_RETINA_FRAMEBUFFER", 0x00023001);
+    addConstant(module, "GLFW_COCOA_FRAME_NAME", 0x00023002);
+    addConstant(module, "GLFW_COCOA_GRAPHICS_SWITCHING", 0x00023003);
+    addConstant(module, "GLFW_X11_CLASS_NAME", 0x00024001);
+    addConstant(module, "GLFW_X11_INSTANCE_NAME", 0x00024002);
+    addConstant(module, "GLFW_NO_API", 0);
+    addConstant(module, "GLFW_OPENGL_API", 0x00030001);
+    addConstant(module, "GLFW_OPENGL_ES_API", 0x00030002);
+    addConstant(module, "GLFW_NO_ROBUSTNESS", 0);
+    addConstant(module, "GLFW_NO_RESET_NOTIFICATION", 0x00031001);
+    addConstant(module, "GLFW_LOSE_CONTEXT_ON_RESET", 0x00031002);
+    addConstant(module, "GLFW_OPENGL_ANY_PROFILE", 0);
+    addConstant(module, "GLFW_OPENGL_CORE_PROFILE", 0x00032001);
+    addConstant(module, "GLFW_OPENGL_COMPAT_PROFILE", 0x00032002);
+    addConstant(module, "GLFW_CURSOR", 0x00033001);
+    addConstant(module, "GLFW_STICKY_KEYS", 0x00033002);
+    addConstant(module, "GLFW_STICKY_MOUSE_BUTTONS", 0x00033003);
+    addConstant(module, "GLFW_LOCK_KEY_MODS", 0x00033004);
+    addConstant(module, "GLFW_RAW_MOUSE_MOTION", 0x00033005);
 };

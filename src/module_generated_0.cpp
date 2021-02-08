@@ -1104,88 +1104,88 @@ void addVulkanGenerated_0(Module & module, ModuleLibrary & lib) {{
     // functions
     //
 
-    addExtern<DAS_BIND_FUN(vkCreateInstance)>(*this, lib, "vkCreateInstance",
+    addExtern<DAS_BIND_FUN(vkCreateInstance)>(module, lib, "vkCreateInstance",
         SideEffects::worstDefault, "vkCreateInstance");
-    addExtern<DAS_BIND_FUN(vkDestroyInstance)>(*this, lib, "vkDestroyInstance",
+    addExtern<DAS_BIND_FUN(vkDestroyInstance)>(module, lib, "vkDestroyInstance",
         SideEffects::worstDefault, "vkDestroyInstance");
-    addExtern<DAS_BIND_FUN(vkEnumeratePhysicalDevices)>(*this, lib, "vkEnumeratePhysicalDevices",
+    addExtern<DAS_BIND_FUN(vkEnumeratePhysicalDevices)>(module, lib, "vkEnumeratePhysicalDevices",
         SideEffects::worstDefault, "vkEnumeratePhysicalDevices");
-    addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceFeatures)>(*this, lib, "vkGetPhysicalDeviceFeatures",
+    addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceFeatures)>(module, lib, "vkGetPhysicalDeviceFeatures",
         SideEffects::worstDefault, "vkGetPhysicalDeviceFeatures");
-    addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceFormatProperties)>(*this, lib, "vkGetPhysicalDeviceFormatProperties",
+    addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceFormatProperties)>(module, lib, "vkGetPhysicalDeviceFormatProperties",
         SideEffects::worstDefault, "vkGetPhysicalDeviceFormatProperties");
-    addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceImageFormatProperties)>(*this, lib, "vkGetPhysicalDeviceImageFormatProperties",
+    addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceImageFormatProperties)>(module, lib, "vkGetPhysicalDeviceImageFormatProperties",
         SideEffects::worstDefault, "vkGetPhysicalDeviceImageFormatProperties");
-    addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceProperties)>(*this, lib, "vkGetPhysicalDeviceProperties",
+    addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceProperties)>(module, lib, "vkGetPhysicalDeviceProperties",
         SideEffects::worstDefault, "vkGetPhysicalDeviceProperties");
-    addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceQueueFamilyProperties)>(*this, lib, "vkGetPhysicalDeviceQueueFamilyProperties",
+    addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceQueueFamilyProperties)>(module, lib, "vkGetPhysicalDeviceQueueFamilyProperties",
         SideEffects::worstDefault, "vkGetPhysicalDeviceQueueFamilyProperties");
-    addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceMemoryProperties)>(*this, lib, "vkGetPhysicalDeviceMemoryProperties",
+    addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceMemoryProperties)>(module, lib, "vkGetPhysicalDeviceMemoryProperties",
         SideEffects::worstDefault, "vkGetPhysicalDeviceMemoryProperties");
-    addExtern<DAS_BIND_FUN(vkCreateDevice)>(*this, lib, "vkCreateDevice",
+    addExtern<DAS_BIND_FUN(vkCreateDevice)>(module, lib, "vkCreateDevice",
         SideEffects::worstDefault, "vkCreateDevice");
-    addExtern<DAS_BIND_FUN(vkDestroyDevice)>(*this, lib, "vkDestroyDevice",
+    addExtern<DAS_BIND_FUN(vkDestroyDevice)>(module, lib, "vkDestroyDevice",
         SideEffects::worstDefault, "vkDestroyDevice");
-    addExtern<DAS_BIND_FUN(vkEnumerateInstanceExtensionProperties)>(*this, lib, "vkEnumerateInstanceExtensionProperties",
+    addExtern<DAS_BIND_FUN(vkEnumerateInstanceExtensionProperties)>(module, lib, "vkEnumerateInstanceExtensionProperties",
         SideEffects::worstDefault, "vkEnumerateInstanceExtensionProperties");
-    addExtern<DAS_BIND_FUN(vkEnumerateDeviceExtensionProperties)>(*this, lib, "vkEnumerateDeviceExtensionProperties",
+    addExtern<DAS_BIND_FUN(vkEnumerateDeviceExtensionProperties)>(module, lib, "vkEnumerateDeviceExtensionProperties",
         SideEffects::worstDefault, "vkEnumerateDeviceExtensionProperties");
-    addExtern<DAS_BIND_FUN(vkEnumerateInstanceLayerProperties)>(*this, lib, "vkEnumerateInstanceLayerProperties",
+    addExtern<DAS_BIND_FUN(vkEnumerateInstanceLayerProperties)>(module, lib, "vkEnumerateInstanceLayerProperties",
         SideEffects::worstDefault, "vkEnumerateInstanceLayerProperties");
-    addExtern<DAS_BIND_FUN(vkEnumerateDeviceLayerProperties)>(*this, lib, "vkEnumerateDeviceLayerProperties",
+    addExtern<DAS_BIND_FUN(vkEnumerateDeviceLayerProperties)>(module, lib, "vkEnumerateDeviceLayerProperties",
         SideEffects::worstDefault, "vkEnumerateDeviceLayerProperties");
-    addExtern<DAS_BIND_FUN(vkGetDeviceQueue)>(*this, lib, "vkGetDeviceQueue",
+    addExtern<DAS_BIND_FUN(vkGetDeviceQueue)>(module, lib, "vkGetDeviceQueue",
         SideEffects::worstDefault, "vkGetDeviceQueue");
-    addExtern<DAS_BIND_FUN(vkQueueSubmit)>(*this, lib, "vkQueueSubmit",
+    addExtern<DAS_BIND_FUN(vkQueueSubmit)>(module, lib, "vkQueueSubmit",
         SideEffects::worstDefault, "vkQueueSubmit");
 
     //
     // macro constants
     //
 
-    addConstant(*this,"GLFW_VERSION_MAJOR",3);
-    addConstant(*this,"GLFW_VERSION_MINOR",3);
-    addConstant(*this,"GLFW_VERSION_REVISION",2);
-    addConstant(*this,"GLFW_TRUE",1);
-    addConstant(*this,"GLFW_FALSE",0);
-    addConstant(*this,"GLFW_RELEASE",0);
-    addConstant(*this,"GLFW_PRESS",1);
-    addConstant(*this,"GLFW_REPEAT",2);
-    addConstant(*this,"GLFW_HAT_CENTERED",0);
-    addConstant(*this,"GLFW_HAT_UP",1);
-    addConstant(*this,"GLFW_HAT_RIGHT",2);
-    addConstant(*this,"GLFW_HAT_DOWN",4);
-    addConstant(*this,"GLFW_HAT_LEFT",8);
-    addConstant(*this,"GLFW_HAT_RIGHT_UP",(GLFW_HAT_RIGHT | GLFW_HAT_UP));
-    addConstant(*this,"GLFW_HAT_RIGHT_DOWN",(GLFW_HAT_RIGHT | GLFW_HAT_DOWN));
-    addConstant(*this,"GLFW_HAT_LEFT_UP",(GLFW_HAT_LEFT  | GLFW_HAT_UP));
-    addConstant(*this,"GLFW_HAT_LEFT_DOWN",(GLFW_HAT_LEFT  | GLFW_HAT_DOWN));
-    addConstant(*this,"GLFW_KEY_UNKNOWN",-1);
-    addConstant(*this,"GLFW_KEY_SPACE",32);
-    addConstant(*this,"GLFW_KEY_APOSTROPHE",39  /* ' */);
-    addConstant(*this,"GLFW_KEY_COMMA",44  /* , */);
-    addConstant(*this,"GLFW_KEY_MINUS",45  /* - */);
-    addConstant(*this,"GLFW_KEY_PERIOD",46  /* . */);
-    addConstant(*this,"GLFW_KEY_SLASH",47  /* / */);
-    addConstant(*this,"GLFW_KEY_0",48);
-    addConstant(*this,"GLFW_KEY_1",49);
-    addConstant(*this,"GLFW_KEY_2",50);
-    addConstant(*this,"GLFW_KEY_3",51);
-    addConstant(*this,"GLFW_KEY_4",52);
-    addConstant(*this,"GLFW_KEY_5",53);
-    addConstant(*this,"GLFW_KEY_6",54);
-    addConstant(*this,"GLFW_KEY_7",55);
-    addConstant(*this,"GLFW_KEY_8",56);
-    addConstant(*this,"GLFW_KEY_9",57);
-    addConstant(*this,"GLFW_KEY_SEMICOLON",59  /* ; */);
-    addConstant(*this,"GLFW_KEY_EQUAL",61  /* = */);
-    addConstant(*this,"GLFW_KEY_A",65);
-    addConstant(*this,"GLFW_KEY_B",66);
-    addConstant(*this,"GLFW_KEY_C",67);
-    addConstant(*this,"GLFW_KEY_D",68);
-    addConstant(*this,"GLFW_KEY_E",69);
-    addConstant(*this,"GLFW_KEY_F",70);
-    addConstant(*this,"GLFW_KEY_G",71);
-    addConstant(*this,"GLFW_KEY_H",72);
-    addConstant(*this,"GLFW_KEY_I",73);
+    addConstant(module, "GLFW_VERSION_MAJOR", 3);
+    addConstant(module, "GLFW_VERSION_MINOR", 3);
+    addConstant(module, "GLFW_VERSION_REVISION", 2);
+    addConstant(module, "GLFW_TRUE", 1);
+    addConstant(module, "GLFW_FALSE", 0);
+    addConstant(module, "GLFW_RELEASE", 0);
+    addConstant(module, "GLFW_PRESS", 1);
+    addConstant(module, "GLFW_REPEAT", 2);
+    addConstant(module, "GLFW_HAT_CENTERED", 0);
+    addConstant(module, "GLFW_HAT_UP", 1);
+    addConstant(module, "GLFW_HAT_RIGHT", 2);
+    addConstant(module, "GLFW_HAT_DOWN", 4);
+    addConstant(module, "GLFW_HAT_LEFT", 8);
+    addConstant(module, "GLFW_HAT_RIGHT_UP", (GLFW_HAT_RIGHT | GLFW_HAT_UP));
+    addConstant(module, "GLFW_HAT_RIGHT_DOWN", (GLFW_HAT_RIGHT | GLFW_HAT_DOWN));
+    addConstant(module, "GLFW_HAT_LEFT_UP", (GLFW_HAT_LEFT  | GLFW_HAT_UP));
+    addConstant(module, "GLFW_HAT_LEFT_DOWN", (GLFW_HAT_LEFT  | GLFW_HAT_DOWN));
+    addConstant(module, "GLFW_KEY_UNKNOWN", -1);
+    addConstant(module, "GLFW_KEY_SPACE", 32);
+    addConstant(module, "GLFW_KEY_APOSTROPHE", 39  /* ' */);
+    addConstant(module, "GLFW_KEY_COMMA", 44  /* , */);
+    addConstant(module, "GLFW_KEY_MINUS", 45  /* - */);
+    addConstant(module, "GLFW_KEY_PERIOD", 46  /* . */);
+    addConstant(module, "GLFW_KEY_SLASH", 47  /* / */);
+    addConstant(module, "GLFW_KEY_0", 48);
+    addConstant(module, "GLFW_KEY_1", 49);
+    addConstant(module, "GLFW_KEY_2", 50);
+    addConstant(module, "GLFW_KEY_3", 51);
+    addConstant(module, "GLFW_KEY_4", 52);
+    addConstant(module, "GLFW_KEY_5", 53);
+    addConstant(module, "GLFW_KEY_6", 54);
+    addConstant(module, "GLFW_KEY_7", 55);
+    addConstant(module, "GLFW_KEY_8", 56);
+    addConstant(module, "GLFW_KEY_9", 57);
+    addConstant(module, "GLFW_KEY_SEMICOLON", 59  /* ; */);
+    addConstant(module, "GLFW_KEY_EQUAL", 61  /* = */);
+    addConstant(module, "GLFW_KEY_A", 65);
+    addConstant(module, "GLFW_KEY_B", 66);
+    addConstant(module, "GLFW_KEY_C", 67);
+    addConstant(module, "GLFW_KEY_D", 68);
+    addConstant(module, "GLFW_KEY_E", 69);
+    addConstant(module, "GLFW_KEY_F", 70);
+    addConstant(module, "GLFW_KEY_G", 71);
+    addConstant(module, "GLFW_KEY_H", 72);
+    addConstant(module, "GLFW_KEY_I", 73);
 };

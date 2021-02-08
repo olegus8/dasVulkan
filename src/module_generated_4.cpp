@@ -942,90 +942,90 @@ void addVulkanGenerated_4(Module & module, ModuleLibrary & lib) {{
     // functions
     //
 
-    addExtern<DAS_BIND_FUN(vkCreateDescriptorSetLayout)>(*this, lib, "vkCreateDescriptorSetLayout",
+    addExtern<DAS_BIND_FUN(vkCreateDescriptorSetLayout)>(module, lib, "vkCreateDescriptorSetLayout",
         SideEffects::worstDefault, "vkCreateDescriptorSetLayout");
-    addExtern<DAS_BIND_FUN(vkDestroyDescriptorSetLayout)>(*this, lib, "vkDestroyDescriptorSetLayout",
+    addExtern<DAS_BIND_FUN(vkDestroyDescriptorSetLayout)>(module, lib, "vkDestroyDescriptorSetLayout",
         SideEffects::worstDefault, "vkDestroyDescriptorSetLayout");
-    addExtern<DAS_BIND_FUN(vkCreateDescriptorPool)>(*this, lib, "vkCreateDescriptorPool",
+    addExtern<DAS_BIND_FUN(vkCreateDescriptorPool)>(module, lib, "vkCreateDescriptorPool",
         SideEffects::worstDefault, "vkCreateDescriptorPool");
-    addExtern<DAS_BIND_FUN(vkDestroyDescriptorPool)>(*this, lib, "vkDestroyDescriptorPool",
+    addExtern<DAS_BIND_FUN(vkDestroyDescriptorPool)>(module, lib, "vkDestroyDescriptorPool",
         SideEffects::worstDefault, "vkDestroyDescriptorPool");
-    addExtern<DAS_BIND_FUN(vkResetDescriptorPool)>(*this, lib, "vkResetDescriptorPool",
+    addExtern<DAS_BIND_FUN(vkResetDescriptorPool)>(module, lib, "vkResetDescriptorPool",
         SideEffects::worstDefault, "vkResetDescriptorPool");
-    addExtern<DAS_BIND_FUN(vkAllocateDescriptorSets)>(*this, lib, "vkAllocateDescriptorSets",
+    addExtern<DAS_BIND_FUN(vkAllocateDescriptorSets)>(module, lib, "vkAllocateDescriptorSets",
         SideEffects::worstDefault, "vkAllocateDescriptorSets");
-    addExtern<DAS_BIND_FUN(vkFreeDescriptorSets)>(*this, lib, "vkFreeDescriptorSets",
+    addExtern<DAS_BIND_FUN(vkFreeDescriptorSets)>(module, lib, "vkFreeDescriptorSets",
         SideEffects::worstDefault, "vkFreeDescriptorSets");
-    addExtern<DAS_BIND_FUN(vkUpdateDescriptorSets)>(*this, lib, "vkUpdateDescriptorSets",
+    addExtern<DAS_BIND_FUN(vkUpdateDescriptorSets)>(module, lib, "vkUpdateDescriptorSets",
         SideEffects::worstDefault, "vkUpdateDescriptorSets");
-    addExtern<DAS_BIND_FUN(vkCreateFramebuffer)>(*this, lib, "vkCreateFramebuffer",
+    addExtern<DAS_BIND_FUN(vkCreateFramebuffer)>(module, lib, "vkCreateFramebuffer",
         SideEffects::worstDefault, "vkCreateFramebuffer");
-    addExtern<DAS_BIND_FUN(vkDestroyFramebuffer)>(*this, lib, "vkDestroyFramebuffer",
+    addExtern<DAS_BIND_FUN(vkDestroyFramebuffer)>(module, lib, "vkDestroyFramebuffer",
         SideEffects::worstDefault, "vkDestroyFramebuffer");
-    addExtern<DAS_BIND_FUN(vkCreateRenderPass)>(*this, lib, "vkCreateRenderPass",
+    addExtern<DAS_BIND_FUN(vkCreateRenderPass)>(module, lib, "vkCreateRenderPass",
         SideEffects::worstDefault, "vkCreateRenderPass");
-    addExtern<DAS_BIND_FUN(vkDestroyRenderPass)>(*this, lib, "vkDestroyRenderPass",
+    addExtern<DAS_BIND_FUN(vkDestroyRenderPass)>(module, lib, "vkDestroyRenderPass",
         SideEffects::worstDefault, "vkDestroyRenderPass");
-    addExtern<DAS_BIND_FUN(vkGetRenderAreaGranularity)>(*this, lib, "vkGetRenderAreaGranularity",
+    addExtern<DAS_BIND_FUN(vkGetRenderAreaGranularity)>(module, lib, "vkGetRenderAreaGranularity",
         SideEffects::worstDefault, "vkGetRenderAreaGranularity");
-    addExtern<DAS_BIND_FUN(vkCreateCommandPool)>(*this, lib, "vkCreateCommandPool",
+    addExtern<DAS_BIND_FUN(vkCreateCommandPool)>(module, lib, "vkCreateCommandPool",
         SideEffects::worstDefault, "vkCreateCommandPool");
-    addExtern<DAS_BIND_FUN(vkDestroyCommandPool)>(*this, lib, "vkDestroyCommandPool",
+    addExtern<DAS_BIND_FUN(vkDestroyCommandPool)>(module, lib, "vkDestroyCommandPool",
         SideEffects::worstDefault, "vkDestroyCommandPool");
-    addExtern<DAS_BIND_FUN(vkResetCommandPool)>(*this, lib, "vkResetCommandPool",
+    addExtern<DAS_BIND_FUN(vkResetCommandPool)>(module, lib, "vkResetCommandPool",
         SideEffects::worstDefault, "vkResetCommandPool");
-    addExtern<DAS_BIND_FUN(vkAllocateCommandBuffers)>(*this, lib, "vkAllocateCommandBuffers",
+    addExtern<DAS_BIND_FUN(vkAllocateCommandBuffers)>(module, lib, "vkAllocateCommandBuffers",
         SideEffects::worstDefault, "vkAllocateCommandBuffers");
-    addExtern<DAS_BIND_FUN(vkFreeCommandBuffers)>(*this, lib, "vkFreeCommandBuffers",
+    addExtern<DAS_BIND_FUN(vkFreeCommandBuffers)>(module, lib, "vkFreeCommandBuffers",
         SideEffects::worstDefault, "vkFreeCommandBuffers");
 
     //
     // macro constants
     //
 
-    addConstant(*this,"GLFW_GAMEPAD_BUTTON_START",7);
-    addConstant(*this,"GLFW_GAMEPAD_BUTTON_GUIDE",8);
-    addConstant(*this,"GLFW_GAMEPAD_BUTTON_LEFT_THUMB",9);
-    addConstant(*this,"GLFW_GAMEPAD_BUTTON_RIGHT_THUMB",10);
-    addConstant(*this,"GLFW_GAMEPAD_BUTTON_DPAD_UP",11);
-    addConstant(*this,"GLFW_GAMEPAD_BUTTON_DPAD_RIGHT",12);
-    addConstant(*this,"GLFW_GAMEPAD_BUTTON_DPAD_DOWN",13);
-    addConstant(*this,"GLFW_GAMEPAD_BUTTON_DPAD_LEFT",14);
-    addConstant(*this,"GLFW_GAMEPAD_BUTTON_LAST",GLFW_GAMEPAD_BUTTON_DPAD_LEFT);
-    addConstant(*this,"GLFW_GAMEPAD_BUTTON_CROSS",GLFW_GAMEPAD_BUTTON_A);
-    addConstant(*this,"GLFW_GAMEPAD_BUTTON_CIRCLE",GLFW_GAMEPAD_BUTTON_B);
-    addConstant(*this,"GLFW_GAMEPAD_BUTTON_SQUARE",GLFW_GAMEPAD_BUTTON_X);
-    addConstant(*this,"GLFW_GAMEPAD_BUTTON_TRIANGLE",GLFW_GAMEPAD_BUTTON_Y);
-    addConstant(*this,"GLFW_GAMEPAD_AXIS_LEFT_X",0);
-    addConstant(*this,"GLFW_GAMEPAD_AXIS_LEFT_Y",1);
-    addConstant(*this,"GLFW_GAMEPAD_AXIS_RIGHT_X",2);
-    addConstant(*this,"GLFW_GAMEPAD_AXIS_RIGHT_Y",3);
-    addConstant(*this,"GLFW_GAMEPAD_AXIS_LEFT_TRIGGER",4);
-    addConstant(*this,"GLFW_GAMEPAD_AXIS_RIGHT_TRIGGER",5);
-    addConstant(*this,"GLFW_GAMEPAD_AXIS_LAST",GLFW_GAMEPAD_AXIS_RIGHT_TRIGGER);
-    addConstant(*this,"GLFW_NO_ERROR",0);
-    addConstant(*this,"GLFW_NOT_INITIALIZED",0x00010001);
-    addConstant(*this,"GLFW_NO_CURRENT_CONTEXT",0x00010002);
-    addConstant(*this,"GLFW_INVALID_ENUM",0x00010003);
-    addConstant(*this,"GLFW_INVALID_VALUE",0x00010004);
-    addConstant(*this,"GLFW_OUT_OF_MEMORY",0x00010005);
-    addConstant(*this,"GLFW_API_UNAVAILABLE",0x00010006);
-    addConstant(*this,"GLFW_VERSION_UNAVAILABLE",0x00010007);
-    addConstant(*this,"GLFW_PLATFORM_ERROR",0x00010008);
-    addConstant(*this,"GLFW_FORMAT_UNAVAILABLE",0x00010009);
-    addConstant(*this,"GLFW_NO_WINDOW_CONTEXT",0x0001000A);
-    addConstant(*this,"GLFW_FOCUSED",0x00020001);
-    addConstant(*this,"GLFW_ICONIFIED",0x00020002);
-    addConstant(*this,"GLFW_RESIZABLE",0x00020003);
-    addConstant(*this,"GLFW_VISIBLE",0x00020004);
-    addConstant(*this,"GLFW_DECORATED",0x00020005);
-    addConstant(*this,"GLFW_AUTO_ICONIFY",0x00020006);
-    addConstant(*this,"GLFW_FLOATING",0x00020007);
-    addConstant(*this,"GLFW_MAXIMIZED",0x00020008);
-    addConstant(*this,"GLFW_CENTER_CURSOR",0x00020009);
-    addConstant(*this,"GLFW_TRANSPARENT_FRAMEBUFFER",0x0002000A);
-    addConstant(*this,"GLFW_HOVERED",0x0002000B);
-    addConstant(*this,"GLFW_FOCUS_ON_SHOW",0x0002000C);
-    addConstant(*this,"GLFW_RED_BITS",0x00021001);
-    addConstant(*this,"GLFW_GREEN_BITS",0x00021002);
+    addConstant(module, "GLFW_GAMEPAD_BUTTON_START", 7);
+    addConstant(module, "GLFW_GAMEPAD_BUTTON_GUIDE", 8);
+    addConstant(module, "GLFW_GAMEPAD_BUTTON_LEFT_THUMB", 9);
+    addConstant(module, "GLFW_GAMEPAD_BUTTON_RIGHT_THUMB", 10);
+    addConstant(module, "GLFW_GAMEPAD_BUTTON_DPAD_UP", 11);
+    addConstant(module, "GLFW_GAMEPAD_BUTTON_DPAD_RIGHT", 12);
+    addConstant(module, "GLFW_GAMEPAD_BUTTON_DPAD_DOWN", 13);
+    addConstant(module, "GLFW_GAMEPAD_BUTTON_DPAD_LEFT", 14);
+    addConstant(module, "GLFW_GAMEPAD_BUTTON_LAST", GLFW_GAMEPAD_BUTTON_DPAD_LEFT);
+    addConstant(module, "GLFW_GAMEPAD_BUTTON_CROSS", GLFW_GAMEPAD_BUTTON_A);
+    addConstant(module, "GLFW_GAMEPAD_BUTTON_CIRCLE", GLFW_GAMEPAD_BUTTON_B);
+    addConstant(module, "GLFW_GAMEPAD_BUTTON_SQUARE", GLFW_GAMEPAD_BUTTON_X);
+    addConstant(module, "GLFW_GAMEPAD_BUTTON_TRIANGLE", GLFW_GAMEPAD_BUTTON_Y);
+    addConstant(module, "GLFW_GAMEPAD_AXIS_LEFT_X", 0);
+    addConstant(module, "GLFW_GAMEPAD_AXIS_LEFT_Y", 1);
+    addConstant(module, "GLFW_GAMEPAD_AXIS_RIGHT_X", 2);
+    addConstant(module, "GLFW_GAMEPAD_AXIS_RIGHT_Y", 3);
+    addConstant(module, "GLFW_GAMEPAD_AXIS_LEFT_TRIGGER", 4);
+    addConstant(module, "GLFW_GAMEPAD_AXIS_RIGHT_TRIGGER", 5);
+    addConstant(module, "GLFW_GAMEPAD_AXIS_LAST", GLFW_GAMEPAD_AXIS_RIGHT_TRIGGER);
+    addConstant(module, "GLFW_NO_ERROR", 0);
+    addConstant(module, "GLFW_NOT_INITIALIZED", 0x00010001);
+    addConstant(module, "GLFW_NO_CURRENT_CONTEXT", 0x00010002);
+    addConstant(module, "GLFW_INVALID_ENUM", 0x00010003);
+    addConstant(module, "GLFW_INVALID_VALUE", 0x00010004);
+    addConstant(module, "GLFW_OUT_OF_MEMORY", 0x00010005);
+    addConstant(module, "GLFW_API_UNAVAILABLE", 0x00010006);
+    addConstant(module, "GLFW_VERSION_UNAVAILABLE", 0x00010007);
+    addConstant(module, "GLFW_PLATFORM_ERROR", 0x00010008);
+    addConstant(module, "GLFW_FORMAT_UNAVAILABLE", 0x00010009);
+    addConstant(module, "GLFW_NO_WINDOW_CONTEXT", 0x0001000A);
+    addConstant(module, "GLFW_FOCUSED", 0x00020001);
+    addConstant(module, "GLFW_ICONIFIED", 0x00020002);
+    addConstant(module, "GLFW_RESIZABLE", 0x00020003);
+    addConstant(module, "GLFW_VISIBLE", 0x00020004);
+    addConstant(module, "GLFW_DECORATED", 0x00020005);
+    addConstant(module, "GLFW_AUTO_ICONIFY", 0x00020006);
+    addConstant(module, "GLFW_FLOATING", 0x00020007);
+    addConstant(module, "GLFW_MAXIMIZED", 0x00020008);
+    addConstant(module, "GLFW_CENTER_CURSOR", 0x00020009);
+    addConstant(module, "GLFW_TRANSPARENT_FRAMEBUFFER", 0x0002000A);
+    addConstant(module, "GLFW_HOVERED", 0x0002000B);
+    addConstant(module, "GLFW_FOCUS_ON_SHOW", 0x0002000C);
+    addConstant(module, "GLFW_RED_BITS", 0x00021001);
+    addConstant(module, "GLFW_GREEN_BITS", 0x00021002);
 };

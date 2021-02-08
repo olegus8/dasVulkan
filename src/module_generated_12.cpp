@@ -935,91 +935,91 @@ void addVulkanGenerated_12(Module & module, ModuleLibrary & lib) {{
     // functions
     //
 
-    addExtern<DAS_BIND_FUN(glfwWindowShouldClose)>(*this, lib, "glfwWindowShouldClose",
+    addExtern<DAS_BIND_FUN(glfwWindowShouldClose)>(module, lib, "glfwWindowShouldClose",
         SideEffects::worstDefault, "glfwWindowShouldClose");
-    addExtern<DAS_BIND_FUN(glfwSetWindowShouldClose)>(*this, lib, "glfwSetWindowShouldClose",
+    addExtern<DAS_BIND_FUN(glfwSetWindowShouldClose)>(module, lib, "glfwSetWindowShouldClose",
         SideEffects::worstDefault, "glfwSetWindowShouldClose");
-    addExtern<DAS_BIND_FUN(glfwSetWindowTitle)>(*this, lib, "glfwSetWindowTitle",
+    addExtern<DAS_BIND_FUN(glfwSetWindowTitle)>(module, lib, "glfwSetWindowTitle",
         SideEffects::worstDefault, "glfwSetWindowTitle");
-    addExtern<DAS_BIND_FUN(glfwSetWindowIcon)>(*this, lib, "glfwSetWindowIcon",
+    addExtern<DAS_BIND_FUN(glfwSetWindowIcon)>(module, lib, "glfwSetWindowIcon",
         SideEffects::worstDefault, "glfwSetWindowIcon");
-    addExtern<DAS_BIND_FUN(glfwGetWindowPos)>(*this, lib, "glfwGetWindowPos",
+    addExtern<DAS_BIND_FUN(glfwGetWindowPos)>(module, lib, "glfwGetWindowPos",
         SideEffects::worstDefault, "glfwGetWindowPos");
-    addExtern<DAS_BIND_FUN(glfwSetWindowPos)>(*this, lib, "glfwSetWindowPos",
+    addExtern<DAS_BIND_FUN(glfwSetWindowPos)>(module, lib, "glfwSetWindowPos",
         SideEffects::worstDefault, "glfwSetWindowPos");
-    addExtern<DAS_BIND_FUN(glfwGetWindowSize)>(*this, lib, "glfwGetWindowSize",
+    addExtern<DAS_BIND_FUN(glfwGetWindowSize)>(module, lib, "glfwGetWindowSize",
         SideEffects::worstDefault, "glfwGetWindowSize");
-    addExtern<DAS_BIND_FUN(glfwSetWindowSizeLimits)>(*this, lib, "glfwSetWindowSizeLimits",
+    addExtern<DAS_BIND_FUN(glfwSetWindowSizeLimits)>(module, lib, "glfwSetWindowSizeLimits",
         SideEffects::worstDefault, "glfwSetWindowSizeLimits");
-    addExtern<DAS_BIND_FUN(glfwSetWindowAspectRatio)>(*this, lib, "glfwSetWindowAspectRatio",
+    addExtern<DAS_BIND_FUN(glfwSetWindowAspectRatio)>(module, lib, "glfwSetWindowAspectRatio",
         SideEffects::worstDefault, "glfwSetWindowAspectRatio");
-    addExtern<DAS_BIND_FUN(glfwSetWindowSize)>(*this, lib, "glfwSetWindowSize",
+    addExtern<DAS_BIND_FUN(glfwSetWindowSize)>(module, lib, "glfwSetWindowSize",
         SideEffects::worstDefault, "glfwSetWindowSize");
-    addExtern<DAS_BIND_FUN(glfwGetFramebufferSize)>(*this, lib, "glfwGetFramebufferSize",
+    addExtern<DAS_BIND_FUN(glfwGetFramebufferSize)>(module, lib, "glfwGetFramebufferSize",
         SideEffects::worstDefault, "glfwGetFramebufferSize");
-    addExtern<DAS_BIND_FUN(glfwGetWindowFrameSize)>(*this, lib, "glfwGetWindowFrameSize",
+    addExtern<DAS_BIND_FUN(glfwGetWindowFrameSize)>(module, lib, "glfwGetWindowFrameSize",
         SideEffects::worstDefault, "glfwGetWindowFrameSize");
-    addExtern<DAS_BIND_FUN(glfwGetWindowContentScale)>(*this, lib, "glfwGetWindowContentScale",
+    addExtern<DAS_BIND_FUN(glfwGetWindowContentScale)>(module, lib, "glfwGetWindowContentScale",
         SideEffects::worstDefault, "glfwGetWindowContentScale");
-    addExtern<DAS_BIND_FUN(glfwGetWindowOpacity)>(*this, lib, "glfwGetWindowOpacity",
+    addExtern<DAS_BIND_FUN(glfwGetWindowOpacity)>(module, lib, "glfwGetWindowOpacity",
         SideEffects::worstDefault, "glfwGetWindowOpacity");
-    addExtern<DAS_BIND_FUN(glfwSetWindowOpacity)>(*this, lib, "glfwSetWindowOpacity",
+    addExtern<DAS_BIND_FUN(glfwSetWindowOpacity)>(module, lib, "glfwSetWindowOpacity",
         SideEffects::worstDefault, "glfwSetWindowOpacity");
-    addExtern<DAS_BIND_FUN(glfwIconifyWindow)>(*this, lib, "glfwIconifyWindow",
+    addExtern<DAS_BIND_FUN(glfwIconifyWindow)>(module, lib, "glfwIconifyWindow",
         SideEffects::worstDefault, "glfwIconifyWindow");
-    addExtern<DAS_BIND_FUN(glfwRestoreWindow)>(*this, lib, "glfwRestoreWindow",
+    addExtern<DAS_BIND_FUN(glfwRestoreWindow)>(module, lib, "glfwRestoreWindow",
         SideEffects::worstDefault, "glfwRestoreWindow");
-    addExtern<DAS_BIND_FUN(glfwMaximizeWindow)>(*this, lib, "glfwMaximizeWindow",
+    addExtern<DAS_BIND_FUN(glfwMaximizeWindow)>(module, lib, "glfwMaximizeWindow",
         SideEffects::worstDefault, "glfwMaximizeWindow");
 
     //
     // macro constants
     //
 
-    addConstant(*this,"VK_EXT_EXTERNAL_MEMORY_DMA_BUF_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_queue_family_foreign",1);
-    addConstant(*this,"VK_EXT_QUEUE_FAMILY_FOREIGN_SPEC_VERSION",1);
-    addConstant(*this,"VK_QUEUE_FAMILY_FOREIGN_EXT",(~0U-2));
-    addConstant(*this,"VK_EXT_debug_utils",1);
-    addConstant(*this,"VK_EXT_DEBUG_UTILS_SPEC_VERSION",2);
-    addConstant(*this,"VK_EXT_sampler_filter_minmax",1);
-    addConstant(*this,"VK_EXT_SAMPLER_FILTER_MINMAX_SPEC_VERSION",2);
-    addConstant(*this,"VK_AMD_gpu_shader_int16",1);
-    addConstant(*this,"VK_AMD_GPU_SHADER_INT16_SPEC_VERSION",2);
-    addConstant(*this,"VK_AMD_mixed_attachment_samples",1);
-    addConstant(*this,"VK_AMD_MIXED_ATTACHMENT_SAMPLES_SPEC_VERSION",1);
-    addConstant(*this,"VK_AMD_shader_fragment_mask",1);
-    addConstant(*this,"VK_AMD_SHADER_FRAGMENT_MASK_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_inline_uniform_block",1);
-    addConstant(*this,"VK_EXT_INLINE_UNIFORM_BLOCK_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_shader_stencil_export",1);
-    addConstant(*this,"VK_EXT_SHADER_STENCIL_EXPORT_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_sample_locations",1);
-    addConstant(*this,"VK_EXT_SAMPLE_LOCATIONS_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_blend_operation_advanced",1);
-    addConstant(*this,"VK_EXT_BLEND_OPERATION_ADVANCED_SPEC_VERSION",2);
-    addConstant(*this,"VK_NV_fragment_coverage_to_color",1);
-    addConstant(*this,"VK_NV_FRAGMENT_COVERAGE_TO_COLOR_SPEC_VERSION",1);
-    addConstant(*this,"VK_NV_framebuffer_mixed_samples",1);
-    addConstant(*this,"VK_NV_FRAMEBUFFER_MIXED_SAMPLES_SPEC_VERSION",1);
-    addConstant(*this,"VK_NV_fill_rectangle",1);
-    addConstant(*this,"VK_NV_FILL_RECTANGLE_SPEC_VERSION",1);
-    addConstant(*this,"VK_NV_shader_sm_builtins",1);
-    addConstant(*this,"VK_NV_SHADER_SM_BUILTINS_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_post_depth_coverage",1);
-    addConstant(*this,"VK_EXT_POST_DEPTH_COVERAGE_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_image_drm_format_modifier",1);
-    addConstant(*this,"VK_EXT_IMAGE_DRM_FORMAT_MODIFIER_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_validation_cache",1);
-    addConstant(*this,"VK_EXT_VALIDATION_CACHE_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_descriptor_indexing",1);
-    addConstant(*this,"VK_EXT_DESCRIPTOR_INDEXING_SPEC_VERSION",2);
-    addConstant(*this,"VK_EXT_shader_viewport_index_layer",1);
-    addConstant(*this,"VK_EXT_SHADER_VIEWPORT_INDEX_LAYER_SPEC_VERSION",1);
-    addConstant(*this,"VK_NV_shading_rate_image",1);
-    addConstant(*this,"VK_NV_SHADING_RATE_IMAGE_SPEC_VERSION",3);
-    addConstant(*this,"VK_NV_ray_tracing",1);
-    addConstant(*this,"VK_NV_RAY_TRACING_SPEC_VERSION",3);
-    addConstant(*this,"VK_SHADER_UNUSED_KHR",(~0U));
-    addConstant(*this,"VK_SHADER_UNUSED_NV",VK_SHADER_UNUSED_KHR);
+    addConstant(module, "VK_EXT_EXTERNAL_MEMORY_DMA_BUF_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_queue_family_foreign", 1);
+    addConstant(module, "VK_EXT_QUEUE_FAMILY_FOREIGN_SPEC_VERSION", 1);
+    addConstant(module, "VK_QUEUE_FAMILY_FOREIGN_EXT", (~0U-2));
+    addConstant(module, "VK_EXT_debug_utils", 1);
+    addConstant(module, "VK_EXT_DEBUG_UTILS_SPEC_VERSION", 2);
+    addConstant(module, "VK_EXT_sampler_filter_minmax", 1);
+    addConstant(module, "VK_EXT_SAMPLER_FILTER_MINMAX_SPEC_VERSION", 2);
+    addConstant(module, "VK_AMD_gpu_shader_int16", 1);
+    addConstant(module, "VK_AMD_GPU_SHADER_INT16_SPEC_VERSION", 2);
+    addConstant(module, "VK_AMD_mixed_attachment_samples", 1);
+    addConstant(module, "VK_AMD_MIXED_ATTACHMENT_SAMPLES_SPEC_VERSION", 1);
+    addConstant(module, "VK_AMD_shader_fragment_mask", 1);
+    addConstant(module, "VK_AMD_SHADER_FRAGMENT_MASK_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_inline_uniform_block", 1);
+    addConstant(module, "VK_EXT_INLINE_UNIFORM_BLOCK_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_shader_stencil_export", 1);
+    addConstant(module, "VK_EXT_SHADER_STENCIL_EXPORT_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_sample_locations", 1);
+    addConstant(module, "VK_EXT_SAMPLE_LOCATIONS_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_blend_operation_advanced", 1);
+    addConstant(module, "VK_EXT_BLEND_OPERATION_ADVANCED_SPEC_VERSION", 2);
+    addConstant(module, "VK_NV_fragment_coverage_to_color", 1);
+    addConstant(module, "VK_NV_FRAGMENT_COVERAGE_TO_COLOR_SPEC_VERSION", 1);
+    addConstant(module, "VK_NV_framebuffer_mixed_samples", 1);
+    addConstant(module, "VK_NV_FRAMEBUFFER_MIXED_SAMPLES_SPEC_VERSION", 1);
+    addConstant(module, "VK_NV_fill_rectangle", 1);
+    addConstant(module, "VK_NV_FILL_RECTANGLE_SPEC_VERSION", 1);
+    addConstant(module, "VK_NV_shader_sm_builtins", 1);
+    addConstant(module, "VK_NV_SHADER_SM_BUILTINS_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_post_depth_coverage", 1);
+    addConstant(module, "VK_EXT_POST_DEPTH_COVERAGE_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_image_drm_format_modifier", 1);
+    addConstant(module, "VK_EXT_IMAGE_DRM_FORMAT_MODIFIER_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_validation_cache", 1);
+    addConstant(module, "VK_EXT_VALIDATION_CACHE_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_descriptor_indexing", 1);
+    addConstant(module, "VK_EXT_DESCRIPTOR_INDEXING_SPEC_VERSION", 2);
+    addConstant(module, "VK_EXT_shader_viewport_index_layer", 1);
+    addConstant(module, "VK_EXT_SHADER_VIEWPORT_INDEX_LAYER_SPEC_VERSION", 1);
+    addConstant(module, "VK_NV_shading_rate_image", 1);
+    addConstant(module, "VK_NV_SHADING_RATE_IMAGE_SPEC_VERSION", 3);
+    addConstant(module, "VK_NV_ray_tracing", 1);
+    addConstant(module, "VK_NV_RAY_TRACING_SPEC_VERSION", 3);
+    addConstant(module, "VK_SHADER_UNUSED_KHR", (~0U));
+    addConstant(module, "VK_SHADER_UNUSED_NV", VK_SHADER_UNUSED_KHR);
 };

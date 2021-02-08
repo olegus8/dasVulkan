@@ -964,24 +964,24 @@ void addVulkanGenerated_11(Module & module, ModuleLibrary & lib) {{
     module.addAnnotation(make_smart<VkAabbPositionsKHRAnnotation>(lib));
     module.addAnnotation(make_smart<VkAccelerationStructureInstanceKHRAnnotation>(lib));
     
-    addExtern<DAS_BIND_FUN(VkAccelerationStructureInstanceKHR_get_instanceCustomIndex)>(*this, lib, "VkAccelerationStructureInstanceKHR_get_instanceCustomIndex",
+    addExtern<DAS_BIND_FUN(VkAccelerationStructureInstanceKHR_get_instanceCustomIndex)>(module, lib, "VkAccelerationStructureInstanceKHR_get_instanceCustomIndex",
         SideEffects::none, "{field.getter_name}");
-    addExtern<DAS_BIND_FUN(VkAccelerationStructureInstanceKHR_set_instanceCustomIndex)>(*this, lib, "VkAccelerationStructureInstanceKHR_set_instanceCustomIndex",
+    addExtern<DAS_BIND_FUN(VkAccelerationStructureInstanceKHR_set_instanceCustomIndex)>(module, lib, "VkAccelerationStructureInstanceKHR_set_instanceCustomIndex",
         SideEffects::modifyArgument, "{field.setter_name}");
     
-    addExtern<DAS_BIND_FUN(VkAccelerationStructureInstanceKHR_get_mask)>(*this, lib, "VkAccelerationStructureInstanceKHR_get_mask",
+    addExtern<DAS_BIND_FUN(VkAccelerationStructureInstanceKHR_get_mask)>(module, lib, "VkAccelerationStructureInstanceKHR_get_mask",
         SideEffects::none, "{field.getter_name}");
-    addExtern<DAS_BIND_FUN(VkAccelerationStructureInstanceKHR_set_mask)>(*this, lib, "VkAccelerationStructureInstanceKHR_set_mask",
+    addExtern<DAS_BIND_FUN(VkAccelerationStructureInstanceKHR_set_mask)>(module, lib, "VkAccelerationStructureInstanceKHR_set_mask",
         SideEffects::modifyArgument, "{field.setter_name}");
     
-    addExtern<DAS_BIND_FUN(VkAccelerationStructureInstanceKHR_get_instanceShaderBindingTableRecordOffset)>(*this, lib, "VkAccelerationStructureInstanceKHR_get_instanceShaderBindingTableRecordOffset",
+    addExtern<DAS_BIND_FUN(VkAccelerationStructureInstanceKHR_get_instanceShaderBindingTableRecordOffset)>(module, lib, "VkAccelerationStructureInstanceKHR_get_instanceShaderBindingTableRecordOffset",
         SideEffects::none, "{field.getter_name}");
-    addExtern<DAS_BIND_FUN(VkAccelerationStructureInstanceKHR_set_instanceShaderBindingTableRecordOffset)>(*this, lib, "VkAccelerationStructureInstanceKHR_set_instanceShaderBindingTableRecordOffset",
+    addExtern<DAS_BIND_FUN(VkAccelerationStructureInstanceKHR_set_instanceShaderBindingTableRecordOffset)>(module, lib, "VkAccelerationStructureInstanceKHR_set_instanceShaderBindingTableRecordOffset",
         SideEffects::modifyArgument, "{field.setter_name}");
     
-    addExtern<DAS_BIND_FUN(VkAccelerationStructureInstanceKHR_get_flags)>(*this, lib, "VkAccelerationStructureInstanceKHR_get_flags",
+    addExtern<DAS_BIND_FUN(VkAccelerationStructureInstanceKHR_get_flags)>(module, lib, "VkAccelerationStructureInstanceKHR_get_flags",
         SideEffects::none, "{field.getter_name}");
-    addExtern<DAS_BIND_FUN(VkAccelerationStructureInstanceKHR_set_flags)>(*this, lib, "VkAccelerationStructureInstanceKHR_set_flags",
+    addExtern<DAS_BIND_FUN(VkAccelerationStructureInstanceKHR_set_flags)>(module, lib, "VkAccelerationStructureInstanceKHR_set_flags",
         SideEffects::modifyArgument, "{field.setter_name}");
     module.addAnnotation(make_smart<VkPhysicalDeviceRepresentativeFragmentTestFeaturesNVAnnotation>(lib));
     module.addAnnotation(make_smart<VkPipelineRepresentativeFragmentTestStateCreateInfoNVAnnotation>(lib));
@@ -994,90 +994,90 @@ void addVulkanGenerated_11(Module & module, ModuleLibrary & lib) {{
     // functions
     //
 
-    addExtern<DAS_BIND_FUN(glfwGetError)>(*this, lib, "glfwGetError",
+    addExtern<DAS_BIND_FUN(glfwGetError)>(module, lib, "glfwGetError",
         SideEffects::worstDefault, "glfwGetError");
-    addExtern<DAS_BIND_FUN(glfwGetMonitors)>(*this, lib, "glfwGetMonitors",
+    addExtern<DAS_BIND_FUN(glfwGetMonitors)>(module, lib, "glfwGetMonitors",
         SideEffects::worstDefault, "glfwGetMonitors");
-    addExtern<DAS_BIND_FUN(glfwGetPrimaryMonitor)>(*this, lib, "glfwGetPrimaryMonitor",
+    addExtern<DAS_BIND_FUN(glfwGetPrimaryMonitor)>(module, lib, "glfwGetPrimaryMonitor",
         SideEffects::worstDefault, "glfwGetPrimaryMonitor");
-    addExtern<DAS_BIND_FUN(glfwGetMonitorPos)>(*this, lib, "glfwGetMonitorPos",
+    addExtern<DAS_BIND_FUN(glfwGetMonitorPos)>(module, lib, "glfwGetMonitorPos",
         SideEffects::worstDefault, "glfwGetMonitorPos");
-    addExtern<DAS_BIND_FUN(glfwGetMonitorWorkarea)>(*this, lib, "glfwGetMonitorWorkarea",
+    addExtern<DAS_BIND_FUN(glfwGetMonitorWorkarea)>(module, lib, "glfwGetMonitorWorkarea",
         SideEffects::worstDefault, "glfwGetMonitorWorkarea");
-    addExtern<DAS_BIND_FUN(glfwGetMonitorPhysicalSize)>(*this, lib, "glfwGetMonitorPhysicalSize",
+    addExtern<DAS_BIND_FUN(glfwGetMonitorPhysicalSize)>(module, lib, "glfwGetMonitorPhysicalSize",
         SideEffects::worstDefault, "glfwGetMonitorPhysicalSize");
-    addExtern<DAS_BIND_FUN(glfwGetMonitorContentScale)>(*this, lib, "glfwGetMonitorContentScale",
+    addExtern<DAS_BIND_FUN(glfwGetMonitorContentScale)>(module, lib, "glfwGetMonitorContentScale",
         SideEffects::worstDefault, "glfwGetMonitorContentScale");
-    addExtern<DAS_BIND_FUN(glfwGetMonitorName)>(*this, lib, "glfwGetMonitorName",
+    addExtern<DAS_BIND_FUN(glfwGetMonitorName)>(module, lib, "glfwGetMonitorName",
         SideEffects::worstDefault, "glfwGetMonitorName");
-    addExtern<DAS_BIND_FUN(glfwSetMonitorUserPointer)>(*this, lib, "glfwSetMonitorUserPointer",
+    addExtern<DAS_BIND_FUN(glfwSetMonitorUserPointer)>(module, lib, "glfwSetMonitorUserPointer",
         SideEffects::worstDefault, "glfwSetMonitorUserPointer");
-    addExtern<DAS_BIND_FUN(glfwGetMonitorUserPointer)>(*this, lib, "glfwGetMonitorUserPointer",
+    addExtern<DAS_BIND_FUN(glfwGetMonitorUserPointer)>(module, lib, "glfwGetMonitorUserPointer",
         SideEffects::worstDefault, "glfwGetMonitorUserPointer");
-    addExtern<DAS_BIND_FUN(glfwGetVideoModes)>(*this, lib, "glfwGetVideoModes",
+    addExtern<DAS_BIND_FUN(glfwGetVideoModes)>(module, lib, "glfwGetVideoModes",
         SideEffects::worstDefault, "glfwGetVideoModes");
-    addExtern<DAS_BIND_FUN(glfwGetVideoMode)>(*this, lib, "glfwGetVideoMode",
+    addExtern<DAS_BIND_FUN(glfwGetVideoMode)>(module, lib, "glfwGetVideoMode",
         SideEffects::worstDefault, "glfwGetVideoMode");
-    addExtern<DAS_BIND_FUN(glfwSetGamma)>(*this, lib, "glfwSetGamma",
+    addExtern<DAS_BIND_FUN(glfwSetGamma)>(module, lib, "glfwSetGamma",
         SideEffects::worstDefault, "glfwSetGamma");
-    addExtern<DAS_BIND_FUN(glfwGetGammaRamp)>(*this, lib, "glfwGetGammaRamp",
+    addExtern<DAS_BIND_FUN(glfwGetGammaRamp)>(module, lib, "glfwGetGammaRamp",
         SideEffects::worstDefault, "glfwGetGammaRamp");
-    addExtern<DAS_BIND_FUN(glfwSetGammaRamp)>(*this, lib, "glfwSetGammaRamp",
+    addExtern<DAS_BIND_FUN(glfwSetGammaRamp)>(module, lib, "glfwSetGammaRamp",
         SideEffects::worstDefault, "glfwSetGammaRamp");
-    addExtern<DAS_BIND_FUN(glfwDefaultWindowHints)>(*this, lib, "glfwDefaultWindowHints",
+    addExtern<DAS_BIND_FUN(glfwDefaultWindowHints)>(module, lib, "glfwDefaultWindowHints",
         SideEffects::worstDefault, "glfwDefaultWindowHints");
-    addExtern<DAS_BIND_FUN(glfwWindowHint)>(*this, lib, "glfwWindowHint",
+    addExtern<DAS_BIND_FUN(glfwWindowHint)>(module, lib, "glfwWindowHint",
         SideEffects::worstDefault, "glfwWindowHint");
-    addExtern<DAS_BIND_FUN(glfwWindowHintString)>(*this, lib, "glfwWindowHintString",
+    addExtern<DAS_BIND_FUN(glfwWindowHintString)>(module, lib, "glfwWindowHintString",
         SideEffects::worstDefault, "glfwWindowHintString");
 
     //
     // macro constants
     //
 
-    addConstant(*this,"VK_NV_external_memory",1);
-    addConstant(*this,"VK_NV_EXTERNAL_MEMORY_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_validation_flags",1);
-    addConstant(*this,"VK_EXT_VALIDATION_FLAGS_SPEC_VERSION",2);
-    addConstant(*this,"VK_EXT_shader_subgroup_ballot",1);
-    addConstant(*this,"VK_EXT_SHADER_SUBGROUP_BALLOT_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_shader_subgroup_vote",1);
-    addConstant(*this,"VK_EXT_SHADER_SUBGROUP_VOTE_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_texture_compression_astc_hdr",1);
-    addConstant(*this,"VK_EXT_TEXTURE_COMPRESSION_ASTC_HDR_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_astc_decode_mode",1);
-    addConstant(*this,"VK_EXT_ASTC_DECODE_MODE_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_conditional_rendering",1);
-    addConstant(*this,"VK_EXT_CONDITIONAL_RENDERING_SPEC_VERSION",2);
-    addConstant(*this,"VK_NV_clip_space_w_scaling",1);
-    addConstant(*this,"VK_NV_CLIP_SPACE_W_SCALING_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_direct_mode_display",1);
-    addConstant(*this,"VK_EXT_DIRECT_MODE_DISPLAY_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_display_surface_counter",1);
-    addConstant(*this,"VK_EXT_DISPLAY_SURFACE_COUNTER_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_display_control",1);
-    addConstant(*this,"VK_EXT_DISPLAY_CONTROL_SPEC_VERSION",1);
-    addConstant(*this,"VK_GOOGLE_display_timing",1);
-    addConstant(*this,"VK_GOOGLE_DISPLAY_TIMING_SPEC_VERSION",1);
-    addConstant(*this,"VK_NV_sample_mask_override_coverage",1);
-    addConstant(*this,"VK_NV_SAMPLE_MASK_OVERRIDE_COVERAGE_SPEC_VERSION",1);
-    addConstant(*this,"VK_NV_geometry_shader_passthrough",1);
-    addConstant(*this,"VK_NV_GEOMETRY_SHADER_PASSTHROUGH_SPEC_VERSION",1);
-    addConstant(*this,"VK_NV_viewport_array2",1);
-    addConstant(*this,"VK_NV_VIEWPORT_ARRAY2_SPEC_VERSION",1);
-    addConstant(*this,"VK_NVX_multiview_per_view_attributes",1);
-    addConstant(*this,"VK_NVX_MULTIVIEW_PER_VIEW_ATTRIBUTES_SPEC_VERSION",1);
-    addConstant(*this,"VK_NV_viewport_swizzle",1);
-    addConstant(*this,"VK_NV_VIEWPORT_SWIZZLE_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_discard_rectangles",1);
-    addConstant(*this,"VK_EXT_DISCARD_RECTANGLES_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_conservative_rasterization",1);
-    addConstant(*this,"VK_EXT_CONSERVATIVE_RASTERIZATION_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_depth_clip_enable",1);
-    addConstant(*this,"VK_EXT_DEPTH_CLIP_ENABLE_SPEC_VERSION",1);
-    addConstant(*this,"VK_EXT_swapchain_colorspace",1);
-    addConstant(*this,"VK_EXT_SWAPCHAIN_COLOR_SPACE_SPEC_VERSION",4);
-    addConstant(*this,"VK_EXT_hdr_metadata",1);
-    addConstant(*this,"VK_EXT_HDR_METADATA_SPEC_VERSION",2);
-    addConstant(*this,"VK_EXT_external_memory_dma_buf",1);
+    addConstant(module, "VK_NV_external_memory", 1);
+    addConstant(module, "VK_NV_EXTERNAL_MEMORY_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_validation_flags", 1);
+    addConstant(module, "VK_EXT_VALIDATION_FLAGS_SPEC_VERSION", 2);
+    addConstant(module, "VK_EXT_shader_subgroup_ballot", 1);
+    addConstant(module, "VK_EXT_SHADER_SUBGROUP_BALLOT_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_shader_subgroup_vote", 1);
+    addConstant(module, "VK_EXT_SHADER_SUBGROUP_VOTE_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_texture_compression_astc_hdr", 1);
+    addConstant(module, "VK_EXT_TEXTURE_COMPRESSION_ASTC_HDR_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_astc_decode_mode", 1);
+    addConstant(module, "VK_EXT_ASTC_DECODE_MODE_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_conditional_rendering", 1);
+    addConstant(module, "VK_EXT_CONDITIONAL_RENDERING_SPEC_VERSION", 2);
+    addConstant(module, "VK_NV_clip_space_w_scaling", 1);
+    addConstant(module, "VK_NV_CLIP_SPACE_W_SCALING_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_direct_mode_display", 1);
+    addConstant(module, "VK_EXT_DIRECT_MODE_DISPLAY_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_display_surface_counter", 1);
+    addConstant(module, "VK_EXT_DISPLAY_SURFACE_COUNTER_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_display_control", 1);
+    addConstant(module, "VK_EXT_DISPLAY_CONTROL_SPEC_VERSION", 1);
+    addConstant(module, "VK_GOOGLE_display_timing", 1);
+    addConstant(module, "VK_GOOGLE_DISPLAY_TIMING_SPEC_VERSION", 1);
+    addConstant(module, "VK_NV_sample_mask_override_coverage", 1);
+    addConstant(module, "VK_NV_SAMPLE_MASK_OVERRIDE_COVERAGE_SPEC_VERSION", 1);
+    addConstant(module, "VK_NV_geometry_shader_passthrough", 1);
+    addConstant(module, "VK_NV_GEOMETRY_SHADER_PASSTHROUGH_SPEC_VERSION", 1);
+    addConstant(module, "VK_NV_viewport_array2", 1);
+    addConstant(module, "VK_NV_VIEWPORT_ARRAY2_SPEC_VERSION", 1);
+    addConstant(module, "VK_NVX_multiview_per_view_attributes", 1);
+    addConstant(module, "VK_NVX_MULTIVIEW_PER_VIEW_ATTRIBUTES_SPEC_VERSION", 1);
+    addConstant(module, "VK_NV_viewport_swizzle", 1);
+    addConstant(module, "VK_NV_VIEWPORT_SWIZZLE_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_discard_rectangles", 1);
+    addConstant(module, "VK_EXT_DISCARD_RECTANGLES_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_conservative_rasterization", 1);
+    addConstant(module, "VK_EXT_CONSERVATIVE_RASTERIZATION_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_depth_clip_enable", 1);
+    addConstant(module, "VK_EXT_DEPTH_CLIP_ENABLE_SPEC_VERSION", 1);
+    addConstant(module, "VK_EXT_swapchain_colorspace", 1);
+    addConstant(module, "VK_EXT_SWAPCHAIN_COLOR_SPACE_SPEC_VERSION", 4);
+    addConstant(module, "VK_EXT_hdr_metadata", 1);
+    addConstant(module, "VK_EXT_HDR_METADATA_SPEC_VERSION", 2);
+    addConstant(module, "VK_EXT_external_memory_dma_buf", 1);
 };

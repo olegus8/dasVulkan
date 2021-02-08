@@ -989,88 +989,88 @@ void addVulkanGenerated_8(Module & module, ModuleLibrary & lib) {{
     // functions
     //
 
-    addExtern<DAS_BIND_FUN(vkEnumeratePhysicalDeviceGroups)>(*this, lib, "vkEnumeratePhysicalDeviceGroups",
+    addExtern<DAS_BIND_FUN(vkEnumeratePhysicalDeviceGroups)>(module, lib, "vkEnumeratePhysicalDeviceGroups",
         SideEffects::worstDefault, "vkEnumeratePhysicalDeviceGroups");
-    addExtern<DAS_BIND_FUN(vkGetImageMemoryRequirements2)>(*this, lib, "vkGetImageMemoryRequirements2",
+    addExtern<DAS_BIND_FUN(vkGetImageMemoryRequirements2)>(module, lib, "vkGetImageMemoryRequirements2",
         SideEffects::worstDefault, "vkGetImageMemoryRequirements2");
-    addExtern<DAS_BIND_FUN(vkGetBufferMemoryRequirements2)>(*this, lib, "vkGetBufferMemoryRequirements2",
+    addExtern<DAS_BIND_FUN(vkGetBufferMemoryRequirements2)>(module, lib, "vkGetBufferMemoryRequirements2",
         SideEffects::worstDefault, "vkGetBufferMemoryRequirements2");
-    addExtern<DAS_BIND_FUN(vkGetImageSparseMemoryRequirements2)>(*this, lib, "vkGetImageSparseMemoryRequirements2",
+    addExtern<DAS_BIND_FUN(vkGetImageSparseMemoryRequirements2)>(module, lib, "vkGetImageSparseMemoryRequirements2",
         SideEffects::worstDefault, "vkGetImageSparseMemoryRequirements2");
-    addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceFeatures2)>(*this, lib, "vkGetPhysicalDeviceFeatures2",
+    addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceFeatures2)>(module, lib, "vkGetPhysicalDeviceFeatures2",
         SideEffects::worstDefault, "vkGetPhysicalDeviceFeatures2");
-    addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceProperties2)>(*this, lib, "vkGetPhysicalDeviceProperties2",
+    addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceProperties2)>(module, lib, "vkGetPhysicalDeviceProperties2",
         SideEffects::worstDefault, "vkGetPhysicalDeviceProperties2");
-    addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceFormatProperties2)>(*this, lib, "vkGetPhysicalDeviceFormatProperties2",
+    addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceFormatProperties2)>(module, lib, "vkGetPhysicalDeviceFormatProperties2",
         SideEffects::worstDefault, "vkGetPhysicalDeviceFormatProperties2");
-    addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceImageFormatProperties2)>(*this, lib, "vkGetPhysicalDeviceImageFormatProperties2",
+    addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceImageFormatProperties2)>(module, lib, "vkGetPhysicalDeviceImageFormatProperties2",
         SideEffects::worstDefault, "vkGetPhysicalDeviceImageFormatProperties2");
-    addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceQueueFamilyProperties2)>(*this, lib, "vkGetPhysicalDeviceQueueFamilyProperties2",
+    addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceQueueFamilyProperties2)>(module, lib, "vkGetPhysicalDeviceQueueFamilyProperties2",
         SideEffects::worstDefault, "vkGetPhysicalDeviceQueueFamilyProperties2");
-    addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceMemoryProperties2)>(*this, lib, "vkGetPhysicalDeviceMemoryProperties2",
+    addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceMemoryProperties2)>(module, lib, "vkGetPhysicalDeviceMemoryProperties2",
         SideEffects::worstDefault, "vkGetPhysicalDeviceMemoryProperties2");
-    addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceSparseImageFormatProperties2)>(*this, lib, "vkGetPhysicalDeviceSparseImageFormatProperties2",
+    addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceSparseImageFormatProperties2)>(module, lib, "vkGetPhysicalDeviceSparseImageFormatProperties2",
         SideEffects::worstDefault, "vkGetPhysicalDeviceSparseImageFormatProperties2");
-    addExtern<DAS_BIND_FUN(vkTrimCommandPool)>(*this, lib, "vkTrimCommandPool",
+    addExtern<DAS_BIND_FUN(vkTrimCommandPool)>(module, lib, "vkTrimCommandPool",
         SideEffects::worstDefault, "vkTrimCommandPool");
-    addExtern<DAS_BIND_FUN(vkGetDeviceQueue2)>(*this, lib, "vkGetDeviceQueue2",
+    addExtern<DAS_BIND_FUN(vkGetDeviceQueue2)>(module, lib, "vkGetDeviceQueue2",
         SideEffects::worstDefault, "vkGetDeviceQueue2");
-    addExtern<DAS_BIND_FUN(vkCreateSamplerYcbcrConversion)>(*this, lib, "vkCreateSamplerYcbcrConversion",
+    addExtern<DAS_BIND_FUN(vkCreateSamplerYcbcrConversion)>(module, lib, "vkCreateSamplerYcbcrConversion",
         SideEffects::worstDefault, "vkCreateSamplerYcbcrConversion");
-    addExtern<DAS_BIND_FUN(vkDestroySamplerYcbcrConversion)>(*this, lib, "vkDestroySamplerYcbcrConversion",
+    addExtern<DAS_BIND_FUN(vkDestroySamplerYcbcrConversion)>(module, lib, "vkDestroySamplerYcbcrConversion",
         SideEffects::worstDefault, "vkDestroySamplerYcbcrConversion");
-    addExtern<DAS_BIND_FUN(vkCreateDescriptorUpdateTemplate)>(*this, lib, "vkCreateDescriptorUpdateTemplate",
+    addExtern<DAS_BIND_FUN(vkCreateDescriptorUpdateTemplate)>(module, lib, "vkCreateDescriptorUpdateTemplate",
         SideEffects::worstDefault, "vkCreateDescriptorUpdateTemplate");
-    addExtern<DAS_BIND_FUN(vkDestroyDescriptorUpdateTemplate)>(*this, lib, "vkDestroyDescriptorUpdateTemplate",
+    addExtern<DAS_BIND_FUN(vkDestroyDescriptorUpdateTemplate)>(module, lib, "vkDestroyDescriptorUpdateTemplate",
         SideEffects::worstDefault, "vkDestroyDescriptorUpdateTemplate");
 
     //
     // macro constants
     //
 
-    addConstant(*this,"VK_KHR_16bit_storage",1);
-    addConstant(*this,"VK_KHR_16BIT_STORAGE_SPEC_VERSION",1);
-    addConstant(*this,"VK_KHR_incremental_present",1);
-    addConstant(*this,"VK_KHR_INCREMENTAL_PRESENT_SPEC_VERSION",1);
-    addConstant(*this,"VK_KHR_descriptor_update_template",1);
-    addConstant(*this,"VK_KHR_DESCRIPTOR_UPDATE_TEMPLATE_SPEC_VERSION",1);
-    addConstant(*this,"VK_KHR_imageless_framebuffer",1);
-    addConstant(*this,"VK_KHR_IMAGELESS_FRAMEBUFFER_SPEC_VERSION",1);
-    addConstant(*this,"VK_KHR_create_renderpass2",1);
-    addConstant(*this,"VK_KHR_CREATE_RENDERPASS_2_SPEC_VERSION",1);
-    addConstant(*this,"VK_KHR_shared_presentable_image",1);
-    addConstant(*this,"VK_KHR_SHARED_PRESENTABLE_IMAGE_SPEC_VERSION",1);
-    addConstant(*this,"VK_KHR_external_fence_capabilities",1);
-    addConstant(*this,"VK_KHR_EXTERNAL_FENCE_CAPABILITIES_SPEC_VERSION",1);
-    addConstant(*this,"VK_KHR_external_fence",1);
-    addConstant(*this,"VK_KHR_EXTERNAL_FENCE_SPEC_VERSION",1);
-    addConstant(*this,"VK_KHR_external_fence_fd",1);
-    addConstant(*this,"VK_KHR_EXTERNAL_FENCE_FD_SPEC_VERSION",1);
-    addConstant(*this,"VK_KHR_performance_query",1);
-    addConstant(*this,"VK_KHR_PERFORMANCE_QUERY_SPEC_VERSION",1);
-    addConstant(*this,"VK_KHR_maintenance2",1);
-    addConstant(*this,"VK_KHR_MAINTENANCE2_SPEC_VERSION",1);
-    addConstant(*this,"VK_KHR_get_surface_capabilities2",1);
-    addConstant(*this,"VK_KHR_GET_SURFACE_CAPABILITIES_2_SPEC_VERSION",1);
-    addConstant(*this,"VK_KHR_variable_pointers",1);
-    addConstant(*this,"VK_KHR_VARIABLE_POINTERS_SPEC_VERSION",1);
-    addConstant(*this,"VK_KHR_get_display_properties2",1);
-    addConstant(*this,"VK_KHR_GET_DISPLAY_PROPERTIES_2_SPEC_VERSION",1);
-    addConstant(*this,"VK_KHR_dedicated_allocation",1);
-    addConstant(*this,"VK_KHR_DEDICATED_ALLOCATION_SPEC_VERSION",3);
-    addConstant(*this,"VK_KHR_storage_buffer_storage_class",1);
-    addConstant(*this,"VK_KHR_STORAGE_BUFFER_STORAGE_CLASS_SPEC_VERSION",1);
-    addConstant(*this,"VK_KHR_relaxed_block_layout",1);
-    addConstant(*this,"VK_KHR_RELAXED_BLOCK_LAYOUT_SPEC_VERSION",1);
-    addConstant(*this,"VK_KHR_get_memory_requirements2",1);
-    addConstant(*this,"VK_KHR_GET_MEMORY_REQUIREMENTS_2_SPEC_VERSION",1);
-    addConstant(*this,"VK_KHR_image_format_list",1);
-    addConstant(*this,"VK_KHR_IMAGE_FORMAT_LIST_SPEC_VERSION",1);
-    addConstant(*this,"VK_KHR_sampler_ycbcr_conversion",1);
-    addConstant(*this,"VK_KHR_SAMPLER_YCBCR_CONVERSION_SPEC_VERSION",14);
-    addConstant(*this,"VK_KHR_bind_memory2",1);
-    addConstant(*this,"VK_KHR_BIND_MEMORY_2_SPEC_VERSION",1);
-    addConstant(*this,"VK_KHR_maintenance3",1);
-    addConstant(*this,"VK_KHR_MAINTENANCE3_SPEC_VERSION",1);
-    addConstant(*this,"VK_KHR_draw_indirect_count",1);
+    addConstant(module, "VK_KHR_16bit_storage", 1);
+    addConstant(module, "VK_KHR_16BIT_STORAGE_SPEC_VERSION", 1);
+    addConstant(module, "VK_KHR_incremental_present", 1);
+    addConstant(module, "VK_KHR_INCREMENTAL_PRESENT_SPEC_VERSION", 1);
+    addConstant(module, "VK_KHR_descriptor_update_template", 1);
+    addConstant(module, "VK_KHR_DESCRIPTOR_UPDATE_TEMPLATE_SPEC_VERSION", 1);
+    addConstant(module, "VK_KHR_imageless_framebuffer", 1);
+    addConstant(module, "VK_KHR_IMAGELESS_FRAMEBUFFER_SPEC_VERSION", 1);
+    addConstant(module, "VK_KHR_create_renderpass2", 1);
+    addConstant(module, "VK_KHR_CREATE_RENDERPASS_2_SPEC_VERSION", 1);
+    addConstant(module, "VK_KHR_shared_presentable_image", 1);
+    addConstant(module, "VK_KHR_SHARED_PRESENTABLE_IMAGE_SPEC_VERSION", 1);
+    addConstant(module, "VK_KHR_external_fence_capabilities", 1);
+    addConstant(module, "VK_KHR_EXTERNAL_FENCE_CAPABILITIES_SPEC_VERSION", 1);
+    addConstant(module, "VK_KHR_external_fence", 1);
+    addConstant(module, "VK_KHR_EXTERNAL_FENCE_SPEC_VERSION", 1);
+    addConstant(module, "VK_KHR_external_fence_fd", 1);
+    addConstant(module, "VK_KHR_EXTERNAL_FENCE_FD_SPEC_VERSION", 1);
+    addConstant(module, "VK_KHR_performance_query", 1);
+    addConstant(module, "VK_KHR_PERFORMANCE_QUERY_SPEC_VERSION", 1);
+    addConstant(module, "VK_KHR_maintenance2", 1);
+    addConstant(module, "VK_KHR_MAINTENANCE2_SPEC_VERSION", 1);
+    addConstant(module, "VK_KHR_get_surface_capabilities2", 1);
+    addConstant(module, "VK_KHR_GET_SURFACE_CAPABILITIES_2_SPEC_VERSION", 1);
+    addConstant(module, "VK_KHR_variable_pointers", 1);
+    addConstant(module, "VK_KHR_VARIABLE_POINTERS_SPEC_VERSION", 1);
+    addConstant(module, "VK_KHR_get_display_properties2", 1);
+    addConstant(module, "VK_KHR_GET_DISPLAY_PROPERTIES_2_SPEC_VERSION", 1);
+    addConstant(module, "VK_KHR_dedicated_allocation", 1);
+    addConstant(module, "VK_KHR_DEDICATED_ALLOCATION_SPEC_VERSION", 3);
+    addConstant(module, "VK_KHR_storage_buffer_storage_class", 1);
+    addConstant(module, "VK_KHR_STORAGE_BUFFER_STORAGE_CLASS_SPEC_VERSION", 1);
+    addConstant(module, "VK_KHR_relaxed_block_layout", 1);
+    addConstant(module, "VK_KHR_RELAXED_BLOCK_LAYOUT_SPEC_VERSION", 1);
+    addConstant(module, "VK_KHR_get_memory_requirements2", 1);
+    addConstant(module, "VK_KHR_GET_MEMORY_REQUIREMENTS_2_SPEC_VERSION", 1);
+    addConstant(module, "VK_KHR_image_format_list", 1);
+    addConstant(module, "VK_KHR_IMAGE_FORMAT_LIST_SPEC_VERSION", 1);
+    addConstant(module, "VK_KHR_sampler_ycbcr_conversion", 1);
+    addConstant(module, "VK_KHR_SAMPLER_YCBCR_CONVERSION_SPEC_VERSION", 14);
+    addConstant(module, "VK_KHR_bind_memory2", 1);
+    addConstant(module, "VK_KHR_BIND_MEMORY_2_SPEC_VERSION", 1);
+    addConstant(module, "VK_KHR_maintenance3", 1);
+    addConstant(module, "VK_KHR_MAINTENANCE3_SPEC_VERSION", 1);
+    addConstant(module, "VK_KHR_draw_indirect_count", 1);
 };

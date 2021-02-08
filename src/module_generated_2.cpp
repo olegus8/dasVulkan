@@ -1028,88 +1028,88 @@ void addVulkanGenerated_2(Module & module, ModuleLibrary & lib) {{
     // functions
     //
 
-    addExtern<DAS_BIND_FUN(vkResetFences)>(*this, lib, "vkResetFences",
+    addExtern<DAS_BIND_FUN(vkResetFences)>(module, lib, "vkResetFences",
         SideEffects::worstDefault, "vkResetFences");
-    addExtern<DAS_BIND_FUN(vkGetFenceStatus)>(*this, lib, "vkGetFenceStatus",
+    addExtern<DAS_BIND_FUN(vkGetFenceStatus)>(module, lib, "vkGetFenceStatus",
         SideEffects::worstDefault, "vkGetFenceStatus");
-    addExtern<DAS_BIND_FUN(vkWaitForFences)>(*this, lib, "vkWaitForFences",
+    addExtern<DAS_BIND_FUN(vkWaitForFences)>(module, lib, "vkWaitForFences",
         SideEffects::worstDefault, "vkWaitForFences");
-    addExtern<DAS_BIND_FUN(vkCreateSemaphore)>(*this, lib, "vkCreateSemaphore",
+    addExtern<DAS_BIND_FUN(vkCreateSemaphore)>(module, lib, "vkCreateSemaphore",
         SideEffects::worstDefault, "vkCreateSemaphore");
-    addExtern<DAS_BIND_FUN(vkDestroySemaphore)>(*this, lib, "vkDestroySemaphore",
+    addExtern<DAS_BIND_FUN(vkDestroySemaphore)>(module, lib, "vkDestroySemaphore",
         SideEffects::worstDefault, "vkDestroySemaphore");
-    addExtern<DAS_BIND_FUN(vkCreateEvent)>(*this, lib, "vkCreateEvent",
+    addExtern<DAS_BIND_FUN(vkCreateEvent)>(module, lib, "vkCreateEvent",
         SideEffects::worstDefault, "vkCreateEvent");
-    addExtern<DAS_BIND_FUN(vkDestroyEvent)>(*this, lib, "vkDestroyEvent",
+    addExtern<DAS_BIND_FUN(vkDestroyEvent)>(module, lib, "vkDestroyEvent",
         SideEffects::worstDefault, "vkDestroyEvent");
-    addExtern<DAS_BIND_FUN(vkGetEventStatus)>(*this, lib, "vkGetEventStatus",
+    addExtern<DAS_BIND_FUN(vkGetEventStatus)>(module, lib, "vkGetEventStatus",
         SideEffects::worstDefault, "vkGetEventStatus");
-    addExtern<DAS_BIND_FUN(vkSetEvent)>(*this, lib, "vkSetEvent",
+    addExtern<DAS_BIND_FUN(vkSetEvent)>(module, lib, "vkSetEvent",
         SideEffects::worstDefault, "vkSetEvent");
-    addExtern<DAS_BIND_FUN(vkResetEvent)>(*this, lib, "vkResetEvent",
+    addExtern<DAS_BIND_FUN(vkResetEvent)>(module, lib, "vkResetEvent",
         SideEffects::worstDefault, "vkResetEvent");
-    addExtern<DAS_BIND_FUN(vkCreateQueryPool)>(*this, lib, "vkCreateQueryPool",
+    addExtern<DAS_BIND_FUN(vkCreateQueryPool)>(module, lib, "vkCreateQueryPool",
         SideEffects::worstDefault, "vkCreateQueryPool");
-    addExtern<DAS_BIND_FUN(vkDestroyQueryPool)>(*this, lib, "vkDestroyQueryPool",
+    addExtern<DAS_BIND_FUN(vkDestroyQueryPool)>(module, lib, "vkDestroyQueryPool",
         SideEffects::worstDefault, "vkDestroyQueryPool");
-    addExtern<DAS_BIND_FUN(vkGetQueryPoolResults)>(*this, lib, "vkGetQueryPoolResults",
+    addExtern<DAS_BIND_FUN(vkGetQueryPoolResults)>(module, lib, "vkGetQueryPoolResults",
         SideEffects::worstDefault, "vkGetQueryPoolResults");
-    addExtern<DAS_BIND_FUN(vkCreateBuffer)>(*this, lib, "vkCreateBuffer",
+    addExtern<DAS_BIND_FUN(vkCreateBuffer)>(module, lib, "vkCreateBuffer",
         SideEffects::worstDefault, "vkCreateBuffer");
-    addExtern<DAS_BIND_FUN(vkDestroyBuffer)>(*this, lib, "vkDestroyBuffer",
+    addExtern<DAS_BIND_FUN(vkDestroyBuffer)>(module, lib, "vkDestroyBuffer",
         SideEffects::worstDefault, "vkDestroyBuffer");
-    addExtern<DAS_BIND_FUN(vkCreateBufferView)>(*this, lib, "vkCreateBufferView",
+    addExtern<DAS_BIND_FUN(vkCreateBufferView)>(module, lib, "vkCreateBufferView",
         SideEffects::worstDefault, "vkCreateBufferView");
-    addExtern<DAS_BIND_FUN(vkDestroyBufferView)>(*this, lib, "vkDestroyBufferView",
+    addExtern<DAS_BIND_FUN(vkDestroyBufferView)>(module, lib, "vkDestroyBufferView",
         SideEffects::worstDefault, "vkDestroyBufferView");
 
     //
     // macro constants
     //
 
-    addConstant(*this,"GLFW_KEY_F4",293);
-    addConstant(*this,"GLFW_KEY_F5",294);
-    addConstant(*this,"GLFW_KEY_F6",295);
-    addConstant(*this,"GLFW_KEY_F7",296);
-    addConstant(*this,"GLFW_KEY_F8",297);
-    addConstant(*this,"GLFW_KEY_F9",298);
-    addConstant(*this,"GLFW_KEY_F10",299);
-    addConstant(*this,"GLFW_KEY_F11",300);
-    addConstant(*this,"GLFW_KEY_F12",301);
-    addConstant(*this,"GLFW_KEY_F13",302);
-    addConstant(*this,"GLFW_KEY_F14",303);
-    addConstant(*this,"GLFW_KEY_F15",304);
-    addConstant(*this,"GLFW_KEY_F16",305);
-    addConstant(*this,"GLFW_KEY_F17",306);
-    addConstant(*this,"GLFW_KEY_F18",307);
-    addConstant(*this,"GLFW_KEY_F19",308);
-    addConstant(*this,"GLFW_KEY_F20",309);
-    addConstant(*this,"GLFW_KEY_F21",310);
-    addConstant(*this,"GLFW_KEY_F22",311);
-    addConstant(*this,"GLFW_KEY_F23",312);
-    addConstant(*this,"GLFW_KEY_F24",313);
-    addConstant(*this,"GLFW_KEY_F25",314);
-    addConstant(*this,"GLFW_KEY_KP_0",320);
-    addConstant(*this,"GLFW_KEY_KP_1",321);
-    addConstant(*this,"GLFW_KEY_KP_2",322);
-    addConstant(*this,"GLFW_KEY_KP_3",323);
-    addConstant(*this,"GLFW_KEY_KP_4",324);
-    addConstant(*this,"GLFW_KEY_KP_5",325);
-    addConstant(*this,"GLFW_KEY_KP_6",326);
-    addConstant(*this,"GLFW_KEY_KP_7",327);
-    addConstant(*this,"GLFW_KEY_KP_8",328);
-    addConstant(*this,"GLFW_KEY_KP_9",329);
-    addConstant(*this,"GLFW_KEY_KP_DECIMAL",330);
-    addConstant(*this,"GLFW_KEY_KP_DIVIDE",331);
-    addConstant(*this,"GLFW_KEY_KP_MULTIPLY",332);
-    addConstant(*this,"GLFW_KEY_KP_SUBTRACT",333);
-    addConstant(*this,"GLFW_KEY_KP_ADD",334);
-    addConstant(*this,"GLFW_KEY_KP_ENTER",335);
-    addConstant(*this,"GLFW_KEY_KP_EQUAL",336);
-    addConstant(*this,"GLFW_KEY_LEFT_SHIFT",340);
-    addConstant(*this,"GLFW_KEY_LEFT_CONTROL",341);
-    addConstant(*this,"GLFW_KEY_LEFT_ALT",342);
-    addConstant(*this,"GLFW_KEY_LEFT_SUPER",343);
-    addConstant(*this,"GLFW_KEY_RIGHT_SHIFT",344);
-    addConstant(*this,"GLFW_KEY_RIGHT_CONTROL",345);
+    addConstant(module, "GLFW_KEY_F4", 293);
+    addConstant(module, "GLFW_KEY_F5", 294);
+    addConstant(module, "GLFW_KEY_F6", 295);
+    addConstant(module, "GLFW_KEY_F7", 296);
+    addConstant(module, "GLFW_KEY_F8", 297);
+    addConstant(module, "GLFW_KEY_F9", 298);
+    addConstant(module, "GLFW_KEY_F10", 299);
+    addConstant(module, "GLFW_KEY_F11", 300);
+    addConstant(module, "GLFW_KEY_F12", 301);
+    addConstant(module, "GLFW_KEY_F13", 302);
+    addConstant(module, "GLFW_KEY_F14", 303);
+    addConstant(module, "GLFW_KEY_F15", 304);
+    addConstant(module, "GLFW_KEY_F16", 305);
+    addConstant(module, "GLFW_KEY_F17", 306);
+    addConstant(module, "GLFW_KEY_F18", 307);
+    addConstant(module, "GLFW_KEY_F19", 308);
+    addConstant(module, "GLFW_KEY_F20", 309);
+    addConstant(module, "GLFW_KEY_F21", 310);
+    addConstant(module, "GLFW_KEY_F22", 311);
+    addConstant(module, "GLFW_KEY_F23", 312);
+    addConstant(module, "GLFW_KEY_F24", 313);
+    addConstant(module, "GLFW_KEY_F25", 314);
+    addConstant(module, "GLFW_KEY_KP_0", 320);
+    addConstant(module, "GLFW_KEY_KP_1", 321);
+    addConstant(module, "GLFW_KEY_KP_2", 322);
+    addConstant(module, "GLFW_KEY_KP_3", 323);
+    addConstant(module, "GLFW_KEY_KP_4", 324);
+    addConstant(module, "GLFW_KEY_KP_5", 325);
+    addConstant(module, "GLFW_KEY_KP_6", 326);
+    addConstant(module, "GLFW_KEY_KP_7", 327);
+    addConstant(module, "GLFW_KEY_KP_8", 328);
+    addConstant(module, "GLFW_KEY_KP_9", 329);
+    addConstant(module, "GLFW_KEY_KP_DECIMAL", 330);
+    addConstant(module, "GLFW_KEY_KP_DIVIDE", 331);
+    addConstant(module, "GLFW_KEY_KP_MULTIPLY", 332);
+    addConstant(module, "GLFW_KEY_KP_SUBTRACT", 333);
+    addConstant(module, "GLFW_KEY_KP_ADD", 334);
+    addConstant(module, "GLFW_KEY_KP_ENTER", 335);
+    addConstant(module, "GLFW_KEY_KP_EQUAL", 336);
+    addConstant(module, "GLFW_KEY_LEFT_SHIFT", 340);
+    addConstant(module, "GLFW_KEY_LEFT_CONTROL", 341);
+    addConstant(module, "GLFW_KEY_LEFT_ALT", 342);
+    addConstant(module, "GLFW_KEY_LEFT_SUPER", 343);
+    addConstant(module, "GLFW_KEY_RIGHT_SHIFT", 344);
+    addConstant(module, "GLFW_KEY_RIGHT_CONTROL", 345);
 };
