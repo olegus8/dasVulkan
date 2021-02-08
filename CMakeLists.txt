@@ -51,11 +51,11 @@ IF(NOT DAS_VULKAN_INCLUDED)
             ${DAS_VULKAN_DIR}/include/dasVulkan/headers_to_bind.h
             ${DAS_VULKAN_DIR}/include/dasVulkan/module_custom.h
             ${DAS_VULKAN_DIR}/include/dasVulkan/module.h
-            ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated.h
+            ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated.h.inc
             ${DAS_VULKAN_DIR}/src/custom.cpp
             ${DAS_VULKAN_DIR}/src/module.cpp
             ${DAS_VULKAN_DIR}/src/module_boost_generated.inc
-            ${DAS_VULKAN_DIR}/src/module_generated.inc
+            ${DAS_VULKAN_DIR}/src/module_generated.cpp.inc
             ${DAS_VULKAN_GENERATED_CPP}
         )
 
@@ -102,7 +102,8 @@ IF(NOT DAS_VULKAN_INCLUDED)
             ${DAS_VULKAN_NUM_PARTS}
             ${DAS_VULKAN_DIR}/include/dasVulkan/headers_to_bind.h
             ${DAS_VULKAN_DIR}/src/module_generated
-            ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated.h
+            ${DAS_VULKAN_DIR}/include/dasVulkan/module_generated.h.inc
+            ${DAS_VULKAN_DIR}/include/dasVulkan/module.h
             ${DAS_VULKAN_DIR}/src/binding_config.py
             "${DAS_VULKAN_INCLUDE_DIRS}"
             "${DAS_VULKAN_BINDER_DEPS}"
