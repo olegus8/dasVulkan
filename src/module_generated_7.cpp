@@ -880,17 +880,17 @@ void addVulkanGenerated_7(Module & module, ModuleLibrary & lib)
     // enums
     //
 
-    addEnumeration(make_smart<EnumerationVkPointClippingBehavior>());
-    addEnumeration(make_smart<EnumerationVkTessellationDomainOrigin>());
-    addEnumeration(make_smart<EnumerationVkSamplerYcbcrModelConversion>());
-    addEnumeration(make_smart<EnumerationVkSamplerYcbcrRange>());
-    addEnumeration(make_smart<EnumerationVkChromaLocation>());
-    addEnumeration(make_smart<EnumerationVkDescriptorUpdateTemplateType>());
-    addEnumeration(make_smart<EnumerationVkSubgroupFeatureFlagBits>());
-    addEnumeration(make_smart<EnumerationVkPeerMemoryFeatureFlagBits>());
-    addEnumeration(make_smart<EnumerationVkMemoryAllocateFlagBits>());
-    addEnumeration(make_smart<EnumerationVkExternalMemoryHandleTypeFlagBits>());
-    addEnumeration(make_smart<EnumerationVkExternalMemoryFeatureFlagBits>());
+    module.addEnumeration(make_smart<EnumerationVkPointClippingBehavior>());
+    module.addEnumeration(make_smart<EnumerationVkTessellationDomainOrigin>());
+    module.addEnumeration(make_smart<EnumerationVkSamplerYcbcrModelConversion>());
+    module.addEnumeration(make_smart<EnumerationVkSamplerYcbcrRange>());
+    module.addEnumeration(make_smart<EnumerationVkChromaLocation>());
+    module.addEnumeration(make_smart<EnumerationVkDescriptorUpdateTemplateType>());
+    module.addEnumeration(make_smart<EnumerationVkSubgroupFeatureFlagBits>());
+    module.addEnumeration(make_smart<EnumerationVkPeerMemoryFeatureFlagBits>());
+    module.addEnumeration(make_smart<EnumerationVkMemoryAllocateFlagBits>());
+    module.addEnumeration(make_smart<EnumerationVkExternalMemoryHandleTypeFlagBits>());
+    module.addEnumeration(make_smart<EnumerationVkExternalMemoryFeatureFlagBits>());
 
     //
     // opaque structs

@@ -933,17 +933,17 @@ void addVulkanGenerated_10(Module & module, ModuleLibrary & lib)
     // enums
     //
 
-    addEnumeration(make_smart<EnumerationVkPerformanceCounterStorageKHR>());
-    addEnumeration(make_smart<EnumerationVkPerformanceCounterDescriptionFlagBitsKHR>());
-    addEnumeration(make_smart<EnumerationVkAcquireProfilingLockFlagBitsKHR>());
-    addEnumeration(make_smart<EnumerationVkFragmentShadingRateCombinerOpKHR>());
-    addEnumeration(make_smart<EnumerationVkPipelineExecutableStatisticFormatKHR>());
-    addEnumeration(make_smart<EnumerationVkDebugReportObjectTypeEXT>());
-    addEnumeration(make_smart<EnumerationVkDebugReportFlagBitsEXT>());
-    addEnumeration(make_smart<EnumerationVkRasterizationOrderAMD>());
-    addEnumeration(make_smart<EnumerationVkShaderInfoTypeAMD>());
-    addEnumeration(make_smart<EnumerationVkExternalMemoryHandleTypeFlagBitsNV>());
-    addEnumeration(make_smart<EnumerationVkExternalMemoryFeatureFlagBitsNV>());
+    module.addEnumeration(make_smart<EnumerationVkPerformanceCounterStorageKHR>());
+    module.addEnumeration(make_smart<EnumerationVkPerformanceCounterDescriptionFlagBitsKHR>());
+    module.addEnumeration(make_smart<EnumerationVkAcquireProfilingLockFlagBitsKHR>());
+    module.addEnumeration(make_smart<EnumerationVkFragmentShadingRateCombinerOpKHR>());
+    module.addEnumeration(make_smart<EnumerationVkPipelineExecutableStatisticFormatKHR>());
+    module.addEnumeration(make_smart<EnumerationVkDebugReportObjectTypeEXT>());
+    module.addEnumeration(make_smart<EnumerationVkDebugReportFlagBitsEXT>());
+    module.addEnumeration(make_smart<EnumerationVkRasterizationOrderAMD>());
+    module.addEnumeration(make_smart<EnumerationVkShaderInfoTypeAMD>());
+    module.addEnumeration(make_smart<EnumerationVkExternalMemoryHandleTypeFlagBitsNV>());
+    module.addEnumeration(make_smart<EnumerationVkExternalMemoryFeatureFlagBitsNV>());
 
     //
     // opaque structs

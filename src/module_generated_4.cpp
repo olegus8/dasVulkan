@@ -879,17 +879,17 @@ void addVulkanGenerated_4(Module & module, ModuleLibrary & lib)
     // enums
     //
 
-    addEnumeration(make_smart<EnumerationVkMemoryPropertyFlagBits>());
-    addEnumeration(make_smart<EnumerationVkQueueFlagBits>());
-    addEnumeration(make_smart<EnumerationVkDeviceQueueCreateFlagBits>());
-    addEnumeration(make_smart<EnumerationVkPipelineStageFlagBits>());
-    addEnumeration(make_smart<EnumerationVkSparseMemoryBindFlagBits>());
-    addEnumeration(make_smart<EnumerationVkSparseImageFormatFlagBits>());
-    addEnumeration(make_smart<EnumerationVkFenceCreateFlagBits>());
-    addEnumeration(make_smart<EnumerationVkQueryPipelineStatisticFlagBits>());
-    addEnumeration(make_smart<EnumerationVkQueryResultFlagBits>());
-    addEnumeration(make_smart<EnumerationVkBufferCreateFlagBits>());
-    addEnumeration(make_smart<EnumerationVkBufferUsageFlagBits>());
+    module.addEnumeration(make_smart<EnumerationVkMemoryPropertyFlagBits>());
+    module.addEnumeration(make_smart<EnumerationVkQueueFlagBits>());
+    module.addEnumeration(make_smart<EnumerationVkDeviceQueueCreateFlagBits>());
+    module.addEnumeration(make_smart<EnumerationVkPipelineStageFlagBits>());
+    module.addEnumeration(make_smart<EnumerationVkSparseMemoryBindFlagBits>());
+    module.addEnumeration(make_smart<EnumerationVkSparseImageFormatFlagBits>());
+    module.addEnumeration(make_smart<EnumerationVkFenceCreateFlagBits>());
+    module.addEnumeration(make_smart<EnumerationVkQueryPipelineStatisticFlagBits>());
+    module.addEnumeration(make_smart<EnumerationVkQueryResultFlagBits>());
+    module.addEnumeration(make_smart<EnumerationVkBufferCreateFlagBits>());
+    module.addEnumeration(make_smart<EnumerationVkBufferUsageFlagBits>());
 
     //
     // opaque structs

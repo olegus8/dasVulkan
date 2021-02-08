@@ -873,17 +873,17 @@ void addVulkanGenerated_12(Module & module, ModuleLibrary & lib)
     // enums
     //
 
-    addEnumeration(make_smart<EnumerationVkBlendOverlapEXT>());
-    addEnumeration(make_smart<EnumerationVkCoverageModulationModeNV>());
-    addEnumeration(make_smart<EnumerationVkValidationCacheHeaderVersionEXT>());
-    addEnumeration(make_smart<EnumerationVkShadingRatePaletteEntryNV>());
-    addEnumeration(make_smart<EnumerationVkCoarseSampleOrderTypeNV>());
-    addEnumeration(make_smart<EnumerationVkRayTracingShaderGroupTypeKHR>());
-    addEnumeration(make_smart<EnumerationVkGeometryTypeKHR>());
-    addEnumeration(make_smart<EnumerationVkAccelerationStructureTypeKHR>());
-    addEnumeration(make_smart<EnumerationVkCopyAccelerationStructureModeKHR>());
-    addEnumeration(make_smart<EnumerationVkAccelerationStructureMemoryRequirementsTypeNV>());
-    addEnumeration(make_smart<EnumerationVkGeometryFlagBitsKHR>());
+    module.addEnumeration(make_smart<EnumerationVkBlendOverlapEXT>());
+    module.addEnumeration(make_smart<EnumerationVkCoverageModulationModeNV>());
+    module.addEnumeration(make_smart<EnumerationVkValidationCacheHeaderVersionEXT>());
+    module.addEnumeration(make_smart<EnumerationVkShadingRatePaletteEntryNV>());
+    module.addEnumeration(make_smart<EnumerationVkCoarseSampleOrderTypeNV>());
+    module.addEnumeration(make_smart<EnumerationVkRayTracingShaderGroupTypeKHR>());
+    module.addEnumeration(make_smart<EnumerationVkGeometryTypeKHR>());
+    module.addEnumeration(make_smart<EnumerationVkAccelerationStructureTypeKHR>());
+    module.addEnumeration(make_smart<EnumerationVkCopyAccelerationStructureModeKHR>());
+    module.addEnumeration(make_smart<EnumerationVkAccelerationStructureMemoryRequirementsTypeNV>());
+    module.addEnumeration(make_smart<EnumerationVkGeometryFlagBitsKHR>());
 
     //
     // opaque structs

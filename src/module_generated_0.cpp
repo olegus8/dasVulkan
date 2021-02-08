@@ -1042,17 +1042,17 @@ void addVulkanGenerated_0(Module & module, ModuleLibrary & lib)
     // enums
     //
 
-    addEnumeration(make_smart<EnumerationVkResult>());
-    addEnumeration(make_smart<EnumerationVkStructureType>());
-    addEnumeration(make_smart<EnumerationVkImageLayout>());
-    addEnumeration(make_smart<EnumerationVkObjectType>());
-    addEnumeration(make_smart<EnumerationVkVendorId>());
-    addEnumeration(make_smart<EnumerationVkPipelineCacheHeaderVersion>());
-    addEnumeration(make_smart<EnumerationVkSystemAllocationScope>());
-    addEnumeration(make_smart<EnumerationVkInternalAllocationType>());
-    addEnumeration(make_smart<EnumerationVkFormat>());
-    addEnumeration(make_smart<EnumerationVkImageTiling>());
-    addEnumeration(make_smart<EnumerationVkImageType>());
+    module.addEnumeration(make_smart<EnumerationVkResult>());
+    module.addEnumeration(make_smart<EnumerationVkStructureType>());
+    module.addEnumeration(make_smart<EnumerationVkImageLayout>());
+    module.addEnumeration(make_smart<EnumerationVkObjectType>());
+    module.addEnumeration(make_smart<EnumerationVkVendorId>());
+    module.addEnumeration(make_smart<EnumerationVkPipelineCacheHeaderVersion>());
+    module.addEnumeration(make_smart<EnumerationVkSystemAllocationScope>());
+    module.addEnumeration(make_smart<EnumerationVkInternalAllocationType>());
+    module.addEnumeration(make_smart<EnumerationVkFormat>());
+    module.addEnumeration(make_smart<EnumerationVkImageTiling>());
+    module.addEnumeration(make_smart<EnumerationVkImageType>());
 
     //
     // opaque structs

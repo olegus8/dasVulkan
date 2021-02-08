@@ -911,17 +911,17 @@ void addVulkanGenerated_11(Module & module, ModuleLibrary & lib)
     // enums
     //
 
-    addEnumeration(make_smart<EnumerationVkValidationCheckEXT>());
-    addEnumeration(make_smart<EnumerationVkConditionalRenderingFlagBitsEXT>());
-    addEnumeration(make_smart<EnumerationVkSurfaceCounterFlagBitsEXT>());
-    addEnumeration(make_smart<EnumerationVkDisplayPowerStateEXT>());
-    addEnumeration(make_smart<EnumerationVkDeviceEventTypeEXT>());
-    addEnumeration(make_smart<EnumerationVkDisplayEventTypeEXT>());
-    addEnumeration(make_smart<EnumerationVkViewportCoordinateSwizzleNV>());
-    addEnumeration(make_smart<EnumerationVkDiscardRectangleModeEXT>());
-    addEnumeration(make_smart<EnumerationVkConservativeRasterizationModeEXT>());
-    addEnumeration(make_smart<EnumerationVkDebugUtilsMessageSeverityFlagBitsEXT>());
-    addEnumeration(make_smart<EnumerationVkDebugUtilsMessageTypeFlagBitsEXT>());
+    module.addEnumeration(make_smart<EnumerationVkValidationCheckEXT>());
+    module.addEnumeration(make_smart<EnumerationVkConditionalRenderingFlagBitsEXT>());
+    module.addEnumeration(make_smart<EnumerationVkSurfaceCounterFlagBitsEXT>());
+    module.addEnumeration(make_smart<EnumerationVkDisplayPowerStateEXT>());
+    module.addEnumeration(make_smart<EnumerationVkDeviceEventTypeEXT>());
+    module.addEnumeration(make_smart<EnumerationVkDisplayEventTypeEXT>());
+    module.addEnumeration(make_smart<EnumerationVkViewportCoordinateSwizzleNV>());
+    module.addEnumeration(make_smart<EnumerationVkDiscardRectangleModeEXT>());
+    module.addEnumeration(make_smart<EnumerationVkConservativeRasterizationModeEXT>());
+    module.addEnumeration(make_smart<EnumerationVkDebugUtilsMessageSeverityFlagBitsEXT>());
+    module.addEnumeration(make_smart<EnumerationVkDebugUtilsMessageTypeFlagBitsEXT>());
 
     //
     // opaque structs

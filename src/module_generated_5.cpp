@@ -1094,17 +1094,17 @@ void addVulkanGenerated_5(Module & module, ModuleLibrary & lib)
     // enums
     //
 
-    addEnumeration(make_smart<EnumerationVkImageViewCreateFlagBits>());
-    addEnumeration(make_smart<EnumerationVkShaderModuleCreateFlagBits>());
-    addEnumeration(make_smart<EnumerationVkPipelineCacheCreateFlagBits>());
-    addEnumeration(make_smart<EnumerationVkColorComponentFlagBits>());
-    addEnumeration(make_smart<EnumerationVkPipelineCreateFlagBits>());
-    addEnumeration(make_smart<EnumerationVkPipelineShaderStageCreateFlagBits>());
-    addEnumeration(make_smart<EnumerationVkShaderStageFlagBits>());
-    addEnumeration(make_smart<EnumerationVkCullModeFlagBits>());
-    addEnumeration(make_smart<EnumerationVkSamplerCreateFlagBits>());
-    addEnumeration(make_smart<EnumerationVkDescriptorPoolCreateFlagBits>());
-    addEnumeration(make_smart<EnumerationVkDescriptorSetLayoutCreateFlagBits>());
+    module.addEnumeration(make_smart<EnumerationVkImageViewCreateFlagBits>());
+    module.addEnumeration(make_smart<EnumerationVkShaderModuleCreateFlagBits>());
+    module.addEnumeration(make_smart<EnumerationVkPipelineCacheCreateFlagBits>());
+    module.addEnumeration(make_smart<EnumerationVkColorComponentFlagBits>());
+    module.addEnumeration(make_smart<EnumerationVkPipelineCreateFlagBits>());
+    module.addEnumeration(make_smart<EnumerationVkPipelineShaderStageCreateFlagBits>());
+    module.addEnumeration(make_smart<EnumerationVkShaderStageFlagBits>());
+    module.addEnumeration(make_smart<EnumerationVkCullModeFlagBits>());
+    module.addEnumeration(make_smart<EnumerationVkSamplerCreateFlagBits>());
+    module.addEnumeration(make_smart<EnumerationVkDescriptorPoolCreateFlagBits>());
+    module.addEnumeration(make_smart<EnumerationVkDescriptorSetLayoutCreateFlagBits>());
 
     //
     // opaque structs

@@ -891,17 +891,17 @@ void addVulkanGenerated_14(Module & module, ModuleLibrary & lib)
     // enums
     //
 
-    addEnumeration(make_smart<EnumerationVkPerformanceValueTypeINTEL>());
-    addEnumeration(make_smart<EnumerationVkShaderCorePropertiesFlagBitsAMD>());
-    addEnumeration(make_smart<EnumerationVkToolPurposeFlagBitsEXT>());
-    addEnumeration(make_smart<EnumerationVkValidationFeatureEnableEXT>());
-    addEnumeration(make_smart<EnumerationVkValidationFeatureDisableEXT>());
-    addEnumeration(make_smart<EnumerationVkComponentTypeNV>());
-    addEnumeration(make_smart<EnumerationVkScopeNV>());
-    addEnumeration(make_smart<EnumerationVkCoverageReductionModeNV>());
-    addEnumeration(make_smart<EnumerationVkLineRasterizationModeEXT>());
-    addEnumeration(make_smart<EnumerationVkIndirectCommandsTokenTypeNV>());
-    addEnumeration(make_smart<EnumerationVkIndirectStateFlagBitsNV>());
+    module.addEnumeration(make_smart<EnumerationVkPerformanceValueTypeINTEL>());
+    module.addEnumeration(make_smart<EnumerationVkShaderCorePropertiesFlagBitsAMD>());
+    module.addEnumeration(make_smart<EnumerationVkToolPurposeFlagBitsEXT>());
+    module.addEnumeration(make_smart<EnumerationVkValidationFeatureEnableEXT>());
+    module.addEnumeration(make_smart<EnumerationVkValidationFeatureDisableEXT>());
+    module.addEnumeration(make_smart<EnumerationVkComponentTypeNV>());
+    module.addEnumeration(make_smart<EnumerationVkScopeNV>());
+    module.addEnumeration(make_smart<EnumerationVkCoverageReductionModeNV>());
+    module.addEnumeration(make_smart<EnumerationVkLineRasterizationModeEXT>());
+    module.addEnumeration(make_smart<EnumerationVkIndirectCommandsTokenTypeNV>());
+    module.addEnumeration(make_smart<EnumerationVkIndirectStateFlagBitsNV>());
 
     //
     // opaque structs

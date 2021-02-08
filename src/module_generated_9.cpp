@@ -875,17 +875,17 @@ void addVulkanGenerated_9(Module & module, ModuleLibrary & lib)
     // enums
     //
 
-    addEnumeration(make_smart<EnumerationVkDescriptorBindingFlagBits>());
-    addEnumeration(make_smart<EnumerationVkSemaphoreWaitFlagBits>());
-    addEnumeration(make_smart<EnumerationVkPresentModeKHR>());
-    addEnumeration(make_smart<EnumerationVkColorSpaceKHR>());
-    addEnumeration(make_smart<EnumerationVkSurfaceTransformFlagBitsKHR>());
-    addEnumeration(make_smart<EnumerationVkCompositeAlphaFlagBitsKHR>());
-    addEnumeration(make_smart<EnumerationVkSwapchainCreateFlagBitsKHR>());
-    addEnumeration(make_smart<EnumerationVkDeviceGroupPresentModeFlagBitsKHR>());
-    addEnumeration(make_smart<EnumerationVkDisplayPlaneAlphaFlagBitsKHR>());
-    addEnumeration(make_smart<EnumerationVkPerformanceCounterUnitKHR>());
-    addEnumeration(make_smart<EnumerationVkPerformanceCounterScopeKHR>());
+    module.addEnumeration(make_smart<EnumerationVkDescriptorBindingFlagBits>());
+    module.addEnumeration(make_smart<EnumerationVkSemaphoreWaitFlagBits>());
+    module.addEnumeration(make_smart<EnumerationVkPresentModeKHR>());
+    module.addEnumeration(make_smart<EnumerationVkColorSpaceKHR>());
+    module.addEnumeration(make_smart<EnumerationVkSurfaceTransformFlagBitsKHR>());
+    module.addEnumeration(make_smart<EnumerationVkCompositeAlphaFlagBitsKHR>());
+    module.addEnumeration(make_smart<EnumerationVkSwapchainCreateFlagBitsKHR>());
+    module.addEnumeration(make_smart<EnumerationVkDeviceGroupPresentModeFlagBitsKHR>());
+    module.addEnumeration(make_smart<EnumerationVkDisplayPlaneAlphaFlagBitsKHR>());
+    module.addEnumeration(make_smart<EnumerationVkPerformanceCounterUnitKHR>());
+    module.addEnumeration(make_smart<EnumerationVkPerformanceCounterScopeKHR>());
 
     //
     // opaque structs

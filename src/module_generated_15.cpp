@@ -939,17 +939,17 @@ void addVulkanGenerated_15(Module & module, ModuleLibrary & lib)
     // enums
     //
 
-    addEnumeration(make_smart<EnumerationVkIndirectCommandsLayoutUsageFlagBitsNV>());
-    addEnumeration(make_smart<EnumerationVkDeviceMemoryReportEventTypeEXT>());
-    addEnumeration(make_smart<EnumerationVkPrivateDataSlotCreateFlagBitsEXT>());
-    addEnumeration(make_smart<EnumerationVkDeviceDiagnosticsConfigFlagBitsNV>());
-    addEnumeration(make_smart<EnumerationVkFragmentShadingRateTypeNV>());
-    addEnumeration(make_smart<EnumerationVkFragmentShadingRateNV>());
-    addEnumeration(make_smart<EnumerationVkBuildAccelerationStructureModeKHR>());
-    addEnumeration(make_smart<EnumerationVkAccelerationStructureBuildTypeKHR>());
-    addEnumeration(make_smart<EnumerationVkAccelerationStructureCompatibilityKHR>());
-    addEnumeration(make_smart<EnumerationVkAccelerationStructureCreateFlagBitsKHR>());
-    addEnumeration(make_smart<EnumerationVkShaderGroupShaderKHR>());
+    module.addEnumeration(make_smart<EnumerationVkIndirectCommandsLayoutUsageFlagBitsNV>());
+    module.addEnumeration(make_smart<EnumerationVkDeviceMemoryReportEventTypeEXT>());
+    module.addEnumeration(make_smart<EnumerationVkPrivateDataSlotCreateFlagBitsEXT>());
+    module.addEnumeration(make_smart<EnumerationVkDeviceDiagnosticsConfigFlagBitsNV>());
+    module.addEnumeration(make_smart<EnumerationVkFragmentShadingRateTypeNV>());
+    module.addEnumeration(make_smart<EnumerationVkFragmentShadingRateNV>());
+    module.addEnumeration(make_smart<EnumerationVkBuildAccelerationStructureModeKHR>());
+    module.addEnumeration(make_smart<EnumerationVkAccelerationStructureBuildTypeKHR>());
+    module.addEnumeration(make_smart<EnumerationVkAccelerationStructureCompatibilityKHR>());
+    module.addEnumeration(make_smart<EnumerationVkAccelerationStructureCreateFlagBitsKHR>());
+    module.addEnumeration(make_smart<EnumerationVkShaderGroupShaderKHR>());
 
     //
     // opaque structs

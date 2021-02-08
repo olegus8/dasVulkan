@@ -924,17 +924,17 @@ void addVulkanGenerated_1(Module & module, ModuleLibrary & lib)
     // enums
     //
 
-    addEnumeration(make_smart<EnumerationVkPhysicalDeviceType>());
-    addEnumeration(make_smart<EnumerationVkQueryType>());
-    addEnumeration(make_smart<EnumerationVkSharingMode>());
-    addEnumeration(make_smart<EnumerationVkComponentSwizzle>());
-    addEnumeration(make_smart<EnumerationVkImageViewType>());
-    addEnumeration(make_smart<EnumerationVkBlendFactor>());
-    addEnumeration(make_smart<EnumerationVkBlendOp>());
-    addEnumeration(make_smart<EnumerationVkCompareOp>());
-    addEnumeration(make_smart<EnumerationVkDynamicState>());
-    addEnumeration(make_smart<EnumerationVkFrontFace>());
-    addEnumeration(make_smart<EnumerationVkVertexInputRate>());
+    module.addEnumeration(make_smart<EnumerationVkPhysicalDeviceType>());
+    module.addEnumeration(make_smart<EnumerationVkQueryType>());
+    module.addEnumeration(make_smart<EnumerationVkSharingMode>());
+    module.addEnumeration(make_smart<EnumerationVkComponentSwizzle>());
+    module.addEnumeration(make_smart<EnumerationVkImageViewType>());
+    module.addEnumeration(make_smart<EnumerationVkBlendFactor>());
+    module.addEnumeration(make_smart<EnumerationVkBlendOp>());
+    module.addEnumeration(make_smart<EnumerationVkCompareOp>());
+    module.addEnumeration(make_smart<EnumerationVkDynamicState>());
+    module.addEnumeration(make_smart<EnumerationVkFrontFace>());
+    module.addEnumeration(make_smart<EnumerationVkVertexInputRate>());
 
     //
     // opaque structs

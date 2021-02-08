@@ -926,17 +926,17 @@ void addVulkanGenerated_8(Module & module, ModuleLibrary & lib)
     // enums
     //
 
-    addEnumeration(make_smart<EnumerationVkExternalFenceHandleTypeFlagBits>());
-    addEnumeration(make_smart<EnumerationVkExternalFenceFeatureFlagBits>());
-    addEnumeration(make_smart<EnumerationVkFenceImportFlagBits>());
-    addEnumeration(make_smart<EnumerationVkSemaphoreImportFlagBits>());
-    addEnumeration(make_smart<EnumerationVkExternalSemaphoreHandleTypeFlagBits>());
-    addEnumeration(make_smart<EnumerationVkExternalSemaphoreFeatureFlagBits>());
-    addEnumeration(make_smart<EnumerationVkDriverId>());
-    addEnumeration(make_smart<EnumerationVkShaderFloatControlsIndependence>());
-    addEnumeration(make_smart<EnumerationVkSamplerReductionMode>());
-    addEnumeration(make_smart<EnumerationVkSemaphoreType>());
-    addEnumeration(make_smart<EnumerationVkResolveModeFlagBits>());
+    module.addEnumeration(make_smart<EnumerationVkExternalFenceHandleTypeFlagBits>());
+    module.addEnumeration(make_smart<EnumerationVkExternalFenceFeatureFlagBits>());
+    module.addEnumeration(make_smart<EnumerationVkFenceImportFlagBits>());
+    module.addEnumeration(make_smart<EnumerationVkSemaphoreImportFlagBits>());
+    module.addEnumeration(make_smart<EnumerationVkExternalSemaphoreHandleTypeFlagBits>());
+    module.addEnumeration(make_smart<EnumerationVkExternalSemaphoreFeatureFlagBits>());
+    module.addEnumeration(make_smart<EnumerationVkDriverId>());
+    module.addEnumeration(make_smart<EnumerationVkShaderFloatControlsIndependence>());
+    module.addEnumeration(make_smart<EnumerationVkSamplerReductionMode>());
+    module.addEnumeration(make_smart<EnumerationVkSemaphoreType>());
+    module.addEnumeration(make_smart<EnumerationVkResolveModeFlagBits>());
 
     //
     // opaque structs

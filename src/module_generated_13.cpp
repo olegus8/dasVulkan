@@ -899,17 +899,17 @@ void addVulkanGenerated_13(Module & module, ModuleLibrary & lib)
     // enums
     //
 
-    addEnumeration(make_smart<EnumerationVkGeometryInstanceFlagBitsKHR>());
-    addEnumeration(make_smart<EnumerationVkBuildAccelerationStructureFlagBitsKHR>());
-    addEnumeration(make_smart<EnumerationVkQueueGlobalPriorityEXT>());
-    addEnumeration(make_smart<EnumerationVkPipelineCompilerControlFlagBitsAMD>());
-    addEnumeration(make_smart<EnumerationVkTimeDomainEXT>());
-    addEnumeration(make_smart<EnumerationVkMemoryOverallocationBehaviorAMD>());
-    addEnumeration(make_smart<EnumerationVkPipelineCreationFeedbackFlagBitsEXT>());
-    addEnumeration(make_smart<EnumerationVkPerformanceConfigurationTypeINTEL>());
-    addEnumeration(make_smart<EnumerationVkQueryPoolSamplingModeINTEL>());
-    addEnumeration(make_smart<EnumerationVkPerformanceOverrideTypeINTEL>());
-    addEnumeration(make_smart<EnumerationVkPerformanceParameterTypeINTEL>());
+    module.addEnumeration(make_smart<EnumerationVkGeometryInstanceFlagBitsKHR>());
+    module.addEnumeration(make_smart<EnumerationVkBuildAccelerationStructureFlagBitsKHR>());
+    module.addEnumeration(make_smart<EnumerationVkQueueGlobalPriorityEXT>());
+    module.addEnumeration(make_smart<EnumerationVkPipelineCompilerControlFlagBitsAMD>());
+    module.addEnumeration(make_smart<EnumerationVkTimeDomainEXT>());
+    module.addEnumeration(make_smart<EnumerationVkMemoryOverallocationBehaviorAMD>());
+    module.addEnumeration(make_smart<EnumerationVkPipelineCreationFeedbackFlagBitsEXT>());
+    module.addEnumeration(make_smart<EnumerationVkPerformanceConfigurationTypeINTEL>());
+    module.addEnumeration(make_smart<EnumerationVkQueryPoolSamplingModeINTEL>());
+    module.addEnumeration(make_smart<EnumerationVkPerformanceOverrideTypeINTEL>());
+    module.addEnumeration(make_smart<EnumerationVkPerformanceParameterTypeINTEL>());
 
     //
     // opaque structs

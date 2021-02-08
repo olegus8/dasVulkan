@@ -965,17 +965,17 @@ void addVulkanGenerated_2(Module & module, ModuleLibrary & lib)
     // enums
     //
 
-    addEnumeration(make_smart<EnumerationVkPrimitiveTopology>());
-    addEnumeration(make_smart<EnumerationVkPolygonMode>());
-    addEnumeration(make_smart<EnumerationVkStencilOp>());
-    addEnumeration(make_smart<EnumerationVkLogicOp>());
-    addEnumeration(make_smart<EnumerationVkBorderColor>());
-    addEnumeration(make_smart<EnumerationVkFilter>());
-    addEnumeration(make_smart<EnumerationVkSamplerAddressMode>());
-    addEnumeration(make_smart<EnumerationVkSamplerMipmapMode>());
-    addEnumeration(make_smart<EnumerationVkDescriptorType>());
-    addEnumeration(make_smart<EnumerationVkAttachmentLoadOp>());
-    addEnumeration(make_smart<EnumerationVkAttachmentStoreOp>());
+    module.addEnumeration(make_smart<EnumerationVkPrimitiveTopology>());
+    module.addEnumeration(make_smart<EnumerationVkPolygonMode>());
+    module.addEnumeration(make_smart<EnumerationVkStencilOp>());
+    module.addEnumeration(make_smart<EnumerationVkLogicOp>());
+    module.addEnumeration(make_smart<EnumerationVkBorderColor>());
+    module.addEnumeration(make_smart<EnumerationVkFilter>());
+    module.addEnumeration(make_smart<EnumerationVkSamplerAddressMode>());
+    module.addEnumeration(make_smart<EnumerationVkSamplerMipmapMode>());
+    module.addEnumeration(make_smart<EnumerationVkDescriptorType>());
+    module.addEnumeration(make_smart<EnumerationVkAttachmentLoadOp>());
+    module.addEnumeration(make_smart<EnumerationVkAttachmentStoreOp>());
 
     //
     // opaque structs
