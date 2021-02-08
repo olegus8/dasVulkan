@@ -907,9 +907,9 @@ void addVulkanGenerated_14(Module & module, ModuleLibrary & lib) {{
     // opaque structs
     //
 
-    addAnnotation(make_smart<VkHandleAnnotation<VkIndirectCommandsLayoutNV>>("VkIndirectCommandsLayoutNV", "VkIndirectCommandsLayoutNV"));
-    addAnnotation(make_smart<VkHandleAnnotation<VkPrivateDataSlotEXT>>("VkPrivateDataSlotEXT", "VkPrivateDataSlotEXT"));
-    addAnnotation(make_smart<VkHandleAnnotation<VkAccelerationStructureKHR>>("VkAccelerationStructureKHR", "VkAccelerationStructureKHR"));
+    module.addAnnotation(make_smart<VkHandleAnnotation<VkIndirectCommandsLayoutNV>>("VkIndirectCommandsLayoutNV", "VkIndirectCommandsLayoutNV"));
+    module.addAnnotation(make_smart<VkHandleAnnotation<VkPrivateDataSlotEXT>>("VkPrivateDataSlotEXT", "VkPrivateDataSlotEXT"));
+    module.addAnnotation(make_smart<VkHandleAnnotation<VkAccelerationStructureKHR>>("VkAccelerationStructureKHR", "VkAccelerationStructureKHR"));
 
     //
     // structs

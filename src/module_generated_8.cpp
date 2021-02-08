@@ -942,9 +942,9 @@ void addVulkanGenerated_8(Module & module, ModuleLibrary & lib) {{
     // opaque structs
     //
 
-    addAnnotation(make_smart<VkHandleAnnotation<VkDescriptorSet>>("VkDescriptorSet", "VkDescriptorSet"));
-    addAnnotation(make_smart<VkHandleAnnotation<VkDescriptorPool>>("VkDescriptorPool", "VkDescriptorPool"));
-    addAnnotation(make_smart<VkHandleAnnotation<VkFramebuffer>>("VkFramebuffer", "VkFramebuffer"));
+    module.addAnnotation(make_smart<VkHandleAnnotation<VkDescriptorSet>>("VkDescriptorSet", "VkDescriptorSet"));
+    module.addAnnotation(make_smart<VkHandleAnnotation<VkDescriptorPool>>("VkDescriptorPool", "VkDescriptorPool"));
+    module.addAnnotation(make_smart<VkHandleAnnotation<VkFramebuffer>>("VkFramebuffer", "VkFramebuffer"));
 
     //
     // structs

@@ -915,9 +915,9 @@ void addVulkanGenerated_13(Module & module, ModuleLibrary & lib) {{
     // opaque structs
     //
 
-    addAnnotation(make_smart<VkHandleAnnotation<VkValidationCacheEXT>>("VkValidationCacheEXT", "VkValidationCacheEXT"));
-    addAnnotation(make_smart<VkHandleAnnotation<VkAccelerationStructureNV>>("VkAccelerationStructureNV", "VkAccelerationStructureNV"));
-    addAnnotation(make_smart<VkHandleAnnotation<VkPerformanceConfigurationINTEL>>("VkPerformanceConfigurationINTEL", "VkPerformanceConfigurationINTEL"));
+    module.addAnnotation(make_smart<VkHandleAnnotation<VkValidationCacheEXT>>("VkValidationCacheEXT", "VkValidationCacheEXT"));
+    module.addAnnotation(make_smart<VkHandleAnnotation<VkAccelerationStructureNV>>("VkAccelerationStructureNV", "VkAccelerationStructureNV"));
+    module.addAnnotation(make_smart<VkHandleAnnotation<VkPerformanceConfigurationINTEL>>("VkPerformanceConfigurationINTEL", "VkPerformanceConfigurationINTEL"));
 
     //
     // structs

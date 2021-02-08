@@ -940,9 +940,9 @@ void addVulkanGenerated_1(Module & module, ModuleLibrary & lib) {{
     // opaque structs
     //
 
-    addAnnotation(make_smart<VkHandleAnnotation<VkInstance>>("VkInstance", "VkInstance"));
-    addAnnotation(make_smart<VkHandleAnnotation<VkPhysicalDevice>>("VkPhysicalDevice", "VkPhysicalDevice"));
-    addAnnotation(make_smart<VkHandleAnnotation<VkDevice>>("VkDevice", "VkDevice"));
+    module.addAnnotation(make_smart<VkHandleAnnotation<VkInstance>>("VkInstance", "VkInstance"));
+    module.addAnnotation(make_smart<VkHandleAnnotation<VkPhysicalDevice>>("VkPhysicalDevice", "VkPhysicalDevice"));
+    module.addAnnotation(make_smart<VkHandleAnnotation<VkDevice>>("VkDevice", "VkDevice"));
 
     //
     // structs

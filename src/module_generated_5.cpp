@@ -1110,9 +1110,9 @@ void addVulkanGenerated_5(Module & module, ModuleLibrary & lib) {{
     // opaque structs
     //
 
-    addAnnotation(make_smart<VkHandleAnnotation<VkImageView>>("VkImageView", "VkImageView"));
-    addAnnotation(make_smart<VkHandleAnnotation<VkShaderModule>>("VkShaderModule", "VkShaderModule"));
-    addAnnotation(make_smart<VkHandleAnnotation<VkPipelineCache>>("VkPipelineCache", "VkPipelineCache"));
+    module.addAnnotation(make_smart<VkHandleAnnotation<VkImageView>>("VkImageView", "VkImageView"));
+    module.addAnnotation(make_smart<VkHandleAnnotation<VkShaderModule>>("VkShaderModule", "VkShaderModule"));
+    module.addAnnotation(make_smart<VkHandleAnnotation<VkPipelineCache>>("VkPipelineCache", "VkPipelineCache"));
 
     //
     // structs

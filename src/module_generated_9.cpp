@@ -891,8 +891,8 @@ void addVulkanGenerated_9(Module & module, ModuleLibrary & lib) {{
     // opaque structs
     //
 
-    addAnnotation(make_smart<VkHandleAnnotation<VkCommandPool>>("VkCommandPool", "VkCommandPool"));
-    addAnnotation(make_smart<VkHandleAnnotation<VkSamplerYcbcrConversion>>("VkSamplerYcbcrConversion", "VkSamplerYcbcrConversion"));
+    module.addAnnotation(make_smart<VkHandleAnnotation<VkCommandPool>>("VkCommandPool", "VkCommandPool"));
+    module.addAnnotation(make_smart<VkHandleAnnotation<VkSamplerYcbcrConversion>>("VkSamplerYcbcrConversion", "VkSamplerYcbcrConversion"));
 
     //
     // structs

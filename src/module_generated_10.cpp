@@ -949,9 +949,9 @@ void addVulkanGenerated_10(Module & module, ModuleLibrary & lib) {{
     // opaque structs
     //
 
-    addAnnotation(make_smart<VkHandleAnnotation<VkDescriptorUpdateTemplate>>("VkDescriptorUpdateTemplate", "VkDescriptorUpdateTemplate"));
-    addAnnotation(make_smart<VkHandleAnnotation<VkSurfaceKHR>>("VkSurfaceKHR", "VkSurfaceKHR"));
-    addAnnotation(make_smart<VkHandleAnnotation<VkSwapchainKHR>>("VkSwapchainKHR", "VkSwapchainKHR"));
+    module.addAnnotation(make_smart<VkHandleAnnotation<VkDescriptorUpdateTemplate>>("VkDescriptorUpdateTemplate", "VkDescriptorUpdateTemplate"));
+    module.addAnnotation(make_smart<VkHandleAnnotation<VkSurfaceKHR>>("VkSurfaceKHR", "VkSurfaceKHR"));
+    module.addAnnotation(make_smart<VkHandleAnnotation<VkSwapchainKHR>>("VkSwapchainKHR", "VkSwapchainKHR"));
 
     //
     // structs

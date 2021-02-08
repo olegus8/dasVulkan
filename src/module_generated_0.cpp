@@ -1058,8 +1058,8 @@ void addVulkanGenerated_0(Module & module, ModuleLibrary & lib) {{
     // opaque structs
     //
 
-    addAnnotation(make_smart<VkHandleAnnotation<VkBuffer>>("VkBuffer", "VkBuffer"));
-    addAnnotation(make_smart<VkHandleAnnotation<VkImage>>("VkImage", "VkImage"));
+    module.addAnnotation(make_smart<VkHandleAnnotation<VkBuffer>>("VkBuffer", "VkBuffer"));
+    module.addAnnotation(make_smart<VkHandleAnnotation<VkImage>>("VkImage", "VkImage"));
 
     //
     // structs

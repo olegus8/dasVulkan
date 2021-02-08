@@ -927,9 +927,9 @@ void addVulkanGenerated_11(Module & module, ModuleLibrary & lib) {{
     // opaque structs
     //
 
-    addAnnotation(make_smart<VkHandleAnnotation<VkDisplayKHR>>("VkDisplayKHR", "VkDisplayKHR"));
-    addAnnotation(make_smart<VkHandleAnnotation<VkDisplayModeKHR>>("VkDisplayModeKHR", "VkDisplayModeKHR"));
-    addAnnotation(make_smart<VkHandleAnnotation<VkDeferredOperationKHR>>("VkDeferredOperationKHR", "VkDeferredOperationKHR"));
+    module.addAnnotation(make_smart<VkHandleAnnotation<VkDisplayKHR>>("VkDisplayKHR", "VkDisplayKHR"));
+    module.addAnnotation(make_smart<VkHandleAnnotation<VkDisplayModeKHR>>("VkDisplayModeKHR", "VkDisplayModeKHR"));
+    module.addAnnotation(make_smart<VkHandleAnnotation<VkDeferredOperationKHR>>("VkDeferredOperationKHR", "VkDeferredOperationKHR"));
 
     //
     // structs

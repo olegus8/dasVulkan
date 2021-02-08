@@ -895,9 +895,9 @@ void addVulkanGenerated_4(Module & module, ModuleLibrary & lib) {{
     // opaque structs
     //
 
-    addAnnotation(make_smart<VkHandleAnnotation<VkEvent>>("VkEvent", "VkEvent"));
-    addAnnotation(make_smart<VkHandleAnnotation<VkQueryPool>>("VkQueryPool", "VkQueryPool"));
-    addAnnotation(make_smart<VkHandleAnnotation<VkBufferView>>("VkBufferView", "VkBufferView"));
+    module.addAnnotation(make_smart<VkHandleAnnotation<VkEvent>>("VkEvent", "VkEvent"));
+    module.addAnnotation(make_smart<VkHandleAnnotation<VkQueryPool>>("VkQueryPool", "VkQueryPool"));
+    module.addAnnotation(make_smart<VkHandleAnnotation<VkBufferView>>("VkBufferView", "VkBufferView"));
 
     //
     // structs

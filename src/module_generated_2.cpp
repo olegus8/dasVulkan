@@ -981,9 +981,9 @@ void addVulkanGenerated_2(Module & module, ModuleLibrary & lib) {{
     // opaque structs
     //
 
-    addAnnotation(make_smart<VkHandleAnnotation<VkQueue>>("VkQueue", "VkQueue"));
-    addAnnotation(make_smart<VkHandleAnnotation<VkSemaphore>>("VkSemaphore", "VkSemaphore"));
-    addAnnotation(make_smart<VkHandleAnnotation<VkCommandBuffer>>("VkCommandBuffer", "VkCommandBuffer"));
+    module.addAnnotation(make_smart<VkHandleAnnotation<VkQueue>>("VkQueue", "VkQueue"));
+    module.addAnnotation(make_smart<VkHandleAnnotation<VkSemaphore>>("VkSemaphore", "VkSemaphore"));
+    module.addAnnotation(make_smart<VkHandleAnnotation<VkCommandBuffer>>("VkCommandBuffer", "VkCommandBuffer"));
 
     //
     // structs

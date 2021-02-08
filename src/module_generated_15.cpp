@@ -955,9 +955,9 @@ void addVulkanGenerated_15(Module & module, ModuleLibrary & lib) {{
     // opaque structs
     //
 
-    addAnnotation(make_smart<VkHandleAnnotation<GLFWmonitor_DasHandle>>("GLFWmonitor_DasHandle", "GLFWmonitor_DasHandle"));
-    addAnnotation(make_smart<VkHandleAnnotation<GLFWwindow_DasHandle>>("GLFWwindow_DasHandle", "GLFWwindow_DasHandle"));
-    addAnnotation(make_smart<VkHandleAnnotation<GLFWcursor_DasHandle>>("GLFWcursor_DasHandle", "GLFWcursor_DasHandle"));
+    module.addAnnotation(make_smart<VkHandleAnnotation<GLFWmonitor_DasHandle>>("GLFWmonitor_DasHandle", "GLFWmonitor_DasHandle"));
+    module.addAnnotation(make_smart<VkHandleAnnotation<GLFWwindow_DasHandle>>("GLFWwindow_DasHandle", "GLFWwindow_DasHandle"));
+    module.addAnnotation(make_smart<VkHandleAnnotation<GLFWcursor_DasHandle>>("GLFWcursor_DasHandle", "GLFWcursor_DasHandle"));
 
     //
     // structs

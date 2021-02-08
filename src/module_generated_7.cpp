@@ -896,9 +896,9 @@ void addVulkanGenerated_7(Module & module, ModuleLibrary & lib) {{
     // opaque structs
     //
 
-    addAnnotation(make_smart<VkHandleAnnotation<VkRenderPass>>("VkRenderPass", "VkRenderPass"));
-    addAnnotation(make_smart<VkHandleAnnotation<VkDescriptorSetLayout>>("VkDescriptorSetLayout", "VkDescriptorSetLayout"));
-    addAnnotation(make_smart<VkHandleAnnotation<VkSampler>>("VkSampler", "VkSampler"));
+    module.addAnnotation(make_smart<VkHandleAnnotation<VkRenderPass>>("VkRenderPass", "VkRenderPass"));
+    module.addAnnotation(make_smart<VkHandleAnnotation<VkDescriptorSetLayout>>("VkDescriptorSetLayout", "VkDescriptorSetLayout"));
+    module.addAnnotation(make_smart<VkHandleAnnotation<VkSampler>>("VkSampler", "VkSampler"));
 
     //
     // structs

@@ -889,8 +889,8 @@ void addVulkanGenerated_12(Module & module, ModuleLibrary & lib) {{
     // opaque structs
     //
 
-    addAnnotation(make_smart<VkHandleAnnotation<VkDebugReportCallbackEXT>>("VkDebugReportCallbackEXT", "VkDebugReportCallbackEXT"));
-    addAnnotation(make_smart<VkHandleAnnotation<VkDebugUtilsMessengerEXT>>("VkDebugUtilsMessengerEXT", "VkDebugUtilsMessengerEXT"));
+    module.addAnnotation(make_smart<VkHandleAnnotation<VkDebugReportCallbackEXT>>("VkDebugReportCallbackEXT", "VkDebugReportCallbackEXT"));
+    module.addAnnotation(make_smart<VkHandleAnnotation<VkDebugUtilsMessengerEXT>>("VkDebugUtilsMessengerEXT", "VkDebugUtilsMessengerEXT"));
 
     //
     // structs

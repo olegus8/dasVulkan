@@ -893,8 +893,8 @@ void addVulkanGenerated_3(Module & module, ModuleLibrary & lib) {{
     // opaque structs
     //
 
-    addAnnotation(make_smart<VkHandleAnnotation<VkFence>>("VkFence", "VkFence"));
-    addAnnotation(make_smart<VkHandleAnnotation<VkDeviceMemory>>("VkDeviceMemory", "VkDeviceMemory"));
+    module.addAnnotation(make_smart<VkHandleAnnotation<VkFence>>("VkFence", "VkFence"));
+    module.addAnnotation(make_smart<VkHandleAnnotation<VkDeviceMemory>>("VkDeviceMemory", "VkDeviceMemory"));
 
     //
     // structs

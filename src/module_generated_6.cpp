@@ -908,8 +908,8 @@ void addVulkanGenerated_6(Module & module, ModuleLibrary & lib) {{
     // opaque structs
     //
 
-    addAnnotation(make_smart<VkHandleAnnotation<VkPipelineLayout>>("VkPipelineLayout", "VkPipelineLayout"));
-    addAnnotation(make_smart<VkHandleAnnotation<VkPipeline>>("VkPipeline", "VkPipeline"));
+    module.addAnnotation(make_smart<VkHandleAnnotation<VkPipelineLayout>>("VkPipelineLayout", "VkPipelineLayout"));
+    module.addAnnotation(make_smart<VkHandleAnnotation<VkPipeline>>("VkPipeline", "VkPipeline"));
 
     //
     // structs
