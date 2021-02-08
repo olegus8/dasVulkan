@@ -2,7 +2,7 @@
 #pragma once
 
 #include "headers_to_bind.h"
-#include "daScript.h"
+#include "daScript/daScript.h"
 
 //
 // enums
