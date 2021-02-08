@@ -920,7 +920,7 @@ struct VkDedicatedAllocationImageCreateInfoNVAnnotation
     }
 };
 
-void addVulkanGenerated_8(Module & module, ModuleLibrary & lib) {{
+void addVulkanGenerated_8(Module & module, ModuleLibrary & lib) {
 
     //
     // enums

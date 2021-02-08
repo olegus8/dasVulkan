@@ -869,7 +869,7 @@ struct VkViewportSwizzleNVAnnotation
     }
 };
 
-void addVulkanGenerated_9(Module & module, ModuleLibrary & lib) {{
+void addVulkanGenerated_9(Module & module, ModuleLibrary & lib) {
 
     //
     // enums

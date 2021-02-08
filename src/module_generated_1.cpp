@@ -918,7 +918,7 @@ struct VkPipelineRasterizationStateCreateInfoAnnotation
     }
 };
 
-void addVulkanGenerated_1(Module & module, ModuleLibrary & lib) {{
+void addVulkanGenerated_1(Module & module, ModuleLibrary & lib) {
 
     //
     // enums

@@ -927,7 +927,7 @@ struct VkDrmFormatModifierPropertiesListEXTAnnotation
     }
 };
 
-void addVulkanGenerated_10(Module & module, ModuleLibrary & lib) {{
+void addVulkanGenerated_10(Module & module, ModuleLibrary & lib) {
 
     //
     // enums

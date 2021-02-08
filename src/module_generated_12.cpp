@@ -867,7 +867,7 @@ struct VkSwapchainDisplayNativeHdrCreateInfoAMDAnnotation
     }
 };
 
-void addVulkanGenerated_12(Module & module, ModuleLibrary & lib) {{
+void addVulkanGenerated_12(Module & module, ModuleLibrary & lib) {
 
     //
     // enums
