@@ -46,11 +46,6 @@ IF(NOT DAS_VULKAN_INCLUDED)
             ${DAS_VULKAN_DIR}/src/module_generated
         )
 
-        #TODO: DO NOT COMMIT!!!
-        #TODO: DO NOT COMMIT!!!
-        #TODO: DO NOT COMMIT!!!
-        MESSAGE(STATUS "DAS_VULKAN_GENERATED_CPP=${DAS_VULKAN_GENERATED_CPP}")
-
         SET(DAS_VULKAN_MODULE_SRC
             ${DAS_VULKAN_DIR}/daslib/internal/generated.das
             ${DAS_VULKAN_DIR}/include/dasVulkan/headers_to_bind.h
