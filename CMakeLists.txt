@@ -46,6 +46,11 @@ IF(NOT DAS_VULKAN_INCLUDED)
             ${DAS_VULKAN_DIR}/src/module_generated
         )
 
+        #TODO: DO NOT COMMIT!!!
+        #TODO: DO NOT COMMIT!!!
+        #TODO: DO NOT COMMIT!!!
+        MESSAGE(STATUS "DAS_VULKAN_GENERATED_CPP=${DAS_VULKAN_GENERATED_CPP}")
+
         SET(DAS_VULKAN_MODULE_SRC
             ${DAS_VULKAN_DIR}/daslib/internal/generated.das
             ${DAS_VULKAN_DIR}/include/dasVulkan/headers_to_bind.h
@@ -84,10 +89,6 @@ IF(NOT DAS_VULKAN_INCLUDED)
         )
         ADD_DEPENDENCIES(dasVulkanExample daScript)
         GET_TARGET_PROPERTY(DAS_VULKAN_INCLUDE_DIRS libDasModuleVulkan INCLUDE_DIRECTORIES)
-        LIST(APPEND DAS_VULKAN_INCLUDE_DIRS
-            ${Vulkan_INCLUDE_DIR}
-            ${glfw_INCLUDE_DIR}
-        )
 
         SET(DAS_VULKAN_HEADERS_TO_BIND
             ${DAS_VULKAN_DIR}/include/dasVulkan/headers_to_bind.h
@@ -101,11 +102,6 @@ IF(NOT DAS_VULKAN_INCLUDED)
             ${DAS_VULKAN_DIR}/daslib/internal/generated.das
             ${DAS_VULKAN_DIR}/src/module_boost_generated.inc
         )
-
-        #TODO: DO NOT COMMIT!!!
-        #TODO: DO NOT COMMIT!!!
-        #TODO: DO NOT COMMIT!!!
-        MESSAGE(STATUS "DAS_VULKAN_GENERATED_CPP=${DAS_VULKAN_GENERATED_CPP}")
 
         DAS_BINDER(
             ${DAS_VULKAN_NUM_PARTS}
