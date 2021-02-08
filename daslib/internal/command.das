@@ -21,6 +21,13 @@ def allocate_command_buffers_primary(
         ]])
 
 
+def allocate_command_buffer_primary(
+    device : Device;
+    pool : CommandPool
+) : CommandBuffers
+    return <- device |> allocate_command_buffers_primary(pool, 1)
+
+
 def create_command_pool(
     device : Device;
     queue_family : uint;

@@ -26,3 +26,12 @@ def wait_for_fence(
     defer() <| ${ delete fences; }
     wait_for_fences([
         device=device, fences=fences, timeout=timeout, result=result])
+
+
+def fence_signalled(device : Device; fence : Fence) : bool
+    var result : VkResult
+    var p_result : VkResult ?
+    unsafe
+        p_result = addr(result)
+    device |> wait_for_fence(fence, uint64(0), p_result)
+    return result == VkResult VK_SUCCESS
