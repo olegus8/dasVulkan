@@ -933,12 +933,7 @@ struct GLFWgamepadstateAnnotation
     }
 };
 
-void addVulkanGenerated_15(Module & module, ModuleLibrary & lib) {
-
-    //
-    // enums
-    //
-
+void addVulkanGeneratedEnums_15(Module & module, ModuleLibrary & lib) {
     module.addEnumeration(make_smart<EnumerationVkIndirectCommandsLayoutUsageFlagBitsNV>());
     module.addEnumeration(make_smart<EnumerationVkDeviceMemoryReportEventTypeEXT>());
     module.addEnumeration(make_smart<EnumerationVkPrivateDataSlotCreateFlagBitsEXT>());
@@ -950,19 +945,15 @@ void addVulkanGenerated_15(Module & module, ModuleLibrary & lib) {
     module.addEnumeration(make_smart<EnumerationVkAccelerationStructureCompatibilityKHR>());
     module.addEnumeration(make_smart<EnumerationVkAccelerationStructureCreateFlagBitsKHR>());
     module.addEnumeration(make_smart<EnumerationVkShaderGroupShaderKHR>());
+}
 
-    //
-    // opaque structs
-    //
-
+void addVulkanGeneratedOpaqueStructs_15(Module & module, ModuleLibrary & lib) {
     module.addAnnotation(make_smart<VkHandleAnnotation<GLFWmonitor_DasHandle>>("GLFWmonitor_DasHandle", "GLFWmonitor_DasHandle"));
     module.addAnnotation(make_smart<VkHandleAnnotation<GLFWwindow_DasHandle>>("GLFWwindow_DasHandle", "GLFWwindow_DasHandle"));
     module.addAnnotation(make_smart<VkHandleAnnotation<GLFWcursor_DasHandle>>("GLFWcursor_DasHandle", "GLFWcursor_DasHandle"));
+}
 
-    //
-    // structs
-    //
-
+void addVulkanGeneratedStructs_15(Module & module, ModuleLibrary & lib) {
     module.addAnnotation(make_smart<VkPhysicalDeviceFragmentDensityMap2PropertiesEXTAnnotation>(lib));
     module.addAnnotation(make_smart<VkCopyCommandTransformInfoQCOMAnnotation>(lib));
     module.addAnnotation(make_smart<VkPhysicalDeviceImageRobustnessFeaturesEXTAnnotation>(lib));
@@ -998,11 +989,9 @@ void addVulkanGenerated_15(Module & module, ModuleLibrary & lib) {
     module.addAnnotation(make_smart<GLFWgammarampAnnotation>(lib));
     module.addAnnotation(make_smart<GLFWimageAnnotation>(lib));
     module.addAnnotation(make_smart<GLFWgamepadstateAnnotation>(lib));
+}
 
-    //
-    // functions
-    //
-
+void addVulkanGeneratedFunctions_15(Module & module, ModuleLibrary & lib) {
     addExtern<DAS_BIND_FUN(glfwUpdateGamepadMappings)>(module, lib, "glfwUpdateGamepadMappings",
         SideEffects::worstDefault, "glfwUpdateGamepadMappings");
     addExtern<DAS_BIND_FUN(glfwGetGamepadName)>(module, lib, "glfwGetGamepadName",
@@ -1039,11 +1028,9 @@ void addVulkanGenerated_15(Module & module, ModuleLibrary & lib) {
         SideEffects::worstDefault, "glfwGetPhysicalDevicePresentationSupport");
     addExtern<DAS_BIND_FUN(glfwCreateWindowSurface)>(module, lib, "glfwCreateWindowSurface",
         SideEffects::worstDefault, "glfwCreateWindowSurface");
+}
 
-    //
-    // macro constants
-    //
-
+void addVulkanGeneratedConsts_15(Module & module, ModuleLibrary & lib) {
     addConstant(module, "VK_EXT_host_query_reset", 1);
     addConstant(module, "VK_EXT_HOST_QUERY_RESET_SPEC_VERSION", 1);
     addConstant(module, "VK_EXT_index_type_uint8", 1);
@@ -1090,4 +1077,4 @@ void addVulkanGenerated_15(Module & module, ModuleLibrary & lib) {
     addConstant(module, "VK_KHR_RAY_TRACING_PIPELINE_SPEC_VERSION", 1);
     addConstant(module, "VK_KHR_ray_query", 1);
     addConstant(module, "VK_KHR_RAY_QUERY_SPEC_VERSION", 1);
-};
+}

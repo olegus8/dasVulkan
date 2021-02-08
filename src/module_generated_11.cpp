@@ -905,12 +905,7 @@ struct VkImportMemoryHostPointerInfoEXTAnnotation
     }
 };
 
-void addVulkanGenerated_11(Module & module, ModuleLibrary & lib) {
-
-    //
-    // enums
-    //
-
+void addVulkanGeneratedEnums_11(Module & module, ModuleLibrary & lib) {
     module.addEnumeration(make_smart<EnumerationVkValidationCheckEXT>());
     module.addEnumeration(make_smart<EnumerationVkConditionalRenderingFlagBitsEXT>());
     module.addEnumeration(make_smart<EnumerationVkSurfaceCounterFlagBitsEXT>());
@@ -922,19 +917,15 @@ void addVulkanGenerated_11(Module & module, ModuleLibrary & lib) {
     module.addEnumeration(make_smart<EnumerationVkConservativeRasterizationModeEXT>());
     module.addEnumeration(make_smart<EnumerationVkDebugUtilsMessageSeverityFlagBitsEXT>());
     module.addEnumeration(make_smart<EnumerationVkDebugUtilsMessageTypeFlagBitsEXT>());
+}
 
-    //
-    // opaque structs
-    //
-
+void addVulkanGeneratedOpaqueStructs_11(Module & module, ModuleLibrary & lib) {
     module.addAnnotation(make_smart<VkHandleAnnotation<VkDisplayKHR>>("VkDisplayKHR", "VkDisplayKHR"));
     module.addAnnotation(make_smart<VkHandleAnnotation<VkDisplayModeKHR>>("VkDisplayModeKHR", "VkDisplayModeKHR"));
     module.addAnnotation(make_smart<VkHandleAnnotation<VkDeferredOperationKHR>>("VkDeferredOperationKHR", "VkDeferredOperationKHR"));
+}
 
-    //
-    // structs
-    //
-
+void addVulkanGeneratedStructs_11(Module & module, ModuleLibrary & lib) {
     module.addAnnotation(make_smart<VkPhysicalDeviceImageDrmFormatModifierInfoEXTAnnotation>(lib));
     module.addAnnotation(make_smart<VkImageDrmFormatModifierListCreateInfoEXTAnnotation>(lib));
     module.addAnnotation(make_smart<VkImageDrmFormatModifierExplicitCreateInfoEXTAnnotation>(lib));
@@ -989,11 +980,9 @@ void addVulkanGenerated_11(Module & module, ModuleLibrary & lib) {
     module.addAnnotation(make_smart<VkFilterCubicImageViewImageFormatPropertiesEXTAnnotation>(lib));
     module.addAnnotation(make_smart<VkDeviceQueueGlobalPriorityCreateInfoEXTAnnotation>(lib));
     module.addAnnotation(make_smart<VkImportMemoryHostPointerInfoEXTAnnotation>(lib));
+}
 
-    //
-    // functions
-    //
-
+void addVulkanGeneratedFunctions_11(Module & module, ModuleLibrary & lib) {
     addExtern<DAS_BIND_FUN(glfwGetError)>(module, lib, "glfwGetError",
         SideEffects::worstDefault, "glfwGetError");
     addExtern<DAS_BIND_FUN(glfwGetMonitors)>(module, lib, "glfwGetMonitors",
@@ -1030,11 +1019,9 @@ void addVulkanGenerated_11(Module & module, ModuleLibrary & lib) {
         SideEffects::worstDefault, "glfwWindowHint");
     addExtern<DAS_BIND_FUN(glfwWindowHintString)>(module, lib, "glfwWindowHintString",
         SideEffects::worstDefault, "glfwWindowHintString");
+}
 
-    //
-    // macro constants
-    //
-
+void addVulkanGeneratedConsts_11(Module & module, ModuleLibrary & lib) {
     addConstant(module, "VK_NV_external_memory", 1);
     addConstant(module, "VK_NV_EXTERNAL_MEMORY_SPEC_VERSION", 1);
     addConstant(module, "VK_EXT_validation_flags", 1);
@@ -1080,4 +1067,4 @@ void addVulkanGenerated_11(Module & module, ModuleLibrary & lib) {
     addConstant(module, "VK_EXT_hdr_metadata", 1);
     addConstant(module, "VK_EXT_HDR_METADATA_SPEC_VERSION", 2);
     addConstant(module, "VK_EXT_external_memory_dma_buf", 1);
-};
+}

@@ -918,12 +918,7 @@ struct VkPipelineRasterizationStateCreateInfoAnnotation
     }
 };
 
-void addVulkanGenerated_1(Module & module, ModuleLibrary & lib) {
-
-    //
-    // enums
-    //
-
+void addVulkanGeneratedEnums_1(Module & module, ModuleLibrary & lib) {
     module.addEnumeration(make_smart<EnumerationVkPhysicalDeviceType>());
     module.addEnumeration(make_smart<EnumerationVkQueryType>());
     module.addEnumeration(make_smart<EnumerationVkSharingMode>());
@@ -935,19 +930,15 @@ void addVulkanGenerated_1(Module & module, ModuleLibrary & lib) {
     module.addEnumeration(make_smart<EnumerationVkDynamicState>());
     module.addEnumeration(make_smart<EnumerationVkFrontFace>());
     module.addEnumeration(make_smart<EnumerationVkVertexInputRate>());
+}
 
-    //
-    // opaque structs
-    //
-
+void addVulkanGeneratedOpaqueStructs_1(Module & module, ModuleLibrary & lib) {
     module.addAnnotation(make_smart<VkHandleAnnotation<VkInstance>>("VkInstance", "VkInstance"));
     module.addAnnotation(make_smart<VkHandleAnnotation<VkPhysicalDevice>>("VkPhysicalDevice", "VkPhysicalDevice"));
     module.addAnnotation(make_smart<VkHandleAnnotation<VkDevice>>("VkDevice", "VkDevice"));
+}
 
-    //
-    // structs
-    //
-
+void addVulkanGeneratedStructs_1(Module & module, ModuleLibrary & lib) {
     module.addAnnotation(make_smart<VkMemoryRequirementsAnnotation>(lib));
     module.addAnnotation(make_smart<VkSparseMemoryBindAnnotation>(lib));
     module.addAnnotation(make_smart<VkSparseBufferMemoryBindInfoAnnotation>(lib));
@@ -982,11 +973,9 @@ void addVulkanGenerated_1(Module & module, ModuleLibrary & lib) {
     module.addAnnotation(make_smart<VkViewportAnnotation>(lib));
     module.addAnnotation(make_smart<VkPipelineViewportStateCreateInfoAnnotation>(lib));
     module.addAnnotation(make_smart<VkPipelineRasterizationStateCreateInfoAnnotation>(lib));
+}
 
-    //
-    // functions
-    //
-
+void addVulkanGeneratedFunctions_1(Module & module, ModuleLibrary & lib) {
     addExtern<DAS_BIND_FUN(vkQueueWaitIdle)>(module, lib, "vkQueueWaitIdle",
         SideEffects::worstDefault, "vkQueueWaitIdle");
     addExtern<DAS_BIND_FUN(vkDeviceWaitIdle)>(module, lib, "vkDeviceWaitIdle",
@@ -1023,11 +1012,9 @@ void addVulkanGenerated_1(Module & module, ModuleLibrary & lib) {
         SideEffects::worstDefault, "vkCreateFence");
     addExtern<DAS_BIND_FUN(vkDestroyFence)>(module, lib, "vkDestroyFence",
         SideEffects::worstDefault, "vkDestroyFence");
+}
 
-    //
-    // macro constants
-    //
-
+void addVulkanGeneratedConsts_1(Module & module, ModuleLibrary & lib) {
     addConstant(module, "GLFW_KEY_J", 74);
     addConstant(module, "GLFW_KEY_K", 75);
     addConstant(module, "GLFW_KEY_L", 76);
@@ -1073,4 +1060,4 @@ void addVulkanGenerated_1(Module & module, ModuleLibrary & lib) {
     addConstant(module, "GLFW_KEY_F1", 290);
     addConstant(module, "GLFW_KEY_F2", 291);
     addConstant(module, "GLFW_KEY_F3", 292);
-};
+}

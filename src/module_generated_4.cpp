@@ -873,12 +873,7 @@ struct VkExternalFencePropertiesAnnotation
     }
 };
 
-void addVulkanGenerated_4(Module & module, ModuleLibrary & lib) {
-
-    //
-    // enums
-    //
-
+void addVulkanGeneratedEnums_4(Module & module, ModuleLibrary & lib) {
     module.addEnumeration(make_smart<EnumerationVkMemoryPropertyFlagBits>());
     module.addEnumeration(make_smart<EnumerationVkQueueFlagBits>());
     module.addEnumeration(make_smart<EnumerationVkDeviceQueueCreateFlagBits>());
@@ -890,19 +885,15 @@ void addVulkanGenerated_4(Module & module, ModuleLibrary & lib) {
     module.addEnumeration(make_smart<EnumerationVkQueryResultFlagBits>());
     module.addEnumeration(make_smart<EnumerationVkBufferCreateFlagBits>());
     module.addEnumeration(make_smart<EnumerationVkBufferUsageFlagBits>());
+}
 
-    //
-    // opaque structs
-    //
-
+void addVulkanGeneratedOpaqueStructs_4(Module & module, ModuleLibrary & lib) {
     module.addAnnotation(make_smart<VkHandleAnnotation<VkEvent>>("VkEvent", "VkEvent"));
     module.addAnnotation(make_smart<VkHandleAnnotation<VkQueryPool>>("VkQueryPool", "VkQueryPool"));
     module.addAnnotation(make_smart<VkHandleAnnotation<VkBufferView>>("VkBufferView", "VkBufferView"));
+}
 
-    //
-    // structs
-    //
-
+void addVulkanGeneratedStructs_4(Module & module, ModuleLibrary & lib) {
     module.addAnnotation(make_smart<VkSparseImageFormatProperties2Annotation>(lib));
     module.addAnnotation(make_smart<VkPhysicalDeviceSparseImageFormatInfo2Annotation>(lib));
     module.addAnnotation(make_smart<VkPhysicalDevicePointClippingPropertiesAnnotation>(lib));
@@ -937,11 +928,9 @@ void addVulkanGenerated_4(Module & module, ModuleLibrary & lib) {
     module.addAnnotation(make_smart<VkExportMemoryAllocateInfoAnnotation>(lib));
     module.addAnnotation(make_smart<VkPhysicalDeviceExternalFenceInfoAnnotation>(lib));
     module.addAnnotation(make_smart<VkExternalFencePropertiesAnnotation>(lib));
+}
 
-    //
-    // functions
-    //
-
+void addVulkanGeneratedFunctions_4(Module & module, ModuleLibrary & lib) {
     addExtern<DAS_BIND_FUN(vkCreateDescriptorSetLayout)>(module, lib, "vkCreateDescriptorSetLayout",
         SideEffects::worstDefault, "vkCreateDescriptorSetLayout");
     addExtern<DAS_BIND_FUN(vkDestroyDescriptorSetLayout)>(module, lib, "vkDestroyDescriptorSetLayout",
@@ -978,11 +967,9 @@ void addVulkanGenerated_4(Module & module, ModuleLibrary & lib) {
         SideEffects::worstDefault, "vkAllocateCommandBuffers");
     addExtern<DAS_BIND_FUN(vkFreeCommandBuffers)>(module, lib, "vkFreeCommandBuffers",
         SideEffects::worstDefault, "vkFreeCommandBuffers");
+}
 
-    //
-    // macro constants
-    //
-
+void addVulkanGeneratedConsts_4(Module & module, ModuleLibrary & lib) {
     addConstant(module, "GLFW_GAMEPAD_BUTTON_START", 7);
     addConstant(module, "GLFW_GAMEPAD_BUTTON_GUIDE", 8);
     addConstant(module, "GLFW_GAMEPAD_BUTTON_LEFT_THUMB", 9);
@@ -1028,4 +1015,4 @@ void addVulkanGenerated_4(Module & module, ModuleLibrary & lib) {
     addConstant(module, "GLFW_FOCUS_ON_SHOW", 0x0002000C);
     addConstant(module, "GLFW_RED_BITS", 0x00021001);
     addConstant(module, "GLFW_GREEN_BITS", 0x00021002);
-};
+}

@@ -893,12 +893,7 @@ struct VkPhysicalDeviceDeviceGeneratedCommandsPropertiesNVAnnotation
     }
 };
 
-void addVulkanGenerated_13(Module & module, ModuleLibrary & lib) {
-
-    //
-    // enums
-    //
-
+void addVulkanGeneratedEnums_13(Module & module, ModuleLibrary & lib) {
     module.addEnumeration(make_smart<EnumerationVkGeometryInstanceFlagBitsKHR>());
     module.addEnumeration(make_smart<EnumerationVkBuildAccelerationStructureFlagBitsKHR>());
     module.addEnumeration(make_smart<EnumerationVkQueueGlobalPriorityEXT>());
@@ -910,19 +905,15 @@ void addVulkanGenerated_13(Module & module, ModuleLibrary & lib) {
     module.addEnumeration(make_smart<EnumerationVkQueryPoolSamplingModeINTEL>());
     module.addEnumeration(make_smart<EnumerationVkPerformanceOverrideTypeINTEL>());
     module.addEnumeration(make_smart<EnumerationVkPerformanceParameterTypeINTEL>());
+}
 
-    //
-    // opaque structs
-    //
-
+void addVulkanGeneratedOpaqueStructs_13(Module & module, ModuleLibrary & lib) {
     module.addAnnotation(make_smart<VkHandleAnnotation<VkValidationCacheEXT>>("VkValidationCacheEXT", "VkValidationCacheEXT"));
     module.addAnnotation(make_smart<VkHandleAnnotation<VkAccelerationStructureNV>>("VkAccelerationStructureNV", "VkAccelerationStructureNV"));
     module.addAnnotation(make_smart<VkHandleAnnotation<VkPerformanceConfigurationINTEL>>("VkPerformanceConfigurationINTEL", "VkPerformanceConfigurationINTEL"));
+}
 
-    //
-    // structs
-    //
-
+void addVulkanGeneratedStructs_13(Module & module, ModuleLibrary & lib) {
     module.addAnnotation(make_smart<VkPhysicalDeviceFragmentDensityMapFeaturesEXTAnnotation>(lib));
     module.addAnnotation(make_smart<VkPhysicalDeviceFragmentDensityMapPropertiesEXTAnnotation>(lib));
     module.addAnnotation(make_smart<VkRenderPassFragmentDensityMapCreateInfoEXTAnnotation>(lib));
@@ -957,11 +948,9 @@ void addVulkanGenerated_13(Module & module, ModuleLibrary & lib) {
     module.addAnnotation(make_smart<VkPhysicalDeviceExtendedDynamicStateFeaturesEXTAnnotation>(lib));
     module.addAnnotation(make_smart<VkPhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXTAnnotation>(lib));
     module.addAnnotation(make_smart<VkPhysicalDeviceDeviceGeneratedCommandsPropertiesNVAnnotation>(lib));
+}
 
-    //
-    // functions
-    //
-
+void addVulkanGeneratedFunctions_13(Module & module, ModuleLibrary & lib) {
     addExtern<DAS_BIND_FUN(glfwShowWindow)>(module, lib, "glfwShowWindow",
         SideEffects::worstDefault, "glfwShowWindow");
     addExtern<DAS_BIND_FUN(glfwHideWindow)>(module, lib, "glfwHideWindow",
@@ -996,11 +985,9 @@ void addVulkanGenerated_13(Module & module, ModuleLibrary & lib) {
         SideEffects::worstDefault, "glfwRawMouseMotionSupported");
     addExtern<DAS_BIND_FUN(glfwGetKeyName)>(module, lib, "glfwGetKeyName",
         SideEffects::worstDefault, "glfwGetKeyName");
+}
 
-    //
-    // macro constants
-    //
-
+void addVulkanGeneratedConsts_13(Module & module, ModuleLibrary & lib) {
     addConstant(module, "VK_NV_representative_fragment_test", 1);
     addConstant(module, "VK_NV_REPRESENTATIVE_FRAGMENT_TEST_SPEC_VERSION", 2);
     addConstant(module, "VK_EXT_filter_cubic", 1);
@@ -1046,4 +1033,4 @@ void addVulkanGenerated_13(Module & module, ModuleLibrary & lib) {
     addConstant(module, "VK_EXT_pci_bus_info", 1);
     addConstant(module, "VK_EXT_PCI_BUS_INFO_SPEC_VERSION", 2);
     addConstant(module, "VK_AMD_display_native_hdr", 1);
-};
+}

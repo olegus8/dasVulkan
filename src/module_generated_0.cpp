@@ -1036,12 +1036,7 @@ struct VkMemoryAllocateInfoAnnotation
     }
 };
 
-void addVulkanGenerated_0(Module & module, ModuleLibrary & lib) {
-
-    //
-    // enums
-    //
-
+void addVulkanGeneratedEnums_0(Module & module, ModuleLibrary & lib) {
     module.addEnumeration(make_smart<EnumerationVkResult>());
     module.addEnumeration(make_smart<EnumerationVkStructureType>());
     module.addEnumeration(make_smart<EnumerationVkImageLayout>());
@@ -1053,18 +1048,14 @@ void addVulkanGenerated_0(Module & module, ModuleLibrary & lib) {
     module.addEnumeration(make_smart<EnumerationVkFormat>());
     module.addEnumeration(make_smart<EnumerationVkImageTiling>());
     module.addEnumeration(make_smart<EnumerationVkImageType>());
+}
 
-    //
-    // opaque structs
-    //
-
+void addVulkanGeneratedOpaqueStructs_0(Module & module, ModuleLibrary & lib) {
     module.addAnnotation(make_smart<VkHandleAnnotation<VkBuffer>>("VkBuffer", "VkBuffer"));
     module.addAnnotation(make_smart<VkHandleAnnotation<VkImage>>("VkImage", "VkImage"));
+}
 
-    //
-    // structs
-    //
-
+void addVulkanGeneratedStructs_0(Module & module, ModuleLibrary & lib) {
     module.addAnnotation(make_smart<VkExtent2DAnnotation>(lib));
     module.addAnnotation(make_smart<VkExtent3DAnnotation>(lib));
     module.addAnnotation(make_smart<VkOffset2DAnnotation>(lib));
@@ -1099,11 +1090,9 @@ void addVulkanGenerated_0(Module & module, ModuleLibrary & lib) {
     module.addAnnotation(make_smart<VkSubmitInfoAnnotation>(lib));
     module.addAnnotation(make_smart<VkMappedMemoryRangeAnnotation>(lib));
     module.addAnnotation(make_smart<VkMemoryAllocateInfoAnnotation>(lib));
+}
 
-    //
-    // functions
-    //
-
+void addVulkanGeneratedFunctions_0(Module & module, ModuleLibrary & lib) {
     addExtern<DAS_BIND_FUN(vkCreateInstance)>(module, lib, "vkCreateInstance",
         SideEffects::worstDefault, "vkCreateInstance");
     addExtern<DAS_BIND_FUN(vkDestroyInstance)>(module, lib, "vkDestroyInstance",
@@ -1138,11 +1127,9 @@ void addVulkanGenerated_0(Module & module, ModuleLibrary & lib) {
         SideEffects::worstDefault, "vkGetDeviceQueue");
     addExtern<DAS_BIND_FUN(vkQueueSubmit)>(module, lib, "vkQueueSubmit",
         SideEffects::worstDefault, "vkQueueSubmit");
+}
 
-    //
-    // macro constants
-    //
-
+void addVulkanGeneratedConsts_0(Module & module, ModuleLibrary & lib) {
     addConstant(module, "GLFW_VERSION_MAJOR", 3);
     addConstant(module, "GLFW_VERSION_MINOR", 3);
     addConstant(module, "GLFW_VERSION_REVISION", 2);
@@ -1188,4 +1175,4 @@ void addVulkanGenerated_0(Module & module, ModuleLibrary & lib) {
     addConstant(module, "GLFW_KEY_G", 71);
     addConstant(module, "GLFW_KEY_H", 72);
     addConstant(module, "GLFW_KEY_I", 73);
-};
+}

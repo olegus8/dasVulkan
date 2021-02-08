@@ -869,12 +869,7 @@ struct VkViewportSwizzleNVAnnotation
     }
 };
 
-void addVulkanGenerated_9(Module & module, ModuleLibrary & lib) {
-
-    //
-    // enums
-    //
-
+void addVulkanGeneratedEnums_9(Module & module, ModuleLibrary & lib) {
     module.addEnumeration(make_smart<EnumerationVkDescriptorBindingFlagBits>());
     module.addEnumeration(make_smart<EnumerationVkSemaphoreWaitFlagBits>());
     module.addEnumeration(make_smart<EnumerationVkPresentModeKHR>());
@@ -886,18 +881,14 @@ void addVulkanGenerated_9(Module & module, ModuleLibrary & lib) {
     module.addEnumeration(make_smart<EnumerationVkDisplayPlaneAlphaFlagBitsKHR>());
     module.addEnumeration(make_smart<EnumerationVkPerformanceCounterUnitKHR>());
     module.addEnumeration(make_smart<EnumerationVkPerformanceCounterScopeKHR>());
+}
 
-    //
-    // opaque structs
-    //
-
+void addVulkanGeneratedOpaqueStructs_9(Module & module, ModuleLibrary & lib) {
     module.addAnnotation(make_smart<VkHandleAnnotation<VkCommandPool>>("VkCommandPool", "VkCommandPool"));
     module.addAnnotation(make_smart<VkHandleAnnotation<VkSamplerYcbcrConversion>>("VkSamplerYcbcrConversion", "VkSamplerYcbcrConversion"));
+}
 
-    //
-    // structs
-    //
-
+void addVulkanGeneratedStructs_9(Module & module, ModuleLibrary & lib) {
     module.addAnnotation(make_smart<VkDedicatedAllocationBufferCreateInfoNVAnnotation>(lib));
     module.addAnnotation(make_smart<VkDedicatedAllocationMemoryAllocateInfoNVAnnotation>(lib));
     module.addAnnotation(make_smart<VkPhysicalDeviceTransformFeedbackFeaturesEXTAnnotation>(lib));
@@ -932,11 +923,9 @@ void addVulkanGenerated_9(Module & module, ModuleLibrary & lib) {
     module.addAnnotation(make_smart<VkPresentTimesInfoGOOGLEAnnotation>(lib));
     module.addAnnotation(make_smart<VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVXAnnotation>(lib));
     module.addAnnotation(make_smart<VkViewportSwizzleNVAnnotation>(lib));
+}
 
-    //
-    // functions
-    //
-
+void addVulkanGeneratedFunctions_9(Module & module, ModuleLibrary & lib) {
     addExtern<DAS_BIND_FUN(vkUpdateDescriptorSetWithTemplate)>(module, lib, "vkUpdateDescriptorSetWithTemplate",
         SideEffects::worstDefault, "vkUpdateDescriptorSetWithTemplate");
     addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceExternalBufferProperties)>(module, lib, "vkGetPhysicalDeviceExternalBufferProperties",
@@ -973,11 +962,9 @@ void addVulkanGenerated_9(Module & module, ModuleLibrary & lib) {
         SideEffects::worstDefault, "vkGetBufferOpaqueCaptureAddress");
     addExtern<DAS_BIND_FUN(vkGetDeviceMemoryOpaqueCaptureAddress)>(module, lib, "vkGetDeviceMemoryOpaqueCaptureAddress",
         SideEffects::worstDefault, "vkGetDeviceMemoryOpaqueCaptureAddress");
+}
 
-    //
-    // macro constants
-    //
-
+void addVulkanGeneratedConsts_9(Module & module, ModuleLibrary & lib) {
     addConstant(module, "VK_KHR_DRAW_INDIRECT_COUNT_SPEC_VERSION", 1);
     addConstant(module, "VK_KHR_shader_subgroup_extended_types", 1);
     addConstant(module, "VK_KHR_SHADER_SUBGROUP_EXTENDED_TYPES_SPEC_VERSION", 1);
@@ -1024,4 +1011,4 @@ void addVulkanGenerated_9(Module & module, ModuleLibrary & lib) {
     addConstant(module, "VK_KHR_shader_non_semantic_info", 1);
     addConstant(module, "VK_KHR_SHADER_NON_SEMANTIC_INFO_SPEC_VERSION", 1);
     addConstant(module, "VK_KHR_copy_commands2", 1);
-};
+}

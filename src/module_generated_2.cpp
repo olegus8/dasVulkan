@@ -959,12 +959,7 @@ struct VkClearDepthStencilValueAnnotation
     }
 };
 
-void addVulkanGenerated_2(Module & module, ModuleLibrary & lib) {
-
-    //
-    // enums
-    //
-
+void addVulkanGeneratedEnums_2(Module & module, ModuleLibrary & lib) {
     module.addEnumeration(make_smart<EnumerationVkPrimitiveTopology>());
     module.addEnumeration(make_smart<EnumerationVkPolygonMode>());
     module.addEnumeration(make_smart<EnumerationVkStencilOp>());
@@ -976,19 +971,15 @@ void addVulkanGenerated_2(Module & module, ModuleLibrary & lib) {
     module.addEnumeration(make_smart<EnumerationVkDescriptorType>());
     module.addEnumeration(make_smart<EnumerationVkAttachmentLoadOp>());
     module.addEnumeration(make_smart<EnumerationVkAttachmentStoreOp>());
+}
 
-    //
-    // opaque structs
-    //
-
+void addVulkanGeneratedOpaqueStructs_2(Module & module, ModuleLibrary & lib) {
     module.addAnnotation(make_smart<VkHandleAnnotation<VkQueue>>("VkQueue", "VkQueue"));
     module.addAnnotation(make_smart<VkHandleAnnotation<VkSemaphore>>("VkSemaphore", "VkSemaphore"));
     module.addAnnotation(make_smart<VkHandleAnnotation<VkCommandBuffer>>("VkCommandBuffer", "VkCommandBuffer"));
+}
 
-    //
-    // structs
-    //
-
+void addVulkanGeneratedStructs_2(Module & module, ModuleLibrary & lib) {
     module.addAnnotation(make_smart<VkPipelineMultisampleStateCreateInfoAnnotation>(lib));
     module.addAnnotation(make_smart<VkStencilOpStateAnnotation>(lib));
     module.addAnnotation(make_smart<VkPipelineDepthStencilStateCreateInfoAnnotation>(lib));
@@ -1023,11 +1014,9 @@ void addVulkanGenerated_2(Module & module, ModuleLibrary & lib) {
     module.addAnnotation(make_smart<VkBufferImageCopyAnnotation>(lib));
     module.addAnnotation(make_smart<VkClearColorValueAnnotation>(lib));
     module.addAnnotation(make_smart<VkClearDepthStencilValueAnnotation>(lib));
+}
 
-    //
-    // functions
-    //
-
+void addVulkanGeneratedFunctions_2(Module & module, ModuleLibrary & lib) {
     addExtern<DAS_BIND_FUN(vkResetFences)>(module, lib, "vkResetFences",
         SideEffects::worstDefault, "vkResetFences");
     addExtern<DAS_BIND_FUN(vkGetFenceStatus)>(module, lib, "vkGetFenceStatus",
@@ -1062,11 +1051,9 @@ void addVulkanGenerated_2(Module & module, ModuleLibrary & lib) {
         SideEffects::worstDefault, "vkCreateBufferView");
     addExtern<DAS_BIND_FUN(vkDestroyBufferView)>(module, lib, "vkDestroyBufferView",
         SideEffects::worstDefault, "vkDestroyBufferView");
+}
 
-    //
-    // macro constants
-    //
-
+void addVulkanGeneratedConsts_2(Module & module, ModuleLibrary & lib) {
     addConstant(module, "GLFW_KEY_F4", 293);
     addConstant(module, "GLFW_KEY_F5", 294);
     addConstant(module, "GLFW_KEY_F6", 295);
@@ -1112,4 +1099,4 @@ void addVulkanGenerated_2(Module & module, ModuleLibrary & lib) {
     addConstant(module, "GLFW_KEY_LEFT_SUPER", 343);
     addConstant(module, "GLFW_KEY_RIGHT_SHIFT", 344);
     addConstant(module, "GLFW_KEY_RIGHT_CONTROL", 345);
-};
+}

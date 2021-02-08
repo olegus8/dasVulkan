@@ -871,12 +871,7 @@ struct VkPhysicalDeviceMemoryProperties2Annotation
     }
 };
 
-void addVulkanGenerated_3(Module & module, ModuleLibrary & lib) {
-
-    //
-    // enums
-    //
-
+void addVulkanGeneratedEnums_3(Module & module, ModuleLibrary & lib) {
     module.addEnumeration(make_smart<EnumerationVkPipelineBindPoint>());
     module.addEnumeration(make_smart<EnumerationVkCommandBufferLevel>());
     module.addEnumeration(make_smart<EnumerationVkIndexType>());
@@ -888,18 +883,14 @@ void addVulkanGenerated_3(Module & module, ModuleLibrary & lib) {
     module.addEnumeration(make_smart<EnumerationVkSampleCountFlagBits>());
     module.addEnumeration(make_smart<EnumerationVkImageUsageFlagBits>());
     module.addEnumeration(make_smart<EnumerationVkMemoryHeapFlagBits>());
+}
 
-    //
-    // opaque structs
-    //
-
+void addVulkanGeneratedOpaqueStructs_3(Module & module, ModuleLibrary & lib) {
     module.addAnnotation(make_smart<VkHandleAnnotation<VkFence>>("VkFence", "VkFence"));
     module.addAnnotation(make_smart<VkHandleAnnotation<VkDeviceMemory>>("VkDeviceMemory", "VkDeviceMemory"));
+}
 
-    //
-    // structs
-    //
-
+void addVulkanGeneratedStructs_3(Module & module, ModuleLibrary & lib) {
     module.addAnnotation(make_smart<VkClearValueAnnotation>(lib));
     module.addAnnotation(make_smart<VkClearAttachmentAnnotation>(lib));
     module.addAnnotation(make_smart<VkClearRectAnnotation>(lib));
@@ -934,11 +925,9 @@ void addVulkanGenerated_3(Module & module, ModuleLibrary & lib) {
     module.addAnnotation(make_smart<VkPhysicalDeviceImageFormatInfo2Annotation>(lib));
     module.addAnnotation(make_smart<VkQueueFamilyProperties2Annotation>(lib));
     module.addAnnotation(make_smart<VkPhysicalDeviceMemoryProperties2Annotation>(lib));
+}
 
-    //
-    // functions
-    //
-
+void addVulkanGeneratedFunctions_3(Module & module, ModuleLibrary & lib) {
     addExtern<DAS_BIND_FUN(vkCreateImage)>(module, lib, "vkCreateImage",
         SideEffects::worstDefault, "vkCreateImage");
     addExtern<DAS_BIND_FUN(vkDestroyImage)>(module, lib, "vkDestroyImage",
@@ -975,11 +964,9 @@ void addVulkanGenerated_3(Module & module, ModuleLibrary & lib) {
         SideEffects::worstDefault, "vkCreateSampler");
     addExtern<DAS_BIND_FUN(vkDestroySampler)>(module, lib, "vkDestroySampler",
         SideEffects::worstDefault, "vkDestroySampler");
+}
 
-    //
-    // macro constants
-    //
-
+void addVulkanGeneratedConsts_3(Module & module, ModuleLibrary & lib) {
     addConstant(module, "GLFW_KEY_RIGHT_ALT", 346);
     addConstant(module, "GLFW_KEY_RIGHT_SUPER", 347);
     addConstant(module, "GLFW_KEY_MENU", 348);
@@ -1026,4 +1013,4 @@ void addVulkanGenerated_3(Module & module, ModuleLibrary & lib) {
     addConstant(module, "GLFW_GAMEPAD_BUTTON_LEFT_BUMPER", 4);
     addConstant(module, "GLFW_GAMEPAD_BUTTON_RIGHT_BUMPER", 5);
     addConstant(module, "GLFW_GAMEPAD_BUTTON_BACK", 6);
-};
+}

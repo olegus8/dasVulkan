@@ -874,12 +874,7 @@ struct VkDisplayPlaneInfo2KHRAnnotation
     }
 };
 
-void addVulkanGenerated_7(Module & module, ModuleLibrary & lib) {
-
-    //
-    // enums
-    //
-
+void addVulkanGeneratedEnums_7(Module & module, ModuleLibrary & lib) {
     module.addEnumeration(make_smart<EnumerationVkPointClippingBehavior>());
     module.addEnumeration(make_smart<EnumerationVkTessellationDomainOrigin>());
     module.addEnumeration(make_smart<EnumerationVkSamplerYcbcrModelConversion>());
@@ -891,19 +886,15 @@ void addVulkanGenerated_7(Module & module, ModuleLibrary & lib) {
     module.addEnumeration(make_smart<EnumerationVkMemoryAllocateFlagBits>());
     module.addEnumeration(make_smart<EnumerationVkExternalMemoryHandleTypeFlagBits>());
     module.addEnumeration(make_smart<EnumerationVkExternalMemoryFeatureFlagBits>());
+}
 
-    //
-    // opaque structs
-    //
-
+void addVulkanGeneratedOpaqueStructs_7(Module & module, ModuleLibrary & lib) {
     module.addAnnotation(make_smart<VkHandleAnnotation<VkRenderPass>>("VkRenderPass", "VkRenderPass"));
     module.addAnnotation(make_smart<VkHandleAnnotation<VkDescriptorSetLayout>>("VkDescriptorSetLayout", "VkDescriptorSetLayout"));
     module.addAnnotation(make_smart<VkHandleAnnotation<VkSampler>>("VkSampler", "VkSampler"));
+}
 
-    //
-    // structs
-    //
-
+void addVulkanGeneratedStructs_7(Module & module, ModuleLibrary & lib) {
     module.addAnnotation(make_smart<VkDisplayModeCreateInfoKHRAnnotation>(lib));
     module.addAnnotation(make_smart<VkDisplayModePropertiesKHRAnnotation>(lib));
     module.addAnnotation(make_smart<VkDisplayPlaneCapabilitiesKHRAnnotation>(lib));
@@ -938,11 +929,9 @@ void addVulkanGenerated_7(Module & module, ModuleLibrary & lib) {
     module.addAnnotation(make_smart<VkDisplayPlaneProperties2KHRAnnotation>(lib));
     module.addAnnotation(make_smart<VkDisplayModeProperties2KHRAnnotation>(lib));
     module.addAnnotation(make_smart<VkDisplayPlaneInfo2KHRAnnotation>(lib));
+}
 
-    //
-    // functions
-    //
-
+void addVulkanGeneratedFunctions_7(Module & module, ModuleLibrary & lib) {
     addExtern<DAS_BIND_FUN(vkCmdWaitEvents)>(module, lib, "vkCmdWaitEvents",
         SideEffects::worstDefault, "vkCmdWaitEvents");
     addExtern<DAS_BIND_FUN(vkCmdPipelineBarrier)>(module, lib, "vkCmdPipelineBarrier",
@@ -979,11 +968,9 @@ void addVulkanGenerated_7(Module & module, ModuleLibrary & lib) {
         SideEffects::worstDefault, "vkCmdSetDeviceMask");
     addExtern<DAS_BIND_FUN(vkCmdDispatchBase)>(module, lib, "vkCmdDispatchBase",
         SideEffects::worstDefault, "vkCmdDispatchBase");
+}
 
-    //
-    // macro constants
-    //
-
+void addVulkanGeneratedConsts_7(Module & module, ModuleLibrary & lib) {
     addConstant(module, "VK_VERSION_1_2", 1);
     addConstant(module, "VK_API_VERSION_1_2", VK_MAKE_VERSION(1, 2, 0));
     addConstant(module, "VK_MAX_DRIVER_NAME_SIZE", 256);
@@ -1029,4 +1016,4 @@ void addVulkanGenerated_7(Module & module, ModuleLibrary & lib) {
     addConstant(module, "VK_KHR_PUSH_DESCRIPTOR_SPEC_VERSION", 2);
     addConstant(module, "VK_KHR_shader_float16_int8", 1);
     addConstant(module, "VK_KHR_SHADER_FLOAT16_INT8_SPEC_VERSION", 1);
-};
+}

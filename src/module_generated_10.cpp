@@ -927,12 +927,7 @@ struct VkDrmFormatModifierPropertiesListEXTAnnotation
     }
 };
 
-void addVulkanGenerated_10(Module & module, ModuleLibrary & lib) {
-
-    //
-    // enums
-    //
-
+void addVulkanGeneratedEnums_10(Module & module, ModuleLibrary & lib) {
     module.addEnumeration(make_smart<EnumerationVkPerformanceCounterStorageKHR>());
     module.addEnumeration(make_smart<EnumerationVkPerformanceCounterDescriptionFlagBitsKHR>());
     module.addEnumeration(make_smart<EnumerationVkAcquireProfilingLockFlagBitsKHR>());
@@ -944,19 +939,15 @@ void addVulkanGenerated_10(Module & module, ModuleLibrary & lib) {
     module.addEnumeration(make_smart<EnumerationVkShaderInfoTypeAMD>());
     module.addEnumeration(make_smart<EnumerationVkExternalMemoryHandleTypeFlagBitsNV>());
     module.addEnumeration(make_smart<EnumerationVkExternalMemoryFeatureFlagBitsNV>());
+}
 
-    //
-    // opaque structs
-    //
-
+void addVulkanGeneratedOpaqueStructs_10(Module & module, ModuleLibrary & lib) {
     module.addAnnotation(make_smart<VkHandleAnnotation<VkDescriptorUpdateTemplate>>("VkDescriptorUpdateTemplate", "VkDescriptorUpdateTemplate"));
     module.addAnnotation(make_smart<VkHandleAnnotation<VkSurfaceKHR>>("VkSurfaceKHR", "VkSurfaceKHR"));
     module.addAnnotation(make_smart<VkHandleAnnotation<VkSwapchainKHR>>("VkSwapchainKHR", "VkSwapchainKHR"));
+}
 
-    //
-    // structs
-    //
-
+void addVulkanGeneratedStructs_10(Module & module, ModuleLibrary & lib) {
     module.addAnnotation(make_smart<VkPipelineViewportSwizzleStateCreateInfoNVAnnotation>(lib));
     module.addAnnotation(make_smart<VkPhysicalDeviceDiscardRectanglePropertiesEXTAnnotation>(lib));
     module.addAnnotation(make_smart<VkPipelineDiscardRectangleStateCreateInfoEXTAnnotation>(lib));
@@ -992,11 +983,9 @@ void addVulkanGenerated_10(Module & module, ModuleLibrary & lib) {
     module.addAnnotation(make_smart<VkPhysicalDeviceShaderSMBuiltinsFeaturesNVAnnotation>(lib));
     module.addAnnotation(make_smart<VkDrmFormatModifierPropertiesEXTAnnotation>(lib));
     module.addAnnotation(make_smart<VkDrmFormatModifierPropertiesListEXTAnnotation>(lib));
+}
 
-    //
-    // functions
-    //
-
+void addVulkanGeneratedFunctions_10(Module & module, ModuleLibrary & lib) {
     addExtern<DAS_BIND_FUN(vkDestroySurfaceKHR)>(module, lib, "vkDestroySurfaceKHR",
         SideEffects::worstDefault, "vkDestroySurfaceKHR");
     addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceSurfaceSupportKHR)>(module, lib, "vkGetPhysicalDeviceSurfaceSupportKHR",
@@ -1031,11 +1020,9 @@ void addVulkanGenerated_10(Module & module, ModuleLibrary & lib) {
         SideEffects::worstDefault, "glfwGetVersion");
     addExtern<DAS_BIND_FUN(glfwGetVersionString)>(module, lib, "glfwGetVersionString",
         SideEffects::worstDefault, "glfwGetVersionString");
+}
 
-    //
-    // macro constants
-    //
-
+void addVulkanGeneratedConsts_10(Module & module, ModuleLibrary & lib) {
     addConstant(module, "VK_KHR_COPY_COMMANDS_2_SPEC_VERSION", 1);
     addConstant(module, "VK_EXT_debug_report", 1);
     addConstant(module, "VK_EXT_DEBUG_REPORT_SPEC_VERSION", 9);
@@ -1081,4 +1068,4 @@ void addVulkanGenerated_10(Module & module, ModuleLibrary & lib) {
     addConstant(module, "VK_IMG_FORMAT_PVRTC_SPEC_VERSION", 1);
     addConstant(module, "VK_NV_external_memory_capabilities", 1);
     addConstant(module, "VK_NV_EXTERNAL_MEMORY_CAPABILITIES_SPEC_VERSION", 1);
-};
+}

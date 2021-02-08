@@ -885,12 +885,7 @@ struct VkPhysicalDeviceFragmentDensityMap2FeaturesEXTAnnotation
     }
 };
 
-void addVulkanGenerated_14(Module & module, ModuleLibrary & lib) {
-
-    //
-    // enums
-    //
-
+void addVulkanGeneratedEnums_14(Module & module, ModuleLibrary & lib) {
     module.addEnumeration(make_smart<EnumerationVkPerformanceValueTypeINTEL>());
     module.addEnumeration(make_smart<EnumerationVkShaderCorePropertiesFlagBitsAMD>());
     module.addEnumeration(make_smart<EnumerationVkToolPurposeFlagBitsEXT>());
@@ -902,19 +897,15 @@ void addVulkanGenerated_14(Module & module, ModuleLibrary & lib) {
     module.addEnumeration(make_smart<EnumerationVkLineRasterizationModeEXT>());
     module.addEnumeration(make_smart<EnumerationVkIndirectCommandsTokenTypeNV>());
     module.addEnumeration(make_smart<EnumerationVkIndirectStateFlagBitsNV>());
+}
 
-    //
-    // opaque structs
-    //
-
+void addVulkanGeneratedOpaqueStructs_14(Module & module, ModuleLibrary & lib) {
     module.addAnnotation(make_smart<VkHandleAnnotation<VkIndirectCommandsLayoutNV>>("VkIndirectCommandsLayoutNV", "VkIndirectCommandsLayoutNV"));
     module.addAnnotation(make_smart<VkHandleAnnotation<VkPrivateDataSlotEXT>>("VkPrivateDataSlotEXT", "VkPrivateDataSlotEXT"));
     module.addAnnotation(make_smart<VkHandleAnnotation<VkAccelerationStructureKHR>>("VkAccelerationStructureKHR", "VkAccelerationStructureKHR"));
+}
 
-    //
-    // structs
-    //
-
+void addVulkanGeneratedStructs_14(Module & module, ModuleLibrary & lib) {
     module.addAnnotation(make_smart<VkPhysicalDeviceDeviceGeneratedCommandsFeaturesNVAnnotation>(lib));
     module.addAnnotation(make_smart<VkGraphicsShaderGroupCreateInfoNVAnnotation>(lib));
     module.addAnnotation(make_smart<VkGraphicsPipelineShaderGroupsCreateInfoNVAnnotation>(lib));
@@ -949,11 +940,9 @@ void addVulkanGenerated_14(Module & module, ModuleLibrary & lib) {
     module.addAnnotation(make_smart<VkPhysicalDeviceFragmentShadingRateEnumsPropertiesNVAnnotation>(lib));
     module.addAnnotation(make_smart<VkPipelineFragmentShadingRateEnumStateCreateInfoNVAnnotation>(lib));
     module.addAnnotation(make_smart<VkPhysicalDeviceFragmentDensityMap2FeaturesEXTAnnotation>(lib));
+}
 
-    //
-    // functions
-    //
-
+void addVulkanGeneratedFunctions_14(Module & module, ModuleLibrary & lib) {
     addExtern<DAS_BIND_FUN(glfwGetKeyScancode)>(module, lib, "glfwGetKeyScancode",
         SideEffects::worstDefault, "glfwGetKeyScancode");
     addExtern<DAS_BIND_FUN(glfwGetKey)>(module, lib, "glfwGetKey",
@@ -990,11 +979,9 @@ void addVulkanGenerated_14(Module & module, ModuleLibrary & lib) {
         SideEffects::worstDefault, "glfwGetJoystickUserPointer");
     addExtern<DAS_BIND_FUN(glfwJoystickIsGamepad)>(module, lib, "glfwJoystickIsGamepad",
         SideEffects::worstDefault, "glfwJoystickIsGamepad");
+}
 
-    //
-    // macro constants
-    //
-
+void addVulkanGeneratedConsts_14(Module & module, ModuleLibrary & lib) {
     addConstant(module, "VK_AMD_DISPLAY_NATIVE_HDR_SPEC_VERSION", 1);
     addConstant(module, "VK_EXT_fragment_density_map", 1);
     addConstant(module, "VK_EXT_FRAGMENT_DENSITY_MAP_SPEC_VERSION", 1);
@@ -1040,4 +1027,4 @@ void addVulkanGenerated_14(Module & module, ModuleLibrary & lib) {
     addConstant(module, "VK_EXT_LINE_RASTERIZATION_SPEC_VERSION", 1);
     addConstant(module, "VK_EXT_shader_atomic_float", 1);
     addConstant(module, "VK_EXT_SHADER_ATOMIC_FLOAT_SPEC_VERSION", 1);
-};
+}

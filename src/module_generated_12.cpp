@@ -867,12 +867,7 @@ struct VkSwapchainDisplayNativeHdrCreateInfoAMDAnnotation
     }
 };
 
-void addVulkanGenerated_12(Module & module, ModuleLibrary & lib) {
-
-    //
-    // enums
-    //
-
+void addVulkanGeneratedEnums_12(Module & module, ModuleLibrary & lib) {
     module.addEnumeration(make_smart<EnumerationVkBlendOverlapEXT>());
     module.addEnumeration(make_smart<EnumerationVkCoverageModulationModeNV>());
     module.addEnumeration(make_smart<EnumerationVkValidationCacheHeaderVersionEXT>());
@@ -884,18 +879,14 @@ void addVulkanGenerated_12(Module & module, ModuleLibrary & lib) {
     module.addEnumeration(make_smart<EnumerationVkCopyAccelerationStructureModeKHR>());
     module.addEnumeration(make_smart<EnumerationVkAccelerationStructureMemoryRequirementsTypeNV>());
     module.addEnumeration(make_smart<EnumerationVkGeometryFlagBitsKHR>());
+}
 
-    //
-    // opaque structs
-    //
-
+void addVulkanGeneratedOpaqueStructs_12(Module & module, ModuleLibrary & lib) {
     module.addAnnotation(make_smart<VkHandleAnnotation<VkDebugReportCallbackEXT>>("VkDebugReportCallbackEXT", "VkDebugReportCallbackEXT"));
     module.addAnnotation(make_smart<VkHandleAnnotation<VkDebugUtilsMessengerEXT>>("VkDebugUtilsMessengerEXT", "VkDebugUtilsMessengerEXT"));
+}
 
-    //
-    // structs
-    //
-
+void addVulkanGeneratedStructs_12(Module & module, ModuleLibrary & lib) {
     module.addAnnotation(make_smart<VkMemoryHostPointerPropertiesEXTAnnotation>(lib));
     module.addAnnotation(make_smart<VkPhysicalDeviceExternalMemoryHostPropertiesEXTAnnotation>(lib));
     module.addAnnotation(make_smart<VkPipelineCompilerControlCreateInfoAMDAnnotation>(lib));
@@ -930,11 +921,9 @@ void addVulkanGenerated_12(Module & module, ModuleLibrary & lib) {
     module.addAnnotation(make_smart<VkPhysicalDevicePCIBusInfoPropertiesEXTAnnotation>(lib));
     module.addAnnotation(make_smart<VkDisplayNativeHdrSurfaceCapabilitiesAMDAnnotation>(lib));
     module.addAnnotation(make_smart<VkSwapchainDisplayNativeHdrCreateInfoAMDAnnotation>(lib));
+}
 
-    //
-    // functions
-    //
-
+void addVulkanGeneratedFunctions_12(Module & module, ModuleLibrary & lib) {
     addExtern<DAS_BIND_FUN(glfwWindowShouldClose)>(module, lib, "glfwWindowShouldClose",
         SideEffects::worstDefault, "glfwWindowShouldClose");
     addExtern<DAS_BIND_FUN(glfwSetWindowShouldClose)>(module, lib, "glfwSetWindowShouldClose",
@@ -971,11 +960,9 @@ void addVulkanGenerated_12(Module & module, ModuleLibrary & lib) {
         SideEffects::worstDefault, "glfwRestoreWindow");
     addExtern<DAS_BIND_FUN(glfwMaximizeWindow)>(module, lib, "glfwMaximizeWindow",
         SideEffects::worstDefault, "glfwMaximizeWindow");
+}
 
-    //
-    // macro constants
-    //
-
+void addVulkanGeneratedConsts_12(Module & module, ModuleLibrary & lib) {
     addConstant(module, "VK_EXT_EXTERNAL_MEMORY_DMA_BUF_SPEC_VERSION", 1);
     addConstant(module, "VK_EXT_queue_family_foreign", 1);
     addConstant(module, "VK_EXT_QUEUE_FAMILY_FOREIGN_SPEC_VERSION", 1);
@@ -1022,4 +1009,4 @@ void addVulkanGenerated_12(Module & module, ModuleLibrary & lib) {
     addConstant(module, "VK_NV_RAY_TRACING_SPEC_VERSION", 3);
     addConstant(module, "VK_SHADER_UNUSED_KHR", (~0U));
     addConstant(module, "VK_SHADER_UNUSED_NV", VK_SHADER_UNUSED_KHR);
-};
+}

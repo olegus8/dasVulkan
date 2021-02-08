@@ -886,12 +886,7 @@ struct VkDisplayModeParametersKHRAnnotation
     }
 };
 
-void addVulkanGenerated_6(Module & module, ModuleLibrary & lib) {
-
-    //
-    // enums
-    //
-
+void addVulkanGeneratedEnums_6(Module & module, ModuleLibrary & lib) {
     module.addEnumeration(make_smart<EnumerationVkAttachmentDescriptionFlagBits>());
     module.addEnumeration(make_smart<EnumerationVkDependencyFlagBits>());
     module.addEnumeration(make_smart<EnumerationVkFramebufferCreateFlagBits>());
@@ -903,18 +898,14 @@ void addVulkanGenerated_6(Module & module, ModuleLibrary & lib) {
     module.addEnumeration(make_smart<EnumerationVkQueryControlFlagBits>());
     module.addEnumeration(make_smart<EnumerationVkCommandBufferResetFlagBits>());
     module.addEnumeration(make_smart<EnumerationVkStencilFaceFlagBits>());
+}
 
-    //
-    // opaque structs
-    //
-
+void addVulkanGeneratedOpaqueStructs_6(Module & module, ModuleLibrary & lib) {
     module.addAnnotation(make_smart<VkHandleAnnotation<VkPipelineLayout>>("VkPipelineLayout", "VkPipelineLayout"));
     module.addAnnotation(make_smart<VkHandleAnnotation<VkPipeline>>("VkPipeline", "VkPipeline"));
+}
 
-    //
-    // structs
-    //
-
+void addVulkanGeneratedStructs_6(Module & module, ModuleLibrary & lib) {
     module.addAnnotation(make_smart<VkPhysicalDeviceSamplerFilterMinmaxPropertiesAnnotation>(lib));
     module.addAnnotation(make_smart<VkPhysicalDeviceVulkanMemoryModelFeaturesAnnotation>(lib));
     module.addAnnotation(make_smart<VkPhysicalDeviceImagelessFramebufferFeaturesAnnotation>(lib));
@@ -949,11 +940,9 @@ void addVulkanGenerated_6(Module & module, ModuleLibrary & lib) {
     module.addAnnotation(make_smart<VkDeviceGroupPresentInfoKHRAnnotation>(lib));
     module.addAnnotation(make_smart<VkDeviceGroupSwapchainCreateInfoKHRAnnotation>(lib));
     module.addAnnotation(make_smart<VkDisplayModeParametersKHRAnnotation>(lib));
+}
 
-    //
-    // functions
-    //
-
+void addVulkanGeneratedFunctions_6(Module & module, ModuleLibrary & lib) {
     addExtern<DAS_BIND_FUN(vkCmdDrawIndexed)>(module, lib, "vkCmdDrawIndexed",
         SideEffects::worstDefault, "vkCmdDrawIndexed");
     addExtern<DAS_BIND_FUN(vkCmdDrawIndirect)>(module, lib, "vkCmdDrawIndirect",
@@ -990,11 +979,9 @@ void addVulkanGenerated_6(Module & module, ModuleLibrary & lib) {
         SideEffects::worstDefault, "vkCmdSetEvent");
     addExtern<DAS_BIND_FUN(vkCmdResetEvent)>(module, lib, "vkCmdResetEvent",
         SideEffects::worstDefault, "vkCmdResetEvent");
+}
 
-    //
-    // macro constants
-    //
-
+void addVulkanGeneratedConsts_6(Module & module, ModuleLibrary & lib) {
     addConstant(module, "GLFW_CURSOR_NORMAL", 0x00034001);
     addConstant(module, "GLFW_CURSOR_HIDDEN", 0x00034002);
     addConstant(module, "GLFW_CURSOR_DISABLED", 0x00034003);
@@ -1041,4 +1028,4 @@ void addVulkanGenerated_6(Module & module, ModuleLibrary & lib) {
     addConstant(module, "VK_MAX_DEVICE_GROUP_SIZE", 32);
     addConstant(module, "VK_LUID_SIZE", 8);
     addConstant(module, "VK_QUEUE_FAMILY_EXTERNAL", (~0U-1));
-};
+}
