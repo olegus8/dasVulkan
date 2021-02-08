@@ -905,7 +905,7 @@ struct VkImportMemoryHostPointerInfoEXTAnnotation
     }
 };
 
-void addVulkanGenerated_11(Module & module, ModuleLibrary & lib)
+void addVulkanGenerated_11(Module & module, ModuleLibrary & lib) {{
 
     //
     // enums

@@ -873,7 +873,7 @@ struct VkExternalFencePropertiesAnnotation
     }
 };
 
-void addVulkanGenerated_4(Module & module, ModuleLibrary & lib)
+void addVulkanGenerated_4(Module & module, ModuleLibrary & lib) {{
 
     //
     // enums

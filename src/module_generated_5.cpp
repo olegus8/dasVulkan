@@ -1088,7 +1088,7 @@ struct VkSamplerReductionModeCreateInfoAnnotation
     }
 };
 
-void addVulkanGenerated_5(Module & module, ModuleLibrary & lib)
+void addVulkanGenerated_5(Module & module, ModuleLibrary & lib) {{
 
     //
     // enums

@@ -959,7 +959,7 @@ struct VkClearDepthStencilValueAnnotation
     }
 };
 
-void addVulkanGenerated_2(Module & module, ModuleLibrary & lib)
+void addVulkanGenerated_2(Module & module, ModuleLibrary & lib) {{
 
     //
     // enums

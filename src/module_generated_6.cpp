@@ -886,7 +886,7 @@ struct VkDisplayModeParametersKHRAnnotation
     }
 };
 
-void addVulkanGenerated_6(Module & module, ModuleLibrary & lib)
+void addVulkanGenerated_6(Module & module, ModuleLibrary & lib) {{
 
     //
     // enums

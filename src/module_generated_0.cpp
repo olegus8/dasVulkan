@@ -1036,7 +1036,7 @@ struct VkMemoryAllocateInfoAnnotation
     }
 };
 
-void addVulkanGenerated_0(Module & module, ModuleLibrary & lib)
+void addVulkanGenerated_0(Module & module, ModuleLibrary & lib) {{
 
     //
     // enums
