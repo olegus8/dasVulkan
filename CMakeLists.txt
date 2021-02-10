@@ -13,7 +13,6 @@ IF(NOT DAS_VULKAN_INCLUDED)
     LIST(APPEND CMAKE_MODULE_PATH ${DAS_VULKAN_DIR})
 
     FIND_PACKAGE(Vulkan)
-    FIND_PACKAGE(glfw3)
     FIND_PROGRAM(DAS_VULKAN_GLSL_EXE glslc)
 
     MACRO(DAS_VULKAN_COMPILE_SHADER input stage)
@@ -35,7 +34,7 @@ IF(NOT DAS_VULKAN_INCLUDED)
         ENDIF()
     ENDMACRO()
 
-    IF(NOT Vulkan_FOUND OR NOT glfw3_FOUND OR NOT DAS_VULKAN_GLSL_EXE)
+    IF(NOT Vulkan_FOUND OR NOT DAS_VULKAN_GLSL_EXE)
         MESSAGE(STATUS "Prerequisites not found. Not building dasVulkan.")
     ELSE()
         SET(DAS_VULKAN_NUM_PARTS 16)
@@ -65,12 +64,10 @@ IF(NOT DAS_VULKAN_INCLUDED)
         ADD_LIBRARY(libDasModuleVulkan ${DAS_VULKAN_MODULE_SRC})
         TARGET_LINK_LIBRARIES(libDasModuleVulkan
             ${Vulkan_LIBRARY}
-            glfw::glfw
         )
         ADD_DEPENDENCIES(libDasModuleVulkan libDaScript)
         TARGET_INCLUDE_DIRECTORIES(libDasModuleVulkan PUBLIC
             ${Vulkan_INCLUDE_DIR}
-            ${glfw_INCLUDE_DIR}
             ${DAS_VULKAN_DIR}/include
         )
         SETUP_CPP11(libDasModuleVulkan)
