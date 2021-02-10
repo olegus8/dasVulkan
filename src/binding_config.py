@@ -18,7 +18,7 @@ class Config(ConfigBase):
 
     @property
     def c_headers_to_extract_macro_consts_from(self):
-        return ['GLFW/glfw3.h', 'vulkan/vulkan_core.h']
+        return ['vulkan/vulkan_core.h']
 
     @property
     def title(self):
@@ -35,7 +35,6 @@ class Config(ConfigBase):
             macro_const.ignore()
             return
         for prefix in [
-            'GLFW_',
             'VK_',
         ]:
             if macro_const.name.startswith(prefix):
@@ -46,10 +45,6 @@ class Config(ConfigBase):
         struct.set_annotation_type('VkHandleAnnotation')
         if struct.name.endswith('_T'):
             struct.set_das_type(struct.name[:-2])
-        if struct.name.startswith('GLFW'):
-            ptr_type = struct.name + '_DasHandle'
-            struct.set_das_type(ptr_type)
-            struct.define_ptr_type(ptr_type)
 
     def configure_struct_field(self, field):
         # whitelist
@@ -91,22 +86,6 @@ class Config(ConfigBase):
         or  func.name.endswith('NV')
         or  func.name.endswith('NVX')
         ):
-            func.ignore()
-
-        if func.name.startswith('glfw'):
-            for kw in [
-                'ProcAddress',
-                'Callback',
-            ]:
-                if kw in func.name:
-                    func.ignore()
-
-        # we have custom implementations for these
-        if func.name in [
-            'glfwCreateWindow', 
-            'glfwDestroyWindow',
-            'glfwSetWindowUserPointer',
-        ]:
             func.ignore()
 
 
