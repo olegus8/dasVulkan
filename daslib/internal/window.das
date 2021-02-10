@@ -3,10 +3,11 @@ options no_aot = true
 
 require daslib/safe_addr
 require vulkan
+require glfw
 
 
 struct Window
-    window : GLFWwindow_DasHandle
+    window : GLFWwindow ?
     _needs_delete : bool
 
 
@@ -16,7 +17,7 @@ def create_window(width : int; height : int; title : string;
     glfwWindowHint(GLFW_RESIZABLE, resizable ? GLFW_TRUE : GLFW_FALSE)
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API)
     return <- [[Window window = glfwCreateWindow(width, height, title,
-        [[GLFWmonitor_DasHandle]], [[GLFWwindow_DasHandle]]
+        [[GLFWmonitor ?]], [[GLFWwindow ?]]
     )]]
 
 
@@ -30,7 +31,7 @@ def create_fullscreen_window(title : string) : Window
     glfwWindowHint(GLFW_BLUE_BITS, mode.blueBits)
     glfwWindowHint(GLFW_REFRESH_RATE, mode.refreshRate)
     var window = glfwCreateWindow(mode.width, mode.height,
-        title, monitor, [[GLFWwindow_DasHandle]])
+        title, monitor, [[GLFWwindow ?]])
     return <- [[Window window=window]]
 
 
