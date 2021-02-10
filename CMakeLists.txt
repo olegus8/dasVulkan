@@ -2,11 +2,8 @@ IF(NOT DAS_VULKAN_INCLUDED)
     SET(DAS_VULKAN_INCLUDED TRUE)
     MESSAGE(STATUS "dasVulkan module included.")
 
-    IF(EXISTS ${CMAKE_SOURCE_DIR}/modules/dasBinder/CMakeLists.txt)
-        INCLUDE(${CMAKE_SOURCE_DIR}/modules/dasBinder/CMakeLists.txt)
-    ELSE()
-        MESSAGE(FATAL_ERROR "Cannot use dasVulkan without dasBinder.")
-    ENDIF()
+    INCLUDE(${CMAKE_SOURCE_DIR}/modules/dasGlfw/CMakeLists.txt)
+    INCLUDE(${CMAKE_SOURCE_DIR}/modules/dasBinder/CMakeLists.txt)
 
     SET(DAS_VULKAN_DIR ${CMAKE_SOURCE_DIR}/modules/dasVulkan)
 
