@@ -14,8 +14,8 @@ struct Window
 def create_window(width : int; height : int; title : string;
     resizable : bool = true
 ) : Window
-    glfwWindowHint(GLFW_RESIZABLE, resizable ? GLFW_TRUE : GLFW_FALSE)
-    glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API)
+    glfwWindowHint(int(GLFW_RESIZABLE), resizable ? GLFW_TRUE : GLFW_FALSE)
+    glfwWindowHint(int(GLFW_CLIENT_API), GLFW_NO_API)
     return <- [[Window window = glfwCreateWindow(width, height, title,
         [[GLFWmonitor ?]], [[GLFWwindow ?]]
     )]]
