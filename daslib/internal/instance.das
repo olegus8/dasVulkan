@@ -3,7 +3,7 @@ options no_aot = true
 
 require daslib/defer
 require generated
-require glfw
+require window
 require vulkan
 require debug
 
