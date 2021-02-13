@@ -1,6 +1,8 @@
 #include "dasVulkan/module.h"
 
-#include <iostream>
+#define GLFW_INCLUDE_VULKAN
+#define GLFW_INCLUDE_NONE
+#include <GLFW/glfw3.h>
 
 using namespace das;
 using namespace std;
@@ -40,7 +42,6 @@ static VKAPI_ATTR VkBool32 VKAPI_CALL vk_debug_msg_callback(
 class Module_vulkan : public GeneratedModule_vulkan {
 public:
     Module_vulkan() : GeneratedModule_vulkan() {
-        cerr << "module_vulkan_debug : ctor\n";
         ModuleLibrary lib;
         lib.addModule(this);
         lib.addBuiltInModule();
