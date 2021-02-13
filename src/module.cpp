@@ -57,6 +57,11 @@ public:
         addVulkanBoostGenerated(*this, lib);
         addVulkanCustomAfterGenerated(*this, lib);
 
+        addExtern<DAS_BIND_FUN(glfwCreateWindowSurface)>(*this, lib,
+            "glfwCreateWindowSurface",
+            SideEffects::worstDefault,
+            "glfwCreateWindowSurface");
+
         addConstant(*this, "vk_debug_msg_callback",
             reinterpret_cast<uint64_t>(&vk_debug_msg_callback));
     }
