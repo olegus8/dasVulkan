@@ -24,12 +24,12 @@ def create_window(width : int; height : int; title : string;
 def create_fullscreen_window(title : string) : Window
     var monitor = glfwGetPrimaryMonitor()
     var mode = monitor |> glfwGetVideoMode
-    glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API)
-    glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE)
-    glfwWindowHint(GLFW_RED_BITS, mode.redBits)
-    glfwWindowHint(GLFW_GREEN_BITS, mode.greenBits)
-    glfwWindowHint(GLFW_BLUE_BITS, mode.blueBits)
-    glfwWindowHint(GLFW_REFRESH_RATE, mode.refreshRate)
+    glfwWindowHint(int(GLFW_CLIENT_API), GLFW_NO_API)
+    glfwWindowHint(int(GLFW_RESIZABLE), GLFW_FALSE)
+    glfwWindowHint(int(GLFW_RED_BITS), mode.redBits)
+    glfwWindowHint(int(GLFW_GREEN_BITS), mode.greenBits)
+    glfwWindowHint(int(GLFW_BLUE_BITS), mode.blueBits)
+    glfwWindowHint(int(GLFW_REFRESH_RATE), mode.refreshRate)
     var window = glfwCreateWindow(mode.width, mode.height,
         title, monitor, [[GLFWwindow ?]])
     return <- [[Window window=window]]
