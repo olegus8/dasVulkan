@@ -7,6 +7,8 @@
 using namespace das;
 using namespace std;
 
+#include "../../dasGlfw/src/module_glfw_include.h"
+
 IMPLEMENT_EXTERNAL_TYPE_FACTORY(PFN_vkDebugUtilsMessengerCallbackEXT, PFN_vkDebugUtilsMessengerCallbackEXT);
 
 #include "module_generated.cpp.inc"
@@ -42,9 +44,23 @@ static VKAPI_ATTR VkBool32 VKAPI_CALL vk_debug_msg_callback(
 class Module_vulkan : public GeneratedModule_vulkan {
 public:
     Module_vulkan() : GeneratedModule_vulkan() {
+    }
+
+    bool initialized = false;
+    virtual bool initDependencies() override {
+        if ( initialized ) return true;
+
+        // GLFW
+        auto mod_glfw = Module::require("glfw");
+        if ( !mod_glfw ) return false;
+        if ( !mod_glfw->initDependencies() ) return false;
+
+        initialized = true;
+
         ModuleLibrary lib;
         lib.addModule(this);
         lib.addBuiltInModule();
+        lib.addModule(mod_glfw);
 
         addAnnotation(make_smart<VkHandleAnnotation<
             PFN_vkDebugUtilsMessengerCallbackEXT> >(
@@ -64,6 +80,8 @@ public:
 
         addConstant(*this, "vk_debug_msg_callback",
             reinterpret_cast<uint64_t>(&vk_debug_msg_callback));
+
+        return true;
     }
 };
 
