@@ -972,7 +972,7 @@ def run_example
     defer() <| { delete sis; }
 
     sis.window.window |> glfwSetKeyCallback <| @ (
-      window : GLFWwindow ?; key, scancode, action, mods : int
+      window : GLFWwindow const ?; key, scancode, action, mods : int
     )
         print("key={key} scancode={scancode} action={action} mods={mods}\n")
 
