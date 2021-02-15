@@ -1005,8 +1005,11 @@ def run_example
 
 [export]
 def main
+    unsafe
+        string_heap_collect()
     let heap_on_start = heap_bytes_allocated()
     let string_heap_on_start = string_heap_bytes_allocated()
+
     print("\nStarted\n")
     glfwInit()
     glfwWindowHint(int(GLFW_CLIENT_API), GLFW_NO_API)
@@ -1016,7 +1019,6 @@ def main
 
     unsafe
         string_heap_collect()
-
     let heap_leaks = int(heap_bytes_allocated() - heap_on_start)
     let string_heap_leaks = int(string_heap_bytes_allocated()
         - string_heap_on_start)
