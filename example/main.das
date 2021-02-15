@@ -1009,8 +1009,8 @@ def main
     let string_heap_on_start = string_heap_bytes_allocated()
     print("\nStarted\n")
     glfwInit()
-    glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API)
-    glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE)
+    glfwWindowHint(int(GLFW_CLIENT_API), GLFW_NO_API)
+    glfwWindowHint(int(GLFW_RESIZABLE), GLFW_TRUE)
     run_example()
     glfwTerminate()
 
