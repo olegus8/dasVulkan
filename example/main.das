@@ -968,16 +968,19 @@ def draw_frame(
 
 
 def run_example
-    var sis <- create_swapchain_independent_state(800, 600, "dasVulkanExample")
-    defer() <| { delete sis; }
-/*
-    sis.window.window |> glfwSetKeyCallback <| @ (
+    var key_callback <- @ (
       window : GLFWwindow const ?; key, scancode, action, mods : int
     )
         print("key={key} scancode={scancode} action={action} mods={mods}\n")
-*/
+    defer <| { delete key_callback; }
+
+    var sis <- create_swapchain_independent_state(800, 600, "dasVulkanExample")
+    defer <| { delete sis; }
+
+    sis.window.window |> glfwSetKeyCallback <| key_callback
+
     var props <- sis.phys_dev |> get_physical_device_properties()
-    defer() <| { delete props ; }
+    defer <| { delete props ; }
     print("Using {props.device_name}\n")
 
     var keep_running = true
@@ -989,7 +992,7 @@ def run_example
 
         if true
             var sds <- create_swapchain_dependent_state(sis)
-            defer() <| { delete sds; }
+            defer <| { delete sds; }
 
             print("{sds.swapchain.framebuffers |> length()} " +
                 "images in swap chain\n")
