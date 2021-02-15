@@ -703,7 +703,7 @@ def create_swapchain_independent_state(
     s.phys_dev <- s.instance.instance |> find_best_physical_device(s.surface)
     s.present_mode = VkPresentModeKHR VK_PRESENT_MODE_FIFO_KHR
     s.surf_fmt <- s.phys_dev |> find_format_like_srgb_bgra8(s.surface)
-    s.graphics_family <- s.phys_dev |> get_graphics_queue_family(s.surface)
+    s.graphics_family <- s.phys_dev |> get_graphics_queue_family(s.surface, 1)
     s.device <- s.phys_dev |> create_example_device(s.graphics_family)
     s.queue <- s.device |> get_device_queue(s.graphics_family)
     s.cmd_pool <- create_command_pool([device=s.device,
