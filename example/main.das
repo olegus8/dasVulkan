@@ -967,19 +967,15 @@ def draw_frame(
     return img_acquired && presented
 
 
-[export]
-def key_callback(
-    window : GLFWwindow_DasHandle;
-    key, scancode, action, mods : int
-)
-    print("key={key} scancode={scancode} action={action} mods={mods}\n")
-
-
 def run_example
     var sis <- create_swapchain_independent_state(800, 600, "dasVulkanExample")
     defer() <| { delete sis; }
 
-    sis.window.window |> glfwSetKeyCallback(@@key_callback)
+    sis.window.window |> glfwSetKeyCallback <| @ (
+      window : GLFWwindow ?; key, scancode, action, mods : int
+    )
+      print("key={key} scancode={scancode} action={action} mods={mods}\n")
+
     var props <- sis.phys_dev |> get_physical_device_properties()
     defer() <| { delete props ; }
     print("Using {props.device_name}\n")
