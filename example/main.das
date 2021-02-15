@@ -974,7 +974,7 @@ def run_example
     sis.window.window |> glfwSetKeyCallback <| @ (
       window : GLFWwindow ?; key, scancode, action, mods : int
     )
-      print("key={key} scancode={scancode} action={action} mods={mods}\n")
+        print("key={key} scancode={scancode} action={action} mods={mods}\n")
 
     var props <- sis.phys_dev |> get_physical_device_properties()
     defer() <| { delete props ; }
