@@ -968,7 +968,7 @@ def draw_frame(
 
 
 def run_example
-    var key_callback <- @ (
+    var key_callback <- @ <| (
       window : GLFWwindow const ?; key, scancode, action, mods : int
     )
         print("key={key} scancode={scancode} action={action} mods={mods}\n")
