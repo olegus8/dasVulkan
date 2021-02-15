@@ -600,7 +600,7 @@ def get_suitability_score(device : PhysicalDevice; surface : SurfaceKHR)
     var score = 1
 
     var has_graphics = false
-    device |> find_graphics_queue_family(surface) <| $(qfam)
+    device |> find_graphics_queue_family(surface, 1) <| $(qfam)
         has_graphics = true
     if ! has_graphics
         print("No graphics. No go.\n")
