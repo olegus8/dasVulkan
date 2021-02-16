@@ -4,6 +4,7 @@ options no_aot = true
 module vulkan_boost
 
 require vulkan                  public
+require glfw                    public
 require internal/generated      public
 
 require internal/buffer         public
@@ -13,7 +14,6 @@ require internal/debug          public
 require internal/descriptor_set public
 require internal/device         public
 require internal/framebuffer    public
-require internal/glfw           public
 require internal/image          public
 require internal/instance       public
 require internal/memory         public

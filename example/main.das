@@ -600,7 +600,7 @@ def get_suitability_score(device : PhysicalDevice; surface : SurfaceKHR)
     var score = 1
 
     var has_graphics = false
-    device |> find_graphics_queue_family(surface) <| $(qfam)
+    device |> find_graphics_queue_family(surface, 1) <| $(qfam)
         has_graphics = true
     if ! has_graphics
         print("No graphics. No go.\n")
@@ -703,7 +703,7 @@ def create_swapchain_independent_state(
     s.phys_dev <- s.instance.instance |> find_best_physical_device(s.surface)
     s.present_mode = VkPresentModeKHR VK_PRESENT_MODE_FIFO_KHR
     s.surf_fmt <- s.phys_dev |> find_format_like_srgb_bgra8(s.surface)
-    s.graphics_family <- s.phys_dev |> get_graphics_queue_family(s.surface)
+    s.graphics_family <- s.phys_dev |> get_graphics_queue_family(s.surface, 1)
     s.device <- s.phys_dev |> create_example_device(s.graphics_family)
     s.queue <- s.device |> get_device_queue(s.graphics_family)
     s.cmd_pool <- create_command_pool([device=s.device,
@@ -967,21 +967,20 @@ def draw_frame(
     return img_acquired && presented
 
 
-[export]
-def key_callback(
-    window : GLFWwindow_DasHandle;
-    key, scancode, action, mods : int
-)
-    print("key={key} scancode={scancode} action={action} mods={mods}\n")
-
-
 def run_example
-    var sis <- create_swapchain_independent_state(800, 600, "dasVulkanExample")
-    defer() <| { delete sis; }
+    var key_callback <- @ <| (
+      window : GLFWwindow const ?; key, scancode, action, mods : int
+    )
+        print("key={key} scancode={scancode} action={action} mods={mods}\n")
+    defer <| { delete key_callback; }
 
-    sis.window.window |> glfwSetKeyCallback(@@key_callback)
+    var sis <- create_swapchain_independent_state(800, 600, "dasVulkanExample")
+    defer <| { delete sis; }
+
+    sis.window.window |> glfwSetKeyCallback <| key_callback
+
     var props <- sis.phys_dev |> get_physical_device_properties()
-    defer() <| { delete props ; }
+    defer <| { delete props ; }
     print("Using {props.device_name}\n")
 
     var keep_running = true
@@ -993,7 +992,7 @@ def run_example
 
         if true
             var sds <- create_swapchain_dependent_state(sis)
-            defer() <| { delete sds; }
+            defer <| { delete sds; }
 
             print("{sds.swapchain.framebuffers |> length()} " +
                 "images in swap chain\n")
@@ -1009,18 +1008,20 @@ def run_example
 
 [export]
 def main
+    unsafe
+        string_heap_collect()
     let heap_on_start = heap_bytes_allocated()
     let string_heap_on_start = string_heap_bytes_allocated()
+
     print("\nStarted\n")
     glfwInit()
-    glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API)
-    glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE)
+    glfwWindowHint(int(GLFW_CLIENT_API), GLFW_NO_API)
+    glfwWindowHint(int(GLFW_RESIZABLE), GLFW_TRUE)
     run_example()
     glfwTerminate()
 
     unsafe
         string_heap_collect()
-
     let heap_leaks = int(heap_bytes_allocated() - heap_on_start)
     let string_heap_leaks = int(string_heap_bytes_allocated()
         - string_heap_on_start)

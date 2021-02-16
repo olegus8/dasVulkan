@@ -1,7 +1,13 @@
 #include "dasVulkan/module.h"
 
+#define GLFW_INCLUDE_VULKAN
+#define GLFW_INCLUDE_NONE
+#include <GLFW/glfw3.h>
+
 using namespace das;
 using namespace std;
+
+#include "../../dasGlfw/src/module_glfw_include.h"
 
 IMPLEMENT_EXTERNAL_TYPE_FACTORY(PFN_vkDebugUtilsMessengerCallbackEXT, PFN_vkDebugUtilsMessengerCallbackEXT);
 
@@ -11,93 +17,6 @@ IMPLEMENT_EXTERNAL_TYPE_FACTORY(PFN_vkDebugUtilsMessengerCallbackEXT, PFN_vkDebu
 void addVulkanCustomBeforeGenerated(Module &, ModuleLibrary &);
 void addVulkanCustomAfterGenerated(Module &, ModuleLibrary &);
 
-
-struct WindowContext {
-    Context * ctx = nullptr;
-    SimFunction * framebuffer_size_callback = nullptr;
-    SimFunction * key_callback = nullptr;
-};
-
-GLFWwindow* glfw_create_window(int width, int height, const char* title,
-    GLFWmonitor* monitor, GLFWwindow* share, Context * ctx
-) {
-    auto wnd = glfwCreateWindow(width, height, title, monitor, share);
-    if ( wnd ) {
-        auto window_ctx = new WindowContext();
-        window_ctx->ctx = ctx;
-        glfwSetWindowUserPointer(wnd, window_ctx);
-    }
-    return wnd;
-}
-
-void glfw_destroy_window(GLFWwindow* window) {
-    auto window_ctx = reinterpret_cast<WindowContext*>(
-        glfwGetWindowUserPointer(window));
-    delete window_ctx;
-    glfwDestroyWindow(window);
-}
-
-void glfw_framebuffer_size_callback(
-    GLFWwindow* window, int width, int height
-) {
-    auto window_ctx = reinterpret_cast<WindowContext*>(
-        glfwGetWindowUserPointer(window));
-    vec4f args[3] = {
-        cast<GLFWwindow *>::from(window),
-        cast<int32_t>::from(width),
-        cast<int32_t>::from(height)
-    };
-    window_ctx->ctx->eval(window_ctx->framebuffer_size_callback, args);
-}
-
-void glfw_set_framebuffer_size_callback(
-    GLFWwindow * window, Func fn, Context * ctx
-) {
-    auto window_ctx = reinterpret_cast<WindowContext*>(
-        glfwGetWindowUserPointer(window));
-    if ( window_ctx->ctx != ctx ) {
-        ctx->throw_error("must call from same context as was window created");
-    }
-    if ( ! window_ctx->framebuffer_size_callback ) {
-        glfwSetFramebufferSizeCallback(
-            window, glfw_framebuffer_size_callback);
-    }
-    window_ctx->framebuffer_size_callback = window_ctx->ctx->getFunction(
-        fn.index-1);
-    if ( ! window_ctx->framebuffer_size_callback ) {
-        window_ctx->ctx->throw_error("callback function not found");
-    }
-}
-
-void glfw_key_callback(
-    GLFWwindow* window, int key, int scancode, int action, int mods
-) {
-    auto window_ctx = reinterpret_cast<WindowContext*>(
-        glfwGetWindowUserPointer(window));
-    vec4f args[5] = {
-        cast<GLFWwindow *>::from(window),
-        cast<int32_t>::from(key),
-        cast<int32_t>::from(scancode),
-        cast<int32_t>::from(action),
-        cast<int32_t>::from(mods)
-    };
-    window_ctx->ctx->eval(window_ctx->key_callback, args);
-}
-
-void glfw_set_key_callback(GLFWwindow * window, Func fn, Context * ctx) {
-    auto window_ctx = reinterpret_cast<WindowContext*>(
-        glfwGetWindowUserPointer(window));
-    if ( window_ctx->ctx != ctx ) {
-        ctx->throw_error("must call from same context as was window created");
-    }
-    if ( ! window_ctx->key_callback ) {
-        glfwSetKeyCallback(window, glfw_key_callback);
-    }
-    window_ctx->key_callback = window_ctx->ctx->getFunction(fn.index-1);
-    if ( ! window_ctx->key_callback ) {
-        window_ctx->ctx->throw_error("callback function not found");
-    }
-}
 
 static VKAPI_ATTR VkBool32 VKAPI_CALL vk_debug_msg_callback(
     VkDebugUtilsMessageSeverityFlagBitsEXT      msg_severity,
@@ -125,9 +44,23 @@ static VKAPI_ATTR VkBool32 VKAPI_CALL vk_debug_msg_callback(
 class Module_vulkan : public GeneratedModule_vulkan {
 public:
     Module_vulkan() : GeneratedModule_vulkan() {
+    }
+
+    bool initialized = false;
+    virtual bool initDependencies() override {
+        if ( initialized ) return true;
+
+        // GLFW
+        auto mod_glfw = Module::require("glfw");
+        if ( !mod_glfw ) return false;
+        if ( !mod_glfw->initDependencies() ) return false;
+
+        initialized = true;
+
         ModuleLibrary lib;
         lib.addModule(this);
         lib.addBuiltInModule();
+        lib.addModule(mod_glfw);
 
         addAnnotation(make_smart<VkHandleAnnotation<
             PFN_vkDebugUtilsMessengerCallbackEXT> >(
@@ -140,21 +73,15 @@ public:
         addVulkanBoostGenerated(*this, lib);
         addVulkanCustomAfterGenerated(*this, lib);
 
+        addExtern<DAS_BIND_FUN(glfwCreateWindowSurface)>(*this, lib,
+            "glfwCreateWindowSurface",
+            SideEffects::worstDefault,
+            "glfwCreateWindowSurface");
+
         addConstant(*this, "vk_debug_msg_callback",
             reinterpret_cast<uint64_t>(&vk_debug_msg_callback));
 
-        addExtern<DAS_BIND_FUN(glfw_create_window)>(
-            *this, lib, "glfwCreateWindow",
-            SideEffects::worstDefault, "glfwCreateWindow");
-        addExtern<DAS_BIND_FUN(glfw_destroy_window)>(
-            *this, lib, "glfwDestroyWindow",
-            SideEffects::worstDefault, "glfwDestroyWindow");
-        addExtern<DAS_BIND_FUN(glfw_set_framebuffer_size_callback)>(
-            *this, lib, "glfwSetFramebufferSizeCallback",
-            SideEffects::worstDefault, "glfwSetFramebufferSizeCallback");
-        addExtern<DAS_BIND_FUN(glfw_set_key_callback)>(
-            *this, lib, "glfwSetKeyCallback",
-            SideEffects::worstDefault, "glfwSetKeyCallback");
+        return true;
     }
 };
 
