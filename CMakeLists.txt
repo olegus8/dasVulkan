@@ -98,6 +98,7 @@ IF(NOT DAS_VULKAN_INCLUDED)
         )
 
         DAS_BINDER(
+            DAS_VULKAN_GENERATE
             ${DAS_VULKAN_NUM_PARTS}
             ${DAS_VULKAN_DIR}/include/dasVulkan/headers_to_bind.h
             ${DAS_VULKAN_DIR}/src/module_generated
