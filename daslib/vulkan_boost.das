@@ -100,6 +100,9 @@ def vk_desc_pool(s : SimpleSwapchainIndependentState) : VkDescriptorPool
 def vk_render_pass(s : SimpleSwapchainIndependentState) : VkRenderPass
     return s.render_pass.render_pass
 
+def glfw_window(s : SimpleSwapchainIndependentState) : GLFWwindow ?
+    return s.window.window
+
 
 def create_simple_sis(title : string; width,height : int
 ) : SimpleSwapchainIndependentState
