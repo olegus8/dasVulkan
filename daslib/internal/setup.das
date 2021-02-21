@@ -34,7 +34,7 @@ def finalize(var x : SimpleVulkanSetup explicit)
 def simple_vulkan_setup(title : string; width,height : int) : SimpleVulkanSetup
     var s : SimpleVulkanSetup
     s.window <- create_window(width, height, title)
-    s.instance <- create_instance_ex
+    s.instance <- create_instance_ex()
     s.surface <- s.instance.instance |> create_window_surface(s.window)
     s.phys_dev <- s.instance.instance |> find_best_physical_device(
         s.surface, @@simple_device_score)
