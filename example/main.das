@@ -607,7 +607,7 @@ def create_swapchain_independent_state(
     s.frag_shmod <- s.setup.device |> create_shader_module_from_file(
         "{get_das_root()}/modules/dasVulkan/example/frag.spv")
     s.render_pass <- s.setup.device |> create_example_render_pass(s.surf_fmt)
-    s.desc_set_layout <- s.setup.device |> create_example_descriptor_set_layout()
+    s.desc_set_layout <- s.setup.device|>create_example_descriptor_set_layout()
     s.pipeline_layout <- s.setup.device |> create_example_pipeline_layout(
         s.desc_set_layout)
     s.vertices <- [{auto[]
