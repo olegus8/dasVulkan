@@ -7,6 +7,22 @@ require generated
 require device
 
 
+let
+    ALL_DESCRIPTOR_TYPES <- [{auto[]
+        VkDescriptorType VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+        VkDescriptorType VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT;
+        VkDescriptorType VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE;
+        VkDescriptorType VK_DESCRIPTOR_TYPE_SAMPLER;
+        VkDescriptorType VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
+        VkDescriptorType VK_DESCRIPTOR_TYPE_STORAGE_BUFFER_DYNAMIC;
+        VkDescriptorType VK_DESCRIPTOR_TYPE_STORAGE_IMAGE;
+        VkDescriptorType VK_DESCRIPTOR_TYPE_STORAGE_TEXEL_BUFFER;
+        VkDescriptorType VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+        VkDescriptorType VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC;
+        VkDescriptorType VK_DESCRIPTOR_TYPE_UNIFORM_TEXEL_BUFFER
+    }]
+
+
 def create_simple_descriptor_pool(
     device : Device;
     sis : SwapchainIndependentState;
