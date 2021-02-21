@@ -24,11 +24,11 @@ struct SimpleVulkanSetup
 
 def finalize(var x : SimpleVulkanSetup explicit)
     x.device |> device_wait_idle
-    delete x.window
-    delete x.instance
-    delete x.surface
-    delete x.device
     delete x.desc_pool
+    delete x.device
+    delete x.surface
+    delete x.instance
+    delete x.window
 
 
 def simple_vulkan_setup(title : string; width,height : int) : SimpleVulkanSetup
