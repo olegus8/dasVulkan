@@ -32,6 +32,8 @@ require internal/window          public
 // TODO: move this to vulkan_simple_app
 
 
+require daslib/defer
+
 let
     MAX_FRAMES_IN_FLIGHT = 2
 
