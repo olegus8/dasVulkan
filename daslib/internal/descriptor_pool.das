@@ -29,8 +29,8 @@ def create_simple_descriptor_pool(
     desc_types : array<VkDescriptorType> = ALL_DESCRIPTOR_TYPES
 ) : DescriptorPool
     var info <- [[ DescriptorPoolCreateInfo
-        pool_sizes <- [{ for desc_type in desc_types ;
-            [[ DescriptorPoolSize type_=desc_type, descriptor_count=count ]]
+        pool_sizes <- [{ for type_ in desc_types ;
+            [[ DescriptorPoolSize type_=type_, descriptor_count=uint(count)]]
         }],
         max_sets = uint(count * length(desc_types)),
         flags = uint(VkDescriptorPoolCreateFlagBits
