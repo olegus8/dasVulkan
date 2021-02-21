@@ -97,6 +97,9 @@ def vk_queue(sis : SimpleSwapchainIndependentState) : VkQueue
 def vk_desc_pool(sis : SimpleSwapchainIndependentState) : VkDescriptorPool
     return s.desc_pool.descriptor_pool
 
+def vk_render_pass(sis : SimpleSwapchainIndependentState) : VkRenderPass
+    return s.render_pass.render_pass
+
 
 def create_simple_sis(title : string; width,height : int
 ) : SimpleSwapchainIndependentState
