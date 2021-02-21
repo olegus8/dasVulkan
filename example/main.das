@@ -599,16 +599,16 @@ def create_swapchain_independent_state(
     var s : SwapchainIndependentState
     s.setup <- simple_vulkan_setup(title, width, height)
     s.present_mode = VkPresentModeKHR VK_PRESENT_MODE_FIFO_KHR
-    s.surf_fmt <- s.phys_dev |> find_format_like_srgb_bgra8(s.surface)
-    s.cmd_pool <- create_command_pool([device=s.device,
+    s.surf_fmt <- s.setup.phys_dev |> find_format_like_srgb_bgra8(s.surface)
+    s.cmd_pool <- create_command_pool([device=s.setup.device,
         queue_family=s.setup.gfx_qfam])
-    s.vert_shmod <- s.device |> create_shader_module_from_file(
+    s.vert_shmod <- s.setup.device |> create_shader_module_from_file(
         "{get_das_root()}/modules/dasVulkan/example/vert.spv")
-    s.frag_shmod <- s.device |> create_shader_module_from_file(
+    s.frag_shmod <- s.setup.device |> create_shader_module_from_file(
         "{get_das_root()}/modules/dasVulkan/example/frag.spv")
-    s.render_pass <- s.device |> create_example_render_pass(s.surf_fmt)
-    s.desc_set_layout <- s.device |> create_example_descriptor_set_layout()
-    s.pipeline_layout <- s.device |> create_example_pipeline_layout(
+    s.render_pass <- s.setup.device |> create_example_render_pass(s.surf_fmt)
+    s.desc_set_layout <- s.setup.device |> create_example_descriptor_set_layout()
+    s.pipeline_layout <- s.setup.device |> create_example_pipeline_layout(
         s.desc_set_layout)
     s.vertices <- [{auto[]
         [[Vertex pos=float2(-0.5f, -0.5f), color=float3(1f, 0f, 0f),
@@ -625,7 +625,7 @@ def create_swapchain_independent_state(
     s.ibuf <- s |> create_device_local_buffer(s.indices, 
         uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_INDEX_BUFFER_BIT))
     s.texture <- s |> create_example_texture()
-    s.texture_view <- s.device |> create_image_view(s.texture)
+    s.texture_view <- s.setup.device |> create_image_view(s.texture)
     s.sampler <- s |> create_example_sampler()
     return <- s
 
