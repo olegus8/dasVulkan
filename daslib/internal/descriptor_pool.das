@@ -32,7 +32,7 @@ def create_simple_descriptor_pool(
         pool_sizes <- [{ for desc_type in desc_types ;
             [[ DescriptorPoolSize type_=desc_type, descriptor_count=count ]]
         }],
-        max_sets = count * length(desc_types)
+        max_sets = count * length(desc_types),
         flags = uint(VkDescriptorPoolCreateFlagBits
             VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT)
     ]]
