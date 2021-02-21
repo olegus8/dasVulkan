@@ -47,10 +47,12 @@ struct SimpleSwapchainIndependentState
     gfx_qfam     : uint
     surf_fmt     : SurfaceFormatKHR
     present_mode : VkPresentModeKHR
+    render_pass  : RenderPass
 
 
 def finalize(var x : SimpleSwapchainIndependentState explicit)
     x.device |> device_wait_idle
+    delete s.render_pass
     delete x.desc_pool
     delete x.device
     delete x.surface
@@ -92,6 +94,7 @@ def create_simple_sis(title : string; width,height : int
     sis.desc_pool <- sis.device |> create_simple_descriptor_pool
     sis.present_mode = VkPresentModeKHR VK_PRESENT_MODE_FIFO_KHR
     sis.surf_fmt <- sis.phys_dev |> find_format_like_srgb_bgra8(sis.surface)
+    sis.render_pass <- s.device |> create_simple_render_pass(sis.surf_fmt)
     return <- sis
 
 
@@ -172,3 +175,45 @@ def create_simple_swapchain(
         views <- views,
         framebuffers <- framebuffers
     ]]
+
+
+def create_simple_render_pass(
+    device : Device;
+    surf_fmt : SurfaceFormatKHR
+) : RenderPass
+    
+    var create_info <- [[RenderPassCreateInfo
+        attachments <- [{auto[] [[AttachmentDescription
+            format = surf_fmt.format,
+            samples = VkSampleCountFlagBits VK_SAMPLE_COUNT_1_BIT,
+            load_op = VkAttachmentLoadOp VK_ATTACHMENT_LOAD_OP_CLEAR,
+            store_op = VkAttachmentStoreOp VK_ATTACHMENT_STORE_OP_STORE,
+            stencil_load_op = (VkAttachmentLoadOp
+                VK_ATTACHMENT_LOAD_OP_DONT_CARE),
+            stencil_store_op = (VkAttachmentStoreOp
+                VK_ATTACHMENT_STORE_OP_DONT_CARE),
+            initial_layout = VkImageLayout VK_IMAGE_LAYOUT_UNDEFINED,
+            final_layout = VkImageLayout VK_IMAGE_LAYOUT_PRESENT_SRC_KHR
+        ]]}],
+        subpasses <- [{auto[] [[SubpassDescription
+            pipeline_bind_point = (VkPipelineBindPoint
+                VK_PIPELINE_BIND_POINT_GRAPHICS),
+            color_attachments <- [{auto[] [[AttachmentReference
+                attachment = 0u,
+                layout = VkImageLayout VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL
+            ]]}]
+        ]]}],
+        dependencies <- [{auto[] [[SubpassDependency
+            src_subpass = VK_SUBPASS_EXTERNAL,
+            dst_subpass = 0u,
+            src_stage_mask = uint(VkPipelineStageFlagBits
+                VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT),
+            src_access_mask = 0u,
+            dst_stage_mask = uint(VkPipelineStageFlagBits
+                VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT),
+            dst_access_mask = uint(VkAccessFlagBits
+                VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT)
+        ]]}]
+    ]]
+    defer() <| { delete create_info; }
+    return <- device |> create_render_pass(create_info)
