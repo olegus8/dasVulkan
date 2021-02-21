@@ -9,6 +9,7 @@ require device
 require generated
 require window
 require instance
+require descriptor_pool
 
 
 struct SimpleVulkanSetup
