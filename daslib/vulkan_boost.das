@@ -94,7 +94,7 @@ def create_simple_sis(title : string; width,height : int
     sis.desc_pool <- sis.device |> create_simple_descriptor_pool
     sis.present_mode = VkPresentModeKHR VK_PRESENT_MODE_FIFO_KHR
     sis.surf_fmt <- sis.phys_dev |> find_format_like_srgb_bgra8(sis.surface)
-    sis.render_pass <- s.device |> create_simple_render_pass(sis.surf_fmt)
+    sis.render_pass <- sis.device |> create_simple_render_pass(sis.surf_fmt)
     return <- sis
 
 
