@@ -572,79 +572,6 @@ def create_example_device(
     return <- physical_device |> create_device(create_info)
 
 
-def find_best_physical_device(
-    instance : Instance;
-    surface : SurfaceKHR
-) : PhysicalDevice
-    var best_score : int = 0
-    var best_device : PhysicalDevice
-    var devices <- instance |> enumerate_physical_devices()
-    defer() <| ${ delete devices; }
-    print("Looking for a suitable physical device\n")
-    for device in devices
-        var props <- device |> get_physical_device_properties()
-        defer() <| { delete props ; }
-        let version = props.api_version |> vk_version_to_boost |> to_string
-        print("Considering {props.device_name} (supports vulkan {version})\n")
-        var score = device |> get_suitability_score(surface)
-        if score > best_score
-            print("Found new best device.\n")
-            best_score = score
-            best_device = device
-    if best_score == 0
-        panic("No suitable physical device found.")
-    return <- best_device
-
-
-def get_suitability_score(device : PhysicalDevice; surface : SurfaceKHR)
-    var score = 1
-
-    var has_graphics = false
-    device |> find_graphics_queue_family(surface, 1) <| $(qfam)
-        has_graphics = true
-    if ! has_graphics
-        print("No graphics. No go.\n")
-        return 0
-    
-    var props <- device |> get_physical_device_properties()
-    if (props.device_type ==
-        VkPhysicalDeviceType VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU
-    )
-        score += 1000
-
-    var feats <- device |> get_physical_device_features()
-    if feats.sampler_anisotropy == 0u
-        print("No anisotropy. No go.\n")
-        return 0
-
-    var exts <- device |> enumerate_device_extension_properties()
-    defer() <| ${ delete exts; }
-    for required_ext in DEFAULT_REQUIRED_EXTENSIONS
-        var found = false
-        for ext in exts
-            if ext.extension_name == required_ext
-                found = true
-                break
-        if ! found
-            print("Required extension {required_ext} not found. No go.\n")
-            return 0
-
-    var formats <- device |> get_physical_device_surface_formats_khr(surface)
-    defer() <| ${ delete formats; }
-    if formats |> length() == 0
-        print("No surface formats. No go.\n")
-        return 0
-
-    var present_modes <- (
-        device |> get_physical_device_surface_present_modes_khr(surface))
-    defer() <| ${ delete present_modes; }
-    if present_modes |> length() == 0
-        print("No present modes. No go.\n")
-        return 0
-
-    return score
-
-
 struct SwapchainIndependentState
     window          : Window
     instance        : InstanceEx
@@ -700,7 +627,8 @@ def create_swapchain_independent_state(
     s.window <- create_window(width, height, title)
     s.instance <- create_instance_ex()
     s.surface <- s.instance.instance |> create_window_surface(s.window)
-    s.phys_dev <- s.instance.instance |> find_best_physical_device(s.surface)
+    s.phys_dev <- s.instance.instance |> find_best_physical_device(
+        s.surface, simple_device_score)
     s.present_mode = VkPresentModeKHR VK_PRESENT_MODE_FIFO_KHR
     s.surf_fmt <- s.phys_dev |> find_format_like_srgb_bgra8(s.surface)
     s.graphics_family <- s.phys_dev |> get_graphics_queue_family(s.surface, 1)

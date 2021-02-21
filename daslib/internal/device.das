@@ -175,3 +175,77 @@ def allocate_descriptor_set(
     ]]
     defer <| { delete create_info; }
     return <- device |> allocate_descriptor_sets <| create_info
+
+
+def find_best_physical_device(
+    instance : Instance;
+    surface : SurfaceKHR;
+    score_fn : block<(d : PhysicalDevice; s : SurfaceKHR) : int>
+) : PhysicalDevice
+    var best_score : int = 0
+    var best_device : PhysicalDevice
+    var devices <- instance |> enumerate_physical_devices()
+    defer() <| ${ delete devices; }
+    print("Looking for a suitable physical device\n")
+    for device in devices
+        var props <- device |> get_physical_device_properties()
+        defer() <| { delete props ; }
+        let version = props.api_version |> vk_version_to_boost |> to_string
+        print("Considering {props.device_name} (supports vulkan {version})\n")
+        var score = score_fn |> invoke(device, surface)
+        if score > best_score
+            print("Found new best device.\n")
+            best_score = score
+            best_device = device
+    if best_score == 0
+        panic("No suitable physical device found.")
+    return <- best_device
+
+
+def simple_device_score(device : PhysicalDevice; surface : SurfaceKHR)
+    var score = 1
+
+    var has_graphics = false
+    device |> find_graphics_queue_family(surface, 1) <| $(qfam)
+        has_graphics = true
+    if ! has_graphics
+        print("No graphics. No go.\n")
+        return 0
+    
+    var props <- device |> get_physical_device_properties()
+    if (props.device_type ==
+        VkPhysicalDeviceType VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU
+    )
+        score += 1000
+
+    var feats <- device |> get_physical_device_features()
+    if feats.sampler_anisotropy == 0u
+        print("No anisotropy. No go.\n")
+        return 0
+
+    var exts <- device |> enumerate_device_extension_properties()
+    defer() <| ${ delete exts; }
+    for required_ext in DEFAULT_REQUIRED_EXTENSIONS
+        var found = false
+        for ext in exts
+            if ext.extension_name == required_ext
+                found = true
+                break
+        if ! found
+            print("Required extension {required_ext} not found. No go.\n")
+            return 0
+
+    var formats <- device |> get_physical_device_surface_formats_khr(surface)
+    defer() <| ${ delete formats; }
+    if formats |> length() == 0
+        print("No surface formats. No go.\n")
+        return 0
+
+    var present_modes <- (
+        device |> get_physical_device_surface_present_modes_khr(surface))
+    defer() <| ${ delete present_modes; }
+    if present_modes |> length() == 0
+        print("No present modes. No go.\n")
+        return 0
+
+    return score
