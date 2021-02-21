@@ -25,8 +25,8 @@ let
 
 def create_simple_descriptor_pool(
     device : Device;
-    sis : SwapchainIndependentState;
-    framebuffers : array<Framebuffer>
+    count : int = 1000;
+    desc_types : array<VkDescriptorType> = ALL_DESCRIPTOR_TYPES
 ) : DescriptorPool
     var info <- [[ DescriptorPoolCreateInfo
         pool_sizes <- [{ auto[]
