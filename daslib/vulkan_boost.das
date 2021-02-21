@@ -82,6 +82,22 @@ def finalize(var s : SimpleSwapchainDependentState explicit)
     memzero(s)
 
 
+def vk_instance(sis : SimpleSwapchainIndependentState) : VkInstance
+    return s.instance.instance.instance
+
+def vk_phys_dev(sis : SimpleSwapchainIndependentState) : VkPhysicalDevice
+    return s.phys_dev.physical_device
+
+def vk_device(sis : SimpleSwapchainIndependentState) : VkDevice
+    return s.device.device
+
+def vk_queue(sis : SimpleSwapchainIndependentState) : VkQueue
+    return s.queue.queue
+
+def vk_desc_pool(sis : SimpleSwapchainIndependentState) : VkDescriptorPool
+    return s.desc_pool.descriptor_pool
+
+
 def create_simple_sis(title : string; width,height : int
 ) : SimpleSwapchainIndependentState
     var sis : SimpleSwapchainIndependentState
