@@ -8,6 +8,7 @@ require vulkan
 require math
 require generated
 require window
+require instance
 
 let
     DEFAULT_REQUIRED_EXTENSIONS <- [{auto[]
