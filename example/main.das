@@ -554,24 +554,6 @@ def create_example_render_pass(
     return <- device |> create_render_pass(create_info)
 
 
-def create_example_device(
-    physical_device : PhysicalDevice;
-    queue_family    : uint
-) : Device
-    var create_info <- [[DeviceCreateInfo
-        queue_create_infos <- [{auto[] [[DeviceQueueCreateInfo
-            queue_family_index = queue_family,
-            queue_priorities <- [{ auto[] 1.0f }]
-        ]]}],
-        enabled_extension_names := DEFAULT_REQUIRED_EXTENSIONS,
-        p_enabled_features = new [[ PhysicalDeviceFeatures
-            sampler_anisotropy = 1u ]]
-    ]]
-    defer() <| ${ delete create_info; }
-
-    return <- physical_device |> create_device(create_info)
-
-
 struct SwapchainIndependentState
     window          : Window
     instance        : InstanceEx
@@ -632,7 +614,7 @@ def create_swapchain_independent_state(
     s.present_mode = VkPresentModeKHR VK_PRESENT_MODE_FIFO_KHR
     s.surf_fmt <- s.phys_dev |> find_format_like_srgb_bgra8(s.surface)
     s.graphics_family <- s.phys_dev |> get_graphics_queue_family(s.surface, 1)
-    s.device <- s.phys_dev |> create_example_device(s.graphics_family)
+    s.device <- s.phys_dev |> create_simple_device(s.graphics_family)
     s.queue <- s.device |> get_device_queue(s.graphics_family)
     s.cmd_pool <- create_command_pool([device=s.device,
         queue_family=s.graphics_family])

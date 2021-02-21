@@ -250,3 +250,21 @@ def simple_device_score(device : PhysicalDevice; surface : SurfaceKHR)
         return 0
 
     return score
+
+
+def create_simple_device(
+    physical_device : PhysicalDevice;
+    queue_family    : uint
+) : Device
+    var create_info <- [[DeviceCreateInfo
+        queue_create_infos <- [{auto[] [[DeviceQueueCreateInfo
+            queue_family_index = queue_family,
+            queue_priorities <- [{ auto[] 1.0f }]
+        ]]}],
+        enabled_extension_names := DEFAULT_REQUIRED_EXTENSIONS,
+        p_enabled_features = new [[ PhysicalDeviceFeatures
+            sampler_anisotropy = 1u ]]
+    ]]
+    defer() <| ${ delete create_info; }
+
+    return <- physical_device |> create_device(create_info)
