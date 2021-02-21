@@ -29,6 +29,8 @@ require internal/window          public
 // hanled correctly when this is moved into one of the publicly
 // shared modules above.
 
+// TODO: move this to vulkan_simple_app
+
 
 let
     MAX_FRAMES_IN_FLIGHT = 2
