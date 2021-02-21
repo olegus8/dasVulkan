@@ -599,7 +599,8 @@ def create_swapchain_independent_state(
     var s : SwapchainIndependentState
     s.setup <- simple_vulkan_setup(title, width, height)
     s.present_mode = VkPresentModeKHR VK_PRESENT_MODE_FIFO_KHR
-    s.surf_fmt <- s.setup.phys_dev |> find_format_like_srgb_bgra8(s.surface)
+    s.surf_fmt <- s.setup.phys_dev |> find_format_like_srgb_bgra8(
+        s.setup.surface)
     s.cmd_pool <- create_command_pool([device=s.setup.device,
         queue_family=s.setup.gfx_qfam])
     s.vert_shmod <- s.setup.device |> create_shader_module_from_file(
