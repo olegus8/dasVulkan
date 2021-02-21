@@ -19,7 +19,7 @@ struct SimpleVulkanSetup
     device    : Device
     queue     : Queue
     desc_pool : DescriptorPool
-    gfx_fam   : uint
+    gfx_qfam  : uint
 
 
 def finalize(var x : SimpleVulkanSetup explicit)
