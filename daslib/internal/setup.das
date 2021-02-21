@@ -40,6 +40,6 @@ def simple_vulkan_setup(title : string; width,height : int) : SimpleVulkanSetup
         s.surface, @@simple_device_score)
     s.gfx_qfam = s.phys_dev |> get_graphics_queue_family(s.surface, 1)
     s.device <- s.phys_dev |> create_simple_device(s.gfx_qfam)
-    s.queue <- device |> get_device_queue(s.gfx_qfam)
+    s.queue <- s.device |> get_device_queue(s.gfx_qfam)
     s.desc_pool <- s.device |> create_simple_descriptor_pool
     return <- s
