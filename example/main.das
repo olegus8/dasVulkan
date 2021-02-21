@@ -675,7 +675,6 @@ def create_swapchain_dependent_state(
         sis.render_pass)
     sds.uniform_bufs <- sis |> create_example_uniform_buffers(
         sds.swapchain.framebuffers)
-    sis.setup.desc_pool <- sis.setup.device |> create_simple_descriptor_pool
     sds.desc_sets <- sis |> create_example_descriptor_sets(
         sis.setup.desc_pool, sds.uniform_bufs)
     sds.pipeline <- sis |> create_example_graphics_pipeline()
