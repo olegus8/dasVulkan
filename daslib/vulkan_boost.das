@@ -52,7 +52,7 @@ struct SimpleSwapchainIndependentState
 
 def finalize(var x : SimpleSwapchainIndependentState explicit)
     x.device |> device_wait_idle
-    delete s.render_pass
+    delete x.render_pass
     delete x.desc_pool
     delete x.device
     delete x.surface
