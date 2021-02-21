@@ -555,12 +555,7 @@ def create_example_render_pass(
 
 
 struct SwapchainIndependentState
-    window          : Window
-    instance        : InstanceEx
-    surface         : SurfaceKHR
-    phys_dev        : PhysicalDevice
-    device          : Device
-    queue           : Queue
+    setup           : SimpleVulkanSetup
     surf_fmt        : SurfaceFormatKHR
     present_mode    : VkPresentModeKHR
     vert_shmod      : ShaderModule
@@ -576,7 +571,6 @@ struct SwapchainIndependentState
     texture         : MemoryBackedImage
     texture_view    : ImageView
     sampler         : Sampler
-    graphics_family : uint
 
 
 def finalize(var s : SwapchainIndependentState explicit)
@@ -594,10 +588,7 @@ def finalize(var s : SwapchainIndependentState explicit)
     delete s.frag_shmod
     delete s.vert_shmod
     delete s.cmd_pool
-    delete s.device
-    delete s.surface
-    delete s.instance
-    delete s.window
+    delete s.setup
     memzero(s)
 
 
@@ -606,7 +597,7 @@ def create_swapchain_independent_state(
     title : string
 ) : SwapchainIndependentState
     var s : SwapchainIndependentState
-    s.window <- create_window(width, height, title)
+    s.setup <- simple_vulkan_setup(title, width, height)
     s.instance <- create_instance_ex()
     s.surface <- s.instance.instance |> create_window_surface(s.window)
     s.phys_dev <- s.instance.instance |> find_best_physical_device(
