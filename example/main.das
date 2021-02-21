@@ -574,7 +574,7 @@ struct SwapchainIndependentState
 
 
 def finalize(var s : SwapchainIndependentState explicit)
-    s.device |> device_wait_idle()
+    s.setup.device |> device_wait_idle
     delete s.sampler
     delete s.texture_view
     delete s.texture
