@@ -693,8 +693,7 @@ def create_swapchain_dependent_state(
         sis.render_pass)
     sds.uniform_bufs <- sis |> create_example_uniform_buffers(
         sds.swapchain.framebuffers)
-    sds.desc_pool <- sis |> create_example_descriptor_pool(
-        sds.swapchain.framebuffers)
+    sds.desc_pool <- sis.device |> create_simple_descriptor_pool
     sds.desc_sets <- sis |> create_example_descriptor_sets(
         sds.desc_pool, sds.uniform_bufs)
     sds.pipeline <- sis |> create_example_graphics_pipeline()
@@ -744,30 +743,6 @@ def create_example_descriptor_sets(
             defer <| { delete writes; }
             sis.device |> update_descriptor_sets(writes)
     return <- dsets
-
-
-def create_example_descriptor_pool(
-    sis : SwapchainIndependentState;
-    framebuffers : array<Framebuffer>
-) : DescriptorPool
-    var info <- [[ DescriptorPoolCreateInfo
-        pool_sizes <- [{ auto[]
-            [[ DescriptorPoolSize
-                type_ = VkDescriptorType VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER,
-                descriptor_count = uint(framebuffers |> length())
-            ]];
-            [[ DescriptorPoolSize
-                type_ = (VkDescriptorType
-                    VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER),
-                descriptor_count = uint(framebuffers |> length())
-            ]]
-        }],
-        max_sets = uint(framebuffers |> length()),
-        flags = uint(VkDescriptorPoolCreateFlagBits
-            VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT)
-    ]]
-    defer() <| { delete info; }
-    return <- sis.device |> create_descriptor_pool(info)
 
 
 def create_example_uniform_buffers(
