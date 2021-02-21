@@ -53,8 +53,8 @@ def create_instance_ex(
     api_version : VulkanVersion = [[ VulkanVersion major=1, minor=2 ]];
     extensions : array<string>  = DEFAULT_INSTANCE_EXTENSIONS;
     layers : array<string>      = DEFAULT_INSTANCE_LAYERS;
-    debug_msg_severity : uint   = DEBUG_UTILS_MESSENGER_DEFAULT_SEVERITY;
-    debug_msg_type : uint       = DEBUG_UTILS_MESSENGER_DEFAULT_TYPE;
+    debug_msg_severity : uint   = debug::DEBUG_UTILS_MESSENGER_DEFAULT_SEVERITY;
+    debug_msg_type : uint       = debug::DEBUG_UTILS_MESSENGER_DEFAULT_TYPE;
     var callback : debug_msg_callback_fn = (
                                   @@debug_utils_messenger_default_callback)
 )
