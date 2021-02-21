@@ -121,7 +121,7 @@ def create_example_pipeline_layout(
 def create_example_graphics_pipeline(
     sis : SwapchainIndependentState
 ) : Pipeline
-    var extent <- sis.phys_dev |> get_swap_extent(sis.surface, sis.window)
+    var extent <- sis.setup.phys_dev |> get_swap_extent(sis.setup.surface, sis.setup.window)
     var create_info <- [[GraphicsPipelineCreateInfo
         layout = weak_copy(sis.pipeline_layout),
         render_pass = weak_copy(sis.render_pass),
@@ -179,21 +179,21 @@ def create_example_graphics_pipeline(
     defer() <| { delete create_info; }
 
     return <- create_graphics_pipeline([
-        device=sis.device, create_info=create_info])
+        device=sis.setup.device, create_info=create_info])
 
 
 def create_example_draw_commands(
     sis : SwapchainIndependentState;
     sds : SwapchainDependentState
 ) : CommandBuffers
-    var cmd_bufs <- sis.device |> allocate_command_buffers_primary(
+    var cmd_bufs <- sis.setup.device |> allocate_command_buffers_primary(
         sis.cmd_pool, sds.swapchain.framebuffers |> length())
     var clear_values <- [{ auto[] [[VkClearValue]] }]
     defer() <| { delete clear_values; }
     for cmd_buf, fbuf, dset in cmd_bufs.command_buffers, sds.swapchain.framebuffers, sds.desc_sets.descriptor_sets
         cmd_buf |> record_command_buffer() <|
             cmd_buf |> record_render_pass(
-                sis.phys_dev, sis.window, sis.surface, sis.render_pass,
+                sis.setup.phys_dev, sis.setup.window, sis.setup.surface, sis.render_pass,
                 fbuf, clear_values
             ) <|
                 cmd_buf |> cmd_bind_pipeline(
@@ -301,24 +301,24 @@ def create_device_local_buffer(
 ) : MemoryBackedBuffer
     let buf_size = typeinfo(sizeof type<T>) * data |> length()
 
-    var buf <- sis.device |> create_memory_backed_buffer(
-        sis.phys_dev, uint64(buf_size),
+    var buf <- sis.setup.device |> create_memory_backed_buffer(
+        sis.setup.phys_dev, uint64(buf_size),
         usage | uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_TRANSFER_DST_BIT),
         uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT))
 
-    var staging <- sis.device |> create_memory_backed_buffer(
-        sis.phys_dev, uint64(buf_size),
+    var staging <- sis.setup.device |> create_memory_backed_buffer(
+        sis.setup.phys_dev, uint64(buf_size),
         uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_TRANSFER_SRC_BIT),
         uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT)|
         uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_COHERENT_BIT))
     defer() <| { delete staging; }
 
-    sis.device |> map_device_memory_to_array(
+    sis.setup.device |> map_device_memory_to_array(
         staging.memory, uint64(buf_size), uint64(0), 0u
     ) <| $(var mapped_data : array<T>#)
         for dst, src in mapped_data, data
             dst = src
-    sis.device |> run_cmd_sync(sis.cmd_pool, sis.queue) <| $(cmd_buf)
+    sis.setup.device |> run_cmd_sync(sis.cmd_pool, sis.setup.queue) <| $(cmd_buf)
         cmd_buf |> cmd_copy_buffer(staging.buffer,buf.buffer,uint64(buf_size))
 
     return <- buf
@@ -346,21 +346,21 @@ def create_device_local_sampled_image_rgba8(
     assert(width % 4 == 0)
     let buf_size = typeinfo(sizeof type<uint>) * width * height
 
-    var staging <- sis.device |> create_memory_backed_buffer(
-        sis.phys_dev, uint64(buf_size),
+    var staging <- sis.setup.device |> create_memory_backed_buffer(
+        sis.setup.phys_dev, uint64(buf_size),
         uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_TRANSFER_SRC_BIT),
         uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT)|
         uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_COHERENT_BIT))
     defer() <| { delete staging; }
 
-    sis.device |> map_device_memory_to_array(
+    sis.setup.device |> map_device_memory_to_array(
         staging.memory, uint64(buf_size), uint64(0), 0u
     ) <| $(var mapped_data : array<uint4>#)
         b |> invoke(mapped_data)
 
     var img <- create_memory_backed_image([
-        device = sis.device,
-        phys_dev = sis.phys_dev,
+        device = sis.setup.device,
+        phys_dev = sis.setup.phys_dev,
         width = width,
         height = height,
         format = VkFormat VK_FORMAT_R8G8B8A8_SRGB,
@@ -389,7 +389,7 @@ def copy_buffer_to_image(
     buffer : MemoryBackedBuffer;
     image : MemoryBackedImage
 )
-    sis.device |> run_cmd_sync(sis.cmd_pool, sis.queue) <| $(cmd_buf)
+    sis.setup.device |> run_cmd_sync(sis.cmd_pool, sis.setup.queue) <| $(cmd_buf)
         var regions <- [{ auto[] [[ BufferImageCopy
             image_subresource <- [[ ImageSubresourceLayers
                 aspect_mask = uint(
@@ -458,7 +458,7 @@ def transition_image_layout(
     ]] }]
     defer() <| { delete barriers; }
 
-    sis.device |> run_cmd_sync(sis.cmd_pool, sis.queue) <| $(cmd_buf)
+    sis.setup.device |> run_cmd_sync(sis.cmd_pool, sis.setup.queue) <| $(cmd_buf)
         cmd_pipeline_barrier([
             command_buffer = cmd_buf,
             src_stage_mask = src_stage_mask,
@@ -467,8 +467,8 @@ def transition_image_layout(
 
 
 def create_example_sampler(sis : SwapchainIndependentState) : Sampler
-    let props <- sis.phys_dev |> get_physical_device_properties()
-    return <- sis.device |> create_sampler( [[ SamplerCreateInfo
+    let props <- sis.setup.phys_dev |> get_physical_device_properties()
+    return <- sis.setup.device |> create_sampler( [[ SamplerCreateInfo
         mag_filter = VkFilter VK_FILTER_LINEAR,
         min_filter = VkFilter VK_FILTER_LINEAR,
         address_mode_u = VkSamplerAddressMode VK_SAMPLER_ADDRESS_MODE_REPEAT,
@@ -598,17 +598,10 @@ def create_swapchain_independent_state(
 ) : SwapchainIndependentState
     var s : SwapchainIndependentState
     s.setup <- simple_vulkan_setup(title, width, height)
-    s.instance <- create_instance_ex()
-    s.surface <- s.instance.instance |> create_window_surface(s.window)
-    s.phys_dev <- s.instance.instance |> find_best_physical_device(
-        s.surface, @@simple_device_score)
     s.present_mode = VkPresentModeKHR VK_PRESENT_MODE_FIFO_KHR
     s.surf_fmt <- s.phys_dev |> find_format_like_srgb_bgra8(s.surface)
-    s.graphics_family <- s.phys_dev |> get_graphics_queue_family(s.surface, 1)
-    s.device <- s.phys_dev |> create_simple_device(s.graphics_family)
-    s.queue <- s.device |> get_device_queue(s.graphics_family)
     s.cmd_pool <- create_command_pool([device=s.device,
-        queue_family=s.graphics_family])
+        queue_family=s.setup.gfx_qfam])
     s.vert_shmod <- s.device |> create_shader_module_from_file(
         "{get_das_root()}/modules/dasVulkan/example/vert.spv")
     s.frag_shmod <- s.device |> create_shader_module_from_file(
@@ -644,7 +637,6 @@ struct SwapchainDependentState
     render_done_sems    : array<Semaphore>
     frame_fences        : array<Fence>
     uniform_bufs        : array<MemoryBackedBuffer>
-    desc_pool           : DescriptorPool
     desc_sets           : DescriptorSets
     draw_cmds           : CommandBuffers
     frames_since_start  : int
@@ -658,7 +650,6 @@ def finalize(var s : SwapchainDependentState explicit)
     delete s.draw_cmds
     delete s.pipeline
     delete s.desc_sets
-    delete s.desc_pool
     delete s.uniform_bufs
     delete s.swapchain
     delete s.frame_fences
@@ -670,23 +661,23 @@ def finalize(var s : SwapchainDependentState explicit)
 def create_swapchain_dependent_state(
     sis : SwapchainIndependentState
 ) : SwapchainDependentState
-    var sds <- [[ SwapchainDependentState _device <- weak_copy(sis.device) ]]
+    var sds <- [[ SwapchainDependentState _device <- weak_copy(sis.setup.device) ]]
     sds.img_avail_sems <- [{for x in range(MAX_FRAMES_IN_FLIGHT);
-        sis.device |> create_semaphore() }]
+        sis.setup.device |> create_semaphore() }]
     sds.render_done_sems <- [{for x in range(MAX_FRAMES_IN_FLIGHT);
-        sis.device |> create_semaphore() }]
+        sis.setup.device |> create_semaphore() }]
     sds.frame_fences <- [{for x in range(MAX_FRAMES_IN_FLIGHT);
-        sis.device |> create_fence([[FenceCreateInfo
+        sis.setup.device |> create_fence([[FenceCreateInfo
             flags=uint(VkFenceCreateFlagBits VK_FENCE_CREATE_SIGNALED_BIT)
     ]]) }]
-    sds.swapchain <- sis.device |> create_swapchain_ex(sis.phys_dev,
-        sis.surface, sis.window, sis.surf_fmt, sis.present_mode,
+    sds.swapchain <- sis.setup.device |> create_swapchain_ex(sis.setup.phys_dev,
+        sis.setup.surface, sis.setup.window, sis.surf_fmt, sis.present_mode,
         sis.render_pass)
     sds.uniform_bufs <- sis |> create_example_uniform_buffers(
         sds.swapchain.framebuffers)
-    sds.desc_pool <- sis.device |> create_simple_descriptor_pool
+    sis.setup.desc_pool <- sis.setup.device |> create_simple_descriptor_pool
     sds.desc_sets <- sis |> create_example_descriptor_sets(
-        sds.desc_pool, sds.uniform_bufs)
+        sis.setup.desc_pool, sds.uniform_bufs)
     sds.pipeline <- sis |> create_example_graphics_pipeline()
     sds.draw_cmds <- create_example_draw_commands(sis, sds)
     sds.imgs_used_by_frames <- [{for x in sds.swapchain.framebuffers; -1}]
@@ -705,7 +696,7 @@ def create_example_descriptor_sets(
             weak_copy(sis.desc_set_layout) }]
     ]]
     defer() <| { delete create_info; }
-    var dsets <- sis.device |> allocate_descriptor_sets(create_info)
+    var dsets <- sis.setup.device |> allocate_descriptor_sets(create_info)
     for dset, ubuf in dsets.descriptor_sets, ubufs
         if true
             var writes <- [{ auto[]
@@ -732,7 +723,7 @@ def create_example_descriptor_sets(
                 ]] }] ]]
             }]
             defer <| { delete writes; }
-            sis.device |> update_descriptor_sets(writes)
+            sis.setup.device |> update_descriptor_sets(writes)
     return <- dsets
 
 
@@ -741,8 +732,8 @@ def create_example_uniform_buffers(
     framebuffers : array<Framebuffer>
 ) : array<MemoryBackedBuffer>
     return <- [{ for fbuf in framebuffers ;
-        sis.device |> create_memory_backed_buffer(
-            sis.phys_dev, uint64(typeinfo(sizeof type<UniformBufferObject>)),
+        sis.setup.device |> create_memory_backed_buffer(
+            sis.setup.phys_dev, uint64(typeinfo(sizeof type<UniformBufferObject>)),
             uint(VkBufferUsageFlagBits VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT),
             uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT)|
             uint(VkMemoryPropertyFlagBits VK_MEMORY_PROPERTY_HOST_COHERENT_BIT)
@@ -813,30 +804,30 @@ def draw_frame(
     var sds : SwapchainDependentState
 )
     let frame = sds.frames_since_start % MAX_FRAMES_IN_FLIGHT
-    sis.device |> wait_for_fence(sds.frame_fences[frame], ULONG_MAX)
+    sis.setup.device |> wait_for_fence(sds.frame_fences[frame], ULONG_MAX)
     var img_acquired = false
     var presented = false
-    sis.device |> with_next_image(sds.swapchain.swapchain,
+    sis.setup.device |> with_next_image(sds.swapchain.swapchain,
         sds.img_avail_sems[frame]
     ) <| $(img_i)
         img_acquired = true
 
         var img_frame = sds.imgs_used_by_frames[img_i]
         if img_frame != -1
-            sis.device |> wait_for_fence(
+            sis.setup.device |> wait_for_fence(
                 sds.frame_fences[img_frame], ULONG_MAX)
         sds.imgs_used_by_frames[img_i] = frame
 
-        sis.device |> update_uniform_buffer(sds.uniform_bufs[img_i],
+        sis.setup.device |> update_uniform_buffer(sds.uniform_bufs[img_i],
             sds.frames_since_start)
 
-        sis.device |> reset_fence(sds.frame_fences[frame])
-        sis.device |> submit_draw(sis.queue,
+        sis.setup.device |> reset_fence(sds.frame_fences[frame])
+        sis.setup.device |> submit_draw(sis.setup.queue,
             sds.draw_cmds.command_buffers[img_i],
             sds.img_avail_sems[frame], sds.render_done_sems[frame],
             sds.frame_fences[frame])
 
-        presented = sis.device |> present(sis.queue, sds.swapchain.swapchain,
+        presented = sis.setup.device |> present(sis.setup.queue, sds.swapchain.swapchain,
             img_i, sds.render_done_sems[frame])
 
     sds.frames_since_start += 1
@@ -853,18 +844,18 @@ def run_example
     var sis <- create_swapchain_independent_state(800, 600, "dasVulkanExample")
     defer <| { delete sis; }
 
-    sis.window.window |> glfwSetKeyCallback <| key_callback
+    sis.setup.window.window |> glfwSetKeyCallback <| key_callback
 
-    var props <- sis.phys_dev |> get_physical_device_properties()
+    var props <- sis.setup.phys_dev |> get_physical_device_properties()
     defer <| { delete props ; }
     print("Using {props.device_name}\n")
 
     var keep_running = true
     while keep_running // swapchain re-creation loop
         // waiting while window is minimized
-        while uint2(0,0) == sis.window |> get_framebuffer_size()
+        while uint2(0,0) == sis.setup.window |> get_framebuffer_size()
             glfwWaitEvents()
-        sis.device |> device_wait_idle()
+        sis.setup.device |> device_wait_idle()
 
         if true
             var sds <- create_swapchain_dependent_state(sis)
@@ -874,12 +865,12 @@ def run_example
                 "images in swap chain\n")
 
             while keep_running
-                keep_running = sis.window.window |> glfwWindowShouldClose()==0
+                keep_running = sis.setup.window.window |> glfwWindowShouldClose()==0
                 glfwPollEvents()
                 if ! draw_frame(sis, sds)
                     break
 
-            sis.device |> device_wait_idle()
+            sis.setup.device |> device_wait_idle()
 
 
 [export]
