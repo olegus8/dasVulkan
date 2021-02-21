@@ -181,7 +181,7 @@ def allocate_descriptor_set(
 def find_best_physical_device(
     instance : Instance;
     surface : SurfaceKHR;
-    score_fn : block<(d : PhysicalDevice; s : SurfaceKHR) : int>
+    score_fn : function<(d : PhysicalDevice; s : SurfaceKHR) : int>
 ) : PhysicalDevice
     var best_score : int = 0
     var best_device : PhysicalDevice

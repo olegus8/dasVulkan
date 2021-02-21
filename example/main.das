@@ -628,7 +628,7 @@ def create_swapchain_independent_state(
     s.instance <- create_instance_ex()
     s.surface <- s.instance.instance |> create_window_surface(s.window)
     s.phys_dev <- s.instance.instance |> find_best_physical_device(
-        s.surface, simple_device_score)
+        s.surface, @@simple_device_score)
     s.present_mode = VkPresentModeKHR VK_PRESENT_MODE_FIFO_KHR
     s.surf_fmt <- s.phys_dev |> find_format_like_srgb_bgra8(s.surface)
     s.graphics_family <- s.phys_dev |> get_graphics_queue_family(s.surface, 1)
