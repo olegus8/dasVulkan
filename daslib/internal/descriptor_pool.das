@@ -29,20 +29,12 @@ def create_simple_descriptor_pool(
     desc_types : array<VkDescriptorType> = ALL_DESCRIPTOR_TYPES
 ) : DescriptorPool
     var info <- [[ DescriptorPoolCreateInfo
-        pool_sizes <- [{ auto[]
-            [[ DescriptorPoolSize
-                type_ = VkDescriptorType VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER,
-                descriptor_count = uint(framebuffers |> length())
-            ]];
-            [[ DescriptorPoolSize
-                type_ = (VkDescriptorType
-                    VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER),
-                descriptor_count = uint(framebuffers |> length())
-            ]]
+        pool_sizes <- [{ for desc_type in desc_types ;
+            [[ DescriptorPoolSize type_=desc_type, descriptor_count=count ]]
         }],
-        max_sets = uint(framebuffers |> length()),
+        max_sets = count * length(desc_types)
         flags = uint(VkDescriptorPoolCreateFlagBits
             VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT)
     ]]
     defer() <| { delete info; }
-    return <- sis.device |> create_descriptor_pool(info)
+    return <- device |> create_descriptor_pool(info)
