@@ -25,6 +25,9 @@ require internal/sync            public
 require internal/window          public
 
 
+// Have to keep this goo here because currently "require" does not resolve 
+// dependencies properly if this is moved to internal/setup.das
+
 struct SimpleVulkanSetup
     window    : Window
     instance  : InstanceEx
