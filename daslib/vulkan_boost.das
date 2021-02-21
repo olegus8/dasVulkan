@@ -20,7 +20,6 @@ require internal/instance        public
 require internal/memory          public
 require internal/pipeline        public
 require internal/queries         public
-require internal/setup           public
 require internal/swapchain       public
 require internal/sync            public
 require internal/window          public
