@@ -4,7 +4,6 @@ options no_aot = true
 module vulkan_simple_app
 
 require daslib/defer
-require daslib/safe_addr
 require vulkan_boost
 
 
