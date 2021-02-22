@@ -80,9 +80,6 @@ def vk_render_pass(s : SimpleSwapchainIndependentState) : VkRenderPass
 def glfw_window(s : SimpleSwapchainIndependentState) : GLFWwindow ?
     return s.window.window
 
-def wait_idle(s : SimpleSwapchainIndependentState)
-    return s.device.device |> device_wait_idle
-
 
 def create_simple_sis(title : string; width,height : int
 ) : SimpleSwapchainIndependentState
@@ -172,6 +169,30 @@ def draw_simple_frame(
 
     sds.frames_since_start += 1
     return img_acquired && presented
+
+
+def simple_frame_loop(
+    sis : SimpleSwapchainIndependentState;
+    var sds : SimpleSwapchainDependentState;
+    draw_fn : block<(c:CommandBuffer; f:Framebuffer)>
+)
+    var keep_running = true
+    while keep_running // swapchain re-creation loop
+        // waiting while window is minimized
+        while uint2(0,0) == sis.setup.window |> get_framebuffer_size()
+            glfwWaitEvents()
+        vk_device(sis) |> device_wait_idle
+
+        delete sds
+        sds <- create_simple_sds(sis)
+
+        while keep_running
+            keep_running = glfwWindowShouldClose(sis|>glfw_window) == 0
+            glfwPollEvents()
+            if ! draw_simple_frame(sis, sds, draw_fn)
+                break
+
+        device_wait_idle(sis |> vk_device)
 
 
 struct SimpleSwapchain
