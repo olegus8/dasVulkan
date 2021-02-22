@@ -197,28 +197,27 @@ def draw_simple_frame(
     return img_acquired && presented
 
 
-def simple_frame_loop(
-    sis : SimpleSwapchainIndependentState;
-    var sds : SimpleSwapchainDependentState;
+def frame_loop(
+    var app : SimpleFrameLoop;
     draw_fn : block<(c:CommandBuffer; f:Framebuffer)>
 )
     var keep_running = true
     while keep_running // swapchain re-creation loop
         // waiting while window is minimized
-        while uint2(0,0) == sis.setup.window |> get_framebuffer_size()
+        while uint2(0,0) == app.sis.window |> get_framebuffer_size
             glfwWaitEvents()
-        vk_device(sis) |> device_wait_idle
+        device_wait_idle(app |> vk_device)
 
-        delete sds
-        sds <- create_simple_sds(sis)
+        delete app.sds
+        app.sds <- create_simple_sds(app.sis)
 
         while keep_running
-            keep_running = glfwWindowShouldClose(sis|>glfw_window) == 0
+            keep_running = glfwWindowShouldClose(app |> glfw_window) == 0
             glfwPollEvents()
-            if ! draw_simple_frame(sis, sds, draw_fn)
+            if ! draw_simple_frame(app.sis, app.sds, draw_fn)
                 break
 
-        device_wait_idle(sis |> vk_device)
+        device_wait_idle(app |> vk_device)
 
 
 struct SimpleSwapchain
