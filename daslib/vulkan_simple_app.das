@@ -59,26 +59,43 @@ def finalize(var s : SimpleSwapchainDependentState explicit)
     memzero(s)
 
 
-def vk_instance(s : SimpleSwapchainIndependentState) : VkInstance
-    return s.instance.instance.instance
+def SimpleVulkanApp
+    sis : SimpleSwapchainIndependentState
+    sds : SimpleSwapchainDependentState
 
-def vk_phys_dev(s : SimpleSwapchainIndependentState) : VkPhysicalDevice
-    return s.phys_dev.physical_device
+def finalize(var a : SimpleVulkanApp explicit)
+    delete a.sds
+    delete a.sis
+    memzero(a)
+    glfwTerminate()
 
-def vk_device(s : SimpleSwapchainIndependentState) : VkDevice
-    return s.device.device
 
-def vk_queue(s : SimpleSwapchainIndependentState) : VkQueue
-    return s.queue.queue
+def vk_instance(a : SimpleVulkanApp) : VkInstance
+    return a.sis.instance.instance.instance
 
-def vk_desc_pool(s : SimpleSwapchainIndependentState) : VkDescriptorPool
-    return s.desc_pool.descriptor_pool
+def vk_phys_dev(a : SimpleVulkanApp) : VkPhysicalDevice
+    return a.sis.phys_dev.physical_device
 
-def vk_render_pass(s : SimpleSwapchainIndependentState) : VkRenderPass
-    return s.render_pass.render_pass
+def vk_device(a : SimpleVulkanApp) : VkDevice
+    return a.sis.device.device
 
-def glfw_window(s : SimpleSwapchainIndependentState) : GLFWwindow ?
-    return s.window.window
+def vk_queue(a : SimpleVulkanApp) : VkQueue
+    return a.sis.queue.queue
+
+def vk_desc_pool(a : SimpleVulkanApp) : VkDescriptorPool
+    return a.sis.desc_pool.descriptor_pool
+
+def vk_render_pass(a : SimpleVulkanApp) : VkRenderPass
+    return a.sis.render_pass.render_pass
+
+def vk_gfx_qfam(a : SimpleVulkanApp) : uint
+    return a.sis.gfx_qfam
+
+def glfw_window(a : SimpleVulkanApp) : GLFWwindow ?
+    return a.sis.window.window
+
+def images_in_swapchain(a : SimpleVulkanApp) : int
+    return a.sds.swapchain.images |> length
 
 
 def create_simple_sis(title : string; width,height : int
@@ -125,6 +142,15 @@ def create_simple_sds(sis : SimpleSwapchainIndependentState
         sis.cmd_pool, sds.swapchain.framebuffers |> length)
 
     return <- sds
+
+
+def create_simple_vulkan_app(title : string; width,height : int)
+    if glfwInit()==0
+		panic("can't init glfw")
+    var app : SimpleVulkanApp
+    app.sis <- create_simple_sis(title, width, height)
+    app.sds <- create_simple_sds(app.sis)
+    return <- app
 
 
 def draw_simple_frame(
