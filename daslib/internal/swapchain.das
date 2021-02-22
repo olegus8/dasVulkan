@@ -4,6 +4,7 @@ options no_aot = true
 require math
 
 require daslib/defer
+require daslib/safe_addr
 require vulkan
 require device
 require image
