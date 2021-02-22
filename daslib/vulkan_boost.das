@@ -103,6 +103,9 @@ def vk_render_pass(s : SimpleSwapchainIndependentState) : VkRenderPass
 def glfw_window(s : SimpleSwapchainIndependentState) : GLFWwindow ?
     return s.window.window
 
+def wait_idle(s : SimpleSwapchainIndependentState)
+    return s.device.device |> device_wait_idle
+
 
 def create_simple_sis(title : string; width,height : int
 ) : SimpleSwapchainIndependentState
