@@ -300,7 +300,7 @@ def create_simple_swapchain(
         images <- images,
         views <- views,
         framebuffers <- framebuffers,
-        extent <- int2(int(extent.width), int(extent.height))
+        extent = int2(int(extent.width), int(extent.height))
     ]]
 
 
