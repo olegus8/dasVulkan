@@ -145,7 +145,8 @@ def create_simple_sds(sis : SimpleSwapchainIndependentState
 
 def draw_simple_frame(
     sis : SimpleSwapchainIndependentState;
-    var sds : SimpleSwapchainDependentState
+    var sds : SimpleSwapchainDependentState;
+    draw_fn : block<(c:CommandBuffer; f:Framebuffer)>
 )
     let frame = sds.frames_since_start % MAX_FRAMES_IN_FLIGHT
     sis.device |> wait_for_fence(sds.frame_fences[frame], ULONG_MAX)
@@ -162,16 +163,19 @@ def draw_simple_frame(
                 sds.frame_fences[img_frame], ULONG_MAX)
         sds.imgs_used_by_frames[img_i] = frame
 
-        //TODO: reset and fill commands here. allow multiple cmd buffers
+        var cmd_buf <- weak_copy(sds.draw_cmds.command_buffers[img_i])
+        cmd_buf |> reset_command_buffer
+        cmd_buf |> record_command_buffer <|
+            invoke(draw_fn, cmd_buf, sds.swapchain.framebuffers[img_i])
 
-        sis.device |> reset_fence(sds.frame_fences[frame])
-        sis.device |> submit_draw(sis.queue,
-
-            //TODO: use command buffers filled above
-            sds.draw_cmds.command_buffers[img_i],
-
-            sds.img_avail_sems[frame], sds.render_done_sems[frame],
-            sds.frame_fences[frame])
+        sis.device |> reset_fence <| sds.frame_fences[frame]
+        queue_submit([queue = sis.queue, command_buffer = cmd_buf,
+            wait_semaphore = safe_addr(sds.img_avail_sems[frame]),
+            wait_dst_stage_mask = uint(VkPipelineStageFlagBits
+                VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT),
+            signal_semaphore = safe_addr(sds.render_done_sems[frame]),
+            fence = sds.frame_fences[frame]
+        ])
 
         presented = sis.device |> present(sis.queue, sds.swapchain.swapchain,
             img_i, sds.render_done_sems[frame])
