@@ -77,7 +77,7 @@ def record_render_pass(
     var info <- [[RenderPassBeginInfo
         render_pass = weak_copy(render_pass),
         framebuffer = weak_copy(framebuffer),
-        render_area = [[ Rect2D extent = extent ]],
+        render_area = [[ Rect2D extent := extent ]],
         clear_values <- clone_to_move(clear_values)
     ]]
     defer() <| ${ delete info; }
