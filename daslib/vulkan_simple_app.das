@@ -117,7 +117,8 @@ def create_simple_sis(title : string; width,height : int
         device=sis.device,
         queue_family=sis.gfx_qfam,
         flags=uint(VkCommandPoolCreateFlagBits
-            VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT]))
+            VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT)
+    ])
     return <- sis
 
 
