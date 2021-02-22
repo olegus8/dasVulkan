@@ -18,8 +18,8 @@ struct SimpleVulkanApp
 def SimpleVulkanApp(
     title : string;
     width, height : int;
-    present_mode : VkPresentModeKHR = [[
-        VkPresentModeKHR VK_PRESENT_MODE_FIFO_KHR]]
+    present_mode : VkPresentModeKHR = (
+        VkPresentModeKHR VK_PRESENT_MODE_FIFO_KHR)
 ) : SimpleVulkanApp
     if glfwInit()==0
 		panic("can't init glfw")
