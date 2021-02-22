@@ -151,6 +151,8 @@ def create_simple_sds(sis : SimpleSwapchainIndependentState
         sis.surface, sis.window, sis.surf_fmt, sis.present_mode,
         sis.render_pass)
     sds.imgs_used_by_frames <- [{for x in sds.swapchain.framebuffers; -1}]
+    sds.draw_cmds <- sis.device |> allocate_command_buffers_primary(
+        sis.cmd_pool, sds.swapchain.framebuffers |> length)
 
     return <- sds
 
