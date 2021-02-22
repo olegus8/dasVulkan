@@ -145,7 +145,7 @@ def frame_loop(
         app.sds <- create_simple_sds(app.sis)
 
         while app.keep_running
-            app.keep_running &= glfwWindowShouldClose(app |> glfw_window) == 0
+            app.keep_running &= (glfwWindowShouldClose(app |> glfw_window)==0)
             glfwPollEvents()
             if ! draw_simple_frame(app.sis, app.sds, draw_fn)
                 break
