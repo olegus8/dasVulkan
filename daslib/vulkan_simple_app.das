@@ -59,7 +59,7 @@ def finalize(var s : SimpleSwapchainDependentState explicit)
     memzero(s)
 
 
-def SimpleVulkanApp
+struct SimpleVulkanApp
     sis : SimpleSwapchainIndependentState
     sds : SimpleSwapchainDependentState
 
