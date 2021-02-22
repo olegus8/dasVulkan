@@ -82,7 +82,7 @@ def queue_present_khr(
 
 def with_next_image(
     device : Device;
-    swapchain : Swapchain;
+    swapchain : SwapchainKHR;
     sem_to_signal : Semaphore;
     b : block<(i:uint)>
 )
