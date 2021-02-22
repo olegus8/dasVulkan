@@ -395,6 +395,7 @@ def add_boost_content(g):
     g.add_gen_func(name = 'vkQueueSubmit',
         ).declare_array(count = 'submitCount', items = 'pSubmits')
     g.add_gen_func(name = 'vkQueueWaitIdle')
+    g.add_gen_func(name = 'vkResetCommandBuffer')
     g.add_gen_func(name = 'vkResetFences',
         ).declare_array(count = 'fenceCount', items = 'pFences')
     g.add_gen_func(name = 'vkResetQueryPool')
