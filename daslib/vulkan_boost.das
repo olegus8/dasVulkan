@@ -143,6 +143,43 @@ def create_simple_sds(sis : SimpleSwapchainIndependentState
     return <- sds
 
 
+def draw_simple_frame(
+    sis : SimpleSwapchainIndependentState;
+    var sds : SimpleSwapchainDependentState
+)
+    let frame = sds.frames_since_start % MAX_FRAMES_IN_FLIGHT
+    sis.device |> wait_for_fence(sds.frame_fences[frame], ULONG_MAX)
+    var img_acquired = false
+    var presented = false
+    sis.device |> with_next_image(sds.swapchain.swapchain,
+        sds.img_avail_sems[frame]
+    ) <| $(img_i)
+        img_acquired = true
+
+        var img_frame = sds.imgs_used_by_frames[img_i]
+        if img_frame != -1
+            sis.device |> wait_for_fence(
+                sds.frame_fences[img_frame], ULONG_MAX)
+        sds.imgs_used_by_frames[img_i] = frame
+
+        //TODO: reset and fill commands here. allow multiple cmd buffers
+
+        sis.device |> reset_fence(sds.frame_fences[frame])
+        sis.device |> submit_draw(sis.queue,
+
+            //TODO: use command buffers filled above
+            sds.draw_cmds.command_buffers[img_i],
+
+            sds.img_avail_sems[frame], sds.render_done_sems[frame],
+            sds.frame_fences[frame])
+
+        presented = sis.device |> present(sis.queue, sds.swapchain.swapchain,
+            img_i, sds.render_done_sems[frame])
+
+    sds.frames_since_start += 1
+    return img_acquired && presented
+
+
 struct SimpleSwapchain
     swapchain       : SwapchainKHR
     images          : array<Image>
