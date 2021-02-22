@@ -70,6 +70,21 @@ def finalize(var a : SimpleVulkanApp explicit)
     glfwTerminate()
 
 
+struct SimpleSwapchain
+    swapchain       : SwapchainKHR
+    images          : array<Image>
+    views           : array<ImageView>
+    framebuffers    : array<Framebuffer>
+
+
+def finalize(var sc : SimpleSwapchain)
+    delete sc.framebuffers
+    delete sc.views
+    delete sc.images
+    delete sc.swapchain
+    memzero(sc)
+
+
 def vk_instance(a : SimpleVulkanApp) : VkInstance
     return a.sis.instance.instance.instance
 
@@ -98,6 +113,39 @@ def images_in_swapchain(a : SimpleVulkanApp) : int
     return a.sds.swapchain.images |> length
 
 
+def SimpleVulkanApp(title : string; width,height : int) : SimpleVulkanApp
+    if glfwInit()==0
+		panic("can't init glfw")
+    var app : SimpleVulkanApp
+    app.sis <- create_simple_sis(title, width, height)
+    app.sds <- create_simple_sds(app.sis)
+    return <- app
+
+
+def frame_loop(
+    var app : SimpleFrameLoop;
+    draw_fn : block<(c:CommandBuffer; f:Framebuffer)>
+)
+    var keep_running = true
+    while keep_running // swapchain re-creation loop
+        // waiting while window is minimized
+        while uint2(0,0) == app.sis.window |> get_framebuffer_size
+            glfwWaitEvents()
+        device_wait_idle(app |> vk_device)
+
+        delete app.sds
+        app.sds <- create_simple_sds(app.sis)
+
+        while keep_running
+            keep_running = glfwWindowShouldClose(app |> glfw_window) == 0
+            glfwPollEvents()
+            if ! draw_simple_frame(app.sis, app.sds, draw_fn)
+                break
+
+        device_wait_idle(app |> vk_device)
+
+
+[private]
 def create_simple_sis(title : string; width,height : int
 ) : SimpleSwapchainIndependentState
     var sis : SimpleSwapchainIndependentState
@@ -122,6 +170,7 @@ def create_simple_sis(title : string; width,height : int
     return <- sis
 
 
+[private]
 def create_simple_sds(sis : SimpleSwapchainIndependentState
 ) : SimpleSwapchainDependentState
     var sds <- [[ SimpleSwapchainDependentState
@@ -145,15 +194,7 @@ def create_simple_sds(sis : SimpleSwapchainIndependentState
     return <- sds
 
 
-def SimpleVulkanApp(title : string; width,height : int) : SimpleVulkanApp
-    if glfwInit()==0
-		panic("can't init glfw")
-    var app : SimpleVulkanApp
-    app.sis <- create_simple_sis(title, width, height)
-    app.sds <- create_simple_sds(app.sis)
-    return <- app
-
-
+[private]
 def draw_simple_frame(
     sis : SimpleSwapchainIndependentState;
     var sds : SimpleSwapchainDependentState;
@@ -198,44 +239,7 @@ def draw_simple_frame(
     return img_acquired && presented
 
 
-def frame_loop(
-    var app : SimpleFrameLoop;
-    draw_fn : block<(c:CommandBuffer; f:Framebuffer)>
-)
-    var keep_running = true
-    while keep_running // swapchain re-creation loop
-        // waiting while window is minimized
-        while uint2(0,0) == app.sis.window |> get_framebuffer_size
-            glfwWaitEvents()
-        device_wait_idle(app |> vk_device)
-
-        delete app.sds
-        app.sds <- create_simple_sds(app.sis)
-
-        while keep_running
-            keep_running = glfwWindowShouldClose(app |> glfw_window) == 0
-            glfwPollEvents()
-            if ! draw_simple_frame(app.sis, app.sds, draw_fn)
-                break
-
-        device_wait_idle(app |> vk_device)
-
-
-struct SimpleSwapchain
-    swapchain       : SwapchainKHR
-    images          : array<Image>
-    views           : array<ImageView>
-    framebuffers    : array<Framebuffer>
-
-
-def finalize(var sc : SimpleSwapchain)
-    delete sc.framebuffers
-    delete sc.views
-    delete sc.images
-    delete sc.swapchain
-    memzero(sc)
-
-
+[private]
 def create_simple_swapchain(
     device          : Device;
     phys_dev        : PhysicalDevice;
@@ -279,6 +283,7 @@ def create_simple_swapchain(
     ]]
 
 
+[private]
 def create_simple_render_pass(
     device : Device;
     surf_fmt : SurfaceFormatKHR
@@ -319,4 +324,3 @@ def create_simple_render_pass(
     ]]
     defer() <| { delete create_info; }
     return <- device |> create_render_pass(create_info)
-
