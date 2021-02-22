@@ -78,3 +78,22 @@ def queue_present_khr(
     defer() <| ${ delete info; }
 
     queue |> queue_present_khr(info, result)
+
+
+def with_next_image(
+    device : Device;
+    swapchain : Swapchain;
+    sem_to_signal : Semaphore;
+    b : block<(i:uint)>
+)
+    var result : VkResult
+    var p_result : VkResult ?
+    unsafe
+        p_result = addr(result)
+    let img_index = device |> acquire_next_image_khr(
+        swapchain, ULONG_MAX, sem_to_signal, [[Fence]], p_result)
+    if result == VkResult VK_SUCCESS
+        b |> invoke(img_index)
+    else
+        assert(result == VkResult VK_ERROR_OUT_OF_DATE_KHR ||
+            result == VkResult VK_SUBOPTIMAL_KHR)
