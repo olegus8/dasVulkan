@@ -224,12 +224,18 @@ def draw_simple_frame(
         ]] ) <|
             draw_fn |> invoke(cmd_buf, sds.swapchain.framebuffers[img_i])
 
+        var p_img_avail : Semaphore ?
+        var p_render_done : Semaphore ?
+        unsafe
+            p_img_avail = addr(sds.img_avail_sems[frame])
+            p_render_done = addr(sds.render_done_sems[frame])
+
         sis.device |> reset_fence <| sds.frame_fences[frame]
         queue_submit([queue = sis.queue, command_buffer = cmd_buf,
-            wait_semaphore = safe_addr(sds.img_avail_sems[frame]),
+            wait_semaphore = p_img_avail,
             wait_dst_stage_mask = uint(VkPipelineStageFlagBits
                 VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT),
-            signal_semaphore = safe_addr(sds.render_done_sems[frame]),
+            signal_semaphore = p_render_done,
             fence = sds.frame_fences[frame]
         ])
 
