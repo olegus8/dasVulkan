@@ -62,6 +62,7 @@ IF(NOT DAS_VULKAN_INCLUDED)
         ADD_MODULE_LIB(libDasModuleVulkan)
         ADD_MODULE_CPP(vulkan)
         ADD_MODULE_NATIVE(vulkan_boost)
+        ADD_MODULE_NATIVE(vulkan_simple_app)
 
         ADD_LIBRARY(libDasModuleVulkan ${DAS_VULKAN_MODULE_SRC})
         TARGET_LINK_LIBRARIES(libDasModuleVulkan
@@ -74,14 +75,6 @@ IF(NOT DAS_VULKAN_INCLUDED)
             ${glfw_INCLUDE_DIR}
         )
         SETUP_CPP11(libDasModuleVulkan)
-
-        DAS_VULKAN_COMPILE_SHADER(${DAS_VULKAN_DIR}/example/vert.glsl vert)
-        DAS_VULKAN_COMPILE_SHADER(${DAS_VULKAN_DIR}/example/frag.glsl frag)
-        ADD_CUSTOM_TARGET(dasVulkanExample ALL DEPENDS
-            ${DAS_VULKAN_DIR}/example/vert.spv
-            ${DAS_VULKAN_DIR}/example/frag.spv
-        )
-        ADD_DEPENDENCIES(dasVulkanExample daScript)
         GET_TARGET_PROPERTY(DAS_VULKAN_INCLUDE_DIRS libDasModuleVulkan INCLUDE_DIRECTORIES)
 
         SET(DAS_VULKAN_HEADERS_TO_BIND

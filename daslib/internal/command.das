@@ -2,6 +2,7 @@ options indenting = 4
 options no_aot = true
 
 require daslib/defer
+require daslib/safe_addr
 require vulkan
 require generated
 require device
@@ -67,18 +68,17 @@ def record_render_pass_ex(
 def record_render_pass(
     command_buffer  : CommandBuffer;
     physical_device : PhysicalDevice;
-    window          : Window;
-    surface         : SurfaceKHR;
     render_pass     : RenderPass;
     framebuffer     : Framebuffer;
+    extent          : int2;
     clear_values    : array<VkClearValue>;
     b : block
 )
-    var extent <- physical_device |> get_swap_extent(surface, window)
     var info <- [[RenderPassBeginInfo
         render_pass = weak_copy(render_pass),
         framebuffer = weak_copy(framebuffer),
-        render_area = [[ Rect2D extent <- extent ]],
+        render_area = [[ Rect2D extent <- [[ Extent2D
+            width=uint(extent.x), height=uint(extent.y) ]] ]],
         clear_values <- clone_to_move(clear_values)
     ]]
     defer() <| ${ delete info; }
@@ -155,6 +155,30 @@ def queue_submit(
         wait_semaphore = wait_semaphore,
         wait_dst_stage_mask = wait_dst_stage_mask,
         signal_semaphore = signal_semaphore,
+        fence = fence,
+        result = result
+    ])
+
+
+def queue_submit(
+    queue               : Queue;
+    command_buffer      : CommandBuffer;
+    wait_semaphore      : Semaphore;
+    wait_dst_stage_mask : uint;
+    signal_semaphore    : Semaphore;
+    fence               : Fence;
+    var result          : VkResult? = [[VkResult?]]
+)
+    var command_buffers <- [[ CommandBuffers
+        command_buffers <- [{ auto[] weak_copy(command_buffer) }]
+    ]]
+    defer() <| ${ delete command_buffers; }
+    queue_submit([
+        queue = queue,
+        command_buffers = command_buffers,
+        wait_semaphore = safe_addr(wait_semaphore),
+        wait_dst_stage_mask = wait_dst_stage_mask,
+        signal_semaphore = safe_addr(signal_semaphore),
         fence = fence,
         result = result
     ])

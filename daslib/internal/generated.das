@@ -1047,6 +1047,20 @@ def queue_wait_idle(
     )
     assert(result_ == VkResult VK_SUCCESS)
 
+def reset_command_buffer(
+    command_buffer : CommandBuffer = [[ CommandBuffer ]];
+    flags : uint = [[ uint ]];
+    var result : VkResult? = [[VkResult?]]
+) : void
+
+    var result_ = VkResult VK_SUCCESS
+
+    result ?? result_ = vkResetCommandBuffer(
+        boost_value_to_vk(command_buffer),
+        boost_value_to_vk(flags)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
+
 def reset_fences(
     device : Device = [[ Device ]];
     fences : array<Fence> = [[ array<Fence> ]];
