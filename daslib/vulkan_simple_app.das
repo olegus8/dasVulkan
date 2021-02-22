@@ -120,6 +120,9 @@ def glfw_window(a : SimpleVulkanApp) : GLFWwindow ?
 def images_in_swapchain(a : SimpleVulkanApp) : int
     return a.sds.swapchain.images |> length
 
+def run_cmd_sync(a : SimpleVulkanApp; b : block<(cmd_buf:CommandBuffer)>)
+    a.sis.device |> run_cmd_sync(a.sis.cmd_pool, a.sis.queue) <| b
+
 
 def frame_loop(
     var app : SimpleVulkanApp;
