@@ -216,12 +216,21 @@ def draw_simple_frame(
 
         let cmd_buf : CommandBuffer <- weak_copy(
             sds.draw_cmds.command_buffers[img_i])
+        let fbuf : Framebuffer <- weak_copy(
+            sds.swapchain.framebuffers[img_i])
+
         cmd_buf |> reset_command_buffer
         cmd_buf |> record_command_buffer_ex([[ CommandBufferBeginInfo
             flags = uint(VkCommandBufferUsageFlagBits
                 VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT)
         ]] ) <|
-            draw_fn |> invoke(cmd_buf, sds.swapchain.framebuffers[img_i])
+            var clear_values <- [{ auto[] [[VkClearValue]] }]
+            defer() <| { delete clear_values; }
+            cmd_buf |> record_render_pass(
+                sis.phys_dev, sis.window, sis.surface, sis.render_pass,
+                fbuf, clear_values
+            ) <|
+                draw_fn |> invoke(cmd_buf, fbuf)
 
         sis.device |> reset_fence <| sds.frame_fences[frame]
         queue_submit([queue = sis.queue, command_buffer = cmd_buf,
