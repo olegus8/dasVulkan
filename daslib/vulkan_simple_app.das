@@ -123,7 +123,7 @@ def images_in_swapchain(a : SimpleVulkanApp) : int
 
 def frame_loop(
     var app : SimpleVulkanApp;
-    draw_fn : block<(c:CommandBuffer; f:Framebuffer)>
+    draw_fn : block<(c:CommandBuffer)>
 )
     var keep_running = true
     while keep_running // swapchain re-creation loop
@@ -197,7 +197,7 @@ def create_simple_sds(sis : SimpleSwapchainIndependentState
 def draw_simple_frame(
     sis : SimpleSwapchainIndependentState;
     var sds : SimpleSwapchainDependentState;
-    draw_fn : block<(c:CommandBuffer; f:Framebuffer)>
+    draw_fn : block<(c:CommandBuffer)>
 )
     let frame = sds.frames_since_start % MAX_FRAMES_IN_FLIGHT
     sis.device |> wait_for_fence(sds.frame_fences[frame], ULONG_MAX)
@@ -216,8 +216,6 @@ def draw_simple_frame(
 
         let cmd_buf : CommandBuffer <- weak_copy(
             sds.draw_cmds.command_buffers[img_i])
-        let fbuf : Framebuffer <- weak_copy(
-            sds.swapchain.framebuffers[img_i])
 
         cmd_buf |> reset_command_buffer
         cmd_buf |> record_command_buffer_ex([[ CommandBufferBeginInfo
@@ -228,9 +226,9 @@ def draw_simple_frame(
             defer() <| { delete clear_values; }
             cmd_buf |> record_render_pass(
                 sis.phys_dev, sis.window, sis.surface, sis.render_pass,
-                fbuf, clear_values
+                sds.swapchain.framebuffers[img_i], clear_values
             ) <|
-                draw_fn |> invoke(cmd_buf, fbuf)
+                draw_fn |> invoke <| cmd_buf
 
         sis.device |> reset_fence <| sds.frame_fences[frame]
         queue_submit([queue = sis.queue, command_buffer = cmd_buf,
