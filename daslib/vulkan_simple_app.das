@@ -229,8 +229,9 @@ def draw_simple_frame(
             var clear_values <- [{ auto[] [[VkClearValue]] }]
             defer() <| { delete clear_values; }
             cmd_buf |> record_render_pass(
-                sis.phys_dev, sis.window, sis.surface, sis.render_pass,
-                sds.swapchain.framebuffers[img_i], clear_values
+                sis.phys_dev, sis.render_pass,
+                sds.swapchain.framebuffers[img_i],
+                sds.swapchain.extent, clear_values
             ) <|
                 draw_fn |> invoke <| cmd_buf
 
