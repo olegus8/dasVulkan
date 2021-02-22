@@ -131,7 +131,7 @@ def frame_loop(
         // waiting while window is minimized
         while uint2(0,0) == app.sis.window |> get_framebuffer_size
             glfwWaitEvents()
-        device_wait_idle(app |> vk_device)
+        app.sis.device |> device_wait_idle
 
         delete app.sds
         app.sds <- create_simple_sds(app.sis)
@@ -142,7 +142,7 @@ def frame_loop(
             if ! draw_simple_frame(app.sis, app.sds, draw_fn)
                 break
 
-        device_wait_idle(app |> vk_device)
+        app.sis.device |> device_wait_idle
 
 
 [private]
