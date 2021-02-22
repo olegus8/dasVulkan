@@ -80,6 +80,25 @@ def queue_present_khr(
     queue |> queue_present_khr(info, result)
 
 
+def present(
+    queue : Queue;
+    swapchain : SwapchainKHR;
+    image_index : uint;
+    sem_to_wait : Semaphore
+) : bool
+    var result : VkResult
+    var p_result : VkResult ?
+    unsafe
+        p_result = addr(result)
+    queue |> queue_present_khr(
+        swapchain, image_index, safe_addr(sem_to_wait), p_result)
+    if result == VkResult VK_SUCCESS
+        return true
+    assert(result == VkResult VK_ERROR_OUT_OF_DATE_KHR ||
+        result == VkResult VK_SUBOPTIMAL_KHR)
+    return false
+
+
 def with_next_image(
     device : Device;
     swapchain : SwapchainKHR;

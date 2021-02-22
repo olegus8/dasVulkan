@@ -232,7 +232,7 @@ def draw_simple_frame(
             fence = sds.frame_fences[frame]
         ])
 
-        presented = sis.device |> present(sis.queue, sds.swapchain.swapchain,
+        presented = sis.queue |> present(sds.swapchain.swapchain,
             img_i, sds.render_done_sems[frame])
 
     sds.frames_since_start += 1
