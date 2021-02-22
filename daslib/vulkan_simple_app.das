@@ -15,11 +15,16 @@ struct SimpleVulkanApp
     sis : SimpleSwapchainIndependentState
     sds : SimpleSwapchainDependentState
 
-def SimpleVulkanApp(title : string; width,height : int) : SimpleVulkanApp
+def SimpleVulkanApp(
+    title : string;
+    width, height : int;
+    present_mode : VkPresentModeKHR = [[
+        VkPresentModeKHR VK_PRESENT_MODE_FIFO_KHR]]
+) : SimpleVulkanApp
     if glfwInit()==0
 		panic("can't init glfw")
     var app : SimpleVulkanApp
-    app.sis <- create_simple_sis(title, width, height)
+    app.sis <- create_simple_sis(title, width, height, present_mode)
     app.sds <- create_simple_sds(app.sis)
     return <- app
 
@@ -149,7 +154,10 @@ def frame_loop(
 
 
 [private]
-def create_simple_sis(title : string; width,height : int
+def create_simple_sis(
+    title : string;
+    width, height : int;
+    present_mode : VkPresentModeKHR
 ) : SimpleSwapchainIndependentState
     var sis : SimpleSwapchainIndependentState
     sis.window <- create_window(width, height, title)
@@ -161,7 +169,7 @@ def create_simple_sis(title : string; width,height : int
     sis.device <- sis.phys_dev |> create_simple_device(sis.gfx_qfam)
     sis.queue <- sis.device |> get_device_queue(sis.gfx_qfam)
     sis.desc_pool <- sis.device |> create_simple_descriptor_pool
-    sis.present_mode = VkPresentModeKHR VK_PRESENT_MODE_FIFO_KHR
+    sis.present_mode = present_mode
     sis.surf_fmt <- sis.phys_dev |> find_format_like_srgb_bgra8(sis.surface)
     sis.render_pass <- sis.device |> create_simple_render_pass(sis.surf_fmt)
     sis.cmd_pool <- create_command_pool([
