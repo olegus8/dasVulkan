@@ -215,7 +215,8 @@ def draw_simple_frame(
                 sds.frame_fences[img_frame], ULONG_MAX)
         sds.imgs_used_by_frames[img_i] = frame
 
-        var cmd_buf <- weak_copy(sds.draw_cmds.command_buffers[img_i])
+        var cmd_buf : CommandBuffer <- weak_copy(
+            sds.draw_cmds.command_buffers[img_i])
         cmd_buf |> reset_command_buffer
         cmd_buf |> record_command_buffer_ex([[ CommandBufferBeginInfo
             flags = uint(VkCommandBufferUsageFlagBits
