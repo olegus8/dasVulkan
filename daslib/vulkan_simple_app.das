@@ -11,6 +11,25 @@ let
     MAX_FRAMES_IN_FLIGHT = 2
 
 
+struct SimpleVulkanApp
+    sis : SimpleSwapchainIndependentState
+    sds : SimpleSwapchainDependentState
+
+def SimpleVulkanApp(title : string; width,height : int) : SimpleVulkanApp
+    if glfwInit()==0
+		panic("can't init glfw")
+    var app : SimpleVulkanApp
+    app.sis <- create_simple_sis(title, width, height)
+    app.sds <- create_simple_sds(app.sis)
+    return <- app
+
+def finalize(var a : SimpleVulkanApp explicit)
+    delete a.sds
+    delete a.sis
+    memzero(a)
+    glfwTerminate()
+
+
 struct SimpleSwapchainIndependentState
     window       : Window
     instance     : InstanceEx
@@ -59,17 +78,6 @@ def finalize(var s : SimpleSwapchainDependentState explicit)
     memzero(s)
 
 
-struct SimpleVulkanApp
-    sis : SimpleSwapchainIndependentState
-    sds : SimpleSwapchainDependentState
-
-def finalize(var a : SimpleVulkanApp explicit)
-    delete a.sds
-    delete a.sis
-    memzero(a)
-    glfwTerminate()
-
-
 struct SimpleSwapchain
     swapchain       : SwapchainKHR
     images          : array<Image>
@@ -111,15 +119,6 @@ def glfw_window(a : SimpleVulkanApp) : GLFWwindow ?
 
 def images_in_swapchain(a : SimpleVulkanApp) : int
     return a.sds.swapchain.images |> length
-
-
-def SimpleVulkanApp(title : string; width,height : int) : SimpleVulkanApp
-    if glfwInit()==0
-		panic("can't init glfw")
-    var app : SimpleVulkanApp
-    app.sis <- create_simple_sis(title, width, height)
-    app.sds <- create_simple_sds(app.sis)
-    return <- app
 
 
 def frame_loop(
