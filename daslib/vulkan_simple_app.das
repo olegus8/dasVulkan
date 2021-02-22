@@ -26,15 +26,15 @@ struct SimpleSwapchainIndependentState
     cmd_pool     : CommandPool
 
 
-def finalize(var x : SimpleSwapchainIndependentState explicit)
-    x.device |> device_wait_idle
+def finalize(var s : SimpleSwapchainIndependentState explicit)
+    s.device |> device_wait_idle
     delete s.cmd_pool
-    delete x.render_pass
-    delete x.desc_pool
-    delete x.device
-    delete x.surface
-    delete x.instance
-    delete x.window
+    delete s.render_pass
+    delete s.desc_pool
+    delete s.device
+    delete s.surface
+    delete s.instance
+    delete s.window
 
 
 struct SimpleSwapchainDependentState
