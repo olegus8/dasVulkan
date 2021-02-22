@@ -62,6 +62,7 @@ IF(NOT DAS_VULKAN_INCLUDED)
         ADD_MODULE_LIB(libDasModuleVulkan)
         ADD_MODULE_CPP(vulkan)
         ADD_MODULE_NATIVE(vulkan_boost)
+        ADD_MODULE_NATIVE(vulkan_simple_app)
 
         ADD_LIBRARY(libDasModuleVulkan ${DAS_VULKAN_MODULE_SRC})
         TARGET_LINK_LIBRARIES(libDasModuleVulkan
