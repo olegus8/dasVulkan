@@ -70,14 +70,15 @@ def record_render_pass(
     physical_device : PhysicalDevice;
     render_pass     : RenderPass;
     framebuffer     : Framebuffer;
-    extent          : Extent2D;
+    extent          : int2;
     clear_values    : array<VkClearValue>;
     b : block
 )
     var info <- [[RenderPassBeginInfo
         render_pass = weak_copy(render_pass),
         framebuffer = weak_copy(framebuffer),
-        render_area = [[ Rect2D extent := extent ]],
+        render_area = [[ Rect2D extent <- [[ Extent2D
+            width=extent.x, height=extent.y ]] ]],
         clear_values <- clone_to_move(clear_values)
     ]]
     defer() <| ${ delete info; }

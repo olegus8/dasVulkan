@@ -89,7 +89,7 @@ struct SimpleSwapchain
     images          : array<Image>
     views           : array<ImageView>
     framebuffers    : array<Framebuffer>
-    extent          : Extent2D
+    extent          : int2
 
 
 def finalize(var sc : SimpleSwapchain)
@@ -300,7 +300,7 @@ def create_simple_swapchain(
         images <- images,
         views <- views,
         framebuffers <- framebuffers,
-        extent <- extent
+        extent <- int2(int(extent.width), int(extent.height))
     ]]
 
 
