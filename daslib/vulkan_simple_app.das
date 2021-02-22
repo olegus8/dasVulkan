@@ -14,6 +14,7 @@ let
 struct SimpleVulkanApp
     sis : SimpleSwapchainIndependentState
     sds : SimpleSwapchainDependentState
+    keep_running : bool = true
 
 def SimpleVulkanApp(
     title : string;
@@ -134,8 +135,7 @@ def frame_loop(
     var app : SimpleVulkanApp;
     draw_fn : block<(c:CommandBuffer)>
 )
-    var keep_running = true
-    while keep_running // swapchain re-creation loop
+    while app.keep_running // swapchain re-creation loop
         // waiting while window is minimized
         while uint2(0,0) == app.sis.window |> get_framebuffer_size
             glfwWaitEvents()
@@ -144,8 +144,8 @@ def frame_loop(
         delete app.sds
         app.sds <- create_simple_sds(app.sis)
 
-        while keep_running
-            keep_running = glfwWindowShouldClose(app |> glfw_window) == 0
+        while app.keep_running
+            app.keep_running &= glfwWindowShouldClose(app |> glfw_window) == 0
             glfwPollEvents()
             if ! draw_simple_frame(app.sis, app.sds, draw_fn)
                 break
