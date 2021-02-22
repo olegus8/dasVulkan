@@ -177,7 +177,10 @@ def draw_simple_frame(
 
         var cmd_buf <- weak_copy(sds.draw_cmds.command_buffers[img_i])
         cmd_buf |> reset_command_buffer
-        cmd_buf |> record_command_buffer <|
+        cmd_buf |> record_command_buffer_ex([[ CommandBufferBeginInfo
+            flags = uint(VkCommandBufferUsageFlagBits
+                VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT)
+        ]] ) <|
             draw_fn |> invoke(cmd_buf, sds.swapchain.framebuffers[img_i])
 
         sis.device |> reset_fence <| sds.frame_fences[frame]
