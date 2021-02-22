@@ -50,10 +50,12 @@ struct SimpleSwapchainIndependentState
     surf_fmt     : SurfaceFormatKHR
     present_mode : VkPresentModeKHR
     render_pass  : RenderPass
+    cmd_pool     : CommandPool
 
 
 def finalize(var x : SimpleSwapchainIndependentState explicit)
     x.device |> device_wait_idle
+    delete s.cmd_pool
     delete x.render_pass
     delete x.desc_pool
     delete x.device
@@ -124,6 +126,11 @@ def create_simple_sis(title : string; width,height : int
     sis.present_mode = VkPresentModeKHR VK_PRESENT_MODE_FIFO_KHR
     sis.surf_fmt <- sis.phys_dev |> find_format_like_srgb_bgra8(sis.surface)
     sis.render_pass <- sis.device |> create_simple_render_pass(sis.surf_fmt)
+    sis.cmd_pool <- create_command_pool([
+        device=sis.device,
+        queue_family=sis.gfx_qfam,
+        flags=uint(VkCommandPoolCreateFlagBits
+            VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT]))
     return <- sis
 
 
