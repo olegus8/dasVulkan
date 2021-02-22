@@ -68,18 +68,16 @@ def record_render_pass_ex(
 def record_render_pass(
     command_buffer  : CommandBuffer;
     physical_device : PhysicalDevice;
-    window          : Window;
-    surface         : SurfaceKHR;
     render_pass     : RenderPass;
     framebuffer     : Framebuffer;
+    extent          : Extent2D;
     clear_values    : array<VkClearValue>;
     b : block
 )
-    var extent <- physical_device |> get_swap_extent(surface, window)
     var info <- [[RenderPassBeginInfo
         render_pass = weak_copy(render_pass),
         framebuffer = weak_copy(framebuffer),
-        render_area = [[ Rect2D extent <- extent ]],
+        render_area = [[ Rect2D extent = extent ]],
         clear_values <- clone_to_move(clear_values)
     ]]
     defer() <| ${ delete info; }

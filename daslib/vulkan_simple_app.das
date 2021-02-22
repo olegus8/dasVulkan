@@ -83,6 +83,7 @@ struct SimpleSwapchain
     images          : array<Image>
     views           : array<ImageView>
     framebuffers    : array<Framebuffer>
+    extent          : Extent2D
 
 
 def finalize(var sc : SimpleSwapchain)
@@ -274,7 +275,7 @@ def create_simple_swapchain(
             components = COMPONENT_MAPPING_IDENTITY
         ]])}]
 
-    let extent <- phys_dev |> get_swap_extent(surface, window)
+    var extent <- phys_dev |> get_swap_extent(surface, window)
 
     var framebuffers <- [{ for view in views;
         create_single_view_framebuffer([
@@ -289,7 +290,8 @@ def create_simple_swapchain(
         swapchain <- swapchain,
         images <- images,
         views <- views,
-        framebuffers <- framebuffers
+        framebuffers <- framebuffers,
+        extent <- extent
     ]]
 
 
