@@ -123,7 +123,7 @@ def SimpleVulkanApp(title : string; width,height : int) : SimpleVulkanApp
 
 
 def frame_loop(
-    var app : SimpleFrameLoop;
+    var app : SimpleVulkanApp;
     draw_fn : block<(c:CommandBuffer; f:Framebuffer)>
 )
     var keep_running = true
