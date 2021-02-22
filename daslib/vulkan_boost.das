@@ -67,6 +67,7 @@ struct SimpleSwapchainDependentState
     img_avail_sems      : array<Semaphore>
     render_done_sems    : array<Semaphore>
     frame_fences        : array<Fence>
+    draw_cmds           : CommandBuffers
     frames_since_start  : int
     imgs_used_by_frames : array<int>
     _device             : Device
@@ -75,6 +76,7 @@ struct SimpleSwapchainDependentState
 def finalize(var s : SimpleSwapchainDependentState explicit)
     s._device |> device_wait_idle()
     delete s.imgs_used_by_frames
+    delete s.draw_cmds
     delete s.swapchain
     delete s.frame_fences
     delete s.render_done_sems
