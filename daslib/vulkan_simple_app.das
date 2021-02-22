@@ -14,7 +14,7 @@ let
 struct SimpleVulkanApp
     sis : SimpleSwapchainIndependentState
     sds : SimpleSwapchainDependentState
-    keep_running : bool = true
+    keep_running : bool
 
 def SimpleVulkanApp(
     title : string;
@@ -24,7 +24,7 @@ def SimpleVulkanApp(
 ) : SimpleVulkanApp
     if glfwInit()==0
 		panic("can't init glfw")
-    var app : SimpleVulkanApp
+    var app <- [[ SimpleVulkanApp keep_running = true ]]
     app.sis <- create_simple_sis(title, width, height, present_mode)
     app.sds <- create_simple_sds(app.sis)
     return <- app
