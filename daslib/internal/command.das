@@ -78,7 +78,7 @@ def record_render_pass(
         render_pass = weak_copy(render_pass),
         framebuffer = weak_copy(framebuffer),
         render_area = [[ Rect2D extent <- [[ Extent2D
-            width=extent.x, height=extent.y ]] ]],
+            width=uint(extent.x), height=uint(extent.y) ]] ]],
         clear_values <- clone_to_move(clear_values)
     ]]
     defer() <| ${ delete info; }
