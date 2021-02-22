@@ -144,7 +144,7 @@ def create_simple_sds(sis : SimpleSwapchainIndependentState
     return <- sds
 
 
-def create_simple_vulkan_app(title : string; width,height : int)
+def SimpleVulkanApp(title : string; width,height : int) : SimpleVulkanApp
     if glfwInit()==0
 		panic("can't init glfw")
     var app : SimpleVulkanApp
