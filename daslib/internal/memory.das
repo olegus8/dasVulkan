@@ -7,9 +7,6 @@ require vulkan
 require generated
 
 
-let VK_WHOLE_SIZE = ~uint64(0)
-
-
 def find_memory_type(
     phys_dev        : PhysicalDevice;
     type_filter     : uint;
