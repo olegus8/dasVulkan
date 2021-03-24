@@ -70,9 +70,9 @@ def map_device_memory_to_array(
 
 
 def flush(device : Device; memory : DeviceMemory)
-  var ranges <- [{ auto[] [[ MappedMemoryRange
-      memory <- weak_copy(memory),
-      size = VK_WHOLE_SIZE
+    var ranges <- [{ auto[] [[ MappedMemoryRange
+        memory <- weak_copy(memory),
+        size = VK_WHOLE_SIZE
     ]] }]
-  defer <| { delete ranges; }
-  device |> flush_mapped_memory_ranges(ranges)
+    defer <| { delete ranges; }
+    device |> flush_mapped_memory_ranges(ranges)
