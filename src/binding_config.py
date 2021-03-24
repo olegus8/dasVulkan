@@ -152,6 +152,7 @@ def add_boost_content(g):
         'VkFormatProperties',
         'VkImageSubresourceRange',
         'VkLayerProperties',
+        'VkMappedMemoryRange',
         'VkMemoryHeap',
         'VkMemoryRequirements',
         'VkMemoryType',
@@ -353,6 +354,8 @@ def add_boost_content(g):
     g.add_gen_func(name = 'vkEnumeratePhysicalDevices',
         ).declare_array(count = 'pPhysicalDeviceCount', items = 'pPhysicalDevices',
         ).declare_output(name = 'pPhysicalDevices')
+    g.add_gen_func(name = 'vkFlushMappedMemoryRanges',
+        ).declare_array(count = 'memoryRangeCount', items = 'pMemoryRanges')
     g.add_gen_func(name = 'vkFreeCommandBuffers', private = True,
         ).declare_array(count = 'commandBufferCount', items = 'pCommandBuffers')
     g.add_gen_func(name = 'vkFreeDescriptorSets', private = True,

@@ -7,6 +7,9 @@ require vulkan
 require generated
 
 
+let VK_WHOLE_SIZE = ~uint64(0)
+
+
 def find_memory_type(
     phys_dev        : PhysicalDevice;
     type_filter     : uint;
@@ -64,3 +67,12 @@ def map_device_memory_to_array(
         mem_ptr |> map_to_array(int(size)) <| $(var mapped : array<T>#)
             b |> invoke(mapped)
     device |> unmap_memory(memory)
+
+
+def flush(device : Device; memory : DeviceMemory)
+  var ranges <- [{ auto[] [[ MappedMemoryRange
+      memory <- weak_copy(memory),
+      size = VK_WHOLE_SIZE
+    ]] }]
+  defer <| { delete ranges; }
+  device |> flush_mapped_memory_ranges(ranges)
