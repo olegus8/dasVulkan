@@ -18,7 +18,7 @@ struct QueueEx
 def finalize(var q : QueueEx & explicit)
     delete q.cmd_pool
     delete q.queue
-    memzero(s)
+    memzero(q)
 
 
 def create_queue_ex(device : Device; family : uint)
