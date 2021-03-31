@@ -13,7 +13,6 @@ struct QueueEx
     queue     : Queue
     family    : uint
     cmd_pool  : CommandPool
-    _device   : Device
 
 def finalize(var q : QueueEx & explicit)
     delete q.cmd_pool
@@ -25,8 +24,7 @@ def create_queue_ex(device : Device; family : uint)
     return <- [[ QueueEx
         queue <- device |> get_device_queue(family, 0u),
         family = family,
-        cmd_pool <- create_command_pool([device=device, queue_family=family]),
-        _device <- weak_copy(device)
+        cmd_pool <- create_command_pool([device=device, queue_family=family])
     ]]
 
 
