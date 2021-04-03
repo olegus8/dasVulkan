@@ -49,3 +49,26 @@ def create_graphics_pipeline(
     // TODO: Here pipelines[0] is not memzeroed, and hence gets deleted twice,
     // first time in defer() above, second time -- when caller calls delete
     //return <- pipelines[0]
+
+
+def create_compute_pipeline(
+    device : Device = [[ Device ]];
+    pipeline_cache : PipelineCache = [[ PipelineCache ]];
+    var create_info : ComputePipelineCreateInfo = [[
+        ComputesPipelineCreateInfo ]];
+    var result : VkResult? = [[VkResult?]]
+) : Pipeline
+
+    var create_infos <- [{ auto[] clone_to_move(create_info) }]
+    defer() <| ${ delete create_infos; }
+    var pipelines <- create_compute_pipelines([
+        device = device,
+        pipeline_cache = pipeline_cache,
+        create_infos = create_infos,
+        result = result
+    ])
+    defer() <| ${ delete pipelines; }
+    assert(pipelines |> length() == 1)
+
+    var pipeline <- pipelines[0]
+    return <- pipeline
