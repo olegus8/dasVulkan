@@ -55,7 +55,7 @@ def create_compute_pipeline(
     device : Device = [[ Device ]];
     pipeline_cache : PipelineCache = [[ PipelineCache ]];
     var create_info : ComputePipelineCreateInfo = [[
-        ComputesPipelineCreateInfo ]];
+        ComputePipelineCreateInfo ]];
     var result : VkResult? = [[VkResult?]]
 ) : Pipeline
 
