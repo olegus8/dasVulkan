@@ -32,6 +32,26 @@ IF(NOT DAS_VULKAN_INCLUDED)
         ENDIF()
     ENDMACRO()
 
+    MACRO(DAS_VULKAN_COMPILE_SHADER_EX input output entry_point stage)
+        IF(NOT DAS_VULKAN_GLSL_EXE)
+            MESSAGE(STATUS "glslc not found. Will use precompiled shaders.")
+        ELSE()
+            get_filename_component(input_src ${input} ABSOLUTE)
+            get_filename_component(input_dir ${input_src} DIRECTORY)
+            get_filename_component(output_src ${output} ABSOLUTE)
+            ADD_CUSTOM_COMMAND(
+                DEPENDS ${input_src}
+                OUTPUT ${output_src}
+                WORKING_DIRECTORY ${input_dir}
+                VERBATIM
+                COMMAND ${DAS_VULKAN_GLSL_EXE}
+                    -fshader-stage=${stage}
+                    -fentry-point=${entry_point}
+                    ${input_src} -o ${output_src}
+                COMMENT "glsl ${input} to ${output}")
+        ENDIF()
+    ENDMACRO()
+
     IF(NOT Vulkan_FOUND)
         MESSAGE(STATUS "Vulkan not found. Not building dasVulkan.")
     ELSEIF(NOT DAS_VULKAN_GLSL_EXE)
