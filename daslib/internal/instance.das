@@ -69,11 +69,12 @@ def create_instance_ex(
     ]]
 
     var debug_msg_create_info <- debug_utils_messenger_create_info([
-        next <- validation_features,
         debug_ctx = instance._debug_ctx,
         message_severity = debug_msg_severity,
         message_type = debug_msg_type
     ])
+
+    debug_msg_create_info.next <- validation_features
 
     var all_extensions <- get_required_instance_extensions()
     for ext in extensions
