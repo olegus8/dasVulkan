@@ -215,7 +215,7 @@ def add_boost_content(g):
 
     debug_msg_create_info = g.add_gen_struct(
         name='VkDebugUtilsMessengerCreateInfoEXT', vk_to_boost=False,
-        next_in_chain = debug_msg_create_info)
+        next_in_chain = debug_validation_features)
 
     g.add_gen_struct(name = 'VkBufferCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'queueFamilyIndexCount', items = 'pQueueFamilyIndices')
