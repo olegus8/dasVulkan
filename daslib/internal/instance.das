@@ -63,7 +63,7 @@ def create_instance_ex(
         _debug_ctx <- create_debug_msg_context(callback)
     ]]
 
-    var validation_features <- [[ VkValidationFeaturesEXT
+    var validation_features <- [[ ValidationFeaturesEXT
         enabled_validation_features := enabled_validation_features,
         disabled_validation_features := disabled_validation_features
     ]]
