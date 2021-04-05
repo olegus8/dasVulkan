@@ -211,7 +211,9 @@ def add_boost_content(g):
         g.add_gen_struct(name=name, vk_to_boost=False)
 
     debug_validation_features = g.add_gen_struct(
-        name='VkValidationFeaturesEXT', vk_to_boost=False)
+            name='VkValidationFeaturesEXT', vk_to_boost=False
+        ).declare_array(count='enabledValidationFeatureCount', items = 'pEnabledValidationFeatures'
+        ).declare_array(count='disabledValidationFeatureCount', items = 'pDisabledValidationFeatures')
 
     debug_msg_create_info = g.add_gen_struct(
         name='VkDebugUtilsMessengerCreateInfoEXT', vk_to_boost=False,

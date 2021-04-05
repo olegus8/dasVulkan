@@ -55,14 +55,21 @@ def create_instance_ex(
     layers : array<string>      = DEFAULT_INSTANCE_LAYERS;
     debug_msg_severity : uint   = DEBUG_UTILS_MESSENGER_DEFAULT_SEVERITY;
     debug_msg_type : uint       = DEBUG_UTILS_MESSENGER_DEFAULT_TYPE;
-    var callback : debug_msg_callback_fn = (
-                                  @@debug_utils_messenger_default_callback)
+    enabled_validation_features : array<VkValidationFeatureEnableEXT> = [[ array<VkValidationFeatureEnableEXT> ]];
+    disabled_validation_features : array<VkValidationFeatureDisableEXT> = [[ array<VkValidationFeatureDisableEXT> ]];
+    var callback : debug_msg_callback_fn = @@debug_utils_messenger_default_callback
 )
     var instance <- [[ InstanceEx
         _debug_ctx <- create_debug_msg_context(callback)
     ]]
 
+    var validation_features <- [[ VkValidationFeaturesEXT
+        enabled_validation_features := enabled_validation_features,
+        disabled_validation_features := disabled_validation_features
+    ]]
+
     var debug_msg_create_info <- debug_utils_messenger_create_info([
+        next <- validation_features,
         debug_ctx = instance._debug_ctx,
         message_severity = debug_msg_severity,
         message_type = debug_msg_type
