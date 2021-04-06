@@ -43,7 +43,10 @@ def emplace(var queue : QueueEx; var info : SubmitInfo)
     for w in queue._waits
         info.wait_semaphores |> emplace <| w.weak_sem
         info.wait_dst_stage_mask |> emplace <| w.dst_stage_mask
+    for sem in queue._signals
+        info.signal_semaphores |> emplace <| sem
     queue._waits |> clear
+    queue._signals |> clear
     queue._submits |> emplace <| info
 
 
@@ -57,14 +60,8 @@ def wait_in_next(
         weak_sem <- weak_copy(sem), dst_stage_mask=dst_stage_mask ]]
 
 
-def signal_in_next(
-    var queue : QueueEx;
-    sem : Semaphore;
-    dst_stage_mask : uint = uint(
-        VkPipelineStageFlagBits VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT)
-)
-    queue._waits |> emplace <| [[ QueueWait
-        weak_sem <- weak_copy(sem), dst_stage_mask=dst_stage_mask ]]
+def signal_in_next(var queue : QueueEx; sem : Semaphore)
+    queue._signals |> emplace <| weak_copy(sem)
 
 
 def submit(var queue : QueueEx; fence_to_signal : Fence = [[ Fence ]])
