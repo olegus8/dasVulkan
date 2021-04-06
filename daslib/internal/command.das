@@ -20,9 +20,9 @@ def finalize(var q : QueueEx & explicit)
     memzero(q)
 
 
-def create_queue_ex(device : Device; family : uint)
+def create_queue_ex(device : Device; family : uint; index : uint=0u)
     return <- [[ QueueEx
-        queue <- device |> get_device_queue(family, 0u),
+        queue <- device |> get_device_queue(family, index),
         family = family,
         cmd_pool <- create_command_pool([device=device, queue_family=family])
     ]]
