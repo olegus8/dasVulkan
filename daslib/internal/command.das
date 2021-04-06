@@ -10,16 +10,20 @@ require window
 
 
 struct QueueEx
-    queue       : Queue
-    family      : uint
-    cmd_pool    : CommandPool
-    _waits      : array<QueueWait>
-    _signals    : array<Semaphore>
-    _submits    : array<SubmitInfo>
+    queue           : Queue
+    family          : uint
+    cmd_pool        : CommandPool
+    _sems           : array<Semaphore>
+    _recycled_sems  : array<Semaphore>
+    _waits          : array<QueueWait>
+    _signals        : array<Semaphore>
+    _submits        : array<SubmitInfo>
 
 def finalize(var q : QueueEx & explicit)
     delete q.cmd_pool
     delete q.queue
+    delete q._sems
+    delete q._recycled_sems
     delete q._waits
     delete q._signals
     delete q._submits
@@ -54,6 +58,14 @@ def push(var queue : QueueEx; cmds : CommandBuffers)
     queue |> emplace <| [[ SubmitInfo command_buffers:=cmds.command_buffers ]]
 
 
+def push_seq(var queue : QueueEx; cmds : CommandBuffers)
+    var sem <- queue |> get_reusable_sem
+    queue |> next_signal    <| sem
+    queue |> push           <| cmds
+    queue |> next_wait      <| sem
+    queue |> recycle        <| sem
+
+
 def next_wait(
     var queue : QueueEx;
     sem : Semaphore;
@@ -72,6 +84,9 @@ def submit(var queue : QueueEx; fence_to_signal : Fence = [[ Fence ]])
     queue.queue |> queue_submit(queue._submits, fence_to_signal)
     for s in queue._submits
         delete s
+    for s in queue._recycled_sems
+        queue._sems |> emplace <| s
+    queue._recycled_sems |> clear
     queue._submits |> clear
 
 
