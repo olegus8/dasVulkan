@@ -54,7 +54,7 @@ def push(var queue : QueueEx; cmds : CommandBuffers)
     queue |> emplace <| [[ SubmitInfo command_buffers:=cmds.command_buffers ]]
 
 
-def wait_in_next(
+def next_wait(
     var queue : QueueEx;
     sem : Semaphore;
     dst_stage_mask : uint = uint(
@@ -64,7 +64,7 @@ def wait_in_next(
         weak_sem <- weak_copy(sem), dst_stage_mask=dst_stage_mask ]]
 
 
-def signal_in_next(var queue : QueueEx; sem : Semaphore)
+def next_signal(var queue : QueueEx; sem : Semaphore)
     queue._signals |> emplace <| weak_copy(sem)
 
 
