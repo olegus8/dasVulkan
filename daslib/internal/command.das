@@ -66,11 +66,18 @@ def push(var queue : QueueEx; cmds : CommandBuffers)
 
 
 def push_seq(var queue : QueueEx; cmds : CommandBuffers)
-    var sem <- queue |> get_reusable_sem
+    var sem <- queue |> reusable_semaphore
     queue |> next_signal    <| sem
     queue |> push           <| cmds
     queue |> next_wait      <| sem
     queue |> recycle        <| sem
+
+
+def reusable_semaphore(var queue : QueueEx) : Semaphore
+    return <- queue._sems |> pop
+
+def recycle(var queue : QueueEx; var semaphore : Semaphore)
+    queue._recycled_sems |> emplace <| semaphore
 
 
 def next_wait(
