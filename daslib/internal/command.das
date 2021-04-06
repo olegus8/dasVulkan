@@ -10,13 +10,18 @@ require window
 
 
 struct QueueEx
-    queue     : Queue
-    family    : uint
-    cmd_pool  : CommandPool
+    queue           : Queue
+    family          : uint
+    cmd_pool        : CommandPool
+    _sems_to_wait   : array<Semaphore>  // must be weak copies
+    _submits        : array<SubmitInfo> // must be weak copies
+    _device         : Device
 
 def finalize(var q : QueueEx & explicit)
     delete q.cmd_pool
     delete q.queue
+    delete q._sems_to_wait
+    delete q._submits
     memzero(q)
 
 
@@ -24,8 +29,25 @@ def create_queue_ex(device : Device; family : uint; index : uint=0u)
     return <- [[ QueueEx
         queue <- device |> get_device_queue(family, index),
         family = family,
-        cmd_pool <- create_command_pool([device=device, queue_family=family])
+        cmd_pool <- create_command_pool([device=device, queue_family=family]),
+        _device <- weak_copy(device)
     ]]
+
+
+def emplace(var queue : QueueEx; var info : SubmitInfo)
+    for sem in queue._sems_to_wait
+        info.wait_semaphores |> emplace <| sem
+    queue._sems_to_wait |> clear
+    queue._submits |> emplace <| info
+
+
+def wait_in_next_emplace(var queue : QueueEx; var sem : Semaphore)
+    queue._sems_to_wait |> emplace <| sem
+
+
+def submit(var queue : QueueEx; fence_to_signal : Fence = [[ Fence ]])
+    queue._device |> queue_submit(queue._submits, fence_to_signal)
+    queue._submits |> clear
 
 
 def allocate_command_buffers_primary(
