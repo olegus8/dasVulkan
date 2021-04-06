@@ -13,11 +13,13 @@ struct QueueEx
     queue           : Queue
     family          : uint
     cmd_pool        : CommandPool
+    sems_underflow  : int
     _sems           : array<Semaphore>
     _recycled_sems  : array<Semaphore>
     _waits          : array<QueueWait>
     _signals        : array<Semaphore>
     _submits        : array<SubmitInfo>
+    _device         : Device
 
 def finalize(var q : QueueEx & explicit)
     delete q.cmd_pool
@@ -27,6 +29,7 @@ def finalize(var q : QueueEx & explicit)
     delete q._waits
     delete q._signals
     delete q._submits
+    delete q._device
     memzero(q)
 
 
@@ -46,7 +49,8 @@ def create_queue_ex(
         family = family,
         cmd_pool <- create_command_pool([device=device, queue_family=family]),
         _sems <- [{ for i in range(recyclable_sems);
-            device |> create_semaphore }]
+            device |> create_semaphore }],
+        _device <- weak_copy(device)
     ]]
 
 
@@ -74,7 +78,15 @@ def push_seq(var queue : QueueEx; cmds : CommandBuffers)
 
 
 def reusable_semaphore(var queue : QueueEx) : Semaphore
-    return <- queue._sems |> pop
+    var sem : Semaphore
+    if length(queue._sems) > 0:
+        sem <- queue._sems[length(queue._sems)-1]
+        queue._sems |> pop
+    else
+        sem <- queue._device |> create_semaphore
+        queue.sems_underflow++
+    return <- sem
+    
 
 def recycle(var queue : QueueEx; var semaphore : Semaphore)
     queue._recycled_sems |> emplace <| semaphore
