@@ -44,7 +44,9 @@ def create_queue_ex(
     return <- [[ QueueEx
         queue <- device |> get_device_queue(family, index),
         family = family,
-        cmd_pool <- create_command_pool([device=device, queue_family=family])
+        cmd_pool <- create_command_pool([device=device, queue_family=family]),
+        _sems <- [{ auto[] for i in range(recyclable_sems);
+            device |> create_semaphore }]
     ]]
 
 
