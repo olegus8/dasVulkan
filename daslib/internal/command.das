@@ -10,19 +10,17 @@ require window
 
 
 struct QueueEx
-    queue          : Queue
-    family         : uint
-    cmd_pool       : CommandPool
-    _weak_waits    : array<QueueWait>
-    _weak_submits  : array<SubmitInfo>
-    _weak_device   : Device
+    queue       : Queue
+    family      : uint
+    cmd_pool    : CommandPool
+    _waits      : array<QueueWait>
+    _submits    : array<SubmitInfo>
 
 def finalize(var q : QueueEx & explicit)
     delete q.cmd_pool
     delete q.queue
-    delete q._weak_waits
-    delete q._weak_submits
-    delete q._weak_device
+    delete q._waits
+    delete q._submits
     memzero(q)
 
 
@@ -35,17 +33,16 @@ def create_queue_ex(device : Device; family : uint; index : uint=0u)
     return <- [[ QueueEx
         queue <- device |> get_device_queue(family, index),
         family = family,
-        cmd_pool <- create_command_pool([device=device, queue_family=family]),
-        _weak_device <- weak_copy(device)
+        cmd_pool <- create_command_pool([device=device, queue_family=family])
     ]]
 
 
 def emplace(var queue : QueueEx; var info : SubmitInfo)
-    for w in queue._weak_waits
+    for w in queue._waits
         info.wait_semaphores |> emplace <| w.weak_sem
         info.wait_dst_stage_mask |> emplace <| w.dst_stage_mask
-    queue._weak_waits |> clear
-    queue._weak_submits |> emplace <| info
+    queue._waits |> clear
+    queue._submits |> emplace <| info
 
 
 def wait_in_next_emplaced(
@@ -54,13 +51,13 @@ def wait_in_next_emplaced(
     dst_stage_mask : uint = uint(
         VkPipelineStageFlagBits VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT)
 )
-    queue._weak_waits |> emplace <| [[ QueueWait
+    queue._waits |> emplace <| [[ QueueWait
         weak_sem <- weak_copy(sem), dst_stage_mask=dst_stage_mask ]]
 
 
 def submit(var queue : QueueEx; fence_to_signal : Fence = [[ Fence ]])
-    queue._weak_device |> queue_submit(queue._weak_submits, fence_to_signal)
-    queue._weak_submits |> clear
+    queue_submit(queue._submits, fence_to_signal)
+    queue._submits |> clear
 
 
 def allocate_command_buffers_primary(
