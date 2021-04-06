@@ -35,7 +35,12 @@ struct QueueWait
     dst_stage_mask  : uint
 
 
-def create_queue_ex(device : Device; family : uint; index : uint=0u)
+def create_queue_ex(
+    device              : Device;
+    family              : uint;
+    index               : uint = 0u;
+    recyclable_sems     : int = 100
+)
     return <- [[ QueueEx
         queue <- device |> get_device_queue(family, index),
         family = family,
