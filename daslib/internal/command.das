@@ -14,12 +14,14 @@ struct QueueEx
     family      : uint
     cmd_pool    : CommandPool
     _waits      : array<QueueWait>
+    _signals    : array<Semaphore>
     _submits    : array<SubmitInfo>
 
 def finalize(var q : QueueEx & explicit)
     delete q.cmd_pool
     delete q.queue
     delete q._waits
+    delete q._signals
     delete q._submits
     memzero(q)
 
@@ -45,7 +47,17 @@ def emplace(var queue : QueueEx; var info : SubmitInfo)
     queue._submits |> emplace <| info
 
 
-def wait_in_next_emplaced(
+def wait_in_next(
+    var queue : QueueEx;
+    sem : Semaphore;
+    dst_stage_mask : uint = uint(
+        VkPipelineStageFlagBits VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT)
+)
+    queue._waits |> emplace <| [[ QueueWait
+        weak_sem <- weak_copy(sem), dst_stage_mask=dst_stage_mask ]]
+
+
+def signal_in_next(
     var queue : QueueEx;
     sem : Semaphore;
     dst_stage_mask : uint = uint(
