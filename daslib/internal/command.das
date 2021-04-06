@@ -79,7 +79,7 @@ def push_seq(var queue : QueueEx; cmds : CommandBuffers)
 
 def reusable_semaphore(var queue : QueueEx) : Semaphore
     var sem : Semaphore
-    if length(queue._sems) > 0:
+    if length(queue._sems) > 0
         sem <- queue._sems[length(queue._sems)-1]
         queue._sems |> pop
     else
