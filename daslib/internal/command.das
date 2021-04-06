@@ -70,6 +70,8 @@ def signal_in_next(var queue : QueueEx; sem : Semaphore)
 
 def submit(var queue : QueueEx; fence_to_signal : Fence = [[ Fence ]])
     queue.queue |> queue_submit(queue._submits, fence_to_signal)
+    for s in queue._submits
+        delete s
     queue._submits |> clear
 
 
