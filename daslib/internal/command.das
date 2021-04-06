@@ -56,7 +56,7 @@ def wait_in_next_emplaced(
 
 
 def submit(var queue : QueueEx; fence_to_signal : Fence = [[ Fence ]])
-    queue_submit(queue._submits, fence_to_signal)
+    queue.queue |> queue_submit(queue._submits, fence_to_signal)
     queue._submits |> clear
 
 
