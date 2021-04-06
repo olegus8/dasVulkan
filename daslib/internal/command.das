@@ -50,6 +50,10 @@ def emplace(var queue : QueueEx; var info : SubmitInfo)
     queue._submits |> emplace <| info
 
 
+def push(var queue : QueueEx; cmds : CommandBuffers)
+    queue |> emplace <| [[ SubmitInfo command_buffers:=cmds.command_buffers ]]
+
+
 def wait_in_next(
     var queue : QueueEx;
     sem : Semaphore;
