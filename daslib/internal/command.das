@@ -10,19 +10,25 @@ require window
 
 
 struct QueueEx
-    queue           : Queue
-    family          : uint
-    cmd_pool        : CommandPool
-    _sems_to_wait   : array<Semaphore>  // must be weak copies
-    _submits        : array<SubmitInfo> // must be weak copies
-    _device         : Device
+    queue          : Queue
+    family         : uint
+    cmd_pool       : CommandPool
+    _weak_waits    : array<QueueWait>
+    _weak_submits  : array<SubmitInfo>
+    _weak_device   : Device
 
 def finalize(var q : QueueEx & explicit)
     delete q.cmd_pool
     delete q.queue
-    delete q._sems_to_wait
-    delete q._submits
+    delete q._weak_waits
+    delete q._weak_submits
+    delete q._weak_device
     memzero(q)
+
+
+struct QueueWait
+    weak_sem        : Semaphore
+    dst_stage_mask  : uint
 
 
 def create_queue_ex(device : Device; family : uint; index : uint=0u)
@@ -30,24 +36,31 @@ def create_queue_ex(device : Device; family : uint; index : uint=0u)
         queue <- device |> get_device_queue(family, index),
         family = family,
         cmd_pool <- create_command_pool([device=device, queue_family=family]),
-        _device <- weak_copy(device)
+        _weak_device <- weak_copy(device)
     ]]
 
 
 def emplace(var queue : QueueEx; var info : SubmitInfo)
-    for sem in queue._sems_to_wait
-        info.wait_semaphores |> emplace <| sem
-    queue._sems_to_wait |> clear
-    queue._submits |> emplace <| info
+    for w in queue._weak_waits
+        info.wait_semaphores |> emplace <| w.weak_sem
+        info.wait_dst_stage_mask |> emplace <| w.dst_stage_mask
+    queue._weak_waits |> clear
+    queue._weak_submits |> emplace <| info
 
 
-def wait_in_next_emplace(var queue : QueueEx; var sem : Semaphore)
-    queue._sems_to_wait |> emplace <| sem
+def wait_in_next_emplace(
+    var queue : QueueEx;
+    sem : Semaphore;
+    dst_stage_mask : uint = uint(
+        VkPipelineStageFlagBits VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT)
+)
+    queue._weak_waits |> emplace <| [[ QueueWait
+        weak_sem <- weak_copy(sem), dst_stage_mask=dst_stage_mask ]]
 
 
 def submit(var queue : QueueEx; fence_to_signal : Fence = [[ Fence ]])
-    queue._device |> queue_submit(queue._submits, fence_to_signal)
-    queue._submits |> clear
+    queue._weak_device |> queue_submit(queue._weak_submits, fence_to_signal)
+    queue._weak_submits |> clear
 
 
 def allocate_command_buffers_primary(
