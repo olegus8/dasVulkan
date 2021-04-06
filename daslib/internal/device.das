@@ -31,13 +31,12 @@ def get_graphics_queue_family(
 
 def get_exact_queue_family(
     physical_device : PhysicalDevice;
-    surface : SurfaceKHR;
     min_queue_count : int;
     queue_flags : uint
 ) : uint
     var found_index : uint = UINT_MAX
     physical_device |> find_exact_queue_family(
-        surface, min_queue_count, queue_flags
+      min_queue_count, queue_flags
     ) <| $(qfam)
         found_index = qfam
     assert(found_index != UINT_MAX)
@@ -75,7 +74,6 @@ def find_graphics_queue_family(
 
 def find_exact_queue_family(
     physical_device : PhysicalDevice;
-    surface : SurfaceKHR;
     min_queue_count : int;
     queue_flags : uint;
     b : block<(qfam:uint)>
