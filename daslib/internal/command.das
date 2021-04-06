@@ -48,7 +48,7 @@ def emplace(var queue : QueueEx; var info : SubmitInfo)
     queue._weak_submits |> emplace <| info
 
 
-def wait_in_next_emplace(
+def wait_in_next_emplaced(
     var queue : QueueEx;
     sem : Semaphore;
     dst_stage_mask : uint = uint(
