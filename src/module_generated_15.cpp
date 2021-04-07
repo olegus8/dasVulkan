@@ -979,8 +979,6 @@ void addVulkanGeneratedStructs_15(Module & module, ModuleLibrary & lib) {
 }
 
 void addVulkanGeneratedFunctions_15(Module & module, ModuleLibrary & lib) {
-    addExtern<DAS_BIND_FUN(vkDestroySurfaceKHR)>(module, lib, "vkDestroySurfaceKHR",
-        SideEffects::worstDefault, "vkDestroySurfaceKHR");
     addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceSurfaceSupportKHR)>(module, lib, "vkGetPhysicalDeviceSurfaceSupportKHR",
         SideEffects::worstDefault, "vkGetPhysicalDeviceSurfaceSupportKHR");
     addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceSurfaceCapabilitiesKHR)>(module, lib, "vkGetPhysicalDeviceSurfaceCapabilitiesKHR",
@@ -999,6 +997,8 @@ void addVulkanGeneratedFunctions_15(Module & module, ModuleLibrary & lib) {
         SideEffects::worstDefault, "vkAcquireNextImageKHR");
     addExtern<DAS_BIND_FUN(vkQueuePresentKHR)>(module, lib, "vkQueuePresentKHR",
         SideEffects::worstDefault, "vkQueuePresentKHR");
+    addExtern<DAS_BIND_FUN(vkSetDebugUtilsObjectNameEXT)>(module, lib, "vkSetDebugUtilsObjectNameEXT",
+        SideEffects::worstDefault, "vkSetDebugUtilsObjectNameEXT");
     addExtern<DAS_BIND_FUN(vkCreateDebugUtilsMessengerEXT)>(module, lib, "vkCreateDebugUtilsMessengerEXT",
         SideEffects::worstDefault, "vkCreateDebugUtilsMessengerEXT");
     addExtern<DAS_BIND_FUN(vkDestroyDebugUtilsMessengerEXT)>(module, lib, "vkDestroyDebugUtilsMessengerEXT",

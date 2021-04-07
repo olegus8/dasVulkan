@@ -1137,8 +1137,6 @@ void addVulkanGeneratedStructs_5(Module & module, ModuleLibrary & lib) {
 }
 
 void addVulkanGeneratedFunctions_5(Module & module, ModuleLibrary & lib) {
-    addExtern<DAS_BIND_FUN(vkDestroyShaderModule)>(module, lib, "vkDestroyShaderModule",
-        SideEffects::worstDefault, "vkDestroyShaderModule");
     addExtern<DAS_BIND_FUN(vkCreatePipelineCache)>(module, lib, "vkCreatePipelineCache",
         SideEffects::worstDefault, "vkCreatePipelineCache");
     addExtern<DAS_BIND_FUN(vkDestroyPipelineCache)>(module, lib, "vkDestroyPipelineCache",

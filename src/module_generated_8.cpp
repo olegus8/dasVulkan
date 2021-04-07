@@ -1011,6 +1011,8 @@ void addVulkanGeneratedFunctions_8(Module & module, ModuleLibrary & lib) {
         SideEffects::worstDefault, "vkCmdBindVertexBuffers");
     addExtern<DAS_BIND_FUN(vkCmdDraw)>(module, lib, "vkCmdDraw",
         SideEffects::worstDefault, "vkCmdDraw");
+    addExtern<DAS_BIND_FUN(vkCmdDrawIndexed)>(module, lib, "vkCmdDrawIndexed",
+        SideEffects::worstDefault, "vkCmdDrawIndexed");
 }
 
 void addVulkanGeneratedConsts_8(Module & module, ModuleLibrary & lib) {

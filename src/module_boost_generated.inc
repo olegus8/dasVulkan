@@ -6,6 +6,22 @@ static VkInstance vk_get_linked_instance() {
     return g_vk_linked_instance;
 }
 
+static PFN_vkSetDebugUtilsObjectNameEXT
+    g_vk_linked_vkSetDebugUtilsObjectNameEXT = nullptr;
+VKAPI_ATTR VkResult VKAPI_CALL vkSetDebugUtilsObjectNameEXT(
+    struct VkDevice_T * device,
+    const VkDebugUtilsObjectNameInfoEXT * pNameInfo
+) {
+    if ( g_vk_linked_vkSetDebugUtilsObjectNameEXT == nullptr ) {
+        DAS_ASSERTF(0, "vkSetDebugUtilsObjectNameEXT not found");
+        DAS_FATAL_ERROR
+    }
+    return (*g_vk_linked_vkSetDebugUtilsObjectNameEXT)(
+        device,
+        pNameInfo
+    );
+}
+
 static PFN_vkCreateDebugUtilsMessengerEXT
     g_vk_linked_vkCreateDebugUtilsMessengerEXT = nullptr;
 VKAPI_ATTR VkResult VKAPI_CALL vkCreateDebugUtilsMessengerEXT(
@@ -46,6 +62,9 @@ VKAPI_ATTR void VKAPI_CALL vkDestroyDebugUtilsMessengerEXT(
 
 static void vk_link_instance(VkInstance instance) {
     g_vk_linked_instance = instance;
+    g_vk_linked_vkSetDebugUtilsObjectNameEXT =
+        (PFN_vkSetDebugUtilsObjectNameEXT) vkGetInstanceProcAddr(
+            instance, "vkSetDebugUtilsObjectNameEXT");
     g_vk_linked_vkCreateDebugUtilsMessengerEXT =
         (PFN_vkCreateDebugUtilsMessengerEXT) vkGetInstanceProcAddr(
             instance, "vkCreateDebugUtilsMessengerEXT");
@@ -56,6 +75,7 @@ static void vk_link_instance(VkInstance instance) {
 
 static void vk_unlink_instance() {
     g_vk_linked_instance = VK_NULL_HANDLE;
+    g_vk_linked_vkSetDebugUtilsObjectNameEXT = nullptr;
     g_vk_linked_vkCreateDebugUtilsMessengerEXT = nullptr;
     g_vk_linked_vkDestroyDebugUtilsMessengerEXT = nullptr;
 }

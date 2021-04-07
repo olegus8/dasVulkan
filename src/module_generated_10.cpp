@@ -972,8 +972,6 @@ void addVulkanGeneratedStructs_10(Module & module, ModuleLibrary & lib) {
 }
 
 void addVulkanGeneratedFunctions_10(Module & module, ModuleLibrary & lib) {
-    addExtern<DAS_BIND_FUN(vkCmdClearColorImage)>(module, lib, "vkCmdClearColorImage",
-        SideEffects::worstDefault, "vkCmdClearColorImage");
     addExtern<DAS_BIND_FUN(vkCmdClearDepthStencilImage)>(module, lib, "vkCmdClearDepthStencilImage",
         SideEffects::worstDefault, "vkCmdClearDepthStencilImage");
     addExtern<DAS_BIND_FUN(vkCmdClearAttachments)>(module, lib, "vkCmdClearAttachments",

@@ -941,8 +941,6 @@ void addVulkanGeneratedStructs_9(Module & module, ModuleLibrary & lib) {
 }
 
 void addVulkanGeneratedFunctions_9(Module & module, ModuleLibrary & lib) {
-    addExtern<DAS_BIND_FUN(vkCmdDrawIndexed)>(module, lib, "vkCmdDrawIndexed",
-        SideEffects::worstDefault, "vkCmdDrawIndexed");
     addExtern<DAS_BIND_FUN(vkCmdDrawIndirect)>(module, lib, "vkCmdDrawIndirect",
         SideEffects::worstDefault, "vkCmdDrawIndirect");
     addExtern<DAS_BIND_FUN(vkCmdDrawIndexedIndirect)>(module, lib, "vkCmdDrawIndexedIndirect",
@@ -965,6 +963,8 @@ void addVulkanGeneratedFunctions_9(Module & module, ModuleLibrary & lib) {
         SideEffects::worstDefault, "vkCmdUpdateBuffer");
     addExtern<DAS_BIND_FUN(vkCmdFillBuffer)>(module, lib, "vkCmdFillBuffer",
         SideEffects::worstDefault, "vkCmdFillBuffer");
+    addExtern<DAS_BIND_FUN(vkCmdClearColorImage)>(module, lib, "vkCmdClearColorImage",
+        SideEffects::worstDefault, "vkCmdClearColorImage");
 }
 
 void addVulkanGeneratedConsts_9(Module & module, ModuleLibrary & lib) {

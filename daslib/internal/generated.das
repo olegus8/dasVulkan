@@ -432,6 +432,20 @@ def cmd_copy_buffer_to_image(
         array_addr_unsafe(vk_regions)
     )
 
+def cmd_dispatch(
+    command_buffer : CommandBuffer = [[ CommandBuffer ]];
+    group_count_x : uint = [[ uint ]];
+    group_count_y : uint = [[ uint ]];
+    group_count_z : uint = [[ uint ]]
+) : void
+
+    vkCmdDispatch(
+        boost_value_to_vk(command_buffer),
+        boost_value_to_vk(group_count_x),
+        boost_value_to_vk(group_count_y),
+        boost_value_to_vk(group_count_z)
+    )
+
 def cmd_draw(
     command_buffer : CommandBuffer = [[ CommandBuffer ]];
     vertex_count : uint = [[ uint ]];
@@ -649,6 +663,28 @@ def enumerate_physical_devices(
     )
     assert(result_ == VkResult VK_SUCCESS)
     return <- [{for x in vk_physical_devices; vk_value_to_boost(x)}]
+
+def flush_mapped_memory_ranges(
+    device : Device = [[ Device ]];
+    var memory_ranges : array<MappedMemoryRange> = [[ array<MappedMemoryRange> ]];
+    var result : VkResult? = [[VkResult?]]
+) : void
+
+    let vk_memoryRangeCount = uint(memory_ranges |> length())
+    var vk_memory_ranges <- [{ for item in memory_ranges ;
+        item |> vk_view_create_unsafe() }]
+    defer() <|
+        for item in memory_ranges
+            item |> vk_view_destroy()
+        delete vk_memory_ranges
+    var result_ = VkResult VK_SUCCESS
+
+    result ?? result_ = vkFlushMappedMemoryRanges(
+        boost_value_to_vk(device),
+        vk_memoryRangeCount,
+        array_addr_unsafe(vk_memory_ranges)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
 
 [private]
 def free_command_buffers(
@@ -1093,6 +1129,22 @@ def reset_query_pool(
         boost_value_to_vk(first_query),
         boost_value_to_vk(query_count)
     )
+
+def set_debug_utils_object_name_ext(
+    device : Device = [[ Device ]];
+    var name_info : DebugUtilsObjectNameInfoEXT = [[ DebugUtilsObjectNameInfoEXT ]];
+    var result : VkResult? = [[VkResult?]]
+) : void
+
+    var vk_name_info <- name_info |> vk_view_create_unsafe()
+    defer() <| { name_info |> vk_view_destroy(); }
+    var result_ = VkResult VK_SUCCESS
+
+    result ?? result_ = vkSetDebugUtilsObjectNameEXT(
+        boost_value_to_vk(device),
+        safe_addr(vk_name_info)
+    )
+    assert(result_ == VkResult VK_SUCCESS)
 
 def unmap_memory(
     device : Device = [[ Device ]];
@@ -1571,6 +1623,39 @@ def vk_value_to_boost(vk_struct : VkLayerProperties) : LayerProperties
         spec_version = vk_value_to_boost(vk_struct.specVersion),
         implementation_version = vk_value_to_boost(vk_struct.implementationVersion),
         description = vk_value_to_boost(vk_struct.description)
+    ]]
+
+//
+// MappedMemoryRange
+//
+
+struct MappedMemoryRange
+    memory : DeviceMemory
+    offset : uint64
+    size : uint64
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : MappedMemoryRange &
+) : VkMappedMemoryRange
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    return <- [[ VkMappedMemoryRange
+        sType = VkStructureType VK_STRUCTURE_TYPE_MAPPED_MEMORY_RANGE,
+        memory = boost_value_to_vk(boost_struct.memory),
+        offset = boost_value_to_vk(boost_struct.offset),
+        size = boost_value_to_vk(boost_struct.size)
+    ]]
+
+def vk_view_destroy(var boost_struct : MappedMemoryRange &)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+def vk_value_to_boost(vk_struct : VkMappedMemoryRange) : MappedMemoryRange
+    return <- [[MappedMemoryRange
+        memory = vk_value_to_boost(vk_struct.memory),
+        offset = vk_value_to_boost(vk_struct.offset),
+        size = vk_value_to_boost(vk_struct.size)
     ]]
 
 //
@@ -3701,15 +3786,47 @@ def vk_view_destroy(var boost_struct : VertexInputBindingDescription &)
     boost_struct._vk_view__active = false
 
 //
+// ValidationFeaturesEXT
+//
+
+struct ValidationFeaturesEXT
+    enabled_validation_features : array<VkValidationFeatureEnableEXT>
+    disabled_validation_features : array<VkValidationFeatureDisableEXT>
+    _vk_view__active : bool
+
+def vk_view_create_unsafe(var boost_struct : ValidationFeaturesEXT &
+) : VkValidationFeaturesEXT
+
+    assert(!boost_struct._vk_view__active)
+    boost_struct._vk_view__active = true
+    let vk_enabled_validation_feature_count = uint(boost_struct.enabled_validation_features |> length())
+    let vk_p_enabled_validation_features = array_addr_unsafe(boost_struct.enabled_validation_features)
+    let vk_disabled_validation_feature_count = uint(boost_struct.disabled_validation_features |> length())
+    let vk_p_disabled_validation_features = array_addr_unsafe(boost_struct.disabled_validation_features)
+    return <- [[ VkValidationFeaturesEXT
+        sType = VkStructureType VK_STRUCTURE_TYPE_VALIDATION_FEATURES_EXT,
+        enabledValidationFeatureCount = vk_enabled_validation_feature_count,
+        pEnabledValidationFeatures = vk_p_enabled_validation_features,
+        disabledValidationFeatureCount = vk_disabled_validation_feature_count,
+        pDisabledValidationFeatures = vk_p_disabled_validation_features
+    ]]
+
+def vk_view_destroy(var boost_struct : ValidationFeaturesEXT &)
+    assert(boost_struct._vk_view__active)
+    boost_struct._vk_view__active = false
+
+//
 // DebugUtilsMessengerCreateInfoEXT
 //
 
 struct DebugUtilsMessengerCreateInfoEXT
+    next : ValidationFeaturesEXT
     flags : uint
     message_severity : uint
     message_type : uint
     pfn_user_callback : PFN_vkDebugUtilsMessengerCallbackEXT
     p_user_data : void ?
+    _vk_view_p_next : VkValidationFeaturesEXT ?
     _vk_view__active : bool
 
 def vk_view_create_unsafe(var boost_struct : DebugUtilsMessengerCreateInfoEXT &
@@ -3717,8 +3834,12 @@ def vk_view_create_unsafe(var boost_struct : DebugUtilsMessengerCreateInfoEXT &
 
     assert(!boost_struct._vk_view__active)
     boost_struct._vk_view__active = true
+    boost_struct._vk_view_p_next = new VkValidationFeaturesEXT
+    *(boost_struct._vk_view_p_next) <- (
+        boost_struct.next |> vk_view_create_unsafe())
     return <- [[ VkDebugUtilsMessengerCreateInfoEXT
         sType = VkStructureType VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT,
+        pNext = boost_struct._vk_view_p_next,
         flags = boost_value_to_vk(boost_struct.flags),
         messageSeverity = boost_value_to_vk(boost_struct.message_severity),
         messageType = boost_value_to_vk(boost_struct.message_type),
@@ -3728,6 +3849,9 @@ def vk_view_create_unsafe(var boost_struct : DebugUtilsMessengerCreateInfoEXT &
 
 def vk_view_destroy(var boost_struct : DebugUtilsMessengerCreateInfoEXT &)
     assert(boost_struct._vk_view__active)
+    boost_struct.next |> vk_view_destroy()
+    unsafe
+        delete boost_struct._vk_view_p_next
     boost_struct._vk_view__active = false
 
 //

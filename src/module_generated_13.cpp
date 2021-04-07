@@ -959,8 +959,6 @@ void addVulkanGeneratedStructs_13(Module & module, ModuleLibrary & lib) {
 }
 
 void addVulkanGeneratedFunctions_13(Module & module, ModuleLibrary & lib) {
-    addExtern<DAS_BIND_FUN(vkTrimCommandPool)>(module, lib, "vkTrimCommandPool",
-        SideEffects::worstDefault, "vkTrimCommandPool");
     addExtern<DAS_BIND_FUN(vkGetDeviceQueue2)>(module, lib, "vkGetDeviceQueue2",
         SideEffects::worstDefault, "vkGetDeviceQueue2");
     addExtern<DAS_BIND_FUN(vkCreateSamplerYcbcrConversion)>(module, lib, "vkCreateSamplerYcbcrConversion",
@@ -983,6 +981,8 @@ void addVulkanGeneratedFunctions_13(Module & module, ModuleLibrary & lib) {
         SideEffects::worstDefault, "vkGetDescriptorSetLayoutSupport");
     addExtern<DAS_BIND_FUN(vkCmdDrawIndirectCount)>(module, lib, "vkCmdDrawIndirectCount",
         SideEffects::worstDefault, "vkCmdDrawIndirectCount");
+    addExtern<DAS_BIND_FUN(vkCmdDrawIndexedIndirectCount)>(module, lib, "vkCmdDrawIndexedIndirectCount",
+        SideEffects::worstDefault, "vkCmdDrawIndexedIndirectCount");
 }
 
 void addVulkanGeneratedConsts_13(Module & module, ModuleLibrary & lib) {

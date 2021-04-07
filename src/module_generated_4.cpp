@@ -962,6 +962,8 @@ void addVulkanGeneratedFunctions_4(Module & module, ModuleLibrary & lib) {
         SideEffects::worstDefault, "vkDestroyImageView");
     addExtern<DAS_BIND_FUN(vkCreateShaderModule)>(module, lib, "vkCreateShaderModule",
         SideEffects::worstDefault, "vkCreateShaderModule");
+    addExtern<DAS_BIND_FUN(vkDestroyShaderModule)>(module, lib, "vkDestroyShaderModule",
+        SideEffects::worstDefault, "vkDestroyShaderModule");
 }
 
 void addVulkanGeneratedConsts_4(Module & module, ModuleLibrary & lib) {

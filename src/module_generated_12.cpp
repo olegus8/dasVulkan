@@ -958,6 +958,8 @@ void addVulkanGeneratedFunctions_12(Module & module, ModuleLibrary & lib) {
         SideEffects::worstDefault, "vkGetPhysicalDeviceMemoryProperties2");
     addExtern<DAS_BIND_FUN(vkGetPhysicalDeviceSparseImageFormatProperties2)>(module, lib, "vkGetPhysicalDeviceSparseImageFormatProperties2",
         SideEffects::worstDefault, "vkGetPhysicalDeviceSparseImageFormatProperties2");
+    addExtern<DAS_BIND_FUN(vkTrimCommandPool)>(module, lib, "vkTrimCommandPool",
+        SideEffects::worstDefault, "vkTrimCommandPool");
 }
 
 void addVulkanGeneratedConsts_12(Module & module, ModuleLibrary & lib) {

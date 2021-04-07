@@ -960,8 +960,6 @@ void addVulkanGeneratedStructs_14(Module & module, ModuleLibrary & lib) {
 }
 
 void addVulkanGeneratedFunctions_14(Module & module, ModuleLibrary & lib) {
-    addExtern<DAS_BIND_FUN(vkCmdDrawIndexedIndirectCount)>(module, lib, "vkCmdDrawIndexedIndirectCount",
-        SideEffects::worstDefault, "vkCmdDrawIndexedIndirectCount");
     addExtern<DAS_BIND_FUN(vkCreateRenderPass2)>(module, lib, "vkCreateRenderPass2",
         SideEffects::worstDefault, "vkCreateRenderPass2");
     addExtern<DAS_BIND_FUN(vkCmdBeginRenderPass2)>(module, lib, "vkCmdBeginRenderPass2",
@@ -984,6 +982,8 @@ void addVulkanGeneratedFunctions_14(Module & module, ModuleLibrary & lib) {
         SideEffects::worstDefault, "vkGetBufferOpaqueCaptureAddress");
     addExtern<DAS_BIND_FUN(vkGetDeviceMemoryOpaqueCaptureAddress)>(module, lib, "vkGetDeviceMemoryOpaqueCaptureAddress",
         SideEffects::worstDefault, "vkGetDeviceMemoryOpaqueCaptureAddress");
+    addExtern<DAS_BIND_FUN(vkDestroySurfaceKHR)>(module, lib, "vkDestroySurfaceKHR",
+        SideEffects::worstDefault, "vkDestroySurfaceKHR");
 }
 
 void addVulkanGeneratedConsts_14(Module & module, ModuleLibrary & lib) {
