@@ -28,7 +28,7 @@ IF(NOT DAS_VULKAN_INCLUDED)
                 VERBATIM
                 COMMAND ${DAS_VULKAN_GLSL_EXE} -O -Werror
                     -fshader-stage=${stage}
-                    -target-env=vulkan1.2
+                    --target-env=vulkan1.2
                     ${input_name_ext} -o ${input_name}.spv
                 COMMENT "glsl ${input} to ${input_dir}/${input_name}.spv")
         ENDIF()
