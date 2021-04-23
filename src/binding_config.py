@@ -147,6 +147,7 @@ def add_boost_content(g):
         'VkComponentMapping',
         'VkDebugUtilsLabelEXT',
         'VkDebugUtilsObjectNameInfoEXT',
+        'VkDrawIndexedIndirectCommand',
         'VkExtensionProperties',
         'VkExtent2D',
         'VkExtent3D',
@@ -345,6 +346,7 @@ def add_boost_content(g):
     g.add_gen_func(name = 'vkCmdDispatch')
     g.add_gen_func(name = 'vkCmdDraw')
     g.add_gen_func(name = 'vkCmdDrawIndexed')
+    g.add_gen_func(name = 'vkCmdDrawIndexedIndirect')
     g.add_gen_func(name = 'vkCmdEndRenderPass')
     g.add_gen_func(name = 'vkCmdPipelineBarrier',
         ).declare_array(count = 'memoryBarrierCount', items = 'pMemoryBarriers',
