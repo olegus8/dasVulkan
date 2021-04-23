@@ -147,6 +147,7 @@ def add_boost_content(g):
         'VkComponentMapping',
         'VkDebugUtilsLabelEXT',
         'VkDebugUtilsObjectNameInfoEXT',
+        'VkDispatchIndirectCommand',
         'VkDrawIndexedIndirectCommand',
         'VkExtensionProperties',
         'VkExtent2D',
@@ -344,6 +345,7 @@ def add_boost_content(g):
     g.add_gen_func(name = 'vkCmdCopyBufferToImage',
         ).declare_array(count = 'regionCount', items = 'pRegions')
     g.add_gen_func(name = 'vkCmdDispatch')
+    g.add_gen_func(name = 'vkCmdDispatchIndirect')
     g.add_gen_func(name = 'vkCmdDraw')
     g.add_gen_func(name = 'vkCmdDrawIndexed')
     g.add_gen_func(name = 'vkCmdDrawIndexedIndirect')
