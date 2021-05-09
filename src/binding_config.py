@@ -98,6 +98,7 @@ def add_boost_content(g):
     #
 
     for name in [
+        'VkAccelerationStructureKHR',
         'VkBuffer',
         'VkBufferView',
         'VkCommandBuffer',
@@ -179,6 +180,7 @@ def add_boost_content(g):
 
     for name in [
         'VkAccelerationStructureBuildGeometryInfoKHR',
+        'VkAccelerationStructureCreateInfoKHR',
         'VkAccelerationStructureGeometryAabbsDataKHR',
         'VkAccelerationStructureGeometryInstancesDataKHR',
         'VkAccelerationStructureGeometryTrianglesDataKHR',
