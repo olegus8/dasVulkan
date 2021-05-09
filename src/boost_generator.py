@@ -768,7 +768,7 @@ class C_Type(object):
         for pattern in [
             (   r'^(const)?(struct|enum|union)?\s*'
                 r'(?P<type>(unsigned )?(long )?[A-z0-9_]+)'
-                r'( \*| \[\d+\])?$'
+                r'( \*| \*const \*| \[\d+\])?$'
             ),
         ]:
             m = re.match(pattern, self.name)
