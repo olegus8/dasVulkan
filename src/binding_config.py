@@ -377,7 +377,7 @@ def add_boost_content(g):
         ).declare_array(count = 'commandBufferCount', items = 'pCommandBuffers')
     g.add_gen_func(name = 'vkFreeDescriptorSets', private = True,
         ).declare_array(count = 'descriptorSetCount', items = 'pDescriptorSets')
-    g.add_gen_func(name = 'vkGetAccelerationStructureBuildSizesKHR' 
+    g.add_gen_func(name = 'vkGetAccelerationStructureBuildSizesKHR'
         ).declare_array(count_expr = 'build_info.geometry_count', items = 'pMaxPrimitiveCounts',
         ).declare_output(name = 'pSizeInfo')
     g.add_gen_func(name = 'vkGetDeviceQueue'
