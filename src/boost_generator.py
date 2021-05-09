@@ -125,7 +125,8 @@ class BoostGenerator(LoggingObject):
     @property
     def __functions_to_link(self):
         return [fn for fn in self.functions.values()
-            if fn.name.endswith('EXT')]
+            if fn.name.endswith('EXT')
+            or fn.name.endswith('KHR')]
 
     def __generate_cpp(self):
         lines = []
