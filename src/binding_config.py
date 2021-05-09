@@ -141,12 +141,14 @@ def add_boost_content(g):
     #
 
     for name in [
+        'VkAccelerationStructureBuildSizesInfoKHR',
         'VkApplicationInfo',
         'VkAttachmentDescription',
         'VkAttachmentReference',
         'VkComponentMapping',
         'VkDebugUtilsLabelEXT',
         'VkDebugUtilsObjectNameInfoEXT',
+        'VkDeviceOrHostAddressConstKHR',
         'VkDispatchIndirectCommand',
         'VkDrawIndexedIndirectCommand',
         'VkExtensionProperties',
@@ -172,7 +174,6 @@ def add_boost_content(g):
         'VkSurfaceCapabilitiesKHR',
         'VkSurfaceFormatKHR',
         'VkViewport',
-        'VkDeviceOrHostAddressConstKHR',
     ]:
         g.add_gen_struct(name = name)
 
