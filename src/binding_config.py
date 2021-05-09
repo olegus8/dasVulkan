@@ -181,6 +181,7 @@ def add_boost_content(g):
         'VkAccelerationStructureGeometryAabbsDataKHR',
         'VkAccelerationStructureGeometryInstancesDataKHR',
         'VkAccelerationStructureGeometryTrianglesDataKHR',
+        'VkAccelerationStructureBuildGeometryInfoKHR',
         'VkBufferCopy',
         'VkBufferImageCopy',
         'VkBufferMemoryBarrier',
