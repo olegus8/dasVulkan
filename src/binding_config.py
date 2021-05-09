@@ -149,7 +149,6 @@ def add_boost_content(g):
         'VkComponentMapping',
         'VkDebugUtilsLabelEXT',
         'VkDebugUtilsObjectNameInfoEXT',
-        'VkDeviceOrHostAddressConstKHR',
         'VkDispatchIndirectCommand',
         'VkDrawIndexedIndirectCommand',
         'VkExtensionProperties',
@@ -179,10 +178,10 @@ def add_boost_content(g):
         g.add_gen_struct(name = name)
 
     for name in [
+        'VkAccelerationStructureBuildGeometryInfoKHR',
         'VkAccelerationStructureGeometryAabbsDataKHR',
         'VkAccelerationStructureGeometryInstancesDataKHR',
         'VkAccelerationStructureGeometryTrianglesDataKHR',
-        'VkAccelerationStructureBuildGeometryInfoKHR',
         'VkBufferCopy',
         'VkBufferImageCopy',
         'VkBufferMemoryBarrier',
@@ -197,6 +196,7 @@ def add_boost_content(g):
         'VkDescriptorBufferInfo',
         'VkDescriptorImageInfo',
         'VkDescriptorPoolSize',
+        'VkDeviceOrHostAddressConstKHR',
         'VkFenceCreateInfo',
         'VkImageMemoryBarrier',
         'VkImageSubresourceLayers',
