@@ -172,10 +172,14 @@ def add_boost_content(g):
         'VkSurfaceCapabilitiesKHR',
         'VkSurfaceFormatKHR',
         'VkViewport',
+        'VkDeviceOrHostAddressConstKHR',
     ]:
         g.add_gen_struct(name = name)
 
     for name in [
+        'VkAccelerationStructureGeometryAabbsDataKHR',
+        'VkAccelerationStructureGeometryInstancesDataKHR',
+        'VkAccelerationStructureGeometryTrianglesDataKHR',
         'VkBufferCopy',
         'VkBufferImageCopy',
         'VkBufferMemoryBarrier',
@@ -185,6 +189,7 @@ def add_boost_content(g):
         'VkCommandBufferBeginInfo',
         'VkCommandBufferInheritanceInfo',
         'VkCommandPoolCreateInfo',
+        'VkComputePipelineCreateInfo',
         'VkCopyDescriptorSet',
         'VkDescriptorBufferInfo',
         'VkDescriptorImageInfo',
@@ -223,7 +228,6 @@ def add_boost_content(g):
 
     g.add_gen_struct(name = 'VkBufferCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'queueFamilyIndexCount', items = 'pQueueFamilyIndices')
-    g.add_gen_struct(name='VkComputePipelineCreateInfo', vk_to_boost=False)
     g.add_gen_struct(name = 'VkDebugUtilsMessengerCallbackDataEXT',
         ).declare_array(count = 'queueLabelCount', items = 'pQueueLabels'
         ).declare_array(count = 'cmdBufLabelCount', items = 'pCmdBufLabels'
