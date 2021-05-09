@@ -67,6 +67,7 @@ class Config(ConfigBase):
             'vkDestroyDebugUtilsMessengerEXT',
             'vkDestroySurfaceKHR',
             'vkDestroySwapchainKHR',
+            'vkGetAccelerationStructureBuildSizesKHR',
             'vkGetPhysicalDeviceSurfaceCapabilitiesKHR',
             'vkGetPhysicalDeviceSurfaceFormatsKHR',
             'vkGetPhysicalDeviceSurfacePresentModesKHR',
