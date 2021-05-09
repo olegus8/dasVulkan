@@ -388,7 +388,8 @@ class GenStruct(object):
 
     @property
     def __c_struct(self):
-        return self.__generator.structs[self.vk_type_name]
+        return (self.__generator.structs.get(self.vk_type_name)
+            or  self.__generator.unions.get (self.vk_type_name))
 
     @property
     def boost_type_name(self):
