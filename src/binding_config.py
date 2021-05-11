@@ -207,7 +207,6 @@ def add_boost_content(g):
         'VkImageMemoryBarrier',
         'VkImageSubresourceLayers',
         'VkImageViewCreateInfo',
-        'VkMemoryAllocateInfo',
         'VkMemoryBarrier',
         'VkPipelineColorBlendAttachmentState',
         'VkPipelineDepthStencilStateCreateInfo',
@@ -225,11 +224,17 @@ def add_boost_content(g):
         'VkVertexInputBindingDescription',
     ]:
         g.add_gen_struct(name=name, vk_to_boost=False)
-
+        
     debug_validation_features = g.add_gen_struct(
             name='VkValidationFeaturesEXT', vk_to_boost=False
         ).declare_array(count='enabledValidationFeatureCount', items = 'pEnabledValidationFeatures'
         ).declare_array(count='disabledValidationFeatureCount', items = 'pDisabledValidationFeatures')
+
+    memory_allocate_flags_info = g.add_gen_struct(
+        name='VkMemoryAllocateFlagsInfo', vk_to_boost=False)
+
+    g.add_gen_struct(name='VkMemoryAllocateInfo', vk_to_boost=False,
+        next_in_chain = memory_allocate_flags_info)
 
     debug_msg_create_info = g.add_gen_struct(
         name='VkDebugUtilsMessengerCreateInfoEXT', vk_to_boost=False,
