@@ -296,8 +296,6 @@ class GenFunc(object):
             return output.boost_func_return_value
 
     def generate(self):
-        vk_fn = self._vk_func_name
-
         lines = []
         lines += [
             '',
@@ -332,7 +330,7 @@ class GenFunc(object):
             lines.append('')
         if self.__have_array_outputs_of_unknown_size:
             lines += [
-               f'    {maybe_return}{maybe_capture_result}{vk_fn}(',
+               f'    {maybe_capture_result}{self._vk_func_name}(',
             ]
             for param in self._params:
                 lines += ['        {},'.format(
@@ -355,7 +353,7 @@ class GenFunc(object):
                 for line in param.generate_boost_func_temp_vars_update()]
 
         lines += [
-           f'    {maybe_capture_result}{self._vk_func_name}(',
+           f'    {maybe_return}{maybe_capture_result}{self._vk_func_name}(',
         ]
         for param in self._params:
             lines += ['        {},'.format(param.boost_func_call_vk_param)]
@@ -366,7 +364,7 @@ class GenFunc(object):
         if self._returns_vk_result:
             lines.append('    assert(result_ == VkResult VK_SUCCESS)')
 
-        if self._return_type != 'void' and self.__return_value:
+        if self.__return_value is not None:
             lines.append(f'    return {self.__return_value}')
         return lines
 
