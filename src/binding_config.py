@@ -253,7 +253,7 @@ def add_boost_content(g):
         ).declare_array(count = 'bindingCount', items = 'pBindings')
     g.add_gen_struct(name = 'VkDeviceCreateInfo', vk_to_boost=False,
         next_in_chain = g.add_gen_struct(
-            name = 'VkPhysicalDeviceVulkan12Features'))
+            name = 'VkPhysicalDeviceVulkan12Features')
         ).declare_array(count = 'queueCreateInfoCount', items = 'pQueueCreateInfos',
         ).declare_array(count = 'enabledLayerCount', items = 'ppEnabledLayerNames',
         ).declare_array(count = 'enabledExtensionCount', items = 'ppEnabledExtensionNames')
