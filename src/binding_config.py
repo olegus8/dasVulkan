@@ -188,6 +188,7 @@ def add_boost_content(g):
         'VkAccelerationStructureGeometryKHR',
         'VkAccelerationStructureGeometryTrianglesDataKHR',
         'VkBufferCopy',
+        'VkBufferDeviceAddressInfo',
         'VkBufferImageCopy',
         'VkBufferMemoryBarrier',
         'VkBufferViewCreateInfo',
@@ -389,6 +390,7 @@ def add_boost_content(g):
     g.add_gen_func(name = 'vkGetAccelerationStructureBuildSizesKHR'
         ).declare_array(count_expr = 'build_info.geometry_count', items = 'pMaxPrimitiveCounts',
         ).declare_output(name = 'pSizeInfo')
+    g.add_gen_func(name = 'vkGetBufferDeviceAddress')
     g.add_gen_func(name = 'vkGetDeviceQueue'
         ).declare_output(name = 'pQueue')
     g.add_gen_func(name = 'vkGetBufferMemoryRequirements'
