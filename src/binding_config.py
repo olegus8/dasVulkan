@@ -232,13 +232,14 @@ def add_boost_content(g):
 
     memory_allocate_flags_info = g.add_gen_struct(
         name='VkMemoryAllocateFlagsInfo', vk_to_boost=False)
-
-    g.add_gen_struct(name='VkMemoryAllocateInfo', vk_to_boost=False,
-        next_in_chain = memory_allocate_flags_info)
-
     debug_msg_create_info = g.add_gen_struct(
         name='VkDebugUtilsMessengerCreateInfoEXT', vk_to_boost=False,
         next_in_chain = debug_validation_features)
+    ray_query_feats = g.add_gen_struct(
+        name='VkPhysicalDeviceRayQueryFeaturesKHR')
+    phys_dev_12_feats=g.add_gen_struct(
+        name='VkPhysicalDeviceVulkan12Features'
+        next_in_chain = ray_query_feats)
 
     g.add_gen_struct(name = 'VkAccelerationStructureBuildGeometryInfoKHR', vk_to_boost=False, ignore_fields=['ppGeometries']
         ).declare_array(count = 'geometryCount', items = 'pGeometries')
@@ -257,8 +258,7 @@ def add_boost_content(g):
     g.add_gen_struct(name = 'VkDescriptorSetLayoutCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'bindingCount', items = 'pBindings')
     g.add_gen_struct(name = 'VkDeviceCreateInfo', vk_to_boost=False,
-        next_in_chain = g.add_gen_struct(
-            name = 'VkPhysicalDeviceVulkan12Features')
+        next_in_chain = phys_dev_12_feats
         ).declare_array(count = 'queueCreateInfoCount', items = 'pQueueCreateInfos',
         ).declare_array(count = 'enabledLayerCount', items = 'ppEnabledLayerNames',
         ).declare_array(count = 'enabledExtensionCount', items = 'ppEnabledExtensionNames')
@@ -282,6 +282,8 @@ def add_boost_content(g):
         next_in_chain = debug_msg_create_info
         ).declare_array(count = 'enabledLayerCount', items = 'ppEnabledLayerNames',
         ).declare_array(count = 'enabledExtensionCount', items = 'ppEnabledExtensionNames')
+    g.add_gen_struct(name='VkMemoryAllocateInfo', vk_to_boost=False,
+        next_in_chain = memory_allocate_flags_info)
     g.add_gen_struct(name = 'VkPhysicalDeviceMemoryProperties',
         ).declare_array(count = 'memoryTypeCount', items = 'memoryTypes',
         ).declare_array(count = 'memoryHeapCount', items = 'memoryHeaps')
