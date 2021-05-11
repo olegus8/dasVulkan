@@ -286,7 +286,7 @@ class GenFunc(object):
             raise Exception('TODO: add multiple outputs support if needed')
         for output in self._output_params:
             return output._boost_func_param_type
-        return 'void'
+        return 'void' if self._returs_vk_result else self.__c_func.return_type
 
     @property
     def __return_value(self):
