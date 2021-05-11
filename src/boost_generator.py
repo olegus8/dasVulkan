@@ -366,7 +366,7 @@ class GenFunc(object):
         if self._returns_vk_result:
             lines.append('    assert(result_ == VkResult VK_SUCCESS)')
 
-        if self._return_type != 'void' and self._return_value:
+        if self._return_type != 'void' and self.__return_value:
             lines.append(f'    return {self.__return_value}')
         return lines
 
