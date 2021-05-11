@@ -289,6 +289,11 @@ class GenFunc(object):
         return 'void' if self._returns_vk_result else self.__c_func.return_type
 
     @property
+    def __forward_return_value(self):
+        return (self._return_type != 'void'
+            and self._return_type == self.__c_func.return_type)
+
+    @property
     def __return_value(self):
         if len(self._output_params) > 1:
             raise Exception('TODO: add multiple outputs support if needed')
@@ -323,8 +328,7 @@ class GenFunc(object):
             lines.append(f'    var result_ = VkResult VK_SUCCESS')
         maybe_capture_result = ('result ?? result_ = '
             if self._returns_vk_result else '')
-        maybe_return = ('return '
-            if self.__c_func.return_type == self._return_type else '')
+        maybe_return = 'return ' if self.__forward_return_value else ''
 
         if lines[-1] != '':
             lines.append('')
