@@ -238,7 +238,8 @@ def add_boost_content(g):
     accel_feats = g.add_gen_struct(
         name='VkPhysicalDeviceAccelerationStructureFeaturesKHR')
     ray_query_feats = g.add_gen_struct(
-        name='VkPhysicalDeviceRayQueryFeaturesKHR')
+        name='VkPhysicalDeviceRayQueryFeaturesKHR',
+        next_in_chain = accel_feats)
     phys_dev_12_feats=g.add_gen_struct(
         name='VkPhysicalDeviceVulkan12Features',
         next_in_chain = ray_query_feats)
