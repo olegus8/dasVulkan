@@ -13,6 +13,8 @@ require strings
 // Helpers
 //
 
+typedef VkDeviceAddress = uint64
+
 def with_view(
     var boost_struct : auto(BOOST_T);
     b : block<(vk_struct : auto(VK_T))>
