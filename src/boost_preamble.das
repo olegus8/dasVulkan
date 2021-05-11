@@ -13,7 +13,8 @@ require strings
 // Helpers
 //
 
-typedef VkDeviceAddress = uint64
+typedef
+    VkDeviceAddress = uint64
 
 def with_view(
     var boost_struct : auto(BOOST_T);
