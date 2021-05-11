@@ -234,7 +234,8 @@ def add_boost_content(g):
         name='VkDebugUtilsMessengerCreateInfoEXT', vk_to_boost=False,
         next_in_chain = debug_validation_features)
 
-    g.add_gen_struct(name = 'VkAccelerationStructureBuildGeometryInfoKHR', vk_to_boost=False, ignore_fields=['ppGeometries'])
+    g.add_gen_struct(name = 'VkAccelerationStructureBuildGeometryInfoKHR', vk_to_boost=False, ignore_fields=['ppGeometries']
+        ).declare_array(count = 'geometryCount', items = 'pGeometries')
     g.add_gen_struct(name = 'VkBufferCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'queueFamilyIndexCount', items = 'pQueueFamilyIndices')
     g.add_gen_struct(name = 'VkDebugUtilsMessengerCallbackDataEXT',
