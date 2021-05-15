@@ -293,7 +293,7 @@ def run_cmd_sync(
                 VkPipelineStageFlagBits VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT),
             dst_stage_mask = uint(
                 VkPipelineStageFlagBits VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT),
-            memory_barriers = bars,
+            memory_barriers = bars
           ])
 
     queue |> queue_submit(cmd_bufs)
