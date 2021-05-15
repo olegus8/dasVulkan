@@ -62,6 +62,7 @@ class Config(ConfigBase):
         # whitelist
         if func.name in [
             'vkAcquireNextImageKHR',
+            'vkCmdBuildAccelerationStructuresKHR',
             'vkCmdBuildAccelerationStructuresIndirectKHR',
             'vkCreateAccelerationStructureKHR',
             'vkCreateDebugUtilsMessengerEXT',
