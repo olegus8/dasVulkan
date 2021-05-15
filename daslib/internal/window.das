@@ -58,3 +58,9 @@ def get_required_instance_extensions() : array<string>
         unsafe
             ext := *(glfw_exts + i)
     return <- exts
+
+
+def get_cursor_pos(window : Window) : float2
+    var xpos, ypos : double
+    window.window |> glfwGetCursorPos(safe_addr(xpos), safe_addr(ypos))
+    return float2(float(xpos), float(ypos))

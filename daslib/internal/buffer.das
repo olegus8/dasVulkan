@@ -15,3 +15,8 @@ def create_buffer_exclusive(
         flags=flags, size=size, usage=usage,
         sharing_mode=VkSharingMode VK_SHARING_MODE_EXCLUSIVE
     ]])
+
+def get_buffer_device_address(device : Device; buffer : Buffer
+) : VkDeviceAddress
+    var info <- [[ BufferDeviceAddressInfo buffer <- weak_copy(buffer) ]]
+    return device |> get_buffer_device_address <| info

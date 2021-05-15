@@ -108,8 +108,8 @@ def cmd_write(
         boost_value_to_vk(query._index)
     )
 def cmd_write_begin(cmd_buf : CommandBuffer; query : TimestampQuery)
-  cmd_buf |> cmd_write(query,
-    VkPipelineStageFlagBits VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT)
+    cmd_buf |> cmd_write(query,
+        VkPipelineStageFlagBits VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT)
 def cmd_write_end(cmd_buf : CommandBuffer; query : TimestampQuery)
-  cmd_buf |> cmd_write(query,
-    VkPipelineStageFlagBits VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT)
+    cmd_buf |> cmd_write(query,
+        VkPipelineStageFlagBits VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT)

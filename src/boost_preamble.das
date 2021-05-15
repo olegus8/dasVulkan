@@ -66,6 +66,9 @@ def weak_copy(b : auto(T)) : T -const
     else
         concept_assert(0, "can't weak copy this type")
 
+def weak_copy_first(dsets : DescriptorSets) : DescriptorSet
+    return <- weak_copy(dsets.descriptor_sets[0])
+
 //
 // Surface
 //
