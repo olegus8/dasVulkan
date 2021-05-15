@@ -62,8 +62,8 @@ class Config(ConfigBase):
         # whitelist
         if func.name in [
             'vkAcquireNextImageKHR',
-            'vkCmdBuildAccelerationStructuresKHR',
             'vkCmdBuildAccelerationStructuresIndirectKHR',
+            'vkCmdBuildAccelerationStructuresKHR',
             'vkCreateAccelerationStructureKHR',
             'vkCreateDebugUtilsMessengerEXT',
             'vkCreateSwapchainKHR',
@@ -72,6 +72,7 @@ class Config(ConfigBase):
             'vkDestroySurfaceKHR',
             'vkDestroySwapchainKHR',
             'vkGetAccelerationStructureBuildSizesKHR',
+            'vkGetAccelerationStructureDeviceAddressKHR',
             'vkGetPhysicalDeviceSurfaceCapabilitiesKHR',
             'vkGetPhysicalDeviceSurfaceFormatsKHR',
             'vkGetPhysicalDeviceSurfacePresentModesKHR',
@@ -185,6 +186,7 @@ def add_boost_content(g):
 
     for name in [
         'VkAccelerationStructureCreateInfoKHR',
+        'VkAccelerationStructureDeviceAddressInfoKHR',
         'VkAccelerationStructureGeometryAabbsDataKHR',
         'VkAccelerationStructureGeometryInstancesDataKHR',
         'VkAccelerationStructureGeometryKHR',
@@ -405,11 +407,12 @@ def add_boost_content(g):
     g.add_gen_func(name = 'vkGetAccelerationStructureBuildSizesKHR'
         ).declare_array(count_expr = 'build_info.geometry_count', items = 'pMaxPrimitiveCounts',
         ).declare_output(name = 'pSizeInfo')
+    g.add_gen_func(name = 'vkGetAccelerationStructureDeviceAddressKHR')
     g.add_gen_func(name = 'vkGetBufferDeviceAddress')
-    g.add_gen_func(name = 'vkGetDeviceQueue'
-        ).declare_output(name = 'pQueue')
     g.add_gen_func(name = 'vkGetBufferMemoryRequirements'
         ).declare_output(name = 'pMemoryRequirements')
+    g.add_gen_func(name = 'vkGetDeviceQueue'
+        ).declare_output(name = 'pQueue')
     g.add_gen_func(name = 'vkGetImageMemoryRequirements',
         ).declare_output(name = 'pMemoryRequirements')
     g.add_gen_func(name = 'vkGetPhysicalDeviceFeatures',
