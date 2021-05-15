@@ -211,6 +211,33 @@ def cmd_bind_vertex_buffer(
     command_buffer |> cmd_bind_vertex_buffers(binding, buffers, offsets)
 
 
+def cmd_build_acceleration_structure_indirect_khr(
+    command_buffer           : CommandBuffer;
+    var info                 : AccelerationStructureBuildGeometryInfoKHR;
+    indirect_device_address  : VkDeviceAddress;
+    var max_primitive_counts : array<uint>
+) : void
+    assert(length(max_primitive_counts) == length(info.geometries))
+
+    var vk_info <- info |> vk_view_create_unsafe()
+    defer() <| { info |> vk_view_destroy(); }
+
+    let indirect_stride = uint(0)
+
+    var p_max_primitive_counts : uint const ?
+    unsafe
+        p_max_primitive_counts = array_addr_unsafe(max_primitive_counts)
+
+    vkCmdBuildAccelerationStructuresIndirectKHR(
+        boost_value_to_vk(command_buffer),
+        1u, // infoCount
+        safe_addr(vk_info),
+        safe_addr(indirect_device_address),
+        safe_addr(indirect_stride),
+        safe_addr(p_max_primitive_counts)
+    )
+
+
 def run_cmd_sync(
     device          : Device;
     command_pool    : CommandPool;
