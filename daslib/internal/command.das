@@ -222,7 +222,8 @@ def cmd_build_acceleration_structure_indirect_khr(
     var vk_info <- info |> vk_view_create_unsafe()
     defer() <| { info |> vk_view_destroy(); }
 
-    let indirect_stride = uint(0)
+    let indirect_stride = uint(
+        typeinfo(sizeof type<VkAccelerationStructureBuildRangeInfoKHR>))
 
     var p_max_primitive_counts : uint const ?
     unsafe
