@@ -242,19 +242,25 @@ def cmd_build_acceleration_structure_indirect_khr(
 def cmd_build_acceleration_structure_khr(
     command_buffer           : CommandBuffer;
     var info                 : AccelerationStructureBuildGeometryInfoKHR;
-    var build_range_info     : VkAccelerationStructureBuildRangeInfoKHR
+    var build_range_infos    : array<AccelerationStructureBuildRangeInfoKHR>
 ) : void
+    assert(length(build_range_infos) == length(info.geometries))
+
     var vk_info <- info |> vk_view_create_unsafe()
     defer() <| { info |> vk_view_destroy(); }
 
-    var vk_build_range_info <- build_range_info |> vk_view_create_unsafe()
-    defer() <| { build_range_info |> vk_view_destroy(); }
+    var vk_build_range_infos <- [{ for item in build_range_infos ;
+        item |> vk_view_create_unsafe() }]
+    defer() <|
+        for item in build_range_infos
+            item |> vk_view_destroy()
+        delete vk_build_range_infos
 
     vkCmdBuildAccelerationStructurestKHR(
         boost_value_to_vk(command_buffer),
         1u, // infoCount
         safe_addr(vk_info),
-        safe_addr(vk_build_range_info)
+        array_addr_unsafe(vk_build_range_infos)
     )
 
 
