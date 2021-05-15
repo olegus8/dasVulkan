@@ -275,11 +275,26 @@ def run_cmd_sync(
     b               : block<(cmd_buf:CommandBuffer)>
 )
     var cmd_bufs <- device |> allocate_command_buffers_primary(command_pool, 1)
-    defer() <| ${ delete cmd_bufs; }
+    defer <| ${ delete cmd_bufs; }
     let cmd_buf = cmd_bufs.command_buffers[0]
 
-    cmd_buf |> record_command_buffer() <|
+    var bars <- [{ auto[] [[ MemoryBarrier
+        src_access_mask = uint(VkAccessFlagBits VK_ACCESS_MEMORY_WRITE_BIT);
+        dst_access_mask = uint(VkAccessFlagBits VK_ACCESS_MEMORY_READ_BIT) |
+            uint(VkAccessFlagBits VK_ACCESS_MEMORY_WRITE_BIT)
+    ]] }]
+    defer <| { delete bars; }
+
+    cmd_buf |> record_command_buffer <|
         b |> invoke(cmd_buf)
+        cmd_pipeline_barrier([
+           command_buffer = cmd_buf,
+            src_stage_mask = uint(
+                VkPipelineStageFlagBits VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT),
+            dst_stage_mask = uint(
+                VkPipelineStageFlagBits VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT),
+            memory_barriers = bars,
+          ])
 
     queue |> queue_submit(cmd_bufs)
     queue |> queue_wait_idle()
