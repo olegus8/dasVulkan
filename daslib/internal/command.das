@@ -256,7 +256,7 @@ def cmd_build_acceleration_structure_khr(
             item |> vk_view_destroy()
         delete vk_build_range_infos
 
-    vkCmdBuildAccelerationStructurestKHR(
+    vkCmdBuildAccelerationStructuresKHR(
         boost_value_to_vk(command_buffer),
         1u, // infoCount
         safe_addr(vk_info),
