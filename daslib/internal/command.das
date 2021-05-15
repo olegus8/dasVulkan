@@ -279,7 +279,7 @@ def run_cmd_sync(
     let cmd_buf = cmd_bufs.command_buffers[0]
 
     var bars <- [{ auto[] [[ MemoryBarrier
-        src_access_mask = uint(VkAccessFlagBits VK_ACCESS_MEMORY_WRITE_BIT);
+        src_access_mask = uint(VkAccessFlagBits VK_ACCESS_MEMORY_WRITE_BIT),
         dst_access_mask = uint(VkAccessFlagBits VK_ACCESS_MEMORY_READ_BIT) |
             uint(VkAccessFlagBits VK_ACCESS_MEMORY_WRITE_BIT)
     ]] }]
