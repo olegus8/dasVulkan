@@ -239,6 +239,25 @@ def cmd_build_acceleration_structure_indirect_khr(
     )
 
 
+def cmd_build_acceleration_structure_khr(
+    command_buffer           : CommandBuffer;
+    var info                 : AccelerationStructureBuildGeometryInfoKHR;
+    var build_range_info     : VkAccelerationStructureBuildRangeInfoKHR
+) : void
+    var vk_info <- info |> vk_view_create_unsafe()
+    defer() <| { info |> vk_view_destroy(); }
+
+    var vk_build_range_info <- build_range_info |> vk_view_create_unsafe()
+    defer() <| { build_range_info |> vk_view_destroy(); }
+
+    vkCmdBuildAccelerationStructurestKHR(
+        boost_value_to_vk(command_buffer),
+        1u, // infoCount
+        safe_addr(vk_info),
+        safe_addr(vk_build_range_info)
+    )
+
+
 def run_cmd_sync(
     device          : Device;
     command_pool    : CommandPool;
