@@ -1240,7 +1240,10 @@ class ParamVk_pNext(ParamBase):
     def generate_boost_struct_field_decl(self):
         if self.__next:
             nbtype = self.__next.boost_type_name
-            return [f'next : {nbtype}']
+            return [
+                f'next : {nbtype}',
+                f'next_enabled : bool',
+            ]
         return []
 
     def generate_boost_struct_field_view_decl(self):
@@ -1253,6 +1256,7 @@ class ParamVk_pNext(ParamBase):
         if self.__next:
             nvtype = self.__next.vk_type_name
             return [
+                #TODO: add support for optional pNext here when needed
                 f'assert(vk_struct.pNext != null)',
                 f'var vk_p_next : {nvtype} ?',
                 f'unsafe',
@@ -1269,9 +1273,10 @@ class ParamVk_pNext(ParamBase):
         if self.__next:
             nvtype = self.__next.vk_type_name
             return [
-               f'boost_struct._vk_view_p_next = new {nvtype}',
-               f'*(boost_struct._vk_view_p_next) <- (',
-               f'    boost_struct.next |> vk_view_create_unsafe())',
+               f'if boost_struct.next_enabled',
+               f'    boost_struct._vk_view_p_next = new {nvtype}',
+               f'    *(boost_struct._vk_view_p_next) <- (',
+               f'        boost_struct.next |> vk_view_create_unsafe())',
             ]
         return []
 
@@ -1283,9 +1288,10 @@ class ParamVk_pNext(ParamBase):
     def generate_boost_struct_view_destroy(self):
         if self.__next:
             return [
-               f'boost_struct.next |> vk_view_destroy()',
-               f'unsafe',
-               f'    delete boost_struct._vk_view_p_next',
+               f'if boost_struct.next_enabled',
+               f'    boost_struct.next |> vk_view_destroy()',
+               f'    unsafe',
+               f'        delete boost_struct._vk_view_p_next',
             ]
         return []
 
