@@ -116,7 +116,8 @@ def create_debug_msg_context(
             delete boost_data
             return result
 
-    debug_ctx.callback <- vk_callback
+        debug_ctx.callback <- vk_callback
+
     debug_ctx.debug_ctx = create_debug_msg_context(debug_ctx.callback)
 
     return <- debug_ctx
