@@ -57,7 +57,7 @@ def create_instance_ex(
     debug_msg_type : uint       = DEBUG_UTILS_MESSENGER_DEFAULT_TYPE;
     enabled_validation_features : array<VkValidationFeatureEnableEXT> = [[ array<VkValidationFeatureEnableEXT> ]];
     disabled_validation_features : array<VkValidationFeatureDisableEXT> = [[ array<VkValidationFeatureDisableEXT> ]];
-    var debug_msg_ignore_list : array<string>;
+    var debug_msg_ignore_list   : array<string> = [[ array<string> ]];
     var callback : debug_msg_callback_fn = @@debug_utils_messenger_default_callback
 ) : InstanceEx
     var instance <- [[ InstanceEx
