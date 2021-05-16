@@ -244,9 +244,11 @@ def add_boost_content(g):
     ray_query_feats = g.add_gen_struct(
         name='VkPhysicalDeviceRayQueryFeaturesKHR',
         next_in_chain = accel_feats)
-    phys_dev_12_feats=g.add_gen_struct(
+    phys_dev_12_feats = g.add_gen_struct(
         name='VkPhysicalDeviceVulkan12Features',
         next_in_chain = ray_query_feats)
+    wds_accel = g.add_gen_struct(name = 'VkWriteDescriptorSetAccelerationStructureKHR', vk_to_boost=False,
+        ).declare_array(count = 'accelerationStructureCount', items = 'pAccelerationStructures')
 
     g.add_gen_struct(name = 'VkAccelerationStructureBuildGeometryInfoKHR', vk_to_boost=False, ignore_fields=['ppGeometries']
         ).declare_array(count = 'geometryCount', items = 'pGeometries')
@@ -338,6 +340,7 @@ def add_boost_content(g):
     g.add_gen_struct(name = 'VkRenderPassBeginInfo', vk_to_boost=False,
         ).declare_array(count = 'clearValueCount', items = 'pClearValues')
     g.add_gen_struct(name = 'VkWriteDescriptorSet', vk_to_boost=False,
+        next_in_chain = wds_accel,
         ).declare_array(count = 'descriptorCount', items = 'pImageInfo', optional=True,
         ).declare_array(count = 'descriptorCount', items = 'pBufferInfo', optional=True,
         ).declare_array(count = 'descriptorCount', items = 'pTexelBufferView', optional=True)
