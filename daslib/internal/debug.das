@@ -80,7 +80,7 @@ def debug_utils_messenger_default_callback(
 [private]
 def should_ignore(msg : string; ignore_list : array<string>) : bool
     for ignore_msg in ignore_list
-        if msg |> find(ignore_msg) != -1
+        if msg |> find(ignore_msg, 0) != -1
             return true
     return false
 
