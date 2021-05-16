@@ -99,22 +99,24 @@ def create_debug_msg_context(
 
     var debug_ctx <-[[ DebugMsgContext ignore_list <- ignore_list ]]
 
-    debug_ctx.callback <- @ <| [[
-        := callback,
-        & debug_ctx,
-        & _all_handled_debug_msg_severities
-    ]](
-        msg_severity : VkDebugUtilsMessageSeverityFlagBitsEXT;
-        msg_type : uint;
-        data : VkDebugUtilsMessengerCallbackDataEXT
-    ) : uint
-        var boost_data <- vk_value_to_boost(data)
-        if ! debug_ctx |> should_ignore(boost_data.message)
-            _all_handled_debug_msg_severities |= uint(msg_severity)
-        let result = callback |> invoke(msg_severity, msg_type, boost_data)
-        delete boost_data
-        return result
+    unsafe
+        var vk_callback <- @ <| [[
+            := callback,
+            & debug_ctx,
+            & _all_handled_debug_msg_severities
+        ]](
+            msg_severity : VkDebugUtilsMessageSeverityFlagBitsEXT;
+            msg_type : uint;
+            data : VkDebugUtilsMessengerCallbackDataEXT
+        ) : uint
+            var boost_data <- vk_value_to_boost(data)
+            if ! debug_ctx |> should_ignore(boost_data.message)
+                _all_handled_debug_msg_severities |= uint(msg_severity)
+            let result = callback |> invoke(msg_severity, msg_type, boost_data)
+            delete boost_data
+            return result
 
+    debug_ctx.callback <- vk_callback
     debug_ctx.debug_ctx = create_debug_msg_context(debug_ctx.callback)
 
     return <- debug_ctx
