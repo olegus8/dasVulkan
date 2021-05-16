@@ -944,8 +944,6 @@ class ParamBase(object):
         return [f'{bname} : {btype} = [[ {btype} ]];']
 
     def generate_boost_struct_field_decl(self):
-        if self.vk_is_dyn_array_count:
-            return []
         bname = self._boost_struct_field_name
         btype = self._boost_struct_field_type
         return [f'{bname} : {btype}']
@@ -976,7 +974,8 @@ class ParamBase(object):
                     cur = 'boost_struct.' + ar_items._boost_struct_field_name
                     lines += [f'vk_{bname} = '
                         f'max(vk_{bname}, {vtype}({cur} |> length()))']
-            lines += [f'vk_{bname} = max(vk_{bname}, boost_struct.{bname})']
+            lines += [f'vk_{bname} = '
+                f'max(vk_{bname}, {vtype}(boost_struct.{bname}))']
             return lines
         elif self.vk_is_dyn_array_items:
             adr = f'array_addr_unsafe(boost_struct.{bname})'
