@@ -81,7 +81,7 @@ def debug_utils_messenger_default_callback(
 
 
 [private]
-def should_ignore(DebugMsgContext ctx; msg : string)
+def should_ignore(ctx : DebugMsgContext; msg : string)
     for ignore_msg in ctx.ignore_list
         if msg |> find(ignore_msg) != -1
             return true
