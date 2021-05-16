@@ -97,7 +97,7 @@ def create_debug_msg_context(
     var vk_callback <- @ <| [[
         := callback,
         <- ignore_list,
-        & _all_handled_debug_msg_severities,
+        & _all_handled_debug_msg_severities
     ]](
         msg_severity : VkDebugUtilsMessageSeverityFlagBitsEXT;
         msg_type : uint;
@@ -138,13 +138,14 @@ def create_debug_utils_messenger(
     instance : Instance;
     message_severity : uint = DEBUG_UTILS_MESSENGER_DEFAULT_SEVERITY;
     message_type : uint = DEBUG_UTILS_MESSENGER_DEFAULT_TYPE;
+    var ignore_list : array<string> = [[ array<string> ]];
     var callback : debug_msg_callback_fn = (
         @@debug_utils_messenger_default_callback);
     var result : VkResult? = [[VkResult?]]
 ) : DebugUtilsMessenger
 
     var messenger <- [[ DebugUtilsMessenger
-        _debug_ctx <- create_debug_msg_context(callback)
+        _debug_ctx <- create_debug_msg_context(ignore_list, callback)
     ]]
     var create_info <- debug_utils_messenger_create_info([
         debug_ctx = messenger._debug_ctx,
