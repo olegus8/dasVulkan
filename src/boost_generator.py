@@ -968,8 +968,7 @@ class ParamBase(object):
                     cur = 'boost_struct.' + ar_items._boost_struct_field_name
                     lines += [f'assert(length({cur}) == 0 || '
                         f'length({cur}) == length({first}))']
-                lines += [f'let vk_{bname} = {vtype}({first} |> length())']
-                return lines
+                lines += [f'var vk_{bname} = {vtype}({first} |> length())']
             else:
                 assert_greater(len(self.__dyn_array_items_optional), 0)
                 lines = [f'var vk_{bname} : {vtype}']
@@ -977,7 +976,8 @@ class ParamBase(object):
                     cur = 'boost_struct.' + ar_items._boost_struct_field_name
                     lines += [f'vk_{bname} = '
                         f'max(vk_{bname}, {vtype}({cur} |> length()))']
-                return lines
+            lines += [f'vk_{bname} = max(vk_{bname}, boost_struct.{bname})']
+            return lines
         elif self.vk_is_dyn_array_items:
             adr = f'array_addr_unsafe(boost_struct.{bname})'
             if self._boost_unqual_type == self.vk_unqual_type:
