@@ -37,6 +37,7 @@ typedef
 
 struct DebugMsgContext
     debug_ctx : DebugMsgContext_DasHandle
+    ignore_list : array<string>
     callback : lambda<(
         msg_severity : VkDebugUtilsMessageSeverityFlagBitsEXT;
         msg_type : uint;
@@ -47,6 +48,7 @@ struct DebugMsgContext
 def finalize(var handle : DebugMsgContext & explicit)
     handle.debug_ctx |> destroy_debug_msg_context
     delete handle.callback
+    delete handle.ignore_list
     memzero(handle)
 
 
@@ -79,8 +81,8 @@ def debug_utils_messenger_default_callback(
 
 
 [private]
-def should_ignore(msg : string; ignore_list : array<string>) : bool
-    for ignore_msg in ignore_list
+def should_ignore(DebugMsgContext ctx; msg : string)
+    for ignore_msg in ctx.ignore_list
         if msg |> find(ignore_msg) != -1
             return true
     return false
@@ -95,9 +97,11 @@ def create_debug_msg_context(
     ): uint>
 ) : DebugMsgContext
 
-    var vk_callback <- @ <| [[
+    var debug_ctx <-[[ DebugMsgContext ignore_list <- ignore_list ]]
+
+    debug_ctx.callback <- @ <| [[
         := callback,
-        <- ignore_list,
+        & debug_ctx,
         & _all_handled_debug_msg_severities
     ]](
         msg_severity : VkDebugUtilsMessageSeverityFlagBitsEXT;
@@ -105,13 +109,12 @@ def create_debug_msg_context(
         data : VkDebugUtilsMessengerCallbackDataEXT
     ) : uint
         var boost_data <- vk_value_to_boost(data)
-        if ! should_ignore(boost_data.message, ignore_list)
+        if ! debug_ctx |> should_ignore(boost_data.message)
             _all_handled_debug_msg_severities |= uint(msg_severity)
         let result = callback |> invoke(msg_severity, msg_type, boost_data)
         delete boost_data
         return result
 
-    var debug_ctx <-[[ DebugMsgContext callback <- vk_callback ]]
     debug_ctx.debug_ctx = create_debug_msg_context(debug_ctx.callback)
 
     return <- debug_ctx
