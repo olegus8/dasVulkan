@@ -290,9 +290,11 @@ def run_cmd_sync(
         cmd_pipeline_barrier([
            command_buffer = cmd_buf,
             src_stage_mask = uint(
-                VkPipelineStageFlagBits VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT),
+                //VkPipelineStageFlagBits VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT),
+                VkPipelineStageFlagBits VK_PIPELINE_STAGE_ALL_COMMANDS_BIT),
             dst_stage_mask = uint(
-                VkPipelineStageFlagBits VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT),
+                //VkPipelineStageFlagBits VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT),
+                VkPipelineStageFlagBits VK_PIPELINE_STAGE_ALL_COMMANDS_BIT),
             memory_barriers = bars
           ])
 
