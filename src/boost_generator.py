@@ -1285,9 +1285,7 @@ class ParamVk_pNext(ParamBase):
         return lines
 
     def generate_boost_struct_view_create_field(self):
-        if self.__next:
-            return [f'pNext = vk_p_next,']
-        return []
+        return [f'pNext = vk_p_next,']
 
     def generate_boost_struct_view_destroy(self):
         lines = []
