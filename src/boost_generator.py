@@ -381,6 +381,7 @@ class GenStruct(object):
         ignore_fields = ignore_fields or []
         self.__generator = generator
         self.vk_type_name = name
+        self.__can_be_next = False
         self.__boost_to_vk = boost_to_vk
         self.__vk_to_boost = vk_to_boost
         self._nexts_in_chain = []
@@ -407,7 +408,11 @@ class GenStruct(object):
             if field.vk_name == vk_name:
                 return field
 
+    def set_can_be_next(self, b):
+        self.__can_be_next = b
+
     def next_in_chain(self, struct):
+        struct.set_can_be_next(True)
         self._nexts_in_chain.append(struct)
 
     def declare_mandatory_ptr(self, name):
@@ -457,6 +462,9 @@ class GenStruct(object):
             lines += [f'    {line}' for field in self.__fields
                 for line in field.generate_boost_struct_field_view_decl()]
             lines += [f'    _vk_view__active : bool']
+
+        if self.__can_be_next:
+            lines += [f'    boost_select_as_next : bool']
         return lines
 
     def __generate_vk_to_boost(self):
