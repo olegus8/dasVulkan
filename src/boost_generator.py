@@ -462,6 +462,8 @@ class GenStruct(object):
             lines += [f'    {line}' for field in self.__fields
                 for line in field.generate_boost_struct_field_view_decl()]
             lines += [f'    _vk_view__active : bool']
+            if self.__can_be_next:
+                lines += [f'    _vk_view__as_next : {self.vk_type_name} ?']
 
         if self.__can_be_next:
             lines += [f'    boost_select_as_next : bool']
@@ -1248,13 +1250,14 @@ class ParamVk_pNext(ParamBase):
         return self._gen_struct._nexts_in_chain
 
     def generate_boost_struct_field_decl(self):
-        if self.__next:
-            nbtype = self.__next.boost_type_name
-            return [
-                f'next : {nbtype}',
-                f'next_enabled : bool',
+        lines = []
+        for s in self.__nexts:
+            nbtype = s.boost_type_name
+            nbvar = boost_camel_to_lower(nbtype)
+            lines += [
+                f'boost_next_{nbvar} : {nbtype}',
             ]
-        return []
+        return lines
 
     def generate_boost_struct_field_view_decl(self):
         if self.__next:
