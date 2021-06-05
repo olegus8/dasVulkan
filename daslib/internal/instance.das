@@ -68,20 +68,22 @@ def create_instance_ex(
         enabled_validation_features := enabled_validation_features,
         disabled_validation_features := disabled_validation_features
     ]]
+    validation_features.boost_selected_as_next = true
 
     var debug_msg_create_info <- debug_utils_messenger_create_info([
         debug_ctx = instance._debug_ctx,
         message_severity = debug_msg_severity,
         message_type = debug_msg_type
     ])
+    debug_msg_create_info.boost_selected_as_next = true
 
-    debug_msg_create_info.next <- validation_features
+    debug_msg_create_info.boost_next_validation_features_ext <- validation_features
 
     var all_extensions <- get_required_instance_extensions()
     for ext in extensions
         all_extensions |> push(clone_string(ext))
     var create_info <- [[InstanceCreateInfo
-        next <- debug_msg_create_info,
+        boost_next_debug_utils_messenger_create_info_ext <- debug_msg_create_info,
         enabled_extension_names <- all_extensions,
         enabled_layer_names := layers,
         p_application_info = new [[ApplicationInfo
