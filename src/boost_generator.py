@@ -466,7 +466,7 @@ class GenStruct(object):
                 lines += [f'    _vk_view__as_next : {self.vk_type_name} ?']
 
         if self.__can_be_next:
-            lines += [f'    boost_select_as_next : bool']
+            lines += [f'    boost_selected_as_next : bool']
         return lines
 
     def __generate_vk_to_boost(self):
@@ -1268,6 +1268,18 @@ class ParamVk_pNext(ParamBase):
         return []
 
     def generate_boost_struct_view_create_init(self):
+        lines = []
+        lines += [
+            f'var vk_p_next : void ?',
+        ]
+        for s in self.__nexts:
+            nbvar = boost_camel_to_lower(s.boost_type_name)
+            lines += [
+                f'if boost_struct.{nbvar}.boost_selected_as_next',
+                f'    if vk_p_next != null',
+                f'        panic("Only one next-in-chain structure can be selected")',
+            ]
+        return lines
         if self.__next:
             nvtype = self.__next.vk_type_name
             return [
@@ -1280,7 +1292,7 @@ class ParamVk_pNext(ParamBase):
 
     def generate_boost_struct_view_create_field(self):
         if self.__next:
-            return [f'pNext = boost_struct._vk_view_p_next,']
+            return [f'pNext = vk_p_next,']
         return []
 
     def generate_boost_struct_view_destroy(self):
