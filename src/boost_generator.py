@@ -1258,11 +1258,11 @@ class ParamVk_pNext(ParamBase):
         return lines
 
     def generate_boost_struct_v2b_vars(self):
-        assert(not self.__nexts, 'pNext is not supported for vk->boost')
+        #TODO: add pNext support for vk->boost when needed
         return []
 
     def generate_boost_struct_v2b_field(self):
-        assert(not self.__nexts, 'pNext is not supported for vk->boost')
+        #TODO: add pNext support for vk->boost when needed
         return []
 
     def generate_boost_struct_view_create_init(self):
