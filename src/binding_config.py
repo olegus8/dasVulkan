@@ -344,6 +344,7 @@ def add_boost_content(g):
         ).declare_array(count = 'clearValueCount', items = 'pClearValues')
     g.add_gen_struct(name = 'VkWriteDescriptorSet', vk_to_boost=False,
         ).next_in_chain(wds_accel
+        ).next_in_chain(wds_inline_uni
         ).declare_array(count = 'descriptorCount', items = 'pImageInfo', optional=True,
         ).declare_array(count = 'descriptorCount', items = 'pBufferInfo', optional=True,
         ).declare_array(count = 'descriptorCount', items = 'pTexelBufferView', optional=True)
