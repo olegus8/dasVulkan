@@ -249,6 +249,7 @@ def add_boost_content(g):
         next_in_chain = ray_query_feats)
     wds_accel = g.add_gen_struct(name = 'VkWriteDescriptorSetAccelerationStructureKHR', vk_to_boost=False,
         ).declare_array(count = 'accelerationStructureCount', items = 'pAccelerationStructures')
+    inline_uniform_dp = g.add_gen_struct(name = 'VkDescriptorPoolInlineUniformBlockCreateInfoEXT', vk_to_boost=False)
 
     g.add_gen_struct(name = 'VkAccelerationStructureBuildGeometryInfoKHR', vk_to_boost=False, ignore_fields=['ppGeometries']
         ).declare_array(count = 'geometryCount', items = 'pGeometries')
@@ -259,6 +260,7 @@ def add_boost_content(g):
         ).declare_array(count = 'cmdBufLabelCount', items = 'pCmdBufLabels'
         ).declare_array(count = 'objectCount', items = 'pObjects')
     g.add_gen_struct(name = 'VkDescriptorPoolCreateInfo', vk_to_boost=False,
+        next_in_chain = inline_uniform_dp
         ).declare_array(count = 'poolSizeCount', items = 'pPoolSizes')
     g.add_gen_struct(name = 'VkDescriptorSetAllocateInfo', vk_to_boost=False,
         ).declare_array(count = 'descriptorSetCount', items = 'pSetLayouts')
