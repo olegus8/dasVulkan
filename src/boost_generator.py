@@ -411,7 +411,7 @@ class GenStruct(object):
     def next_in_chain(self, struct):
         struct.__can_be_next = True
         self._nexts_in_chain.append(struct)
-        return struct
+        return self
 
     def declare_mandatory_ptr(self, name):
         field = self.__get_field(name)
