@@ -343,7 +343,7 @@ def add_boost_content(g):
     g.add_gen_struct(name = 'VkRenderPassBeginInfo', vk_to_boost=False,
         ).declare_array(count = 'clearValueCount', items = 'pClearValues')
     g.add_gen_struct(name = 'VkWriteDescriptorSet', vk_to_boost=False,
-        ).next_in_chain(wds_accel),
+        ).next_in_chain(wds_accel
         ).declare_array(count = 'descriptorCount', items = 'pImageInfo', optional=True,
         ).declare_array(count = 'descriptorCount', items = 'pBufferInfo', optional=True,
         ).declare_array(count = 'descriptorCount', items = 'pTexelBufferView', optional=True)
