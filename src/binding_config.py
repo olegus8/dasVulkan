@@ -242,10 +242,10 @@ def add_boost_content(g):
     accel_feats = g.add_gen_struct(
         name='VkPhysicalDeviceAccelerationStructureFeaturesKHR')
     ray_query_feats = g.add_gen_struct(
-        name='VkPhysicalDeviceRayQueryFeaturesKHR',
+        name='VkPhysicalDeviceRayQueryFeaturesKHR', vk_to_boost=False,
         ).next_in_chain(accel_feats)
     phys_dev_12_feats = g.add_gen_struct(
-        name='VkPhysicalDeviceVulkan12Features',
+        name='VkPhysicalDeviceVulkan12Features', vk_to_boost=False,
         ).next_in_chain(ray_query_feats)
     wds_accel = g.add_gen_struct(name = 'VkWriteDescriptorSetAccelerationStructureKHR', vk_to_boost=False,
         ).declare_array(count = 'accelerationStructureCount', items = 'pAccelerationStructures')
@@ -348,7 +348,7 @@ def add_boost_content(g):
         ).declare_array(count = 'descriptorCount', items = 'pBufferInfo', optional=True,
         ).declare_array(count = 'descriptorCount', items = 'pTexelBufferView', optional=True)
 
-    g.add_gen_struct(name = 'VkPhysicalDeviceFeatures2'
+    g.add_gen_struct(name = 'VkPhysicalDeviceFeatures2', vk_to_boost=False,
         ).next_in_chain(g.add_gen_struct(
             name = 'VkPhysicalDeviceVulkan11Features'))
 

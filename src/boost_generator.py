@@ -1259,27 +1259,12 @@ class ParamVk_pNext(ParamBase):
             ]
         return lines
 
-    def generate_boost_struct_field_view_decl(self):
-        if self.__next:
-            nvtype = self.__next.vk_type_name
-            return [f'_vk_view_p_next : {nvtype} ?']
-        return []
-
     def generate_boost_struct_v2b_vars(self):
-        if self.__next:
-            nvtype = self.__next.vk_type_name
-            return [
-                #TODO: add support for optional pNext here when needed
-                f'assert(vk_struct.pNext != null)',
-                f'var vk_p_next : {nvtype} ?',
-                f'unsafe',
-                f'    vk_p_next = reinterpret<{nvtype} ?>(vk_struct.pNext)',
-            ]
+        assert(not self.__nexts, 'pNext is not supported for vk->boost')
         return []
 
     def generate_boost_struct_v2b_field(self):
-        if self.__next:
-            return [f'next <- vk_value_to_boost(*vk_p_next),']
+        assert(not self.__nexts, 'pNext is not supported for vk->boost')
         return []
 
     def generate_boost_struct_view_create_init(self):
