@@ -408,12 +408,10 @@ class GenStruct(object):
             if field.vk_name == vk_name:
                 return field
 
-    def set_can_be_next(self, b):
-        self.__can_be_next = b
-
     def next_in_chain(self, struct):
-        struct.set_can_be_next(True)
+        struct.__can_be_next = True
         self._nexts_in_chain.append(struct)
+        return struct
 
     def declare_mandatory_ptr(self, name):
         field = self.__get_field(name)
