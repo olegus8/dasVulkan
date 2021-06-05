@@ -1273,11 +1273,16 @@ class ParamVk_pNext(ParamBase):
             f'var vk_p_next : void ?',
         ]
         for s in self.__nexts:
+            nvtype = s.vk_type_name
             nbvar = boost_camel_to_lower(s.boost_type_name)
             lines += [
-                f'if boost_struct.{nbvar}.boost_selected_as_next',
+                f'if boost_struct.boost_next_{nbvar}.boost_selected_as_next',
                 f'    if vk_p_next != null',
                 f'        panic("Only one next-in-chain structure can be selected")',
+                f'    boost_struct.boost_next_{nbvar}._vk_view__as_next = new {nvtype}',
+                f'    *(boost_struct.boost_next_{nbvar}._vk_view__as_next) <- (',
+                f'        boost_struct.boost_next_{nbvar} |> vk_view_create_unsafe())',
+                f'    vk_p_next = boost_struct.boost_next_{nbvar}._vk_view__as_next',
             ]
         return lines
         if self.__next:
