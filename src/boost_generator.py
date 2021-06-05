@@ -1292,14 +1292,16 @@ class ParamVk_pNext(ParamBase):
         return []
 
     def generate_boost_struct_view_destroy(self):
-        if self.__next:
-            return [
-               f'if boost_struct.next_enabled',
-               f'    boost_struct.next |> vk_view_destroy()',
-               f'    unsafe',
-               f'        delete boost_struct._vk_view_p_next',
+        lines = []
+        for s in self.__nexts:
+            nbvar = boost_camel_to_lower(s.boost_type_name)
+            lines += [
+                f'if boost_struct.boost_next_{nbvar}.boost_selected_as_next',
+                f'    boost_struct.boost_next_{nbvar} |> vk_view_destroy()',
+                f'    unsafe',
+                f'        delete boost_struct.boost_next_{nbvar}._vk_view__as_next = new {nvtype}',
             ]
-        return []
+        return lines
 
 
 class ParamVk_sType(ParamBase):
