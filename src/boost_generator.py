@@ -1295,7 +1295,7 @@ class ParamVk_pNext(ParamBase):
                 f'if boost_struct.boost_next_{nbvar}.boost_selected_as_next',
                 f'    boost_struct.boost_next_{nbvar} |> vk_view_destroy()',
                 f'    unsafe',
-                f'        delete boost_struct.boost_next_{nbvar}._vk_view__as_next = new {nvtype}',
+                f'        delete boost_struct.boost_next_{nbvar}._vk_view__as_next',
             ]
         return lines
 
