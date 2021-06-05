@@ -383,7 +383,7 @@ class GenStruct(object):
         self.vk_type_name = name
         self.__boost_to_vk = boost_to_vk
         self.__vk_to_boost = vk_to_boost
-        self.__nexts_in_chain = []
+        self._nexts_in_chain = []
 
         self.__fields = [field for field in
             self.__generator.create_struct_fields(self.__c_struct)
@@ -408,7 +408,7 @@ class GenStruct(object):
                 return field
 
     def next_in_chain(self, struct):
-        self.__nexts_in_chain
+        self._nexts_in_chain.append(struct)
 
     def declare_mandatory_ptr(self, name):
         field = self.__get_field(name)
@@ -1236,8 +1236,8 @@ class ParamVk_pNext(ParamBase):
         return self._c_unqual_type
 
     @property
-    def __next(self):
-        return self._gen_struct.next_in_chain
+    def __nexts(self):
+        return self._gen_struct._nexts_in_chain
 
     def generate_boost_struct_field_decl(self):
         if self.__next:
