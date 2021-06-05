@@ -238,17 +238,18 @@ def add_boost_content(g):
         name='VkMemoryAllocateFlagsInfo', vk_to_boost=False)
     debug_msg_create_info = g.add_gen_struct(
         name='VkDebugUtilsMessengerCreateInfoEXT', vk_to_boost=False,
-        next_in_chain = debug_validation_features)
+        ).next_in_chain(debug_validation_features)
     accel_feats = g.add_gen_struct(
         name='VkPhysicalDeviceAccelerationStructureFeaturesKHR')
     ray_query_feats = g.add_gen_struct(
         name='VkPhysicalDeviceRayQueryFeaturesKHR',
-        next_in_chain = accel_feats)
+        ).next_in_chain(accel_feats)
     phys_dev_12_feats = g.add_gen_struct(
         name='VkPhysicalDeviceVulkan12Features',
-        next_in_chain = ray_query_feats)
+        ).next_in_chain(ray_query_feats)
     wds_accel = g.add_gen_struct(name = 'VkWriteDescriptorSetAccelerationStructureKHR', vk_to_boost=False,
         ).declare_array(count = 'accelerationStructureCount', items = 'pAccelerationStructures')
+    wds_inline_uni = g.add_gen_struct(name = 'VkWriteDescriptorSetInlineUniformBlockEXT', vk_to_boost=False)
     inline_uniform_dp = g.add_gen_struct(name = 'VkDescriptorPoolInlineUniformBlockCreateInfoEXT', vk_to_boost=False)
 
     g.add_gen_struct(name = 'VkAccelerationStructureBuildGeometryInfoKHR', vk_to_boost=False, ignore_fields=['ppGeometries']
@@ -260,7 +261,7 @@ def add_boost_content(g):
         ).declare_array(count = 'cmdBufLabelCount', items = 'pCmdBufLabels'
         ).declare_array(count = 'objectCount', items = 'pObjects')
     g.add_gen_struct(name = 'VkDescriptorPoolCreateInfo', vk_to_boost=False,
-        next_in_chain = inline_uniform_dp
+        ).next_in_chain(inline_uniform_dp
         ).declare_array(count = 'poolSizeCount', items = 'pPoolSizes')
     g.add_gen_struct(name = 'VkDescriptorSetAllocateInfo', vk_to_boost=False,
         ).declare_array(count = 'descriptorSetCount', items = 'pSetLayouts')
@@ -269,7 +270,7 @@ def add_boost_content(g):
     g.add_gen_struct(name = 'VkDescriptorSetLayoutCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'bindingCount', items = 'pBindings')
     g.add_gen_struct(name = 'VkDeviceCreateInfo', vk_to_boost=False,
-        next_in_chain = phys_dev_12_feats
+        ).next_in_chain(phys_dev_12_feats
         ).declare_array(count = 'queueCreateInfoCount', items = 'pQueueCreateInfos',
         ).declare_array(count = 'enabledLayerCount', items = 'ppEnabledLayerNames',
         ).declare_array(count = 'enabledExtensionCount', items = 'ppEnabledExtensionNames')
@@ -290,11 +291,11 @@ def add_boost_content(g):
     g.add_gen_struct(name = 'VkImageCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'queueFamilyIndexCount', items = 'pQueueFamilyIndices')
     g.add_gen_struct(name = 'VkInstanceCreateInfo', vk_to_boost=False,
-        next_in_chain = debug_msg_create_info
+        ).next_in_chain(debug_msg_create_info
         ).declare_array(count = 'enabledLayerCount', items = 'ppEnabledLayerNames',
         ).declare_array(count = 'enabledExtensionCount', items = 'ppEnabledExtensionNames')
     g.add_gen_struct(name='VkMemoryAllocateInfo', vk_to_boost=False,
-        next_in_chain = memory_allocate_flags_info)
+        ).next_in_chain(memory_allocate_flags_info)
     g.add_gen_struct(name = 'VkPhysicalDeviceMemoryProperties',
         ).declare_array(count = 'memoryTypeCount', items = 'memoryTypes',
         ).declare_array(count = 'memoryHeapCount', items = 'memoryHeaps')
@@ -342,14 +343,13 @@ def add_boost_content(g):
     g.add_gen_struct(name = 'VkRenderPassBeginInfo', vk_to_boost=False,
         ).declare_array(count = 'clearValueCount', items = 'pClearValues')
     g.add_gen_struct(name = 'VkWriteDescriptorSet', vk_to_boost=False,
-        next_in_chain = wds_accel,
+        ).next_in_chain(wds_accel),
         ).declare_array(count = 'descriptorCount', items = 'pImageInfo', optional=True,
         ).declare_array(count = 'descriptorCount', items = 'pBufferInfo', optional=True,
         ).declare_array(count = 'descriptorCount', items = 'pTexelBufferView', optional=True)
 
-    g.add_gen_struct(
-        name = 'VkPhysicalDeviceFeatures2',
-        next_in_chain = g.add_gen_struct(
+    g.add_gen_struct(name = 'VkPhysicalDeviceFeatures2'
+        ).next_in_chain(g.add_gen_struct(
             name = 'VkPhysicalDeviceVulkan11Features'))
 
     #

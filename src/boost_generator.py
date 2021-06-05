@@ -376,14 +376,14 @@ class GenFunc(object):
 class GenStruct(object):
 
     def __init__(self, generator, name, boost_to_vk=True, vk_to_boost=True,
-        ignore_fields=None, next_in_chain=None
+        ignore_fields=None,
     ):
         ignore_fields = ignore_fields or []
         self.__generator = generator
         self.vk_type_name = name
         self.__boost_to_vk = boost_to_vk
         self.__vk_to_boost = vk_to_boost
-        self.next_in_chain = next_in_chain
+        self.__nexts_in_chain = []
 
         self.__fields = [field for field in
             self.__generator.create_struct_fields(self.__c_struct)
@@ -406,6 +406,9 @@ class GenStruct(object):
         for field in self.__fields:
             if field.vk_name == vk_name:
                 return field
+
+    def next_in_chain(self, struct):
+        self.__nexts_in_chain
 
     def declare_mandatory_ptr(self, name):
         field = self.__get_field(name)
