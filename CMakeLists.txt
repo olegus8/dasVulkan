@@ -13,7 +13,7 @@ IF(NOT DAS_VULKAN_INCLUDED)
     FIND_PACKAGE(glfw3)
     FIND_PROGRAM(DAS_VULKAN_GLSL_EXE glslc)
 
-    MACRO(DAS_VULKAN_COMPILE_SHADER input stage)
+    MACRO(DAS_VULKAN_COMPILE_SHADER input stage extra_deps)
         IF(NOT DAS_VULKAN_GLSL_EXE)
             MESSAGE(STATUS "glslc not found. Will use precompiled shaders.")
         ELSE()
@@ -22,7 +22,7 @@ IF(NOT DAS_VULKAN_INCLUDED)
             get_filename_component(input_name ${input} NAME_WE)
             get_filename_component(input_name_ext ${input} NAME)
             ADD_CUSTOM_COMMAND(
-                DEPENDS ${input_src}
+                DEPENDS ${input_src} ${extra_deps}
                 OUTPUT ${input_dir}/${input_name}.spv
                 WORKING_DIRECTORY ${input_dir}
                 VERBATIM
