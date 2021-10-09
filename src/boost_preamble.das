@@ -32,6 +32,11 @@ def boost_value_to_vk(b : auto(T)[]) : T[]
 def boost_value_to_vk(b : auto(T)) : T
     return b
 
+//FIXME: temporary hack. need to adjust generator accordingly
+def boost_value_to_vk(b : VkClearColorValue) : VkClearColorValue
+    var clone := b
+    return clone
+
 def vk_value_to_boost(v : auto(T)[]) : T[]
     return v
 
