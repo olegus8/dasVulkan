@@ -377,6 +377,8 @@ def add_boost_content(g):
     g.add_gen_func(name = 'vkCmdBindVertexBuffers',
         ).declare_array(count = 'bindingCount', items = 'pBuffers',
         ).declare_array(count = 'bindingCount', items = 'pOffsets')
+    g.add_gen_func(name = 'vkCmdClearColorImage',
+        ).declare_array(count = 'rangeCount', items = 'pRanges')
     g.add_gen_func(name = 'vkCmdCopyBuffer',
         ).declare_array(count = 'regionCount', items = 'pRegions')
     g.add_gen_func(name = 'vkCmdCopyBufferToImage',
