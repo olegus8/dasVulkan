@@ -76,7 +76,16 @@ def debug_utils_messenger_default_callback(
     msg_type : uint;
     data : DebugUtilsMessengerCallbackDataEXT
 ): uint
-    print("vk_debug_utils_messenger: {data.message}\n")
+    var sev : string
+    if ( uint(msg_severity) & uint(VkDebugUtilsMessageSeverityFlagBitsEXT
+        VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT
+    )) != 0u
+        sev += " WARNING"
+    if ( uint(msg_severity) & uint(VkDebugUtilsMessageSeverityFlagBitsEXT
+        VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT
+    )) != 0u
+        sev += " ERROR"
+    print("vk_debug_utils_messenger{sev}: {data.message}\n")
     return 0u
 
 
