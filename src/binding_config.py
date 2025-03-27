@@ -386,6 +386,7 @@ def add_boost_content(g):
     g.add_gen_func(name = 'vkCmdDispatch')
     g.add_gen_func(name = 'vkCmdDispatchIndirect')
     g.add_gen_func(name = 'vkCmdDraw')
+    g.add_gen_func(name = 'vkCmdDrawIndirect')
     g.add_gen_func(name = 'vkCmdDrawIndexed')
     g.add_gen_func(name = 'vkCmdDrawIndexedIndirect')
     g.add_gen_func(name = 'vkCmdEndRenderPass')
