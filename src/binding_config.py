@@ -174,6 +174,7 @@ def add_boost_content(g):
         'VkPhysicalDeviceLimits',
         'VkPhysicalDeviceProperties',
         'VkPhysicalDeviceSparseProperties',
+        'VkPipelineInfo',
         'VkPushConstantRange',
         'VkQueueFamilyProperties',
         'VkRect2D',
