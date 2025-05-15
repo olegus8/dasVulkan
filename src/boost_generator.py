@@ -1758,13 +1758,27 @@ class ParamUInt64(ParamBase):
     @classmethod
     def maybe_create(cls, c_param, **kwargs):
         if c_param.type.unqual_name in [
-            'unsigned long long', 'unsigned long',
+            'unsigned long long', 'unsigned long', 'uint64_t',
         ]:
             return cls(c_param=c_param, **kwargs)
 
     @property
     def vk_unqual_type(self):
         return 'uint64'
+
+
+class ParamInt64(ParamBase):
+
+    @classmethod
+    def maybe_create(cls, c_param, **kwargs):
+        if c_param.type.unqual_name in [
+            'long long', 'int64_t'
+        ]:
+            return cls(c_param=c_param, **kwargs)
+
+    @property
+    def vk_unqual_type(self):
+        return 'int64'
 
 
 class ParamVkBool32(ParamBase):
