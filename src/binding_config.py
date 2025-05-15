@@ -78,6 +78,7 @@ class Config(ConfigBase):
             'vkGetPhysicalDeviceSurfacePresentModesKHR',
             'vkGetPhysicalDeviceSurfaceSupportKHR',
             'vkGetPipelineExecutablePropertiesKHR',
+            'vkGetPipelineExecutableStatisticsKHR',
             'vkGetSwapchainImagesKHR',
             'vkQueuePresentKHR',
             'vkSetDebugUtilsObjectNameEXT',
@@ -177,6 +178,7 @@ def add_boost_content(g):
         'VkPhysicalDeviceSparseProperties',
         'VkPipelineExecutableInfoKHR',
         'VkPipelineExecutablePropertiesKHR',
+        'VkPipelineExecutableStatisticKHR',
         'VkPipelineInfo',
         'VkPushConstantRange',
         'VkQueueFamilyProperties',
@@ -434,6 +436,9 @@ def add_boost_content(g):
     g.add_gen_func(name = 'vkGetPipelineExecutablePropertiesKHR',
         ).declare_array(count = 'pExecutableCount', items = 'pProperties',
         ).declare_output(name = 'pProperties')
+    g.add_gen_func(name = 'vkGetPipelineExecutableStatisticsKHR',
+        ).declare_array(count = 'pStatisticCount', items = 'pStatistics',
+        ).declare_output(name = 'pStatistics')
     g.add_gen_func(name = 'vkGetPhysicalDeviceFeatures',
         ).declare_output(name = 'pFeatures')
     g.add_gen_func(name = 'vkGetPhysicalDeviceFeatures2',
