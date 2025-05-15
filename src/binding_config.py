@@ -179,6 +179,7 @@ def add_boost_content(g):
         'VkPipelineExecutableInfoKHR',
         'VkPipelineExecutablePropertiesKHR',
         'VkPipelineExecutableStatisticKHR',
+        'VkPipelineExecutableStatisticValueKHR',
         'VkPipelineInfoKHR',
         'VkPushConstantRange',
         'VkQueueFamilyProperties',
