@@ -79,6 +79,7 @@ class BoostGenerator(LoggingObject):
             ParamStringPtr,
             ParamFloat,
             ParamInt32,
+            ParamInt64,
             ParamUInt8,
             ParamUInt32,
             ParamUInt64,
