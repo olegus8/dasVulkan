@@ -78,6 +78,7 @@ class BoostGenerator(LoggingObject):
             ParamFixedString,
             ParamStringPtr,
             ParamFloat,
+            ParamDouble,
             ParamInt32,
             ParamInt64,
             ParamUInt8,
@@ -1714,6 +1715,18 @@ class ParamFloat(ParamBase):
     @property
     def vk_unqual_type(self):
         return 'float'
+
+
+class ParamDouble(ParamBase):
+
+    @classmethod
+    def maybe_create(cls, c_param, **kwargs):
+        if c_param.type.unqual_name == 'double':
+            return cls(c_param=c_param, **kwargs)
+
+    @property
+    def vk_unqual_type(self):
+        return 'double'
 
 
 class ParamInt32(ParamBase):
