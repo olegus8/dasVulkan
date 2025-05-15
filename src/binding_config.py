@@ -239,8 +239,11 @@ def add_boost_content(g):
     debug_msg_create_info = g.add_gen_struct(
         name='VkDebugUtilsMessengerCreateInfoEXT', vk_to_boost=False,
         ).next_in_chain(debug_validation_features)
+    exec_feats = g.add_gen_struct(
+        name='VkPhysicalDevicePipelineExecutablePropertiesFeaturesKHR')
     accel_feats = g.add_gen_struct(
-        name='VkPhysicalDeviceAccelerationStructureFeaturesKHR')
+        name='VkPhysicalDeviceAccelerationStructureFeaturesKHR',
+        vk_to_boost=False).next_in_chain(exec_feats)
     ray_query_feats = g.add_gen_struct(
         name='VkPhysicalDeviceRayQueryFeaturesKHR', vk_to_boost=False,
         ).next_in_chain(accel_feats)
