@@ -386,6 +386,9 @@ class GenStruct(object):
         self.__vk_to_boost = vk_to_boost
         self._nexts_in_chain = []
 
+        if self.__c_struct is None:
+          raise Exception('Cannot find struct or union "{}"'.format(name))
+
         self.__fields = [field for field in
             self.__generator.create_struct_fields(self.__c_struct)
             if field.vk_name not in ignore_fields]
