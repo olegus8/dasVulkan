@@ -483,3 +483,5 @@ def add_boost_content(g):
         ).declare_array(count = 'descriptorCopyCount', items = 'pDescriptorCopies')
     g.add_gen_func(name = 'vkWaitForFences',
         ).declare_array(count = 'fenceCount', items = 'pFences')
+    g.add_gen_func(name = 'vkInvalidateMappedMemoryRanges',
+        ).declare_array(count = 'memoryRangeCount', items = 'pMemoryRanges')
