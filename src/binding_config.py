@@ -250,9 +250,7 @@ def add_boost_content(g):
     debug_msg_create_info = g.add_gen_struct(
         name='VkDebugUtilsMessengerCreateInfoEXT', vk_to_boost=False,
         ).next_in_chain(debug_validation_features)
-    rob_info = g.add_gen_struct(
-        name='VkPipelineRobustnessCreateInfo'
-        )
+    rob_info = g.add_gen_struct(name='VkPipelineRobustnessCreateInfo')
     rob_feats = g.add_gen_struct(
         name='VkPhysicalDevicePipelineRobustnessFeatures'
         ).next_in_chain(rob_info)
