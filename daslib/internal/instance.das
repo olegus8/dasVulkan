@@ -80,7 +80,7 @@ def create_instance_ex(
 
     debug_msg_create_info.boost_next_validation_features_ext <- validation_features
 
-    var layer_settings_create_info <- [[ LayerSettingsCreateInfo
+    var layer_settings_create_info <- [[ LayerSettingsCreateInfoEXT
         settings := layer_settings
     ]]
     layer_settings_create_info.boost_selected_as_next = true
