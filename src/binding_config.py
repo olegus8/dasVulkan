@@ -96,6 +96,7 @@ class Config(ConfigBase):
         or  func.name.endswith('NV')
         or  func.name.endswith('NVX')
         or  func.name.endswith('QCOM')
+        or  func.name.endswith('VALVE')
         ):
             func.ignore()
 
