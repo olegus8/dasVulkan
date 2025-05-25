@@ -441,8 +441,6 @@ def add_boost_content(g):
         ).declare_output(name = 'pStatistics')
     g.add_gen_func(name = 'vkGetPhysicalDeviceFeatures',
         ).declare_output(name = 'pFeatures')
-    g.add_gen_func(name = 'vkGetPhysicalDeviceFeatures2',
-        ).declare_output(name = 'pFeatures')
     g.add_gen_func(name = 'vkGetPhysicalDeviceFormatProperties',
         ).declare_output(name = 'pFormatProperties')
     g.add_gen_func(name = 'vkGetPhysicalDeviceProperties',
