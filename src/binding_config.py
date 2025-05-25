@@ -257,6 +257,9 @@ def add_boost_content(g):
     phys_dev_12_feats = g.add_gen_struct(
         name='VkPhysicalDeviceVulkan12Features', vk_to_boost=False,
         ).next_in_chain(ray_query_feats)
+    phys_dev_11_feats = g.add_gen_struct(
+        name='VkPhysicalDeviceVulkan11Features', vk_to_boost=False,
+        ).next_in_chain(phys_dev_12_feats)
     wds_accel = g.add_gen_struct(name = 'VkWriteDescriptorSetAccelerationStructureKHR', vk_to_boost=False,
         ).declare_array(count = 'accelerationStructureCount', items = 'pAccelerationStructures')
     wds_inline_uni = g.add_gen_struct(name = 'VkWriteDescriptorSetInlineUniformBlockEXT', vk_to_boost=False)
@@ -280,7 +283,7 @@ def add_boost_content(g):
     g.add_gen_struct(name = 'VkDescriptorSetLayoutCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'bindingCount', items = 'pBindings')
     g.add_gen_struct(name = 'VkDeviceCreateInfo', vk_to_boost=False,
-        ).next_in_chain(phys_dev_12_feats
+        ).next_in_chain(phys_dev_11_feats
         ).declare_array(count = 'queueCreateInfoCount', items = 'pQueueCreateInfos',
         ).declare_array(count = 'enabledLayerCount', items = 'ppEnabledLayerNames',
         ).declare_array(count = 'enabledExtensionCount', items = 'ppEnabledExtensionNames')
