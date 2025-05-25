@@ -121,7 +121,7 @@ class BoostGenerator(LoggingObject):
     def __vk_version(self):
         v = self.macro_consts['VK_HEADER_VERSION_COMPLETE'].value.replace(
             'VK_HEADER_VERSION', self.macro_consts['VK_HEADER_VERSION'].value)
-        m = re.match(r'VK_MAKE_VERSION\((\d+), (\d+), (\d+)\)', v)
+        m = re.match(r'VK_MAKE.*VERSION\((\d+), (\d+), (\d+)\)', v)
         return '.'.join(m.groups())
 
     @property
