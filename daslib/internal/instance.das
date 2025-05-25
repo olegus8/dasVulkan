@@ -55,6 +55,7 @@ def create_instance_ex(
     layers : array<string>      = DEFAULT_INSTANCE_LAYERS;
     debug_msg_severity : uint   = DEBUG_UTILS_MESSENGER_DEFAULT_SEVERITY;
     debug_msg_type : uint       = DEBUG_UTILS_MESSENGER_DEFAULT_TYPE;
+    layer_settings : array<VkLayerSettingEXT> = [[ array<VkLayerSettingEXT> ]];
     enabled_validation_features : array<VkValidationFeatureEnableEXT> = [[ array<VkValidationFeatureEnableEXT> ]];
     disabled_validation_features : array<VkValidationFeatureDisableEXT> = [[ array<VkValidationFeatureDisableEXT> ]];
     var debug_msg_ignore_list   : array<string> = [[ array<string> ]];
@@ -79,11 +80,17 @@ def create_instance_ex(
 
     debug_msg_create_info.boost_next_validation_features_ext <- validation_features
 
+    var layer_settings_create_info <- [[ LayerSettingsCreateInfo
+        settings := layer_settings
+    ]]
+    layer_settings_create_info.boost_selected_as_next = true
+    layer_settings_create_info.boost_next_debug_utils_messenger_create_info_ext <- debug_msg_create_info
+
     var all_extensions <- get_required_instance_extensions()
     for ext in extensions
         all_extensions |> push(clone_string(ext))
     var create_info <- [[InstanceCreateInfo
-        boost_next_debug_utils_messenger_create_info_ext <- debug_msg_create_info,
+        boost_next_layer_settings_create_info <- layer_settings_create_info,
         enabled_extension_names <- all_extensions,
         enabled_layer_names := layers,
         p_application_info = new [[ApplicationInfo

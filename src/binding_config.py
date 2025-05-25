@@ -166,6 +166,7 @@ def add_boost_content(g):
         'VkFormatProperties',
         'VkImageSubresourceRange',
         'VkLayerProperties',
+        'VkLayerSettingEXT',
         'VkMappedMemoryRange',
         'VkMemoryHeap',
         'VkMemoryRequirements',
@@ -303,8 +304,12 @@ def add_boost_content(g):
         ).declare_mandatory_ptr(name = 'pColorBlendState')
     g.add_gen_struct(name = 'VkImageCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'queueFamilyIndexCount', items = 'pQueueFamilyIndices')
-    g.add_gen_struct(name = 'VkInstanceCreateInfo', vk_to_boost=False,
+    layer_settings_create_info = g.add_gen_struct(
+          name = 'VkLayerSettingsCreateInfoEXT', vk_to_boost=False,
         ).next_in_chain(debug_msg_create_info
+        ).declare_array(count = 'settingCount', items = 'pSettings')
+    g.add_gen_struct(name = 'VkInstanceCreateInfo', vk_to_boost=False,
+        ).next_in_chain(layer_settings_create_info
         ).declare_array(count = 'enabledLayerCount', items = 'ppEnabledLayerNames',
         ).declare_array(count = 'enabledExtensionCount', items = 'ppEnabledExtensionNames')
     g.add_gen_struct(name='VkMemoryAllocateInfo', vk_to_boost=False,
