@@ -90,7 +90,7 @@ def create_instance_ex(
     for ext in extensions
         all_extensions |> push(clone_string(ext))
     var create_info <- [[InstanceCreateInfo
-        boost_next_layer_settings_create_info <- layer_settings_create_info,
+        boost_next_layer_settings_create_info_ext <- layer_settings_create_info,
         enabled_extension_names <- all_extensions,
         enabled_layer_names := layers,
         p_application_info = new [[ApplicationInfo
