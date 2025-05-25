@@ -220,6 +220,7 @@ def add_boost_content(g):
         'VkImageMemoryBarrier',
         'VkImageSubresourceLayers',
         'VkImageViewCreateInfo',
+        'VkLayerSettingEXT',
         'VkMemoryBarrier',
         'VkPipelineColorBlendAttachmentState',
         'VkPipelineDepthStencilStateCreateInfo',
@@ -268,7 +269,6 @@ def add_boost_content(g):
     wds_inline_uni = g.add_gen_struct(name = 'VkWriteDescriptorSetInlineUniformBlock', vk_to_boost=False)
     inline_uniform_dp = g.add_gen_struct(name = 'VkDescriptorPoolInlineUniformBlockCreateInfo', vk_to_boost=False)
 
-    g.add_gen_struct(name = 'VkLayerSettingEXT', vk_to_boost=False)
     g.add_gen_struct(name = 'VkAccelerationStructureBuildGeometryInfoKHR', vk_to_boost=False, ignore_fields=['ppGeometries']
         ).declare_array(count = 'geometryCount', items = 'pGeometries')
     g.add_gen_struct(name = 'VkBufferCreateInfo', vk_to_boost=False,
