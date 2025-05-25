@@ -362,10 +362,6 @@ def add_boost_content(g):
         ).declare_array(count = 'descriptorCount', items = 'pBufferInfo', optional=True,
         ).declare_array(count = 'descriptorCount', items = 'pTexelBufferView', optional=True)
 
-    g.add_gen_struct(name = 'VkPhysicalDeviceFeatures2',
-        ).next_in_chain(g.add_gen_struct(
-            name = 'VkPhysicalDeviceVulkan11Features'))
-
     #
     # Functions
     #
