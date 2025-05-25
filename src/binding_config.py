@@ -264,7 +264,7 @@ def add_boost_content(g):
     wds_accel = g.add_gen_struct(name = 'VkWriteDescriptorSetAccelerationStructureKHR', vk_to_boost=False,
         ).declare_array(count = 'accelerationStructureCount', items = 'pAccelerationStructures')
     wds_inline_uni = g.add_gen_struct(name = 'VkWriteDescriptorSetInlineUniformBlock', vk_to_boost=False)
-    inline_uniform_dp = g.add_gen_struct(name = 'VkDescriptorPoolInlineUniformBlockCreateInfoEXT', vk_to_boost=False)
+    inline_uniform_dp = g.add_gen_struct(name = 'VkDescriptorPoolInlineUniformBlockCreateInfo', vk_to_boost=False)
 
     g.add_gen_struct(name = 'VkAccelerationStructureBuildGeometryInfoKHR', vk_to_boost=False, ignore_fields=['ppGeometries']
         ).declare_array(count = 'geometryCount', items = 'pGeometries')
