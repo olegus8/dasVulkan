@@ -87,13 +87,15 @@ class Config(ConfigBase):
 
         #TODO: make these work
         if ('PFN_' in func.type
-        or  func.name.endswith('KHR')
-        or  func.name.endswith('EXT')
-        or  func.name.endswith('INTEL')
         or  func.name.endswith('AMD')
+        or  func.name.endswith('EXT')
         or  func.name.endswith('GOOGLE')
+        or  func.name.endswith('HUAWEI')
+        or  func.name.endswith('INTEL')
+        or  func.name.endswith('KHR')
         or  func.name.endswith('NV')
         or  func.name.endswith('NVX')
+        or  func.name.endswith('QCOM')
         ):
             func.ignore()
 
