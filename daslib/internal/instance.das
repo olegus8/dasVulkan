@@ -55,7 +55,7 @@ def create_instance_ex(
     layers : array<string>      = DEFAULT_INSTANCE_LAYERS;
     debug_msg_severity : uint   = DEBUG_UTILS_MESSENGER_DEFAULT_SEVERITY;
     debug_msg_type : uint       = DEBUG_UTILS_MESSENGER_DEFAULT_TYPE;
-    layer_settings : array<VkLayerSettingEXT> = [[ array<VkLayerSettingEXT> ]];
+    layer_settings : array<LayerSettingEXT> = [[ array<LayerSettingEXT> ]];
     enabled_validation_features : array<VkValidationFeatureEnableEXT> = [[ array<VkValidationFeatureEnableEXT> ]];
     disabled_validation_features : array<VkValidationFeatureDisableEXT> = [[ array<VkValidationFeatureDisableEXT> ]];
     var debug_msg_ignore_list   : array<string> = [[ array<string> ]];
