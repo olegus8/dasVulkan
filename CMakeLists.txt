@@ -28,7 +28,7 @@ IF(NOT DAS_VULKAN_INCLUDED)
                 VERBATIM
                 COMMAND ${DAS_VULKAN_GLSL_EXE} ${args}
                     ${input_name_ext} -o ${input_name}.spv
-                COMMENT "glsl ${input} to ${input_dir}/${input_name}.spv")
+                COMMENT "glsl ${input} to ${input_dir}/${input_name}.spv extra args: ${args}")
         ENDIF()
     ENDMACRO()
 
