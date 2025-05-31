@@ -13,7 +13,7 @@ IF(NOT DAS_VULKAN_INCLUDED)
     FIND_PACKAGE(glfw3)
     FIND_PROGRAM(DAS_VULKAN_GLSL_EXE glslc)
 
-    MACRO(DAS_VULKAN_COMPILE_SHADER input stage extra_deps)
+    MACRO(DAS_VULKAN_COMPILE_SHADER input args extra_deps)
         IF(NOT DAS_VULKAN_GLSL_EXE)
             MESSAGE(STATUS "glslc not found. Will use precompiled shaders.")
         ELSE()
@@ -26,9 +26,7 @@ IF(NOT DAS_VULKAN_INCLUDED)
                 OUTPUT ${input_dir}/${input_name}.spv
                 WORKING_DIRECTORY ${input_dir}
                 VERBATIM
-                COMMAND ${DAS_VULKAN_GLSL_EXE} -O -Werror
-                    -fshader-stage=${stage}
-                    --target-env=vulkan1.2
+                COMMAND ${DAS_VULKAN_GLSL_EXE} ${args}
                     ${input_name_ext} -o ${input_name}.spv
                 COMMENT "glsl ${input} to ${input_dir}/${input_name}.spv")
         ENDIF()
