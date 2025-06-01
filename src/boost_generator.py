@@ -1925,6 +1925,8 @@ def boost_camel_to_lower(camel):
     for src, dst in [
         ('Vulkan11', 'Vulkan_1_1_'),
         ('Vulkan12', 'Vulkan_1_2_'),
+        ('Float16', 'FLOAT16_'),
+        ('Int8', 'INT8_'),
     ]:
         camel = camel.replace(src, dst)
 
