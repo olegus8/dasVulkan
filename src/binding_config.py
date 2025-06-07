@@ -250,17 +250,8 @@ def add_boost_content(g):
     debug_msg_create_info = g.add_gen_struct(
         name='VkDebugUtilsMessengerCreateInfoEXT', vk_to_boost=False,
         ).next_in_chain(debug_validation_features)
-    sub_ext = g.add_gen_struct(
-        name='VkPhysicalDeviceShaderSubgroupExtendedTypesFeatures')
-    shader_f16_i8 = g.add_gen_struct(
-        name='VkPhysicalDeviceShaderFloat16Int8Features'
-        ).next_in_chain(sub_ext)
-    storage_16bit = g.add_gen_struct(
-        name='VkPhysicalDevice16BitStorageFeatures'
-        ).next_in_chain(shader_f16_i8)
     rob_info = g.add_gen_struct(
-        name='VkPipelineRobustnessCreateInfo'
-        ).next_in_chain(storage_16bit)
+        name='VkPipelineRobustnessCreateInfo')
     rob_feats = g.add_gen_struct(
         name='VkPhysicalDevicePipelineRobustnessFeatures'
         ).next_in_chain(rob_info)
