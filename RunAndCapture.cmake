@@ -7,7 +7,7 @@
 #   cmake -DTOOL=glslangValidator -DOUT=x.txt -DARGS="--reflect;shader.spv" -P RunAndCapture.cmake
 
 execute_process(
-    COMMAND "${TOOL}" ${ARGS}
+    COMMAND ${TOOL} ${ARGS}
     OUTPUT_FILE "${OUT}"
     RESULT_VARIABLE _ec
 )
