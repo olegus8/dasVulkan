@@ -35,7 +35,7 @@ IF(NOT DAS_VULKAN_INCLUDED)
             get_filename_component(input_name_ext ${input} NAME)
             ADD_CUSTOM_COMMAND(
                 DEPENDS ${input_src} ${extra_deps}
-                OUTPUT ${input_dir}/${input_name}.base.spv
+                OUTPUT ${input_dir}/${input_name}.pre.glsl
                 WORKING_DIRECTORY ${input_dir}
                 VERBATIM
                 COMMAND_EXPAND_LISTS
