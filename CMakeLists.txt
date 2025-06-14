@@ -41,10 +41,10 @@ IF(NOT DAS_VULKAN_INCLUDED)
                 VERBATIM
                 USES_TERMINAL
                 COMMAND_EXPAND_LISTS
-                COMMAND ${DAS_VULKAN_GLSLANG_VALIDATOR_EXE} ${GLSLANG_ARGS}
-                    ${input_name_ext} -o ${input_name}.base.spv
                 COMMAND ${DAS_VULKAN_GLSLANG_VALIDATOR_EXE} ${GLSLANG_PRE_ARGS}
                     ${input_name_ext}
+                COMMAND ${DAS_VULKAN_GLSLANG_VALIDATOR_EXE} ${GLSLANG_ARGS}
+                    ${input_name_ext} -o ${input_name}.base.spv
                 COMMENT "glslangValidator ${input} to ${input_dir}/${input_name}.base.spv")
             ADD_CUSTOM_COMMAND(
                 DEPENDS ${input_dir}/${input_name}.base.spv
