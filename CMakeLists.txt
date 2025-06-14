@@ -32,12 +32,39 @@ IF(NOT DAS_VULKAN_INCLUDED)
             get_filename_component(input_name_ext ${input} NAME)
             ADD_CUSTOM_COMMAND(
                 DEPENDS ${input_src} ${extra_deps}
+                OUTPUT ${input_dir}/${input_name}.base.spv
+                WORKING_DIRECTORY ${input_dir}
+                VERBATIM
+                COMMAND ${DAS_VULKAN_GLSLANG_VALIDATOR_EXE} ${GLSLANG_ARGS}
+                    ${input_name_ext} -o ${input_name}.base.spv
+                COMMENT "glslangValidator ${input} to ${input_dir}/${input_name}.base.spv")
+            ADD_CUSTOM_COMMAND(
+                DEPENDS ${input_dir}/${input_name}.base.spv
+                OUTPUT ${input_dir}/${input_name}.base.spvasm
+                WORKING_DIRECTORY ${input_dir}
+                VERBATIM
+                COMMAND ${DAS_VULKAN_SPIRV_DIS_EXE}
+                    --indent=2 --no-color ${input_dir}/${input_name}.base.spv
+                    -o ${input_name}.base.spvasm
+                COMMENT "spirv-dis ${input_dir}/${input_name}.base.spv to ${input_dir}/${input_name}.base.spvasm")
+            ADD_CUSTOM_COMMAND(
+                DEPENDS ${input_dir}/${input_name}.base.spv
                 OUTPUT ${input_dir}/${input_name}.spv
                 WORKING_DIRECTORY ${input_dir}
                 VERBATIM
-                COMMAND ${DAS_VULKAN_GLSL_EXE} ${ARGN}
-                    ${input_name_ext} -o ${input_name}.spv
-                COMMENT "glsl ${input} to ${input_dir}/${input_name}.spv")
+                COMMAND ${DAS_VULKAN_SPIRV_OPT_EXE} ${SPIRV_OPT_ARGS}
+                    ${input_dir}/${input_name}.base.spv
+                    -o ${input_name}.spv
+                COMMENT "spirv-opt ${input_dir}/${input_name}.base.spv to ${input_dir}/${input_name}.spv")
+            ADD_CUSTOM_COMMAND(
+                DEPENDS ${input_dir}/${input_name}.spv
+                OUTPUT ${input_dir}/${input_name}.spvasm
+                WORKING_DIRECTORY ${input_dir}
+                VERBATIM
+                COMMAND ${DAS_VULKAN_SPIRV_DIS_EXE}
+                    --indent=2 --no-color ${input_dir}/${input_name}.spv
+                    -o ${input_name}.spvasm
+                COMMENT "spirv-dis ${input_dir}/${input_name}.spv to ${input_dir}/${input_name}.spvasm")
         ENDIF()
     ENDMACRO()
 
