@@ -39,8 +39,8 @@ IF(NOT DAS_VULKAN_INCLUDED)
                 WORKING_DIRECTORY ${input_dir}
                 VERBATIM
                 COMMAND ${CMAKE_COMMAND}
-                  -DTOOL="${DAS_VULKAN_GLSLANG_VALIDATOR_EXE}"
-                  -DOUT="${input_dir}/${input_name}.pre.glsl"
+                  -DTOOL=${DAS_VULKAN_GLSLANG_VALIDATOR_EXE}
+                  -DOUT=${input_dir}/${input_name}.pre.glsl
                   -DARGS="${GLSLANG_PRE_ARGS};${input_name_ext}"
                   -P "${DAS_VULKAN_DIR}/RunAndCapture.cmake"
                 COMMENT "glslangValidator ${input} to ${input_dir}/${input_name}.pre.glsl")
