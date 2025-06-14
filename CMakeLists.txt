@@ -49,7 +49,8 @@ IF(NOT DAS_VULKAN_INCLUDED)
                 VERBATIM
                 COMMAND_EXPAND_LISTS
                 COMMAND ${DAS_VULKAN_SPIRV_DIS_EXE}
-                    --indent=2 --no-color ${input_dir}/${input_name}.base.spv
+                    --nested-indent --comment --no-color
+                    ${input_dir}/${input_name}.base.spv
                     -o ${input_name}.base.spvasm
                 COMMENT "spirv-dis ${input_dir}/${input_name}.base.spv to ${input_dir}/${input_name}.base.spvasm")
             ADD_CUSTOM_COMMAND(
@@ -69,8 +70,8 @@ IF(NOT DAS_VULKAN_INCLUDED)
                 VERBATIM
                 COMMAND_EXPAND_LISTS
                 COMMAND ${DAS_VULKAN_SPIRV_DIS_EXE}
-                    --indent=2 --no-color ${input_dir}/${input_name}.spv
-                    -o ${input_name}.spvasm
+                    --nested-indent --comment --no-color
+                    ${input_dir}/${input_name}.spv -o ${input_name}.spvasm
                 COMMENT "spirv-dis ${input_dir}/${input_name}.spv to ${input_dir}/${input_name}.spvasm")
         ENDIF()
     ENDMACRO()
