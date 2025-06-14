@@ -17,6 +17,9 @@ IF(NOT DAS_VULKAN_INCLUDED)
     FIND_PROGRAM(DAS_VULKAN_SPIRV_DIS_EXE spirv-dis)
 
     MACRO(DAS_VULKAN_COMPILE_SHADER input extra_deps)
+        CMAKE_PARSE_ARGUMENTS(DS "" "" "GLSLANG_ARGS;SPIRV_OPT_ARGS" ${ARGN})
+        SET(GLSLANG_ARGS ${DS_GLSLANG_ARGS})
+        SET(SPIRV_OPT_ARGS ${DS_SPIRV_OPT_ARGS})
         IF(NOT DAS_VULKAN_GLSL_EXE)
             MESSAGE(STATUS "glslc not found. Will use precompiled shaders.")
         ELSEIF(NOT DAS_VULKAN_GLSLANG_VALIDATOR_EXE)
@@ -35,6 +38,7 @@ IF(NOT DAS_VULKAN_INCLUDED)
                 OUTPUT ${input_dir}/${input_name}.base.spv
                 WORKING_DIRECTORY ${input_dir}
                 VERBATIM
+                COMMAND_EXPAND_LISTS
                 COMMAND ${DAS_VULKAN_GLSLANG_VALIDATOR_EXE} ${GLSLANG_ARGS}
                     ${input_name_ext} -o ${input_name}.base.spv
                 COMMENT "glslangValidator ${input} to ${input_dir}/${input_name}.base.spv")
@@ -43,6 +47,7 @@ IF(NOT DAS_VULKAN_INCLUDED)
                 OUTPUT ${input_dir}/${input_name}.base.spvasm
                 WORKING_DIRECTORY ${input_dir}
                 VERBATIM
+                COMMAND_EXPAND_LISTS
                 COMMAND ${DAS_VULKAN_SPIRV_DIS_EXE}
                     --indent=2 --no-color ${input_dir}/${input_name}.base.spv
                     -o ${input_name}.base.spvasm
@@ -52,6 +57,7 @@ IF(NOT DAS_VULKAN_INCLUDED)
                 OUTPUT ${input_dir}/${input_name}.spv
                 WORKING_DIRECTORY ${input_dir}
                 VERBATIM
+                COMMAND_EXPAND_LISTS
                 COMMAND ${DAS_VULKAN_SPIRV_OPT_EXE} ${SPIRV_OPT_ARGS}
                     ${input_dir}/${input_name}.base.spv
                     -o ${input_name}.spv
@@ -61,6 +67,7 @@ IF(NOT DAS_VULKAN_INCLUDED)
                 OUTPUT ${input_dir}/${input_name}.spvasm
                 WORKING_DIRECTORY ${input_dir}
                 VERBATIM
+                COMMAND_EXPAND_LISTS
                 COMMAND ${DAS_VULKAN_SPIRV_DIS_EXE}
                     --indent=2 --no-color ${input_dir}/${input_name}.spv
                     -o ${input_name}.spvasm
