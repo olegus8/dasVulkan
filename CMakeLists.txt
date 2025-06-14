@@ -34,19 +34,14 @@ IF(NOT DAS_VULKAN_INCLUDED)
             get_filename_component(input_dir ${input_src} DIRECTORY)
             get_filename_component(input_name ${input} NAME_WE)
             get_filename_component(input_name_ext ${input} NAME)
-            set(_args_list ${GLSLANG_PRE_ARGS} ${input_name_ext})     # real list
-            list(JOIN _args_list "\;" _args_joined)                   # escape semicolons
-            set(_PRE_ARG "-DARGS=${_args_joined}")                    # one string, no quotes
             ADD_CUSTOM_COMMAND(
                 DEPENDS ${input_src} ${extra_deps}
                 OUTPUT ${input_dir}/${input_name}.pre.glsl
                 WORKING_DIRECTORY ${input_dir}
                 VERBATIM
-                COMMAND ${CMAKE_COMMAND}
-                  -DTOOL=${DAS_VULKAN_GLSLANG_VALIDATOR_EXE}
-                  -DOUT=${input_dir}/${input_name}.pre.glsl
-                  "${_PRE_ARG}"
-                  -P "${DAS_VULKAN_DIR}/RunAndCapture.cmake"
+                COMMAND_EXPAND_LISTS
+                COMMAND ${DAS_VULKAN_GLSLANG_VALIDATOR_EXE} ${GLSLANG_PRE_ARGS}
+                    ${input_name_ext} -o ${input_name}.pre.glsl
                 COMMENT "glslangValidator ${input} to ${input_dir}/${input_name}.pre.glsl")
             ADD_CUSTOM_COMMAND(
                 DEPENDS ${input_src} ${extra_deps}
