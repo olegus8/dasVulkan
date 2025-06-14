@@ -39,8 +39,7 @@ IF(NOT DAS_VULKAN_INCLUDED)
                 WORKING_DIRECTORY ${input_dir}
                 VERBATIM
                 COMMAND_EXPAND_LISTS
-                COMMAND ${DAS_VULKAN_GLSLANG_VALIDATOR_EXE} ${GLSLANG_ARGS}
-                    -E -C -H -dH
+                COMMAND ${DAS_VULKAN_GLSLANG_VALIDATOR_EXE} ${GLSLANG_PRE_ARGS}
                     ${input_name_ext} -o ${input_name}.pre.glsl
                 COMMENT "glslangValidator ${input} to ${input_dir}/${input_name}.pre.glsl")
             ADD_CUSTOM_COMMAND(
