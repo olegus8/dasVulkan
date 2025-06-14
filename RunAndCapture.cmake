@@ -11,7 +11,7 @@ execute_process(
     OUTPUT_FILE "${OUT}"
     RESULT_VARIABLE _ec
     ERROR_VARIABLE _err
-    COMMAND_ECHO STDOUT
+    COMMAND_ECHO STDERR
 )
 
 if(_ec AND NOT _ec EQUAL 0)
