@@ -10,9 +10,11 @@ execute_process(
     COMMAND ${TOOL} ${ARGS}
     OUTPUT_FILE "${OUT}"
     RESULT_VARIABLE _ec
+    ERROR_VARIABLE _err
+    COMMAND_ECHO STDOUT
 )
 
-if(_ec)
+if(_ec AND NOT _ec EQUAL 0)
     message(FATAL_ERROR
-            "`${TOOL} ${ARGS}` failed with exit code ${_ec}")
+        "\"${TOOL}\" failed (exit ${_ec})\n${_err}")
 endif()
