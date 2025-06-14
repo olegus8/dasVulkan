@@ -14,5 +14,5 @@ execute_process(
 
 if(_ec)
     message(FATAL_ERROR
-            "`${TOOL}` failed with exit code ${_ec}")
+            "`${TOOL} ${ARGS}` failed with exit code ${_ec}")
 endif()
