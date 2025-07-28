@@ -178,7 +178,6 @@ def add_boost_content(g):
         'VkPhysicalDeviceFeatures',
         'VkPhysicalDeviceLimits',
         'VkPhysicalDeviceProperties',
-        'VkPhysicalDeviceProperties2',
         'VkPhysicalDeviceSparseProperties',
         'VkPipelineExecutableInfoKHR',
         'VkPipelineExecutablePropertiesKHR',
@@ -459,8 +458,6 @@ def add_boost_content(g):
     g.add_gen_func(name = 'vkGetPhysicalDeviceFormatProperties',
         ).declare_output(name = 'pFormatProperties')
     g.add_gen_func(name = 'vkGetPhysicalDeviceProperties',
-        ).declare_output(name = 'pProperties')
-    g.add_gen_func(name = 'vkGetPhysicalDeviceProperties2',
         ).declare_output(name = 'pProperties')
     g.add_gen_func(name = 'vkGetPhysicalDeviceSurfaceCapabilitiesKHR',
         ).declare_output(name = 'pSurfaceCapabilities')
