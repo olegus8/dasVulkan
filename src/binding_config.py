@@ -143,6 +143,9 @@ def add_boost_content(g):
     h.declare_ctor(name = 'vkCreateComputePipelines',
         ).declare_array(count = 'createInfoCount', items = 'pCreateInfos'
         ).declare_array(count = 'createInfoCount', items = 'pPipelines')
+    h.declare_ctor(name = 'vkCreateRayTracingPipelinesKHR',
+        ).declare_array(count = 'createInfoCount', items = 'pCreateInfos'
+        ).declare_array(count = 'createInfoCount', items = 'pPipelines')
 
     h = g.add_gen_handle(name = 'VkDeviceMemory')
     h.declare_ctor(name = 'vkAllocateMemory')
@@ -301,6 +304,10 @@ def add_boost_content(g):
         ).declare_array(count = 'queueCount', items = 'pQueuePriorities')
     g.add_gen_struct(name = 'VkFramebufferCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'attachmentCount', items = 'pAttachments')
+    g.add_gen_struct(
+        name='VkRayTracingPipelineCreateInfoKHR', vk_to_boost=False,
+      ).declare_array(count = 'stageCount', items = 'pStages',
+      ).declare_array(count = 'groupCount', items = 'pGroups')
     g.add_gen_struct(name = 'VkGraphicsPipelineCreateInfo', vk_to_boost=False,
         ).declare_array(count = 'stageCount', items = 'pStages',
         ).declare_mandatory_ptr(name = 'pVertexInputState'
