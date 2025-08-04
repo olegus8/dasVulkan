@@ -120,7 +120,6 @@ def add_boost_content(g):
         'VkCommandBuffer',
         'VkCommandPool',
         'VkDebugUtilsMessengerEXT',
-        'VkDeferredOperationKHR',
         'VkDescriptorPool',
         'VkDescriptorSet',
         'VkDescriptorSetLayout',
