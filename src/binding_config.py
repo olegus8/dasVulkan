@@ -120,6 +120,7 @@ def add_boost_content(g):
         'VkCommandBuffer',
         'VkCommandPool',
         'VkDebugUtilsMessengerEXT',
+        'VkDeferredOperationKHR',
         'VkDescriptorPool',
         'VkDescriptorSet',
         'VkDescriptorSetLayout',
@@ -156,10 +157,6 @@ def add_boost_content(g):
     h = g.add_gen_handle(name = 'VkDeviceMemory')
     h.declare_ctor(name = 'vkAllocateMemory')
     h.declare_dtor(name = 'vkFreeMemory')
-
-    h = g.add_gen_handle(name = 'VkDeferredOperationKHR')
-    h.declare_ctor(name = 'vkCreateDeferredOperationKHR')
-    h.declare_dtor(name = 'vkDestroyDeferredOperationKHR')
 
     #
     # Structs
