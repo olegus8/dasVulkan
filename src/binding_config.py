@@ -427,6 +427,8 @@ def add_boost_content(g):
         ).declare_array(count = 'regionCount', items = 'pRegions')
     g.add_gen_func(name = 'vkCmdDispatch')
     g.add_gen_func(name = 'vkCmdDispatchIndirect')
+    g.add_gen_func(name = 'vkCmdTraceRaysKHR')
+    g.add_gen_func(name = 'vkCmdTraceRaysIndirectKHR')
     g.add_gen_func(name = 'vkCmdDraw')
     g.add_gen_func(name = 'vkCmdDrawIndirect')
     g.add_gen_func(name = 'vkCmdDrawIndexed')
