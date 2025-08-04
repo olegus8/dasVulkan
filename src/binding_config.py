@@ -192,6 +192,7 @@ def add_boost_content(g):
         'VkPipelineInfoKHR',
         'VkPushConstantRange',
         'VkQueueFamilyProperties',
+        'VkRayTracingShaderGroupCreateInfoKHR',
         'VkRect2D',
         'VkSubpassDependency',
         'VkSurfaceCapabilitiesKHR',
