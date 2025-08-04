@@ -196,6 +196,7 @@ def add_boost_content(g):
         'VkSubpassDependency',
         'VkSurfaceCapabilitiesKHR',
         'VkSurfaceFormatKHR',
+        'VkTraceRaysIndirectCommandKHR',
         'VkViewport',
     ]:
         g.add_gen_struct(name = name)
