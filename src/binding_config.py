@@ -240,6 +240,7 @@ def add_boost_content(g):
         'VkSemaphoreCreateInfo',
         'VkSpecializationMapEntry',
         'VkStencilOpState',
+        'VkStridedDeviceAddressRegionKHR',
         'VkVertexInputAttributeDescription',
         'VkVertexInputBindingDescription',
     ]:
