@@ -64,6 +64,8 @@ class Config(ConfigBase):
             'vkAcquireNextImageKHR',
             'vkCmdBuildAccelerationStructuresIndirectKHR',
             'vkCmdBuildAccelerationStructuresKHR',
+            'vkCmdTraceRaysIndirectKHR',
+            'vkCmdTraceRaysKHR',
             'vkCreateAccelerationStructureKHR',
             'vkCreateDebugUtilsMessengerEXT',
             'vkCreateRayTracingPipelinesKHR',
