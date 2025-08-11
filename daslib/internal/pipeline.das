@@ -114,7 +114,7 @@ def create_ray_tracing_pipeline(
     var result : VkResult
     result = vkGetRayTracingShaderGroupHandlesKHR(
         device.device, pipeline.pipeline, 0u, uint(groups_count),
-        uint(length(shader_group_handles) * typeinfo(sizeof type<HANDLE_T>)),
+        uint64(length(shader_group_handles) * typeinfo(sizeof type<HANDLE_T>)),
         p_handles)
     assert(result == VkResult VK_SUCCESS)
     return <- pipeline
