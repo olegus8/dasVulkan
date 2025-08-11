@@ -108,13 +108,10 @@ def create_ray_tracing_pipeline(
     var pipeline <- create_ray_tracing_pipeline([
       device=device, create_info=create_info])
     shader_group_handles |> resize(groups_count)
-    var p_handles : void ?
-    unsafe
-        p_handles = addr(shader_group_handles[0])
     var result : VkResult
     result = vkGetRayTracingShaderGroupHandlesKHR(
         device.device, pipeline.pipeline, 0u, uint(groups_count),
         uint(length(shader_group_handles) * typeinfo(sizeof type<HANDLE_T>)),
-        p_handles)
+        void ? (array_addr_unsafe(shader_group_handles)))
     assert(result == VkResult VK_SUCCESS)
     return <- pipeline
