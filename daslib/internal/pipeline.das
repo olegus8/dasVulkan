@@ -110,7 +110,7 @@ def create_ray_tracing_pipeline(
     shader_group_handles |> resize(groups_count)
     var p_handles : void ?
     unsafe
-      p_handles = addr(shader_group_handles[0])
+        p_handles = addr(shader_group_handles[0])
     var result : VkResult
     result = vkGetRayTracingShaderGroupHandlesKHR(
         device, pipeline.pipeline, 0u, uint(groups_count),
