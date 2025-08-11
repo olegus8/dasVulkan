@@ -72,3 +72,28 @@ def create_compute_pipeline(
 
     var pipeline <- pipelines[0]
     return <- pipeline
+
+
+def create_ray_tracing_pipeline(
+    device : Device = [[ Device ]];
+    deferred_operation : DeferredOperationKHR = [[ DeferredOperationKHR ]];
+    pipeline_cache : PipelineCache = [[ PipelineCache ]];
+    var create_info : RayTracingPipelineCreateInfoKHR = [[
+        RayTracingPipelineCreateInfoKHR ]];
+    var result : VkResult? = [[VkResult?]]
+) : Pipeline
+
+    var create_infos <- [{ auto[] clone_to_move(create_info) }]
+    defer() <| ${ delete create_infos; }
+    var pipelines <- create_ray_tracing_pipelines_khr([
+        device = device,
+        deferred_operation = deferred_operation,
+        pipeline_cache = pipeline_cache,
+        create_infos = create_infos,
+        result = result
+    ])
+    defer() <| ${ delete pipelines; }
+    assert(pipelines |> length() == 1)
+
+    var pipeline <- pipelines[0]
+    return <- pipeline
