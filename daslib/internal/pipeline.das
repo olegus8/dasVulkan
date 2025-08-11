@@ -107,7 +107,7 @@ def create_ray_tracing_pipeline(
     let groups_count = length(create_info.groups)
     var pipeline <- create_ray_tracing_pipeline([
       device=device, create_info=create_info])
-    shader_group_handler |> resize(groups_count)
+    shader_group_handles |> resize(groups_count)
     var result : VkResult
     result = vkGetRayTracingShaderGroupHandlesKHR(
         device, pipeline.pipeline, 0u, uint(groups_count),
