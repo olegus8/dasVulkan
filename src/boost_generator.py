@@ -270,7 +270,9 @@ class GenFunc(object):
             if param.vk_name == vk_name:
                 return param
 
-    def declare_array(self, items, count=None, count_expr=None):
+    def declare_array(self, items, count=None, count_expr=None,
+      force_item_type=None,
+    ):
         with log_on_exception(func=self._vk_func_name,
              count=count, items=items
         ):
@@ -280,6 +282,7 @@ class GenFunc(object):
                 p_count.set_dyn_array(count=p_count, items=p_items)
             p_items.set_dyn_array(count=p_count, items=p_items,
                 count_expr=count_expr)
+            p_items.force_boost_unqual_type(force_item_type)
         return self
 
     def declare_output(self, name):
