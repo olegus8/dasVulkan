@@ -443,6 +443,7 @@ def add_boost_content(g):
         ).declare_array(count = 'bufferMemoryBarrierCount', items = 'pBufferMemoryBarriers',
         ).declare_array(count = 'imageMemoryBarrierCount', items = 'pImageMemoryBarriers')
     g.add_gen_func(name = 'vkCmdResetQueryPool')
+    g.add_gen_func(name = 'vkCmdSetStencilReference')
     g.add_gen_func(name = 'vkDeviceWaitIdle')
     g.add_gen_func(name = 'vkEndCommandBuffer')
     g.add_gen_func(name = 'vkEnumerateDeviceExtensionProperties',
