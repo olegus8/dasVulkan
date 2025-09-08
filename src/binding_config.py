@@ -273,9 +273,12 @@ def add_boost_content(g):
     exec_feats = g.add_gen_struct(
         name='VkPhysicalDevicePipelineExecutablePropertiesFeaturesKHR'
         ).next_in_chain(rob_feats)
+    bary_feats = g.add_gen_struct(
+        name='VkPhysicalDeviceFragmentShaderBarycentricFeaturesKHR',
+        vk_to_boost=False).next_in_chain(exec_feats)
     accel_feats = g.add_gen_struct(
         name='VkPhysicalDeviceAccelerationStructureFeaturesKHR',
-        vk_to_boost=False).next_in_chain(exec_feats)
+        vk_to_boost=False).next_in_chain(bary_feats)
     ray_pipe_feats = g.add_gen_struct(
         name='VkPhysicalDeviceRayTracingPipelineFeaturesKHR',vk_to_boost=False,
         ).next_in_chain(accel_feats)
